@@ -157,7 +157,71 @@
 @push('scripts')
 	<script type="text/javascript">
 		var laravel_token = '{{ csrf_token() }}';
-		var resizefunc = [];
+		var resizefunc = []; 
+
+        /*********************************
+        *
+        * CALENDARIO E DATA
+        * 
+        *********************************/
+
+        jQuery.datetimepicker.setLocale('pt-BR'); 
+            
+        jQuery('#selecionaData1').datetimepicker({                
+            timepicker:false,
+            format:'d.m.Y',
+        });
+        jQuery('#selecionaHora1').datetimepicker({ 
+            datepicker:false,
+            format:'H:i',
+            step: 10,
+        });
+            
+        jQuery('#selecionaData2').datetimepicker({                
+            timepicker:false,
+            format:'d.m.Y',
+        });
+        jQuery('#selecionaHora2').datetimepicker({ 
+            datepicker:false,
+            format:'H:i',
+            step: 10,
+        });
+            
+        /*********************************
+        *
+        * TROCA COR CARD AO CLICAR
+        * 
+        *********************************/
+
+        $('.card-resultado').on('show.bs.collapse hide.bs.collapse', function (e) {
+            if (e.type=='show') {
+                $(this).addClass("card-resultado-active");
+            } else {
+                $(this).removeClass("card-resultado-active");
+            }
+        });  
+
+        /*********************************
+        *
+        * COLLAPSE FORM BUSCA MOBILE
+        * 
+        *********************************/
+
+        jQuery(document).ready(function($) {
+        var alterClass = function() {
+            var ww = document.body.clientWidth;
+            if (ww < 975) {
+            $('.collapseFormulario').removeClass('show');
+            } else if (ww >= 975) {
+            $('.collapseFormulario').addClass('show');
+            };
+        };
+        $(window).resize(function(){
+            alterClass();
+        });
+        //Fire it when the page first loads:
+        alterClass();
+        });             
 
 		/*********************************
         *
