@@ -100,6 +100,25 @@ a.jstree-anchor i.ti-na {
     border-top: 1px solid #dee2e6;
 }
 
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single {
+    padding-top: 14px;
+    height: 52px;
+    font-size: 15px;
+}
+
+.select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single .select2-selection__rendered {
+    color: rgb(124, 124, 124);
+}
+
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single .select2-selection__arrow {
+    margin-top: 12px;
+}
+
+.cvx-local-atendimento {
+	height: 52px;
+	font-size: 14px;
+}
+
 .page-loader-variant-1 {
     position: fixed;
     left: 0;

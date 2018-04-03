@@ -21,6 +21,7 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/fontawesome-all.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
+        <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css" />
     	    	
     	<!-- DoutorHJ Reset CSS -->
     	<link rel="stylesheet" href="/css/doutorhj.style.css">
@@ -30,10 +31,15 @@
         <script src="js/html5shiv.min.js"></script>
 		<![endif]-->
     	
-    	<script src="/libs/comvex-template/js/jquery.min.js"></script>
+    	<script type="text/javascript" src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
+    	<script type="text/javascript" src="/libs/home-template/js/popper.min.js"></script>
+    	<script type="text/javascript" src="/libs/home-template/js/bootstrap.min.js"></script>
     	
     	<!-- modernizr script -->
     	<script src="/libs/comvex-template/js/modernizr.min.js"></script>
+    	
+    	<!-- select2 with search script -->
+    	<script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>
     	
     	<script src="/js/doutorhj.script.js"></script>
     	
@@ -148,10 +154,6 @@
     		var resizefunc = [];
     	</script>
     	
-        <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
-    	<script src="/libs/home-template/js/popper.min.js"></script>
-    	<script src="/libs/home-template/js/bootstrap.min.js"></script>
-        
         <script type="text/javascript">
            
         </script>

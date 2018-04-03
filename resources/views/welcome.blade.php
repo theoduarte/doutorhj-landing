@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="especialidade">Especialidade ou exame</label>
-                            <select class="form-control" id="especialidade">
+                            <select id="tipo_especialidade" class="form-control select2">
                                 <option>Ex.: Clínica Médica</option>
                                 <option>Opção 1</option>
                                 <option>Opção 2</option>
@@ -44,13 +44,7 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="local">Local de antedimento</label>
-                            <select class="form-control" id="local">
-                                <option>Ex.: Asa Sul</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
-                            </select>
+                            <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" placeholder="Ex.: Asa Sul">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="button" class="btn btn-primary btn-vermelho">Pesquisar</button>
