@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('resultado', 'ClinicaController@findClinicaSearch');
+//Route::get('login', 'Controller@login');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
 Route::resource('profissionals','ProfissionalsController')->middleware('auth');

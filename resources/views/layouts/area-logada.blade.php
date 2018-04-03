@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -9,7 +9,6 @@
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
-  
     <title>@yield('title', 'Doutor HJ')</title>
 
     @push('style')
@@ -60,21 +59,21 @@
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">                            
                             <li class="nav-item">
-                                <a class="nav-link" href="#">O que é o Doutor Hoje?</a>
+                                <a class="nav-link" href="#">Agendamento</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Como funciona?</a>
+                                <a class="nav-link" href="#">Dicas do Doutor</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Vantagens</a>
-                            </li>
-                            <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="#">Sou profissional de saúde</a>
-                            </li>
-                            <li class="nav-item btn-entrar">
+                                <a class="nav-link" href="#">Como Funciona</a>
+                            </li>                            
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">Entrar</a>
                             </li>
                         </ul>
+                        <div class="menu-area-logada">
+                            <span>Whashington</span>
+                        </div>
                     </div>
                 </div>
             </nav>
