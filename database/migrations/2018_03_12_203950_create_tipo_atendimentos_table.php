@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateTipoAtendimentoTable extends Migration
+class CreateTipoAtendimentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateTipoAtendimentoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipoatendimento', function (Blueprint $table) {
+        Schema::create('tipoatendimentos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cd_atendimento', 3)->nullable();
             $table->string('ds_atendimento', 150)->nullable();
@@ -30,6 +30,6 @@ class CreateTipoAtendimentoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipoatendimento');
+        Schema::dropIfExists('tipoatendimentos');
     }
 }

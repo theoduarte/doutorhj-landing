@@ -35,6 +35,8 @@
     	<!-- modernizr script -->
     	<script src="/libs/comvex-template/js/modernizr.min.js"></script>
     	
+    	<script src="/js/doutorhj.script.js"></script>
+    	
     	
     @endpush
     
