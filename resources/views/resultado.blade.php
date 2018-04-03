@@ -30,7 +30,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select class="form-control" id="especialidade">
+                            <select id="list_especialidade" class="form-control">
                                 <option>Especialidade</option>
                                 <option>Opção 1</option>
                                 <option>Opção 2</option>

@@ -24,12 +24,12 @@
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="tipo">Tipo de atendimento</label>
-                            <select class="form-control" id="tipo">
+                            <select id="tipo_atendimento" class="form-control">
                                 <option>Ex.: Consulta</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
+                                <option value="saude">Consulta Médica</option>
+                                <option value="odonto">Consulta Odontológica</option>
+                                <option value="exame">Exames</option>
+                                <option value="procedimento">Procedimento</option>
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
