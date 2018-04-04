@@ -15,7 +15,7 @@
     @push('style')
     
     	<!-- Google fonts -->
-    	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet" >
+    	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     	
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
@@ -36,7 +36,7 @@
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
         <script src="/js/doutorhj.script.js"></script>
-        
+
     @endpush
     
     @stack('style')

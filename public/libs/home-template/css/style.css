@@ -31,7 +31,7 @@ body,
 .btn-vermelho {
 	font-size: 13px;
 	height: 52px;
-	font-weight: 700;
+	font-weight: 600;
 	text-transform: uppercase;
 	background-color: rgb(163, 36, 49);
 	border: 0;
@@ -773,7 +773,76 @@ header .container {
 	font-weight: 700;
 }
 
-.card-login-cadastro 
+.card-login-cadastro .card-body {
+	padding-top: 10px;
+}
+
+.card-login-cadastro .card-span {
+	color: rgb(115, 115, 115);
+	font-size: 13px;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+.card-login-cadastro .card-title {
+	color: rgb(47, 61, 74);
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.card-login-cadastro form label {
+	color: rgb(70, 117, 184);
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.card-login-cadastro form input {
+	height: 38px;
+	font-size: 12px;
+}
+
+
+.card-login-cadastro form button {
+	color: rgb(255, 255, 255);	
+	width: 100%;
+	font-size: 11px;
+	padding: 0 12px;
+	height: 38px;
+}
+
+.area-label {
+	margin-bottom: 0px;
+}
+
+.c-login form .col:nth-child(1) {
+	padding-right: 5px;
+}
+
+.c-login form .col:nth-child(2) {
+	padding-left: 5px;
+}
+
+.c-login .links-login {
+	font-size: 12px;
+}
+
+.card-login-cadastro form .fc-termo .form-check-input {
+	display: block;
+	height: auto;
+}
+
+.card-login-cadastro form .fc-termo .form-check-label {
+	font-size: 13px;
+	font-weight: 400;
+	text-transform: none;
+}
+
+.card-login-cadastro form .btn-criar-conta {
+	width: 130px;
+	margin-top: 20px;
+}
 
 /*********************************
 *
