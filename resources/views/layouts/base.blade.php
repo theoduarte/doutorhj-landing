@@ -92,6 +92,7 @@
                 <div class="area-logo-rodape">
                     <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                 </div>
+                <!-- teste smartgit -->
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
                         <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
