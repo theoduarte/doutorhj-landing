@@ -13,29 +13,16 @@ $(document).ready(function () {
 				'_token': laravel_token
 			},
 			success: function (result) {
-				$( this ).addClass( "done" );
 
 				if( result != null) {
-					var json = JSON.parse(result.endereco);
-
-					$('#te_endereco').val(json.logradouro);
-					$('#te_bairro').val(json.bairro);
-					$('#nm_cidade').val(json.cidade);
-					$('#sg_estado').val(json.estado);
-					$('#cd_cidade_ibge').val(json.ibge);
-					$('#nr_latitude_gps').val(json.latitude);
-					$('#nr_longitute_gps').val(json.longitude);
+					var json = JSON.parse(result.atendimento);
 					
-				} else {
-
-					$('#te_endereco').val('');
-					$('#te_bairro').val('');
-					$('#nm_cidade').val('');
-					$('#sg_estado').val('');
-					$('#cd_cidade_ibge').val('');
-					$('#sg_logradouro').prop('selectedIndex',0);
-					$('#nr_latitude_gps').val('');
-					$('#nr_longitute_gps').val('');
+					$('#tipo_especialidade').empty();
+					for(var i=0; i < json.length; i++) {
+						var option = '<option value="'+json[i].id+'" tipo="'+json[i].tipo+'">'+json[i].descricao+'</option>';
+						$('#tipo_especialidade').append($(option));
+					}
+					
 				}
             },
             error: function (result) {
@@ -45,38 +32,32 @@ $(document).ready(function () {
 		
 	});
 	
-	$( "#list_especialidade" ).blur(function() {
+	$(".select2").select2();
+	
+	$( "#local_atendimento" ).keyup(function() {
+		
+		var search_term = $(this).val();
+		if(search_term.length < 3){ return false; }
+		
+		var tipo_atendimento = $('#tipo_atendimento').val();
+		var procedimento_id = $('#tipo_especialidade').val();
+		var tipo_especialidade = $('#tipo_especialidade').attr('tipo');
+		
     	jQuery.ajax({
-    		type: 'GET',
-    	  	url: '/consulta-cep/cep/'+this.value,
+    		type: 'POST',
+    	  	url: '/consulta-local-atendimento',
     	  	data: {
-				'nr_cep': this.value,
+				'search_term': search_term,
+				'tipo_atendimento': tipo_atendimento,
+				'procedimento_id': procedimento_id,
+				'tipo_especialidade': tipo_especialidade,
 				'_token': laravel_token
 			},
 			success: function (result) {
-				$( this ).addClass( "done" );
 
 				if( result != null) {
 					var json = JSON.parse(result.endereco);
-
-					$('#te_endereco').val(json.logradouro);
-					$('#te_bairro').val(json.bairro);
-					$('#nm_cidade').val(json.cidade);
-					$('#sg_estado').val(json.estado);
-					$('#cd_cidade_ibge').val(json.ibge);
-					$('#nr_latitude_gps').val(json.latitude);
-					$('#nr_longitute_gps').val(json.longitude);
 					
-				} else {
-
-					$('#te_endereco').val('');
-					$('#te_bairro').val('');
-					$('#nm_cidade').val('');
-					$('#sg_estado').val('');
-					$('#cd_cidade_ibge').val('');
-					$('#sg_logradouro').prop('selectedIndex',0);
-					$('#nr_latitude_gps').val('');
-					$('#nr_longitute_gps').val('');
 				}
             },
             error: function (result) {

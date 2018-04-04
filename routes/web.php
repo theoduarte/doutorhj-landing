@@ -23,6 +23,7 @@ Route::resource('agenda','AgendaController')->middleware('auth');
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
+Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');

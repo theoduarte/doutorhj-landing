@@ -22,19 +22,22 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/fontawesome-all.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
-
-    	<!-- DoutorHJ Reset CSS -->
+        <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css" />
+        
+        <!-- DoutorHJ Reset CSS -->
     	<link rel="stylesheet" href="/css/doutorhj.style.css">
     	
     	<!--[if lt IE 10]>
         <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="/libs/home-template/img/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
         <script src="js/html5shiv.min.js"></script>
-
 		<![endif]-->    	
         
         <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
+        <script type="text/javascript" src="/libs/home-template/js/popper.min.js"></script>
+    	<script type="text/javascript" src="/libs/home-template/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>
         <script src="/js/doutorhj.script.js"></script>
 
     @endpush
@@ -137,9 +140,6 @@
     	<script>
     		var laravel_token = '{{ csrf_token() }}';
     		var resizefunc = [];
-    	</script>        
-    	<script src="/libs/home-template/js/popper.min.js"></script>
-        <script src="/libs/home-template/js/bootstrap.min.js"></script>
     @endpush
     
     @stack('scripts')
