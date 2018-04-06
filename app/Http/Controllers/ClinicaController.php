@@ -617,4 +617,8 @@ class ClinicaController extends Controller
         
         return view('resultado', compact('prestadores'));
     }
+
+    public function paginaPagamento(){
+        return view('pagamento');
+    }
 }

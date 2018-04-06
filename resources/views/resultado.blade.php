@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Home - DoutorHJ')
+@section('title', 'Resultado - DoutorHJ')
 
 @push('scripts')
 
@@ -155,136 +155,138 @@
     </div>
 </section>
 @push('scripts')
-	<script type="text/javascript">
-		var laravel_token = '{{ csrf_token() }}';
-		var resizefunc = []; 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var laravel_token = '{{ csrf_token() }}';
+            var resizefunc = []; 
 
-        /*********************************
-        *
-        * CALENDARIO E DATA
-        * 
-        *********************************/
+            /*********************************
+            *
+            * CALENDARIO E DATA
+            * 
+            *********************************/
 
-        jQuery.datetimepicker.setLocale('pt-BR'); 
-            
-        jQuery('#selecionaData1').datetimepicker({                
-            timepicker:false,
-            format:'d.m.Y',
-        });
-        jQuery('#selecionaHora1').datetimepicker({ 
-            datepicker:false,
-            format:'H:i',
-            step: 10,
-        });
-            
-        jQuery('#selecionaData2').datetimepicker({                
-            timepicker:false,
-            format:'d.m.Y',
-        });
-        jQuery('#selecionaHora2').datetimepicker({ 
-            datepicker:false,
-            format:'H:i',
-            step: 10,
-        });
-            
-        /*********************************
-        *
-        * TROCA COR CARD AO CLICAR
-        * 
-        *********************************/
-
-        $('.card-resultado').on('show.bs.collapse hide.bs.collapse', function (e) {
-            if (e.type=='show') {
-                $(this).addClass("card-resultado-active");
-            } else {
-                $(this).removeClass("card-resultado-active");
-            }
-        });  
-
-        /*********************************
-        *
-        * COLLAPSE FORM BUSCA MOBILE
-        * 
-        *********************************/
-
-        jQuery(document).ready(function($) {
-        var alterClass = function() {
-            var ww = document.body.clientWidth;
-            if (ww < 975) {
-            $('.collapseFormulario').removeClass('show');
-            } else if (ww >= 975) {
-            $('.collapseFormulario').addClass('show');
-            };
-        };
-        $(window).resize(function(){
-            alterClass();
-        });
-        //Fire it when the page first loads:
-        alterClass();
-        });             
-
-		/*********************************
-        *
-        * GOOGLE MAPS
-        * 
-        *********************************/
-
-        function initMap() {
-
-            var clinicaUm = {
-                info: '<strong>Check Up Centro Médico</strong><br>\
-                            SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
-                            <a href="https://goo.gl/Y9UUWt">Obter direção</a>',
-                lat: -15.7987496,
-                long: -47.8949315
-            };
-
-            var clinicaDois = {
-                info: '<strong>Actual Clínica Médica e Psicologia</strong><br>\
-                            SCS Quadra 6 Bloco A Lote 150/170 - Edifício<br> Carioca 5 andar Sala 514/15,<br> Q. 6 - Asa Sul, Brasília - DF, 70325-900<br>\
-                            <a href="https://goo.gl/JWt3Tp">Obter direção</a>',
-                lat: -15.7960663,
-                long: -47.8927361
-            };
-
-            var clinicaTres = {
-                info: '<strong>Clínica Devas</strong><br>\r\
-                            SDN CNB Etapa III - S 4104, Setor de<br> Diversões Norte - Brasília, DF, 70077-000<br>\
-                            <a href="https://goo.gl/2JdPbn">Obter direção</a>',
-                lat: -15.7920841,
-                long: -47.8859702
-            };
-
-            var locations = [
-            [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
-            [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
-            [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
-            ];
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
-                center: new google.maps.LatLng(-15.7987496, -47.8949315),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+            jQuery.datetimepicker.setLocale('pt-BR'); 
+                
+            jQuery('#selecionaData1').datetimepicker({                
+                timepicker:false,
+                format:'d.m.Y',
             });
+            jQuery('#selecionaHora1').datetimepicker({ 
+                datepicker:false,
+                format:'H:i',
+                step: 10,
+            });
+                
+            jQuery('#selecionaData2').datetimepicker({                
+                timepicker:false,
+                format:'d.m.Y',
+            });
+            jQuery('#selecionaHora2').datetimepicker({ 
+                datepicker:false,
+                format:'H:i',
+                step: 10,
+            });
+                
+            /*********************************
+            *
+            * TROCA COR CARD AO CLICAR
+            * 
+            *********************************/
 
-            var infowindow = new google.maps.InfoWindow({});
+            $('.card-resultado').on('show.bs.collapse hide.bs.collapse', function (e) {
+                if (e.type=='show') {
+                    $(this).addClass("card-resultado-active");
+                } else {
+                    $(this).removeClass("card-resultado-active");
+                }
+            });  
 
-            var marker, i;
+            /*********************************
+            *
+            * COLLAPSE FORM BUSCA MOBILE
+            * 
+            *********************************/
 
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map
+            jQuery(document).ready(function($) {
+            var alterClass = function() {
+                var ww = document.body.clientWidth;
+                if (ww < 975) {
+                $('.collapseFormulario').removeClass('show');
+                } else if (ww >= 975) {
+                $('.collapseFormulario').addClass('show');
+                };
+            };
+            $(window).resize(function(){
+                alterClass();
+            });
+            //Fire it when the page first loads:
+            alterClass();
+            });             
+
+            /*********************************
+            *
+            * GOOGLE MAPS
+            * 
+            *********************************/
+
+            function initMap() {
+
+                var clinicaUm = {
+                    info: '<strong>Check Up Centro Médico</strong><br>\
+                                SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
+                                <a href="https://goo.gl/Y9UUWt">Obter direção</a>',
+                    lat: -15.7987496,
+                    long: -47.8949315
+                };
+
+                var clinicaDois = {
+                    info: '<strong>Actual Clínica Médica e Psicologia</strong><br>\
+                                SCS Quadra 6 Bloco A Lote 150/170 - Edifício<br> Carioca 5 andar Sala 514/15,<br> Q. 6 - Asa Sul, Brasília - DF, 70325-900<br>\
+                                <a href="https://goo.gl/JWt3Tp">Obter direção</a>',
+                    lat: -15.7960663,
+                    long: -47.8927361
+                };
+
+                var clinicaTres = {
+                    info: '<strong>Clínica Devas</strong><br>\r\
+                                SDN CNB Etapa III - S 4104, Setor de<br> Diversões Norte - Brasília, DF, 70077-000<br>\
+                                <a href="https://goo.gl/2JdPbn">Obter direção</a>',
+                    lat: -15.7920841,
+                    long: -47.8859702
+                };
+
+                var locations = [
+                [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
+                [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
+                [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 13,
+                    center: new google.maps.LatLng(-15.7987496, -47.8949315),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
 
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(locations[i][0]);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
+                var infowindow = new google.maps.InfoWindow({});
+
+                var marker, i;
+
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
             }
-        }
+        });
 	</script>
 	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI&callback=initMap" type="text/javascript"></script>

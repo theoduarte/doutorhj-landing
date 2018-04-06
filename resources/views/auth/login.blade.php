@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-lg-6">
-                    <div class="card card-login-cadastro c-login">
+                    <div class="card card-formulario c-login">
                         <div class="card-header">
                             Já é cadastrado?
                         </div>
@@ -28,10 +28,10 @@
                                     <label for="inputEmailTelefone" class="col-sm-12">E-mail ou Celular</label>                       
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col col-md-12 col-lg-8">
+                                    <div class="col col-lg-7 col-xl-8">
                                         <input type="text" class="form-control" id="inputEmailTelefone" placeholder="E-mail ou Celular">
                                     </div>
-                                    <div class="col col-md-12 col-lg-4">
+                                    <div class="col col-lg-5 col-xl-4">
                                         <button type="submit" class="btn btn-vermelho"><i class="fas fa-key"></i> Enviar Token</button>
                                     </div>
                                 </div>
@@ -39,10 +39,10 @@
                                     <label for="inputToken" class="col-sm-12 ">Token de Acesso</label>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col col-md-12 col-lg-8">
+                                    <div class="col col-lg-7 col-xl-8">
                                         <input type="text" class="form-control" id="inputToken" placeholder="Token de Acesso">
                                     </div>
-                                    <div class="col col-md-12 col-lg-4">
+                                    <div class="col col-lg-5 col-xl-4">
                                         <button type="submit" class="btn btn-vermelho"><i class="fas fa-arrow-right"></i> Acessar Conta</button>
                                     </div>
 								</div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
-                    <div class="card card-login-cadastro">
+                    <div class="card card-formulario">
                         <div class="card-header">
                             Ainda não tem cadastro?
                         </div>
@@ -98,7 +98,7 @@
                                         <input type="email" class="form-control" id="inputCelular" placeholder="Celular">
                                     </div>
                                 </div>
-                                <div class="form-check fc-termo">
+                                <div class="form-check fc-checkbox">
                                     <input type="checkbox" class="form-check-input" id="termoCheck">
                                     <label class="form-check-label" for="termoCheck">Declaro que li e concordo com os <a href="#">termos de uso do Doctor Hoje</a></label>
                                 </div>

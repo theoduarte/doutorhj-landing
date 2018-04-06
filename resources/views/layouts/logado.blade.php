@@ -14,7 +14,7 @@
     @push('style')
     
     	<!-- Google fonts -->
-    	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet" >
+    	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     	
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
@@ -131,7 +131,7 @@
         </footer>        
     </div>
     @push('scripts')
-    	<script>
+    	<script>            
     		var laravel_token = '{{ csrf_token() }}';
     		var resizefunc = [];
     	</script>        
