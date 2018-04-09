@@ -103,14 +103,16 @@ class EspecialidadeController extends Controller
         $procedimento_id = CVXRequest::post('procedimento_id');
         $tipo_especialidade = CVXRequest::post('tipo_especialidade');
         
+        //dd("busca: $search_term tipo: $tipo_atendimento id: $procedimento_id especialidade: $tipo_especialidade");
+        
         $result = [];
         
-        // 	    $menus_app = Menu::with('itemmenus')
-        // 	    ->join('menu_perfiluser', function($join1) { $join1->on('menus.id', '=', 'menu_perfiluser.menu_id');})
-        // 	    ->join('perfilusers', function($join2) { $join2->on('menu_perfiluser.perfiluser_id', '=', 'perfilusers.id');})
-        // 	    ->join('users', function($join3) use($user_id) { $join3->on('perfilusers.id', '=', 'users.perfiluser_id')->on('users.id', '=', DB::raw($user_id));})
-        // 	    ->select('menus.*', 'menus.id', 'menus.titulo')
-        // 	    ->get();
+        $menus_app = Menu::with('itemmenus')
+        	    ->join('menu_perfiluser', function($join1) { $join1->on('menus.id', '=', 'menu_perfiluser.menu_id');})
+        	    ->join('perfilusers', function($join2) { $join2->on('menu_perfiluser.perfiluser_id', '=', 'perfilusers.id');})
+        	    ->join('users', function($join3) use($user_id) { $join3->on('perfilusers.id', '=', 'users.perfiluser_id')->on('users.id', '=', DB::raw($user_id));})
+        	    ->select('menus.*', 'menus.id', 'menus.titulo')
+        	    ->get();
         
         if ($tipo_atendimento == 'saude') {
             

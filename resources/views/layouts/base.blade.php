@@ -39,6 +39,10 @@
     	<script type="text/javascript" src="/libs/home-template/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>
         <script src="/js/doutorhj.script.js"></script>
+        
+        <script type="text/javascript">
+        	var laravel_token = '{{ csrf_token() }}';
+        </script>
 
     @endpush
     
@@ -139,8 +143,9 @@
     </div>
     @push('scripts')
     	<script>
-    		var laravel_token = '{{ csrf_token() }}';
     		var resizefunc = [];
+    	</script>
+    	<script src="/libs/jquery-ui/jquery-ui.js"></script>
     @endpush
     
     @stack('scripts')
