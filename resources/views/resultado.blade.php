@@ -96,6 +96,9 @@
                                         <div class="confirma-data">
                                             <span>26/03/2018 - Segunda-feira - 10h30min</span>
                                         </div>
+                                        <div class="mensagem-confirma-data">
+                                            <span>Data e horário sugeito a confirmação</span>
+                                        </div>
                                         <div class="valor-total">
                                             <span><strong>Total a pagar:</strong> R$ 173,00</span>
                                         </div>
@@ -135,6 +138,9 @@
                                         <div class="confirma-data">
                                             <span>26/03/2018 - Segunda-feira - 10h30min</span>
                                         </div>
+                                        <div class="mensagem-confirma-data">
+                                            <span>Data e horário sugeito a confirmação</span>
+                                        </div>
                                         <div class="valor-total">
                                             <span><strong>Total a pagar:</strong> R$ 173,00</span>
                                         </div>
@@ -155,8 +161,7 @@
     </div>
 </section>
 @push('scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
+    <script type="text/javascript">        
             var laravel_token = '{{ csrf_token() }}';
             var resizefunc = []; 
 
@@ -285,8 +290,7 @@
                         }
                     })(marker, i));
                 }
-            }
-        });
+            }        
 	</script>
 	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI&callback=initMap" type="text/javascript"></script>

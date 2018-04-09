@@ -283,7 +283,7 @@
                                             </div> 
                                             <div class="linha-resumo">
                                                 <div class="titulo-resumo">
-                                                    <span>Data agendada:</span>    
+                                                    <span>Data pré-agendada:</span>    
                                                 </div>
                                                 <div class="dados-resumo">
                                                     <p>26/03/2018 - Segunda-feira</p>
@@ -291,7 +291,7 @@
                                             </div> 
                                             <div class="linha-resumo">
                                                 <div class="titulo-resumo">
-                                                    <span>Horário agendado: </span>    
+                                                    <span>Horário pré-agendado: </span>    
                                                 </div>
                                                 <div class="dados-resumo">
                                                     <p>10h30min</p>
@@ -363,7 +363,7 @@
 
                                             <div class="linha-resumo">
                                                 <div class="titulo-resumo">
-                                                    <span>Data agendada:</span>    
+                                                    <span>Data pré-agendada:</span>    
                                                 </div>
                                                 <div class="dados-resumo">
                                                     <p>26/03/2018 - Segunda-feira</p>
@@ -372,7 +372,7 @@
 
                                             <div class="linha-resumo">
                                                 <div class="titulo-resumo">
-                                                    <span>Horário agendado: </span>    
+                                                    <span>Horário pré-agendado: </span>    
                                                 </div>
                                                 <div class="dados-resumo">
                                                     <p>10h30min</p>
