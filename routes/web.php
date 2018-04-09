@@ -10,11 +10,11 @@ Route::get('/', function () {
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento');
 
-Route::get('resultado', 'ClinicaController@findClinicaSearch');
+Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
-Route::resource('profissionals','ProfissionalsController')->middleware('auth');
-Route::resource('clientes', 'ClientesController')->middleware('auth');
+Route::resource('profissionals','ProfissionalController')->middleware('auth');
+Route::resource('clientes', 'ClienteController')->middleware('auth');
 Route::resource('cargos','CargoController')->middleware('auth');
 Route::resource('menus','MenuController')->middleware('auth');
 Route::resource('itemmenus','ItemmenuController')->middleware('auth');

@@ -32,9 +32,11 @@ $(document).ready(function () {
 		
 	});
 	
-	$(".select2").select2();
+	$(".select2").select2({
+		language: 'pt-BR'
+	});
 	
-	$( "#local_atendimento" ).keyup(function() {
+	/*$( "#local_atendimento" ).keyup(function() {
 		
 		var search_term = $(this).val();
 		
@@ -71,6 +73,23 @@ $(document).ready(function () {
 				$('input[name="descricao_procedimento"]').val(arProcedimento[2]);
 			}
 		});
+	});*/
+	
+	$( '#local_atendimento' ).autocomplete({
+		type:'post',
+		dataType: 'json',
+		params: {
+			'search_term': $(this).val(),
+			'tipo_atendimento': function() { return $('#tipo_atendimento').val(); },
+			'procedimento_id': function() { return $('#tipo_especialidade').val(); },
+			'tipo_especialidade': function() { return $('#tipo_atendimento').val() == 'saude' | $('#tipo_atendimento').val() == 'odonto' ? 'consulta' : 'procedimento'; },
+			'_token': laravel_token
+		},
+		minChars: 3,
+		serviceUrl: "/consulta-local-atendimento",
+	    onSelect: function (result) {
+	    	$('#endereco_id').val(result.id);			
+	    }
 	});
 	
 });
