@@ -61,41 +61,64 @@
                         <div class="card-body">
                             <span class="card-span">Cadastre-se para obter acesso e continuar.</span>
                             <h5 class="card-title">Dados cadastrais</h5>
-                            <form>
-                                <div class="form-group row area-label">
+                            
+                            <form class="form-horizontal " action="{{ route('register') }}" method="post">
+                            	
+                            	{{ csrf_field() }}
+                            	
+                                <div class="form-group row area-label {{ $errors->has('name') ? ' has-error' : '' }}">
                                     <label for="inputNome" class="col col-sm-12">Nome</label>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row {{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col col-sm-12">
-                                        <input type="text" class="form-control" id="inputNome" placeholder="Nome completo">
+                                        <input type="text" id="inputNome" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nome completo">
+                                        @if ($errors->has('name'))
+						                    <span class="help-block">
+						                        <strong>{{ $errors->first('name') }}</strong>
+						                    </span>
+						                @endif
                                     </div>
                                 </div>
-                                <div class="form-group row area-label">
+                                <div class="form-group row area-label {{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="inputEmail" class="col col-sm-12">E-mail</label>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row {{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col col-sm-12">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="E-mail">
+                                        <input type="email" id="inputEmail" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail">
+                                        @if ($errors->has('email'))
+						                    <span class="help-block">
+						                        <strong>{{ $errors->first('email') }}</strong>
+						                    </span>
+						                @endif
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col col-sm-6">
                                         <label for="inputSexo">Sexo</label>
-                                        <input type="email" class="form-control" id="inputSexo" placeholder="Sexo">
+                                        <select id="cs_sexo" class="form-control" name="cs_sexo" >
+                                        	<option value="">Sexo</option>
+			                            	<option value="M" @if( old('cs_sexo') == 'M' ) selected="selected" @endif >Masculino</option>
+			                            	<option value="F" @if( old('cs_sexo') == 'F' ) selected="selected" @endif>Feminino</option>
+			                            </select>
                                     </div>
-                                    <div class="col col-sm-6">
+                                    <div class="col col-sm-6 {{ $errors->has('dt_nascimento') ? ' has-error' : '' }}">
                                         <label for="inputTelefone">Data de Nascimento</label>
-                                        <input type="text" class="form-control" id="inputNascimento" placeholder="Data de Nascimento">
+                                        <input type="text" id="inputNascimento" class="form-control mascaraData" name="dt_nascimento" value="{{ old('dt_nascimento') }}" placeholder="Data de Nascimento">
+                                        @if ($errors->has('dt_nascimento'))
+						                    <span class="help-block">
+						                        <strong>{{ $errors->first('dt_nascimento') }}</strong>
+						                    </span>
+						                @endif
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col col-sm-6">
                                         <label for="inputCPF">CPF</label>
-                                        <input type="text" class="form-control" id="inputCPF" placeholder="CPF">
+                                        <input type="text" id="inputCPF" class="form-control mascaraCPF" placeholder="CPF">
                                     </div>
                                     <div class="col col-sm-6">
                                         <label for="inputCelular">Celular</label>
-                                        <input type="email" class="form-control" id="inputCelular" placeholder="Celular">
+                                        <input type="text" id="inputCelular" class="form-control mascaraTelefone" placeholder="Celular">
                                     </div>
                                 </div>
                                 <div class="form-check fc-checkbox">
@@ -125,10 +148,10 @@
 
 			jQuery.datetimepicker.setLocale('pt-BR'); 
 				
-			jQuery('#inputNascimento').datetimepicker({                
+			/* jQuery('#inputNascimento').datetimepicker({                
 				timepicker:false,
 				format:'d.m.Y',
-			});  
+			}); */  
 		})		     
 	</script>
 @endpush

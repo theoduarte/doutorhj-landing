@@ -44,6 +44,7 @@
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
+        
         <script src="/js/doutorhj.script.js"></script>
         
         <script type="text/javascript">
@@ -151,7 +152,14 @@
     	<script>
     		var resizefunc = [];
     	</script>
-    	<!-- <script src="/libs/jquery-ui/jquery-ui.js"></script> -->
+    	<script type="text/javascript" src="/libs/moment/moment.js"></script>        
+        <script type="text/javascript" src="/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="/libs/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+		<script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+		
+		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    	<script src="/js/utilitarios.js"></script>
     @endpush
     
     @stack('scripts')

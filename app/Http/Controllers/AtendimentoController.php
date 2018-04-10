@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Tipoatendimento;
 use App\Consulta;
+use App\Atendimento;
 
 class AtendimentoController extends Controller
 {
@@ -18,80 +19,36 @@ class AtendimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function consultaAtendimentos()
-    {
+    {   
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
-        $result = [];
+        $tipo_especialidade = CVXRequest::get('tipo_especialidade');
+        $local_atendimento = UtilController::toStr(CVXRequest::get('local_atendimento'));
+        $endereco_id = CVXRequest::get('endereco_id');
+        
+        $atendimentos = [];
         
         if ($tipo_atendimento == 'saude') {
-            
-            $tp_atendimento = DB::table('consultas')
-                ->join('tipoatendimentos', function($join1) { $join1->on('tipoatendimentos.id', '=', 'consultas.tipoatendimento_id')->where('tipoatendimentos.cd_atendimento', '=', "100");})
-                ->select('consultas.*', 'consultas.id', 'consultas.cd_consulta', 'consultas.ds_consulta')
-                ->get();
-            
-            foreach ($tp_atendimento as $atend) {
-                $item = [
-                    'id' => $atend->id,
-                    'tipo' => 'consulta',
-                    'descricao' => $atend->ds_consulta
-                ];
-                
-                array_push($result, $item);
-            }
-            
-        } elseif ($tipo_atendimento == 'odonto') {
-            
-            $tp_atendimento = DB::table('consultas')
-                ->join('tipoatendimentos', function($join1) { $join1->on('tipoatendimentos.id', '=', 'consultas.tipoatendimento_id')->where('tipoatendimentos.cd_atendimento', '=', "200");})
-                ->select('consultas.*', 'consultas.id', 'consultas.cd_consulta', 'consultas.ds_consulta')
-                ->get();
-            
-            foreach ($tp_atendimento as $atend) {
-                $item = [
-                    'id' => $atend->id,
-                    'tipo' => 'consulta',
-                    'descricao' => $atend->ds_consulta
-                ];
-                
-                array_push($result, $item);
-            }
-            
-        } elseif ($tipo_atendimento == 'exame') {
-            
-            $tp_atendimento = DB::table('procedimentos')
-                ->join('tipoatendimentos', function($join1) { $join1->on('tipoatendimentos.id', '=', 'procedimentos.tipoatendimento_id')->where('tipoatendimentos.cd_atendimento', '=', "300");})
-                ->select('procedimentos.*', 'procedimentos.id', 'procedimentos.cd_procedimento', 'procedimentos.ds_procedimento')
-                ->get();
-            
-            foreach ($tp_atendimento as $atend) {
-                $item = [
-                    'id' => $atend->id,
-                    'tipo' => 'procedimento',
-                    'descricao' => $atend->ds_procedimento
-                ];
-                
-                array_push($result, $item);
-            }
-            
-        } elseif ($tipo_atendimento == 'procedimento') {
-            
-            $tp_atendimento = DB::table('procedimentos')
-                ->join('tipoatendimentos', function($join1) { $join1->on('tipoatendimentos.id', '=', 'procedimentos.tipoatendimento_id')->where('tipoatendimentos.cd_atendimento', '=', "400");})
-                ->select('procedimentos.*', 'procedimentos.id', 'procedimentos.cd_procedimento', 'procedimentos.ds_procedimento')
-                ->get();
-            
-            foreach ($tp_atendimento as $atend) {
-                $item = [
-                    'id' => $atend->id,
-                    'tipo' => 'procedimento',
-                    'descricao' => $atend->ds_procedimento
-                ];
-                
-                array_push($result, $item);
-            }
-            
+        	 
+        	//DB::enableQueryLog();
+        	$atendimentos = Atendimento::with('clinica')
+        		->join('clinicas', function($join1) { $join1->on('clinicas.id', '=', 'atendimentos.clinica_id');})
+        		->join('clinica_endereco', function($join2) { $join2->on('clinicas.id', '=', 'clinica_endereco.clinica_id');})
+        		->join('enderecos', function($join3) use ($endereco_id) { $join3->on('clinica_endereco.endereco_id', '=', 'enderecos.id')->on('enderecos.id', '=', DB::raw($endereco_id));})
+        		->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_atendimento', 'atendimentos.ds_preco', 'atendimentos.consulta_id')
+        		->distinct()
+        		->get();
+        	 
+        	//$especialidades = Especialidade::orderBy('ds_especialidade', 'asc')->pluck('ds_especialidade', 'id');
+        	//$query = DB::getQueryLog();
+        	//print_r($query);
+        	 
+        	//dd($atendimentos);
+        
         }
         
-        return view('resultado', compact('result'));
+        return view('resultado', compact('atendimentos', 'tipo_atendimento'));
     }
 }
