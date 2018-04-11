@@ -14,7 +14,7 @@ class PacienteSender extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $verify_hash;
+    public $paciente;
     /**
      * Create a new message instance.
      *
@@ -23,7 +23,7 @@ class PacienteSender extends Mailable
     public function __construct(Paciente $paciente)
     {
         $this->user = $paciente->user;
-        $this->verify_hash = Crypt::encryptString($paciente->id);
+        $this->paciente = $paciente;
     }
 
     /**
@@ -33,6 +33,6 @@ class PacienteSender extends Mailable
      */
     public function build()
     {
-        return $this->from('administrador@comvex.com.br')->view('view.emails.paciente_verificacao_conta');
+        return $this->from('administrador@comvex.com.br')->view('view.emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)]);
     }
 }

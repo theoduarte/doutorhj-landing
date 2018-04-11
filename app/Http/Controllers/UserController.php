@@ -141,7 +141,7 @@ class UserController extends Controller
     	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
     	
     	# envia o e-mail de ativação
-    	Mail::to($usuario)->send(new PacienteSender($paciente));
+    	Mail::to($usuario->email)->send(new PacienteSender($paciente));
     	
     	return view('users.register', compact('access_token'));
     }
