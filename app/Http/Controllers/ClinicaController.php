@@ -622,7 +622,10 @@ class ClinicaController extends Controller
         return view('pagamento');
     }
 
-    public function paginaConfirmaBeneficiario(){
-        return view('confirma-beneficiario');
+    public function informaBeneficiario(){
+        return view('informa-beneficiario');
+    }
+    public function confirmaAgendamento(){
+        return view('confirmacao');
     }
 }
