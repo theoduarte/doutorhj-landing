@@ -100,6 +100,16 @@ class UtilController extends Controller
 	}
 	
 	/**
+	 * gera token de acesso para o paciente
+	 * Ex.: 602154
+	 *
+	 */
+	public static function getAccessToken()
+	{
+		return sprintf('%06d', rand(0, 999999));
+	}
+	
+	/**
 	 * sendSms method
 	 *
 	 * @param string $number Destinatários que receberam a mensagem. DDD+Número, separados por vírgula caso possua mais de um.

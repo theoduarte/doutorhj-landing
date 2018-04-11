@@ -126,7 +126,7 @@ class ClinicaController extends Controller
         array_push($arContatos, $contato1->id);
         
         if(!empty($request->input('ds_contato2'))){
-            $contato2             = new \App\Contato();
+            $contato2             = new Contato();
             $contato2->tp_contato = $request->input('tp_contato2');
             $contato2->ds_contato = $request->input('ds_contato2');
             $contato2->save();

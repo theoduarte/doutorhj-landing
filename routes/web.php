@@ -28,6 +28,8 @@ Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecial
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento')->middleware('auth');
+Route::post('users/register', 'UserController@register')->name('registrar');
+Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');
