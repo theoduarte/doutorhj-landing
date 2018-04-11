@@ -98,4 +98,41 @@ class UtilController extends Controller
 	{
 	    return substr(md5(openssl_random_pseudo_bytes(20)),-$len);
 	}
+	
+	/**
+	 * sendSms method
+	 *
+	 * @param string $number Destinatários que receberam a mensagem. DDD+Número, separados por vírgula caso possua mais de um.
+	 * @param string $remetente Nome do Remetente até 32 caracteres. Utilizado somente na organização dos relatórios
+	 * @param string $message Conteúdo da mensagem que será enviada. Tamanho máximo de 2048 caracteres.
+	 */
+	public function sendSms($number, $remetente, $message)
+	{
+		$url = "https://sms.comtele.com.br/Api/91caf268-5c29-420a-b55c-1ad15cf12e43/SendMessage";
+	
+		$data = [
+				'content' => $message,
+				'sender' => $remetente,
+				'receivers' => $number
+		];
+	
+		$fields = http_build_query($data);
+		$post = curl_init();
+	
+		$url = $url.'?'.$fields;
+	
+		curl_setopt($post, CURLOPT_URL, $url);
+		curl_setopt($post, CURLOPT_POST, 1);
+		curl_setopt($post, CURLOPT_POSTFIELDS, $fields);
+	
+		$result['status'] = curl_exec($post);
+	
+		curl_close($post);
+	
+		if($result['status'] == false) {
+			$result['error'] = 'Curl error: ' . curl_error($post);
+		}
+	
+		return $result;
+	}
 }

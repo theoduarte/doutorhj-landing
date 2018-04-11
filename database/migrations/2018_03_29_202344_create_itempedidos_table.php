@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 class CreateItempedidosTable extends Migration
 {
@@ -17,7 +16,7 @@ class CreateItempedidosTable extends Migration
         Schema::create('itempedidos', function (Blueprint $table) {
             $table->increments('id');
             $table->float('valor')->nullable()->comment('VALOR DA COMPRA');
-            $table->timestamp('created_at')->default(DB ::raw('NOW()'));
+            $table->timestamp('created_at')->default(DB::raw('NOW()'));
             $table->timestamp('updated_at')->default(DB::raw('NOW()'));
         });
     }

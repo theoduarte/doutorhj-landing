@@ -23,6 +23,10 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
         <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css" />
+        <!-- JQueryUI -->
+    	<!-- <link rel="stylesheet" href="/libs/jquery-ui-themes/jquery-ui.css"> -->
+    	<!-- JQuery Autocomplete -->
+    	<link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
         
         <!-- DoutorHJ Reset CSS -->
     	<link rel="stylesheet" href="/css/doutorhj.style.css">
@@ -35,10 +39,17 @@
         <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
-        <script type="text/javascript" src="/libs/home-template/js/popper.min.js"></script>
-    	<script type="text/javascript" src="/libs/home-template/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>
+        <script src="/libs/home-template/js/popper.min.js"></script>
+    	<script src="/libs/home-template/js/bootstrap.min.js"></script>
+        <script src="/libs/select2/js/select2.min.js"></script>
+        <script src="/libs/select2/js/i18n/pt-BR.js"></script>
+        <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
+        
         <script src="/js/doutorhj.script.js"></script>
+        
+        <script type="text/javascript">
+        	var laravel_token = '{{ csrf_token() }}';
+        </script>
 
     @endpush
     
@@ -139,8 +150,16 @@
     </div>
     @push('scripts')
     	<script>
-    		var laravel_token = '{{ csrf_token() }}';
     		var resizefunc = [];
+    	</script>
+    	<script type="text/javascript" src="/libs/moment/moment.js"></script>        
+        <script type="text/javascript" src="/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="/libs/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+		<script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+		
+		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    	<script src="/js/utilitarios.js"></script>
     @endpush
     
     @stack('scripts')

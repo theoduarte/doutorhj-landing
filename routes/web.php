@@ -8,31 +8,31 @@ Route::get('/', function () {
 });
 
 
-Route::get('resultado', 'ClinicaController@findClinicaSearch');
-
 Route::get('pagamento', 'ClinicaController@paginaPagamento');
-
 Route::get('confirma-beneficiario', 'ClinicaController@paginaConfirmaBeneficiario');
+Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
-Route::resource('profissionals','ProfissionalsController')->middleware('auth');
-Route::resource('clientes', 'ClientesController')->middleware('auth');
+Route::resource('profissionals','ProfissionalController')->middleware('auth');
+Route::resource('clientes', 'ClienteController')->middleware('auth');
 Route::resource('cargos','CargoController')->middleware('auth');
 Route::resource('menus','MenuController')->middleware('auth');
 Route::resource('itemmenus','ItemmenuController')->middleware('auth');
 Route::resource('perfilusers','PerfiluserController')->middleware('auth');
 Route::resource('permissaos','PermissaoController')->middleware('auth');
-Route::resource('agenda','AgendaController')->middleware('auth');
+Route::resource('agendamentos','AgendamentoController')->middleware('auth');
 
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 
+Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento')->middleware('auth');
+
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');
-Route::get('consultas/localatendimento/{consulta}', 'AgendaController@getLocalAtendimento')->middleware('auth');
-Route::get('agenda/profissional/{profissional}', 'AgendaController@getProfissional')->middleware('auth');
+Route::get('consultas/localatendimento/{consulta}', 'AgendamentoController@getLocalAtendimento')->middleware('auth');
+Route::get('agenda/profissional/{profissional}', 'AgendamentoController@getProfissional')->middleware('auth');
 Route::post('clinicas/{clinica}/edit/add-profissional', 'ClinicaController@addProfissionalStore')->middleware('auth');
 Route::post('clinicas/{clinica}/edit/view-profissional', 'ClinicaController@viewProfissionalShow')->middleware('auth');
 Route::post('clinicas/{clinica}/edit/delete-profissional', 'ClinicaController@deleteProfissionalDestroy')->middleware('auth');

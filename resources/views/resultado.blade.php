@@ -64,12 +64,14 @@
                             </select>
                         </div>
                         <div id="accordion">
+                        	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
-                                    <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
-                                    <h6 class="card-subtitle">Dr. Alexandre José</h6>
-                                    <p class="card-text">Clínica médica</p>
-                                    <p class="card-text">Edifício Pio X - 716 Sul (Asa Sul) Brasilia, DF <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }}</h5>
+                                    <h6 class="card-subtitle">Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}</h6>
+                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) Clínica médica @else Clínica Odontológica @endif </p>
+                                    <p class="card-text">{{ $atendimento->clinica->enderecos[0]->te_endereco.' ('.$atendimento->clinica->enderecos[0]->te_bairro.') '.$atendimento->clinica->enderecos[0]->cidade->nm_cidade.'-'.$atendimento->clinica->enderecos[0]->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
@@ -78,34 +80,44 @@
                                         Agendar com este profissional
                                         </label>
                                     </div>
-                                    <strong>R$ 173,00</strong>
+                                    <strong>R$ {{ $atendimento->vl_atendimento }}</strong>
                                 </div>
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="area-escolher-data">
-                                        <div class="titulo-escolhe-data">
-                                            Escolha data e horário
-                                        </div>
-                                        <div class="escolher-data">                                    
-                                            <input id="selecionaData1" class="selecionaData" type="text" placeholder="Data">
-                                            <label for="selecionaData1"><i class="far fa-calendar-alt"></i></label>
-                                        </div>
-                                        <div class="escolher-hora">                                    
-                                            <input id="selecionaHora1" class="selecionaData" type="text" placeholder="Horário">
-                                            <label for="selecionaHora1"><i class="far fa-clock"></i></label>
-                                        </div>
-                                        <div class="confirma-data">
-                                            <span>26/03/2018 - Segunda-feira - 10h30min</span>
-                                        </div>
-                                        <div class="mensagem-confirma-data">
-                                            <span>Data e horário sugeito a confirmação</span>
-                                        </div>
-                                        <div class="valor-total">
-                                            <span><strong>Total a pagar:</strong> R$ 173,00</span>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
-                                    </div>
+                                	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post">
+                                	
+                                		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
+                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $atendimento->profissional->id }}">
+                                    	<input type="hidden" id="paciente_id" name="paciente_id" value="">
+                                    	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
+                                    	{!! csrf_field() !!}
+                                	
+	                                    <div class="area-escolher-data">
+	                                        <div class="titulo-escolhe-data">
+	                                            Escolha data e horário
+	                                        </div>
+	                                        <div class="escolher-data">                                    
+	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData" name="data_atendimento" placeholder="Data">
+	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="far fa-calendar-alt"></i></label>
+	                                        </div>
+	                                        <div class="escolher-hora">                                    
+	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora" name="hora_atendimento" placeholder="Horário">
+	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="far fa-clock"></i></label>
+	                                        </div>
+	                                        <div class="confirma-data">
+	                                            <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span>
+	                                        </div>
+	                                        <div class="mensagem-confirma-data">
+	                                            <span>Data e horário sugeito a confirmação</span>
+	                                        </div>
+	                                        <div class="valor-total">
+	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->vl_atendimento }}</span>
+	                                        </div>
+	                                        <button type="submit" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
+	                                    </div>
+                                    </form>
                                 </div>
                             </div>
+                            @endforeach
                             <div class="card card-resultado">
                                 <div class="card-body">
                                     <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
@@ -173,14 +185,19 @@
 
             jQuery.datetimepicker.setLocale('pt-BR'); 
                 
-            jQuery('#selecionaData1').datetimepicker({                
+            jQuery('.selecionaData').datetimepicker({                
                 timepicker:false,
-                format:'d.m.Y',
+                format:'d.m.Y'
+            }).on("input change", function(e){
+            	console.log("Date changed: ", e.target.value);
             });
-            jQuery('#selecionaHora1').datetimepicker({ 
+            
+            jQuery('.selecionaHora').datetimepicker({ 
                 datepicker:false,
                 format:'H:i',
                 step: 10,
+            }).on("input change", function(e){
+            	console.log("Time changed: ", e.target.value);
             });
                 
             jQuery('#selecionaData2').datetimepicker({                

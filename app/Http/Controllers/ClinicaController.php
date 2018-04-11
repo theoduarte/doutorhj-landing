@@ -306,13 +306,13 @@ class ClinicaController extends Controller
      */
     public function destroy($idClinica)
     {
-        $clinica = \App\Clinica::findorfail($idClinica);
+        $clinica = Clinica::findorfail($idClinica);
         $clinica->forceDelete();
         $clinica->contatos()->forceDelete();
         $clinica->enderecos()->forceDelete();
         $clinica->documentos()->forceDelete();
         $clinica->user()->forceDelete();
-        \App\Atendimento::where('clinica_id', $idClinica)->delete();
+        Atendimento::where('clinica_id', $idClinica)->delete();
         
         
         return redirect()->route('clinicas.index')->with('success', 'Clínica excluída com sucesso!');        
