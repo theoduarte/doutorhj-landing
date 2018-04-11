@@ -9,7 +9,8 @@ Route::get('/', function () {
 
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento');
-Route::get('confirma-beneficiario', 'ClinicaController@paginaConfirmaBeneficiario');
+Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
+Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
