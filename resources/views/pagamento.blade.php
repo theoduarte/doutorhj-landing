@@ -458,7 +458,6 @@
                                     </div>                                    
                                 </div>
                                 <div class="resumo-compra">
-
                                     <div class="row">
                                         <div class="col-sm-8 linha-forma-pagamento linha-resumo">
                                             <div class="titulo-resumo">
@@ -469,7 +468,6 @@
                                             </div>
                                         </div> 
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="titulo-resumo">
@@ -482,7 +480,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="titulo-resumo">
@@ -495,7 +492,18 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="titulo-resumo">
+                                                <span>Anuidade:</span>    
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="dados-resumo">
+                                                <p>Isento</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="titulo-resumo">
@@ -508,7 +516,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="titulo-resumo">
@@ -521,7 +528,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-12 col-md-6 area-btn-finalizar">
                                             <button type="button" class="btn btn-link btn-continuar-comprando">Continuar comprando</button>
@@ -529,8 +535,7 @@
                                         <div class="col-12 col-md-6 area-btn-finalizar">                                           
                                             <button type="submit" class="btn btn-vermelho btn-finalizar">Finalizar Pedido</button>
                                         </div>                                          
-                                    </div>
-                                    
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>

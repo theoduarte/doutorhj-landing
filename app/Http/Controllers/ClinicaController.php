@@ -621,4 +621,8 @@ class ClinicaController extends Controller
     public function paginaPagamento(){
         return view('pagamento');
     }
+
+    public function paginaConfirmaBeneficiario(){
+        return view('confirma-beneficiario');
+    }
 }

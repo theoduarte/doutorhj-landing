@@ -10,7 +10,8 @@ Verson: 1.0
 4 SEÇÕES HOME
 5 RESULTADO DA BUSCA
 6 LOGIN/CADASTRO
-7 PAGAMENTO
+7 MENU ÁREA LOGADA
+8 PAGAMENTO
 
 X FOOTER
 X MEDIA QUERIES
@@ -22,15 +23,15 @@ X MEDIA QUERIES
 * 
 *********************************/
 
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+
 html,
 body,
 .tudo {
 	width: 100%;
 	height: 100%;
-}
-
-* {
-	font-family: 'Montserrat', sans-serif;
 }
 
 .btn-vermelho {
@@ -52,6 +53,46 @@ body,
 
 .tooltip {
 	font-size: 12px;
+}
+
+.resultado,
+.login,
+.pagamento,
+.confirma-beneficiario  {
+	padding: 10px 0 60px 0;
+	background-color: rgb(236, 243, 247);
+	box-sizing: border-box;
+	min-height: 70%;
+}
+
+.resultado .area-container,
+.login .area-container,
+.pagamento .area-container,
+.confirma-beneficiario .area-container  {
+	border-radius: 4px;
+	padding: 30px 25px;
+	background-color: rgb(255, 255, 255);
+	-webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.resultado .area-container .titulo strong,
+.login .area-container .titulo strong,
+.pagamento .area-container .titulo strong,
+.confirma-beneficiario .area-container .titulo strong  {
+	font-size: 20px;
+	text-transform: uppercase;
+	color: rgb(70, 117, 184);
+	font-weight: 700;
+}
+
+.resultado .area-container .titulo p,
+.login .area-container .titulo p,
+.pagamento .area-container .titulo p,
+.confirma-beneficiario .area-container .titulo p  {
+	font-size: 15px;
+	color: rgb(115, 115, 115);
+	margin-bottom: 10px;
 }
 
 /*********************************
@@ -483,32 +524,6 @@ header .container {
 * 
 *********************************/
 
-.resultado {
-	padding: 10px 0 60px 0;
-	background-color: rgb(236, 243, 247)
-}
-
-.resultado .area-container {
-	border-radius: 4px;
-	padding: 30px 25px;
-	background-color: rgb(255, 255, 255);
-	-webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
-}
-
-.area-container .titulo strong {
-	font-size: 20px;
-	text-transform: uppercase;
-	color: rgb(70, 117, 184);
-	font-weight: 700;
-}
-
-.area-container .titulo p {
-	font-size: 15px;
-	color: rgb(115, 115, 115);
-	margin-bottom: 10px;
-}
-
 .area-alt-busca {
 	width: 100%;
 	overflow: auto;
@@ -770,11 +785,6 @@ header .container {
 * 
 *********************************/
 
-.login {
-    padding: 10px 0 60px 0;
-    background-color: rgb(236, 243, 247);
-}
-
 .login .area-container {
     border-radius: 4px;
     padding: 30px 25px;
@@ -864,22 +874,250 @@ header .container {
 
 /*********************************
 *
-*  7 PAGAMENTO
+*  7 MENU ÁREA LOGADA
 * 
 *********************************/
 
-.pagamento {
-    padding: 10px 0 60px 0;
-    background-color: rgb(236, 243, 247);
+.confirma-usuario {
+
 }
 
-.pagamento .area-container {
-    border-radius: 4px;
-    padding: 30px 25px;
-    background-color: rgb(255, 255, 255);
-    -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+/*********************************
+*
+*  8 CONFIRMA BENEFICIARIO
+* 
+*********************************/
+
+.menu-area-logada {
+	background-color: rgb(230, 230, 230);
+	padding: 78px 15px 22px 0;
+	margin-top: -55px;
 }
+
+.menu-area-logada ul {
+	list-style: none;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+.menu-area-logada ul li {
+	float: left;
+}
+
+.menu-area-logada ul li span {
+	font-size: 13px;
+    font-weight: 700;
+    color: rgb(46, 46, 46); 
+    text-transform: uppercase;
+	letter-spacing: -0.5px;
+	color: rgb(70, 117, 184);
+}
+
+.menu-area-logada button {
+	background: transparent;
+}
+
+.menu-area-logada button:hover,
+.menu-area-logada button:active,
+.menu-area-logada button:focus,
+.menu-area-logada button:visited {
+	background: transparent;
+	box-shadow: 0 0 0 0 rgba(255, 255,255, 0);
+}
+
+.opcoes-menu-usuario .dropdown-menu {
+	padding-bottom: 0;
+}
+
+.opcoes-menu-usuario .dropdown-menu a {
+	font-size: 13px;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+.opcoes-menu-usuario .dropdown-menu .desativado span {
+	font-size: 18px;
+	color: rgb(220, 220, 220);
+	font-weight: 600;	
+}
+
+.opcoes-menu-usuario .dropdown-menu .desativado,
+.opcoes-menu-usuario .dropdown-menu .desativado:hover {	
+	cursor: default;
+	background-color: rgb(255, 255, 255);
+	border-bottom: 1px solid rgb(206, 206, 206);	
+	text-align: center;
+}
+
+.opcoes-menu-usuario .btn-area-logada {
+	position: relative;
+}
+
+.opcoes-menu-usuario .btn-area-logada .numero-notificacoes {
+	background-color: rgb(163, 36, 49);
+	border-radius: 50% 50%;
+	width: 17px;
+	height: 17px;
+	position: absolute;
+	top: 0;
+}
+
+.opcoes-menu-usuario .btn-area-logada .numero-notificacoes span {
+	color: rgb(255, 255, 255);
+	font-size: 10px;
+	line-height: 17px;
+	font-weight: 400;
+	display: block;
+}
+
+.drop-notificacoes {
+	padding-right: 0px;
+}
+
+.drop-notificacoes .btn-area-logada .numero-notificacoes {
+	right: 0px;
+}
+
+.drop-carrinho {
+	padding-right: 0px;
+}
+
+.drop-carrinho .btn-area-logada .numero-notificacoes {
+	right: 0;
+}
+
+
+.drop-notificacoes .dropdown-toggle::after,
+.drop-carrinho .dropdown-toggle::after {
+	display: none !important;
+}
+
+.opcoes-menu-usuario .dropdown-menu {
+	left: auto;
+	right: 0;
+	min-width: 230px;
+}
+
+.nav-item-mobile {
+	display: none;
+}
+
+.drop-notificacoes button span,
+.drop-carrinho button span {
+	display: none;
+}
+
+.opcoes-menu-usuario .dropdown-item {
+	white-space: normal;
+}
+
+.opcoes-menu-usuario .dropdown-item span {
+	display: block;
+}
+
+.opcoes-menu-usuario .mensagens-menu {
+	border-bottom: 1px solid rgb(206, 206, 206);
+	padding: 10px 24px;
+}
+
+.opcoes-menu-usuario .mensagens-menu:last-child {
+	border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.opcoes-menu-usuario .mensagens-menu a {
+	font-size: 13px;
+	text-transform: none;
+	color: rgb(0, 0, 0);
+	width: 100%;
+	display: block;
+}
+
+.opcoes-menu-usuario .mensagens-menu a:hover {	
+	color: rgb(70, 117, 184);
+	text-decoration: none;
+}
+
+.opcoes-menu-usuario .mensagens-menu span {
+	font-size: 12px;
+	text-transform: none;
+	color: rgb(167, 167, 167);
+	font-weight: 400;
+}
+
+.opcoes-menu-usuario  .dropdown-item.active, .opcoes-menu-usuario .dropdown-item:active {
+	background-color: rgb(255, 255, 255);
+}
+
+/*********************************
+*
+*  8 CONFIRMA BENEFICIÁRIO
+* 
+*********************************/
+
+.confirma-beneficiario .btn {
+	color: rgb(255, 255, 255);
+}
+
+.confirma-beneficiario .btn-beneficiario {
+    font-size: 13px;
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;    
+	border: 0;
+	color: rgb(33, 37, 41);
+	background-color: rgb(234, 234, 234);
+}
+
+.confirma-beneficiario .btn-beneficiario:hover {   
+	background-color: rgb(220, 220, 220);
+}
+
+.area-dados-beneficiario {
+	margin-top: 30px;
+}
+
+.area-dados-beneficiario h4 {
+	font-size: 18px;
+	text-transform: uppercase;
+    color: rgb(70, 117, 184);
+	font-weight: 700;
+	padding: 15px 0;
+}
+
+.area-dados-beneficiario form label {
+	color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.area-dados-beneficiario form input {
+	height: 38px;
+    font-size: 12px;
+}
+
+.area-dados-beneficiario .grupo-sexo label {
+	font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+}
+
+.area-dados-beneficiario .grupo-sexo input {
+	display: block;
+    height: auto;
+}
+
+.area-dados-beneficiario .titulo-sexo-beneficiario {
+	margin-bottom: 0;
+}
+
+/*********************************
+*
+*  9 PAGAMENTO
+* 
+*********************************/
 
 .pagamento .area-container .titulo {
     margin-bottom: 30px;
@@ -1025,6 +1263,7 @@ footer {
 	clear: both;
 	background-color: rgb(25, 42, 66);
 	padding: 60px 0 20px 0;
+	
 }
 
 .area-logo-rodape {
@@ -1185,6 +1424,40 @@ footer ul li a:hover {
 	}
 	.info-atendimento {
 		margin-top: 26px;
+	}
+	.menu-area-logada {
+		background-color: rgb(255, 255, 255);
+		padding: 5px 0 0 0;
+		margin-top: 0;
+		border-top: 1px solid rgb(220, 220, 220);
+	}
+	.nav-item-mobile {
+		display: inline-block;
+	}	
+	.drop-menu {
+		display: none;
+	}
+	.menu-area-logada ul li {
+		float: none;
+	}
+	.drop-notificacoes button,
+	.drop-carrinho button {
+		padding: 0 25px 0 0;
+	}
+	.drop-notificacoes button span,
+	.drop-carrinho button span {
+		display: block;
+	}
+	.drop-notificacoes button i,
+	.drop-carrinho button i {
+		display: none;
+	}
+	.opcoes-menu-usuario {
+		padding: 5px 0;
+	}
+	.opcoes-menu-usuario .dropdown-menu {
+		left: 0;
+		right: auto;
 	}
 }
 
