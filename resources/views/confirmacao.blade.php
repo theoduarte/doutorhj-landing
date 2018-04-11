@@ -14,6 +14,7 @@
             <strong>Confirmação de agendamento</strong>
             <p>Temos uma boa notícia! Sua solicitação de agendamento foi efetuada com sucesso. Atenção ao horário e data do serviço escolhido.</p>
         </div>
+        <div></div>
     </div>
 </div>
 </section>
