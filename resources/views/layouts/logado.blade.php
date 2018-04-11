@@ -92,7 +92,7 @@
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
-                                            <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span>Notificações </span><i class="fas fa-bell"></i>
                                                 <div class="numero-notificacoes">
                                                     <span>5</span>
@@ -121,13 +121,13 @@
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
-                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Carrinho </span><i class="fas fa-shopping-cart"></i>
-                                                <div class="numero-notificacoes">
+                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span>Carrinho </span><i class="far fa-list-alt"></i>
+                                                <!--<div class="numero-notificacoes">
                                                     <span>2</span>
-                                                </div>
+                                                </div>-->
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownCarrinho">
+                                            <!--<div class="dropdown-menu" aria-labelledby="dropdownCarrinho">
                                                 <ul>
                                                     <li class="dropdown-item desativado">
                                                         <span>Carrinho</span>
@@ -139,7 +139,7 @@
                                                         <a href="#">Nome Produto 2</a>
                                                     </li>
                                                 </ul>      
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </li>
                                 </ul>
