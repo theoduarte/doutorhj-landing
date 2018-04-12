@@ -30,6 +30,7 @@ Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocal
 
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento')->middleware('auth');
 Route::post('users/register', 'UserController@register')->name('registrar');
+Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');

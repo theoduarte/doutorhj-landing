@@ -24,26 +24,26 @@
                             <span class="card-span">E-mail ou Celular obrigatórios para o login.</span>
                             <h5 class="card-title">Dados de acesso</h5>
                             <form>
-                                <div class="form-group row area-label">
+                                <div class="form-group row area-label btn-send-token">
                                     <label for="inputEmailTelefone" class="col-sm-12">E-mail ou Celular</label>                       
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row btn-send-token">
                                     <div class="col col-lg-7 col-xl-8">
-                                        <input type="text" class="form-control" id="inputEmailTelefone" placeholder="E-mail ou Celular">
+                                        <input type="text" id="inputEmailTelefone" class="form-control mascaraTelefone" placeholder="E-mail ou Celular">
                                     </div>
                                     <div class="col col-lg-5 col-xl-4">
-                                        <button type="submit" class="btn btn-vermelho"><i class="fas fa-key"></i> Enviar Token</button>
+                                        <button type="button" id="btn-send-token" class="btn btn-vermelho"><i class="fas fa-key"></i> Enviar Token</button>
                                     </div>
                                 </div>
-                                <div class="form-group row area-label">
+                                <div class="form-group row area-label btn-login-token">
                                     <label for="inputToken" class="col-sm-12 ">Token de Acesso</label>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row btn-login-token">
                                     <div class="col col-lg-7 col-xl-8">
                                         <input type="text" class="form-control" id="inputToken" placeholder="Token de Acesso">
                                     </div>
                                     <div class="col col-lg-5 col-xl-4">
-                                        <button type="submit" class="btn btn-vermelho"><i class="fas fa-arrow-right"></i> Acessar Conta</button>
+                                        <button type="button" id="btn-login-token" class="btn btn-vermelho"><i class="fas fa-arrow-right"></i> Acessar Conta</button>
                                     </div>
 								</div>
 								<div class="form-group links-login">
@@ -156,7 +156,57 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var laravel_token = '{{ csrf_token() }}';
-			var resizefunc = []; 
+			var resizefunc = [];
+			
+			$('.btn-login-token').hide();
+
+			$('#btn-send-token').click(function(){
+				if($('#inputEmailTelefone').val() == ''){ return false; }
+
+				$('.btn-send-token').hide();
+				$('.btn-login-token').show();
+
+				var ds_contato = $('#inputEmailTelefone').val();
+
+				jQuery.ajax({
+	        		type: 'POST',
+	        	  	url: "{{ route('enviar_token') }}",
+	        	  	data: {
+						'ds_contato': ds_contato,
+						'_token': laravel_token
+					},
+					success: function (result) {
+
+						if( result != null) {
+							$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+							
+							var json = JSON.parse(result.endereco);
+
+							$('#te_endereco').val(json.logradouro);
+							$('#te_bairro').val(json.bairro);
+							$('#nm_cidade').val(json.cidade);
+							$('#sg_estado').val(json.estado);
+							$('#cd_cidade_ibge').val(json.ibge);
+							$('#nr_latitude_gps').val(json.latitude);
+							$('#nr_longitute_gps').val(json.longitude);
+							
+						} else {
+
+							$('#te_endereco').val('');
+							$('#te_bairro').val('');
+							$('#nm_cidade').val('');
+							$('#sg_estado').val('');
+							$('#cd_cidade_ibge').val('');
+							$('#sg_logradouro').prop('selectedIndex',0);
+							$('#nr_latitude_gps').val('');
+							$('#nr_longitute_gps').val('');
+						}
+		            },
+		            error: function (result) {
+		            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+		            }
+	        	});
+			});
 
 			/*********************************
 			*

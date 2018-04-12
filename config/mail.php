@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 465),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'contato@doctorhoje.com.br'),
+        'address' => env('MAIL_FROM_ADDRESS', 'administrador@comvex.com.br'),
         'name' => env('MAIL_FROM_NAME', 'DoctorHoje'),
     ],
 

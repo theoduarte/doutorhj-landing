@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Cidade;
 use App\Endereco;
 use App\User;
+use Illuminate\Support\Facades\Crypt;
+use App\Paciente;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -27,6 +29,32 @@ class PacienteController extends Controller
         return view('paciente', ['arEstados' => $arEstados, 
                                  'arCargos'=> $arCargos, 
                                  'arEspecialidade'=>$arEspecialidade]);
+    }
+    
+    /**
+     * ativarConta the specified resource in storage.
+     *
+     * @param  String  $verify_hash
+     * @return \Illuminate\Http\Response
+     */
+    public function ativarConta($verify_hash)
+    {
+        //$this->validate($request, Volunteer::$rules);
+        
+        $paciente_id = Crypt::decryptString($verify_hash);
+        
+        $paciente = Paciente::findOrFail($paciente_id);
+        
+        if($paciente === null) {
+            return view('welcome');
+        }
+        
+        $user_id = $paciente->user->id;
+        $user = User::findOrFail($user_id);
+        $user->cs_status = 'A';
+        $user->save();
+        
+        return view('pacientes.activate');
     }
     
      

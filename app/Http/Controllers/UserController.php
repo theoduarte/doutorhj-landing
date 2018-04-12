@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Mail\PacienteSender;
 use App\Documento;
 use App\Contato;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -147,6 +148,35 @@ class UserController extends Controller
     	Mail::to($usuario->email)->send(new PacienteSender($paciente));
     	
     	return view('users.register', compact('access_token'));
+    }
+    
+    /**
+     * sendToken the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendToken(Request $request)
+    {   
+        //DB::enableQueryLog();
+        $ds_contato = UtilController::retiraMascara(CVXRequest::post('ds_contato'));
+        $contato1 = Contato::where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', $ds_contato)->get();
+        //$query = DB::getQueryLog();
+        //print_r($query);
+        $contato = $contato1->first();
+        
+        $paciente = Paciente::findOrFail($paciente_id);
+        
+        if($paciente === null) {
+            return view('welcome');
+        }
+        
+        $user_id = $paciente->user->id;
+        $user = User::findOrFail($user_id);
+        $user->cs_status = 'A';
+        $user->save();
+        
+        return view('pacientes.activate');
     }
     
     //############# PERFORM RELATIONSHIP ##################
