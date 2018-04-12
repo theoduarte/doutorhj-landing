@@ -169,11 +169,9 @@ class ClinicaController extends Controller
         $prestador->load('documentos');
         $prestador->load('profissionals');
         
-        
         $user   = User::findorfail($prestador->responsavel->user_id); 
         $cidade = Cidade::findorfail($prestador->enderecos->first()->cidade_id); 
         $documentoprofissional = [];
-        
         
         $precoprocedimentos = Atendimento::where(['clinica_id'=> $idClinica, 'consulta_id'=> null])->get();
         $precoprocedimentos->load('procedimento');

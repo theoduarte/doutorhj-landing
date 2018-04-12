@@ -65,6 +65,116 @@
             </div>
         </div>  -->        
         <header>
+        	@if (Auth::check())
+        	<nav class="navbar navbar-expand-xl">
+        		<div class="container">
+        			<a class="navbar-brand" href="/">
+        				<h1>Doutor Hoje</h1>
+        			</a>
+        			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+        				<i class="fas fa-bars"></i>
+        			</button>
+        			<div class="collapse navbar-collapse" id="navbarMobile">
+        				<ul class="navbar-nav ml-auto">
+        					<li class="nav-item">
+        						<a class="nav-link" href="#">Agendamento</a>
+        					</li>
+        					<li class="nav-item">
+        						<a class="nav-link" href="#">Dicas do Doutor</a>
+        					</li>
+        					<li class="nav-item">
+        						<a class="nav-link" href="#">Como Funciona</a>
+        					</li>
+        					<li class="nav-item nav-item-mobile">
+        						<a class="nav-link" href="#">Meus dados</a>
+        					</li>
+        					<li class="nav-item nav-item-mobile">
+        						<a class="nav-link" href="#">Agenda</a>
+        					</li>
+        					<li class="nav-item nav-item-mobile">
+        						<a class="nav-link" href="#">Finanaceiro</a>
+        					</li>
+        					<li class="nav-item nav-item-mobile">
+        						<a class="nav-link" href="#">Configurações</a>
+        					</li>
+        					<li class="nav-item nav-item-mobile">
+        						<a class="nav-link" href="/logout">Sair</a>
+        					</li>
+        				</ul>
+        				<div class="menu-area-logada">
+        					<ul>
+        						<li>
+        							<div class="dropdown opcoes-menu-usuario drop-menu">
+        								<button class="btn dropdown-toggle btn-nome-usuario" type="button" id="dropdownNomeUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        									<span>{{ Auth::user()->paciente->nm_primario }}</span>
+        								</button>
+        								<div class="dropdown-menu" aria-labelledby="dropdownNomeUsuario">
+        									<a class="dropdown-item" href="#">Meus dados</a>
+        									<a class="dropdown-item" href="#">Meus agendamentos</a>
+        									<a class="dropdown-item" href="#">Financeiro</a>
+        									<a class="dropdown-item" href="#">Configurações</a>
+        									<a class="dropdown-item" href="/logout">Sair</a>
+        								</div>
+        							</div>
+        						</li>
+                                    <li>
+                                        <div class="dropdown opcoes-menu-usuario drop-notificacoes">
+                                            <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span>Notificações </span><i class="fas fa-bell"></i>
+                                                <div class="numero-notificacoes">
+                                                    <span>5</span>
+                                                </div>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownNotificacoes">
+                                                <ul>
+                                                    <li class="dropdown-item desativado">
+                                                        <span>Notificações</span>
+                                                    </li>
+                                                    <li class="dropdown-item mensagens-menu">
+                                                        <a href="#">O Dr. Hoje tem uma mensagem urgente. </a>
+                                                        <span>Há 3 horas</span>
+                                                    </li>
+                                                    <li class="dropdown-item mensagens-menu">
+                                                        <a href="#">Seu EXAME foi confirmado.</a>
+                                                        <span>Há 1 semana</span>
+                                                    </li>
+                                                    <li class="dropdown-item mensagens-menu">
+                                                        <a href="#">Sua CONSULTA ODONTOLÓGICA está agendada.</a>
+                                                        <span>Há 2 semanas</span>
+                                                    </li>
+                                                </ul>                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown opcoes-menu-usuario drop-carrinho">
+                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span>Carrinho </span><i class="far fa-list-alt"></i>
+                                                <!--<div class="numero-notificacoes">
+                                                    <span>2</span>
+                                                </div>-->
+                                            </button>
+                                            <!--<div class="dropdown-menu" aria-labelledby="dropdownCarrinho">
+                                                <ul>
+                                                    <li class="dropdown-item desativado">
+                                                        <span>Carrinho</span>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Nome Produto 1</a>
+                                                    </li>
+                                                    <li class="dropdown-item">
+                                                        <a href="#">Nome Produto 2</a>
+                                                    </li>
+                                                </ul>      
+                                            </div>-->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            </nav>
+        	@else
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
@@ -88,12 +198,13 @@
                                 <a class="nav-link" href="#">Sou profissional de saúde</a>
                             </li>
                             <li class="nav-item btn-entrar">
-                                <a class="nav-link" href="#">Entrar</a>
+                                <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
+            @endif
         </header>
 
         @yield('content')

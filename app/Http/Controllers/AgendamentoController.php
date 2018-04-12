@@ -8,6 +8,7 @@ use App\Agendamento;
 use App\Clinica;
 use App\Profissional;
 use App\Estado;
+use App\Atendimento;
 
 class AgendamentoController extends Controller
 {
@@ -118,11 +119,18 @@ class AgendamentoController extends Controller
      */
     public function agendarAtendimento(Request $request)
     {
-    	$agendamento = Agendamento::create($request->all());
+    	$atendimento_id		= $request->input('atendimento_id');
+    	$profissional_id	= $request->input('profissional_id');
+    	$paciente_id		= $request->input('paciente_id');
+    	$clinica_id			= $request->input('clinica_id');
+    	$data_atendimento	= $request->input('data_atendimento');
+    	$hora_atendimento	= $request->input('hora_atendimento');
+    	
+    	$atendimento = Atendimento::findOrFail($atendimento_id);
+    	
+    	dd($atendimento);
     	 
-    	$agendamento->save();
-    	 
-    	return redirect()->route('resultado')->with('success', 'O Agendamento foi realizado com sucesso!');
+    	return view('agendamentos.pagamento', compact('cargos'));
     }
     
     /**
@@ -133,8 +141,7 @@ class AgendamentoController extends Controller
      */
     public function getLocalAtendimento($consulta){
         $arJson = array();
-        $consultas = Clinica::where(DB::raw('to_str(nm_razao_social)'), 
-                                            'like', '%'.UtilController::toStr($consulta).'%')->get();
+        $consultas = Clinica::where(DB::raw('to_str(nm_razao_social)'), 'like', '%'.UtilController::toStr($consulta).'%')->get();
         $consultas->load('documentos');
         
         foreach ($consultas as $query)
