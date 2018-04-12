@@ -11,7 +11,9 @@ Verson: 1.0
 5 RESULTADO DA BUSCA
 6 LOGIN/CADASTRO
 7 MENU ÁREA LOGADA
-8 PAGAMENTO
+8 INFORMA BENEFICIÁRIO
+9 PAGAMENTO
+10 CONFIRMAÇÃO AGENDAMENTO
 
 X FOOTER
 X MEDIA QUERIES
@@ -834,7 +836,6 @@ header .container {
 	font-size: 12px;
 }
 
-
 .card-formulario form button {
 	color: rgb(255, 255, 255);	
 	width: 100%;
@@ -879,16 +880,6 @@ header .container {
 /*********************************
 *
 *  7 MENU ÁREA LOGADA
-* 
-*********************************/
-
-.confirma-usuario {
-
-}
-
-/*********************************
-*
-*  8 CONFIRMA BENEFICIARIO
 * 
 *********************************/
 
@@ -1055,7 +1046,7 @@ header .container {
 
 /*********************************
 *
-*  8 CONFIRMA BENEFICIÁRIO
+*  8 INFORMA BENEFICIÁRIO
 * 
 *********************************/
 
@@ -1259,7 +1250,7 @@ header .container {
 
 /*********************************
 *
-*  10 CONFIRMAÇÃO
+*  10 CONFIRMAÇÃO AGENDAMENTO
 * 
 *********************************/
 
@@ -1530,8 +1521,6 @@ footer ul li a:hover {
 	}
 	.condicoes {
 		margin-top: 30px;
-		
-
 	}
 }
 
