@@ -33,6 +33,6 @@ class PacienteSender extends Mailable
      */
     public function build()
     {
-        return $this->from('administrador@comvex.com.br')->view('view.emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)]);
+        return $this->from('administrador@comvex.com.br')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)]);
     }
 }

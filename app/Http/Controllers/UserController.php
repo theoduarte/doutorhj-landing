@@ -7,7 +7,10 @@ use App\Paciente;
 use App\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Mail\PacienteSender;
+use App\Documento;
+use App\Contato;
 
 class UserController extends Controller
 {
@@ -121,7 +124,7 @@ class UserController extends Controller
     	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
     	$paciente->access_token    	= $access_token;
     	$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
-    	dd($usuario);
+    	//dd($usuario);
     	$paciente->save();
     	
     	# cpf do paciente
@@ -134,7 +137,7 @@ class UserController extends Controller
     	# contato do paciente
     	$contato1             		= new Contato();
     	$contato1->tp_contato 		= 'CP';
-    	$contato1->ds_contato 		= $request->input('ds_contato1');
+    	$contato1->ds_contato 		= $request->input('ds_contato');
     	$contato1->save();
     	$contato_ids = [$contato1->id];
     	

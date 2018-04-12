@@ -38,7 +38,7 @@ class PerfilusersTableSeeder extends Seeder
                 [
                     'titulo'                => 'Paciente',
                     'descricao'             => 'Clientes usuários do sistema.',
-                    'tipo_permissao'        => 2
+                    'tipo_permissao'        => 4
                 ]
                 
             ]);
