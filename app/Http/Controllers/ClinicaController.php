@@ -628,4 +628,8 @@ class ClinicaController extends Controller
     public function confirmaAgendamento(){
         return view('confirmacao');
     }
+
+    public function homePrestador(){
+        return view('home-prestador');
+    }
 }
