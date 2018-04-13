@@ -11,7 +11,7 @@
     <div class="container">
         <div class="area-container">
             <div class="titulo">
-                <strong>Pré-agendamento realizado com sucesso</strong>            
+                <strong>Pré-agendamento realizado com sucesso!</strong>            
             </div>
             <div class="row">
                 <div class="col-md-12 texto-confirmacao">
@@ -32,7 +32,7 @@
                             <li><i class="far fa-calendar-alt"></i> <span>21 de março / quarta-feira</span></li>
                             <li><i class="far fa-clock"></i> <span>9h00 (por ordem de chegada)</span></li>
                             <li><i class="fas fa-map-marker-alt"></i> <span>Rua Antenor Lemos, 57 709 Menino Jesus Porto Alegre/ RS</span></li>
-                            <li><i class="far fa-check-square"></i> Status do agendamento: <span>Pré-agendado</span></li>
+                            <li><i class="far fa-calendar-check"></i> Status do agendamento: <span>Pré-agendado</span></li>
                             <li><i class="far fa-check-circle"></i> Status do pagamento: <span>Pago</span></li>
                         </ul>
                     </div>

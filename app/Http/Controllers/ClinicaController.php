@@ -628,7 +628,7 @@ class ClinicaController extends Controller
     public function homePrestador(){
         return view('home-prestador');
     }
-    public function cadastroPreFinalizado(){
-        return view('cadastro-pre-finalizado');
+    public function confirmaCadastro(){
+        return view('confirma-cadastro');
     }
 }

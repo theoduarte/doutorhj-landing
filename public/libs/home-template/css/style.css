@@ -37,6 +37,7 @@ body,
 
 .btn-vermelho {
   font-size: 13px;
+  color: rgb(255, 255, 255);
   height: 52px;
   font-weight: 600;
   text-transform: uppercase;
@@ -58,6 +59,7 @@ body,
 
 .resultado,
 .login,
+.confirma-cadastro,
 .pagamento,
 .confirma-beneficiario,
 .confirmacao {
@@ -69,6 +71,7 @@ body,
 
 .resultado .area-container,
 .login .area-container,
+.confirma-cadastro .area-container,
 .pagamento .area-container,
 .confirma-beneficiario .area-container,
 .confirmacao .area-container {
@@ -81,6 +84,7 @@ body,
 
 .resultado .area-container .titulo strong,
 .login .area-container .titulo strong,
+.confirma-cadastro .area-container .titulo strong,
 .pagamento .area-container .titulo strong,
 .confirma-beneficiario .area-container .titulo strong,
 .confirmacao .area-container .titulo strong {
@@ -1282,6 +1286,10 @@ header .container {
 
 .dados-confirmacao ul li {
   clear: both;
+}
+
+.confirmacao .condicoes p {
+  font-size: 14px;
 }
 
 /*********************************
