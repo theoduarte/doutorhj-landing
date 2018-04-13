@@ -108,7 +108,7 @@ class UserController extends Controller
     	
     	# dados de acesso do usuário paciente
     	$usuario            		= new User();
-    	$usuario->name      		= $request->input('nm_primario').''.$request->input('nm_secundario');
+    	$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
     	$usuario->email     		= $request->input('email');
     	$usuario->password  		= bcrypt($access_token);
     	$usuario->tp_user   		= 'PAC';
@@ -164,19 +164,39 @@ class UserController extends Controller
         //$query = DB::getQueryLog();
         //print_r($query);
         $contato = $contato1->first();
+        $contato_id = $contato->id;
         
-        $paciente = Paciente::findOrFail($paciente_id);
+        $paciente_temp = Paciente::with('user')
+        	->join('contato_paciente', function($join1) { $join1->on('pacientes.id', '=', 'contato_paciente.paciente_id');})
+	        ->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
+	        ->select('pacientes.*')
+	        ->get();
+	    
+        $user = $paciente_temp->first()->user;
         
-        if($paciente === null) {
-            return view('welcome');
+        if($user === null) {
+            return view('login');
         }
         
-        $user_id = $paciente->user->id;
-        $user = User::findOrFail($user_id);
-        $user->cs_status = 'A';
+        # atualiza o token do paciente
+        $paciente = $paciente_temp->first();
+        
+        $access_token = UtilController::getAccessToken();
+        $time_to_live = date('Y-m-d H:i:s');
+        
+        $paciente->access_token = $access_token;
+        $paciente->time_to_live = date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+        $paciente->save();
+        
+        # realiza a criptografia do token do paciente
+        $user->password = bcrypt($access_token);
         $user->save();
         
-        return view('pacientes.activate');
+        $number = UtilController::retiraMascara($contato->ds_contato);
+        $remetente = 'DoctorHoje';
+        $message = "Seu Novo Token de acesso ao DoctorHoje: $access_token";
+        
+        UtilController::sendSms($number, $remetente, $message);
     }
     
     //############# PERFORM RELATIONSHIP ##################

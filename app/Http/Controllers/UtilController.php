@@ -116,7 +116,7 @@ class UtilController extends Controller
 	 * @param string $remetente Nome do Remetente até 32 caracteres. Utilizado somente na organização dos relatórios
 	 * @param string $message Conteúdo da mensagem que será enviada. Tamanho máximo de 2048 caracteres.
 	 */
-	public function sendSms($number, $remetente, $message)
+	public static function sendSms($number, $remetente, $message)
 	{
 		$url = "https://sms.comtele.com.br/Api/91caf268-5c29-420a-b55c-1ad15cf12e43/SendMessage";
 	

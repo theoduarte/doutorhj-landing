@@ -23,7 +23,10 @@
                         <div class="card-body">
                             <span class="card-span">E-mail ou Celular obrigatórios para o login.</span>
                             <h5 class="card-title">Dados de acesso</h5>
-                            <form>
+                            <form action="{{ route('login') }}" method="post">
+                            
+                            	{{ csrf_field() }}
+                            	
                                 <div class="form-group row area-label btn-send-token">
                                     <label for="inputEmailTelefone" class="col-sm-12">E-mail ou Celular</label>                       
                                 </div>
@@ -40,10 +43,11 @@
                                 </div>
                                 <div class="form-group row btn-login-token">
                                     <div class="col col-lg-7 col-xl-8">
-                                        <input type="text" class="form-control" id="inputToken" placeholder="Token de Acesso">
+                                        <input type="text" id="inputToken" class="form-control" name="cvx_token" placeholder="Token de Acesso">
+                                        <input type="hidden" id="input_hidden_EmailTelefone" name="cvx_telefone">
                                     </div>
                                     <div class="col col-lg-5 col-xl-4">
-                                        <button type="button" id="btn-login-token" class="btn btn-vermelho"><i class="fas fa-arrow-right"></i> Acessar Conta</button>
+                                        <button type="submit" id="btn-login-token" class="btn btn-vermelho"><i class="fas fa-arrow-right"></i> Acessar Conta</button>
                                     </div>
 								</div>
 								<div class="form-group links-login">
@@ -162,11 +166,12 @@
 
 			$('#btn-send-token').click(function(){
 				if($('#inputEmailTelefone').val() == ''){ return false; }
-
+				
 				$('.btn-send-token').hide();
 				$('.btn-login-token').show();
 
 				var ds_contato = $('#inputEmailTelefone').val();
+				$('#input_hidden_EmailTelefone').val(ds_contato);
 
 				jQuery.ajax({
 	        		type: 'POST',
