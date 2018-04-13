@@ -20,6 +20,43 @@
                 <h3>Como se cadastrar</h3>
                 <div class="linha"></div>
             </div>
+            <div class="passos-cadastro">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="icone">
+                            <img src="/libs/home-template/img/icone-pre-cadastro.png" alt="">
+                        </div>
+                        <div class="titulo">
+                            Solicite o pré-cadastro
+                        </div>
+                        <div class="texto">
+                            Preencha os dados do formulário 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icone">
+                            <img src="/libs/home-template/img/icone-aguarde.png" alt="">
+                        </div>
+                        <div class="titulo">
+                            Aguarde
+                        </div>
+                        <div class="texto">
+                            Analisamos os seus dados e entramos em contato
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icone">
+                            <img src="/libs/home-template/img/icone-confirmacao.png" alt="">
+                        </div>
+                        <div class="titulo">
+                            Confirmação
+                        </div>
+                        <div class="texto">
+                        Seja bem-vindo! Com o contrato em mãos, o Doutor Hoje passa a indicar centenas de pacientes para você.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

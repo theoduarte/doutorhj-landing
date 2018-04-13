@@ -12,6 +12,7 @@ Route::get('pagamento', 'ClinicaController@paginaPagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('home-prestador', 'ClinicaController@homePrestador');
+Route::get('cadastro-pre-finalizado', 'ClinicaController@cadastroPreFinalizado');
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');

@@ -621,15 +621,16 @@ class ClinicaController extends Controller
     public function paginaPagamento(){
         return view('pagamento');
     }
-
     public function informaBeneficiario(){
         return view('informa-beneficiario');
     }
     public function confirmaAgendamento(){
         return view('confirmacao');
     }
-
     public function homePrestador(){
         return view('home-prestador');
+    }
+    public function cadastroPreFinalizado(){
+        return view('cadastro-pre-finalizado');
     }
 }
