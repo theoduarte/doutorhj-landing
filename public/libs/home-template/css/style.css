@@ -26,36 +26,36 @@ X MEDIA QUERIES
 *********************************/
 
 * {
-  font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html,
 body,
 .tudo {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .btn-vermelho {
-  font-size: 13px;
-  color: rgb(255, 255, 255);
-  height: 52px;
-  font-weight: 600;
-  text-transform: uppercase;
-  background-color: rgb(163, 36, 49);
-  border: 0;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(163, 36, 49);
+    border: 0;
 }
 
 .btn-vermelho:hover {
-  background-color: rgb(117, 27, 36);
+    background-color: rgb(117, 27, 36);
 }
 
 .btn-vermelho:focus {
-  box-shadow: none!important;
+    box-shadow: none !important;
 }
 
 .tooltip {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .resultado,
@@ -64,10 +64,10 @@ body,
 .pagamento,
 .confirma-beneficiario,
 .confirmacao {
-  padding: 10px 0 60px 0;
-  background-color: rgb(236, 243, 247);
-  box-sizing: border-box;
-  min-height: 70%;
+    padding: 10px 0 60px 0;
+    background-color: rgb(236, 243, 247);
+    box-sizing: border-box;
+    min-height: 70%;
 }
 
 .resultado .area-container,
@@ -76,11 +76,11 @@ body,
 .pagamento .area-container,
 .confirma-beneficiario .area-container,
 .confirmacao .area-container {
-  border-radius: 4px;
-  padding: 30px 25px;
-  background-color: rgb(255, 255, 255);
-  -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 30px 25px;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
 .resultado .area-container .titulo strong,
@@ -89,10 +89,10 @@ body,
 .pagamento .area-container .titulo strong,
 .confirma-beneficiario .area-container .titulo strong,
 .confirmacao .area-container .titulo strong {
-  font-size: 20px;
-  text-transform: uppercase;
-  color: rgb(70, 117, 184);
-  font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: rgb(70, 117, 184);
+    font-weight: 700;
 }
 
 .resultado .area-container .titulo p,
@@ -100,13 +100,13 @@ body,
 .pagamento .area-container .titulo p,
 .confirma-beneficiario .area-container .titulo p,
 .confirmacao .area-container .titulo p {
-  font-size: 15px;
-  color: rgb(115, 115, 115);
-  margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(115, 115, 115);
+    margin-bottom: 10px;
 }
 
 p {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 /*********************************
@@ -116,68 +116,68 @@ p {
 *********************************/
 
 header {
-  padding: 40px 0 0 0;
+    padding: 40px 0 0 0;
 }
 
 header .container {
-  height: 82px;
-  padding-top: 15px;
+    height: 82px;
+    padding-top: 15px;
 }
 
 .navbar-brand {
-  display: block;
-  width: 255px;
-  height: 55px;
-  background-image: url(../img/logo-padrao.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  margin-top: -30px;
+    display: block;
+    width: 255px;
+    height: 55px;
+    background-image: url(../img/logo-padrao.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: -30px;
 }
 
 .nav-link {
-  font-size: 13px;
-  font-weight: 700;
-  color: rgb(46, 46, 46);
-  position: relative;
-  display: block;
-  cursor: pointer;
-  padding-bottom: 8px;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding-bottom: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
 }
 
 .nav-link:hover {
-  color: rgb(163, 36, 49);
-  text-decoration: none;
+    color: rgb(163, 36, 49);
+    text-decoration: none;
 }
 
 .btn-profissional a {
-  background-color: rgb(234, 234, 234);
-  border-radius: 3px;
-  margin: 0 10px;
+    background-color: rgb(234, 234, 234);
+    border-radius: 3px;
+    margin: 0 10px;
 }
 
 .btn-entrar a {
-  color: rgb(255, 255, 255);
-  background-color: rgb(163, 36, 49);
-  border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(163, 36, 49);
+    border-radius: 3px;
 }
 
 .btn-entrar a:hover {
-  color: rgb(255, 255, 255);
-  background-color: rgb(117, 27, 36);
+    color: rgb(255, 255, 255);
+    background-color: rgb(117, 27, 36);
 }
 
 .navbar-toggler i {
-  color: rgb(70, 117, 184);
+    color: rgb(70, 117, 184);
 }
 
 .navbar-collapse {
-  background: rgb(255, 255, 255);
+    background: rgb(255, 255, 255);
 }
 
 /*********************************
@@ -187,74 +187,74 @@ header .container {
 *********************************/
 
 .area-banner {
-  background-image: url(../img/banner1.png);
-  background-position: left top;
-  padding: 250px 0 60px 0;
+    background-image: url(../img/banner1.png);
+    background-position: left top;
+    padding: 250px 0 60px 0;
 }
 
 .area-banner .frase {
-  width: 470px;
-  font-size: 46px;
-  line-height: 50px;
-  font-weight: 700;
-  color: rgb(255, 255, 255);
-  text-transform: uppercase;
-  text-shadow: 1px 5px 20px rgb(105, 105, 105);
-  margin-left: auto;
+    width: 470px;
+    font-size: 46px;
+    line-height: 50px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+    margin-left: auto;
 }
 
 .area-banner .frase p:last-child {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 28px;
-  text-transform: none;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 28px;
+    text-transform: none;
 }
 
 .busca-home {
-  margin: 0 auto;
-  padding: 20px 20px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.7);
+    margin: 0 auto;
+    padding: 20px 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .busca-home .titulo {
-  text-align: center;
-  margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .busca-home .titulo span {
-  font-size: 34px;
-  font-weight: 700;
-  line-height: 34px;
-  color: rgb(163, 36, 49);
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 34px;
+    color: rgb(163, 36, 49);
 }
 
 .form-busca-home label {
-  font-size: 16px;
-  color: rgb(22, 22, 22);
+    font-size: 16px;
+    color: rgb(22, 22, 22);
 }
 
 .form-busca-home select {
-  font-size: 13px;
-  color: rgb(124, 124, 124);
-  text-transform: uppercase;
-  height: 52px!important;
+    font-size: 13px;
+    color: rgb(124, 124, 124);
+    text-transform: uppercase;
+    height: 52px !important;
 }
 
 .form-busca-home select option {
-  font-size: 16px;
-  text-transform: none;
+    font-size: 16px;
+    text-transform: none;
 }
 
 .form-busca-home button {
-  width: 100%;
-  margin-top: 32px;
+    width: 100%;
+    margin-top: 32px;
 }
 
 .form-busca-home .btn-primary:not(:disabled):not(.disabled).active,
 .btn-primary:not(:disabled):not(.disabled):active,
-.show>.btn-primary.dropdown-toggle {
-  background-color: rgb(117, 27, 36);
+.show > .btn-primary.dropdown-toggle {
+    background-color: rgb(117, 27, 36);
 }
 
 /*********************************
@@ -264,271 +264,271 @@ header .container {
 *********************************/
 
 .area-sobre {
-  padding: 60px 0;
+    padding: 60px 0;
 }
 
 .area-sobre .col1-sobre p {
-  color: rgb(45, 45, 45);
-  font-size: 31px;
-  font-weight: 700;
+    color: rgb(45, 45, 45);
+    font-size: 31px;
+    font-weight: 700;
 }
 
 .area-sobre .col1-sobre p strong {
-  font-weight: 300;
-  font-style: italic;
+    font-weight: 300;
+    font-style: italic;
 }
 
 .area-sobre .col1-sobre p:first-child {
-  font-size: 14px;
-  text-transform: uppercase;
-  font-weight: 400;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
 }
 
 .area-sobre .col2-sobre {
-  padding-top: 36px;
+    padding-top: 36px;
 }
 
 .area-sobre .col2-sobre p {
-  color: rgb(131, 131, 131);
-  font-size: 17px;
-  line-height: 30px;
-  font-weight: 400;
+    color: rgb(131, 131, 131);
+    font-size: 17px;
+    line-height: 30px;
+    font-weight: 400;
 }
 
 .area-sobre .col2-sobre a {
-  color: rgb(163, 36, 49);
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 700;
+    color: rgb(163, 36, 49);
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .area-passos {
-  padding: 60px 0;
-  background-color: rgb(163, 36, 49);
-  background-image: url(../img/bg-passos.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-	/*background-size: auto 100%;*/;
+    padding: 60px 0;
+    background-color: rgb(163, 36, 49);
+    background-image: url(../img/bg-passos.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    /*background-size: auto 100%;*/;
 }
 
 .area-passos .container .titulo-home {
-  text-align: center;
-  color: rgb(255, 255, 255);
+    text-align: center;
+    color: rgb(255, 255, 255);
 }
 
 .area-passos .container .titulo-home span {
-  font-size: 14px;
-  text-transform: uppercase;
+    font-size: 14px;
+    text-transform: uppercase;
 }
 
 .area-passos .container .titulo-home h3 {
-  font-size: 34px;
-  margin: 20px 0;
-  font-weight: 700;
+    font-size: 34px;
+    margin: 20px 0;
+    font-weight: 700;
 }
 
 .area-passos .container .titulo-home p {
-  font-size: 17px;
+    font-size: 17px;
 }
 
 .steps {
-  width: 100%;
-  overflow: auto;
-  margin-top: 70px;
+    width: 100%;
+    overflow: auto;
+    margin-top: 70px;
 }
 
 .steps .step {
-  width: 20%;
-  float: left;
-  text-align: center;
+    width: 20%;
+    float: left;
+    text-align: center;
 }
 
 .steps .step .icone {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .steps .step .icone img {
-  height: 48px;
-  margin: 0 auto;
+    height: 48px;
+    margin: 0 auto;
 }
 
 .steps .step .traco {
-  width: 100%;
-  height: 12px;
-  background-image: url(../img/linha-steps.png);
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin-bottom: 15px;
+    width: 100%;
+    height: 12px;
+    background-image: url(../img/linha-steps.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: 15px;
 }
 
 .steps .step .numero {
-  font-size: 28px;
-  color: rgb(255, 255, 255);
-  margin-bottom: 5px;
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
 }
 
 .steps .step .texto {
-  font-size: 13px;
-  text-transform: uppercase;
-  color: rgb(255, 255, 255);
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
 }
 
 .steps-mobile {
-  display: none;
+    display: none;
 }
 
 .area-vantagens {
-  padding: 60px 0;
+    padding: 60px 0;
 }
 
 .area-vantagens .titulo-home {
-  text-align: center;
-  margin-bottom: 80px;
+    text-align: center;
+    margin-bottom: 80px;
 }
 
 .area-vantagens .titulo-home span {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: rgb(131, 131, 131);
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
 }
 
 .area-vantagens .titulo-home h3 {
-  font-size: 34px;
-  margin: 10px 0 20px 0;
-  font-weight: 700;
-  color: rgb(46, 46, 46);
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
 }
 
 .area-vantagens .row {
-  margin-bottom: 80px;
+    margin-bottom: 80px;
 }
 
 .icone-vantagem {
-  float: left;
-  padding-right: 20px;
-  height: 100%;
+    float: left;
+    padding-right: 20px;
+    height: 100%;
 }
 
 .icone-vantagem img {
-  width: 72px;
+    width: 72px;
 }
 
 .texto-vantagem h4 {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgb(46, 46, 46);
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
 }
 
 .texto-vantagem p {
-  font-size: 16px;
-  color: rgb(131, 131, 131);
+    font-size: 16px;
+    color: rgb(131, 131, 131);
 }
 
 .area-participe {
-  padding: 60px 0;
-  background-color: rgb(241, 239, 230);
+    padding: 60px 0;
+    background-color: rgb(241, 239, 230);
 }
 
 .area-participe .titulo-home span {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: rgb(131, 131, 131);
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
 }
 
 .area-participe .titulo-home h3 {
-  font-size: 34px;
-  margin: 10px 0 20px 0;
-  font-weight: 700;
-  color: rgb(46, 46, 46);
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
 }
 
 .area-participe .btn {
-  padding: 6px 40px;
+    padding: 6px 40px;
 }
 
 .area-participe p {
-  font-size: 17px;
-  color: rgb(43, 43, 43);
+    font-size: 17px;
+    color: rgb(43, 43, 43);
 }
 
 .box-banner-conheca .area-imagem {
-  width: 80%;
-  margin-top: -116px;
-  position: relative;
+    width: 80%;
+    margin-top: -116px;
+    position: relative;
 }
 
 .box-banner-conheca .area-imagem img {
-  width: 100%;
-  position: absolute;
-  left: 10%;
-  -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
+    width: 100%;
+    position: absolute;
+    left: 10%;
+    -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
 }
 
 .area-aplicativo {
-  padding: 100px 0 60px 0;
+    padding: 100px 0 60px 0;
 }
 
 .area-aplicativo .titulo-home span {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: rgb(131, 131, 131);
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
 }
 
 .area-aplicativo .titulo-home h3 {
-  font-size: 34px;
-  margin: 10px 0 20px 0;
-  font-weight: 700;
-  color: rgb(136, 36, 49);
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(136, 36, 49);
 }
 
 .area-aplicativo p {
-  font-size: 17px;
-  color: rgb(43, 43, 43);
+    font-size: 17px;
+    color: rgb(43, 43, 43);
 }
 
 .area-aplicativo p strong {
-  font-style: italic;
-  display: block;
-  margin-top: 30px;
+    font-style: italic;
+    display: block;
+    margin-top: 30px;
 }
 
 .area-imagem-aplicativo img {
-  display: block;
-  margin: 0 auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .area-texto-aplicativo {
-  padding-top: 120px;
+    padding-top: 120px;
 }
 
 .link-aplicativos {
-  list-style: none;
-  padding: 0!important;
+    list-style: none;
+    padding: 0 !important;
 }
 
 .link-aplicativos li {
-  float: left;
+    float: left;
 }
 
 .link-aplicativos li:first-child {
-  margin-right: 30px;
+    margin-right: 30px;
 }
 
 .link-aplicativos li a {
-  display: block;
-  width: 171px;
-  height: 51px;
-  background-size: 100% 100%;
-  text-indent: -9999px;
+    display: block;
+    width: 171px;
+    height: 51px;
+    background-size: 100% 100%;
+    text-indent: -9999px;
 }
 
 .link-aplicativos li:first-child a {
-  background-image: url(../img/app-google.png);
+    background-image: url(../img/app-google.png);
 }
 
 .link-aplicativos li:last-child a {
-  background-image: url(../img/app-apple.png);
+    background-image: url(../img/app-apple.png);
 }
 
 /*********************************
@@ -538,234 +538,234 @@ header .container {
 *********************************/
 
 .area-alt-busca {
-  width: 100%;
-  overflow: auto;
-  display: none;
+    width: 100%;
+    overflow: auto;
+    display: none;
 }
 
 .area-alt-busca .btn-alt-busca {
-  width: 100%;
-  background-color: rgb(54, 96, 156);
-  border-radius: 0;
-  text-transform: uppercase;
-  font-weight: 700;
+    width: 100%;
+    background-color: rgb(54, 96, 156);
+    border-radius: 0;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .area-alt-busca .btn-alt-busca i {
-  font-weight: 300;
-  margin-left: 10px;
+    font-weight: 300;
+    margin-left: 10px;
 }
 
 .form-busca-resultado {
-  background-color: rgb(70, 117, 184);
-  padding: 10px 10px;
+    background-color: rgb(70, 117, 184);
+    padding: 10px 10px;
 }
 
 .form-busca-resultado .form-group {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .form-busca-resultado .form-group select,
 .form-busca-resultado .form-group .btn {
-  width: 100%;
-  height: 38px;
-  border: 0;
-  font-size: 14px;
+    width: 100%;
+    height: 38px;
+    border: 0;
+    font-size: 14px;
 }
 
 .form-busca-resultado .form-group .btn i {
-  margin-right: 10px;
-  font-size: 16px;
+    margin-right: 10px;
+    font-size: 16px;
 }
 
 .div-filtro {
-  margin-bottom: 10px;
-  overflow: auto;
+    margin-bottom: 10px;
+    overflow: auto;
 }
 
 .div-filtro select {
-  width: 100%;
-  height: 38px!important;
-  float: left;
-  padding: 6px 12px;
-  border: 1px solid rgb(206, 121, 218);
-  border-radius: 4px;
-  font-size: 14px;
+    width: 100%;
+    height: 38px !important;
+    float: left;
+    padding: 6px 12px;
+    border: 1px solid rgb(206, 121, 218);
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .lista-resultado {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .lista-resultado .card {
-  width: 100%;
-  margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .lista-resultado .card .card-title {
-  font-size: 16px;
-  color: rgb(70, 117, 184);
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 18px;
+    font-size: 16px;
+    color: rgb(70, 117, 184);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
 }
 
 .lista-resultado .card .card-subtitle {
-  font-size: 16px;
-  font-weight: 700;
-  color: rgb(47, 47, 47);
-  margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(47, 47, 47);
+    margin-bottom: 10px;
 }
 
 .lista-resultado .card .card-text {
-  font-size: 14px;
-  color: rgb(47, 47, 47);
-  margin-bottom: 8px;
+    font-size: 14px;
+    color: rgb(47, 47, 47);
+    margin-bottom: 8px;
 }
 
 .lista-resultado .card .card-text:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .link-mapa-mobile {
-  font-size: 11px;
-  text-transform: uppercase;
-  display: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: none;
 }
 
 .card-footer .mais-detalhes-marcacao {
-  color: rgb(163, 36, 49);
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 700;
+    color: rgb(163, 36, 49);
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .card-footer strong {
-  float: right;
-  line-height: 33px;
+    float: right;
+    line-height: 33px;
 }
 
 .area-escolher-data {
-  padding: 20px;
-  background-color: rgb(247, 229, 232);
+    padding: 20px;
+    background-color: rgb(247, 229, 232);
 }
 
 .titulo-escolhe-data {
-  font-size: 14px;
-  margin-bottom: 15px;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
 .escolher-data, .escolher-hora {
-  position: relative;
-  width: 48%;
+    position: relative;
+    width: 48%;
 }
 
 .escolher-data {
-  float: left;
+    float: left;
 }
 
 .escolher-hora {
-  float: right;
+    float: right;
 }
 
 .escolher-data input, .escolher-hora input {
-  width: 100%;
-  height: 50px;
-  padding: 6px 38px 6px 12px;
-  border: 1px solid rgb(206, 212, 218);
-  border-radius: 4px;
-  font-size: 14px;
+    width: 100%;
+    height: 50px;
+    padding: 6px 38px 6px 12px;
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .escolher-data label, .escolher-hora label {
-  position: absolute;
-  top: 13px;
-  right: 10px;
-  margin-bottom: 0;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    margin-bottom: 0;
 }
 
 .escolher-data label i, .escolher-hora label i {
-  font-size: 24px;
-  color: rgb(183, 183, 183);
+    font-size: 24px;
+    color: rgb(183, 183, 183);
 }
 
 .area-escolher-data .btn {
-  width: 100%;
+    width: 100%;
 }
 
 .area-escolher-data .confirma-data {
-  font-size: 13px;
-  text-transform: uppercase;
-  color: rgb(163, 36, 49);
-  padding: 10px 0;
-  clear: both;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(163, 36, 49);
+    padding: 10px 0;
+    clear: both;
 }
 
 .area-escolher-data .mensagem-confirma-data {
-  font-size: 13px;
-  text-transform: none;
-  color: rgb(163, 36, 49);
-  padding: 0 0 10px 0;
-  clear: both;
+    font-size: 13px;
+    text-transform: none;
+    color: rgb(163, 36, 49);
+    padding: 0 0 10px 0;
+    clear: both;
 }
 
 .area-escolher-data .valor-total {
-  font-size: 15px;
-  color: rgb(45, 45, 45);
-  padding: 0 0 14px 0;
+    font-size: 15px;
+    color: rgb(45, 45, 45);
+    padding: 0 0 14px 0;
 }
 
 .area-seleciona-profissional {
-  float: left;
-  background-color: rgb(226, 226, 226);
-  padding: 5px 10px 5px 10px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 23px;
-  text-transform: uppercase;
-  color: rgb(163, 36, 49);
-  cursor: pointer;
+    float: left;
+    background-color: rgb(226, 226, 226);
+    padding: 5px 10px 5px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 23px;
+    text-transform: uppercase;
+    color: rgb(163, 36, 49);
+    cursor: pointer;
 }
 
 .form-check-input {
-  display: none;
+    display: none;
 }
 
 .area-seleciona-profissional input,
 .area-seleciona-profissional label {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mapa-resultado {
-  position: sticky;
-  top: 20px;
-  left: 0;
-  overflow: auto;
-  width: 100%;
-  height: 530px;
+    position: sticky;
+    top: 20px;
+    left: 0;
+    overflow: auto;
+    width: 100%;
+    height: 530px;
 }
 
 #map {
-  width: 100%;
-  height: 530px;
+    width: 100%;
+    height: 530px;
 }
 
 .card-resultado {
-  border-radius: 5px;
+    border-radius: 5px;
 }
 
 .card-resultado .card-body {
-  border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
 }
 
 .card-resultado .card-footer {
-  border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
 }
 
 .card-resultado:hover .card-body,
 .card-resultado-active .card-body {
-  background-color: rgb(136, 36, 49);
+    background-color: rgb(136, 36, 49);
 }
 
 .card-resultado:hover .card-body h5,
@@ -778,17 +778,17 @@ header .container {
 .card-resultado-active .card-body p,
 .card-resultado-active .link-mapa-mobile,
 .card-resultado-active .card-footer strong {
-  color: rgb(255, 255, 255) !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 .card-resultado:hover .link-mapa-mobile,
 .card-resultado-active .link-mapa-mobile {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .card-resultado:hover .card-footer,
 .card-resultado-active .card-footer {
-  background-color: rgb(119, 26, 36);
+    background-color: rgb(119, 26, 36);
 }
 
 /*********************************
@@ -798,101 +798,101 @@ header .container {
 *********************************/
 
 .login .area-container {
-  border-radius: 4px;
-  padding: 30px 25px;
-  background-color: rgb(255, 255, 255);
-  -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 30px 25px;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
 .card-formulario .card-header {
-  color: rgb(255, 255, 255);
-  background-color: rgb(70, 117, 184);
-  font-size: 16px;
-  font-weight: 700;
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 117, 184);
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .card-formulario .card-body {
-  padding-top: 10px;
+    padding-top: 10px;
 }
 
 .card-formulario .card-span {
-  color: rgb(115, 115, 115);
-  font-size: 13px;
-  margin-bottom: 20px;
-  display: inline-block;
+    color: rgb(115, 115, 115);
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: inline-block;
 }
 
 .card-formulario .card-title {
-  color: rgb(47, 61, 74);
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 20px;
+    color: rgb(47, 61, 74);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
 .card-formulario form label {
-  color: rgb(70, 117, 184);
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 700;
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .card-formulario form input, .card-formulario form select {
-  height: 38px;
-  font-size: 12px;
+    height: 38px;
+    font-size: 12px;
 }
 
 .card-formulario form button {
-  color: rgb(255, 255, 255);
-  width: 100%;
-  font-size: 11px;
-  padding: 0 12px;
-  height: 38px;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    font-size: 11px;
+    padding: 0 12px;
+    height: 38px;
 }
 
 .area-label {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .c-login form .col:nth-child(1) {
-  padding-right: 5px;
+    padding-right: 5px;
 }
 
 .c-login form .col:nth-child(2) {
-  padding-left: 5px;
+    padding-left: 5px;
 }
 
 .c-login .links-login {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .card-formulario form .fc-checkbox .form-check-input {
-  display: block;
-  height: auto;
+    display: block;
+    height: auto;
 }
 
 .card-formulario form .fc-checkbox .form-check-label {
-  font-size: 13px;
-  font-weight: 400;
-  text-transform: none;
-  color: rgb(98, 98, 98);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
 }
 
 .card-formulario form .btn-criar-conta {
-  width: 130px;
-  margin-top: 20px;
+    width: 130px;
+    margin-top: 20px;
 }
 
 .confirma-cadastro .titulo {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .confirma-cadastro .titulo {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .confirma-cadastro .p {
-  font-size: 17px;
+    font-size: 17px;
 }
 
 /*********************************
@@ -902,162 +902,162 @@ header .container {
 *********************************/
 
 .menu-area-logada {
-  background-color: rgb(230, 230, 230);
-  padding: 78px 15px 22px 0;
-  margin-top: -55px;
+    background-color: rgb(230, 230, 230);
+    padding: 78px 15px 22px 0;
+    margin-top: -55px;
 }
 
 .menu-area-logada ul {
-  list-style: none;
-  float: left;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    float: left;
+    padding: 0;
+    margin: 0;
 }
 
 .menu-area-logada ul li {
-  float: left;
+    float: left;
 }
 
 .menu-area-logada ul li span {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-  color: rgb(70, 117, 184);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: rgb(70, 117, 184);
 }
 
 .menu-area-logada button {
-  background: transparent;
+    background: transparent;
 }
 
 .menu-area-logada button:hover,
 .menu-area-logada button:active,
 .menu-area-logada button:focus,
 .menu-area-logada button:visited {
-  background: transparent;
-  box-shadow: 0 0 0 0 rgba(255, 255,255, 0);
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 }
 
 .opcoes-menu-usuario .dropdown-menu {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .opcoes-menu-usuario .dropdown-menu a {
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
 .opcoes-menu-usuario .dropdown-menu .desativado span {
-  font-size: 18px;
-  color: rgb(220, 220, 220);
-  font-weight: 600;
+    font-size: 18px;
+    color: rgb(220, 220, 220);
+    font-weight: 600;
 }
 
 .opcoes-menu-usuario .dropdown-menu .desativado,
 .opcoes-menu-usuario .dropdown-menu .desativado:hover {
-  cursor: default;
-  background-color: rgb(255, 255, 255);
-  border-bottom: 1px solid rgb(206, 206, 206);
-  text-align: center;
+    cursor: default;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(206, 206, 206);
+    text-align: center;
 }
 
 .opcoes-menu-usuario .btn-area-logada {
-  position: relative;
+    position: relative;
 }
 
 .opcoes-menu-usuario .btn-area-logada .numero-notificacoes {
-  background-color: rgb(163, 36, 49);
-  border-radius: 50% 50%;
-  width: 17px;
-  height: 17px;
-  position: absolute;
-  top: 0;
+    background-color: rgb(163, 36, 49);
+    border-radius: 50% 50%;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 0;
 }
 
 .opcoes-menu-usuario .btn-area-logada .numero-notificacoes span {
-  color: rgb(255, 255, 255);
-  font-size: 10px;
-  line-height: 17px;
-  font-weight: 400;
-  display: block;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    line-height: 17px;
+    font-weight: 400;
+    display: block;
 }
 
 .drop-notificacoes {
-  padding-right: 0;
+    padding-right: 0;
 }
 
 .drop-notificacoes .btn-area-logada .numero-notificacoes {
-  right: 0;
+    right: 0;
 }
 
 .drop-carrinho {
-  padding-right: 0;
+    padding-right: 0;
 }
 
 .drop-carrinho .btn-area-logada .numero-notificacoes {
-  right: 0;
+    right: 0;
 }
 
 .drop-notificacoes .dropdown-toggle::after,
 .drop-carrinho .dropdown-toggle::after {
-  display: none !important;
+    display: none !important;
 }
 
 .opcoes-menu-usuario .dropdown-menu {
-  left: auto;
-  right: 0;
-  min-width: 230px;
+    left: auto;
+    right: 0;
+    min-width: 230px;
 }
 
 .nav-item-mobile {
-  display: none;
+    display: none;
 }
 
 .drop-notificacoes button span,
 .drop-carrinho button span {
-  display: none;
+    display: none;
 }
 
 .opcoes-menu-usuario .dropdown-item {
-  white-space: normal;
+    white-space: normal;
 }
 
 .opcoes-menu-usuario .dropdown-item span {
-  display: block;
+    display: block;
 }
 
 .opcoes-menu-usuario .mensagens-menu {
-  border-bottom: 1px solid rgb(206, 206, 206);
-  padding: 10px 24px;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding: 10px 24px;
 }
 
 .opcoes-menu-usuario .mensagens-menu:last-child {
-  border-bottom: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
 }
 
 .opcoes-menu-usuario .mensagens-menu a {
-  font-size: 13px;
-  text-transform: none;
-  color: rgb(0, 0, 0);
-  width: 100%;
-  display: block;
+    font-size: 13px;
+    text-transform: none;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    display: block;
 }
 
 .opcoes-menu-usuario .mensagens-menu a:hover {
-  color: rgb(70, 117, 184);
-  text-decoration: none;
+    color: rgb(70, 117, 184);
+    text-decoration: none;
 }
 
 .opcoes-menu-usuario .mensagens-menu span {
-  font-size: 12px;
-  text-transform: none;
-  color: rgb(167, 167, 167);
-  font-weight: 400;
+    font-size: 12px;
+    text-transform: none;
+    color: rgb(167, 167, 167);
+    font-weight: 400;
 }
 
-.opcoes-menu-usuario  .dropdown-item.active, .opcoes-menu-usuario .dropdown-item:active {
-  background-color: rgb(255, 255, 255);
+.opcoes-menu-usuario .dropdown-item.active, .opcoes-menu-usuario .dropdown-item:active {
+    background-color: rgb(255, 255, 255);
 }
 
 /*********************************
@@ -1067,61 +1067,61 @@ header .container {
 *********************************/
 
 .confirma-beneficiario .btn {
-  color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 .confirma-beneficiario .btn-beneficiario {
-  font-size: 13px;
-  height: 52px;
-  font-weight: 600;
-  text-transform: uppercase;
-  border: 0;
-  color: rgb(33, 37, 41);
-  background-color: rgb(234, 234, 234);
+    font-size: 13px;
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 0;
+    color: rgb(33, 37, 41);
+    background-color: rgb(234, 234, 234);
 }
 
 .confirma-beneficiario .btn-beneficiario:hover {
-  background-color: rgb(220, 220, 220);
+    background-color: rgb(220, 220, 220);
 }
 
 .area-dados-beneficiario {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .area-dados-beneficiario h4 {
-  font-size: 18px;
-  text-transform: uppercase;
-  color: rgb(70, 117, 184);
-  font-weight: 700;
-  padding: 15px 0;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(70, 117, 184);
+    font-weight: 700;
+    padding: 15px 0;
 }
 
 .area-dados-beneficiario form label {
-  color: rgb(70, 117, 184);
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 700;
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .area-dados-beneficiario form input {
-  height: 38px;
-  font-size: 12px;
+    height: 38px;
+    font-size: 12px;
 }
 
 .area-dados-beneficiario .grupo-sexo label {
-  font-size: 13px;
-  font-weight: 400;
-  text-transform: none;
-  color: rgb(98, 98, 98);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
 }
 
 .area-dados-beneficiario .grupo-sexo input {
-  display: block;
-  height: auto;
+    display: block;
+    height: auto;
 }
 
 .area-dados-beneficiario .titulo-sexo-beneficiario {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /*********************************
@@ -1131,138 +1131,138 @@ header .container {
 *********************************/
 
 .pagamento .area-container .titulo {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .pagamento .card-formulario {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .formas-pagamento {
-  display: none;
+    display: none;
 }
 
 .codigo-seguranca .area-codigo-seguranca {
-  position: relative;
+    position: relative;
 }
 
 .codigo-seguranca .area-codigo-seguranca i {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: rgb(183, 183, 183);
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: rgb(183, 183, 183);
 }
 
 .card-resumo-compra {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .card-resumo-compra .card-header {
-  background-color: rgb(245, 245, 245);
-  border-bottom: none;
+    background-color: rgb(245, 245, 245);
+    border-bottom: none;
 }
 
 .card-resumo-compra .card-header .nome-produto {
-  color: rgb(69, 112, 172);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 24px;
-  cursor: pointer;
+    color: rgb(69, 112, 172);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
 }
 
 .card-resumo-compra .card-header .nome-produto:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .card-resumo-compra .card-header .excluir-produto i {
-  color: rgb(163, 36, 49);
-  font-size: 14px;
-  line-height: 24px;
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
 }
 
 .card-resumo-compra .card-header .valor-produto {
-  color: rgb(70, 74, 78);
-  font-size: 13px;
-  font-weight: 700;
-  text-align: right;
-  line-height: 24px;
+    color: rgb(70, 74, 78);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+    line-height: 24px;
 }
 
 .card-resumo-compra .linha-resumo {
-  margin-bottom: 15px;
-  width: 100%;
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .card-resumo-compra .titulo-resumo {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgb(69, 112, 172);
-  margin-bottom: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(69, 112, 172);
+    margin-bottom: 3px;
 }
 
 .card-resumo-compra .dados-resumo {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgb(98, 98, 98);
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
 }
 
 .card-resumo-compra .dados-resumo p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .resumo-compra {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .resumo-compra .titulo-resumo {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgb(69, 112, 172);
-  margin-bottom: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(69, 112, 172);
+    margin-bottom: 3px;
 }
 
 .resumo-compra .dados-resumo {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgb(98, 98, 98);
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
 }
 
 .resumo-compra .dados-resumo p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .linha-forma-pagamento {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .linha-forma-pagamento .dados-resumo {
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgb(195, 195, 195);
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgb(195, 195, 195);
 }
 
 .resumo-compra .valor-total-produtos p {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 .area-btn-finalizar {
-  padding-top: 30px;
+    padding-top: 30px;
 }
 
 .area-btn-finalizar .btn-continuar-comprando {
-  float: left;
-  font-size: 12px;
-  line-height: 38px;
-  background-color: rgb(241, 241, 241);
+    float: left;
+    font-size: 12px;
+    line-height: 38px;
+    background-color: rgb(241, 241, 241);
 }
 
 .area-btn-finalizar .btn-continuar-comprando:hover {
-  background-color: rgb(230, 230, 230);
-  text-decoration: none;
+    background-color: rgb(230, 230, 230);
+    text-decoration: none;
 }
 
 .area-btn-finalizar .btn-finalizar {
-  color: rgb(255, 255, 255);
-  float: right;
+    color: rgb(255, 255, 255);
+    float: right;
 }
 
 /*********************************
@@ -1272,36 +1272,36 @@ header .container {
 *********************************/
 
 .dados-confirmacao {
-  background-color: rgb(247, 247, 247);
-  padding: 30px;
+    background-color: rgb(247, 247, 247);
+    padding: 30px;
 }
 
 .confirmacao .texto-confirmacao p {
-  margin: 15px 0 25px 0;
+    margin: 15px 0 25px 0;
 }
 
 .dados-confirmacao ul {
-  list-style: none;
-  padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 .dados-confirmacao ul li {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .dados-confirmacao ul li i {
-  font-size: 22px;
-  color: rgb(216, 216, 216);
-  margin: 0 15px 30px 0;
-  display: block;
-  width: 20px;
-  height: 20px;
-  float: left;
-  text-align: center;
+    font-size: 22px;
+    color: rgb(216, 216, 216);
+    margin: 0 15px 30px 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    float: left;
+    text-align: center;
 }
 
 .dados-confirmacao ul li {
-  clear: both;
+    clear: both;
 }
 
 /*********************************
@@ -1309,129 +1309,207 @@ header .container {
 *  11 HOME PRESTADOR
 * 
 *********************************/
-  
+
 .home-prestador .area-banner {
-	text-align: center;
-	background-image: url(../img/banner-prestador.jpg);
-	background-position: center center;
-	background-size: cover;
-	background-attachment: fixed;
+    text-align: center;
+    background-image: url(../img/banner-prestador.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
 }
-  
+
 .home-prestador .area-banner h2 {
-	font-size: 48px;
-	font-weight: 700;
-	text-transform: uppercase;
-	color: rgb(255, 255, 255);
-	text-shadow: 1px 5px 20px rgb(105, 105, 105);
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
 }
-  
+
 .home-prestador .area-banner p {
-	font-size: 27px;
-	font-weight: 500;
-	color: rgb(255, 255, 255);
-	text-shadow: 1px 5px 20px rgb(105, 105, 105);
+    font-size: 27px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
 }
-  
+
 .home-prestador .titulo {
-	text-align: center;
-  margin-bottom: 50px;
+    text-align: center;
+    margin-bottom: 50px;
 }
-  
+
 .home-prestador .titulo h3 {
-	font-size: 34px;
-	margin: 10px 0 20px 0;
-	font-weight: 700;
-	color: rgb(46, 46, 46);
-	text-transform: uppercase;
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    text-transform: uppercase;
 }
-  
+
 .home-prestador .areas {
-	padding: 30px 0;
+    padding: 30px 0;
 }
-  
+
 .home-prestador .titulo .linha {
-	width: 75px;
-	height: 2px;
-	margin: 0 auto;
-	background-color: rgb(70, 117, 184);
+    width: 75px;
+    height: 2px;
+    margin: 0 auto;
+    background-color: rgb(70, 117, 184);
 }
 
 .home-prestador .passos-cadastro {
-	text-align: center;
+    text-align: center;
 }
 
 .home-prestador .passos-cadastro .icone {
-	border-radius: 54px;
-	width: 104px;
-	height: 104px;
-	background-color: rgb(84, 112, 163);
-	margin: 0 auto;
-  margin-bottom: 20px;
+    border-radius: 54px;
+    width: 104px;
+    height: 104px;
+    background-color: rgb(84, 112, 163);
+    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
-.home-prestador .passos-cadastro .icone img {	
-	height: 64px;
-	margin: 20px 20px;
+.home-prestador .passos-cadastro .icone img {
+    height: 64px;
+    margin: 20px 20px;
 }
 
-.home-prestador .passos-cadastro .titulo {	
-	font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
+.home-prestador .passos-cadastro .titulo {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-.home-prestador .passos-cadastro .texto {  
-  font-size: 17px;
+.home-prestador .passos-cadastro .texto {
+    font-size: 17px;
 }
 
 .home-prestador .area-sobre p {
-  text-align: center;
-  font-size: 17px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.home-prestador .area-como-funciona {
+    padding-top: 150px;
 }
 
 .home-prestador .area-como-funciona .container {
-  background-color: rgb(84, 112, 163);
+    background-color: rgb(84, 112, 163);
 }
 
 .home-prestador .area-como-funciona .titulo h3,
 .home-prestador .area-como-funciona .titulo p {
-  text-align: left;
-  color: rgb(255, 255, 255);
+    text-align: left;
+    color: rgb(255, 255, 255);
+}
+.home-prestador .area-texto-como-funciona {
+    padding: 40px;
 }
 
 .home-prestador .area-como-funciona .titulo h3 {
-  margin: 10px 0 10px 0;
+    margin: 10px 0 10px 0;
+}
+
+.home-prestador .area-como-funciona .titulo p {
+    font-size: 17px;
 }
 
 .home-prestador .area-como-funciona .titulo .linha {
-  margin-left: 0;
-  margin-bottom: 10px;
-  background-color: rgb(255, 255, 255);
+    margin-left: 0;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
 }
 
 .home-prestador .area-como-funciona ul {
-  list-style: none;
-  padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 .home-prestador .area-como-funciona ul li {
-  clear: both;
+    clear: both;
+    margin-bottom: 30px;
+    overflow: auto;
 }
 
 .home-prestador .area-como-funciona ul li img {
-  width: 52px;
-  float: left;
-  display: block;
-  margin-right: 15px;
+    width: 52px;
+    float: left;
+    display: block;
+    margin-right: 15px;
 }
 
 .home-prestador .area-como-funciona ul li p {
-  font-size: 17px;
-  color: rgb(255, 255, 255);
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0;
+    line-height: 22px;
 }
 
+.home-prestador .area-imagem-passos-prestador {
+    position: relative;
+}
+.home-prestador .area-imagem-passos-prestador img {
+    position: absolute;
+    right: 0;
+    top: -90px;
+}
 
+.home-prestador .area-beneficios {
+    padding-bottom: 0;
+}
+
+.home-prestador .area-beneficios .titulo p {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.home-prestador .area-beneficios ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/*.home-prestador .area-beneficios .lista-beneficios {
+    -moz-column-count: 2;
+    -moz-column-gap: 30px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 30px;
+    column-count: 2;
+    column-gap: 30px;
+}*/
+
+.home-prestador .area-beneficios .lb1 {
+    text-align: left;
+}
+
+.home-prestador .area-beneficios .lb2 {
+    text-align: right;
+}
+
+.home-prestador .area-beneficios .lista-beneficios li {
+    margin-bottom: 40px;
+}
+
+.home-prestador .area-beneficios .lista-beneficios span {
+    font-size: 17px;
+    color: rgb(84, 112, 163);
+    font-weight: 700;
+}
+
+.home-prestador .area-beneficios .lista-beneficios p {
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.parte-medico img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.medico-parte-2 img {
+    margin-top: -60px;
+}
 
 /*********************************
 *
@@ -1440,90 +1518,90 @@ header .container {
 *********************************/
 
 footer {
-  clear: both;
-  background-color: rgb(25, 42, 66);
-  padding: 60px 0 20px 0;
+    clear: both;
+    background-color: rgb(25, 42, 66);
+    padding: 60px 0 20px 0;
 }
 
 .area-logo-rodape {
-  width: 100%;
-  overflow: auto;
-  margin-bottom: 20px;
-  display: none;
+    width: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+    display: none;
 }
 
 .area-logo-rodape img {
-  width: 240px;
-  margin: 0 auto;
-  display: block;
+    width: 240px;
+    margin: 0 auto;
+    display: block;
 }
 
 .logo-rodape {
-  width: 240px;
-  display: block;
+    width: 240px;
+    display: block;
 }
 
 .info-atendimento {
-  margin-top: 50px;
-  background-image: url(../img/icone-atendimento.png);
-  background-repeat: no-repeat;
-  background-size: 52px 52px;
-  padding-left: 65px;
+    margin-top: 50px;
+    background-image: url(../img/icone-atendimento.png);
+    background-repeat: no-repeat;
+    background-size: 52px 52px;
+    padding-left: 65px;
 }
 
 .info-atendimento img {
-  float: left;
+    float: left;
 }
 
 .info-atendimento p {
-  color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 .info-atendimento p:first-child {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 5px;
 }
 
 .info-atendimento p strong {
-  font-size: 26px;
-  font-style: italic;
-  line-height: 26px;
+    font-size: 26px;
+    font-style: italic;
+    line-height: 26px;
 }
 
 footer ul {
-  padding-left: 0;
-  list-style: none;
+    padding-left: 0;
+    list-style: none;
 }
 
 footer h5 {
-  color: rgb(255, 255, 255);
-  font-size: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin: 26px 0 26px 0;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 26px 0 26px 0;
 }
 
 footer ul li a {
-  color: rgb(255, 255, 255);
-  font-size: 17px;
+    color: rgb(255, 255, 255);
+    font-size: 17px;
 }
 
 footer ul li a:hover {
-  color: rgb(255, 255, 255);
-  text-decoration: underline;
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
 }
 
 .endereco-site {
-  text-align: center;
-  background-color: rgb(163, 36, 49);
-  padding: 10px 0;
+    text-align: center;
+    background-color: rgb(163, 36, 49);
+    padding: 10px 0;
 }
 
 .endereco-site a {
-  color: rgb(255, 255, 255);
-  font-size: 18px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
 }
 
 /*********************************
@@ -1533,415 +1611,432 @@ footer ul li a:hover {
 *********************************/
 
 @media only screen and (min-width: 1200px) {
-  .nav-link:before,
-	.nav-link:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 4px;
-    bottom: -24px;
-    background: rgb(163, 36, 49);
-  }
+    .nav-link:before,
+    .nav-link:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 4px;
+        bottom: -24px;
+        background: rgb(163, 36, 49);
+    }
 
-  .nav-link:before {
-    left: 0;
-  }
+    .nav-link:before {
+        left: 0;
+    }
 
-  .nav-link:after {
-    right: 0;
-    background: rgb(163, 36, 49);
-    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
+    .nav-link:after {
+        right: 0;
+        background: rgb(163, 36, 49);
+        transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
 
-  .nav-link:hover:before {
-    background: rgb(163, 36, 49);
-    width: 100%;
-    transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
+    .nav-link:hover:before {
+        background: rgb(163, 36, 49);
+        width: 100%;
+        transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
 
-  .nav-link:hover:after {
-    background: transparent;
-    width: 100%;
-    transition: 0s;
-  }
+    .nav-link:hover:after {
+        background: transparent;
+        width: 100%;
+        transition: 0s;
+    }
 }
 
 @media only screen and (max-width: 1200px) {
-  header {
-    padding: 40px 0 38px 0;
-  }
+    header {
+        padding: 40px 0 38px 0;
+    }
 
-  .navbar .container {
-    height: auto;
-  }
+    .navbar .container {
+        height: auto;
+    }
 
-  .navbar-collapse {
-    padding-top: 30px;
-  }
+    .navbar-collapse {
+        padding-top: 30px;
+    }
 
-  .btn-profissional a {
-    margin: 0;
-    text-align: center;
-    width: 234px;
-  }
+    .btn-profissional a {
+        margin: 0;
+        text-align: center;
+        width: 234px;
+    }
 
-  .btn-entrar a {
-    text-align: center;
-    width: 234px;
-    margin-top: 10px;
-  }
+    .btn-entrar a {
+        text-align: center;
+        width: 234px;
+        margin-top: 10px;
+    }
 
-  .form-busca-home button {
-    margin-top: 15px;
-  }
+    .form-busca-home button {
+        margin-top: 15px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -37px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -37px;
+    }
 
-  .area-seleciona-profissional {
-    font-size: 11px;
-  }
+    .area-seleciona-profissional {
+        font-size: 11px;
+    }
 
-  .card-footer strong {
-    font-size: 13px;
-  }
+    .card-footer strong {
+        font-size: 13px;
+    }
 
-  .area-logo-rodape {
-    display: block;
-  }
+    .area-logo-rodape {
+        display: block;
+    }
 
-  .logo-rodape {
-    display: none;
-  }
+    .logo-rodape {
+        display: none;
+    }
 
-  .info-atendimento {
-    margin-top: 26px;
-  }
+    .info-atendimento {
+        margin-top: 26px;
+    }
 
-  .menu-area-logada {
-    background-color: rgb(255, 255, 255);
-    padding: 5px 0 0 0;
-    margin-top: 0;
-    border-top: 1px solid rgb(220, 220, 220);
-  }
+    .menu-area-logada {
+        background-color: rgb(255, 255, 255);
+        padding: 5px 0 0 0;
+        margin-top: 0;
+        border-top: 1px solid rgb(220, 220, 220);
+    }
 
-  .nav-item-mobile {
-    display: inline-block;
-  }
+    .nav-item-mobile {
+        display: inline-block;
+    }
 
-  .drop-menu {
-    display: none;
-  }
+    .drop-menu {
+        display: none;
+    }
 
-  .menu-area-logada ul li {
-    float: none;
-  }
+    .menu-area-logada ul li {
+        float: none;
+    }
 
-  .drop-notificacoes button,
-	.drop-carrinho button {
-    padding: 0 25px 0 0;
-  }
+    .drop-notificacoes button,
+    .drop-carrinho button {
+        padding: 0 25px 0 0;
+    }
 
-  .drop-notificacoes button span,
-	.drop-carrinho button span {
-    display: block;
-  }
+    .drop-notificacoes button span,
+    .drop-carrinho button span {
+        display: block;
+    }
 
-  .drop-notificacoes button i,
-	.drop-carrinho button i {
-    display: none;
-  }
+    .drop-notificacoes button i,
+    .drop-carrinho button i {
+        display: none;
+    }
 
-  .opcoes-menu-usuario {
-    padding: 5px 0;
-  }
+    .opcoes-menu-usuario {
+        padding: 5px 0;
+    }
 
-  .opcoes-menu-usuario .dropdown-menu {
-    left: 0;
-    right: auto;
-  }
+    .opcoes-menu-usuario .dropdown-menu {
+        left: 0;
+        right: auto;
+    }
 
-  .condicoes {
-    margin-top: 30px;
-  }
+    .condicoes {
+        margin-top: 30px;
+    }
 }
 
 @media only screen and (max-width: 991px) {
-  .area-banner .frase {
-    margin-right: auto;
-    text-align: center;
-    width: 100%;
-  }
+    .area-banner .frase {
+        margin-right: auto;
+        text-align: center;
+        width: 100%;
+    }
 
-  .box-banner-conheca {
-    height: 160px;
-  }
+    .box-banner-conheca {
+        height: 160px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -486px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -486px;
+    }
 
-  .area-vantagens {
-    padding-bottom: 390px;
-  }
+    .area-vantagens {
+        padding-bottom: 390px;
+    }
 
-  .area-imagem-aplicativo img {
-    width: 100%;
-  }
+    .area-imagem-aplicativo img {
+        width: 100%;
+    }
 
-  .area-texto-aplicativo {
-    padding-top: 44px;
-  }
+    .area-texto-aplicativo {
+        padding-top: 44px;
+    }
 
-  .area-alt-busca {
-    display: block;
-  }
+    .area-alt-busca {
+        display: block;
+    }
 
-  .col-mapa {
-    display: none;
-  }
+    .col-mapa {
+        display: none;
+    }
 
-  .form-busca-resultado .form-group select {
-    margin-bottom: 15px;
-  }
+    .form-busca-resultado .form-group select {
+        margin-bottom: 15px;
+    }
 
-  .link-mapa-mobile {
-    display: inline-block;
-  }
+    .link-mapa-mobile {
+        display: inline-block;
+    }
 
-  .card-formulario {
-    margin-bottom: 40px;
-  }
+    .card-formulario {
+        margin-bottom: 40px;
+    }
+    .home-prestador .area-imagem-passos-prestador img {
+        display: none;
+    }
+    .home-prestador .area-como-funciona {
+        padding-top: 30px;
+    }
+    .home-prestador .area-como-funciona .titulo h3,
+    .home-prestador .area-como-funciona .titulo p {
+        text-align: center;
+    }
+    .home-prestador .area-como-funciona .titulo .linha {
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
-  .area-passos {
-    background-size: cover;
-  }
+    .area-passos {
+        background-size: cover;
+    }
 
-  .steps {
-    display: none;
-  }
+    .steps {
+        display: none;
+    }
 
-  .steps-mobile {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    margin-top: 70px;
-  }
+    .steps-mobile {
+        display: block;
+        width: 100%;
+        overflow: auto;
+        margin-top: 70px;
+    }
 
-  .steps-mobile .step {
-    width: 340px;
-    text-align: left;
-    overflow: auto;
-    margin: 0 auto;
-  }
+    .steps-mobile .step {
+        width: 340px;
+        text-align: left;
+        overflow: auto;
+        margin: 0 auto;
+    }
 
-  .steps-mobile .step .numero {
-    font-size: 28px;
-    color: rgb(255, 255, 255);
-    float: left;
-    display: block;
-    width: 30px;
-    margin-top: 28px;
-  }
+    .steps-mobile .step .numero {
+        font-size: 28px;
+        color: rgb(255, 255, 255);
+        float: left;
+        display: block;
+        width: 30px;
+        margin-top: 28px;
+    }
 
-  .steps-mobile .step .traco {
-    width: 12px;
-    height: 100px;
-    margin-right: 12px;
-    background-image: url(../img/linha-steps-mobile.png);
-    background-repeat: no-repeat;
-    background-position: center center;
-    float: left;
-  }
+    .steps-mobile .step .traco {
+        width: 12px;
+        height: 100px;
+        margin-right: 12px;
+        background-image: url(../img/linha-steps-mobile.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        float: left;
+    }
 
-  .steps-mobile .step .icone {
-    margin-bottom: 0;
-    float: left;
-    margin-top: 24px;
-  }
+    .steps-mobile .step .icone {
+        margin-bottom: 0;
+        float: left;
+        margin-top: 24px;
+    }
 
-  .steps-mobile .step .icone img {
-    height: 48px;
-    margin: 0 auto;
-  }
+    .steps-mobile .step .icone img {
+        height: 48px;
+        margin: 0 auto;
+    }
 
-  .steps-mobile .step .texto {
-    font-size: 13px;
-    text-transform: uppercase;
-    color: rgb(255, 255, 255);
-    margin: 30px 0 0 20px;
-    display: block;
-    float: left;
-  }
+    .steps-mobile .step .texto {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: rgb(255, 255, 255);
+        margin: 30px 0 0 20px;
+        display: block;
+        float: left;
+    }
 
-  .steps-mobile .step5 .texto {
-    font-size: 13px;
-    text-transform: uppercase;
-    color: rgb(255, 255, 255);
-    margin: 18px 0 0 20px;
-    display: block;
-    float: left;
-  }
+    .steps-mobile .step5 .texto {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: rgb(255, 255, 255);
+        margin: 18px 0 0 20px;
+        display: block;
+        float: left;
+    }
 
-  .area-vantagens .row {
-    margin-bottom: 0;
-  }
+    .area-vantagens .row {
+        margin-bottom: 0;
+    }
 
-  .area-vantagens .row .col-sm-12 {
-    margin-bottom: 30px;
-  }
+    .area-vantagens .row .col-sm-12 {
+        margin-bottom: 30px;
+    }
 
-  .area-vantagens {
-    padding-bottom: 320px;
-  }
+    .area-vantagens {
+        padding-bottom: 320px;
+    }
 
-  .box-banner-conheca {
-    height: 104px;
-  }
+    .box-banner-conheca {
+        height: 104px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -374px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -374px;
+    }
 
-  .area-imagem-aplicativo img {
-    width: 50%;
-  }
+    .area-imagem-aplicativo img {
+        width: 50%;
+    }
 
-  .area-seleciona-profissional {
-    font-size: 10px;
-  }
+    .area-seleciona-profissional {
+        font-size: 10px;
+    }
 
-  .select-validade-mes {
-    margin-bottom: 5px;
-  }
+    .select-validade-mes {
+        margin-bottom: 5px;
+    }
 
-  .area-btn-finalizar .btn-finalizar {
-    float: left;
-  }
+    .area-btn-finalizar .btn-finalizar {
+        float: left;
+    }
+    .home-prestador .passos-cadastro .texto {
+        margin-bottom: 30px;
+    }
 }
 
 @media only screen and (max-width: 575px) {
-  .pagamento .form-group {
-    margin-bottom: 16px;
-  }
+    .pagamento .form-group {
+        margin-bottom: 16px;
+    }
 
-  .pagamento .area-label {
-    margin-bottom: 0;
-  }
+    .pagamento .area-label {
+        margin-bottom: 0;
+    }
 
-  .pagamento .form-group .input-numero-cartao {
-    margin-bottom: 16px;
-  }
+    .pagamento .form-group .input-numero-cartao {
+        margin-bottom: 16px;
+    }
 
-  .pagamento .form-group .input-cpf-titular {
-    margin-bottom: 16px;
-  }
+    .pagamento .form-group .input-cpf-titular {
+        margin-bottom: 16px;
+    }
 
-  .pagamento .form-group .label-codigo-seguranca {
-    margin-top: 16px;
-  }
+    .pagamento .form-group .label-codigo-seguranca {
+        margin-top: 16px;
+    }
 
-  .card-resumo-compra .card-header .valor-produto {
-    text-align: left;
-  }
+    .card-resumo-compra .card-header .valor-produto {
+        text-align: left;
+    }
 }
 
 @media only screen and (max-width: 480px) {
-  .box-banner-conheca {
-    height: 95px;
-  }
+    .box-banner-conheca {
+        height: 95px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -328px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -328px;
+    }
 
-  .link-aplicativos li:first-child {
-    margin-right: 20px;
-  }
+    .link-aplicativos li:first-child {
+        margin-right: 20px;
+    }
 
-  .link-aplicativos li a {
-    width: 140px;
-    height: 42px;
-  }
+    .link-aplicativos li a {
+        width: 140px;
+        height: 42px;
+    }
 
-  .escolher-data input, .escolher-hora input {
-    font-size: 12px;
-    padding: 6px 12px 6px 12px;
-  }
+    .escolher-data input, .escolher-hora input {
+        font-size: 12px;
+        padding: 6px 12px 6px 12px;
+    }
 
-  .escolher-data label, .escolher-hora label {
-    display: none;
-  }
+    .escolher-data label, .escolher-hora label {
+        display: none;
+    }
 
-  .area-escolher-data .confirma-data {
-    font-size: 12px;
-  }
+    .area-escolher-data .confirma-data {
+        font-size: 12px;
+    }
 }
 
 @media only screen and (max-width: 420px) {
-  .card-footer {
-    position: relative;
-    height: 84px;
-  }
+    .card-footer {
+        position: relative;
+        height: 84px;
+    }
 
-  .card-footer .form-check, .card-footer strong {
-    position: absolute;
-  }
+    .card-footer .form-check, .card-footer strong {
+        position: absolute;
+    }
 
-  .card-footer .form-check {
-    top: 38px;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 226px;
-    text-align: center;
-  }
+    .card-footer .form-check {
+        top: 38px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 226px;
+        text-align: center;
+    }
 
-  .card-footer strong {
-    line-height: 18px;
-    font-size: 16px;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    width: 150px;
-    text-align: center;
-  }
+    .card-footer strong {
+        line-height: 18px;
+        font-size: 16px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 150px;
+        text-align: center;
+    }
 
-  .area-escolher-data .btn {
-    font-size: 11px;
-  }
+    .area-escolher-data .btn {
+        font-size: 11px;
+    }
 }
 
 @media only screen and (max-width: 375px) {
-  .area-vantagens {
-    padding-bottom: 236px;
-  }
+    .area-vantagens {
+        padding-bottom: 236px;
+    }
 
-  .box-banner-conheca {
-    height: 45px;
-  }
+    .box-banner-conheca {
+        height: 45px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -258px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -258px;
+    }
 }
 
 @media only screen and (max-width: 320px) {
-  .area-vantagens {
-    padding-bottom: 190px;
-  }
+    .area-vantagens {
+        padding-bottom: 190px;
+    }
 
-  .box-banner-conheca .area-imagem {
-    margin-top: -228px;
-  }
+    .box-banner-conheca .area-imagem {
+        margin-top: -228px;
+    }
 
-  .box-banner-conheca {
-    height: 38px;
-  }
+    .box-banner-conheca {
+        height: 38px;
+    }
 }
