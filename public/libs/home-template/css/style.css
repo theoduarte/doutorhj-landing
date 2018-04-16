@@ -14,6 +14,7 @@ Verson: 1.0
 8 INFORMA BENEFICIÁRIO
 9 PAGAMENTO
 10 CONFIRMAÇÃO AGENDAMENTO
+11 HOME PRESTADOR
 X FOOTER
 X MEDIA QUERIES
 ----------------------------------------------------------------------------------------*/
@@ -102,6 +103,10 @@ body,
   font-size: 15px;
   color: rgb(115, 115, 115);
   margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
 }
 
 /*********************************
@@ -878,6 +883,18 @@ header .container {
   margin-top: 20px;
 }
 
+.confirma-cadastro .titulo {
+  margin-bottom: 20px;
+}
+
+.confirma-cadastro .titulo {
+  margin-bottom: 20px;
+}
+
+.confirma-cadastro .p {
+  font-size: 17px;
+}
+
 /*********************************
 *
 *  7 MENU ÁREA LOGADA
@@ -904,7 +921,6 @@ header .container {
 .menu-area-logada ul li span {
   font-size: 13px;
   font-weight: 700;
-  color: rgb(46, 46, 46);
   text-transform: uppercase;
   letter-spacing: -0.5px;
   color: rgb(70, 117, 184);
@@ -1288,10 +1304,6 @@ header .container {
   clear: both;
 }
 
-.confirmacao .condicoes p {
-  font-size: 14px;
-}
-
 /*********************************
 *
 *  11 HOME PRESTADOR
@@ -1323,6 +1335,7 @@ header .container {
   
 .home-prestador .titulo {
 	text-align: center;
+  margin-bottom: 50px;
 }
   
 .home-prestador .titulo h3 {
@@ -1345,7 +1358,6 @@ header .container {
 }
 
 .home-prestador .passos-cadastro {
-	margin-top: 50px;
 	text-align: center;
 }
 
@@ -1355,6 +1367,7 @@ header .container {
 	height: 104px;
 	background-color: rgb(84, 112, 163);
 	margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .home-prestador .passos-cadastro .icone img {	
@@ -1364,6 +1377,58 @@ header .container {
 
 .home-prestador .passos-cadastro .titulo {	
 	font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.home-prestador .passos-cadastro .texto {  
+  font-size: 17px;
+}
+
+.home-prestador .area-sobre p {
+  text-align: center;
+  font-size: 17px;
+}
+
+.home-prestador .area-como-funciona .container {
+  background-color: rgb(84, 112, 163);
+}
+
+.home-prestador .area-como-funciona .titulo h3,
+.home-prestador .area-como-funciona .titulo p {
+  text-align: left;
+  color: rgb(255, 255, 255);
+}
+
+.home-prestador .area-como-funciona .titulo h3 {
+  margin: 10px 0 10px 0;
+}
+
+.home-prestador .area-como-funciona .titulo .linha {
+  margin-left: 0;
+  margin-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.home-prestador .area-como-funciona ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.home-prestador .area-como-funciona ul li {
+  clear: both;
+}
+
+.home-prestador .area-como-funciona ul li img {
+  width: 52px;
+  float: left;
+  display: block;
+  margin-right: 15px;
+}
+
+.home-prestador .area-como-funciona ul li p {
+  font-size: 17px;
+  color: rgb(255, 255, 255);
 }
 
 /*********************************
@@ -1410,7 +1475,6 @@ footer {
 
 .info-atendimento p {
   color: rgb(255, 255, 255);
-  font-size: 14px;
 }
 
 .info-atendimento p:first-child {
@@ -1471,7 +1535,7 @@ footer ul li a:hover {
 	.nav-link:after {
     content: '';
     position: absolute;
-    width: 0%;
+    width: 0;
     height: 4px;
     bottom: -24px;
     background: rgb(163, 36, 49);

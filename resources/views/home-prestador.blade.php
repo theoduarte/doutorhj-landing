@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="icone">
-                            <img src="/libs/home-template/img/icone-pre-cadastro.png" alt="">
+                            <img src="../../libs/home-template/img/icone-pre-cadastro.png" alt="">
                         </div>
                         <div class="titulo">
                             Solicite o pré-cadastro
@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="icone">
-                            <img src="/libs/home-template/img/icone-aguarde.png" alt="">
+                            <img src="../../libs/home-template/img/icone-aguarde.png" alt="">
                         </div>
                         <div class="titulo">
                             Aguarde
@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="icone">
-                            <img src="/libs/home-template/img/icone-confirmacao.png" alt="">
+                            <img src="../../libs/home-template/img/icone-confirmacao.png" alt="">
                         </div>
                         <div class="titulo">
                             Confirmação
@@ -57,6 +57,50 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="areas area-sobre">
+        <div class="container">
+            <div class="titulo">
+                <h3>Sobre o Doctor Hoje</h3>
+                <div class="linha"></div>
+            </div>
+            <p>Uma plataforma digital onde os profissionais de saúde dispõem algumas horas da sua agenda   para centenas de pacientes que buscam qualidade de atendimento particular a custos que cabem no orçamento. Aumento o faturamento de sua clínica, venha para o Doutor Hoje.  </p>
+        </div>
+    </div>
+    <div class="areas area-como-funciona">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-6"></div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <div class="titulo">
+                        <h3>Como funciona?</h3>
+                        <div class="linha"></div>
+                        <p>Uma plataforma digital onde os profissionais de saúde dispõem algumas horas da sua agenda   para centenas de pacientes que buscam qualidade de atendimento particular a custos que cabem no orçamento. Aumento o faturamento de sua clínica, venha para o Doutor Hoje.</p>
+                    </div>
+                    <ul>
+                        <li>
+                            <img src="../../libs/home-template/img/icone-prestador-passo1.png" alt="">
+                            <p>O paciente acessa doutorhoje.com.br e faz a busca do prestador de seu interesse</p>
+                        </li>
+                        <li>
+                            <img src="../../libs/home-template/img/icone-prestador-passo2.png" alt="">
+                            <p>Acessa o sistema de agendamento, escolhendo data e horário de preferência</p>
+                        </li>
+                        <li>
+                            <img src="../../libs/home-template/img/icone-prestador-passo3.png" alt="">
+                            <p>Realiza o pagamento</p></li>
+                        <li>
+                            <img src="../../libs/home-template/img/icone-prestador-passo4.png" alt="">
+                            <p>O prestador receberá o contato do Doutor Hoje para confirmação do agendamento</p>
+                        </li>
+                        <li>
+                            <img src="../../libs/home-template/img/icone-prestador-passo5.png" alt="">
+                            <p>Os honorários serão pagos em até 20 dias</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
         </div>
     </div>
 </section>
