@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Home - DoutorHJ')
+@section('title', 'Resultado - DoutorHJ')
 
 @push('scripts')
 
@@ -30,7 +30,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select class="form-control" id="especialidade">
+                            <select id="list_especialidade" class="form-control">
                                 <option>Especialidade</option>
                                 <option>Opção 1</option>
                                 <option>Opção 2</option>
@@ -64,12 +64,14 @@
                             </select>
                         </div>
                         <div id="accordion">
+                        	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
-                                    <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
-                                    <h6 class="card-subtitle">Dr. Alexandre José</h6>
-                                    <p class="card-text">Clínica médica</p>
-                                    <p class="card-text">Edifício Pio X - 716 Sul (Asa Sul) Brasilia, DF <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }}</h5>
+                                    <h6 class="card-subtitle">Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}</h6>
+                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) Clínica médica @else Clínica Odontológica @endif </p>
+                                    <p class="card-text">{{ $atendimento->clinica->enderecos[0]->te_endereco.' ('.$atendimento->clinica->enderecos[0]->te_bairro.') '.$atendimento->clinica->enderecos[0]->cidade->nm_cidade.'-'.$atendimento->clinica->enderecos[0]->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
@@ -78,31 +80,44 @@
                                         Agendar com este profissional
                                         </label>
                                     </div>
-                                    <strong>R$ 173,00</strong>
+                                    <strong>R$ {{ $atendimento->vl_atendimento }}</strong>
                                 </div>
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="area-escolher-data">
-                                        <div class="titulo-escolhe-data">
-                                            Escolha data e horário
-                                        </div>
-                                        <div class="escolher-data">                                    
-                                            <input id="selecionaData1" class="selecionaData" type="text" placeholder="Data">
-                                            <label for="selecionaData1"><i class="far fa-calendar-alt"></i></label>
-                                        </div>
-                                        <div class="escolher-hora">                                    
-                                            <input id="selecionaHora1" class="selecionaData" type="text" placeholder="Horário">
-                                            <label for="selecionaHora1"><i class="far fa-clock"></i></label>
-                                        </div>
-                                        <div class="confirma-data">
-                                            <span>26/03/2018 - Segunda-feira - 10h30min</span>
-                                        </div>
-                                        <div class="valor-total">
-                                            <span><strong>Total a pagar:</strong> R$ 173,00</span>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
-                                    </div>
+                                	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post">
+                                	
+                                		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
+                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $atendimento->profissional->id }}">
+                                    	<input type="hidden" id="paciente_id" name="paciente_id" value="">
+                                    	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
+                                    	{!! csrf_field() !!}
+                                	
+	                                    <div class="area-escolher-data">
+	                                        <div class="titulo-escolhe-data">
+	                                            Escolha data e horário
+	                                        </div>
+	                                        <div class="escolher-data">                                    
+	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData" name="data_atendimento" placeholder="Data">
+	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="far fa-calendar-alt"></i></label>
+	                                        </div>
+	                                        <div class="escolher-hora">                                    
+	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora" name="hora_atendimento" placeholder="Horário">
+	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="far fa-clock"></i></label>
+	                                        </div>
+	                                        <div class="confirma-data">
+	                                            <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span>
+	                                        </div>
+	                                        <div class="mensagem-confirma-data">
+	                                            <span>Data e horário sugeito a confirmação</span>
+	                                        </div>
+	                                        <div class="valor-total">
+	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->vl_atendimento }}</span>
+	                                        </div>
+	                                        <button type="submit" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
+	                                    </div>
+                                    </form>
                                 </div>
                             </div>
+                            @endforeach
                             <div class="card card-resultado">
                                 <div class="card-body">
                                     <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
@@ -135,6 +150,9 @@
                                         <div class="confirma-data">
                                             <span>26/03/2018 - Segunda-feira - 10h30min</span>
                                         </div>
+                                        <div class="mensagem-confirma-data">
+                                            <span>Data e horário sugeito a confirmação</span>
+                                        </div>
                                         <div class="valor-total">
                                             <span><strong>Total a pagar:</strong> R$ 173,00</span>
                                         </div>
@@ -155,72 +173,141 @@
     </div>
 </section>
 @push('scripts')
-	<script type="text/javascript">
-		var laravel_token = '{{ csrf_token() }}';
-		var resizefunc = [];
+    <script type="text/javascript">        
+            var laravel_token = '{{ csrf_token() }}';
+            var resizefunc = []; 
 
-		/*********************************
-        *
-        * GOOGLE MAPS
-        * 
-        *********************************/
+            /*********************************
+            *
+            * CALENDARIO E DATA
+            * 
+            *********************************/
 
-        function initMap() {
-
-            var clinicaUm = {
-                info: '<strong>Check Up Centro Médico</strong><br>\
-                            SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
-                            <a href="https://goo.gl/Y9UUWt">Obter direção</a>',
-                lat: -15.7987496,
-                long: -47.8949315
-            };
-
-            var clinicaDois = {
-                info: '<strong>Actual Clínica Médica e Psicologia</strong><br>\
-                            SCS Quadra 6 Bloco A Lote 150/170 - Edifício<br> Carioca 5 andar Sala 514/15,<br> Q. 6 - Asa Sul, Brasília - DF, 70325-900<br>\
-                            <a href="https://goo.gl/JWt3Tp">Obter direção</a>',
-                lat: -15.7960663,
-                long: -47.8927361
-            };
-
-            var clinicaTres = {
-                info: '<strong>Clínica Devas</strong><br>\r\
-                            SDN CNB Etapa III - S 4104, Setor de<br> Diversões Norte - Brasília, DF, 70077-000<br>\
-                            <a href="https://goo.gl/2JdPbn">Obter direção</a>',
-                lat: -15.7920841,
-                long: -47.8859702
-            };
-
-            var locations = [
-            [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
-            [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
-            [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
-            ];
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 13,
-                center: new google.maps.LatLng(-15.7987496, -47.8949315),
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+            jQuery.datetimepicker.setLocale('pt-BR'); 
+                
+            jQuery('.selecionaData').datetimepicker({                
+                timepicker:false,
+                format:'d.m.Y'
+            }).on("input change", function(e){
+            	console.log("Date changed: ", e.target.value);
             });
+            
+            jQuery('.selecionaHora').datetimepicker({ 
+                datepicker:false,
+                format:'H:i',
+                step: 10,
+            }).on("input change", function(e){
+            	console.log("Time changed: ", e.target.value);
+            });
+                
+            jQuery('#selecionaData2').datetimepicker({                
+                timepicker:false,
+                format:'d.m.Y',
+            });
+            jQuery('#selecionaHora2').datetimepicker({ 
+                datepicker:false,
+                format:'H:i',
+                step: 10,
+            });
+                
+            /*********************************
+            *
+            * TROCA COR CARD AO CLICAR
+            * 
+            *********************************/
 
-            var infowindow = new google.maps.InfoWindow({});
+            $('.card-resultado').on('show.bs.collapse hide.bs.collapse', function (e) {
+                if (e.type=='show') {
+                    $(this).addClass("card-resultado-active");
+                } else {
+                    $(this).removeClass("card-resultado-active");
+                }
+            });  
 
-            var marker, i;
+            /*********************************
+            *
+            * COLLAPSE FORM BUSCA MOBILE
+            * 
+            *********************************/
 
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map
+            jQuery(document).ready(function($) {
+            var alterClass = function() {
+                var ww = document.body.clientWidth;
+                if (ww < 975) {
+                $('.collapseFormulario').removeClass('show');
+                } else if (ww >= 975) {
+                $('.collapseFormulario').addClass('show');
+                };
+            };
+            $(window).resize(function(){
+                alterClass();
+            });
+            //Fire it when the page first loads:
+            alterClass();
+            });             
+
+            /*********************************
+            *
+            * GOOGLE MAPS
+            * 
+            *********************************/
+
+            function initMap() {
+
+                var clinicaUm = {
+                    info: '<strong>Check Up Centro Médico</strong><br>\
+                                SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
+                                <a href="https://goo.gl/Y9UUWt">Obter direção</a>',
+                    lat: -15.7987496,
+                    long: -47.8949315
+                };
+
+                var clinicaDois = {
+                    info: '<strong>Actual Clínica Médica e Psicologia</strong><br>\
+                                SCS Quadra 6 Bloco A Lote 150/170 - Edifício<br> Carioca 5 andar Sala 514/15,<br> Q. 6 - Asa Sul, Brasília - DF, 70325-900<br>\
+                                <a href="https://goo.gl/JWt3Tp">Obter direção</a>',
+                    lat: -15.7960663,
+                    long: -47.8927361
+                };
+
+                var clinicaTres = {
+                    info: '<strong>Clínica Devas</strong><br>\r\
+                                SDN CNB Etapa III - S 4104, Setor de<br> Diversões Norte - Brasília, DF, 70077-000<br>\
+                                <a href="https://goo.gl/2JdPbn">Obter direção</a>',
+                    lat: -15.7920841,
+                    long: -47.8859702
+                };
+
+                var locations = [
+                [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
+                [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
+                [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 13,
+                    center: new google.maps.LatLng(-15.7987496, -47.8949315),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
 
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(locations[i][0]);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-            }
-        }
+                var infowindow = new google.maps.InfoWindow({});
+
+                var marker, i;
+
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            }        
 	</script>
 	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI&callback=initMap" type="text/javascript"></script>

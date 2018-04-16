@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PacientesRequest;
 use Illuminate\Support\Facades\DB;
+use App\Cidade;
+use App\Endereco;
+use App\User;
+use Illuminate\Support\Facades\Crypt;
+use App\Paciente;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -26,6 +31,32 @@ class PacienteController extends Controller
                                  'arEspecialidade'=>$arEspecialidade]);
     }
     
+    /**
+     * ativarConta the specified resource in storage.
+     *
+     * @param  String  $verify_hash
+     * @return \Illuminate\Http\Response
+     */
+    public function ativarConta($verify_hash)
+    {
+        //$this->validate($request, Volunteer::$rules);
+        
+        $paciente_id = Crypt::decryptString($verify_hash);
+        
+        $paciente = Paciente::findOrFail($paciente_id);
+        
+        if($paciente === null) {
+            return view('welcome');
+        }
+        
+        $user_id = $paciente->user->id;
+        $user = User::findOrFail($user_id);
+        $user->cs_status = 'A';
+        $user->save();
+        
+        return view('pacientes.activate');
+    }
+    
      
     /**
      * 
@@ -36,7 +67,7 @@ class PacienteController extends Controller
         DB::beginTransaction();
         
         try{
-            $usuario = new \App\User();
+            $usuario = new User();
             $usuario->name = strtoupper($request->input('nm_primario').' '.$request->input('nm_secundario'));
             $usuario->email = $request->input('email');
             $usuario->password = bcrypt($request->input('password'));
@@ -48,8 +79,8 @@ class PacienteController extends Controller
             $documento->save();
             
             
-            $endereco = new \App\Endereco($request->all());
-            $idCidade = \App\Cidades::where(['cd_ibge'=>$request->input('cd_ibge_cidade')])->get(['id'])->first();
+            $endereco = new Endereco($request->all());
+            $idCidade = Cidade::where(['cd_ibge'=>$request->input('cd_ibge_cidade')])->get(['id'])->first();
             $endereco->cidade_id = $idCidade->id;
             $endereco->save();
             

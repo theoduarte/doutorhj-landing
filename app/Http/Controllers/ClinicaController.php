@@ -126,7 +126,7 @@ class ClinicaController extends Controller
         array_push($arContatos, $contato1->id);
         
         if(!empty($request->input('ds_contato2'))){
-            $contato2             = new \App\Contato();
+            $contato2             = new Contato();
             $contato2->tp_contato = $request->input('tp_contato2');
             $contato2->ds_contato = $request->input('ds_contato2');
             $contato2->save();
@@ -169,11 +169,9 @@ class ClinicaController extends Controller
         $prestador->load('documentos');
         $prestador->load('profissionals');
         
-        
         $user   = User::findorfail($prestador->responsavel->user_id); 
         $cidade = Cidade::findorfail($prestador->enderecos->first()->cidade_id); 
         $documentoprofissional = [];
-        
         
         $precoprocedimentos = Atendimento::where(['clinica_id'=> $idClinica, 'consulta_id'=> null])->get();
         $precoprocedimentos->load('procedimento');
@@ -306,13 +304,13 @@ class ClinicaController extends Controller
      */
     public function destroy($idClinica)
     {
-        $clinica = \App\Clinica::findorfail($idClinica);
+        $clinica = Clinica::findorfail($idClinica);
         $clinica->forceDelete();
         $clinica->contatos()->forceDelete();
         $clinica->enderecos()->forceDelete();
         $clinica->documentos()->forceDelete();
         $clinica->user()->forceDelete();
-        \App\Atendimento::where('clinica_id', $idClinica)->delete();
+        Atendimento::where('clinica_id', $idClinica)->delete();
         
         
         return redirect()->route('clinicas.index')->with('success', 'Clínica excluída com sucesso!');        
@@ -616,5 +614,21 @@ class ClinicaController extends Controller
         Request::flash();
         
         return view('resultado', compact('prestadores'));
+    }
+
+    public function paginaPagamento(){
+        return view('pagamento');
+    }
+    public function informaBeneficiario(){
+        return view('informa-beneficiario');
+    }
+    public function confirmaAgendamento(){
+        return view('confirmacao');
+    }
+    public function homePrestador(){
+        return view('home-prestador');
+    }
+    public function confirmaCadastro(){
+        return view('confirma-cadastro');
     }
 }

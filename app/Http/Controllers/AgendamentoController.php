@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
+use App\Agendamento;
+use App\Clinica;
+use App\Profissional;
+use App\Estado;
+use App\Atendimento;
 
-class AgendaController extends Controller
+class AgendamentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +19,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agenda = \App\Agendamento::where(function($query){}
+        $agenda = Agendamento::where(function($query){}
         
                                        )->orderBy('dt_atendimento')
                                         ->sortable()->paginate(20);
@@ -107,6 +112,28 @@ class AgendaController extends Controller
     }
     
     /**
+     * Realiza o agendamento de um usuário autenticado.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function agendarAtendimento(Request $request)
+    {
+    	$atendimento_id		= $request->input('atendimento_id');
+    	$profissional_id	= $request->input('profissional_id');
+    	$paciente_id		= $request->input('paciente_id');
+    	$clinica_id			= $request->input('clinica_id');
+    	$data_atendimento	= $request->input('data_atendimento');
+    	$hora_atendimento	= $request->input('hora_atendimento');
+    	
+    	$atendimento = Atendimento::findOrFail($atendimento_id);
+    	
+    	dd($atendimento);
+    	 
+    	return view('agendamentos.pagamento', compact('cargos'));
+    }
+    
+    /**
      * Consulta para alimentar autocomplete
      * 
      * @param string $consulta
@@ -114,8 +141,7 @@ class AgendaController extends Controller
      */
     public function getLocalAtendimento($consulta){
         $arJson = array();
-        $consultas = \App\Clinica::where(DB::raw('to_str(nm_razao_social)'), 
-                                            'like', '%'.UtilController::toStr($consulta).'%')->get();
+        $consultas = Clinica::where(DB::raw('to_str(nm_razao_social)'), 'like', '%'.UtilController::toStr($consulta).'%')->get();
         $consultas->load('documentos');
         
         foreach ($consultas as $query)
@@ -142,7 +168,7 @@ class AgendaController extends Controller
      */
     public function getProfissional($profissional){
         $arJson = array();
-        $profissional = \App\Profissional::where(function($query){
+        $profissional = Profissional::where(function($query){
 //                         dd(Request::all());
                 # $query->where(DB::raw('to_str(CONCAT(nm_primario, nm_secundario))'),'like', '%'.UtilController::toStr($profissional).'%');
             
@@ -156,7 +182,7 @@ class AgendaController extends Controller
                 if( $objDocumento->tp_documento == 'CRM' or 
                         $objDocumento->tp_documento == 'CRO' ){
                     
-                    $estado = \App\Estado::findorfail((int)$objDocumento->estado_id);
+                    $estado = Estado::findorfail((int)$objDocumento->estado_id);
                     $teDocumento = $objDocumento->te_documento.' '.$objDocumento->tp_documento.'/'.$estado->sg_estado;
                 }
             }
