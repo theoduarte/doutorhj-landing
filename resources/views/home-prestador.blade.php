@@ -121,7 +121,7 @@
                         quaisquer taxas ou mensalidades </p>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3 lista-beneficios lb1">
+                    <div class="col-md-6 col-xl-3 lista-beneficios lb1">
                         <ul>
                             <li>
                                 <span>AUMENTO DO SEU FATURAMENTO</span>
@@ -144,10 +144,10 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-6 parte-medico medico-parte-1">
+                    <div class="col-xl-6 parte-medico medico-parte-1">
                         <img src="/libs/home-template/img/medico-parte1.png" alt="">
                     </div>
-                    <div class="col-sm-3 lista-beneficios lb2">
+                    <div class="col-md-6 col-xl-3 lista-beneficios lb2">
                         <ul>
                             <li>
                                 <span>PLATAFORMA PERSONALIZADA</span>

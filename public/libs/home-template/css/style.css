@@ -63,7 +63,8 @@ body,
 .confirma-cadastro,
 .pagamento,
 .confirma-beneficiario,
-.confirmacao {
+.confirmacao,
+.login-prestador {
     padding: 10px 0 60px 0;
     background-color: rgb(236, 243, 247);
     box-sizing: border-box;
@@ -75,7 +76,8 @@ body,
 .confirma-cadastro .area-container,
 .pagamento .area-container,
 .confirma-beneficiario .area-container,
-.confirmacao .area-container {
+.confirmacao .area-container,
+.login-prestador .area-container{
     border-radius: 4px;
     padding: 30px 25px;
     background-color: rgb(255, 255, 255);
@@ -88,7 +90,8 @@ body,
 .confirma-cadastro .area-container .titulo strong,
 .pagamento .area-container .titulo strong,
 .confirma-beneficiario .area-container .titulo strong,
-.confirmacao .area-container .titulo strong {
+.confirmacao .area-container .titulo strong,
+.login-prestador .area-container .titulo strong {
     font-size: 20px;
     text-transform: uppercase;
     color: rgb(70, 117, 184);
@@ -99,7 +102,8 @@ body,
 .login .area-container .titulo p,
 .pagamento .area-container .titulo p,
 .confirma-beneficiario .area-container .titulo p,
-.confirmacao .area-container .titulo p {
+.confirmacao .area-container .titulo p,
+.login-prestador .area-container .titulo p {
     font-size: 15px;
     color: rgb(115, 115, 115);
     margin-bottom: 10px;
@@ -879,7 +883,7 @@ header .container {
 }
 
 .card-formulario form .btn-criar-conta {
-    width: 130px;
+    /*width: 130px;*/
     margin-top: 20px;
 }
 
@@ -1453,6 +1457,8 @@ header .container {
     position: absolute;
     right: 0;
     top: -90px;
+    -webkit-box-shadow: 0 10px 30px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px 5px rgba(0,0,0,0.3);
 }
 
 .home-prestador .area-beneficios {
@@ -1509,6 +1515,10 @@ header .container {
 
 .medico-parte-2 img {
     margin-top: -60px;
+}
+
+.remove-imagem-medico img {
+    display: none;
 }
 
 /*********************************
@@ -1743,6 +1753,12 @@ footer ul li a:hover {
     .condicoes {
         margin-top: 30px;
     }
+    .medico-parte-1, .medico-parte-2 {
+        display: none;
+    }
+    .home-prestador .area-beneficios .lb2 {
+        text-align: left;
+    }
 }
 
 @media only screen and (max-width: 991px) {
@@ -1915,6 +1931,10 @@ footer ul li a:hover {
     }
     .home-prestador .passos-cadastro .texto {
         margin-bottom: 30px;
+    }
+    .home-prestador .area-beneficios .lb1,
+    .home-prestador .area-beneficios .lb2 {
+        text-align: center;
     }
 }
 

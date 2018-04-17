@@ -64,11 +64,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Benefícios da parceria</a>
                         </li>
-                        <li class="nav-item nav-item-mobile">
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Contato</a>
                         </li>
                         <li class="nav-item btn-entrar">
-                            <a class="nav-link" href="#">Entrar</a>
+                            <a class="nav-link" href="#">Login</a>
                         </li>
                     </ul>
                 </div>
