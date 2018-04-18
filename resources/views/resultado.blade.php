@@ -80,7 +80,7 @@
                                         Agendar com este profissional
                                         </label>
                                     </div>
-                                    <strong>R$ {{ $atendimento->vl_atendimento }}</strong>
+                                    <strong>R$ {{ $atendimento->getVlComercialAtendimento() }}</strong>
                                 </div>
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                 	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post">
@@ -110,7 +110,7 @@
 	                                            <span>Data e horário sugeito a confirmação</span>
 	                                        </div>
 	                                        <div class="valor-total">
-	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->vl_atendimento }}</span>
+	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->getVlComercialAtendimento() }}</span>
 	                                        </div>
 	                                        <button type="submit" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
 	                                    </div>
