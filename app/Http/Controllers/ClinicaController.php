@@ -634,4 +634,7 @@ class ClinicaController extends Controller
     public function loginPrestador(){
         return view('login-prestador');
     }
+    public function minhaConta(){
+        return view('minha-conta');
+    }
 }

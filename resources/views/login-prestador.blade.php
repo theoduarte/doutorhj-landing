@@ -18,7 +18,7 @@
             <div class="area-container">
                 <div class="titulo">
                     <strong>Seu Cadastro</strong>
-                    <p>Se você já tem cadastro conosco, faça o login para avançar, ou realize o seu cadastro.</p>
+                    <p>Se você já tem cadastro conosco, faça o login para avançar, ou realize o seu pré-cadastro.</p>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6">
@@ -27,7 +27,7 @@
                                 Já é cadastrado?
                             </div>
                             <div class="card-body">
-                                <span class="card-span">E-mail ou Celular obrigatórios para o login.</span>
+                                <span class="card-span">CNPJ ou CRM obrigatórios para o login.</span>
                                 <h5 class="card-title">Dados de acesso</h5>
                                 <form action="{{ route('login') }}" method="post">
 

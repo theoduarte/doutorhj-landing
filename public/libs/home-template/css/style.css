@@ -15,6 +15,7 @@ Verson: 1.0
 9 PAGAMENTO
 10 CONFIRMAÇÃO AGENDAMENTO
 11 HOME PRESTADOR
+12 MINHA CONTA
 X FOOTER
 X MEDIA QUERIES
 ----------------------------------------------------------------------------------------*/
@@ -128,7 +129,7 @@ header .container {
     padding-top: 15px;
 }
 
-.navbar-brand {
+header .navbar-brand {
     display: block;
     width: 255px;
     height: 55px;
@@ -141,7 +142,7 @@ header .container {
     margin-top: -30px;
 }
 
-.nav-link {
+header .nav-link {
     font-size: 13px;
     font-weight: 700;
     color: rgb(46, 46, 46);
@@ -154,33 +155,33 @@ header .container {
     letter-spacing: -0.5px;
 }
 
-.nav-link:hover {
+header .nav-link:hover {
     color: rgb(163, 36, 49);
     text-decoration: none;
 }
 
-.btn-profissional a {
+header .btn-profissional a {
     background-color: rgb(234, 234, 234);
     border-radius: 3px;
     margin: 0 10px;
 }
 
-.btn-entrar a {
+header .btn-entrar a {
     color: rgb(255, 255, 255);
     background-color: rgb(163, 36, 49);
     border-radius: 3px;
 }
 
-.btn-entrar a:hover {
+header .btn-entrar a:hover {
     color: rgb(255, 255, 255);
     background-color: rgb(117, 27, 36);
 }
 
-.navbar-toggler i {
+header .navbar-toggler i {
     color: rgb(70, 117, 184);
 }
 
-.navbar-collapse {
+header .navbar-collapse {
     background: rgb(255, 255, 255);
 }
 
@@ -907,8 +908,9 @@ header .container {
 
 .menu-area-logada {
     background-color: rgb(230, 230, 230);
-    padding: 78px 15px 22px 0;
+    padding: 78px 15px 22px 15px;
     margin-top: -55px;
+    margin-left: 15px;
 }
 
 .menu-area-logada ul {
@@ -920,6 +922,11 @@ header .container {
 
 .menu-area-logada ul li {
     float: left;
+}
+
+.menu-area-logada ul li .al-nome-usuario {
+    line-height: 37px;
+    cursor: default;
 }
 
 .menu-area-logada ul li span {
@@ -1014,7 +1021,7 @@ header .container {
     min-width: 230px;
 }
 
-.nav-item-mobile {
+header .nav-item-mobile {
     display: none;
 }
 
@@ -1523,8 +1530,227 @@ header .container {
 
 /*********************************
 *
+*  12 MINHA CONTA
+*
+*********************************/
+
+.area-busca-interna {
+    padding-top: 85px;
+    background-image: url(../img/banner-internas.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.box-minha-conta {
+    margin: 85px 0 85px 0;
+    padding-left: 15px;
+    background-color: rgb(236, 239, 242);
+}
+
+.box-minha-conta .row .menu {
+    padding: 20px 0;
+    background-color: rgb(25, 118, 188);
+}
+
+.box-minha-conta .row .menu .nav .nav-link {
+    padding-left: 20px;
+    color: rgb(163, 200, 225);
+}
+
+.box-minha-conta .row .menu .nav .nav-link i {
+    display: none;
+}
+
+.box-minha-conta .row .menu .nav .nav-link:hover {
+    color: rgb(255, 255, 255);
+}
+
+.box-minha-conta .row .menu .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    background-color: transparent;
+    padding-left: 0;
+}
+
+.box-minha-conta .row .menu .nav-pills .nav-link.active i {
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.box-minha-conta .row .conteudo {
+    padding: 30px 40px;
+    min-height: 605px;
+}
+
+.box-minha-conta .row .conteudo form label {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.box-minha-conta .row .conteudo .label-titulo {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.box-minha-conta .row .conteudo form input::placeholder,
+.box-minha-conta .row .conteudo form select {
+    color: rgb(140, 140, 140);
+    font-size: 14px;
+}
+
+.box-minha-conta .row .conteudo form .fc-tit-dn {
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes {
+    overflow: auto;
+    height: 116px;
+    margin-top: 48px;
+}
+
+.box-minha-conta .row .conteudo .btn-adicionar-dependentes {
+    width: 100%;
+    margin: 20px 0 50px 0;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes table {
+    font-size: 14px;
+    margin-bottom: 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.box-minha-conta .row .conteudo .modal-adiciona-dependente {
+    max-width: 400px;
+}
+
+.box-minha-conta .row .conteudo .modal-adiciona-dependente .modal-title {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.box-minha-conta .row .conteudo .modal-adiciona-dependente input,
+.box-minha-conta .row .conteudo .modal-adiciona-dependente select {
+    background-color: rgb(255, 255, 255);
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .row {
+    padding: 10px 0;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
+    font-size: 14px;
+    line-height: 34px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .btn {
+    font-size: 14px;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-opcoes-notificacao {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-not-mob {
+    margin-top: 30px;
+}
+
+.box-minha-conta .row .conteudo  .nota-avaliacao {
+    margin-bottom: 4px;
+}
+
+.box-minha-conta .row .conteudo  .nota-avaliacao p {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+    width: 100%;
+}
+
+.rating {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.rating-input {
+    float: right;
+    width: 18px;
+    height: 16px;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+}
+
+.rating-star {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 18px;
+    height: 16px;
+    float: right;
+    background: url('../img/icone-star.png') 0 -16px;
+}
+
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 18px;
+    height: 16px;
+    background: url('../img/icone-star.png') 0 -16px;
+}
+
+.box-minha-conta .row .conteudo .itens-sair {
+    width: 100%;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .itens-sair span {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+.box-minha-conta .row .conteudo .itens-sair {
+    margin-bottom: 20px;
+}
+
+.box-minha-conta .row .conteudo .itens-sair .btn {
+    font-size: 13px;
+    width: 100px;
+    height: 52px;
+    margin: 0 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 0;
+}
+
+/*********************************
+*
 *  X FOOTER
-* 
+*
 *********************************/
 
 footer {
@@ -1621,8 +1847,8 @@ footer ul li a:hover {
 *********************************/
 
 @media only screen and (min-width: 1200px) {
-    .nav-link:before,
-    .nav-link:after {
+    header .nav-link:before,
+    header .nav-link:after {
         content: '';
         position: absolute;
         width: 0;
@@ -1631,23 +1857,23 @@ footer ul li a:hover {
         background: rgb(163, 36, 49);
     }
 
-    .nav-link:before {
+    header .nav-link:before {
         left: 0;
     }
 
-    .nav-link:after {
+    header .nav-link:after {
         right: 0;
         background: rgb(163, 36, 49);
         transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    .nav-link:hover:before {
+    header .nav-link:hover:before {
         background: rgb(163, 36, 49);
         width: 100%;
         transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    .nav-link:hover:after {
+    header .nav-link:hover:after {
         background: transparent;
         width: 100%;
         transition: 0s;
@@ -1659,11 +1885,11 @@ footer ul li a:hover {
         padding: 40px 0 38px 0;
     }
 
-    .navbar .container {
+    header .navbar .container {
         height: auto;
     }
 
-    .navbar-collapse {
+    header .navbar-collapse {
         padding-top: 30px;
     }
 
@@ -1714,7 +1940,7 @@ footer ul li a:hover {
         border-top: 1px solid rgb(220, 220, 220);
     }
 
-    .nav-item-mobile {
+    header .nav-item-mobile {
         display: inline-block;
     }
 

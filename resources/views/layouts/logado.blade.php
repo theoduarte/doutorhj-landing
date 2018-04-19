@@ -16,6 +16,7 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/fontawesome-all.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
+        <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap-toggle.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
         <!-- DoutorHJ Reset CSS -->
         <link rel="stylesheet" href="/css/doutorhj.style.css">
@@ -26,6 +27,7 @@
         <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
+        <script src="/libs/home-template/js/bootstrap-toggle.js"></script>
         @endpush
         @stack('style')
     </head>
@@ -50,45 +52,22 @@
                         <div class="collapse navbar-collapse" id="navbarMobile">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Agendamento</a>
+                                    <a class="nav-link" href="#">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Dicas do Doutor</a>
+                                    <a class="nav-link" href="#">Indique seus Amigos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Como Funciona</a>
+                                    <a class="nav-link" href="#">Meus Agendamentos</a>
                                 </li>
-                                <li class="nav-item nav-item-mobile">
-                                    <a class="nav-link" href="#">Meus dados</a>
-                                </li>
-                                <li class="nav-item nav-item-mobile">
-                                    <a class="nav-link" href="#">Agenda</a>
-                                </li>
-                                <li class="nav-item nav-item-mobile">
-                                    <a class="nav-link" href="#">Finanaceiro</a>
-                                </li>
-                                <li class="nav-item nav-item-mobile">
-                                    <a class="nav-link" href="#">Configurações</a>
-                                </li>
-                                <li class="nav-item nav-item-mobile">
-                                    <a class="nav-link" href="#">Sair</a>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Minha Conta</a>
                                 </li>
                             </ul>
                             <div class="menu-area-logada">
                                 <ul>
                                     <li>
-                                        <div class="dropdown opcoes-menu-usuario drop-menu">
-                                            <button class="btn dropdown-toggle btn-nome-usuario" type="button" id="dropdownNomeUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span>Whashington</span>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownNomeUsuario">
-                                                <a class="dropdown-item" href="#">Meus dados</a>
-                                                <a class="dropdown-item" href="#">Meus agendamentos</a>
-                                                <a class="dropdown-item" href="#">Financeiro</a>
-                                                <a class="dropdown-item" href="#">Configurações</a>
-                                                <a class="dropdown-item" href="#">Sair</a>
-                                            </div>
-                                        </div>
+                                        <span class="al-nome-usuario">Whashington</span>
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
@@ -122,7 +101,7 @@
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                             <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Carrinho </span><i class="far fa-list-alt"></i>
+                                                <span>Carrinho </span><i class="fas fa-cart-plus"></i>
                                                 <!--<div class="numero-notificacoes">
                                                     <span>2</span>
                                                 </div>-->
