@@ -126,6 +126,14 @@ class AgendamentoController extends Controller
     	$data_atendimento	= $request->input('data_atendimento');
     	$hora_atendimento	= $request->input('hora_atendimento');
     	
+    	\Cart::add(array(
+    			'id' => 456,
+    			'name' => 'Sample Item 1',
+    			'price' => 67.99,
+    			'quantity' => 4,
+    			'attributes' => array()
+    	));
+    	
     	$atendimento = Atendimento::findOrFail($atendimento_id);
     	
     	dd($atendimento);

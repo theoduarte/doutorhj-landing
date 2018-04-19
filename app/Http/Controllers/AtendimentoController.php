@@ -23,6 +23,11 @@ class AtendimentoController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
+    	/* $user_id = 17;
+    	//$cartCollection = \Cart::session($user_id)->getContent();
+    	$cartCollection = \Cart::getContent();
+    	dd($cartCollection); */
+    	
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
         $tipo_especialidade = CVXRequest::get('tipo_especialidade');
         $local_atendimento = UtilController::toStr(CVXRequest::get('local_atendimento'));
@@ -37,7 +42,7 @@ class AtendimentoController extends Controller
         		->join('clinicas', function($join1) { $join1->on('clinicas.id', '=', 'atendimentos.clinica_id');})
         		->join('clinica_endereco', function($join2) { $join2->on('clinicas.id', '=', 'clinica_endereco.clinica_id');})
         		->join('enderecos', function($join3) use ($endereco_id) { $join3->on('clinica_endereco.endereco_id', '=', 'enderecos.id')->on('enderecos.id', '=', DB::raw($endereco_id));})
-        		->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_atendimento', 'atendimentos.ds_preco', 'atendimentos.consulta_id')
+        		->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.consulta_id')
         		->distinct()
         		->get();
         	 

@@ -620,6 +620,29 @@ class ClinicaController extends Controller
         return view('pagamento');
     }
     public function informaBeneficiario(){
+    	/*$user_id = 17;
+    	
+    	\Cart::session($user_id)->add(455, 'Sample Item', 100.99, 2, array());
+    	\Cart::clear();
+    	\Cart::add(array(
+			      'id' => 456,
+			      'name' => 'Sample Item 1',
+			      'price' => 67.99,
+			      'quantity' => 4,
+			      'attributes' => array()
+			  ));
+    	
+    	\Cart::add(array(
+    			'id' => 568,
+			      'name' => 'Sample Item 2',
+			      'price' => 69.25,
+			      'quantity' => 4,
+			      'attributes' => array(
+			        'size' => 'L',
+			        'color' => 'blue'
+			      )
+    	));*/
+    	
         return view('informa-beneficiario');
     }
     public function confirmaAgendamento(){
