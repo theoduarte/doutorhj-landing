@@ -1,6 +1,6 @@
 @extends('layouts.logado')
 
-@section('title', 'Confirma Agendamento - DoutorHJ')
+@section('title', 'Minha Conta - DoutorHJ')
 
 @push('scripts')
 
@@ -49,7 +49,7 @@
             </div>
             <div class="box-minha-conta">
                 <div class="row">
-                    <div class="col-md-3 menu">
+                    <div class="col-12 col-sm-12 col-md-3 menu">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
                             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro"
@@ -75,7 +75,7 @@
                                 Sair</a>
                         </div>
                     </div>
-                    <div class="col-md-9 conteudo">
+                    <div class="col-12 col-sm-12 col-md-9 conteudo">
                         <div class="tab-content" id="v-pills-tabContent">
 
                             <!-- Cadastro -->
@@ -83,7 +83,7 @@
                             <div class="tab-pane fade show active" id="v-pills-cadastro" role="tabpanel"
                                  aria-labelledby="v-pills-home-tab">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12 col-lg-6 col-dados-cadastro">
                                         <span class="label-titulo">Cadastro</span>
                                         <form>
                                             <fieldset disabled>
@@ -131,35 +131,49 @@
                                             </fieldset>
                                         </form>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12 col-lg-6 col-lista-dependentes">
                                         <span class="label-titulo">Dependentes</span>
                                         <div class="lista-dependentes">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <td>Nome Dependente 1</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nome Dependente 2</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nome Dependente 3</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nome Dependente 4</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nome Dependente 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nome Dependente 6</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="dependente">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <span class="nm-dependente">Nome Dependente 1</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="exclui-dependente" href="#"><i
+                                                                    class="far fa-trash-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dependente">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <span class="nm-dependente">Nome Dependente 2</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="exclui-dependente" href="#"><i
+                                                                    class="far fa-trash-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dependente">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <span class="nm-dependente">Nome Dependente 3</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="exclui-dependente" href="#"><i
+                                                                    class="far fa-trash-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <button type="button" class="btn btn-adicionar-dependentes btn-vermelho"
-                                                data-toggle="modal" data-target="#modalAdicionaDependente">
-                                            Adicionar Dependentes <i class="fas fa-user-plus"></i></button>
+
+                                        <button type="button" class="btn btn-light btn-add-dependente"
+                                                data-toggle="modal"
+                                                data-target="#modalAdicionaDependente">
+                                            <i class="fas fa-plus"></i> Adicionar dependente
+                                        </button>
 
                                         <!-- Modal adicionar dependente -->
 
@@ -249,7 +263,236 @@
                             <!-- Pagamento -->
 
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel"
-                                 aria-labelledby="v-pills-profile-tab">2
+                                 aria-labelledby="v-pills-profile-tab">
+                                <div>
+                                    <div class="area-tipo-plano">
+                                        <div class="row">
+                                            <div class="col-md-6 atp1">
+                                                <p class="nome-plano">Plano Premium</p>
+                                                <p class="valor-anuidade">Anuidade Doctor Hoje R$ 9.99</p>
+                                            </div>
+                                            <div class="col-md-6 atp2">
+                                                <p class="valor-plano">1 ano grátis</p>
+                                                <a class="link-indique-amigo" href="#">Indique um Amigo</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-5">
+                                            <span class="label-titulo">Cartões Salvos</span>
+                                            <div class="box-pagamento lista-cartoes">
+                                                <div class="cartao">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="bandeira visa"></div>
+                                                            <p>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a class="exclui-cartao" href="#"><i
+                                                                        class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="cartao">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="bandeira mastercard"></div>
+                                                            <p>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">4385</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a class="exclui-cartao" href="#"><i
+                                                                        class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="cartao">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="bandeira diners"></div>
+                                                            <p>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">6573</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a class="exclui-cartao" href="#"><i
+                                                                        class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="cartao">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="bandeira amex"></div>
+                                                            <p>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">5048</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a class="exclui-cartao" href="#"><i
+                                                                        class="far fa-trash-alt"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-light"><i class="fas fa-plus"></i>
+                                                    Adicionar cartão
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-7">
+                                            <span class="label-titulo">Últimas Transações</span>
+                                            <div class="box-pagamento lista-transacoes">
+                                                <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">
+                                                                28
+                                                            </p>
+                                                            <p class="mes">
+                                                                Abr
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                                Consulta Cardiologia
+                                                            </p>
+                                                            <p class="clinica">
+                                                                Clínica Alvorada
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">Visa </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>100</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">
+                                                                28
+                                                            </p>
+                                                            <p class="mes">
+                                                                Abr
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                                Consulta Cardiologia
+                                                            </p>
+                                                            <p class="clinica">
+                                                                Clínica Alvorada
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">Visa </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>100</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">
+                                                                28
+                                                            </p>
+                                                            <p class="mes">
+                                                                Abr
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                                Consulta Cardiologia
+                                                            </p>
+                                                            <p class="clinica">
+                                                                Clínica Alvorada
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">Visa </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>100</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">
+                                                                28
+                                                            </p>
+                                                            <p class="mes">
+                                                                Abr
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                                Consulta Cardiologia
+                                                            </p>
+                                                            <p class="clinica">
+                                                                Clínica Alvorada
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">Visa </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>100</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">
+                                                                28
+                                                            </p>
+                                                            <p class="mes">
+                                                                Abr
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                                Consulta Cardiologia
+                                                            </p>
+                                                            <p class="clinica">
+                                                                Clínica Alvorada
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">Visa </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">9010</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>100</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Notificações -->
@@ -261,31 +504,31 @@
                                         <span>E-mail</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleLembrete" checked type="checkbox" data-toggle="toggle"
                                                    data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleConfirmacao"><strong>Confirmação</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleConfirmacao" checked type="checkbox" data-toggle="toggle"
                                                    data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleCancelamento" checked type="checkbox" data-toggle="toggle"
                                                    data-on="Sim" data-off="Não">
                                         </div>
@@ -294,33 +537,33 @@
                                         <span>Mobile</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleLembreteMobile" checked type="checkbox"
                                                    data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de
                                                 consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleConfirmacaoMobile" checked type="checkbox"
                                                    data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-5">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
                                             <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de
                                                 consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 col-lg-2">
                                             <input id="toggleCancelamentoMobile" checked type="checkbox"
                                                    data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
@@ -333,7 +576,7 @@
                             <div class="tab-pane fade" id="v-pills-sugestoes" role="tabpanel"
                                  aria-labelledby="v-pills-settings-tab">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12 col-lg-6">
                                         <span class="label-titulo">Avalie o Doctor Hoje</span>
                                         <p>Deixe sua avaliação e nos ajude a deixar o Doctor Hoje melhor ainda.</p>
                                         <p>Dê uma nota de 1 a 5 estrelas para cada tópico abaixo, sendo 1 para péssimo e
@@ -439,12 +682,13 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12 col-lg-6">
                                         <span class="label-titulo">Mais alguma sugestão?</span>
                                         <p>Deixe sua avaliação e nos ajude a deixar o Doctor Hoje melhor ainda.</p>
                                         <form>
                                             <div class="form-group">
-                                                <textarea class="form-control" id="textareaSugestao" rows="6"></textarea>
+                                                <textarea class="form-control" id="textareaSugestao"
+                                                          rows="6"></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-vermelho">Enviar</button>
                                         </form>
@@ -470,6 +714,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -479,15 +724,28 @@
     @push('scripts')
         <script type="text/javascript">
             $(document).ready(function () {
-
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
-
             });
 
-            // Estrelas avaliação
+            /*********************************
+             *
+             * REMOVE PRODUTO DEPENDENTE E CARTÃO
+             *
+             *********************************/
+            $(".exclui-dependente").on("click", function (event) {
+                event.preventDefault();
+                if (confirm("Tem certeza que deseja excluir esse dependente?")) {
+                    $(this).parent().parent().parent().remove();
+                }
+            });
 
-
+            $(".exclui-cartao").on("click", function (event) {
+                event.preventDefault();
+                if (confirm("Tem certeza que deseja excluir esse cartão?")) {
+                    $(this).parent().parent().parent().remove();
+                }
+            });
         </script>
 
     @endpush

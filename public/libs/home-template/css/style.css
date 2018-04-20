@@ -1609,20 +1609,33 @@ header .nav-item-mobile {
 }
 
 .box-minha-conta .row .conteudo .lista-dependentes {
-    overflow: auto;
-    height: 116px;
     margin-top: 48px;
+    background-color: rgb(237, 237, 237);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 16px;
+    border-radius: 4px;
+    max-height: 220px;
+    overflow: auto;
 }
 
-.box-minha-conta .row .conteudo .btn-adicionar-dependentes {
-    width: 100%;
-    margin: 20px 0 50px 0;
-}
-
-.box-minha-conta .row .conteudo .lista-dependentes table {
-    font-size: 14px;
-    margin-bottom: 0;
+.box-minha-conta .row .conteudo .lista-dependentes .dependente {
     background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes .dependente .exclui-dependente {
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .btn-add-dependente {
+    width: 100%;
+    margin: 10px 0 40px 0;
 }
 
 .box-minha-conta .row .conteudo .modal-adiciona-dependente {
@@ -1746,6 +1759,150 @@ header .nav-item-mobile {
     font-weight: 600;
     text-transform: uppercase;
     border: 0;
+}
+.box-minha-conta .row .conteudo .area-tipo-plano {
+    background-color: transparent;
+    border: 1px solid rgb(220, 220, 220);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .nome-plano,
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-plano {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-anuidade,
+.box-minha-conta .row .conteudo .area-tipo-plano .link-indique-amigo {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-plano {
+    color: rgb(126, 211, 33);
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .atp2 {
+    text-align: right;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento {
+    background-color: rgb(237, 237, 237);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 370px;
+    overflow: auto;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao p {
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.box-minha-conta .row .conteudo .box-pagamento .cartao .bandeira {
+    background: url(../img/bandeiras-cartoes.png) no-repeat;
+    background-size: 100%;
+    display: block;
+    width: 30px;
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 2px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .visa {
+    background-position: center 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .mastercard {
+    background-position: center -19px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .diners {
+    background-position: center -38px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .amex {
+    background-position: center -58px;
+}
+
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao p .numero-oculto {
+    color: rgb(175, 175, 175);
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .exclui-cartao {
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .btn {
+    width: 100%;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .area-data {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .dia {
+    text-align: center;
+    font-size: 36px;
+    line-height: 36px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .mes {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .tipo {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .clinica {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .cartao-utilizado {
+    font-size: 11px;
+    color: rgb(155, 155, 155);
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .valor {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(126, 211, 33);
+    margin-bottom: 0;
 }
 
 /*********************************
@@ -2047,6 +2204,21 @@ footer ul li a:hover {
     .home-prestador .area-como-funciona .titulo .linha {
         margin: 0 auto;
         margin-bottom: 10px;
+    }
+    .minha-conta .col-dados-cadastro {
+        margin-bottom: 20px;
+    }
+    .box-minha-conta .row .conteudo .lista-dependentes {
+        margin-top: 10px;
+    }
+    .box-minha-conta .row .conteudo .box-pagamento {
+        margin-bottom: 20px;
+    }
+    .box-minha-conta .row .conteudo .itens-sair img {
+        width: 100%;
+    }
+    .box-minha-conta .row .conteudo {
+        min-height: 100px;
     }
 }
 
