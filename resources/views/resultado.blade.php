@@ -7,6 +7,11 @@
 @endpush
 
 @section('content')
+@if($errors->any())
+    <div class="col-12 alert alert-danger">
+        @foreach ($errors->all() as $error)<div class="col-5">{{ $error }}</div>@endforeach
+    </div>
+@endif
 <section class="resultado">
     <div class="container">
         <div class="area-container">

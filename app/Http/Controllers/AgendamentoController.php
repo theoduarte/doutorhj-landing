@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use App\Agendamento;
@@ -9,6 +10,7 @@ use App\Clinica;
 use App\Profissional;
 use App\Estado;
 use App\Atendimento;
+use App\Http\Requests\AgendamentoRequest;
 
 class AgendamentoController extends Controller
 {
@@ -117,9 +119,9 @@ class AgendamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function agendarAtendimento(Request $request)
+    public function agendarAtendimento(AgendamentoRequest $request)
     {
-    	$atendimento_id		= $request->input('atendimento_id');
+        $atendimento_id		= $request->input('atendimento_id');
     	$profissional_id	= $request->input('profissional_id');
     	$paciente_id		= $request->input('paciente_id');
     	$clinica_id			= $request->input('clinica_id');
