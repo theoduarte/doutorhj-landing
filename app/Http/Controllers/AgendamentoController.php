@@ -11,6 +11,8 @@ use App\Profissional;
 use App\Estado;
 use App\Atendimento;
 use App\Http\Requests\AgendamentoRequest;
+use App\Itempedido;
+use Illuminate\Support\Facades\Redirect;
 
 class AgendamentoController extends Controller
 {
@@ -127,20 +129,46 @@ class AgendamentoController extends Controller
     	$clinica_id			= $request->input('clinica_id');
     	$data_atendimento	= $request->input('data_atendimento');
     	$hora_atendimento	= $request->input('hora_atendimento');
+    	$vl_com_atendimento = $request->input('vl_com_atendimento');
+    	
+    	$item_pedido = Itempedido::all()->last();
+    	$cart_id = 0;
+    	
+    	$cartCollection = \Cart::getContent();
+    	$num_itens = $cartCollection->count();
+    	
+    	if (!isset($item_pedido) & $num_itens == 0) {
+    	    $cart_id = 1;
+    	} elseif (isset($item_pedido) & $num_itens == 0) {
+    	    $cart_id = $item_pedido->id;
+    	} elseif (isset($item_pedido) & $num_itens > 0) {
+    	    $cart_id = $item_pedido->id;
+    	    $cart_id = $cart_id + $num_itens + 1;
+    	} else {
+    	    $cart_id = $num_itens + 1;
+    	}
     	
     	\Cart::add(array(
-    			'id' => 456,
-    			'name' => 'Sample Item 1',
-    			'price' => 67.99,
-    			'quantity' => 4,
-    			'attributes' => array()
+    	    'id' => $cart_id,
+    	    'name' => 'Agendamento Item '.strval($num_itens + 1),
+    	    'price' => $vl_com_atendimento,
+    	    'quantity' => 1,
+        	    'attributes' => array(
+        	        'atendimento_id' => 'L',
+        	        'profissional_id' => 'blue',
+        	        'paciente_id' => $paciente_id,
+        	        'clinica_id' => $clinica_id,
+        	        'data_atendimento' => $data_atendimento,
+        	        'hora_atendimento' => $hora_atendimento,
+        	    )
     	));
     	
-    	$atendimento = Atendimento::findOrFail($atendimento_id);
-    	
-    	dd($atendimento);
+//     	$atendimento = Atendimento::findOrFail($atendimento_id);
+//     	dd($atendimento);
     	 
-    	return view('agendamentos.pagamento', compact('cargos'));
+    	//return view('agendamentos.pagamento', compact('cargos'));
+    	//return Redirect::to($url);
+    	return redirect()->to($url)->with('success', 'O Item foi adicionado com sucesso');
     }
     
     /**

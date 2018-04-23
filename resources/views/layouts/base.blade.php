@@ -20,6 +20,10 @@
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/fontawesome-all.css" />
+        
+        <!-- Switchery CSS-->
+    	<link rel="stylesheet" href="/libs/switchery/switchery.min.css">
+        
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
         <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css" />
@@ -44,6 +48,11 @@
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
+        <script src="/libs/switchery/switchery.min.js"></script>
+        
+        <!-- Notification js -->
+        <script src="/libs/notifyjs/dist/notify.min.js"></script>
+        <script src="/libs/notifications/notify-metro.js"></script>
         
         <script src="/js/doutorhj.script.js"></script>
         
@@ -207,6 +216,7 @@
             @endif
         </header>
 
+		@include('flash-message')
         @yield('content')
         
         <footer>
