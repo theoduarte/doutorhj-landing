@@ -55,6 +55,24 @@ body,
     box-shadow: none !important;
 }
 
+.btn-azul {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(70, 117, 184);
+    border: 0;
+}
+
+.btn-azul:hover {
+    background-color: rgb(57, 98, 157);
+}
+
+.btn-azul:focus {
+    box-shadow: none !important;
+}
+
 .tooltip {
     font-size: 12px;
 }
@@ -1282,7 +1300,7 @@ header .nav-item-mobile {
 
 .produtos-carrinho {
     background-color: rgb(249, 250, 251);
-    border: 1px solid #eee;
+    border: 1px solid rgb(238, 238, 238);
     margin-top: 15px;
 }
 
@@ -1969,6 +1987,127 @@ header .nav-item-mobile {
 .box-meus-agendamentos .lista-agendamentos {
     background-color: rgb(236, 239, 242);
     padding: 40px 20px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos {
+    padding: 15px;
+    background-color: rgb(255, 255, 255);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-data {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .col {
+    padding: 0 30px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dia {
+    text-align: center;
+    font-size: 100px;
+    line-height: 100px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .mes {
+    text-align: center;
+    font-size: 34px;
+    line-height: 34px;
+    color: rgb(111, 111, 111);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .beneficiario {
+    font-size: 28px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .tipo,
+.box-meus-agendamentos .lista-agendamentos .agendamentos .profissional {
+    font-size: 18px;
+    line-height: 18px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .valor {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .endereco {
+    font-size: 14px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .tit-token {
+    font-size: 28px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .txt-token {
+    font-size: 12px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-token {
+    text-align: center;
+    padding: 15px;
+    border-radius: 3px;
+    background-color: #e9edf0;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-token .token {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn {
+    color: rgb(70, 117, 184);
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 50px 50px 0;
+    text-align: center;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn:hover {
+    color: rgb(70, 117, 184);
+    background-color: transparent;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn:focus {
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,.15);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes {
+    padding: 10px;
+    -webkit-box-shadow: 0 10px 20px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes p {
+    margin-bottom: 0;
+    line-height: 40px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: rgb(10, 10, 10);
 }
 
 /*********************************
