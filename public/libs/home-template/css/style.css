@@ -1642,7 +1642,7 @@ header .nav-item-mobile {
     max-width: 400px;
 }
 
-.box-minha-conta .row .conteudo .modal-adiciona-dependente .modal-title {
+.box-minha-conta .row .conteudo .modal-title {
     color: rgb(70, 117, 184);
     font-size: 16px;
     text-transform: uppercase;
@@ -1852,8 +1852,9 @@ header .nav-item-mobile {
     text-align: center;
 }
 
-.box-minha-conta .row .conteudo .box-pagamento .btn {
+.box-minha-conta .row .conteudo .btn-add-cartao {
     width: 100%;
+    margin: 10px 0 0 0;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .transacoes {
@@ -1904,6 +1905,14 @@ header .nav-item-mobile {
     color: rgb(126, 211, 33);
     margin-bottom: 0;
 }
+
+/*********************************
+*
+*  13 MEUS AGENDAMENTOS
+*
+*********************************/
+
+
 
 /*********************************
 *

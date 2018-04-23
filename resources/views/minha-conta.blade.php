@@ -240,14 +240,9 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            <button type="button" class="btn btn-vermelho">Adicionar
+                                                            </button>
                                                         </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-link"
-                                                                data-dismiss="modal">Fechar
-                                                        </button>
-                                                        <button type="button" class="btn btn-vermelho">Adicionar
-                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,9 +336,91 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" class="btn btn-light"><i class="fas fa-plus"></i>
-                                                    Adicionar cartão
-                                                </button>
+                                            </div>
+                                            <button type="button" class="btn btn-light btn-add-cartao"
+                                                    data-toggle="modal" data-target="#modalAdicionarCartao"><i
+                                                        class="fas fa-plus"></i>
+                                                Adicionar cartão
+                                            </button>
+                                            <div class="modal fade" id="modalAdicionarCartao" tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="modalAdicionarCartao" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Adicionar
+                                                                cartão</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form>
+                                                                <div class="form-group row">
+                                                                    <div class="col col-12 col-sm-6">
+                                                                        <label for="inputNumeroCartaoDebito">Número do
+                                                                            cartão</label>
+                                                                        <input type="text"
+                                                                               class="form-control input-numero-cartao"
+                                                                               id="inputNumeroCartaoDebito"
+                                                                               placeholder="Número do cartão">
+                                                                    </div>
+                                                                    <div class="col col-12 col-sm-6">
+                                                                        <label for="inputNomeCartaoDebito">Nome impresso
+                                                                            no cartão</label>
+                                                                        <input type="email" class="form-control"
+                                                                               id="inputNomeCartaoDebito"
+                                                                               placeholder="Nome impresso no cartão">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="col col-6 col-sm-6 col-md-3">
+                                                                        <label for="selectValidadeMesDebito">Validade</label>
+                                                                        <div class="button dropdown">
+                                                                            <select class="form-control select-validade-mes"
+                                                                                    id="selectValidadeMesDebito">
+                                                                                <option>Mês</option>
+                                                                                <option>Janeiro</option>
+                                                                                <option>Fevereiro</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col col-6 col-sm-6 col-md-3">
+                                                                        <label class="label-validade-ano"
+                                                                               for="selectValidadeAnoDebito">&nbsp;</label>
+                                                                        <div class="button dropdown">
+                                                                            <select class="form-control"
+                                                                                    id="selectValidadeAnoDebito">
+                                                                                <option>Ano</option>
+                                                                                <option>2018</option>
+                                                                                <option>2019</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col col-12 col-sm-12 col-md-6 codigo-seguranca">
+                                                                        <label for="inputCodigoDebito"
+                                                                               class="label-codigo-seguranca">Código
+                                                                            de segurança</label>
+                                                                        <div class="area-codigo-seguranca">
+                                                                            <input type="text" class="form-control"
+                                                                                   id="inputCodigoDebito"
+                                                                                   placeholder="000">
+                                                                            <i class="fas fa-credit-card"
+                                                                               data-toggle="tooltip"
+                                                                               data-placement="top"
+                                                                               title="Código de segurança ou CVV são
+                                                                               os 3 dígitos eu ficam no verso do seu
+                                                                               cartão."></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="submit" class="btn btn-vermelho">Adicionar
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-lg-7">
@@ -746,6 +823,16 @@
                     $(this).parent().parent().parent().remove();
                 }
             });
+
+            /*********************************
+             *
+             * ATIVA TOOLTIP
+             *
+             *********************************/
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
         </script>
 
     @endpush
