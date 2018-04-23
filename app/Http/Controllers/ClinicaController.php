@@ -661,6 +661,9 @@ class ClinicaController extends Controller
         return view('minha-conta');
     }
     public function meusAgendamentos(){
-        return view('agendamentos');
+        return view('meus-agendamentos');
+    }
+    public function carrinhoDeCompras(){
+        return view('carrinho');
     }
 }

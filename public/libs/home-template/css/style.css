@@ -60,6 +60,7 @@ body,
 }
 
 .resultado,
+.carrinho,
 .login,
 .confirma-cadastro,
 .pagamento,
@@ -73,6 +74,7 @@ body,
 }
 
 .resultado .area-container,
+.carrinho .area-container,
 .login .area-container,
 .confirma-cadastro .area-container,
 .pagamento .area-container,
@@ -87,6 +89,7 @@ body,
 }
 
 .resultado .area-container .titulo strong,
+.carrinho .area-container .titulo strong,
 .login .area-container .titulo strong,
 .confirma-cadastro .area-container .titulo strong,
 .pagamento .area-container .titulo strong,
@@ -100,6 +103,7 @@ body,
 }
 
 .resultado .area-container .titulo p,
+.carrinho .area-container .titulo p,
 .login .area-container .titulo p,
 .pagamento .area-container .titulo p,
 .confirma-beneficiario .area-container .titulo p,
@@ -1276,6 +1280,37 @@ header .nav-item-mobile {
     float: right;
 }
 
+.produtos-carrinho {
+    background-color: rgb(249, 250, 251);
+    border: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .valor-produto {
+    text-align: left;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto,
+.produtos-carrinho .card-resumo-compra .card-header .excluir-produto {
+    text-align: center;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto {
+    color: rgb(69, 112, 172);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto:hover {
+    text-decoration: underline;
+}
+
+.produtos-carrinho .resumo-compra .titulo-resumo {
+    text-align: right;
+}
+
 /*********************************
 *
 *  10 CONFIRMAÇÃO AGENDAMENTO
@@ -1912,7 +1947,29 @@ header .nav-item-mobile {
 *
 *********************************/
 
+.box-meus-agendamentos {
+    margin: 85px 0 85px 0;
+    border-radius: 10px 10px 0 0;
+    background-color: transparent;
+}
 
+.box-meus-agendamentos .titulo-box {
+    text-align: center;
+    padding: 30px 30px;
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    border-radius: 10px 10px 0 0;
+    background: rgb(25, 118, 188);
+    background: -moz-linear-gradient(left, #40bbff 0%, #1976bc 100%);
+    background: -webkit-linear-gradient(left, #40bbff 0%,#1976bc 100%);
+    background: linear-gradient(to right, #40bbff 0%,#1976bc 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40bbff', endColorstr='#1976bc',GradientType=1 );
+}
+
+.box-meus-agendamentos .lista-agendamentos {
+    background-color: rgb(236, 239, 242);
+    padding: 40px 20px;
+}
 
 /*********************************
 *

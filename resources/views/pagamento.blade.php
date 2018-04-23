@@ -253,14 +253,14 @@
                                     <div class="card card-resumo-compra">
                                         <div class="card-header" id="headingOne">
                                             <div class="row">
-                                                <div class="nome-produto col-10 col-sm-8" data-toggle="collapse"
+                                                <div class="nome-produto col-12 col-sm-9" data-toggle="collapse"
                                                      data-target="#collapseOne" aria-expanded="false"
                                                      aria-controls="collapseOne">
                                                     <span>Eletrocardiograma</span>
                                                 </div>
-                                                <div class="excluir-produto col-2 col-sm-1">
+                                                <!--<div class="excluir-produto col-2 col-sm-1">
                                                     <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
-                                                </div>
+                                                </div>-->
                                                 <div class="valor-produto col-12 col-sm-3">
                                                     <span>R$ 180,00</span>
                                                 </div>
@@ -334,12 +334,12 @@
                                              data-target="#collapseTwo" aria-expanded="false"
                                              aria-controls="collapseTwo">
                                             <div class="row">
-                                                <div class="nome-produto col-10 col-sm-8">
+                                                <div class="nome-produto col-12 col-sm-9">
                                                     <span>Hemograma</span>
                                                 </div>
-                                                <div class="excluir-produto col-2 col-sm-1">
+                                                <!--<div class="excluir-produto col-2 col-sm-1">
                                                     <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
-                                                </div>
+                                                </div>-->
                                                 <div class="valor-produto col-12 col-sm-3">
                                                     <span>R$ 90,00</span>
                                                 </div>
@@ -420,12 +420,12 @@
                                              data-target="#collapseThree" aria-expanded="false"
                                              aria-controls="collapseThree">
                                             <div class="row">
-                                                <div class="nome-produto col-10 col-sm-8">
+                                                <div class="nome-produto col-12 col-sm-9">
                                                     <span>Ecografia</span>
                                                 </div>
-                                                <div class="excluir-produto col-2 col-sm-1">
+                                                <!--<div class="excluir-produto col-2 col-sm-1">
                                                     <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
-                                                </div>
+                                                </div>-->
                                                 <div class="valor-produto col-12 col-sm-3">
                                                     <span>R$ 220,00</span>
                                                 </div>
@@ -573,7 +573,7 @@
                                             </div>
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                                 <button type="submit" class="btn btn-vermelho btn-finalizar">Finalizar
-                                                    Pedido
+                                                    Pagamento
                                                 </button>
                                             </div>
                                         </div>
@@ -617,10 +617,10 @@
                 })
 
                 /*********************************
-                 *
-                 * REMOVE PRODUTO
-                 *
-                 *********************************/
+                *
+                * REMOVE PRODUTO
+                *
+                *********************************/
 
                 $(".close-div").on("click", function (event) {
                     event.preventDefault();
