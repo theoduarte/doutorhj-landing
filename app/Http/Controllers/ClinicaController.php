@@ -660,4 +660,7 @@ class ClinicaController extends Controller
     public function minhaConta(){
         return view('minha-conta');
     }
+    public function meusAgendamentos(){
+        return view('agendamentos');
+    }
 }
