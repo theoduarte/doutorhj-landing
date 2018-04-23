@@ -46,6 +46,12 @@ $.notify.addStyle("metro", {
         white: {
             "background-color": "#ffffff",
             "border": "1px solid #ddd"
-        }
+        },
+        cart: {
+            "color": "#fafafa !important",
+            "background-color": "#333",
+            "border": "1px solid #000"
+        },
+        
     }
 });

@@ -13,6 +13,7 @@ use App\Atendimento;
 use App\Http\Requests\AgendamentoRequest;
 use App\Itempedido;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class AgendamentoController extends Controller
 {
@@ -123,6 +124,9 @@ class AgendamentoController extends Controller
      */
     public function agendarAtendimento(AgendamentoRequest $request)
     {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
         $atendimento_id		= $request->input('atendimento_id');
     	$profissional_id	= $request->input('profissional_id');
     	$paciente_id		= $request->input('paciente_id');
@@ -130,6 +134,7 @@ class AgendamentoController extends Controller
     	$data_atendimento	= $request->input('data_atendimento');
     	$hora_atendimento	= $request->input('hora_atendimento');
     	$vl_com_atendimento = $request->input('vl_com_atendimento');
+    	$url = $request->input('current_url');
     	
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
@@ -148,27 +153,76 @@ class AgendamentoController extends Controller
     	    $cart_id = $num_itens + 1;
     	}
     	
-    	\Cart::add(array(
+    	/* \Cart::add(array(
     	    'id' => $cart_id,
     	    'name' => 'Agendamento Item '.strval($num_itens + 1),
     	    'price' => $vl_com_atendimento,
     	    'quantity' => 1,
-        	    'attributes' => array(
-        	        'atendimento_id' => 'L',
-        	        'profissional_id' => 'blue',
+    		'attributes' => array(
+    				'atendimento_id' => $atendimento_id,
+        	        'profissional_id' => $profissional_id,
         	        'paciente_id' => $paciente_id,
         	        'clinica_id' => $clinica_id,
         	        'data_atendimento' => $data_atendimento,
         	        'hora_atendimento' => $hora_atendimento,
-        	    )
-    	));
+    		)
+    	)); */
     	
 //     	$atendimento = Atendimento::findOrFail($atendimento_id);
 //     	dd($atendimento);
     	 
     	//return view('agendamentos.pagamento', compact('cargos'));
     	//return Redirect::to($url);
-    	return redirect()->to($url)->with('success', 'O Item foi adicionado com sucesso');
+    	//return redirect()->to($url)->with('success', 'O Item foi adicionado com sucesso');
+    	//return redirect()->to($url)->with('cart', 'O Item foi adicionado com sucesso');
+    	
+    	$itens = $cartCollection->toArray();
+    	$carrinho = [];
+    	$user_session = Auth::user();
+    	
+    	foreach ($itens as $item) {
+    		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
+    		$profissional_tmp_id = $item['attributes']['profissional_id'];
+    		$clinica_tmp_id = $item['attributes']['clinica_id'];
+    		
+    		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+    		$profissional = Profissional::findOrFail($profissional_tmp_id);
+    		$clinica = Clinica::findOrFail($clinica_tmp_id);
+    		
+    		if ($atendimento->procedimento_id != null) {
+    			$atendimento->load('procedimento');
+    			$atendimento->procedimento->load('especialidade');
+    		}
+    		
+    		if ($atendimento->consulta_id != null) {
+    			$atendimento->load('consulta');
+    			$atendimento->consulta->load('especialidade');
+    		}
+    		
+    		if (isset($clinica)) {
+    			$clinica->load('enderecos');
+    		}
+    		
+    		$item_carrinho = array(
+    				'item_id' 				=> $item['id'],
+    				'valor' 				=> $item['price'],
+    				'atendimento' 			=> $atendimento,
+    				'profissional' 			=> $profissional,
+    				'clinica' 				=> $clinica,
+    				'paciente'				=> $user_session,
+    				'data_agendamento' 		=> $item['attributes']['data_atendimento'],
+    				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
+    				'current_url' 			=> $url
+    		);
+    		
+    		array_push($carrinho, $item_carrinho);
+    	}
+    	
+    	$valor_total = \Cart::getTotal();
+    	
+    	//dd($carrinho);
+    	
+    	return view('carrinho', compact('url', 'carrinho', 'valor_total'))->with('cart', 'O Item foi adicionado com sucesso');
     }
     
     /**

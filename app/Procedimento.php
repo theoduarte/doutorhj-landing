@@ -22,9 +22,9 @@ class Procedimento extends Model
         return $this->hasMany('App\Atendimento');
     }
     
-    public function especialidades()
+    public function especialidade()
     {
-        return $this->belongsToMany('App\Especialidade');
+        return $this->belongsTo('App\Especialidade');
     }
     
     public function cupom_descontos()

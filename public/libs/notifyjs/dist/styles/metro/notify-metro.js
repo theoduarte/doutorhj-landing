@@ -34,6 +34,6 @@ $.notify.addStyle("metro", {
         white: {
             "background-color": "#f1f1f1",
             "border": "1px solid #ddd"
-        }
+        },
     }
 });

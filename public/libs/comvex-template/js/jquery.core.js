@@ -72,6 +72,8 @@ function($) {
             icon = "mdi mdi-album";
         }else if(style == "info"){
             icon = "fa fa-question";
+        }else if(style == "cart"){
+            icon = "fa   fa-cart-plus";
         }else{
             icon = "fa fa-adjust";
         }
@@ -104,6 +106,8 @@ function($) {
             icon = "mdi mdi-album";
         }else if(style == "info"){
             icon = "fa fa-question";
+        }else if(style == "cart"){
+            icon = "fa   fa-cart-plus";
         }else{
             icon = "fa fa-adjust";
         }
@@ -136,6 +140,8 @@ function($) {
             icon = "mdi mdi-album";
         }else if(style == "info"){
             icon = "fa fa-question";
+        }else if(style == "cart"){
+            icon = "fa   fa-cart-plus";
         }else{
             icon = "fa fa-adjust";
         }

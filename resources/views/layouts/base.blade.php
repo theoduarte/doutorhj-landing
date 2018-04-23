@@ -27,6 +27,10 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />
         <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css" />
+        
+        <!-- Template theme CSS -->
+    	<!-- <link rel="stylesheet" href="/libs/comvex-template/css/style_dark.css"> -->
+        
         <!-- JQueryUI -->
     	<!-- <link rel="stylesheet" href="/libs/jquery-ui-themes/jquery-ui.css"> -->
     	<!-- JQuery Autocomplete -->
@@ -40,7 +44,7 @@
         <script src="js/html5shiv.min.js"></script>
 		<![endif]-->    	
         
-        <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
+        <script src="/libs/comvex-template/js/jquery.min.js"></script>
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
         <script src="/libs/home-template/js/popper.min.js"></script>
@@ -49,10 +53,6 @@
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
         <script src="/libs/switchery/switchery.min.js"></script>
-        
-        <!-- Notification js -->
-        <script src="/libs/notifyjs/dist/notify.min.js"></script>
-        <script src="/libs/notifications/notify-metro.js"></script>
         
         <script src="/js/doutorhj.script.js"></script>
         
@@ -273,11 +273,52 @@
     	<script>
     		var resizefunc = [];
     	</script>
-    	<script type="text/javascript" src="/libs/moment/moment.js"></script>        
+    	
+        <script src="/libs/switchery/switchery.min.js"></script>
+        
+    	<!-- Counter Up  -->
+        <script src="/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="/libs/counterup/jquery.counterup.min.js"></script>
+        
+        <!-- skycons -->
+        <script src="/libs/skyicons/skycons.min.js" type="text/javascript"></script>
+		 
+        <!-- Sweet Alert Js  -->
+        <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
+        <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
+        
+        <!-- Multi Select Js Quicksearch Js  -->
+        <script type="text/javascript" src="/libs/multiselect/js/jquery.multi-select.js"></script>
+        <script type="text/javascript" src="/libs/jquery-quicksearch/jquery.quicksearch.js"></script>
+        
+        <!-- Notification js -->
+        <script src="/libs/notifyjs/dist/notify.min.js"></script>
+        <script src="/libs/notifications/notify-metro.js"></script>
+        
+        <!-- Plugins  -->
+        <script type="text/javascript" src="/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+        <script type="text/javascript" src="/libs/jquery-quicksearch/jquery.quicksearch.js"></script>
+        <script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>
+        <script type="text/javascript" src="/libs/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+		
+        <script type="text/javascript" src="/libs/moment/moment.js"></script>
+        <script type="text/javascript" src="/libs/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+                
         <script type="text/javascript" src="/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script type="text/javascript" src="/libs/bootstrap-daterangepicker/daterangepicker.js"></script>
+		
+
+
 
 		<script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
+		
+        <!-- Custom main Js -->
+        <script src="/libs/comvex-template/js/jquery.core.js"></script>
+        <!-- <script src="/libs/comvex-template/js/jquery.app.js"></script> -->
+        <!-- <script src="/libs/comvex-template/js/jquery.form-advanced.init.js"></script> -->
+        <!-- <script src="/libs/comvex-template/js/jquery.tree.js"></script> -->
+        
+		<!-- <script src="/libs/jquery-ui/jquery-ui.js"></script> -->
 		
 		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     	<script src="/js/utilitarios.js"></script>

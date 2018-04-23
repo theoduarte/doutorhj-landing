@@ -95,7 +95,8 @@
                                     	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
                                     	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_com_atendimento }}">
                                     	
-                                    	<input type="hidden" value="{{ Request::root().'/'.Request::path().'/'.str_replace(Request::url(), '',Request::fullUrl()) }}">
+                                    	<!-- <input type="hidden" name="current_url" value="{{ Request::root().'/'.Request::path().'/'.str_replace(Request::url(), '',Request::fullUrl()) }}"> -->
+                                    	<input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
                                     	{!! csrf_field() !!}
                                 	
 	                                    <div class="area-escolher-data">

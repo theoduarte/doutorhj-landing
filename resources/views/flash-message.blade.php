@@ -36,6 +36,15 @@ $(document).ready(function () {
 </script>
 @endif
 
+@if ($message = Session::get('cart'))
+<script type="text/javascript">
+$(document).ready(function () {
+
+	$.Notification.notify('cart', 'top right', 'Solicitação Concluída!', '{{ $message }}');
+});
+</script>
+@endif
+
 <!-- ALERTS -->
 @if ($message = Session::get('success-alert'))
 <script type="text/javascript">
