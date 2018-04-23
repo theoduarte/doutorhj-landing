@@ -20,6 +20,9 @@ class AtendimentoController extends Controller
      */
     public function consultaAtendimentos()
     {   
+        $url = 'http://192.168.1.241';
+        return redirect()->to($url)->with('success', 'O Item foi adicionado com sucesso');
+        
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
