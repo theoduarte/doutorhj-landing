@@ -21,6 +21,7 @@ use App\Contato;
 use App\Endereco;
 use App\Procedimento;
 use App\Responsavel;
+use Illuminate\Support\Facades\Auth;
 
 class ClinicaController extends Controller
 {
@@ -616,9 +617,73 @@ class ClinicaController extends Controller
         return view('resultado', compact('prestadores'));
     }
 
+    /**
+     * paginaPagamento a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function paginaPagamento(){
-        return view('pagamento');
+    	
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
+    	$cartCollection = \Cart::getContent();
+    	$itens = $cartCollection->toArray();
+    	
+    	$carrinho = [];
+    	$user_session = Auth::user()->paciente;
+    	$url = Request::root();
+    	
+    	foreach ($itens as $item) {
+    		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
+    		$profissional_tmp_id = $item['attributes']['profissional_id'];
+    		$clinica_tmp_id = $item['attributes']['clinica_id'];
+    		 
+    		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+    		$profissional = Profissional::findOrFail($profissional_tmp_id);
+    		$clinica = Clinica::findOrFail($clinica_tmp_id);
+    		$url = $item['attributes']['current_url'];
+    		 
+    		if ($atendimento->procedimento_id != null) {
+    			$atendimento->load('procedimento');
+    			$atendimento->procedimento->load('especialidade');
+    			$atendimento->nome_especialidade = $atendimento->procedimento->especialidade->ds_especialidade;
+    			// {{ isset($item['atendimento']->procedimento_id) ? $item['atendimento']->procedimento->especialidade->ds_especialidade : isset($item['atendimento']->consulta_id) && isset($item['atendimento']->consulta->especialidade) ? $item['atendimento']->consulta->especialidade->ds_especialidade : '--------' }}
+    		}
+    		 
+    		if ($atendimento->consulta_id != null) {
+    			$atendimento->load('consulta');
+    			$atendimento->consulta->load('especialidade');
+    			$atendimento->nome_especialidade = $atendimento->consulta->especialidade->ds_especialidade;
+    		}
+    		 
+    		//dd($atendimento);
+    		 
+    		if (isset($clinica)) {
+    			$clinica->load('enderecos');
+    		}
+    		 
+    		$item_carrinho = array(
+    				'item_id' 				=> $item['id'],
+    				'valor' 				=> $item['price'],
+    				'atendimento' 			=> $atendimento,
+    				'profissional' 			=> $profissional,
+    				'clinica' 				=> $clinica,
+    				'paciente'				=> $user_session,
+    				'data_agendamento' 		=> $item['attributes']['data_atendimento'],
+    				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
+    				'current_url' 			=> $url
+    		);
+    		 
+    		array_push($carrinho, $item_carrinho);
+    	}
+    	
+    	$valor_total = \Cart::getTotal();
+    	$valor_desconto = 10;
+    	 
+    	return view('pagamento', compact('url', 'carrinho', 'valor_total', 'valor_desconto'));
     }
+    
     public function informaBeneficiario(){
     	/*$user_id = 17;
     	
@@ -663,7 +728,25 @@ class ClinicaController extends Controller
     public function meusAgendamentos(){
         return view('meus-agendamentos');
     }
-    public function carrinhoDeCompras(){
-        return view('carrinho');
+    
+    /**
+     * removerItemCarrinho the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function removerItemCarrinho()
+    {
+    	$cart_id = CVXRequest::post('cart_id');
+    	
+    	if(isset($cart_id)) {
+    		$item = \Cart::get($cart_id);
+    		$valor_item = $item->price;
+    		
+    		if (\Cart::remove($cart_id)) {
+    			return response()->json(['status' => true, 'mensagem' => 'O Item foi removido com sucesso!', 'valor_item' => $valor_item]);
+    		}
+    	}
+    	
+    	return response()->json(['status' => false, 'mensagem' => 'O Item não foi removido. Por favor, tente novamente']);
     }
 }

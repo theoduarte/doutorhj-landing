@@ -136,6 +136,7 @@ class AgendamentoController extends Controller
     	$vl_com_atendimento = $request->input('vl_com_atendimento');
     	$url = $request->input('current_url');
     	
+    	//\Cart::clear();
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
     	
@@ -153,7 +154,7 @@ class AgendamentoController extends Controller
     	    $cart_id = $num_itens + 1;
     	}
     	
-    	/* \Cart::add(array(
+    	\Cart::add(array(
     	    'id' => $cart_id,
     	    'name' => 'Agendamento Item '.strval($num_itens + 1),
     	    'price' => $vl_com_atendimento,
@@ -165,8 +166,9 @@ class AgendamentoController extends Controller
         	        'clinica_id' => $clinica_id,
         	        'data_atendimento' => $data_atendimento,
         	        'hora_atendimento' => $hora_atendimento,
+    				'current_url' => $url
     		)
-    	)); */
+    	));
     	
 //     	$atendimento = Atendimento::findOrFail($atendimento_id);
 //     	dd($atendimento);
@@ -176,33 +178,58 @@ class AgendamentoController extends Controller
     	//return redirect()->to($url)->with('success', 'O Item foi adicionado com sucesso');
     	//return redirect()->to($url)->with('cart', 'O Item foi adicionado com sucesso');
     	
+    	
+    	
+    	//dd($carrinho);
+    	
+    	return redirect()->route('carrinho')->with('cart', 'O Item foi adicionado com sucesso');
+    	
+    	//return view('carrinho', compact('url', 'carrinho', 'valor_total'))->with('cart', 'O Item foi adicionado com sucesso');
+    }
+    
+    public function carrinhoDeCompras(){
+    	
+    	//\Cart::clear();
+    	
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
+    	$cartCollection = \Cart::getContent();
     	$itens = $cartCollection->toArray();
+    	 
     	$carrinho = [];
     	$user_session = Auth::user();
-    	
+    	$url = Request::root();
+    	 
     	foreach ($itens as $item) {
     		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
     		$profissional_tmp_id = $item['attributes']['profissional_id'];
     		$clinica_tmp_id = $item['attributes']['clinica_id'];
-    		
+    	
     		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
     		$profissional = Profissional::findOrFail($profissional_tmp_id);
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
-    		
+    		$url = $item['attributes']['current_url'];
+    	
     		if ($atendimento->procedimento_id != null) {
     			$atendimento->load('procedimento');
     			$atendimento->procedimento->load('especialidade');
+    			$atendimento->nome_especialidade = $atendimento->procedimento->especialidade->ds_especialidade;
+    			// {{ isset($item['atendimento']->procedimento_id) ? $item['atendimento']->procedimento->especialidade->ds_especialidade : isset($item['atendimento']->consulta_id) && isset($item['atendimento']->consulta->especialidade) ? $item['atendimento']->consulta->especialidade->ds_especialidade : '--------' }}
     		}
-    		
+    	
     		if ($atendimento->consulta_id != null) {
     			$atendimento->load('consulta');
     			$atendimento->consulta->load('especialidade');
+    			$atendimento->nome_especialidade = $atendimento->consulta->especialidade->ds_especialidade;
     		}
-    		
+    	
+    		//dd($atendimento);
+    	
     		if (isset($clinica)) {
     			$clinica->load('enderecos');
     		}
-    		
+    	
     		$item_carrinho = array(
     				'item_id' 				=> $item['id'],
     				'valor' 				=> $item['price'],
@@ -214,15 +241,13 @@ class AgendamentoController extends Controller
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
     				'current_url' 			=> $url
     		);
-    		
+    	
     		array_push($carrinho, $item_carrinho);
     	}
-    	
+    	 
     	$valor_total = \Cart::getTotal();
     	
-    	//dd($carrinho);
-    	
-    	return view('carrinho', compact('url', 'carrinho', 'valor_total'))->with('cart', 'O Item foi adicionado com sucesso');
+    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
     }
     
     /**

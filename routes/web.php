@@ -16,7 +16,7 @@ Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
 Route::get('login-prestador', 'ClinicaController@loginPrestador');
 Route::get('minha-conta', 'ClinicaController@minhaConta');
 Route::get('meus-agendamentos', 'ClinicaController@meusAgendamentos');
-Route::get('carrinho', 'ClinicaController@carrinhoDeCompras');
+Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
@@ -38,6 +38,7 @@ Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
+Route::post('remover-item_carrinho', 'ClinicaController@RemoverItemCarrinho');
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');

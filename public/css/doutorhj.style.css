@@ -322,6 +322,10 @@ select[readonly], input[readonly] {
   border: 1px solid #4A525F;
 }
 
+.close-div {
+	cursor: pointer;
+}
+
 .pagination li a {
     position: relative;
     display: block;

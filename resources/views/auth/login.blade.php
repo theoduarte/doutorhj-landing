@@ -51,8 +51,9 @@
                                             <input type="hidden" id="input_hidden_EmailTelefone" name="cvx_telefone">
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
-                                            <button type="submit" id="btn-login-token" class="btn btn-vermelho"><i
-                                                        class="fas fa-arrow-right"></i> Acessar Conta
+                                            <button type="submit" id="btn-login-token" class="btn btn-vermelho">
+                                            	<i class="fas fa-arrow-right"></i>
+                                            	Acessar Conta
                                             </button>
                                         </div>
                                     </div>
@@ -212,7 +213,7 @@
                         success: function (result) {
 
                             if (result != null) {
-                                $.Notification.notify('error', 'top right', 'DrHoje', 'Falha na operação!');
+                                $.Notification.notify('success', 'top right', 'DrHoje', 'Seu TOKEN foi enviado via SMS com sucesso!');
 
                                 var json = JSON.parse(result.endereco);
 
