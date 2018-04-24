@@ -321,7 +321,6 @@
 
             });
         </script>
-
     @endpush
 
 @endsection

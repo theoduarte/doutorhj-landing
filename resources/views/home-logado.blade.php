@@ -51,16 +51,18 @@
         <div class="box-resumo-home">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12 col-lg-6">
                         <div class="link-agendamentos">
                             <p>Não se esqueça da sua<br> próxima consulta e/ou exame</p>
                             <button type="button" class="btn btn-light">Meus agendamentos</button>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12 col-lg-6">
                         <div class="proxima-consulta">
-                            <p>Sua próxima consulta é</p>
-                            <p class="data-consulta">28 de Abril</p>
+                            <div class="tit-pc">
+                                <p>Sua próxima consulta é</p>
+                                <p class="data-consulta">28 de Abril</p>
+                            </div>
                             <div class="resumo">
                                 <div class="nome-status">
                                     <div class="row">
@@ -77,6 +79,23 @@
                                 <p class="valor">R$ <span>120,00</span></p>
                                 <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
                                     Sousa - Asa Sul - Brasília/DF</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-noticias-home">
+            <div class="container">
+                <div class="titulo">Saúde Hoje</div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="..." alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
                     </div>
