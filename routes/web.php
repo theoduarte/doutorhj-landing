@@ -17,6 +17,7 @@ Route::get('login-prestador', 'ClinicaController@loginPrestador');
 Route::get('minha-conta', 'ClinicaController@minhaConta');
 Route::get('meus-agendamentos', 'ClinicaController@meusAgendamentos');
 Route::get('carrinho', 'ClinicaController@carrinhoDeCompras');
+Route::get('home-logado', 'ClinicaController@homeLogado');
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');

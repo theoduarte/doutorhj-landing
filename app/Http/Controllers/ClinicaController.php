@@ -666,4 +666,7 @@ class ClinicaController extends Controller
     public function carrinhoDeCompras(){
         return view('carrinho');
     }
+    public function homeLogado(){
+        return view('home-logado');
+    }
 }

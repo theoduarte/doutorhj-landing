@@ -96,7 +96,6 @@
                                     <div class="dropdown-menu ddm-opcoes">
                                         <p><a href="">Remarcar</a></p>
                                         <p><a href="">Cancelar</a></p>
-
                                     </div>
                                 </div>
                             </div>

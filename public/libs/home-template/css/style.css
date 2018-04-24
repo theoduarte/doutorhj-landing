@@ -16,6 +16,8 @@ Verson: 1.0
 10 CONFIRMAÇÃO AGENDAMENTO
 11 HOME PRESTADOR
 12 MINHA CONTA
+13 MEUS AGENDAMENTOS
+14 HOME LOGADA
 X FOOTER
 X MEDIA QUERIES
 ----------------------------------------------------------------------------------------*/
@@ -1991,7 +1993,6 @@ header .nav-item-mobile {
     padding: 40px 20px;
     max-height: 500px;
     overflow: auto;
-    border-left: ;
 }
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos {
@@ -2150,6 +2151,41 @@ header .nav-item-mobile {
     text-transform: uppercase;
     color: rgb(10, 10, 10);
 }
+
+/*********************************
+*
+*  14 HOME LOGADO
+*
+*********************************/
+
+
+.home-logado .busca-home {
+    margin-bottom: 85px;
+}
+
+.box-resumo-home {
+    padding: 100px 0;
+    background-image: url("../img/bg-resumo-home.jpg");
+}
+
+.box-resumo-home .link-agendamentos {
+    text-align: center;
+}
+
+.box-resumo-home .link-agendamentos p {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+}
+
+.box-resumo-home .link-agendamentos .btn {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: rgb(158, 39, 49);
+    font-weight: 600;
+}
+
+.box-resumo-home
 
 /*********************************
 *
