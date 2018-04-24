@@ -59,7 +59,166 @@
                                 <p class="mes">Abril</p>
                             </div>
                             <div class="col col-lg-5 area-informacoes">
-                                <p class="beneficiario">Luiza Souza</p>
+                                <div class="nome-status">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <p class="beneficiario">Luiza</p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <span class="status agendado">Agendado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="tipo">Consulta Clínica Geral</p>
+                                <p class="profissional">Dr. João Camarinha</p>
+                                <p class="valor">R$ <span>120,00</span></p>
+                                <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
+                                    Sousa - Asa Sul - Brasília/DF</p>
+                            </div>
+                            <div class="col col-lg-4">
+                                <p class="tit-token">Token</p>
+                                <p class="txt-token">Apresente este código no momento da consulta</p>
+                                <div class="area-token">
+                                    <p class="token" id="token">456 813</p>
+                                    <p>
+                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
+                                        <br>
+                                        <span id="successMsg" style="display:none;">Copiado!</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="btn-group dropleft">
+                                    <button type="button" class="btn"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu ddm-opcoes">
+                                        <p><a href="">Remarcar</a></p>
+                                        <p><a href="">Cancelar</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="agendamentos">
+                        <div class="row">
+                            <div class="col col-lg-2 area-data">
+                                <p class="dia">28</p>
+                                <p class="mes">Abril</p>
+                            </div>
+                            <div class="col col-lg-5 area-informacoes">
+                                <div class="nome-status">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <p class="beneficiario">Whashington</p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <span class="status pre-agendado">Pré-Agendado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="tipo">Consulta Clínica Geral</p>
+                                <p class="profissional">Dr. João Camarinha</p>
+                                <p class="valor">R$ <span>120,00</span></p>
+                                <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
+                                    Sousa - Asa Sul - Brasília/DF</p>
+                            </div>
+                            <div class="col col-lg-4">
+                                <p class="tit-token">Token</p>
+                                <p class="txt-token">Apresente este código no momento da consulta</p>
+                                <div class="area-token">
+                                    <p class="token" id="token">456 813</p>
+                                    <p>
+                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
+                                        <br>
+                                        <span id="successMsg" style="display:none;">Copiado!</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="btn-group dropleft">
+                                    <button type="button" class="btn"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu ddm-opcoes">
+                                        <p><a href="">Remarcar</a></p>
+                                        <p><a href="">Cancelar</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="agendamentos">
+                        <div class="row">
+                            <div class="col col-lg-2 area-data">
+                                <p class="dia">28</p>
+                                <p class="mes">Abril</p>
+                            </div>
+                            <div class="col col-lg-5 area-informacoes">
+                                <div class="nome-status">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <p class="beneficiario">Luiza</p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <span class="status confirmado">Confirmado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="tipo">Consulta Clínica Geral</p>
+                                <p class="profissional">Dr. João Camarinha</p>
+                                <p class="valor">R$ <span>120,00</span></p>
+                                <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
+                                    Sousa - Asa Sul - Brasília/DF</p>
+                            </div>
+                            <div class="col col-lg-4">
+                                <p class="tit-token">Token</p>
+                                <p class="txt-token">Apresente este código no momento da consulta</p>
+                                <div class="area-token">
+                                    <p class="token" id="token">456 813</p>
+                                    <p>
+                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
+                                        <br>
+                                        <span id="successMsg" style="display:none;">Copiado!</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="btn-group dropleft">
+                                    <button type="button" class="btn"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu ddm-opcoes">
+                                        <p><a href="">Remarcar</a></p>
+                                        <p><a href="">Cancelar</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="agendamentos">
+                        <div class="row">
+                            <div class="col col-lg-2 area-data">
+                                <p class="dia">28</p>
+                                <p class="mes">Abril</p>
+                            </div>
+                            <div class="col col-lg-5 area-informacoes">
+                                <div class="nome-status">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <p class="beneficiario">Luiza</p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <span class="status cancelado">Cancelado</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <p class="tipo">Consulta Clínica Geral</p>
                                 <p class="profissional">Dr. João Camarinha</p>
                                 <p class="valor">R$ <span>120,00</span></p>
