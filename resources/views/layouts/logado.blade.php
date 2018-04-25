@@ -67,7 +67,7 @@
                             <div class="menu-area-logada">
                                 <ul>
                                     <li>
-                                        <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
+                                        <span class="al-nome-usuario"><?php /*{{ Auth::user()->paciente->nm_primario }} */ ?> </span>
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
