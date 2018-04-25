@@ -38,7 +38,7 @@ Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecial
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 
 #rota de notificacao CIELO
-Route::post('drhoje-notificacao', 'EspecialidadeController@consultaLocalAtendimento');
+Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
