@@ -1,6 +1,6 @@
 @extends('layouts.prestador')
 
-@section('title', 'Confirma Beneficiário - DoutorHJ')
+@section('title', 'Confirma Beneficiário - DoctorHJ')
 
 @push('scripts')
 
@@ -11,7 +11,7 @@
         <div class="area-banner">
             <div class="container">
                 <h2>Quer encher a agenda com novos pacientes?</h2>
-                <p>Concheça o Doutor Hoje. Uma nova plataforma que vai aumentar a sua carteira de clientes.</p>
+                <p>Concheça o Doctor Hoje. Uma nova plataforma que vai aumentar a sua carteira de clientes.</p>
             </div>
         </div>
         <div class="areas area-passos-cadastro">
@@ -30,7 +30,7 @@
                                 Solicite o pré-cadastro
                             </div>
                             <div class="texto">
-                                Preencha os dados do formulário
+                                Preencha os dados do <a href="">formulário</a>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -41,7 +41,7 @@
                                 Aguarde
                             </div>
                             <div class="texto">
-                                Analisamos os seus dados e entramos em contato
+                                Analisaremos os seus dados e entraremos em contato
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -52,7 +52,7 @@
                                 Confirmação
                             </div>
                             <div class="texto">
-                                Seja bem-vindo! Com o contrato em mãos, o Doutor Hoje passa a indicar centenas de
+                                Seja bem-vindo! Com o contrato em mãos, o Doctor Hoje passa a indicar centenas de
                                 pacientes para você.
                             </div>
                         </div>
@@ -66,9 +66,9 @@
                     <h3>Sobre o Doctor Hoje</h3>
                     <div class="linha"></div>
                 </div>
-                <p>Uma plataforma digital onde os profissionais de saúde dispõem algumas horas da sua agenda para
+                <p>Uma plataforma digital onde os profissionais de saúde dispõem de algumas horas da sua agenda para
                     centenas de pacientes que buscam qualidade de atendimento particular a custos que cabem no
-                    orçamento. Aumento o faturamento de sua clínica, venha para o Doutor Hoje. </p>
+                    orçamento. Aumente o faturamento de sua clínica, venha para o Doctor Hoje. </p>
             </div>
         </div>
         <div class="areas area-como-funciona">
@@ -83,13 +83,13 @@
                         <div class="titulo">
                             <h3>Como funciona?</h3>
                             <div class="linha"></div>
-                            <p>Após a realização do pré-cadastro e a validação dos dados, assinando o contrato você já
-                                fará parte do Doutor Hoje. </p>
+                            <p>Após a realização do pré-cadastro e a assinatura do contrato, você já
+                                fará parte do Doctor Hoje. </p>
                         </div>
                         <ul>
                             <li>
                                 <img src="/libs/home-template/img/icone-prestador-passo1.png" alt="">
-                                <p>O paciente acessa doutorhoje.com.br e faz a busca do prestador de seu interesse</p>
+                                <p>O paciente acessa doctorhoje.com.br e faz a busca do prestador de seu interesse</p>
                             </li>
                             <li>
                                 <img src="/libs/home-template/img/icone-prestador-passo2.png" alt="">
@@ -100,7 +100,7 @@
                                 <p>Realiza o pagamento</p></li>
                             <li>
                                 <img src="/libs/home-template/img/icone-prestador-passo4.png" alt="">
-                                <p>O prestador receberá o contato do Doutor Hoje para confirmação do agendamento</p>
+                                <p>O prestador receberá o contato do Doctor Hoje para confirmação do agendamento</p>
                             </li>
                             <li>
                                 <img src="/libs/home-template/img/icone-prestador-passo5.png" alt="">
@@ -117,7 +117,7 @@
                 <div class="titulo">
                     <h3>Benefícios da Parceria</h3>
                     <div class="linha"></div>
-                    <p>Fazendo parte da plataforma Doutor Hoje, você estará aumentando sua carteira de clientes, sem
+                    <p>Fazendo parte da plataforma Doctor Hoje, você estará aumentando sua carteira de clientes, sem
                         quaisquer taxas ou mensalidades </p>
                 </div>
                 <div class="row">
@@ -136,12 +136,7 @@
                                 <span>OTIMIZAÇÃO DA AGENDA</span>
                                 <p>Maior organização e preenchimento dos horários livres da agenda e redução de não
                                     comparecimento.</p>
-                            </li>
-                            <li>
-                                <span>PUBLICIDADE DIGITAL</span>
-                                <p>Aumento da sua presença digital, aparecendo nos resultados de busca do Doutor
-                                    Hoje</p>
-                            </li>
+                            </li>                            
                         </ul>
                     </div>
                     <div class="col-xl-6 parte-medico medico-parte-1">
@@ -151,21 +146,16 @@
                         <ul>
                             <li>
                                 <span>PLATAFORMA PERSONALIZADA</span>
-                                <p>O Doutor Hoje é simples, fácil e intuitivo, oferecendo agilidade no momento do
+                                <p>O Doctor Hoje é simples, fácil e intuitivo, oferecendo agilidade no momento do
                                     atendimento ao paciente.</p>
-                            </li>
-                            <li>
-                                <span>OTIMIZAÇÃO DA AGENDA</span>
-                                <p>Maior organização e preenchimento dos horários livres da agenda e redução de não
-                                    comparecimento.</p>
-                            </li>
+                            </li>                            
                             <li>
                                 <span>SERVIÇO DE SUPORTE </span>
                                 <p>Tire suas dúvidas ou receba suporte da nossa equipe online ou por telefone.</p>
                             </li>
                             <li>
                                 <span>PUBLICIDADE DIGITAL</span>
-                                <p>Aumento da sua presença digital, aparecendo nos resultados de busca do Doutor
+                                <p>Aumento da sua presença digital, aparecendo nos resultados de busca do Doctor
                                     Hoje</p>
                             </li>
                         </ul>
