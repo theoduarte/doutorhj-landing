@@ -1,6 +1,6 @@
 @extends('layouts.logado')
 
-@section('title', 'Pagamento - DoutorHJ')
+@section('title', 'Pagamento - DoctorHj')
 
 @push('scripts')
 
@@ -19,7 +19,7 @@
                     <div class="col-md-12 col-lg-6">
                         <div class="card card-formulario">
                             <div class="card-header">
-                                Já é cadastrado?
+                                Cupom de Desconto
                             </div>
                             <div class="card-body">
                                 <span class="card-span">Digite aqui o número do seu cupom</span>

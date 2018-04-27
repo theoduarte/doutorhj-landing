@@ -1,6 +1,6 @@
 @extends('layouts.logado')
 
-@section('title', 'Home - DoutorHJ')
+@section('title', 'Home - DoctorHj')
 
 @push('scripts')
 

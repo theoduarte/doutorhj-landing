@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Resultado - DoutorHJ')
+@section('title', 'Resultado - DoctorHj')
 
 @push('scripts')
 

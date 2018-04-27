@@ -1,8 +1,8 @@
 -- $ php artisan make:auth
--- $ php artisan make:seeder UsersTableSeeder
--- $ php artisan db:seed --class=UsersTableSeeder
+-- $ composer dump-autoload
+-- $ php artisan db:seed
 --------------------------------------------------------
---  DDL for Table ROLES
+-- DDL for Table ROLES
 -- TABELA DO VOYAGER
 -- $ php artisan migrate:rollback
 --------------------------------------------------------
@@ -28,7 +28,9 @@ CREATE TABLE roles_backup (
 --------------------------------------------------------
 --  DDL for Table MENUS
 -- $ php artisan make:migration create_menus_table
--- php artisan make:controller MenuController --resource --model=Menu
+-- $ php artisan make:controller MenuController --resource --model=Menu
+-- $ php artisan make:seeder MenusTableSeeder
+-- $ php artisan db:seed --class=MenusTableSeeder
 --------------------------------------------------------
 
 CREATE TABLE menus (
@@ -44,7 +46,9 @@ CREATE TABLE menus (
 --  DDL for Table ITEMMENUS
 -- $ php artisan make:migration create_itemmenus_table
 -- $ php artisan make:migration add_menu_id_to_itemmenus_table
---php artisan make:controller ItemmenuController --resource --model=Itemmenu
+-- $ php artisan make:controller ItemmenuController --resource --model=Itemmenu
+-- $ php artisan make:seeder ItemmenusTableSeeder
+-- $ php artisan db:seed --class=ItemmenusTableSeeder
 --------------------------------------------------------
   
 CREATE TABLE itemmenus (
@@ -62,6 +66,8 @@ CREATE TABLE itemmenus (
 --------------------------------------------------------
 --  DDL for Table PERMISSAOS
 -- $ php artisan make:migration create_permissaos_table
+-- $ php artisan make:controller PermissaoController --resource --model=Permissao
+-- $ php artisan make:provider PermissaoComposerServiceProvider
 --------------------------------------------------------
 
 CREATE TABLE permissaos (
@@ -69,8 +75,8 @@ CREATE TABLE permissaos (
   titulo          	VARCHAR(150) NOT NULL,
   acesso_privado  	BOOLEAN DEFAULT FALSE NOT NULL,
   codigo_permissao 	VARCHAR(32) NOT NULL,
-  url             	TEXT NOT NULL,
-  url_alternativa 	TEXT,
+  url_action		TEXT NOT NULL,
+  url_model			TEXT,
   descricao     	TEXT,
   created 			TIMESTAMP DEFAULT NOW(),
   modified 			TIMESTAMP DEFAULT NOW(),
@@ -79,6 +85,9 @@ CREATE TABLE permissaos (
 --------------------------------------------------------
 --  DDL for Table PERFILUSERS
 -- $ php artisan make:migration create_perfilusers_table
+-- $ php artisan make:controller PerfiluserController --resource --model=Perfiluser
+-- $ php artisan make:seeder PerfilusersTableSeeder
+-- $ php artisan db:seed --class=PerfilusersTableSeeder
 --------------------------------------------------------
 
 CREATE TABLE perfilusers (
@@ -94,6 +103,9 @@ CREATE TABLE perfilusers (
 --  DDL for Table USERS
 -- $ php artisan make:migration create_users_table
 -- $ php artisan make:migration add_perfiluser_id_to_users_table
+-- $ php artisan make:controller UserController --resource --model=User
+-- $ php artisan make:seeder UsersTableSeeder
+-- $ php artisan db:seed --class=UsersTableSeeder
 --------------------------------------------------------
 
 CREATE TABLE users (
@@ -109,6 +121,44 @@ CREATE TABLE users (
 	FOREIGN KEY (perfiluser_id) REFERENCES perfilusers(id),
 	PRIMARY KEY (id)
 );
+
+--------------------------------------------------------
+--  DDL for Table TIPO_LOGS
+-- $ php artisan make:migration create_tipo_logs_table
+-- $ php artisan make:controller TipoLogController --resource --model=TipoLog
+-- $ php artisan make:seeder TipoLogsTableSeeder
+-- $ php artisan db:seed --class=TipoLogsTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE tipo_logs (
+  id          	SERIAL NOT NULL, 
+  titulo      	VARCHAR(150) NOT NULL, 
+  created_at 	TIMESTAMP DEFAULT NOW(),
+  updated_at 	TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (id));
+
+--------------------------------------------------------
+--  DDL for Table REGISTRO_LOGS
+-- $ php artisan make:migration create_registro_logs_table
+-- $ php artisan make:controller RegistroLogController --resource --model=RegistroLog
+-- $ php artisan make:seeder RegistroLogsTableSeeder
+-- $ php artisan db:seed --class=RegistroLogsTableSeeder
+-- $ php artisan make:migration add_user_id_to_registro_logs_table
+-- $ php artisan make:migration add_tipolog_id_to_registro_logs_table
+--------------------------------------------------------
+
+CREATE TABLE registro_logs (
+  id          	SERIAL NOT NULL, 
+  titulo      	VARCHAR(150) NOT NULL, 
+  descricao		TEXT NOT NULL,
+  ativo  		BOOLEAN DEFAULT TRUE,
+  user_id 		INT4,
+  tipolog_id 	INT4,
+  created_at 	TIMESTAMP DEFAULT NOW(),
+  updated_at 	TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (tipolog_id) REFERENCES tipo_logs(id),
+  PRIMARY KEY (id));
   
 --------------------------------------------------------
 --  DDL for Table CARGO
@@ -116,6 +166,7 @@ CREATE TABLE users (
 -- $ php artisan make:migration create_cargos_table
 -- $ php artisan make:model Cargo --migration
 -- $ php artisan make:controller CargoController --resource --model=Cargo
+-- $ php artisan make:seeder CargosTableSeeder
 --------------------------------------------------------
 
 CREATE TABLE cargos  (
@@ -129,13 +180,15 @@ CREATE TABLE cargos  (
 
 COMMENT ON COLUMN cargos.cd_cargo IS 'CÓDIGO DO CARGO CBO OBTIDO NO MINISTÉRIO DO TRABALHO.';
 COMMENT ON COLUMN cargos.ds_cargo IS 'DESCRIÇÃO DO CARGO CONFORME MINISTÉRIO DO TRABALHO.';
-   
+
 --------------------------------------------------------
---  DDL for Table PROFISSIONAL_ESPECIALIDADE
+--  DDL for Table ESPECIALIDADE
 -- $ php artisan make:migration create_profissional_especialidades_table
+-- $ php artisan make:controller EspecialidadeController
+-- $ php artisan make:seeder EspecialidadesTableSeeder
 --------------------------------------------------------
 
-CREATE TABLE profissional_especialidades (
+CREATE TABLE especialidades (
 	id SERIAL 				NOT NULL,
 	cd_especialidade 		INT4, 
 	ds_especialidade 		VARCHAR(100),
@@ -144,9 +197,9 @@ CREATE TABLE profissional_especialidades (
 	PRIMARY KEY (id)
 );
 
-COMMENT ON COLUMN profissional_especialidades.id IS 'IDENTIFICADOR DE ESPECIALIDADE.';
-COMMENT ON COLUMN profissional_especialidades.cd_especialidade IS 'CÓDIGO DE ESPECIALIDADE.';
-COMMENT ON COLUMN profissional_especialidades.ds_especialidade IS 'DESCRIÇÃO DA ESPECIALIDADE.';
+COMMENT ON COLUMN especialidades.id IS 'IDENTIFICADOR DE ESPECIALIDADE.';
+COMMENT ON COLUMN especialidades.cd_especialidade IS 'CÓDIGO DE ESPECIALIDADE.';
+COMMENT ON COLUMN especialidades.ds_especialidade IS 'DESCRIÇÃO DA ESPECIALIDADE.';
 
 --------------------------------------------------------
 --  DDL for Table PROFISSIONAL
@@ -183,6 +236,7 @@ COMMENT ON COLUMN profissionals.cs_status IS 'A => ATIVO I => INATIVO';
 -- $ php artisan make:migration create_pacientes_table
 -- $ php artisan make:migration add_user_id_to_pacientes_table
 -- $ php artisan make:migration add_cargo_id_to_pacientes_table
+-- $ php artisan make:mail PacienteSender
 --------------------------------------------------------
 
 CREATE TABLE pacientes (
@@ -208,6 +262,57 @@ COMMENT ON COLUMN pacientes.cs_sexo IS 'M => MASCULINO F => FEMININO';
 COMMENT ON COLUMN pacientes.dt_nascimento IS 'DATA DE NASCIMENTO.';
 
 --------------------------------------------------------
+--  DDL for Table RESPONSAVEL
+-- $ php artisan make:migration create_responsavels_table
+-- $ php artisan make:controller ResponsavelController --resource --model=Responsavel
+-- $ php artisan make:seeder ResponsavelsTableSeeder
+-- $ php artisan db:seed --class=ResponsavelsTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE responsavels (
+  id          	SERIAL NOT NULL, 
+  telefone      VARCHAR(20) NOT NULL, 
+  cpf			VARCHAR(14) NOT NULL,
+  user_id 	INT4, 
+  created_at 	TIMESTAMP DEFAULT NOW(),
+  updated_at 	TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  PRIMARY KEY (id));
+  
+--------------------------------------------------------
+--  DDL for Table grupo_procedimento
+-- $ php artisan make:migration create_grupo_procedimentos_table
+-- $ php artisan make:controller GrupoProcedimentoController --resource --model=GrupoProcedimento
+-- $ php artisan make:seeder GrupoProcedimentosTableSeeder
+-- $ php artisan db:seed --class=GrupoProcedimentosTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE grupo_procedimentos (
+	id SERIAL 				NOT NULL, 
+	ds_grupo 				VARCHAR(200),
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (id)
+);
+
+--------------------------------------------------------
+--  DDL for Table TIPO_ATENDIMENTO
+-- $ php artisan make:migration create_tipoatendimentos_table
+-- $ php artisan make:controller TipoatendimentoController --resource --model=Tipoatendimento
+-- $ php artisan make:seeder TipoatendimentosTableSeeder
+-- $ php artisan db:seed --class=TipoatendimentosTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE tipoatendimentos (
+	id SERIAL 				NOT NULL, 
+	cd_atendimento 			VARCHAR(3), 
+	ds_atendimento 			VARCHAR(150),
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	PRIMARY KEY (id)
+);
+
+--------------------------------------------------------
 --  DDL for Table CLINICA
 -- $ php artisan make:migration create_clinicas_table
 -- $ php artisan make:migration add_profissional_id_to_clinicas_table
@@ -217,10 +322,10 @@ CREATE TABLE clinicas (
 	id SERIAL 				NOT NULL, 
 	nm_razao_social 		VARCHAR(50), 
 	nm_nome_fantasia 		VARCHAR(50),
-	profissional_id 		INT4,
+	responsavel_id 			INT4,
 	created_at 				TIMESTAMP DEFAULT NOW(), 
 	updated_at 				TIMESTAMP DEFAULT NOW(),
-	FOREIGN KEY (profissional_id) REFERENCES profissionals(id),
+	FOREIGN KEY (responsavel_id) REFERENCES responsavels(id),
 	PRIMARY KEY (id)
 );
 
@@ -281,6 +386,8 @@ CREATE TABLE categorias (
 --------------------------------------------------------
 --  DDL for Table ESTADO
 -- $ php artisan make:migration create_estados_table
+-- $ php artisan make:seeder EstadosTableSeeder
+-- $ php artisan make:controller EstadoController --resource --model=Estado
 --------------------------------------------------------
 
 CREATE TABLE estados(
@@ -302,6 +409,7 @@ COMMENT ON COLUMN estados.sg_estado IS 'SIGLA DO ESTADO';
 --  DDL for Table CIDADE
 -- $ php artisan make:migration create_cidades_table
 -- $ php artisan make:migration add_estado_id_to_cidades_table
+-- $ php artisan make:seeder CidadesTableSeeder
 --------------------------------------------------------
 
 CREATE TABLE cidades (
@@ -311,6 +419,10 @@ CREATE TABLE cidades (
 	sg_cidade 				VARCHAR(4),
 --	ds_estado 				VARCHAR(30),
 --	sg_estado 				VARCHAR(2),
+	nr_cep 					VARCHAR(9),
+	tp_localidade 			VARCHAR(2),
+	latitude 				FLOAT8 DEFAULT 0.0, 
+	longitude 				FLOAT8 DEFAULT 0.0,
 	estado_id 				INT4,
 	created_at 				TIMESTAMP DEFAULT NOW(), 
 	updated_at 				TIMESTAMP DEFAULT NOW(),
@@ -322,6 +434,7 @@ COMMENT ON COLUMN cidades.id IS 'IDENTIFICADOR DA CIDADE.';
 COMMENT ON COLUMN cidades.estado_id IS 'IDENTIFICADOR DO ESTADO.';
 COMMENT ON COLUMN cidades.nm_cidade IS 'NOME DA CIDADE CONFORME IBGE.';
 COMMENT ON COLUMN cidades.sg_cidade IS 'SIGLA DA CIDADE CONFORME IBGE.';
+COMMENT ON COLUMN cidades.tp_localidade IS 'TIPO DE LOCALIDADE DT => DISTRITO; MN => MUNICIPIO;  PV => POVOADO';
 
 --------------------------------------------------------
 --  DDL for Table CONTATO
@@ -396,11 +509,45 @@ CREATE TABLE enderecos (
 );
 
 --------------------------------------------------------
---  DDL for Table DOUTORHJ_CONSULTA
--- $ php artisan make:migration create_doutorhj_consultas_table
+--  DDL for Table LOGRADOURO
+-- $ php artisan make:migration create_logradouros_table
+-- $ php artisan make:migration add_cidade_id_to_logradouros_table
+-- $ php artisan make:controller LogradouroController --resource --model=Logradouro
 --------------------------------------------------------
 
-CREATE TABLE doutorhj_consultas (
+CREATE TABLE logradouros (
+	id SERIAL 				NOT NULL,
+	altitude 				FLOAT8 DEFAULT 0.0,
+	te_bairro 				VARCHAR(100),
+	nr_cep 					VARCHAR(9),
+	latitude 				FLOAT8 DEFAULT 0.0, 
+	longitude 				FLOAT8 DEFAULT 0.0,
+	tp_logradouro			VARCHAR(50), 
+	te_logradouro 			TEXT, 
+	cd_ibge 				VARCHAR(25),
+	nr_ddd 					VARCHAR(3),
+	sg_estado 				VARCHAR(2),
+	cidade_id 				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (cidade_id) REFERENCES cidades(id),
+	PRIMARY KEY (id)
+);
+
+COMMENT ON COLUMN logradouros.id IS 'IDENTIFICADOR DO LOGRADOURO.';
+COMMENT ON COLUMN logradouros.te_bairro IS 'NOME DO BAIRRO';
+COMMENT ON COLUMN logradouros.te_logradouro IS 'DESCRIÇÃO DO ENDEREÇO';
+COMMENT ON COLUMN logradouros.tp_logradouro IS 'TIPO DE LOGRADOURO';
+
+--------------------------------------------------------
+--  DDL for Table CONSULTA
+-- $ php artisan make:migration create_consultas_table
+-- $ php artisan make:controller ConsultaController --resource --model=Consulta
+-- $ php artisan make:seeder ConsultasTableSeeder
+-- $ php artisan db:seed --class=ConsultasTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE consultas (
 	id SERIAL 				NOT NULL,
 	cd_consulta 			VARCHAR(10), 
 	ds_consulta 			VARCHAR(100),
@@ -409,25 +556,167 @@ CREATE TABLE doutorhj_consultas (
 	PRIMARY KEY (id)
 );
 
-COMMENT ON COLUMN doutorhj_consultas.cd_consulta IS 'CÓDIGO DE CONSULTAS S1 SAÚDE.';
-COMMENT ON COLUMN doutorhj_consultas.ds_consulta IS 'DESCRIÇÃO DE CONSULTA UTILIZADA INTERNAMENTE PELA S1 SAÚDE.';
+COMMENT ON COLUMN consultas.cd_consulta IS 'CÓDIGO DE CONSULTAS S1 SAÚDE.';
+COMMENT ON COLUMN consultas.ds_consulta IS 'DESCRIÇÃO DE CONSULTA UTILIZADA INTERNAMENTE PELA S1 SAÚDE.';
 
 --------------------------------------------------------
---  DDL for Table DOUTORHJ_PROCEDIMENTO
--- $ php artisan make:migration create_doutorhj_procedimentos_table
+--  DDL for Table PROCEDIMENTO
+-- $ php artisan make:migration create_procedimentos_table
+-- $ php artisan make:controller ProcedimentoController --resource --model=Procedimento
+-- $ php artisan make:migration add_tipoatendimento_id_to_tipoatendimentos_table
+-- $ php artisan make:migration add_grupoprocedimento_id_to_procedimentos_table
+-- $ php artisan make:seeder ProcedimentosTableSeeder
+-- $ php artisan db:seed --class=ProcedimentosTableSeeder
 --------------------------------------------------------
 
-CREATE TABLE doutorhj_procedimentos (
+CREATE TABLE procedimentos (
 	id SERIAL 				NOT NULL,
 	cd_procedimento 		VARCHAR(10), 
-	ds_procedimento 		VARCHAR(100),
+	ds_procedimento 		TEXT,
+	grupoprocedimento_id	INT4,
+	tipoatendimento_id		INT4,
 	created_at 				TIMESTAMP DEFAULT NOW(), 
 	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (tipoatendimento_id) REFERENCES tipoatendimentos(id),
+	FOREIGN KEY (grupoprocedimento_id) REFERENCES grupo_procedimentos(id),
 	PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN doutorhj_procedimentos.cd_procedimento IS 'CÓDIGO DO PROCEDIMENTO UTILIZADO PELA S1 SAÚDE.';
 COMMENT ON COLUMN doutorhj_procedimentos.ds_procedimento IS 'DESCRIÇÃO DO PROCEDIMENTO UTILIZADO INTERNAMENTE PELA S1 SAÚDE.';
+
+--------------------------------------------------------
+--  DDL for Table CARTAO_PACIENTES
+-- $ php artisan make:migration create_cartao_pacientes_table
+-- $ php artisan make:controller CartaoPacienteController --resource --model=CartaoPaciente
+-- $ php artisan make:migration add_paciente_id_to_cartao_pacientes_table
+--------------------------------------------------------
+
+CREATE TABLE cartao_pacientes (
+	id SERIAL 				NOT NULL,
+	bandeira 				VARCHAR(20),
+	nome_impresso 			VARCHAR(150),
+	numero 					VARCHAR(16),
+	ano_vencimento			INT4,
+	mes_vencimento			INT4,
+	codigo_seg 				VARCHAR(3),
+	paciente_id				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
+	PRIMARY KEY (id),
+);
+
+--------------------------------------------------------
+--  DDL for Table PEDIDO
+-- $ php artisan make:migration create_pedidos_table
+-- $ php artisan make:controller PedidoController --resource --model=Pedido
+-- $ php artisan make:migration add_paciente_id_to_pedidos_table
+-- $ php artisan make:migration add_cartaopaciente_id_to_pedidos_table
+--------------------------------------------------------
+
+CREATE TABLE pedidos (
+	id SERIAL 				NOT NULL,
+	titulo 					VARCHAR(150), 
+	descricao 				TEXT,
+	dt_pagamento 			TIMESTAMP, 
+	tp_pagamento 			VARCHAR(20),
+	boleto_id				INT4,
+	cartao_id				INT4,
+	paciente_id				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (cartao_id) REFERENCES cartao_pacientes(id),
+	FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
+	PRIMARY KEY (id),
+);
+
+--------------------------------------------------------
+--  DDL for Table PAYMENT
+-- $ php artisan make:migration create_payments_table
+-- $ php artisan make:controller PaymentController --resource --model=Payment
+-- $ php artisan make:migration add_pedido_id_to_payments_table
+-- $ php artisan make:seeder PaymentsTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE payments (
+	id SERIAL 				NOT NULL,
+	merchant_order_id 		VARCHAR(20), 
+	paymentId 				VARCHAR(60),
+	payment_type			VARCHAR(50),
+	amount 					INT4, 
+	currency				VARCHAR(10),
+	country					VARCHAR(10),
+	service_tax_amount 		INT4, 
+	installments 			INT4,
+	interest				VARCHAR(50),
+	capture  				BOOLEAN DEFAULT FALSE,
+	authenticate  			BOOLEAN DEFAULT FALSE,
+	soft_descriptor			VARCHAR(50),
+	crc_card_number			VARCHAR(16),
+	crc_holder				VARCHAR(50),
+	crc_expiration_date		VARCHAR(10),
+	crc_security_code		VARCHAR(4),
+	crc_save_card			BOOLEAN DEFAULT FALSE,
+	crc_brand				VARCHAR(10),
+	dbc_customer_name		VARCHAR(100),
+	dbc_card_number			VARCHAR(16),
+	dbc_holder				VARCHAR(50),
+	dbc_expiration_date		VARCHAR(10),
+	dbc_security_code		VARCHAR(4),
+	dbc_brand				VARCHAR(10),
+	pedido_id				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+	PRIMARY KEY (id),
+);
+
+--------------------------------------------------------
+--  DDL for Table CREDIT_CARD_RESPONSE
+-- $ php artisan make:migration create_credit_card_responses_table
+-- $ php artisan make:controller CreditCardResponseController --resource --model=CreditCardResponse
+-- $ php artisan make:migration add_payment_id_to_credit_card_responses_table
+-- $ php artisan make:seeder CreditCardResponsesTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE credit_card_responses (
+	id SERIAL 				NOT NULL,
+	proof_of_sale 			VARCHAR(6), 
+	tid 					VARCHAR(20),
+	authorization_code 		VARCHAR(6),
+	soft_descriptor			VARCHAR(13),
+	crc_status 				INT4,
+	return_code 			VARCHAR(32),
+	return_message 			TEXT,
+	payment_id				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (payment_id) REFERENCES payments(id),
+	PRIMARY KEY (id),
+);
+
+--------------------------------------------------------
+--  DDL for Table DEBIT_CARD_RESPONSE
+-- $ php artisan make:migration create_debit_card_responses_table
+-- $ php artisan make:controller DebitCardResponseController --resource --model=DebitCardResponse
+-- $ php artisan make:migration add_payment_id_to_debit_card_responses_table
+-- $ php artisan make:seeder DebitCardResponsesTableSeeder
+--------------------------------------------------------
+
+CREATE TABLE debit_card_responses (
+	id SERIAL 				NOT NULL,
+	authentication_url 		TEXT,
+	tid 					VARCHAR(20),
+	return_url 				TEXT,
+	dbc_status 				INT4,
+	return_code 			VARCHAR(32),
+	payment_id				INT4,
+	created_at 				TIMESTAMP DEFAULT NOW(), 
+	updated_at 				TIMESTAMP DEFAULT NOW(),
+	FOREIGN KEY (payment_id) REFERENCES payments(id),
+	PRIMARY KEY (id),
+);
 
 --------------------------------------------------------
 --  DDL for Table MENUS
@@ -561,6 +850,7 @@ CREATE TABLE menu_perfiluser (
 --------------------------------------------------------
 --  DDL for Table PERFILUSER_PERMISSAO
 -- $ php artisan make:migration create_perfiluser_permissao_table
+-- $ php artisan make:middleware CheckPermission
 --------------------------------------------------------  
 
 CREATE TABLE perfiluser_permissao (
@@ -653,6 +943,17 @@ CREATE TABLE contato_profissional (
 	contato_id INTEGER references contatos (id) ON UPDATE CASCADE,
 	profissional_id INTEGER references profissionals (id) ON UPDATE CASCADE,
 	CONSTRAINT contato_profissionals_pkey PRIMARY KEY (contato_id, profissional_id)
+);
+
+--------------------------------------------------------
+--  DDL for Table ESPECIALIDADE_PROFISSIONAL
+-- $ php artisan make:migration create_especialidade_profissional_table
+--------------------------------------------------------
+
+CREATE TABLE especialidade_profissional (
+	especialidade_id INTEGER references especialidades (id) ON UPDATE CASCADE,
+	profissional_id INTEGER references profissionals (id) ON UPDATE CASCADE,
+	CONSTRAINT especialidade_profissionals_pkey PRIMARY KEY (especialidade_id, profissional_id)
 );
 
 --------------------------------------------------------
@@ -802,4 +1103,19 @@ $BODY$
   COST 100;
 ALTER FUNCTION public.to_str(text)
   OWNER TO postgres;
-  
+
+
+-- https://laravel-news.com/authorization-gates
+
+
+select pg_get_serial_sequence('itemmenus', 'id');
+ALTER SEQUENCE permissoes_id_seq RESTART WITH 1;
+
+SELECT nextval('public.menus_id_seq');
+SELECT currval('public.itemmenus_id_seq');
+
+select pg_get_serial_sequence('itemmenus', 'id');
+setval('public.permissoes_id_seq', 1);
+SELECT setval('public.menus_id_seq', 3, true);
+
+SELECT last_value FROM public.permissoes_id_seq;

@@ -1,6 +1,6 @@
 @extends('layouts.logado')
 
-@section('title', 'Minha Conta - DoutorHJ')
+@section('title', 'Minha Conta - DoctorHj')
 
 @push('scripts')
 

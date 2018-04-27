@@ -31,7 +31,7 @@ $(document).ready(function () {
 <script type="text/javascript">
 $(document).ready(function () {
 
-	$.Notification.notify('info', 'top right', 'DoutorHJ Informa!', '{{ $message }}');
+	$.Notification.notify('info', 'top right', 'DoctorHJ Informa!', '{{ $message }}');
 });
 </script>
 @endif
@@ -97,7 +97,7 @@ swal(
 $(document).ready(function () {
 swal(
         {
-            title: 'DoutorHJ Informa!',
+            title: 'DoctorHJ Informa!',
             text: '{{ $message }}',
             type: 'info',
             confirmButtonClass: 'btn btn-confirm mt-2'

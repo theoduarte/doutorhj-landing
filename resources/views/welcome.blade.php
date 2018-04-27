@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Home - DoutorHJ')
+@section('title', 'Home - DoctorHJ')
 
 @push('scripts')
 
@@ -60,13 +60,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col1-sobre">
-                        <p>O que é o Doutor hoje?</p>
-                        <p>O Doutor Hoje é uma<br>plataforma digital que facilita o <strong>acesso a consultas e
+                        <p>O que é o Doctor hoje?</p>
+                        <p>O Doctor Hoje é uma<br>plataforma digital que facilita o <strong>acesso a consultas e
                                 exames</strong> com <strong>preços justos</strong> que cabem no seu orçamento.</p>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-sm-12 col-md-5 col2-sobre">
-                        <p>O Doutor Hoje reúne uma ampla rede de profissionais de saúde em Brasília que, por meio da
+                        <p>O Doctor Hoje reúne uma ampla rede de profissionais de saúde em Brasília que, por meio da
                             plataforma, oferecem o acesso a consultas
                             e exames com preços reduzidos. Não é cobrado mensalidades, carências ou taxas de adesão (NÃO
                             somos um plano ou seguro saúde).
@@ -215,7 +215,7 @@
             <div class="container">
                 <div class="titulo-home">
                     <span>Você só tem a ganhar</span>
-                    <h3>Vantagens em escolher o Doutor Hoje</h3>
+                    <h3>Vantagens em escolher o Doctor Hoje</h3>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -294,7 +294,7 @@
                             <span>Venha fazer parte você também</span>
                             <h3>Você é profissional de saúde?</h3>
                         </div>
-                        <p>Entre em contato e venha participar da nossa plataforma. O Doutor Hoje conecta você a
+                        <p>Entre em contato e venha participar da nossa plataforma. O Doctor Hoje conecta você a
                             milhares de clientes. Oferecemos sistema para o gerenciamento da sua agenda e
                             pagamentos.</p>
                         <button type="button" class="btn btn-primary btn-vermelho">Saiba mais</button>
@@ -306,14 +306,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-5 area-imagem-aplicativo">
-                        <img src="/libs/home-template/img/aplicativo-smartphone.png" alt="Aplicativo Doutor Hoje">
+                        <img src="/libs/home-template/img/aplicativo-smartphone.png" alt="Aplicativo Doctor Hoje">
                     </div>
                     <div class="col-sm-12 col-md-7 area-texto-aplicativo">
                         <div class="titulo-home">
                             <span>a comodidade anda junto com você </span>
-                            <h3>Aplicativo Doutor Hoje</h3>
+                            <h3>Aplicativo Doctor Hoje</h3>
                         </div>
-                        <p>Com o aplicativo Doutor Hoje, você poderá ter acesso a todas as funcionalidades na palma da
+                        <p>Com o aplicativo Doctor Hoje, você poderá ter acesso a todas as funcionalidades na palma da
                             sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro das
                             novidades.</p>
                         <p><strong>Em breve disponível:</strong></p>

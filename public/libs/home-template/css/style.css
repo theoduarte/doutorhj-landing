@@ -221,14 +221,17 @@ header .navbar-collapse {
     padding: 250px 0 60px 0;
 }
 
-.area-banner .frase {
-    width: 470px;
+.area-banner .frase p {
     font-size: 46px;
-    line-height: 50px;
     font-weight: 700;
     color: rgb(255, 255, 255);
     text-transform: uppercase;
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.area-banner .frase {
+    width: 470px;
+    line-height: 50px;
     margin-left: auto;
 }
 

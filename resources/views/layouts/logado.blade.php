@@ -52,11 +52,11 @@
                         <div class="collapse navbar-collapse" id="navbarMobile">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Home</a>
+                                    <a class="nav-link" href="/">Home</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" href="#">Indique seus Amigos</a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Meus Agendamentos</a>
                                 </li>
@@ -67,7 +67,7 @@
                             <div class="menu-area-logada">
                                 <ul>
                                     <li>
-                                        <span class="al-nome-usuario"><?php /*{{ Auth::user()->paciente->nm_primario }} */ ?> </span>
+                                        <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
