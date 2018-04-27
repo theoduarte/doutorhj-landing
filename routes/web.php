@@ -37,6 +37,9 @@ Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 
+#rota de notificacao CIELO
+Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
+
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');

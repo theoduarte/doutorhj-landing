@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateProcedimentosTable extends Migration
+class CreateGrupoProcedimentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,11 @@ class CreateProcedimentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('procedimentos', function (Blueprint $table) {
+        Schema::create('grupo_procedimentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cd_procedimento', 10)->nullable()->comment('CÓDIGO DO PROCEDIMENTO UTILIZADO PELA S1 SAÚDE');
-            $table->text('ds_procedimento')->nullable()->comment('DESCRIÇÃO DO PROCEDIMENTO UTILIZADO INTERNAMENTE PELA S1 SAÚDE');
+            $table->string('ds_grupo', 200)->nullable();
             $table->timestamp('created_at')->default(DB::raw('NOW()'));
-			$table->timestamp('updated_at')->default(DB::raw('NOW()'));
+            $table->timestamp('updated_at')->default(DB::raw('NOW()'));
         });
     }
 
@@ -30,6 +29,6 @@ class CreateProcedimentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('procedimentos');
+        Schema::dropIfExists('grupo_procedimentos');
     }
 }
