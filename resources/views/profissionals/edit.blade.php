@@ -10,7 +10,7 @@
 				<h4 class="page-title">Doctor HJ</h4>
 				<ol class="breadcrumb float-right">
 					<li class="breadcrumb-item"><a href="/">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('profissionais.index') }}">Lista de Profissionais</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('profissionals.index') }}">Lista de Profissionais</a></li>
 					<li class="breadcrumb-item active">Profissionais</li>
 				</ol>
 				<div class="clearfix"></div>
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 	
-	<form action="{{ route('profissionais.update', $profissionais->id) }}" method="post">
+	<form action="{{ route('profissionals.update', $profissionais->id) }}" method="post">
 		<input type="hidden" name="_method" value="PUT">
 		{!! csrf_field() !!}
     	

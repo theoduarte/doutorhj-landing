@@ -10,7 +10,7 @@
 				<h4 class="page-title">Doctor HJ</h4>
 				<ol class="breadcrumb float-right">
 					<li class="breadcrumb-item"><a href="/">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('profissionais.index') }}">Lista de Profissionais</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('profissionals.index') }}">Lista de Profissionais</a></li>
 					<li class="breadcrumb-item active">Detalhes do Profissional</li>
 				</ol>
 				<div class="clearfix"></div>
@@ -108,8 +108,8 @@
 				</table>
 			</div>
 			<div class="form-group text-right m-b-0">
-				<a href="{{ route('profissionais.edit', $profissionais->id) }}" class="btn btn-primary waves-effect waves-light" ><i class="mdi mdi-lead-pencil"></i> Editar</a>
-				<a href="{{ route('profissionais.index') }}" class="btn btn-secondary waves-effect m-l-5"><i class="mdi mdi-cancel"></i> Cancelar</a>
+				<a href="{{ route('profissionals.edit', $profissionais->id) }}" class="btn btn-primary waves-effect waves-light" ><i class="mdi mdi-lead-pencil"></i> Editar</a>
+				<a href="{{ route('profissionals.index') }}" class="btn btn-secondary waves-effect m-l-5"><i class="mdi mdi-cancel"></i> Cancelar</a>
 			</div>
 		</div>
 	</div>

@@ -25,19 +25,29 @@ class EspecialidadeController extends Controller
         
         if ($tipo_atendimento == 'saude') {
             
-            $tp_atendimento = DB::table('consultas')
-                ->join('tipoatendimentos', function($join1) { $join1->on('tipoatendimentos.id', '=', 'consultas.tipoatendimento_id')->where('tipoatendimentos.cd_atendimento', '=', "100");})
-                ->select('consultas.*', 'consultas.id', 'consultas.cd_consulta', 'consultas.ds_consulta')
-                ->get();
-            
-            foreach ($tp_atendimento as $atend) {
-                $item = [
-                    'id' => $atend->id,
-                    'tipo' => 'consulta',
-                    'descricao' => $atend->ds_consulta
-                ];
+            //DB::enableQueryLog();
+            $atendimentos = DB::table('atendimentos')
+                ->join('consultas', function($join1) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', 1);})
+                ->select('atendimentos.*')
+                ->distinct()
+                ->get(['consultas.cd_consulta']);
                 
-                array_push($result, $item);
+            //$query = DB::getQueryLog();
+            //dd($atendimentos);
+        
+            foreach ($atendimentos as $atend) {
+                
+                if (!$this->checkIfAtendimentoExists($result, $atend->consulta_id)) {
+                    
+                    $item = [
+                        'id' => $atend->id,
+                        'tipo' => 'consulta',
+                        'descricao' => $atend->ds_preco,
+                        'codigo' => $atend->consulta_id
+                    ];
+                    
+                    array_push($result, $item);
+                }
             }
             
         } elseif ($tipo_atendimento == 'odonto') {
@@ -148,5 +158,17 @@ class EspecialidadeController extends Controller
         $response = ["suggestions" => $result];
         
         return Response()->json($response);
+    }
+    
+    public function checkIfAtendimentoExists($list_atendimentos, $item) {
+        
+        foreach ($list_atendimentos as $atendimento) {
+            
+            if($atendimento['codigo'] == $item) {
+                return TRUE;
+            }
+        }
+        
+        return FALSE;
     }
 }

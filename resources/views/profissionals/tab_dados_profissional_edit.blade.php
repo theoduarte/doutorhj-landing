@@ -56,7 +56,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card-box">
-				<form action="{{ route('profissionais.update', $profissionais->id) }}" method="post">
+				<form action="{{ route('profissionals.update', $profissionais->id) }}" method="post">
 					<input type="hidden" name="_method" value="PUT">
 					{!! csrf_field() !!}
 					
@@ -359,7 +359,7 @@
 					
 					<div class="form-group text-right m-b-0">
 						<button type="submit" class="btn btn-primary waves-effect waves-light" ><i class="mdi mdi-content-save"></i> Salvar</button>
-						<a href="{{ route('profissionais.index') }}" class="btn btn-secondary waves-effect m-l-5"><i class="mdi mdi-cancel"></i> Cancelar</a>
+						<a href="{{ route('profissionals.index') }}" class="btn btn-secondary waves-effect m-l-5"><i class="mdi mdi-cancel"></i> Cancelar</a>
 					</div>
 				</form>
 			</div>

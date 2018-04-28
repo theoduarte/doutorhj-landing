@@ -28,15 +28,15 @@
 					<th width="100">Valor (R$)</th>
 					<th width="10">Ação</th>
 				</tr>
-    			@foreach( $precoconsultas as $consulta )
-    				<tr id="tr-{{$consulta->id}}">
-    					<td>{{$consulta->id}}</td>
-    					<td>{{$consulta->consulta->cd_consulta}} <input type="hidden" class="consulta_id" value="{{ $consulta->consulta->id }}"></td>
-    					<td>{{$consulta->ds_preco}}</td>
-    					<td>{{$consulta->vl_atendimento}}</td>
+    			@foreach( $precoconsultas as $atendimento )
+    				<tr id="tr-{{$atendimento->id}}">
+    					<td>{{$atendimento->id}}</td>
+    					<td>{{$atendimento->consulta->cd_consulta}} <input type="hidden" class="consulta_id" value="{{ $atendimento->consulta->id }}"></td>
+    					<td>{{$atendimento->ds_preco}}</td>
+    					<td>{{$atendimento->vl_atendimento}}</td>
     					<td>
     						<a href="#" onclick="loadDataConsulta(this)" class="btn btn-icon waves-effect btn-secondary btn-sm m-b-5" title="Exibir"><i class="mdi mdi-lead-pencil"></i> Editar</a>
-	                 		<a onclick="delLinhaConsulta(this, '{{ $consulta->ds_preco }}', '{{ $consulta->id }}')" class="btn btn-danger waves-effect btn-sm m-b-5" title="Excluir"><i class="ti-trash"></i> Remover</a>
+	                 		<a onclick="delLinhaConsulta(this, '{{ $atendimento->ds_preco }}', '{{ $atendimento->id }}')" class="btn btn-danger waves-effect btn-sm m-b-5" title="Excluir"><i class="ti-trash"></i> Remover</a>
     					</td>
     				</tr>
 				@endforeach 

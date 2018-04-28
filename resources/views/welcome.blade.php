@@ -29,17 +29,17 @@
                                     <option value="saude">Consulta Médica</option>
                                     <option value="odonto">Consulta Odontológica</option>
                                     <option value="exame">Exames</option>
-                                    <option value="procedimento">Procedimento</option>
+                                    <!-- <option value="procedimento">Procedimento</option> -->
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
                                 <label for="especialidade">Especialidade ou exame</label>
                                 <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
                                     <option>Ex.: Clínica Médica</option>
-                                    <option>Opção 1</option>
+                                    <!-- <option>Opção 1</option>
                                     <option>Opção 2</option>
                                     <option>Opção 3</option>
-                                    <option>Opção 4</option>
+                                    <option>Opção 4</option> -->
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
