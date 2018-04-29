@@ -20,12 +20,12 @@
                     <div class="titulo">
                         <span>Quero agendar</span>
                     </div>
-                    <form action="/resultado" class="form-busca-home" method="get">
+                    <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
                         <div class="row">
                             <div class="form-group col-md-12 col-lg-3">
                                 <label for="tipo">Tipo de atendimento</label>
                                 <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                    <option>Ex.: Consulta</option>
+                                    <option value="">Ex.: Consulta</option>
                                     <option value="saude">Consulta Médica</option>
                                     <option value="odonto">Consulta Odontológica</option>
                                     <option value="exame">Exames</option>
@@ -35,7 +35,7 @@
                             <div class="form-group col-md-12 col-lg-3">
                                 <label for="especialidade">Especialidade ou exame</label>
                                 <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                    <option>Ex.: Clínica Médica</option>
+                                    <option value="">Ex.: Clínica Médica</option>
                                     <!-- <option>Opção 1</option>
                                     <option>Opção 2</option>
                                     <option>Opção 3</option>

@@ -36,6 +36,7 @@ Route::resource('agendamentos','AgendamentoController')->middleware('auth');
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
+Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@consultaEnderecoLocalAtendimento');
 
 #rota de notificacao CIELO
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');

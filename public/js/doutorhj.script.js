@@ -79,9 +79,9 @@ $(document).ready(function () {
 		type:'post',
 		dataType: 'json',
 		params: {
-			'search_term': $(this).val(),
+			'search_term': function() { return $('#local_atendimento').val(); },
 			'tipo_atendimento': function() { return $('#tipo_atendimento').val(); },
-			'procedimento_id': function() { return $('#tipo_especialidade').val(); },
+			'atendimento_id': function() { return $('#tipo_especialidade').val(); },
 			'tipo_especialidade': function() { return $('#tipo_atendimento').val() == 'saude' | $('#tipo_atendimento').val() == 'odonto' ? 'consulta' : 'procedimento'; },
 			'_token': laravel_token
 		},
@@ -89,10 +89,49 @@ $(document).ready(function () {
 		serviceUrl: "/consulta-local-atendimento",
 	    onSelect: function (result) {
 	    	$('#endereco_id').val(result.id);			
+	    },
+	    onSearchComplete: function (ui) {
+	    	var tipo_atendimento = $('#tipo_atendimento').val();
+	    	var atendimento_id = $('#tipo_especialidade').val();
+	    	
+    	    if($(this).val().length > 3 & tipo_atendimento.length > 0 & atendimento_id.length > 0) {
+        	    buscarEndereco($(this), tipo_atendimento, atendimento_id);
+    	    }
 	    }
 	});
 	
 });
+
+function buscarEndereco(input, tipo_atendimento, atendimento_id) {
+
+	//alert('cnpj: '+cnpj);
+	var search_term = $(input).val();
+	
+	$.ajax({
+		type:'post',
+		   dataType:'json',
+		   url: '/consulta-endereco-local-atendimento',
+		   data: {
+			   'search_term': search_term,
+			   'tipo_atendimento': tipo_atendimento,
+			   'atendimento_id': atendimento_id,
+			   '_token': laravel_token
+		   },
+		   timeout: 15000,
+		   success: function (result) {
+
+			  if(result.status) {
+
+				  //$(input).val(result.endereco.nm_cidade);
+				  $('#endereco_id').val(result.endereco.id);
+
+			  }
+		  },
+		  error: function (result) {
+          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+          }
+	});
+}
 
 function numberToReal(numero) {
 	
@@ -103,4 +142,51 @@ function numberToReal(numero) {
 function moedaParaNumero(valor)
 {
     return isNaN(valor) == false ? parseFloat(valor) :   parseFloat(valor.replace("R$","").replace(".","").replace(",","."));
+}
+
+function validaBuscaAtendimento() {
+	
+	var tipo_atendimento = $('#tipo_atendimento');
+	var tipo_especialidade = $('#tipo_especialidade');
+	var endereco_id = $('#endereco_id');
+	
+	if( tipo_atendimento.val().length == 0 ) {
+		
+		tipo_atendimento.parent().addClass('cvx-has-error');
+		tipo_atendimento.focus();
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione o Tipo de Atentimento');
+		
+		$('.cvx-has-error .form-control').change(function(){
+			$(this).parent().removeClass('cvx-has-error');
+		});
+		
+		return false;
+	}
+	
+	if( tipo_especialidade.val().length == 0 ) {
+		tipo_especialidade.parent().addClass('cvx-has-error');
+		tipo_especialidade.focus();
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
+		
+		$('.cvx-has-error .form-control').change(function(){
+			$(this).parent().removeClass('cvx-has-error');
+		});
+		
+		return false;
+	}
+	
+	if( endereco_id.val().length == 0 ) {
+		endereco_id.parent().addClass('cvx-has-error');
+		endereco_id.focus();
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
+		
+		$('.cvx-has-error .form-control').keyup(function(){
+			$(this).parent().removeClass('cvx-has-error');
+		});
+		
+		return false;
+	}
+	
+	
+	return true;
 }

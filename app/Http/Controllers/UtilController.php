@@ -89,6 +89,17 @@ class UtilController extends Controller
 	}
 	
 	/**
+	 * Coloca máscara no CEP
+	 * Ex.: formataCep(10696600); retorna 10.696-600
+	 *
+	 * @param string $nrcep
+	 */
+	public static function formataCep($nrcep){
+	    
+	    return preg_replace('/^(\d{2})(\d{3})(\d{3})$/', '${1}.${2}-${3}', $nrcep);
+	}
+	
+	/**
 	 * gera random string
 	 * Ex.: WSWQKTQK92JP15IP
 	 *

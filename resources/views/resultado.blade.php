@@ -27,29 +27,27 @@
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <select class="form-control" id="tipo">
-                                <option>Tipo de atendimento</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
+                                <option value="">Tipo de atendimento</option>
+                                <option value="saude" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude' ) selected='selected' @endif >Consulta Médica</option>
+                                <option value="odonto" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif >Consulta Odontológica</option>
+                                <option value="exame" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame' ) selected='selected' @endif >Exames</option>
+                                <!-- <option value="procedimento">Procedimento</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="list_especialidade" class="form-control">
                                 <option>Especialidade</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
+                                @foreach($list_atendimentos as $atendimento)
+                                <option value="{{ $atendimento['id'] }}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento['id'] ) selected="selected" @endif>{{ $atendimento['descricao'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <select class="form-control" id="local">
                                 <option>Local</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
+                                @foreach($list_enderecos as $endereco)
+                                <option value="{{ $endereco['id'] }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco['id'] ) selected="selected" @endif>{{ $endereco['value'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -62,10 +60,10 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
                         <div class="ordenar-por div-filtro">
-                            <select class="form-control" id="ordenar">
-                                <option>Ordenar por...</option>
-                                <option>Maior preço</option>
-                                <option>Menor preço</option>
+                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento={{$_GET['tipo_atendimento']}}&local_atendimento={{$_GET['local_atendimento']}}&tipo_especialidade={{$_GET['tipo_especialidade']}}&endereco_id={{$_GET['endereco_id']}}&sort='+$(this).val() }">
+                                <option value="">Ordenar por...</option>
+                                <option value="desc" @if( isset($_GET['sort']) && $_GET['sort'] == 'desc' ) selected="selected" @endif>Maior preço</option>
+                                <option value="asc" @if( isset($_GET['sort']) && $_GET['sort'] == 'asc' ) selected="selected" @endif>Menor preço</option>
                             </select>
                         </div>
                         <div id="accordion">
@@ -126,7 +124,7 @@
                                 </div>
                             </div>
                             @endforeach
-                            <div class="card card-resultado">
+                            <!-- <div class="card card-resultado">
                                 <div class="card-body">
                                     <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
                                     <h6 class="card-subtitle">Dr. Alexandre José</h6>
@@ -168,6 +166,7 @@
                                     </div>
                                 </div>
                             </div>
+                             -->
                         </div>
                     </div>
                     <div class="col-mapa col-lg-7">
@@ -291,6 +290,14 @@
                 [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
                 [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
                 ];
+
+                var locations = [];
+                var locais_google_maps = {!! json_encode($locais_google_maps) !!};
+
+                for(var i = 0; i < locais_google_maps.length; i++) {
+                    var item = [locais_google_maps[i].info, locais_google_maps[i].lat, locais_google_maps[i].long, i];
+                    locations.push(item);
+                }
 
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 13,
