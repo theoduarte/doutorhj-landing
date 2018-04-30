@@ -23,10 +23,10 @@
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fas fa-edit"></i></a>
             </div>
             <div class="collapseFormulario collapse show" id="collapseFormulario">
-                <form action="" class="form-busca-resultado">
+                <form action="/resultado" class="form-busca-resultado" method="get" >
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
-                            <select class="form-control" id="tipo">
+                            <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="">Tipo de atendimento</option>
                                 <option value="saude" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude' ) selected='selected' @endif >Consulta Médica</option>
                                 <option value="odonto" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif >Consulta Odontológica</option>
@@ -35,7 +35,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select id="list_especialidade" class="form-control">
+                            <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
                                 <option>Especialidade</option>
                                 @foreach($list_atendimentos as $atendimento)
                                 <option value="{{ $atendimento['id'] }}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento['id'] ) selected="selected" @endif>{{ $atendimento['descricao'] }}</option>
@@ -43,15 +43,16 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select class="form-control" id="local">
+                            <select id="endereco_id" class="form-control" name="endereco_id">
                                 <option>Local</option>
                                 @foreach($list_enderecos as $endereco)
                                 <option value="{{ $endereco['id'] }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco['id'] ) selected="selected" @endif>{{ $endereco['value'] }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <button type="button" class="btn btn-primary btn-vermelho"><i class="fas fa-search"></i> Alterar Busca</button>
+                            <button type="submit" class="btn btn-primary btn-vermelho"><i class="fas fa-search"></i> Alterar Busca</button>
                         </div>
                     </div>
                 </form> 
@@ -196,7 +197,12 @@
                 timepicker:false,
                 format:'d.m.Y'
             }).on("input change", function(e){
-            	console.log("Date changed: ", e.target.value);
+            	//console.log("Date changed: ", e.target.value);
+            	var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+            	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+            	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+            	
+            	jQuery(this).parent().parent().find('.confirma-data span').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
             });
             
             jQuery('.selecionaHora').datetimepicker({ 
@@ -204,7 +210,10 @@
                 format:'H:i',
                 step: 10,
             }).on("input change", function(e){
-            	console.log("Time changed: ", e.target.value);
+            	//console.log("Time changed: ", e.target.value);
+            	var ct_hora_temp = (e.target.value).split(':');
+            	var ct_date = jQuery('.selecionaData').parent().parent().find('.confirma-data span').html();
+            	jQuery(this).parent().parent().find('.confirma-data span').html(ct_date + ct_hora_temp[0]+"H"+ct_hora_temp[1]+"MIN");
             });
                 
             jQuery('#selecionaData2').datetimepicker({                
