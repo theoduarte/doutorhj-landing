@@ -75,6 +75,10 @@ $(document).ready(function () {
 		});
 	});*/
 	
+	$( '#local_atendimento' ).keyup(function() {
+		$(this).parent().find('.cvx-no-loading').addClass('cvx-input-loading');
+	});
+	
 	$( '#local_atendimento' ).autocomplete({
 		type:'post',
 		dataType: 'json',
@@ -88,9 +92,11 @@ $(document).ready(function () {
 		minChars: 3,
 		serviceUrl: "/consulta-local-atendimento",
 	    onSelect: function (result) {
+	    	$( '#local_atendimento' ).parent().find('.cvx-no-loading').removeClass('cvx-input-loading');
 	    	$('#endereco_id').val(result.id);			
 	    },
 	    onSearchComplete: function (ui) {
+	    	$( '#local_atendimento' ).parent().find('.cvx-no-loading').removeClass('cvx-input-loading');
 	    	var tipo_atendimento = $('#tipo_atendimento').val();
 	    	var atendimento_id = $('#tipo_especialidade').val();
 	    	

@@ -294,23 +294,27 @@
                     long: -47.8859702
                 };
 
-                var locations = [
+               /*  var locations = [
                 [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
                 [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
                 [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
-                ];
+                ]; */
 
                 var locations = [];
                 var locais_google_maps = {!! json_encode($locais_google_maps) !!};
+                var latitude_init = -15.7987496;
+                var longitude_init = -47.8949315;
 
                 for(var i = 0; i < locais_google_maps.length; i++) {
+                	latitude_init = locais_google_maps[0].lat;
+                	longitude_init = locais_google_maps[0].long;
                     var item = [locais_google_maps[i].info, locais_google_maps[i].lat, locais_google_maps[i].long, i];
                     locations.push(item);
                 }
 
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 13,
-                    center: new google.maps.LatLng(-15.7987496, -47.8949315),
+                    center: new google.maps.LatLng(latitude_init, longitude_init),
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
 

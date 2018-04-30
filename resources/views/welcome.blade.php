@@ -44,8 +44,8 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
                                 <label for="local">Local de antedimento</label>
-                                <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento"
-                                       name="local_atendimento" placeholder="Ex.: Asa Sul">
+                                <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul">
+                                <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                                 <input type="hidden" id="endereco_id" name="endereco_id">
                             </div>
                             <div class="form-group col-md-12 col-lg-3">

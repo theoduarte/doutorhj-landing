@@ -58,6 +58,20 @@ a.jstree-anchor i.ti-na {
     color: #fff ! important;
 }
 
+.cvx-no-loading {
+	visibility: hidden;
+}
+
+.cvx-input-loading {
+	display: inline-block;
+	position: relative;
+    top: -36px;
+    left: 216px;
+    font-size: 20px;
+    color: rgb(163, 36, 49);
+    visibility: visible;
+}
+
 .table-doutorhj tr th,
 .table-doutorhj tr td {
     text-align: center;
