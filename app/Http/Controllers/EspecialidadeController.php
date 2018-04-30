@@ -29,7 +29,7 @@ class EspecialidadeController extends Controller
             
             $tipo_atendimento_id = $tipo_atendimento == 'saude' ? 1 : 2;
             
-            //DB::enableQueryLog();
+            DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
                 ->join('consultas', function($join1) use ($tipo_atendimento_id) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
                 ->orderBy('atendimentos.ds_preco', 'asc')
@@ -37,8 +37,8 @@ class EspecialidadeController extends Controller
                 ->distinct()
                 ->get(['consultas.cd_consulta']);
                 
-            //$query = DB::getQueryLog();
-            //dd($atendimentos);
+            $query = DB::getQueryLog();
+            dd($atendimentos);
         
             foreach ($atendimentos as $atend) {
                 
