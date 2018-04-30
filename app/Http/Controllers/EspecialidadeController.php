@@ -38,7 +38,7 @@ class EspecialidadeController extends Controller
                 ->get(['consultas.cd_consulta']);
                 
             $query = DB::getQueryLog();
-            dd($atendimentos);
+            print_r($query);
         
             foreach ($atendimentos as $atend) {
                 
@@ -59,6 +59,7 @@ class EspecialidadeController extends Controller
                         
             $tipo_atendimento_id = 3;
             
+            DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
                 ->join('procedimentos', function($join1) use ($tipo_atendimento_id) { $join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
                 ->orderBy('atendimentos.ds_preco', 'asc')
