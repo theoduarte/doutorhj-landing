@@ -6,6 +6,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+use App\Agendamento;
 
 class Controller extends BaseController
 {
@@ -38,5 +40,34 @@ class Controller extends BaseController
         }
         
         return response()->json(['status' => false, 'mensagem' => 'A busca falhou. Por favor, tente novamente.']);
+    }
+    
+    /**
+     * carrega dados na landing page
+     *
+     * @param string $nrCep
+     */
+    public function home()
+    {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
+        $agendamentos_home = [];
+        
+        if (Auth::check()) {
+            
+            $paciente = Auth::user()->paciente->id;
+            
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente)->get();
+            
+            for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
+                $agendamentos_home[$i]->clinica->load('enderecos');
+                $agendamentos_home[$i]->clinica->enderecos->first()->load('cidade');
+                $agendamentos_home[$i]->endereco_completo = $agendamentos_home[$i]->clinica->enderecos->first()->te_endereco.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->te_bairro.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->nm_cidade.'/'.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->estado->sg_estado;
+            }
+            
+        }
+        
+        return view('welcome', compact('agendamentos_home'));
     }
 }

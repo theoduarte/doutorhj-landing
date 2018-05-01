@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
     return view('welcome');
 }); */
 
-Route::get('/', 'HomeController@home');
+Route::get('/', 'Controller@home');
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
