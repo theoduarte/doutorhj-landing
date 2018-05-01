@@ -45,7 +45,6 @@ class Controller extends BaseController
     /**
      * carrega dados na landing page
      *
-     * @param string $nrCep
      */
     public function home()
     {
