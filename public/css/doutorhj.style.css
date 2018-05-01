@@ -24,8 +24,14 @@
 }
 
 .cvx-has-error label {
-    color: #a94442;
+    color: #a94442 !important;
 }
+
+.cvx-has-error span.help-block {
+	color: #a94442 !important;
+	font-size: 14px;
+}
+
 
 .cvx-has-error .form-control {
     border-color: #a94442;

@@ -110,14 +110,8 @@ swal(
 @if ($errors->any())
 <script type="text/javascript">
 $(document).ready(function () {
-swal(
-        {
-            title: 'Operação Falhou!',
-            text: 'Por favor, verifique sua operação e tente novamente.',
-            type: 'error',
-            confirmButtonClass: 'btn btn-confirm mt-2'
-        }
-    );
+
+	$.Notification.notify('error','top right', 'Operação Falhou!', 'Por favor, verifique sua operação e tente novamente.');
 });
 </script>
 @endif

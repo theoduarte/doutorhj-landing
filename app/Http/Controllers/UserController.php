@@ -12,6 +12,7 @@ use App\Mail\PacienteSender;
 use App\Documento;
 use App\Contato;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UsuariosRequest;
 
 class UserController extends Controller
 {
@@ -97,7 +98,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register(UsuariosRequest $request)
     {
     	$access_token = UtilController::getAccessToken();
     	$time_to_live = date('Y-m-d H:i:s');
