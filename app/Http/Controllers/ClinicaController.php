@@ -646,15 +646,30 @@ class ClinicaController extends Controller
     		 
     		if ($atendimento->procedimento_id != null) {
     			$atendimento->load('procedimento');
-    			$atendimento->procedimento->load('especialidade');
-    			$atendimento->nome_especialidade = $atendimento->procedimento->especialidade->ds_especialidade;
-    			// {{ isset($item['atendimento']->procedimento_id) ? $item['atendimento']->procedimento->especialidade->ds_especialidade : isset($item['atendimento']->consulta_id) && isset($item['atendimento']->consulta->especialidade) ? $item['atendimento']->consulta->especialidade->ds_especialidade : '--------' }}
+    			$atendimento->load('profissional');
+    			$atendimento->profissional->load('especialidades');
+    			
+    			$nome_especialidade = "";
+    			
+    			foreach ($atendimento->profissional->especialidades as $especialidade) {
+    			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+    			}
+    			
+    			$atendimento->nome_especialidade = $nome_especialidade;
     		}
     		 
     		if ($atendimento->consulta_id != null) {
     			$atendimento->load('consulta');
-    			$atendimento->consulta->load('especialidade');
-    			$atendimento->nome_especialidade = $atendimento->consulta->especialidade->ds_especialidade;
+    			$atendimento->load('profissional');
+    			$atendimento->profissional->load('especialidades');
+    			
+    			$nome_especialidade = "";
+    			
+    			foreach ($atendimento->profissional->especialidades as $especialidade) {
+    			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+    			}
+    			
+    			$atendimento->nome_especialidade = $nome_especialidade;
     		}
     		 
     		//dd($atendimento);
@@ -721,12 +736,6 @@ class ClinicaController extends Controller
     }
     public function loginPrestador(){
         return view('login-prestador');
-    }
-    public function minhaConta(){
-        return view('minha-conta');
-    }
-    public function meusAgendamentos(){
-        return view('meus-agendamentos');
     }
     
     /**

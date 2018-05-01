@@ -86,52 +86,26 @@
         			<div class="collapse navbar-collapse" id="navbarMobile">
         				<ul class="navbar-nav ml-auto">
         					<li class="nav-item">
-        						<a class="nav-link" href="#">Agendamento</a>
-        					</li>
-        					<li class="nav-item">
-        						<a class="nav-link" href="#">Dicas do Doutor</a>
-        					</li>
-        					<li class="nav-item">
-        						<a class="nav-link" href="#">Como Funciona</a>
-        					</li>
-        					<li class="nav-item nav-item-mobile">
-        						<a class="nav-link" href="#">Meus dados</a>
-        					</li>
-        					<li class="nav-item nav-item-mobile">
-        						<a class="nav-link" href="#">Agenda</a>
-        					</li>
-        					<li class="nav-item nav-item-mobile">
-        						<a class="nav-link" href="#">Finanaceiro</a>
-        					</li>
-        					<li class="nav-item nav-item-mobile">
-        						<a class="nav-link" href="#">Configurações</a>
-        					</li>
-        					<li class="nav-item nav-item-mobile">
-        						<a class="nav-link" href="/logout">Sair</a>
-        					</li>
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("meus-agendamentos") }}">Meus Agendamentos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("minha-conta") }}">Minha Conta</a>
+                            </li>
         				</ul>
         				<div class="menu-area-logada">
-        					<ul>
-        						<li>
-        							<div class="dropdown opcoes-menu-usuario drop-menu">
-        								<button class="btn dropdown-toggle btn-nome-usuario" type="button" id="dropdownNomeUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        									<span>{{ Auth::user()->paciente->nm_primario }}</span>
-        								</button>
-        								<div class="dropdown-menu" aria-labelledby="dropdownNomeUsuario">
-        									<a class="dropdown-item" href="#">Meus dados</a>
-        									<a class="dropdown-item" href="#">Meus agendamentos</a>
-        									<a class="dropdown-item" href="#">Financeiro</a>
-        									<a class="dropdown-item" href="#">Configurações</a>
-        									<a class="dropdown-item" href="/logout">Sair</a>
-        								</div>
-        							</div>
-        						</li>
+                                <ul>
+                                    <li>
+                                        <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
+                                    </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                             <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span>Notificações </span><i class="fas fa-bell"></i>
                                                 <div class="numero-notificacoes">
-                                                    <span>5</span>
+                                                    <span>0</span>
                                                 </div>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownNotificacoes">
@@ -139,7 +113,7 @@
                                                     <li class="dropdown-item desativado">
                                                         <span>Notificações</span>
                                                     </li>
-                                                    <li class="dropdown-item mensagens-menu">
+                                                    <!-- <li class="dropdown-item mensagens-menu">
                                                         <a href="#">O Dr. Hoje tem uma mensagem urgente. </a>
                                                         <span>Há 3 horas</span>
                                                     </li>
@@ -150,6 +124,10 @@
                                                     <li class="dropdown-item mensagens-menu">
                                                         <a href="#">Sua CONSULTA ODONTOLÓGICA está agendada.</a>
                                                         <span>Há 2 semanas</span>
+                                                    </li> -->
+                                                    <li class="dropdown-item mensagens-menu">
+                                                        <a href="#">NENHUM ENCONTRADA</a>
+                                                        <!-- <span>Há 2 semanas</span> -->
                                                     </li>
                                                 </ul>                                                
                                             </div>
@@ -157,25 +135,9 @@
                                     </li>
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
-                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Carrinho </span><i class="far fa-list-alt"></i>
-                                                <!--<div class="numero-notificacoes">
-                                                    <span>2</span>
-                                                </div>-->
+                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
+                                               <a href="{{ Request::url() }}/carrinho" class="btn-carrinho"><i class="fas fa-cart-plus"></i></a>
                                             </button>
-                                            <!--<div class="dropdown-menu" aria-labelledby="dropdownCarrinho">
-                                                <ul>
-                                                    <li class="dropdown-item desativado">
-                                                        <span>Carrinho</span>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Nome Produto 1</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Nome Produto 2</a>
-                                                    </li>
-                                                </ul>      
-                                            </div>-->
                                         </div>
                                     </li>
                                 </ul>
@@ -265,7 +227,7 @@
                 </div>
             </div>
             <div class="endereco-site">
-                <a href="www.doutorhoje.com.br">www.doutorhoje.com.br</a>
+                <a href="/">www.doctorhoje.com.br</a>
             </div>
         </footer>        
     </div>

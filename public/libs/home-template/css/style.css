@@ -976,6 +976,14 @@ header .navbar-collapse {
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 }
 
+.menu-area-logada button a.btn-carrinho {
+	color: rgb(46, 46, 46);
+}
+
+.menu-area-logada button:hover a.btn-carrinho {
+	color: #007bff;
+}
+
 .opcoes-menu-usuario .dropdown-menu {
     padding-bottom: 0;
 }

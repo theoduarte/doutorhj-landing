@@ -20,17 +20,22 @@ class Agendamento extends Model
     
     public function paciente()
     {
-        return $this->belongsTo(Paciente::class);
+        return $this->belongsTo('App\Paciente');
     }
     
     public function clinica()
     {
-        return $this->belongsTo(Clinica::class);
+        return $this->belongsTo('App\Clinica');
     }
     
     public function profissional()
     {
-        return $this->belongsTo(Profissional::class);
+        return $this->belongsTo('App\Profissional');
+    }
+    
+    public function atendimento()
+    {
+        return $this->belongsTo('App\Atendimento');
     }
     
     public function getDtConsultaPrimariaAttribute()

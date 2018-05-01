@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
+Route::get('/', 'HomeController@home');
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
@@ -14,8 +15,8 @@ Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
 Route::get('login-prestador', 'ClinicaController@loginPrestador');
-Route::get('minha-conta', 'ClinicaController@minhaConta');
-Route::get('meus-agendamentos', 'ClinicaController@meusAgendamentos');
+Route::get('minha-conta', 'AgendamentoController@minhaConta')->name('minha-conta')->middleware('auth');
+Route::get('meus-agendamentos', 'AgendamentoController@meusAgendamentos')->name('meus-agendamentos')->middleware('auth');
 
 Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
 Route::get('home-logado', 'ClinicaController@homeLogado');
@@ -62,4 +63,4 @@ Route::post('clinicas/{clinica}/edit/delete-consulta', 'ClinicaController@delete
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');

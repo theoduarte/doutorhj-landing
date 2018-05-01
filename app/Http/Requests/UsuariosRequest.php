@@ -27,7 +27,7 @@ class UsuariosRequest extends FormRequest
             'nm_primario'       => 'required|max:50',
             'nm_secundario'     => 'required|max:50',
             'cs_sexo'           => 'required|max:1',
-            'te_documento'      => 'required|max:14|min:11',
+            'te_documento'      => 'required|max:14|min:11|cpf',
             'ds_contato'        => 'required|max:30|unique:contatos,ds_contato',
             'dt_nascimento' => 'required|max:10|date_format:"d/m/Y"',
             'email'         => 'required|max:250|min:3|email|unique:users,email',

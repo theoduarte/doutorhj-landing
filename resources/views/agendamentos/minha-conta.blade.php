@@ -1,4 +1,4 @@
-@extends('layouts.logado')
+@extends('layouts.base')
 
 @section('title', 'Minha Conta - DoctorHj')
 
@@ -52,27 +52,11 @@
                     <div class="col-12 col-sm-12 col-md-3 menu">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
-                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro"
-                               role="tab"
-                               aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-caret-right"></i>
-                                Cadastro</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento"
-                               role="tab"
-                               aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-caret-right"></i>
-                                Pagamento</a>
-                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill"
-                               href="#v-pills-notificacoes"
-                               role="tab"
-                               aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-caret-right"></i>
-                                Notificações</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes"
-                               role="tab"
-                               aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i>
-                                Deixe sua Sugestão</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair"
-                               role="tab"
-                               aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i>
-                                Sair</a>
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-caret-right"></i> Cadastro</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-caret-right"></i> Pagamento</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-caret-right"></i> Notificações</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i> Deixe sua Sugestão</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i> Sair</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-9 conteudo">
@@ -89,23 +73,21 @@
                                             <fieldset disabled>
                                                 <div class="form-group">
                                                     <label for="inputNome">Nome</label>
-                                                    <input type="text" class="form-control" id="inputNome"
-                                                           placeholder="Samyr Almeida">
+                                                    <input type="text" id="inputNome"  class="form-control" value="{{ $user_paciente->paciente->nm_primario.' '.$user_paciente->paciente->nm_secundario }}" placeholder="Nome completo">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputEmail">Email</label>
-                                                    <input type="email" class="form-control" id="inputEmail"
-                                                           placeholder="Email">
+                                                    <input type="email" id="inputEmail" class="form-control" value="{{ $user_paciente->email }}" placeholder="Email">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputTelefone">Telefone</label>
-                                                    <input type="text" class="form-control" id="inputTelefone"
-                                                           placeholder="(61) 9 8241 4090">
+                                                    <input type="text" id="inputTelefone" class="form-control" value="{{ $user_paciente->paciente->contatos->first()->ds_contato }}" placeholder="Telefone">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="selectGenero">Gênero</label>
                                                     <select id="selectGenero" class="form-control">
-                                                        <option>Homem</option>
+                                                        <option @if( $user_paciente->paciente->cs_sexo == 'M') selected="selected" @endif>Homem</option>
+                                                        <option @if( $user_paciente->paciente->cs_sexo == 'F') selected="selected" @endif>Mulher</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group fc-tit-dn">
@@ -114,17 +96,23 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-4">
                                                         <select id="selectDia" class="form-control">
-                                                            <option>09</option>
+                                                        	@for($i = 1; $i < 32; $i++)
+                                                            <option @if( $dt_nascimento[0] == $i) selected="selected" @endif >{{ sprintf("%02d", $i) }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <select id="selectMes" class="form-control">
-                                                            <option>09</option>
+                                                        	@for($i = 1; $i <= 12; $i++)
+                                                            <option @if( $dt_nascimento[1] == $i) selected="selected" @endif >{{ sprintf("%02d", $i) }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <select id="selectAno" class="form-control">
-                                                            <option>1994</option>
+                                                        	@for($i = date('Y'); $i >= (date('Y')-100); $i--)
+                                                            <option @if( $dt_nascimento[2] == $i) selected="selected" @endif>{{ sprintf("%04d", $i) }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                 </div>
@@ -786,7 +774,7 @@
                                 <div class="itens-sair">
                                     <span>Você tem certeza que deseja sair?</span>
                                     <div class="btns-sair">
-                                        <button type="submit" class="btn btn-light">Sim</button>
+                                        <button type="button" class="btn btn-light" onclick="window.location.href='{{ route("logout") }}'">Sim</button>
                                         <button type="submit" class="btn btn-vermelho">Não</button>
                                     </div>
                                 </div>

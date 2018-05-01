@@ -1,5 +1,7 @@
 <?php
 
+use geekcom;
+
 return [
 
     /*
@@ -182,7 +184,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     	Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
-        LaravelLegends\PtBrValidator\ValidatorProvider::class
+        LaravelLegends\PtBrValidator\ValidatorProvider::class,
+        geekcom\ValidatorDocs\ValidatorProvider::class
 
     ],
 

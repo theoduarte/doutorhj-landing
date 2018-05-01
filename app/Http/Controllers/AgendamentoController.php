@@ -324,4 +324,50 @@ class AgendamentoController extends Controller
         
         return Response()->json($arJson);
     }
+    
+    /**
+     * lista os agendamentos na area logada do cliente
+     *
+     * @param string $consulta
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function meusAgendamentos(){
+        
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
+        $agendamentos_home = [];
+        
+        if (Auth::check()) {
+            
+            $paciente_id = Auth::user()->paciente->id;
+            
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente_id)->get();
+            
+            for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
+                $agendamentos_home[$i]->clinica->load('enderecos');
+                $agendamentos_home[$i]->clinica->enderecos->first()->load('cidade');
+                $agendamentos_home[$i]->endereco_completo = $agendamentos_home[$i]->clinica->enderecos->first()->te_endereco.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->te_bairro.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->nm_cidade.'/'.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->estado->sg_estado;
+            }
+            
+        }
+        
+        return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
+    }
+    
+    /**
+     * carrega os dados da conta do cliente
+     *
+     * @param string $consulta
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function minhaConta(){
+        
+        $user_paciente = Auth::user();
+        $user_paciente->paciente->load('contatos');
+        
+        $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
+        
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento'));
+    }
 }
