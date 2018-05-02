@@ -54,6 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 	'mail_host' => env('MAIL_HOST', 'forge'),
+	'encryption' => env('MAIL_ENCRYPTION', 'forge'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,8 +109,6 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
-		
-	'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
