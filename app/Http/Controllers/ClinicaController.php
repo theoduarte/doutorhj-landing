@@ -767,9 +767,28 @@ class ClinicaController extends Controller
     	$paciente = $usuario->paciente;
     	//dd(config('app.mail_host'));
     	
-    	if (Mail::to($usuario->email)->send(new PacienteSender($paciente))) {
+    	//curl --request POST --url https://api.sendgrid.com/v3/mail/send --header 'Authorization: Bearer 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' --header 'Content-Type: application/json' --data '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "administrador@comvex.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste DoctorHoje</h1>"}]}'
+    	
+    	$token = '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';
+    	$url = 'https://api.sendgrid.com/v3/mail/send';
+    	
+    	$payload = '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "administrador@comvex.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste3 DoctorHoje</h1>"}]}';
+    	
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_URL, $url);
+    	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
+    	curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	$output = curl_exec($ch);
+    	
+    	if ($output == "") {
     		dd('O e-mail foi enviado com sucesso!');
+    		//dd($output);
     	}
+    	
+    	/* if (Mail::to($usuario->email)->send(new PacienteSender($paciente))) {
+    		dd('O e-mail foi enviado com sucesso!');
+    	} */
     	
         return view('home-logado');
     }
