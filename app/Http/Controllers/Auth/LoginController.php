@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\UtilController;
-use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Contato;
 use Illuminate\Support\Facades\DB;
 use App\Paciente;

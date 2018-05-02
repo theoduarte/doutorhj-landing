@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Request as CVXRequest;
+use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use App\Agendamento;
@@ -12,7 +13,7 @@ use App\Estado;
 use App\Atendimento;
 use App\Http\Requests\AgendamentoRequest;
 use App\Itempedido;
-use Illuminate\Support\Facades\Redirect;
+//use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
 class AgendamentoController extends Controller
@@ -24,28 +25,15 @@ class AgendamentoController extends Controller
      */
     public function index()
     {
-        $agenda = Agendamento::where(function($query){}
         
-                                       )->orderBy('dt_atendimento')
-                                        ->sortable()->paginate(20);
+        $get_term = CVXRequest::get('dt_atendimento');
+        $search_term = UtilController::toStr($get_term);
         
-        $agenda->load(['Clinica'=>function($query){
-//             $idClinica = (int)Request::input('clinica_id');
-//             if(!empty($idClinica)) { $query->findorfail( 10 ); }
-        }]);
-            
-        $agenda->load(['Paciente'=>function($query){
-//             $paciente = Request::input('nm_paciente');
-            
-//             if(!empty($paciente)){
-//                 $query->where(DB::raw('to_str(CONCAT(nm_primario, nm_secundario)) as nome'),
-//                     'like', '%'.UtilController::toStr($paciente).'%');
-//             }
-        }]);
-        
+        $agenda = Agendamento::where(DB::raw('to_str(dt_atendimento)'), 'LIKE', '%'.$search_term.'%')->sortable()->paginate(10);
+                                        
+        $agenda->load('clinica');    
+        $agenda->load('paciente');
         $agenda->load('Profissional');
-        
-        Request::flash();
         
         return view('agenda.index', compact('agenda'));
     }
@@ -140,7 +128,7 @@ class AgendamentoController extends Controller
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
     	
-    	$cartCollection = \Cart::getContent();
+    	$cartCollection = CVXCart::getContent();
     	$num_itens = $cartCollection->count();
     	
     	if (!isset($item_pedido) & $num_itens == 0) {
@@ -154,7 +142,7 @@ class AgendamentoController extends Controller
     	    $cart_id = $num_itens + 1;
     	}
     	
-    	\Cart::add(array(
+    	CVXCart::add(array(
     	    'id' => $cart_id,
     	    'name' => 'Agendamento Item '.strval($num_itens + 1),
     	    'price' => $vl_com_atendimento,
@@ -194,7 +182,7 @@ class AgendamentoController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-    	$cartCollection = \Cart::getContent();
+    	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
     	 
     	$carrinho = [];
@@ -260,7 +248,7 @@ class AgendamentoController extends Controller
     		array_push($carrinho, $item_carrinho);
     	}
     	 
-    	$valor_total = \Cart::getTotal();
+    	$valor_total = CVXCart::getTotal();
     	
     	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
     }

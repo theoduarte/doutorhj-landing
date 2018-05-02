@@ -192,7 +192,7 @@ class ProfissionalController extends Controller
             $profissionais->user()->forceDelete();
             
             DB::commit();
-        }catch( Exception $e ){
+        }catch( \Exception $e ){
             DB::rollBack();
             
             return redirect()->route('profissionals.index')->with('error', $e->getMessage());

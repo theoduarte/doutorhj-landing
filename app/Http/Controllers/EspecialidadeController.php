@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
-use App\Tipoatendimento;
-use App\Consulta;
-use App\Especialidade;
 use App\Endereco;
 use App\Atendimento;
 

@@ -8,6 +8,7 @@ use App\Http\Requests\PrestadoresRequest;
 use App\Http\Requests\EditarPrestadoresRequest;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use LaravelLegends\PtBrValidator\Validator as CVXValidador;
+use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use App\Clinica;
 use App\User;
 use App\Cargo;
@@ -627,7 +628,7 @@ class ClinicaController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-    	$cartCollection = \Cart::getContent();
+    	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
     	
     	$carrinho = [];
@@ -693,7 +694,7 @@ class ClinicaController extends Controller
     		array_push($carrinho, $item_carrinho);
     	}
     	
-    	$valor_total = \Cart::getTotal();
+    	$valor_total = CVXCart::getTotal();
     	$valor_desconto = 10;
     	 
     	return view('pagamento', compact('url', 'carrinho', 'valor_total', 'valor_desconto'));
@@ -748,10 +749,10 @@ class ClinicaController extends Controller
     	$cart_id = CVXRequest::post('cart_id');
     	
     	if(isset($cart_id)) {
-    		$item = \Cart::get($cart_id);
+    	    $item = CVXCart::get($cart_id);
     		$valor_item = $item->price;
     		
-    		if (\Cart::remove($cart_id)) {
+    		if (CVXCart::remove($cart_id)) {
     			return response()->json(['status' => true, 'mensagem' => 'O Item foi removido com sucesso!', 'valor_item' => $valor_item]);
     		}
     	}

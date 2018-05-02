@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PacientesEditRequest;
 use App\User;
+use App\Cidade;
 
 class ClienteController extends Controller
 {
@@ -88,8 +89,8 @@ class ClienteController extends Controller
             $pacientes->load('enderecos');
             $pacientes->load('contatos');
             
-            $cidade = \App\Cidade::findorfail($pacientes->enderecos->first()->cidade_id);
-        }catch( Exception $e ){
+            $cidade = Cidade::findorfail($pacientes->enderecos->first()->cidade_id);
+        }catch( \Exception $e ){
             print $e->getMessage();
         }
 
@@ -121,9 +122,9 @@ class ClienteController extends Controller
             $pacientes->load('enderecos');
             $pacientes->load('contatos');
             
-            $cidade = \App\Cidade::findorfail($pacientes->enderecos->first()->cidade_id);
+            $cidade = Cidade::findorfail($pacientes->enderecos->first()->cidade_id);
             
-        }catch( Exception $e ){
+        }catch( \Exception $e ){
             print $e->getMessage();
         }
         
@@ -166,7 +167,7 @@ class ClienteController extends Controller
                 $documentos = \App\Documento::findorfail($documentos_id);
                 $documentos->update(['tp_documento'=>$dados['tp_documento'][$indice], 'te_documento'=>UtilController::retiraMascara($dados['te_documento'][$indice])]);
             }
-        }catch( Exception $e ){
+        }catch( \Exception $e ){
             return redirect()->route('clientes.index')->with('error', $e->getMessage());
         }
         
@@ -193,7 +194,7 @@ class ClienteController extends Controller
             
                    
             DB::commit();
-        }catch( Exception $e ){
+        }catch( \Exception $e ){
             DB::rollBack(); 
 
             return redirect()->route('clientes.index')->with('error', $e->getMessage());

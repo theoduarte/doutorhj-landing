@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Perfiluser;
 use Illuminate\Http\Request;
 use App\Menu;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Permissao;
