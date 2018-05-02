@@ -53,7 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-	'mail_host' => env('MAIL_HOST', 'forge'),
+	'mail_host' => env('MAIL_HOST', 'mail.ita.locamail.com.br'),
 
     /*
     |--------------------------------------------------------------------------
