@@ -105,4 +105,15 @@ class PaymentController extends Controller
     	
     	return response()->json('HTTP Status Code 200 OK', 200);
     }
+    
+    /**
+     * realiza o pagamento na Cielo no padrão completo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function fullTransaction(Request $request)
+    {
+        //
+    }
 }
