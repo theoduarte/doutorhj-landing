@@ -766,7 +766,10 @@ class ClinicaController extends Controller
     	$usuario = User::findorfail(50)->load('paciente');
     	$paciente = $usuario->paciente;
     	//dd(config('app.mail_host'));
-    	Mail::to($usuario->email)->send(new PacienteSender($paciente));
+    	
+    	if (Mail::to($usuario->email)->send(new PacienteSender($paciente))) {
+    		dd('O e-mail foi enviado com sucesso!');
+    	}
     	
         return view('home-logado');
     }
