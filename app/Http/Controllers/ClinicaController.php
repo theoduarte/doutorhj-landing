@@ -23,6 +23,8 @@ use App\Endereco;
 use App\Procedimento;
 use App\Responsavel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PacienteSender;
 
 class ClinicaController extends Controller
 {
@@ -760,6 +762,11 @@ class ClinicaController extends Controller
     	return response()->json(['status' => false, 'mensagem' => 'O Item não foi removido. Por favor, tente novamente']);
     }
     public function homeLogado(){
+    	
+    	$usuario = User::findorfail(50)->load('paciente');
+    	$paciente = $usuario->paciente;
+    	Mail::to($usuario->email)->send(new PacienteSender($paciente));
+    	
         return view('home-logado');
     }
 }
