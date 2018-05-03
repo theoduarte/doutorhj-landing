@@ -763,7 +763,7 @@ class ClinicaController extends Controller
     }
     public function homeLogado(){
     	
-    	$verify_hash = "teste";
+    	/* $verify_hash = "teste";
     	$from = 'contato@doctorhoje.com.br';
     	$to = 'teocomp@msn.com';
     	$subject = 'Contato DoctorHoje';
@@ -771,11 +771,11 @@ class ClinicaController extends Controller
     	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
     	
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
-    	dd($send_message);
+    	
     	if ($send_message) {
     	    dd('O e-mail foi enviado com sucesso!');
     	    //dd($output);
-    	}
+    	} */
     	
         return view('home-logado');
     }

@@ -156,8 +156,9 @@ class UserController extends Controller
     	$url = route('ativar_conta', $verify_hash);
     	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
     	
-    	UtilController::sendMail($from, $to, $subject, $html_message);
+    	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	
+    	//echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
     	return view('users.register', compact('access_token'));
     }
     
