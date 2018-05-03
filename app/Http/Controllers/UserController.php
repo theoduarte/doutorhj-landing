@@ -158,7 +158,7 @@ class UserController extends Controller
     	
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	
-    	//echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
+    	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
     	return view('users.register', compact('access_token'));
     }
     
