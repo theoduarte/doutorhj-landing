@@ -763,32 +763,19 @@ class ClinicaController extends Controller
     }
     public function homeLogado(){
     	
-    	$usuario = User::findorfail(50)->load('paciente');
-    	$paciente = $usuario->paciente;
-    	//dd(config('app.mail_host'));
+    	$verify_hash = "teste";
+    	$from = 'contato@doctorhoje.com.br';
+    	$to = 'teocomp@msn.com';
+    	$subject = 'Contato DoctorHoje';
+    	$url = route('ativar_conta', $verify_hash);
+    	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
     	
-    	//curl --request POST --url https://api.sendgrid.com/v3/mail/send --header 'Authorization: Bearer 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' --header 'Content-Type: application/json' --data '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "administrador@comvex.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste DoctorHoje</h1>"}]}'
-    	
-    	$token = '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';
-    	$url = 'https://api.sendgrid.com/v3/mail/send';
-    	
-    	$payload = '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "administrador@comvex.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste3 DoctorHoje</h1>"}]}';
-    	
-    	$ch = curl_init();
-    	curl_setopt($ch, CURLOPT_URL, $url);
-    	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
-    	curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    	$output = curl_exec($ch);
-    	
-    	if ($output == "") {
-    		dd('O e-mail foi enviado com sucesso!');
-    		//dd($output);
+    	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+    	dd($send_message);
+    	if ($send_message) {
+    	    dd('O e-mail foi enviado com sucesso!');
+    	    //dd($output);
     	}
-    	
-    	/* if (Mail::to($usuario->email)->send(new PacienteSender($paciente))) {
-    		dd('O e-mail foi enviado com sucesso!');
-    	} */
     	
         return view('home-logado');
     }

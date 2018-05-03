@@ -146,7 +146,17 @@ class UserController extends Controller
     	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
     	
     	# envia o e-mail de ativação
-    	Mail::to($usuario->email)->send(new PacienteSender($paciente));
+    	//Mail::to($usuario->email)->send(new PacienteSender($paciente));
+    	//$this->from('administrador@comvex.com.br', 'DoctorHoje')->subject('Contato DoctorHoje')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)])
+    	$verify_hash = Crypt::encryptString($paciente->id);
+    	$from = 'contato@doctorhoje.com.br';
+    	$to = $usuario->email;
+    	$subject = 'Contato DoctorHoje';
+    	
+    	$url = route('ativar_conta', $verify_hash);
+    	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
+    	
+    	UtilController::sendMail($from, $to, $subject, $html_message);
     	
     	return view('users.register', compact('access_token'));
     }
