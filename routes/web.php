@@ -42,6 +42,8 @@ Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@cons
 #rota de notificacao CIELO
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
+Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
+
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');

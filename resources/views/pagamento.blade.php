@@ -1,4 +1,4 @@
-@extends('layouts.logado')
+@extends('layouts.base')
 
 @section('title', 'Pagamento - DoctorHj')
 
@@ -41,16 +41,21 @@
                                 Forma de pagamento
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form id="form-finalizar-pedido" method="post">
                                     <div class="form-group row area-label">
-                                        <label for="selectFormaPagamento" class="col-sm-12">Escolha a Forma de
-                                            pagamento</label>
+                                        <label for="selectFormaPagamento" class="col-sm-12">Escolha a Forma de pagamento</label>
                                     </div>
+                                    <!-- client data order -->
+                                    <input type="hidden" name="titulo_pedido" value="{{ $titulo_pedido }}" >
+                                    <input type="hidden" name="paciente_id" value="{{ $user_session->id }}" >
+                                    @foreach($carrinho as $index => $item)
+                                    <input type="hidden" name="atendimento_id[{{ $index }}]" value="{{ $item['atendimento']->id }}" >
+                                    @endforeach
                                     <!-- Formulário cartão de Crédito -->
                                     <div class="form-group row">
                                         <div class="col col-md-6">
                                             <div class="button dropdown">
-                                                <select class="form-control" id="selectFormaPagamento">
+                                                <select id="selectFormaPagamento" class="form-control" name="tipo-pagamento">
                                                     <option value="selecionaFormaPagamento">Selecione</option>
                                                     <option value="credito">Crédito</option>
                                                     <option value="debito">Débito</option>
@@ -63,8 +68,7 @@
                                         <!-- Formulário cartão de Crédito -->
                                         <div id="credito" class="formas-pagamento">
                                             <div class="form-group row area-label">
-                                                <label for="selectCartaoCredito" class="col-sm-12">Selecione um cartão
-                                                    cadastrado</label>
+                                                <label for="selectCartaoCredito" class="col-sm-12">Selecione um cartão cadastrado</label>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-md-6">
@@ -81,59 +85,53 @@
                                             <div class="form-group row">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                    <input type="text" class="form-control input-numero-cartao"
-                                                           id="inputNumeroCartaoCredito" placeholder="Número do cartão">
+                                                    <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao" name="num-cartao-credito" placeholder="Número do cartão">
                                                 </div>
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
-                                                    <input type="email" class="form-control" id="inputNomeCartaoCredito"
-                                                           placeholder="Nome impresso no cartão">
+                                                    <input type="email" id="inputNomeCartaoCredito"  class="form-control" name="nome-impresso-cartao-credito" placeholder="Nome impresso no cartão">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-6 col-sm-6 col-md-3">
                                                     <label for="selectValidadeMesCredito">Validade</label>
                                                     <div class="button dropdown">
-                                                        <select class="form-control select-validade-mes"
-                                                                id="selectValidadeMesCredito">
+                                                        <select id="selectValidadeMesCredito" class="form-control select-validade-mes" name="mes-cartao-credito" >
                                                             <option>Mês</option>
-                                                            <option>Janeiro</option>
-                                                            <option>Fevereiro</option>
+                                                            @for($i = 1; $i <= 12; $i++)
+                                                            <option value="{{ $i }}">{{ strtoupper(strftime('%B', strtotime("2018-$i-02"))) }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col col-6 col-sm-6 col-md-3">
                                                     <label class="label-validade-ano" for="selectValidadeAnoCredito">&nbsp;</label>
                                                     <div class="button dropdown">
-                                                        <select class="form-control" id="selectValidadeAnoCredito">
-                                                            <option>Ano</option>
-                                                            <option>2018</option>
-                                                            <option>2019</option>
+                                                        <select id="selectValidadeAnoCredito" class="form-control" name="ano-cartao-credito">
+                                                        	<option>Ano</option>
+                                                        	@for($i = date('Y'); $i <= (date('Y')+10); $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col col-12 col-sm-12 col-md-6 codigo-seguranca">
-                                                    <label for="inputCodigoCredito" class="label-codigo-seguranca">Código
-                                                        de segurança</label>
+                                                    <label for="inputCodigoCredito" class="label-codigo-seguranca">Código de segurança</label>
                                                     <div class="area-codigo-seguranca">
-                                                        <input type="text" class="form-control" id="inputCodigoCredito"
-                                                               placeholder="000">
-                                                        <i class="fas fa-credit-card" data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                        <input type="text" id="inputCodigoCredito" class="form-control" name="cod-seg-cartao-credito" placeholder="000" maxlength="3">
+                                                        <i class="fas fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputCPFCredito">CPF do titular do cartão</label>
-                                                    <input type="text" class="form-control input-cpf-titular"
-                                                           id="inputCPFCredito" placeholder="CPF do titular do cartão">
+                                                    <input type="text" id="inputCPFCredito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" readonly="readonly">
                                                 </div>
                                                 <div class="col col-12 col-sm-6 codigo-seguranca">
                                                     <label for="selectParcelamentoCredito">Parcelamento</label>
                                                     <div class="button dropdown">
-                                                        <select class="form-control" id="selectParcelamentoCredito">
+                                                        <select id="selectParcelamentoCredito" class="form-control" name="parcelamento-cartao-credito">
                                                             <option>1x R$ 300,00</option>
                                                             <option>2x R$ 150,00</option>
                                                             <option>3x R$ 100,00</option>
@@ -142,22 +140,19 @@
                                                 </div>
                                             </div>
                                             <div class="form-check fc-checkbox">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="checkGravarCartaoCredito">
-                                                <label class="form-check-label" for="checkGravarCartaoCredito">Gravar
-                                                    dados para futuras compras</label>
+                                                <input type="checkbox" id="checkGravarCartaoCredito" class="form-check-input" name="gravar-cartao-credito">
+                                                <label class="form-check-label" for="checkGravarCartaoCredito">Gravar dados para futuras compras</label>
                                             </div>
                                         </div>
                                         <!-- Formulário cartão de Débito -->
                                         <div id="debito" class="formas-pagamento">
                                             <div class="form-group row area-label">
-                                                <label for="selectCartaoDebito" class="col-sm-12">Selecione um cartão
-                                                    cadastrado</label>
+                                                <label for="selectCartaoDebito" class="col-sm-12">Selecione um cartão cadastrado</label>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
-                                                        <select class="form-control" id="selectCartaoDebito">
+                                                        <select id="selectCartaoDebito" class="form-control">
                                                             <option>Selecione</option>
                                                             <option>Cartão Visa - final 0889</option>
                                                             <option>Cartão MasterCard - final 0685</option>
@@ -201,22 +196,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col col-12 col-sm-12 col-md-6 codigo-seguranca">
-                                                    <label for="inputCodigoDebito" class="label-codigo-seguranca">Código
-                                                        de segurança</label>
+                                                    <label for="inputCodigoDebito" class="label-codigo-seguranca">Código de segurança</label>
                                                     <div class="area-codigo-seguranca">
-                                                        <input type="text" class="form-control" id="inputCodigoDebito"
-                                                               placeholder="000">
-                                                        <i class="fas fa-credit-card" data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                        <input type="text" class="form-control" id="inputCodigoDebito" placeholder="000">
+                                                        <i class="fas fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-sm-6">
                                                     <label for="inputCPFDebito">CPF do titular do cartão</label>
-                                                    <input type="text" class="form-control input-cpf-titular"
-                                                           id="inputCPFDebito" placeholder="CPF do titular do cartão">
+                                                    <input type="text" class="form-control input-cpf-titular" id="inputCPFDebito" placeholder="CPF do titular do cartão">
                                                 </div>
                                                 <!--
                                                     <div class="col col-sm-6 codigo-seguranca">
@@ -232,10 +222,8 @@
                                                     -->
                                             </div>
                                             <div class="form-check fc-checkbox">
-                                                <input type="checkbox" class="form-check-input"
-                                                       id="checkGravarCartaoDebito">
-                                                <label class="form-check-label" for="checkGravarCartaoDebito">Gravar
-                                                    dados para futuras compras</label>
+                                                <input type="checkbox" class="form-check-input" id="checkGravarCartaoDebito">
+                                                <label class="form-check-label" for="checkGravarCartaoDebito">Gravar dados para futuras compras</label>
                                             </div>
                                         </div>
                                     </div>
@@ -405,7 +393,7 @@
                                             </div>
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                             	@if(sizeof($carrinho) > 0)
-                                                <button type="submit" class="btn btn-vermelho btn-finalizar">Finalizar Pagamento</button>
+                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar">Finalizar Pagamento</button>
                                                 @endif
                                             </div>
                                         </div>

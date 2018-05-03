@@ -636,6 +636,8 @@ class ClinicaController extends Controller
     	$carrinho = [];
     	$user_session = Auth::user()->paciente;
     	$url = Request::root();
+    	$titulo_pedido = "";
+    	$user_session->load('documentos');
     	
     	foreach ($itens as $item) {
     		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
@@ -659,6 +661,8 @@ class ClinicaController extends Controller
     			}
     			
     			$atendimento->nome_especialidade = $nome_especialidade;
+    			
+    			$titulo_pedido = "Exame: ".$user_session->nm_primario." ".$user_session->nm_secundario;
     		}
     		 
     		if ($atendimento->consulta_id != null) {
@@ -673,6 +677,8 @@ class ClinicaController extends Controller
     			}
     			
     			$atendimento->nome_especialidade = $nome_especialidade;
+    			
+    			$titulo_pedido = "Consulta: ".$user_session->nm_primario." ".$user_session->nm_secundario;
     		}
     		 
     		//dd($atendimento);
@@ -698,8 +704,10 @@ class ClinicaController extends Controller
     	
     	$valor_total = CVXCart::getTotal();
     	$valor_desconto = 10;
+    	
+    	$cpf_titular = $user_session->documentos->first()->te_documento;
     	 
-    	return view('pagamento', compact('url', 'carrinho', 'valor_total', 'valor_desconto'));
+    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido'));
     }
     
     public function informaBeneficiario(){

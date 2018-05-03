@@ -32,6 +32,10 @@ $(document).ready(function () {
 		
 	});
 	
+	$('#btn-finalizar-pedido').click(function(){
+		
+	});
+	
 	$(".select2").select2({
 		language: 'pt-BR'
 	});
