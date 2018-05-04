@@ -51,7 +51,7 @@
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile"
                         aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+                    <i class="fa fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMobile">
                     <ul class="navbar-nav ml-auto">

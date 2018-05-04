@@ -196,7 +196,7 @@
                         e exames com preços reduzidos. Não é cobrado mensalidades, carências ou taxas de adesão (NÃO
                         somos um plano ou seguro saúde).
                     </p>
-                    <a href="#">Acesse e comece a usar agora mesmo <i class="fas fa-angle-right"></i></a>
+                    <a href="#">Acesse e comece a usar agora mesmo <i class="fa fa-angle-right"></i></a>
                 </div>
             </div>
         </div>

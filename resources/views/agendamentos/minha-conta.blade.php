@@ -52,11 +52,11 @@
                     <div class="col-12 col-sm-12 col-md-3 menu">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
-                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-caret-right"></i> Cadastro</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-caret-right"></i> Pagamento</a>
-                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-caret-right"></i> Notificações</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i> Deixe sua Sugestão</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fas fa-caret-right"></i> Sair</a>
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-caret-right"></i> Cadastro</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i> Pagamento</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i> Notificações</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i> Deixe sua Sugestão</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i> Sair</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-9 conteudo">
@@ -160,7 +160,7 @@
                                         <button type="button" class="btn btn-light btn-add-dependente"
                                                 data-toggle="modal"
                                                 data-target="#modalAdicionaDependente">
-                                            <i class="fas fa-plus"></i> Adicionar dependente
+                                            <i class="fa fa-plus"></i> Adicionar dependente
                                         </button>
 
                                         <!-- Modal adicionar dependente -->
@@ -327,7 +327,7 @@
                                             </div>
                                             <button type="button" class="btn btn-light btn-add-cartao"
                                                     data-toggle="modal" data-target="#modalAdicionarCartao"><i
-                                                        class="fas fa-plus"></i>
+                                                        class="fa fa-plus"></i>
                                                 Adicionar cartão
                                             </button>
                                             <div class="modal fade" id="modalAdicionarCartao" tabindex="-1"
@@ -391,15 +391,8 @@
                                                                                class="label-codigo-seguranca">Código
                                                                             de segurança</label>
                                                                         <div class="area-codigo-seguranca">
-                                                                            <input type="text" class="form-control"
-                                                                                   id="inputCodigoDebito"
-                                                                                   placeholder="000">
-                                                                            <i class="fas fa-credit-card"
-                                                                               data-toggle="tooltip"
-                                                                               data-placement="top"
-                                                                               title="Código de segurança ou CVV são
-                                                                               os 3 dígitos eu ficam no verso do seu
-                                                                               cartão."></i>
+                                                                            <input type="text" class="form-control" id="inputCodigoDebito" placeholder="000">
+                                                                            <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Código de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>

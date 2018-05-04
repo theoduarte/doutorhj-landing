@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
                                             <button type="button" id="btn-send-token" class="btn btn-vermelho"><i
-                                                        class="fas fa-key"></i> Enviar Token
+                                                        class="fa fa-key"></i> Enviar Token
                                             </button>
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
                                             <button type="submit" id="btn-login-token" class="btn btn-vermelho">
-                                            	<i class="fas fa-arrow-right"></i>
+                                            	<i class="fa fa-arrow-right"></i>
                                             	Acessar Conta
                                             </button>
                                         </div>
@@ -142,8 +142,7 @@
                                         <input type="checkbox" class="form-check-input" id="termoCheck" required="required">
                                         <label class="form-check-label" for="termoCheck">Declaro que li e concordo com os <a href="#">termos de uso do Doctor Hoje</a></label>
                                     </div>
-                                    <button type="submit" class="btn btn-vermelho btn-criar-conta"><i class="fas fa-user"></i> Criar conta
-                                    </button>
+                                    <button type="submit" class="btn btn-vermelho btn-criar-conta"><i class="fa fa-user"></i> Criar conta <i class="fa fa-spin fa fa fa-cog" style="float: right; font-size: 16px;"></i></button>
                                 </form>
                             </div>
                         </div>

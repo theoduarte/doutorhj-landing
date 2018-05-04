@@ -47,7 +47,7 @@
                             <h1>Doutor Hoje</h1>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-bars"></i>
+                        <i class="fa fa-bars"></i>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarMobile">
                             <ul class="navbar-nav ml-auto">
@@ -72,7 +72,7 @@
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                             <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Notificações </span><i class="fas fa-bell"></i>
+                                                <span>Notificações </span><i class="fa fa-bell"></i>
                                                 <div class="numero-notificacoes">
                                                     <span>5</span>
                                                 </div>
@@ -101,7 +101,7 @@
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                             <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Carrinho </span><i class="fas fa-cart-plus"></i>
+                                                <span>Carrinho </span><i class="fa fa-cart-plus"></i>
                                                 <!--<div class="numero-notificacoes">
                                                     <span>2</span>
                                                 </div>-->

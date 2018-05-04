@@ -20,7 +20,7 @@
                 <p>Após a escoha do prestador, indique a data e horário para realizar o seu agendamento.</p>
             </div>
             <div class="area-alt-busca">
-                <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fas fa-edit"></i></a>
+                <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
             </div>
             <div class="collapseFormulario collapse show" id="collapseFormulario">
                 <form action="/resultado" class="form-busca-resultado" method="get" >
@@ -52,7 +52,7 @@
                             <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-vermelho"><i class="fas fa-search"></i> Alterar Busca</button>
+                            <button type="submit" class="btn btn-primary btn-vermelho"><i class="fa fa-search"></i> Alterar Busca</button>
                         </div>
                     </div>
                 </form> 

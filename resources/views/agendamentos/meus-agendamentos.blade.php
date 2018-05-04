@@ -87,7 +87,7 @@
                                 <div class="btn-group dropleft">
                                     <button type="button" class="btn"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes">
                                         <p><a href="">Remarcar</a></p>
@@ -140,7 +140,7 @@
                                 <div class="btn-group dropleft">
                                     <button type="button" class="btn"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes">
                                         <p><a href="">Remarcar</a></p>
@@ -190,7 +190,7 @@
                                 <div class="btn-group dropleft">
                                     <button type="button" class="btn"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes">
                                         <p><a href="">Remarcar</a></p>

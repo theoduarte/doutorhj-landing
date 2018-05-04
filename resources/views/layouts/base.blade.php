@@ -19,7 +19,7 @@
     	
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="/libs/home-template/css/fontawesome-all.css" />
+        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css" />
         
         <!-- Switchery CSS-->
     	<link rel="stylesheet" href="/libs/switchery/switchery.min.css">
@@ -81,7 +81,7 @@
         				<h1>Doutor Hoje</h1>
         			</a>
         			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-        				<i class="fas fa-bars"></i>
+        				<i class="fa fa-bars"></i>
         			</button>
         			<div class="collapse navbar-collapse" id="navbarMobile">
         				<ul class="navbar-nav ml-auto">
@@ -103,7 +103,7 @@
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                             <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Notificações </span><i class="fas fa-bell"></i>
+                                                <span>Notificações </span><i class="fa fa-bell"></i>
                                                 <div class="numero-notificacoes">
                                                     <span>0</span>
                                                 </div>
@@ -136,7 +136,7 @@
                                     <li>
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                             <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
-                                               <a href="{{ Request::url() }}/carrinho" class="btn-carrinho"><i class="fas fa-cart-plus"></i></a>
+                                               <a href="{{ Request::url() }}/carrinho" class="btn-carrinho"><i class="fa fa-cart-plus"></i></a>
                                             </button>
                                         </div>
                                     </li>
@@ -152,7 +152,7 @@
                         <h1>Doutor Hoje</h1>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+                    <i class="fa fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">                            

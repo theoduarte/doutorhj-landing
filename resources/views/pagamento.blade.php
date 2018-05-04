@@ -119,7 +119,7 @@
                                                     <label for="inputCodigoCredito" class="label-codigo-seguranca">Código de segurança</label>
                                                     <div class="area-codigo-seguranca">
                                                         <input type="text" id="inputCodigoCredito" class="form-control" name="cod-seg-cartao-credito" placeholder="000" maxlength="3">
-                                                        <i class="fas fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                        <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,7 +199,7 @@
                                                     <label for="inputCodigoDebito" class="label-codigo-seguranca">Código de segurança</label>
                                                     <div class="area-codigo-seguranca">
                                                         <input type="text" class="form-control" id="inputCodigoDebito" placeholder="000">
-                                                        <i class="fas fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                        <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                     </div>
                                                 </div>
                                             </div>

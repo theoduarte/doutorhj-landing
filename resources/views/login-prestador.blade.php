@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-vermelho btn-entrar"><i
-                                                    class="fas fa-sign-in-alt"></i> Entrar
+                                                    class="fa fa-sign-in-alt"></i> Entrar
                                         </button>
                                     </div>
                                     <div class="form-group links-login">
@@ -133,7 +133,7 @@
                                             os <a href="#">termos de uso do Doctor Hoje</a></label>
                                     </div>
                                     <button type="submit" class="btn btn-vermelho btn-criar-conta"><i
-                                                class="fas fa-user"></i> Criar conta
+                                                class="fa fa-user"></i> Criar conta
                                     </button>
                                 </form>
                             </div>
