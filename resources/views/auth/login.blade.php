@@ -73,7 +73,7 @@
                                 <span class="card-span">Cadastre-se para obter acesso e continuar.</span>
                                 <h5 class="card-title">Dados cadastrais</h5>
 
-                                <form class="form-horizontal " action="{{ route('registrar') }}" method="post">
+                                <form class="form-horizontal " action="{{ route('registrar') }}" method="post" onsubmit="return validaRegistrar()">
 
                                     {{ csrf_field() }}
 
@@ -142,7 +142,7 @@
                                         <input type="checkbox" class="form-check-input" id="termoCheck" required="required">
                                         <label class="form-check-label" for="termoCheck">Declaro que li e concordo com os <a href="#">termos de uso do Doctor Hoje</a></label>
                                     </div>
-                                    <button type="submit" class="btn btn-vermelho btn-criar-conta"><i class="fa fa-user"></i> Criar conta <i class="fa fa-spin fa fa fa-cog" style="float: right; font-size: 16px;"></i></button>
+                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta"><i class="fa fa-user"></i> <span id="lbl-criar-conta">Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
                                 </form>
                             </div>
                         </div>
@@ -222,7 +222,25 @@
                     timepicker:false,
                     format:'d.m.Y',
                 }); */
-            })
+            });
+
+            function validaRegistrar() {
+            	
+            	if( $('#inputNome').val().length == 0 ) return false;
+                if( $('#inputSobrenome').val().length == 0 ) return false;
+                if( $('#inputEmail').val().length == 0 ) return false;
+                if( $('#cs_sexo').val().length == 0 ) return false;
+                if( $('#inputNascimento').val().length == 0 ) return false;	
+                if( $('#inputCPF').val().length == 0 ) return false;
+                if( $('#inputCelular').val().length == 0 ) return false;
+
+                $('#btn-criar-conta').attr('disabled', 'disabled');
+                $('#btn-criar-conta').find('#lbl-criar-conta').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+                setTimeout(function(){ $('#btn-criar-conta').find('#lbl-criar-conta').html('Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-criar-conta').removeAttr('disabled'); }, 30000);
+
+                return true;
+            }
+            
         </script>
     @endpush
 
