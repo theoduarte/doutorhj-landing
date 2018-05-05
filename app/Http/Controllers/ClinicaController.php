@@ -25,6 +25,7 @@ use App\Responsavel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PacienteSender;
+use App\Consulta;
 
 class ClinicaController extends Controller
 {
@@ -346,7 +347,7 @@ class ClinicaController extends Controller
      */
     public function getConsultas($termo){
         $arResultado = array();
-        $consultas = \App\Consulta::where(DB::raw('to_str(ds_consulta)'), 'like', '%'.UtilController::toStr($termo).'%')->get();
+        $consultas = Consulta::where(DB::raw('to_str(ds_consulta)'), 'like', '%'.UtilController::toStr($termo).'%')->get();
         
         foreach ($consultas as $query)  
         {
@@ -706,8 +707,22 @@ class ClinicaController extends Controller
     	$valor_desconto = 10;
     	
     	$cpf_titular = $user_session->documentos->first()->te_documento;
+    	
+    	$valor_parcelamento = $valor_total-$valor_desconto;
+    	$parcelamentos = array(
+    	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
+    	);
+    	
+    	if ($valor_total > 200) {
+    	    $parcelamentos = [];
+    	    
+    	    for ($i = 2; $i <= 3; $i++) {
+    	        $item_valor =  $valor_parcelamento/$i;
+    	        $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
+    	    }
+    	}
     	 
-    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido'));
+    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos'));
     }
     
     public function informaBeneficiario(){
@@ -776,10 +791,21 @@ class ClinicaController extends Controller
     	$to = 'teocomp@msn.com';
     	$subject = 'Contato DoctorHoje';
     	$url = route('ativar_conta', $verify_hash);
-    	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
+    	$html_message = <<<HEREDOC
+<!DOCTYPE html>
+<html>
+    <head><title>DoctorHoje Ativação</title></head>
+    <body>
+        <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2>
+    </body>
+</html>
+HEREDOC;
+    	
+    	$html_message = str_replace(array("\r", "\n"), '', $html_message);
+    	//dd($html_message);
     	
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
-    	
+    	//dd($send_message);
     	if ($send_message) {
     	    dd('O e-mail foi enviado com sucesso!');
     	    //dd($output);

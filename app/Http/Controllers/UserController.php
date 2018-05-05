@@ -154,7 +154,19 @@ class UserController extends Controller
     	$subject = 'Contato DoctorHoje';
     	
     	$url = route('ativar_conta', $verify_hash);
-    	$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
+    	//$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
+    	
+    	$html_message = <<<HEREDOC
+<!DOCTYPE html>
+<html>
+    <head><title>DoctorHoje Ativação</title></head>
+    <body>
+        <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2>
+    </body>
+</html>
+HEREDOC;
+    	
+    	$html_message = str_replace(array("\r", "\n"), '', $html_message);
     	
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	

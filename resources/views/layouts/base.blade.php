@@ -33,9 +33,10 @@
         
         <!-- JQueryUI -->
     	<!-- <link rel="stylesheet" href="/libs/jquery-ui-themes/jquery-ui.css"> -->
+    	
     	<!-- JQuery Autocomplete -->
     	<link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
-        
+    	
         <!-- DoutorHJ Reset CSS -->
     	<link rel="stylesheet" href="/css/doutorhj.style.css">
     	
@@ -53,6 +54,8 @@
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
         <script src="/libs/switchery/switchery.min.js"></script>
+        
+        <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
         
         <script src="/js/doutorhj.script.js"></script>
         

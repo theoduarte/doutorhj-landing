@@ -32,6 +32,86 @@ $(document).ready(function () {
 		
 	});
 	
+	try {
+		var $cardinput = $('.cvx-checkout_card_number');
+		$('.cvx-checkout_card_number').validateCreditCard(function(result) {		
+			//console.log(result);
+			if (result.card_type != null)
+			{
+				$('.inputCodigoCredito').attr('maxlength', 3);
+				switch (result.card_type.name)
+				{
+					case "visa":
+						$cardinput.css('background-position', '3px -34px');
+						$cardinput.addClass('card_visa');
+						$('.inputBandeiraCartaoCredito').val('Visa');
+						break;
+
+					case "visa_electron":
+						$cardinput.css('background-position', '3px -72px');
+						$cardinput.addClass('card_visa_electron');
+						//$('.inputBandeiraCartaoCredito').val('Visa');
+						break;
+
+					case "mastercard":
+						$cardinput.css('background-position', '3px -110px');
+						$cardinput.addClass('card_mastercard');
+						$('.inputBandeiraCartaoCredito').val('Master');
+						break;
+
+					case "maestro":
+						$cardinput.css('background-position', '3px -148px');
+						$cardinput.addClass('card_maestro');
+						//$('.inputBandeiraCartaoCredito').val('Master');
+						break;
+
+					case "diners_club_international":
+						$cardinput.css('background-position', '3px -186px');
+						$cardinput.addClass('card_discover');
+						$('.inputBandeiraCartaoCredito').val('Diners');
+						break;
+
+					case "amex":
+						$cardinput.css('background-position', '3px -223px');
+						$cardinput.addClass('card_amex');
+						$('.inputBandeiraCartaoCredito').val('Amex');
+						$('.inputCodigoCredito').attr('maxlength', 4);
+						break;
+						
+					case "diners_club_carte_blanche":
+						$cardinput.css('background-position', '3px -186px');
+						$cardinput.addClass('card_discover');
+						$('.inputBandeiraCartaoCredito').val('Diners');
+						break;
+					
+					case "elo":
+						$cardinput.css('background-position', '3px -148px');
+						$cardinput.addClass('card_maestro');
+						$('.inputBandeiraCartaoCredito').val('Elo');
+						break;
+						
+					default:
+						$cardinput.css('background-position', '3px 3px');
+						break;					
+				}
+			} else {
+				$cardinput.css('background-position', '3px 3px');
+			}
+
+			// Check for valid card numbere - only show validation checks for invalid Luhn when length is correct so as not to confuse user as they type.
+			if (result.length_valid || $cardinput.val().length > 16)
+			{
+				if (result.luhn_valid) {
+					$cardinput.parent().removeClass('has-error').addClass('has-success');
+				} else {
+					$cardinput.parent().removeClass('has-success').addClass('has-error');
+				}
+			} else {
+				$cardinput.parent().removeClass('has-success').removeClass('has-error');
+			}
+		});
+	} catch (e) {}
+	
 	$('#btn-finalizar-pedido').click(function(){
 		
 	});
@@ -199,4 +279,22 @@ function validaBuscaAtendimento() {
 	
 	
 	return true;
+}
+
+function onlyNumbers(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+
+    var keychar = String.fromCharCode(key);
+    //alert(keychar);
+    var keycheck = /^[0-9_\b]+$/;
+
+    if (!(key == 8 || key == 9 || key == 17 || key == 27 || key == 44 || key == 46 || key == 37 || key == 39)) {
+        if (!keycheck.test(keychar)) {
+            theEvent.returnValue = false;//for IE
+            if (theEvent.preventDefault) {
+                theEvent.preventDefault();//Firefox
+            }
+        }
+    }
 }
