@@ -129,7 +129,7 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <a class="exclui-dependente" href="#"><i
-                                                                    class="far fa-trash-alt"></i></a>
+                                                                    class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,7 +140,7 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <a class="exclui-dependente" href="#"><i
-                                                                    class="far fa-trash-alt"></i></a>
+                                                                    class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <a class="exclui-dependente" href="#"><i
-                                                                    class="far fa-trash-alt"></i></a>
+                                                                    class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -275,7 +275,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <a class="exclui-cartao" href="#"><i
-                                                                        class="far fa-trash-alt"></i></a>
+                                                                        class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -290,7 +290,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <a class="exclui-cartao" href="#"><i
-                                                                        class="far fa-trash-alt"></i></a>
+                                                                        class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -305,7 +305,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <a class="exclui-cartao" href="#"><i
-                                                                        class="far fa-trash-alt"></i></a>
+                                                                        class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -320,7 +320,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <a class="exclui-cartao" href="#"><i
-                                                                        class="far fa-trash-alt"></i></a>
+                                                                        class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

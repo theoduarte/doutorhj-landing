@@ -232,7 +232,7 @@
                                                 <span>Eletrocardiograma</span>
                                             </div>
                                             <div class="excluir-produto col-2 col-sm-1">
-                                                <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
+                                                <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
                                             </div>                                            
                                             <div class="valor-produto col-12 col-sm-3">
                                                 <span>R$ 180,00</span>
@@ -307,7 +307,7 @@
                                                 <span>Hemograma</span>
                                             </div>
                                             <div class="excluir-produto col-2 col-sm-1">
-                                                <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
+                                                <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
                                             </div>                                         
                                             <div class="valor-produto col-12 col-sm-3">
                                                 <span>R$ 90,00</span>
@@ -389,7 +389,7 @@
                                                 <span>Ecografia</span>
                                             </div>
                                             <div class="excluir-produto col-2 col-sm-1">
-                                                <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
+                                                <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
                                             </div>                                         
                                             <div class="valor-produto col-12 col-sm-3">
                                                 <span>R$ 220,00</span>

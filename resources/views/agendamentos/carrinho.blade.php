@@ -50,7 +50,7 @@
                                             <span>+ detalhes</span>
                                         </div>
                                         <div class="excluir-produto col-2 col-sm-1">
-                                            <a class="close-div"><i class="far fa-trash-alt"></i></a>
+                                            <a class="close-div"><i class="fa fa-trash"></i></a>
                                             <input type="hidden" class="cart_id" value="{{ $item['item_id'] }}">
                                         </div>
                                         <div class="valor-produto col-12 col-sm-2">
@@ -171,6 +171,7 @@
                 	var cart_id = $(this).parent().find('input.cart_id').val();
 
                 	var item_carrinho = $(this).parent().parent().parent().parent();
+                	var num_itens = $('.card-resumo-compra').length;
                 	 
                 	jQuery.ajax({
         				type: 'POST',
@@ -182,9 +183,13 @@
         	            success: function (result) {
         		            if(result.status) {
         		            	atualizaValorTotal(result.valor_item);
-        		            	$('#btn-finaliza-pedido').css('display', 'none');
+        		            	
         		            	$.Notification.notify('success', 'top right', 'Solicitação Concluída!', result.mensagem);
         		            	item_carrinho.remove();
+        		            	
+        		            	if(num_itens == 1) {
+        		            		$('#btn-finaliza-pedido').css('display', 'none');	
+        		            	}
         		            } else {
         		            	$.Notification.notify('error','top right', 'Solicitação Falhou!', result.mensagem);
         		            }

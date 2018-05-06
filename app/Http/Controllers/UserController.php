@@ -198,6 +198,7 @@ HEREDOC;
 	    
         $user = $paciente_temp->first()->user;
         
+        //--quando o usuario tenta ir para a tela de pagamento sem solicitar um atendimento
         if($user === null) {
             return view('login');
         }

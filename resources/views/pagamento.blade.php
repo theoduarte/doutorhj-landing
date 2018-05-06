@@ -46,8 +46,8 @@
                                         <label for="selectFormaPagamento" class="col-sm-12">Escolha a Forma de pagamento</label>
                                     </div>
                                     <!-- client data order -->
-                                    <input type="hidden" name="titulo_pedido" value="{{ $titulo_pedido }}" >
-                                    <input type="hidden" name="paciente_id" value="{{ $user_session->id }}" >
+                                    <input type="hidden" id="titulo_pedido" name="titulo_pedido" value="{{ $titulo_pedido }}" >
+                                    <input type="hidden" id="paciente_id" name="paciente_id" value="{{ $user_session->id }}" >
                                     @foreach($carrinho as $index => $item)
                                     <input type="hidden" name="atendimento_id[{{ $index }}]" value="{{ $item['atendimento']->id }}" >
                                     @endforeach
@@ -56,7 +56,7 @@
                                         <div class="col col-md-6">
                                             <div class="button dropdown">
                                                 <select id="selectFormaPagamento" class="form-control" name="tipo_pagamento">
-                                                    <option value="selecionaFormaPagamento">Selecione</option>
+                                                    <option value="">Selecione</option>
                                                     <option value="credito">Crédito</option>
                                                     <option value="debito">Débito</option>
                                                 </select>
@@ -100,7 +100,7 @@
                                                         <select id="selectValidadeMesCredito" class="form-control select-validade-mes" name="mes_cartao_credito" >
                                                             <option>Mês</option>
                                                             @for($i = 1; $i <= 12; $i++)
-                                                            <option value="{{ $i }}">{{ strtoupper(strftime('%B', strtotime("2018-$i-02"))) }}</option>
+                                                            <option value="{{ $i }}">{{ $i }}</option>
                                                             @endfor
                                                         </select>
                                                     </div>
@@ -239,7 +239,7 @@
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
-                                	@foreach($carrinho as $item)
+                                	@foreach($carrinho as $index => $item)
                                     <div class="card card-resumo-compra">
                                         <div class="card-header" id="heading_{{ $item['item_id'] }}">
                                             <div class="row">
@@ -247,7 +247,7 @@
                                                     <span>{{ $item['atendimento']->ds_preco }}</span>
                                                 </div>
                                                 <!--<div class="excluir-produto col-2 col-sm-1">
-                                                    <a class="close-div" href="#"><i class="far fa-trash-alt"></i></a>
+                                                    <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
                                                 </div>-->
                                                 <div class="valor-produto col-12 col-sm-3">
                                                     <span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
@@ -262,6 +262,7 @@
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ isset($item['paciente']) ? $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario : '--------' }}</p>
+                                                        <input type="hidden" id="paciente_id_{{ $index }}" name="paciente_id_[{{ $index }}]" value="{{ isset($item['paciente']) ? $item['paciente']->id : 0 }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -270,6 +271,7 @@
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>Dr. {{ $item['profissional']->nm_primario.' '.$item['profissional']->nm_secundario }}</p>
+                                                        <input type="hidden" id="profissional_id_{{ $index }}" name="profissional_id_[{{ $index }}]" value="{{ isset($item['profissional']) ? $item['profissional']->id : 0 }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -286,6 +288,7 @@
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ $item['clinica']->nm_fantasia }}</p>
+                                                        <input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($item['clinica']) ? $item['clinica']->id : 0 }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -302,6 +305,8 @@
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
+                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
+                                                        <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">

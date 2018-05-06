@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
     return view('welcome');
 }); */
 
-Route::get('/', 'Controller@home');
+Route::get('/', 'Controller@home')->name('landing-page');
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
@@ -43,6 +43,7 @@ Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@cons
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
 Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
+Route::get('concluir_pedido', 'PaymentController@fullTransactionDoctorhj');
 
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');

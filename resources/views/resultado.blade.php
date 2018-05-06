@@ -104,11 +104,11 @@
 	                                        </div>
 	                                        <div class="escolher-data">                                    
 	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData" name="data_atendimento" placeholder="Data">
-	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="far fa-calendar-alt"></i></label>
+	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="fa fa-calendar"></i></label>
 	                                        </div>
 	                                        <div class="escolher-hora">                                    
 	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora" name="hora_atendimento" placeholder="Horário">
-	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="far fa-clock"></i></label>
+	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="fa fa-clock-o"></i></label>
 	                                        </div>
 	                                        <div class="confirma-data">
 	                                            <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span>
@@ -148,11 +148,11 @@
                                         </div>
                                         <div class="escolher-data">                                    
                                             <input id="selecionaData2" class="selecionaData" type="text" placeholder="Data">
-                                            <label for="selecionaData2"><i class="far fa-calendar-alt"></i></label>
+                                            <label for="selecionaData2"><i class="fa fa-calendar"></i></label>
                                         </div>
                                         <div class="escolher-hora">                                    
                                             <input id="selecionaHora2" class="selecionaData" type="text" placeholder="Horário">
-                                            <label for="selecionaHora2"><i class="far fa-clock"></i></label>
+                                            <label for="selecionaHora2"><i class="fa fa-clock-o"></i></label>
                                         </div>
                                         <div class="confirma-data">
                                             <span>26/03/2018 - Segunda-feira - 10h30min</span>

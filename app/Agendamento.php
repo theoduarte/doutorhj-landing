@@ -38,6 +38,11 @@ class Agendamento extends Model
         return $this->belongsTo('App\Atendimento');
     }
     
+    public function itempedidos()
+    {
+        return $this->hasMany('App\ItemPedido');
+    }
+    
     public function getDtConsultaPrimariaAttribute()
     {
         $date = new Carbon($this->attributes['dt_consulta_primaria']);
