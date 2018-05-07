@@ -37,12 +37,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-12 col-xl-5">
-                    <div class="condicoes">
-                        <p>Acompanhe no Perfil do Cliente o <strong>status</strong> da sua solicitação de agendamento.</p>
-                        <p>Evite transtornos! Caso ocorra algum imprevisto, impossibilitando o comparecimento ao serviço contratado, nos informe com até 24 horas de antecedência.</p>                        
-                    </div>                    
-                </div>
+
             </div>
         </div>
     </div>
