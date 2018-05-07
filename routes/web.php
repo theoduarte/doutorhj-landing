@@ -45,6 +45,10 @@ Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao')
 Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
 Route::get('concluir_pedido', 'PaymentController@fullTransactionDoctorhj');
 
+#rotas de teste
+Route::get('teste_concluir_pedido', 'PaymentController@fullTransactionTeste');
+Route::get('teste-envio-email', 'ClinicaController@testeEnviarEmail');
+
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');

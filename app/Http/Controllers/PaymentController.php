@@ -144,6 +144,35 @@ class PaymentController extends Controller
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
     }
     
+    public function fullTransactionTeste(Request $request)
+    {
+        $result_agendamentos = Agendamento::with('atendimento')->with('clinica')->with('profissional')->with('itempedidos')->with('paciente')->where('agendamentos.id', '>', 5)->get();
+        
+        if ($result_agendamentos == null) {
+            return redirect()->route('landing-page');
+        }
+        //dd($result_agendamentos);
+        $pedido = [];
+        
+        $valor_total_pedido = 0;
+        
+        foreach ($result_agendamentos as $agendamento) {
+            if (isset($agendamento->itempedidos) && sizeof($agendamento->itempedidos) > 0) {
+            
+            $agendamento->itempedidos->first()->load('pedido');
+            // dd($result_agendamentos);
+            $pedido = $agendamento->itempedidos->first()->pedido;
+            $valor_total_pedido = $valor_total_pedido+$agendamento->itempedidos->first()->valor;
+            }
+        }
+        
+        $request->session()->forget('result_agendamentos');
+        $request->session()->forget('pedido');
+        $request->session()->forget('valor_total_pedido');
+        
+        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+    }
+    
     /**
      * realiza o pagamento na Cielo no padrão completo.
      *

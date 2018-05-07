@@ -813,4 +813,34 @@ HEREDOC;
     	
         return view('home-logado');
     }
+    
+    public function testeEnviarEmail(){
+        
+        $verify_hash = "teste";
+         $from = 'contato@doctorhoje.com.br';
+         $to = 'teocomp@msn.com';
+         $subject = 'Contato DoctorHoje';
+         $url = route('ativar_conta', $verify_hash);
+         $html_message = <<<HEREDOC
+<!DOCTYPE html>
+<html>
+<head><title>DoctorHoje Ativação</title></head>
+<body>
+    <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2>
+</body>
+</html>
+HEREDOC;
+         
+         $html_message = str_replace(array("\r", "\n"), '', $html_message);
+         //dd($html_message);
+         
+         $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+         //dd($send_message);
+         if ($send_message) {
+         dd('O e-mail foi enviado com sucesso!');
+         //dd($output);
+         }
+        
+        return view('home-logado');
+    }
 }
