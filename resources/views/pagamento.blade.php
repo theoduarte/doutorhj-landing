@@ -150,7 +150,7 @@
                                             <div class="form-group row area-label">
                                                 <label for="selectCartaoDebito" class="col-sm-12">Selecione um cartão cadastrado</label>
                                             </div>
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
                                                         <select id="selectCartaoDebito" class="form-control">
@@ -161,7 +161,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group row">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoDebito">Número do cartão</label>
@@ -210,18 +210,6 @@
                                                     <label for="inputCPFDebito">CPF do titular do cartão</label>
                                                     <input type="text" id="inputCPFDebito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-debito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão">
                                                 </div>
-                                                <!--
-                                                    <div class="col col-sm-6 codigo-seguranca">
-                                                        <label for="selectParcelamentoDebito">Parcelamento</label>
-                                                        <div class="button dropdown">
-                                                            <select class="form-control" id="selectParcelamentoDebito">
-                                                                <option>1x R$ 300,00</option>
-                                                                <option>2x R$ 150,00</option>
-                                                                <option>3x R$ 100,00</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    -->
                                             </div>
                                             <!-- 
                                             <div class="form-check fc-checkbox">
@@ -310,6 +298,7 @@
                                                         <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
                                                         <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                         <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
+                                                        <input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -402,7 +391,7 @@
                                             </div>
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                             	@if(sizeof($carrinho) > 0)
-                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar">Finalizar Pagamento</button>
+                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar"><span id="lbl-finalizar-pedido">Finalizar Pagamento <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
                                                 @endif
                                             </div>
                                         </div>

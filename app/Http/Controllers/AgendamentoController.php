@@ -330,7 +330,7 @@ class AgendamentoController extends Controller
             
             $paciente_id = Auth::user()->paciente->id;
             
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente_id)->get();
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente_id)->orderBy('dt_atendimento', 'desc')->get();
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');

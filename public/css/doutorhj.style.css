@@ -86,6 +86,10 @@ a.jstree-anchor i.ti-na {
     visibility: visible;
 }
 
+#btn-finalizar-pedido {
+	width: 250px;
+}
+
 .table-doutorhj tr th,
 .table-doutorhj tr td {
     text-align: center;
