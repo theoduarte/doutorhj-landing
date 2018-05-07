@@ -42,60 +42,60 @@ $(document).ready(function () {
 				switch (result.card_type.name)
 				{
 					case "visa":
-						$cardinput.css('background-position', '3px -34px');
+						$cardinput.css('background-position', '5px -38px');
 						$cardinput.addClass('card_visa');
 						$('.inputBandeiraCartaoCredito').val('Visa');
 						break;
 
 					case "visa_electron":
-						$cardinput.css('background-position', '3px -72px');
+						$cardinput.css('background-position', '5px -80px');
 						$cardinput.addClass('card_visa_electron');
 						//$('.inputBandeiraCartaoCredito').val('Visa');
 						break;
 
 					case "mastercard":
-						$cardinput.css('background-position', '3px -110px');
+						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
 						$('.inputBandeiraCartaoCredito').val('Master');
 						break;
 
 					case "maestro":
-						$cardinput.css('background-position', '3px -148px');
+						$cardinput.css('background-position', '5px -164px');
 						$cardinput.addClass('card_maestro');
 						//$('.inputBandeiraCartaoCredito').val('Master');
 						break;
 
 					case "diners_club_international":
-						$cardinput.css('background-position', '3px -186px');
+						$cardinput.css('background-position', '5px -206px');
 						$cardinput.addClass('card_discover');
 						$('.inputBandeiraCartaoCredito').val('Diners');
 						break;
 
 					case "amex":
-						$cardinput.css('background-position', '3px -223px');
+						$cardinput.css('background-position', '5px -290px');
 						$cardinput.addClass('card_amex');
 						$('.inputBandeiraCartaoCredito').val('Amex');
 						$('.inputCodigoCredito').attr('maxlength', 4);
 						break;
 						
 					case "diners_club_carte_blanche":
-						$cardinput.css('background-position', '3px -186px');
+						$cardinput.css('background-position', '5px -248px');
 						$cardinput.addClass('card_discover');
 						$('.inputBandeiraCartaoCredito').val('Diners');
 						break;
 					
 					case "elo":
-						$cardinput.css('background-position', '3px -148px');
+						$cardinput.css('background-position', '5px -332px');
 						$cardinput.addClass('card_maestro');
 						$('.inputBandeiraCartaoCredito').val('Elo');
 						break;
 						
 					default:
-						$cardinput.css('background-position', '3px 3px');
+						$cardinput.css('background-position', '5px 4px');
 						break;					
 				}
 			} else {
-				$cardinput.css('background-position', '3px 3px');
+				$cardinput.css('background-position', '5px 4px');
 			}
 
 			// Check for valid card numbere - only show validation checks for invalid Luhn when length is correct so as not to confuse user as they type.
