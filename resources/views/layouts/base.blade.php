@@ -160,13 +160,13 @@
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">                            
                             <li class="nav-item">
-                                <a class="nav-link" href="#">O que é o Doutor Hoje?</a>
+                                <a class="nav-link" href="#area-sobre">O que é o Doutor Hoje?</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Como funciona?</a>
+                                <a class="nav-link" href="#como-funciona">Como funciona?</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Vantagens</a>
+                                <a class="nav-link" href="#vantagens">Vantagens</a>
                             </li>
                             <li class="nav-item btn-profissional">
                                 <a class="nav-link" href="#">Sou profissional de saúde</a>
@@ -202,8 +202,9 @@
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="">Quem Somos</a></li>
-                            <li><a href="">Como Funciona</a></li>
+                            <li><a href="#area-sobre">O que é o Doutor Hoje?</a></li>
+                            <li><a href="#como-funciona">Como Funciona</a></li>
+                            <li><a href="#vantagens">Vantagens</a></li>
                             <li><a href="">Política de Privacidade</a></li>
                             <li><a href="">Termos de Uso</a></li>
                             <li><a href="">Trabalhe Conosco</a></li>
