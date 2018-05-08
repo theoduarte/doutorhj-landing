@@ -90,7 +90,7 @@
                                                 </div>
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
-                                                    <input type="email" id="inputNomeCartaoCredito"  class="form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
+                                                    <input type="text" id="inputNomeCartaoCredito"  class="form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -150,7 +150,7 @@
                                             <div class="form-group row area-label">
                                                 <label for="selectCartaoDebito" class="col-sm-12">Selecione um cartão cadastrado</label>
                                             </div>
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
                                                         <select id="selectCartaoDebito" class="form-control">
@@ -161,45 +161,46 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group row">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoDebito">Número do cartão</label>
-                                                    <input type="text" class="form-control input-numero-cartao"
-                                                           id="inputNumeroCartaoDebito" placeholder="Número do cartão">
+                                                    <input type="text" id="inputNumeroCartaoDebito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                    <input type="hidden" id="inputBandeiraCartaoDebito" class="inputBandeiraCartaoDebito" name="bandeira_cartao_debito">
                                                 </div>
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNomeCartaoDebito">Nome impresso no cartão</label>
-                                                    <input type="email" class="form-control" id="inputNomeCartaoDebito"
-                                                           placeholder="Nome impresso no cartão">
+                                                    <input type="text" class="form-control" id="inputNomeCartaoDebito" placeholder="Nome impresso no cartão">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col col-6 col-sm-6 col-md-3">
                                                     <label for="selectValidadeMesDebito">Validade</label>
                                                     <div class="button dropdown">
-                                                        <select class="form-control select-validade-mes"
-                                                                id="selectValidadeMesDebito">
+                                                        <select id="selectValidadeMesDebito" class="form-control select-validade-mes" name="mes_cartao_debito">
                                                             <option>Mês</option>
-                                                            <option>Janeiro</option>
-                                                            <option>Fevereiro</option>
+                                                            <option>Mês</option>
+                                                            @for($i = 1; $i <= 12; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col col-6 col-sm-6 col-md-3">
                                                     <label class="label-validade-ano" for="selectValidadeAnoDebito">&nbsp;</label>
                                                     <div class="button dropdown">
-                                                        <select class="form-control" id="selectValidadeAnoDebito">
+                                                        <select id="selectValidadeAnoDebito" class="form-control" name="ano_cartao_debito">
                                                             <option>Ano</option>
-                                                            <option>2018</option>
-                                                            <option>2019</option>
+                                                        	@for($i = date('Y'); $i <= (date('Y')+10); $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            @endfor
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col col-12 col-sm-12 col-md-6 codigo-seguranca">
                                                     <label for="inputCodigoDebito" class="label-codigo-seguranca">Código de segurança</label>
                                                     <div class="area-codigo-seguranca">
-                                                        <input type="text" class="form-control" id="inputCodigoDebito" placeholder="000">
+                                                        <input type="text" id="inputCodigoDebito" class="form-control" name="cod_seg_cartao_debito" placeholder="000" maxlength="3">
                                                         <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                     </div>
                                                 </div>
@@ -207,25 +208,15 @@
                                             <div class="form-group row">
                                                 <div class="col col-sm-6">
                                                     <label for="inputCPFDebito">CPF do titular do cartão</label>
-                                                    <input type="text" class="form-control input-cpf-titular" id="inputCPFDebito" placeholder="CPF do titular do cartão">
+                                                    <input type="text" id="inputCPFDebito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-debito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão">
                                                 </div>
-                                                <!--
-                                                    <div class="col col-sm-6 codigo-seguranca">
-                                                        <label for="selectParcelamentoDebito">Parcelamento</label>
-                                                        <div class="button dropdown">
-                                                            <select class="form-control" id="selectParcelamentoDebito">
-                                                                <option>1x R$ 300,00</option>
-                                                                <option>2x R$ 150,00</option>
-                                                                <option>3x R$ 100,00</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    -->
                                             </div>
+                                            <!-- 
                                             <div class="form-check fc-checkbox">
                                                 <input type="checkbox" class="form-check-input" id="checkGravarCartaoDebito">
                                                 <label class="form-check-label" for="checkGravarCartaoDebito">Gravar dados para futuras compras</label>
                                             </div>
+                                             -->
                                         </div>
                                     </div>
                                 </form>
@@ -307,6 +298,7 @@
                                                         <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
                                                         <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                         <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
+                                                        <input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -329,7 +321,7 @@
                                                     <span>Forma de pagamento:</span>
                                                 </div>
                                                 <div class="dados-resumo">
-                                                    <p>Cartão de débito - Final XXXX</p>
+                                                    <p><span id="resumo_compra_tipo_cartao"></span> - Final XXXX</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -399,7 +391,7 @@
                                             </div>
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                             	@if(sizeof($carrinho) > 0)
-                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar">Finalizar Pagamento</button>
+                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar"><span id="lbl-finalizar-pedido">Finalizar Pagamento <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
                                                 @endif
                                             </div>
                                         </div>
@@ -429,12 +421,16 @@
                     $('#selectFormaPagamento').change(function () {
                         if($(this).val() == 'debito') {
                             $('#parcelamento-content').hide();
+                            $('#resumo_compra_tipo_cartao').html('Cartão de débito')
                         } else if($(this).val() == 'credito') {
                         	$('#parcelamento-content').show();
+                        	$('#resumo_compra_tipo_cartao').html('Cartão de crédito')
                         }
                         $('.formas-pagamento').hide();
                         $('#' + $(this).val()).show();
                     });
+
+                    
                 });
 
                 /*********************************

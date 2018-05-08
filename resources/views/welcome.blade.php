@@ -78,6 +78,7 @@
                             <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                         </div>
                         <br>
+                        <hr style="border-bottom:  1px solid #B32530;">
                         @endforeach
                     </div>
                 </div>

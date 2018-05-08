@@ -54,6 +54,7 @@
                             <div class="col col-lg-2 area-data">
                                 <p class="dia">{{ date('d', strtotime($agendamento->dt_atendimento))}}</p>
                                 <p class="mes">{{ strftime('%B', strtotime($agendamento->dt_atendimento)) }}</p>
+                                <p class="mes" style="font-size: 28px;">{{ date('H:i', strtotime($agendamento->dt_atendimento)) }}</p>
                             </div>
                             <div class="col col-lg-5 area-informacoes">
                                 <div class="nome-status">

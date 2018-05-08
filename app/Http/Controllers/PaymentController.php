@@ -112,8 +112,43 @@ class PaymentController extends Controller
     	return response()->json('HTTP Status Code 200 OK', 200);
     }
     
+    public function fullTransactionTeste(Request $request)
+    {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	 
+    	$result_agendamentos = Agendamento::with('atendimento')->with('clinica')->with('profissional')->with('itempedidos')->with('paciente')->where('agendamentos.id', '>', 5)->get();
+    
+    	if ($result_agendamentos == null) {
+    		return redirect()->route('landing-page');
+    	}
+    	//dd($result_agendamentos);
+    	$pedido = [];
+    
+    	$valor_total_pedido = 0;
+    
+    	foreach ($result_agendamentos as $agendamento) {
+    		if (isset($agendamento->itempedidos) && sizeof($agendamento->itempedidos) > 0) {
+    
+    			$agendamento->itempedidos->first()->load('pedido');
+    			// dd($result_agendamentos);
+    			$pedido = $agendamento->itempedidos->first()->pedido;
+    			$valor_total_pedido = $valor_total_pedido+$agendamento->itempedidos->first()->valor;
+    		}
+    	}
+    
+    	$request->session()->forget('result_agendamentos');
+    	$request->session()->forget('pedido');
+    	$request->session()->forget('valor_total_pedido');
+    
+    	return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+    }
+    
     public function fullTransactionDoctorhj(Request $request)
     {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
         //$result_agendamentos = Agendamento::with('atendimento')->with('clinica')->with('profissional')->with('itempedidos')->with('paciente')->get();
         $result_agendamentos = $request->session()->get('result_agendamentos');
         
@@ -144,37 +179,8 @@ class PaymentController extends Controller
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
     }
     
-    public function fullTransactionTeste(Request $request)
-    {
-        $result_agendamentos = Agendamento::with('atendimento')->with('clinica')->with('profissional')->with('itempedidos')->with('paciente')->where('agendamentos.id', '>', 5)->get();
-        
-        if ($result_agendamentos == null) {
-            return redirect()->route('landing-page');
-        }
-        //dd($result_agendamentos);
-        $pedido = [];
-        
-        $valor_total_pedido = 0;
-        
-        foreach ($result_agendamentos as $agendamento) {
-            if (isset($agendamento->itempedidos) && sizeof($agendamento->itempedidos) > 0) {
-            
-            $agendamento->itempedidos->first()->load('pedido');
-            // dd($result_agendamentos);
-            $pedido = $agendamento->itempedidos->first()->pedido;
-            $valor_total_pedido = $valor_total_pedido+$agendamento->itempedidos->first()->valor;
-            }
-        }
-        
-        $request->session()->forget('result_agendamentos');
-        $request->session()->forget('pedido');
-        $request->session()->forget('valor_total_pedido');
-        
-        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
-    }
-    
     /**
-     * realiza o pagamento na Cielo no padrão completo.
+     * realiza o pagamento na Cielo por cartao de credito no padrao completo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -192,17 +198,21 @@ class PaymentController extends Controller
         
         //-- determina o numero de parcelas -------
         $valor_parcelamento = $valor_total-$valor_desconto;
+        
+        
         $parcelamentos = array(
             1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
         );
         
-        if ($valor_total > 200) {
-            $parcelamentos = [];
-            
-            for ($i = 2; $i <= 3; $i++) {
-                $item_valor =  $valor_parcelamento/$i;
-                $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
-            }
+        if ($tp_pagamento == 'credito') {
+        	if ($valor_total > 200) {
+        		$parcelamentos = [];
+        	
+        		for ($i = 2; $i <= 3; $i++) {
+        			$item_valor =  $valor_parcelamento/$i;
+        			$valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
+        		}
+        	}
         }
         
         $pedido = new Pedido();
@@ -229,7 +239,7 @@ class PaymentController extends Controller
         $customer->load('user');
         $customer->load('documentos');
         
-        $customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario;
+        $customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
         $customer_identity              = $customer->documentos->first()->te_documento;
         $customer_Identity_type         = $customer->documentos->first()->tp_documento;
         $customer_email                 = $customer->user->email;
@@ -251,24 +261,32 @@ class PaymentController extends Controller
         $customer_delivery_state        = "";
         $customer_delivery_country      = "";
         
-        $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard';
-        $payment_amount                 = ($valor_total-$valor_desconto)*100;
+        $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
+        $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
+        $payment_return_url             = CVXRequest::root().'/concluir_pedido'; //-- usado no pagamento por debito apenas
         $payment_currency               = 'BRL';
         $payment_country                = 'BRA';
         $payment_serv_taxa              = 0;
         $payment_installments           = sizeof($parcelamentos);
         $payment_interest               = "ByMerchant";
         $payment_capture                = 'true';
-        $payment_authenticate           = 'false';
+        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'true'; //-- usado no pagamento por debito tambem
         $payment_softdescriptor         = 'doctorhoje';
-        $payment_credicard_number       = CVXRequest::post('num_cartao_credito');
-        $payment_holder                 = CVXRequest::post('nome_impresso_cartao_credito');
-        $payment_expiration_date        = CVXRequest::post('mes_cartao_credito').'/'.CVXRequest::post('ano_cartao_credito');
-        $payment_security_code          = CVXRequest::post('cod_seg_cartao_credito');
-        $payment_save_card              = CVXRequest::post('gravar_cartao_credito') == 'on' ? 'true' : 'false';
-        $payment_brand                  = CVXRequest::post('bandeira_cartao_credito');
+        $payment_credicard_number       = CVXRequest::post('num_cartao'); //-- usado no pagamento por debito tambem
+        $payment_holder                 = CVXRequest::post('nome_impresso_cartao'); //-- usado no pagamento por debito tambem
+        $payment_expiration_date        = CVXRequest::post('mes_cartao').'/'.CVXRequest::post('ano_cartao'); //-- usado no pagamento por debito tambem
+        $payment_security_code          = CVXRequest::post('cod_seg_cartao'); //-- usado no pagamento por debito tambem
+        $payment_save_card              = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
+        $payment_brand                  = CVXRequest::post('bandeira_cartao'); //-- usado no pagamento por debito tambem
         
-        $payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
+        //--payload para CARTAO DE CREDITO
+        if ($tp_pagamento == 'credito') {
+        	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
+        }
+        
+        if ($tp_pagamento == 'debito') {
+        	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":'.$payment_authenticate.',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
+        }
         
         //dd($payload);
         
@@ -279,7 +297,7 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //dd($httpcode);
+        //dd($output);
         if ($httpcode == 201) {
             
             $result_agendamentos = [];
@@ -293,7 +311,7 @@ class PaymentController extends Controller
                 
                 $agendamento->te_ticket         = UtilController::getAccessToken();
                 $agendamento->cs_status         = 10;
-                $agendamento->dt_atendimento    = $item_agendamento->dt_atendimento;
+                $agendamento->dt_atendimento    = $item_agendamento->dt_atendimento.":00";
                 $agendamento->bo_remarcacao     = 'N';
                 $agendamento->bo_retorno        = 'N';
                 $agendamento->paciente_id       = $item_agendamento->paciente_id;
