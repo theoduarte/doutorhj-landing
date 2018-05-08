@@ -9,8 +9,8 @@ class Payment extends Model
 {
 	use Sortable;
 	
-	public $fillable = ['merchant_order_id', 'paymentId', 'payment_type', 'amount', 'currency', 'country', 'service_tax_amount', 'installments', 'interest', 'capture', 'authenticate', 'soft_descriptor', 'crc_card_number', 'crc_holder', 'crc_expiration_date', 'crc_security_code', 'crc_save_card', 'crc_brand', 'dbc_customer_name', 'dbc_card_number', 'dbc_holder', 'dbc_expiration_date', 'dbc_security_code', 'dbc_brand'];
-	public $sortable = ['id', 'merchant_order_id', 'paymentId', 'payment_type', 'amount', 'currency', 'country', 'service_tax_amount', 'installments', 'interest', 'capture', 'authenticate', 'soft_descriptor', 'crc_card_number', 'crc_holder', 'crc_expiration_date', 'crc_security_code', 'crc_save_card', 'crc_brand', 'dbc_customer_name', 'dbc_card_number', 'dbc_holder', 'dbc_expiration_date', 'dbc_security_code', 'dbc_brand'];
+	public $fillable = ['merchant_order_id', 'paymentId', 'tid', 'recurrent', 'cielo_result', 'payment_type', 'amount', 'currency', 'country', 'service_tax_amount', 'installments', 'interest', 'capture', 'authenticate', 'soft_descriptor', 'crc_card_number', 'crc_holder', 'crc_expiration_date', 'crc_security_code', 'crc_save_card', 'crc_brand', 'dbc_customer_name', 'dbc_card_number', 'dbc_holder', 'dbc_expiration_date', 'dbc_security_code', 'dbc_brand'];
+	public $sortable = ['id', 'merchant_order_id', 'paymentId', 'tid', 'recurrent', 'cielo_result', 'payment_type', 'amount', 'currency', 'country', 'service_tax_amount', 'installments', 'interest', 'capture', 'authenticate', 'soft_descriptor', 'crc_card_number', 'crc_holder', 'crc_expiration_date', 'crc_security_code', 'crc_save_card', 'crc_brand', 'dbc_customer_name', 'dbc_card_number', 'dbc_holder', 'dbc_expiration_date', 'dbc_security_code', 'dbc_brand'];
 	
 	public function pedido()
 	{

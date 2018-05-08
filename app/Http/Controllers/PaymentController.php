@@ -11,6 +11,8 @@ use App\Agendamento;
 use App\Paciente;
 use App\Itempedido;
 use Illuminate\Support\Facades\DB;
+use App\CreditCardResponse;
+use App\DebitCardResponse;
 
 class PaymentController extends Controller
 {
@@ -187,9 +189,9 @@ class PaymentController extends Controller
      */
     public function fullTransaction(Request $request)
     {
-        $merchantKey    = env('CIELO_MERCHANT_KEY_DESENV');
-        $merchantId     = env('CIELO_MERCHANT_ID_DESENV');
-        $url            = env('CIELO_URL_DESENV').'/1/sales';
+        $merchantKey    = env('CIELO_MERCHANT_KEY');
+        $merchantId     = env('CIELO_MERCHANT_ID');
+        $url            = env('CIELO_URL').'/1/sales';
         
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
         
@@ -300,6 +302,8 @@ class PaymentController extends Controller
         //dd($output);
         if ($httpcode == 201) {
             
+        	$cielo_result = json_decode($output);
+        	//dd($cielo_result);
             $result_agendamentos = [];
             $agendamentos = CVXRequest::post('agendamentos');
             
@@ -341,6 +345,63 @@ class PaymentController extends Controller
                     array_push($result_agendamentos, $agendamento);
                 }
                 
+            }
+            
+            $pagamento = new Payment();
+            
+            $pagamento->merchant_order_id 		= $cielo_result->MerchantOrderId;
+            $pagamento->payment_id 				= $cielo_result->Payment->PaymentId;
+            $pagamento->tid 					= $cielo_result->Payment->Tid;
+            $pagamento->payment_type 			= $cielo_result->Payment->Type;
+            $pagamento->amount 					= $cielo_result->Payment->Amount;
+            $pagamento->currency 				= $cielo_result->Payment->Currency;
+            $pagamento->country 				= $cielo_result->Payment->Country;
+            $pagamento->service_tax_amount 		= $cielo_result->Payment->ServiceTaxAmount;
+            $pagamento->installments 			= $cielo_result->Payment->Installments;
+            $pagamento->interest 				= $cielo_result->Payment->Interest;
+            $pagamento->capture 				= $cielo_result->Payment->Capture;
+            $pagamento->authenticate 			= $cielo_result->Payment->Authenticate;
+            $pagamento->recurrent 				= $cielo_result->Payment->Recurrent;
+            $pagamento->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
+            $pagamento->crc_holder 				= $cielo_result->Payment->CreditCard->Holder;
+            $pagamento->crc_expiration_date 	= $cielo_result->Payment->CreditCard->ExpirationDate;
+            $pagamento->crc_save_card			= $cielo_result->Payment->CreditCard->SaveCard;
+            $pagamento->crc_brand 				= $cielo_result->Payment->CreditCard->Brand;
+            $pagamento->cielo_result 			= $output;
+            $pagamento->pedido_id 				= $cielo_result->MerchantOrderId;
+            
+            $pagamento->save();
+            
+            if ($tp_pagamento == 'credito') {
+            
+            	$crc_response = new CreditCardResponse();
+            
+            	$crc_response->tid 					= $cielo_result->Payment->Tid;
+            	$crc_response->proof_of_sale 		= isset($cielo_result->Payment->ProofOfSale) ? $cielo_result->Payment->ProofOfSale : '';
+            	$crc_response->authorization_code 	= isset($cielo_result->Payment->AuthorizationCode) ? $cielo_result->Payment->AuthorizationCode : '';
+            	$crc_response->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
+            	$crc_response->crc_status 			= $cielo_result->Payment->Status;
+            	$crc_response->return_code 			= $cielo_result->Payment->ReturnCode;
+            	$crc_response->return_message 		= $cielo_result->Payment->ReturnMessage;
+            	$crc_response->payment_id 			= $pagamento->id;
+            
+            	$crc_response->save();
+            }
+            
+            if ($tp_pagamento == 'debito') {
+            
+            	$dbc_response = new DebitCardResponse();
+            
+            	$dbc_response->tid 					= $cielo_result->Payment->Tid;
+            	$dbc_response->proof_of_sale 		= isset($cielo_result->Payment->ProofOfSale) ? $cielo_result->Payment->ProofOfSale : '';
+            	$dbc_response->authorization_code 	= isset($cielo_result->Payment->AuthorizationCode) ? $cielo_result->Payment->AuthorizationCode : '';
+            	$dbc_response->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
+            	$dbc_response->crc_status 			= $cielo_result->Payment->Status;
+            	$dbc_response->return_code 			= $cielo_result->Payment->ReturnCode;
+            	$dbc_response->return_message 		= $cielo_result->Payment->ReturnMessage;
+            	$dbc_response->payment_id 			= $pagamento->id;
+            
+            	$dbc_response->save();
             }
             
             CVXCart::clear();
