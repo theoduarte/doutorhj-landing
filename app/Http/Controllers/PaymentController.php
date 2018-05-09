@@ -347,16 +347,27 @@ class PaymentController extends Controller
                     
                     if ($payment_save_card == 'true' & $tp_pagamento == 'credito') {
                     	
-                    	$cartao_paciente = new CartaoPaciente();
+                    	$cartoes_paciente = CartaoPaciente::where('bandeira', '=', $cielo_result->Payment->CreditCard->Brand)
+                    		->where('nome_impresso', '=', $cielo_result->Payment->CreditCard->Holder)
+                    		->where('numero', '=', substr($cielo_result->Payment->CreditCard->CardNumber, -4))
+                    		->where('dt_validade', '=', $cielo_result->Payment->CreditCard->ExpirationDate)
+                    		->where('card_token', '=', $cielo_result->Payment->CreditCard->CardToken)
+                    		->where('paciente_id', $paciente_id)
+                    		->orderBy('nome_impresso', 'desc')->get();
                     	
-                    	$cartao_paciente->bandeira			= $cielo_result->Payment->CreditCard->Brand;
-                    	$cartao_paciente->nome_impresso		= $cielo_result->Payment->CreditCard->Holder;
-                    	$cartao_paciente->numero			= substr($cielo_result->Payment->CreditCard->CardNumber, -4);
-                    	$cartao_paciente->dt_validade		= $cielo_result->Payment->CreditCard->ExpirationDate;
-                    	$cartao_paciente->card_token		= $cielo_result->Payment->CreditCard->CardToken;
-                    	$cartao_paciente->paciente_id		= $paciente_id;
-                    	
-                    	$cartao_paciente->save();
+                    	if (sizeof($cartoes_paciente)) {
+                    		
+                    		$cartao_paciente = new CartaoPaciente();
+                    		 
+                    		$cartao_paciente->bandeira			= $cielo_result->Payment->CreditCard->Brand;
+                    		$cartao_paciente->nome_impresso		= $cielo_result->Payment->CreditCard->Holder;
+                    		$cartao_paciente->numero			= substr($cielo_result->Payment->CreditCard->CardNumber, -4);
+                    		$cartao_paciente->dt_validade		= $cielo_result->Payment->CreditCard->ExpirationDate;
+                    		$cartao_paciente->card_token		= $cielo_result->Payment->CreditCard->CardToken;
+                    		$cartao_paciente->paciente_id		= $paciente_id;
+                    		 
+                    		$cartao_paciente->save();
+                    	}
                     }
                 }
                 
