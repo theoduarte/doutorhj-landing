@@ -23,7 +23,7 @@
         </div>
         <div class="collapse area-dados-beneficiario" id="collapseDadosBeneficiario">
             <div class="card card-body">
-                <h4>Informe os dados do befeciário</h4>
+                <h4>Informe os dados do beneficiário</h4>
                 <form>
                     <div class="row">
                         <div class="form-group col-sm-3">

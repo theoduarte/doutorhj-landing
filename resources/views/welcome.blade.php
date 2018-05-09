@@ -205,7 +205,7 @@
             <div id="como-funciona" class="area-passos">
                 <div class="container">
                     <div class="titulo-home">
-                        <span>É tão fácil que você você não vai acreditar</span>
+                        <span>É tão fácil que você não vai acreditar</span>
                         <h3>Veja como é fácil levar saúde para sua família</h3>
                         <p>São apenas 5 passos para você cuidar da sua saúde.<br>
                             Chega de mensalidades caras para serviços que nem sempre você usa.
