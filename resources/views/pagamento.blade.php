@@ -100,7 +100,7 @@
                                                         <select id="selectValidadeMesCredito" class="form-control select-validade-mes" name="mes_cartao_credito" >
                                                             <option>Mês</option>
                                                             @for($i = 1; $i <= 12; $i++)
-                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
                                                             @endfor
                                                         </select>
                                                     </div>
@@ -179,9 +179,8 @@
                                                     <div class="button dropdown">
                                                         <select id="selectValidadeMesDebito" class="form-control select-validade-mes" name="mes_cartao_debito">
                                                             <option>Mês</option>
-                                                            <option>Mês</option>
                                                             @for($i = 1; $i <= 12; $i++)
-                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
                                                             @endfor
                                                         </select>
                                                     </div>
