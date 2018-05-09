@@ -36,8 +36,7 @@
                                                    class="form-control mascaraTelefone" placeholder="E-mail ou Celular">
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
-                                            <button type="button" id="btn-send-token" class="btn btn-vermelho"><i
-                                                        class="fa fa-key"></i> Enviar Token
+                                            <button type="button" id="btn-send-token" class="btn btn-vermelho"><i class="fa fa-key"></i> Enviar Token
                                             </button>
                                         </div>
                                     </div>
@@ -46,8 +45,7 @@
                                     </div>
                                     <div class="form-group row btn-login-token">
                                         <div class="col col-lg-7 col-xl-8">
-                                            <input type="text" id="inputToken" class="form-control" name="cvx_token"
-                                                   placeholder="Token de Acesso">
+                                            <input type="text" id="inputToken" class="form-control" name="cvx_token" placeholder="Token de Acesso">
                                             <input type="hidden" id="input_hidden_EmailTelefone" name="cvx_telefone">
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
@@ -58,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group links-login">
-                                        <a href="">Esqueci meu login</a> | <a href="">Reenviar Token</a>
+                                        <a href="">Esqueci meu login</a> | <a onclick="$('.btn-send-token').show(); $('.btn-login-token').hide();">Reenviar Token</a>
                                     </div>
                                 </form>
                             </div>
@@ -164,9 +162,6 @@
                         return false;
                     }
 
-                    $('.btn-send-token').hide();
-                    $('.btn-login-token').show();
-
                     var ds_contato = $('#inputEmailTelefone').val();
                     $('#input_hidden_EmailTelefone').val(ds_contato);
 
@@ -181,6 +176,9 @@
 
                             if (result != null) {
                                 $.Notification.notify('success', 'top right', 'DrHoje', 'Seu TOKEN foi enviado via SMS com sucesso!');
+
+                                $('.btn-send-token').hide();
+                                $('.btn-login-token').show();
 
                                 var json = JSON.parse(result.endereco);
 

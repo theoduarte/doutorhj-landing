@@ -19,7 +19,7 @@
                     <div class="col-md-12 col-lg-6">
                         <div class="card card-formulario">
                             <div class="card-header">
-                                Cupom de Desconto
+                                Cupom de Desconto {{ substr('03/2020', 0, 2) }}
                             </div>
                             <div class="card-body">
                                 <span class="card-span">Digite aqui o número do seu cupom</span>

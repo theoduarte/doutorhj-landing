@@ -13,6 +13,7 @@ use App\Itempedido;
 use Illuminate\Support\Facades\DB;
 use App\CreditCardResponse;
 use App\DebitCardResponse;
+use App\CartaoPaciente;
 
 class PaymentController extends Controller
 {
@@ -343,6 +344,20 @@ class PaymentController extends Controller
                     $agendamento->load('itempedidos');
                     
                     array_push($result_agendamentos, $agendamento);
+                    
+                    if ($payment_save_card == 'true' & $tp_pagamento == 'credito') {
+                    	
+                    	$cartao_paciente = new CartaoPaciente();
+                    	
+                    	$cartao_paciente->bandeira			= $cielo_result->Payment->CreditCard->Brand;
+                    	$cartao_paciente->nome_impresso		= $cielo_result->Payment->CreditCard->Holder;
+                    	$cartao_paciente->numero			= substr($cielo_result->Payment->CreditCard->CardNumber, -4);
+                    	$cartao_paciente->dt_validade		= $cielo_result->Payment->CreditCard->ExpirationDate;
+                    	$cartao_paciente->card_token		= $cielo_result->Payment->CreditCard->CardToken;
+                    	$cartao_paciente->paciente_id		= $paciente_id;
+                    	
+                    	$cartao_paciente->save();
+                    }
                 }
                 
             }

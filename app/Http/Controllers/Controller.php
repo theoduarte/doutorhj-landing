@@ -67,6 +67,6 @@ class Controller extends BaseController
             
         }
         
-        return view('welcome', compact('agendamentos_home'));
+        return view('welcome', compact('agendamentos_home', 'cvx_num_itens_carrinho'));
     }
 }

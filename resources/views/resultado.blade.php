@@ -73,7 +73,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }}</h5>
                                     <h6 class="card-subtitle">Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}</h6>
-                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) Clínica médica @else Clínica Odontológica @endif </p>
+                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->ds_preco }} @else {{ $atendimento->ds_preco }} @endif </p>
                                     <p class="card-text">{{ $atendimento->clinica->enderecos[0]->te_endereco.' ('.$atendimento->clinica->enderecos[0]->te_bairro.') '.$atendimento->clinica->enderecos[0]->cidade->nm_cidade.'-'.$atendimento->clinica->enderecos[0]->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>
@@ -103,18 +103,19 @@
 	                                            Escolha data e horário
 	                                        </div>
 	                                        <div class="escolher-data">                                    
-	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData" name="data_atendimento" placeholder="Data">
+	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData mascaraDataAgendamento" name="data_atendimento" placeholder="Data" >
 	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="fa fa-calendar"></i></label>
 	                                        </div>
 	                                        <div class="escolher-hora">                                    
-	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora" name="hora_atendimento" placeholder="Horário">
+	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora mascaraHoraAgendamento" name="hora_atendimento" placeholder="Horário" >
 	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="fa fa-clock-o"></i></label>
 	                                        </div>
 	                                        <div class="confirma-data">
-	                                            <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span>
+	                                            <!-- <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span> -->
+	                                            <strong><span class="span-data"> -- NENHUMA DATA SELECIONADA -- </span><span class="span-hora"></span></strong>
 	                                        </div>
 	                                        <div class="mensagem-confirma-data">
-	                                            <span>Data e horário sugeito a confirmação</span>
+	                                            <span>Data e horário sujeito a confirmação</span>
 	                                        </div>
 	                                        <div class="valor-total">
 	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->getVlComercialAtendimento() }}</span>
@@ -191,39 +192,68 @@
             * 
             *********************************/
 
-            jQuery.datetimepicker.setLocale('pt-BR'); 
+            jQuery.datetimepicker.setLocale('pt-BR');
+
+            var today_date = new Date();
+            var min_date = today_date.setDate(today_date.getDate() + 2);
                 
             jQuery('.selecionaData').datetimepicker({                
                 timepicker:false,
-                format:'d.m.Y'
+                format:'d.m.Y',
+                minDate: min_date
             }).on("input change", function(e){
             	//console.log("Date changed: ", e.target.value);
-            	var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
-            	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
-            	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-            	
-            	jQuery(this).parent().parent().find('.confirma-data span').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
-            });
+            	if(e.target.value != '') {
+            		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+                	
+                	jQuery(this).parent().parent().find('.confirma-data span.span-data').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
+
+                	/* if(ct_date <= today_date) {
+                		$(this).val(today_date.getDate()+'.'+(today_date.getMonth()+1)+'.'+today_date.getFullYear());
+                    	//alert('A Data informada não está disponível para a Agendamento');
+                	} */
+            	}
+            }).on("input blur", function(e){
+            	//console.log("Date changed: ", e.target.value);
+            	if(e.target.value != '') {
+            		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                	
+            		if(ct_date <= today_date) {
+            			ct_date.setDate(today_date.getDate());
+            			var ct_mes = pad((ct_date.getMonth()+1));
+            			$(this).val(ct_date.getDate()+'.'+ct_mes+'.'+ct_date.getFullYear());
+                		//alert('A Data informada não está disponível para a Agendamento');
+            		}
+
+                	
+            	}
+            });;
             
             jQuery('.selecionaHora').datetimepicker({ 
                 datepicker:false,
                 format:'H:i',
-                step: 10,
+                step: 30,
             }).on("input change", function(e){
             	//console.log("Time changed: ", e.target.value);
-            	var ct_hora_temp = (e.target.value).split(':');
-            	var ct_date = jQuery('.selecionaData').parent().parent().find('.confirma-data span').html();
-            	jQuery(this).parent().parent().find('.confirma-data span').html(ct_date + ct_hora_temp[0]+"H"+ct_hora_temp[1]+"MIN");
+            	if(e.target.value != '') {
+	            	var ct_hora_temp = (e.target.value).split(':');
+	            	var ct_date = jQuery('.selecionaData').parent().parent().find('.confirma-data span.span-data').html();
+	            	jQuery(this).parent().parent().find('.confirma-data span.span-hora').html(ct_hora_temp[0]+"H"+ct_hora_temp[1]+"MIN");
+            	}
             });
                 
             jQuery('#selecionaData2').datetimepicker({                
                 timepicker:false,
                 format:'d.m.Y',
+                minDate: min_date
             });
             jQuery('#selecionaHora2').datetimepicker({ 
                 datepicker:false,
                 format:'H:i',
-                step: 10,
+                step: 30,
             });
                 
             /*********************************

@@ -155,6 +155,24 @@ a.jstree-anchor i.ti-na {
     margin-top: 12px;
 }
 
+
+
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single {
+    padding-top: 14px;
+    height: 52px;
+    font-size: 15px;
+}
+
+.select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single .select2-selection__rendered {
+    color: rgb(124, 124, 124);
+}
+
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single .select2-selection__arrow {
+    margin-top: 12px;
+}
+
+select2-local_atendimento-container
+
 .cvx-local-atendimento {
 	height: 52px;
 	font-size: 14px;

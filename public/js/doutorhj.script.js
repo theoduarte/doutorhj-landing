@@ -170,7 +170,7 @@ $(document).ready(function () {
 		});
 	});*/
 	
-	$( '#local_atendimento' ).keyup(function() {
+	/*$( '#local_atendimento' ).keyup(function() {
 		$(this).parent().find('.cvx-no-loading').addClass('cvx-input-loading');
 	});
 	
@@ -199,6 +199,50 @@ $(document).ready(function () {
         	    buscarEndereco($(this), tipo_atendimento, atendimento_id);
     	    }
 	    }
+	});*/
+	
+	$('#tipo_especialidade').change(function(){
+		
+		var atendimento_id = $(this).val();
+		var tipo_atendimento = $('#tipo_atendimento').val();
+		
+		if(atendimento_id == '') { return false; }
+		
+		jQuery.ajax({
+    		type: 'POST',
+    	  	url: '/consulta-todos-locais-atendimento',
+    	  	data: {
+				'tipo_atendimento': tipo_atendimento,
+    	  		'atendimento_id': atendimento_id,
+				'_token': laravel_token
+			},
+			success: function (result) {
+
+				if( result != null) {
+					var json = result.endereco;
+					
+					$('#local_atendimento').empty();
+					for(var i=0; i < json.length; i++) {
+						var option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+						$('#local_atendimento').append($(option));
+					}
+					
+				}
+            },
+            error: function (result) {
+            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+            }
+    	});
+		
+	});
+	
+	$('#local_atendimento').change(function(){
+		
+		var endereco_id = $(this).val();
+		
+		if(endereco_id == '') { return false; }
+		
+		$('#endereco_id').val(endereco_id);
 	});
 	
 	/*$('#btn-finalizar-pedido').click(function(){
@@ -541,6 +585,10 @@ function numberToReal(numero) {
 function moedaParaNumero(valor)
 {
     return isNaN(valor) == false ? parseFloat(valor) :   parseFloat(valor.replace("R$","").replace(".","").replace(",","."));
+}
+
+function pad(n){
+    return n > 9 ? "" + n: "0" + n;
 }
 
 function validaBuscaAtendimento() {

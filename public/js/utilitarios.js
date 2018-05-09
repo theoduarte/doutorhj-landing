@@ -4,6 +4,16 @@ $(document).ready(function() {
         keepStatic: true
     });
 	
+	$(".mascaraDataAgendamento").inputmask({
+        mask: ["99.99.9999"],
+        keepStatic: true
+    });
+	
+	$(".mascaraHoraAgendamento").inputmask({
+        mask: ["99:99"],
+        keepStatic: true
+    });
+	
 	$(".mascaraMonetaria").maskMoney({prefix:'', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
 	
 	$(".mascaraTelefone").inputmask({

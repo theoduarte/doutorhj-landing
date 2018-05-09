@@ -7,6 +7,7 @@ use App\Menu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 
 class MenuComposer
 {
@@ -31,6 +32,10 @@ class MenuComposer
 
 	    $menus_app = Session::get('menus_app');
 	    
+	    //--busca itens no carrinho-----------------------
+	    $cartCollection = CVXCart::getContent();
+	    $cvx_num_itens_carrinho = $cartCollection->count();
+	    
 // 	    $options = array();
 // 	    $options['joins'] = array(
 // 	        array('table' => 'zigncom_menus_zigncom_perfilusers', 'alias' => 'MenuProf', 'type' => 'inner', 'conditions' => array( 'ZigncomMenu.id = MenuProf.zigncom_menu_id')),
@@ -41,6 +46,7 @@ class MenuComposer
 //  		$view->with('menus_app', Menu::with('itemmenus')->get());
 // 	    $view->with('menus_app', Menu::all()->load('itemmenus'));
 	    $view->with('menus_app', $menus_app);
+	    $view->with('cvx_num_itens_carrinho', $cvx_num_itens_carrinho);
 //  		$view->with('menus_app', DB::table('menus')->get());
 // 		$view->with('itemmenus', $this->itemmenus->lists('ordemexibicao', 'ic_item_class', 'url', 'titulo', 'id'));
 	}

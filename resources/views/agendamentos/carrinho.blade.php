@@ -143,7 +143,7 @@
                                     </div>
                                     <div class="col-12 col-md-6 area-btn-finalizar">
                                     	@if(sizeof($carrinho) > 0)
-                                    	<a href="{{ route('pagamento')}}" id="btn-finaliza-pedido" class="btn btn-vermelho btn-finalizar">Finalizar Pagamento </a>
+                                    	<a href="{{ route('pagamento')}}" id="btn-finaliza-pedido" class="btn btn-vermelho btn-finalizar" style="padding-top: 16px;">Finalizar Pagamento </a>
                                     	@endif
                                     </div>
                                 </div>

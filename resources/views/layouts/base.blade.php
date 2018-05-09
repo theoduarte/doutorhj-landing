@@ -140,6 +140,9 @@
                                         <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                             <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
                                                <a href="/carrinho" class="btn-carrinho"><i class="fa fa-cart-plus"></i></a>
+                                               <div class="numero-notificacoes">
+                                                    <span>{{ $cvx_num_itens_carrinho }}</span>
+                                                </div>
                                             </button>
                                         </div>
                                     </li>

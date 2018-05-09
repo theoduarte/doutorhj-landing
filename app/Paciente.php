@@ -15,7 +15,7 @@ class Paciente extends Model
 	public $dates 	      = ['dt_nascimento'];
     
 	public function cargo(){
-	    return $this->belongsTo(Cargo::class);
+	    return $this->belongsTo('App\Cargo');
 	}
 
 	public function contatos(){
@@ -32,6 +32,11 @@ class Paciente extends Model
 	
 	public function user(){
 	    return $this->belongsTo('App\User');
+	}
+	
+	public function cartoes()
+	{
+		return $this->hasMany('App\CartaoPaciente');
 	}
     
 	public function setDtNascimentoAttribute($data)

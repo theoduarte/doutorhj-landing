@@ -1,4 +1,4 @@
-@extends('layouts.logado')
+@extends('layouts.base')
 
 @section('title', 'Confirma Beneficiário - DoctorHj')
 
