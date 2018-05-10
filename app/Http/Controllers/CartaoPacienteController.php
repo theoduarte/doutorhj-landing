@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CartaoPaciente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as CVXRequest;
 
 class CartaoPacienteController extends Controller
 {
@@ -81,5 +82,21 @@ class CartaoPacienteController extends Controller
     public function destroy(CartaoPaciente $cartaoPaciente)
     {
         //
+    }
+    
+    public function consultaCartao()
+    {
+    	$cartao_id = CVXRequest::post('cartao_id');
+    
+    	$result = [];
+    	
+    	if (isset($cartao_id) && $cartao_id != '') {
+    		
+    		$result = CartaoPaciente::findorfail($cartao_id);
+    		
+    		return response()->json(['status' => true, 'mensagem' => '', 'cartao' => $result]);
+    	}
+    
+    	return response()->json(['status' => false, 'mensagem' => 'Falha na operação', 'cartao' => $result]);
     }
 }

@@ -245,10 +245,42 @@ $(document).ready(function () {
 		$('#endereco_id').val(endereco_id);
 	});
 	
-	/*$('#btn-finalizar-pedido').click(function(){
+	$('#selectCartaoCredito').change(function(){
 		
-		
-	});*/
+		if($(this).val() != '') {
+			
+			var cartao_id = $(this).val();
+			
+			jQuery.ajax({
+	    		type: 'POST',
+	    	  	url: '/consulta-cartao-paciente',
+	    	  	data: {
+					'cartao_id': cartao_id,
+					'_token': laravel_token
+				},
+				success: function (result) {
+
+					if(result) {
+						var json = result.cartao;
+						$('#inputNomeSaveCard').val(json.nome_impresso);
+						$('#inputNumFinalSaveCard').val(json.numero);
+						$('#inputExpirationDateSaveCard').val(json.dt_validade);
+						$('#inputBrandSaveCard').val(json.bandeira);
+						$('#inputSaveCardId').val(json.id);
+						
+						$('.row-payment-card').css('display', 'none');
+						$('.row-card-token').css('display', 'flex');
+					}
+	            },
+	            error: function (result) {
+	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+	            }
+	    	});
+		} else {
+			$('.row-payment-card').css('display', 'flex');
+			$('.row-card-token').css('display', 'none');
+		}
+	});
 	
 });
 
@@ -357,7 +389,7 @@ function pagarCartaoCredito() {
 	var mes_cartao_credito = mes_credito.val();
 	var ano_cartao_credito = ano_credito.val();
 	var cod_seg_cartao_credito = cod_seg.val();
-	var gravar_cartao_credito = $('#checkGravarCartaoCredito').val();
+	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
 	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
 	
 	$.ajax({

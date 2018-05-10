@@ -19,7 +19,7 @@
                     <div class="col-md-12 col-lg-6">
                         <div class="card card-formulario">
                             <div class="card-header">
-                                Cupom de Desconto {{ substr('03/2020', 0, 2) }}
+                                Cupom de Desconto
                             </div>
                             <div class="card-body">
                                 <span class="card-span">Digite aqui o número do seu cupom</span>
@@ -73,16 +73,19 @@
                                             <div class="form-group row">
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
-                                                        <select class="form-control" id="selectCartaoCredito">
+                                                        <select class="form-control" id="selectCartaoCredito" name="selectCartaoCredito">
                                                             <option>Selecione</option>
-                                                            <option>Cartão Visa - final 0889</option>
+                                                            @foreach($cartoes_gravados as $item)
+                                                            <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
+                                    						@endforeach
+                                                            <!-- <option>Cartão Visa - final 0889</option>
                                                             <option>Cartão MasterCard - final 0685</option>
-                                                            <option>Cartão Cielo - final 6854</option>
+                                                            <option>Cartão Cielo - final 6854</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row row-payment-card">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
                                                     <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
@@ -93,7 +96,7 @@
                                                     <input type="text" id="inputNomeCartaoCredito"  class="form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row row-payment-card">
                                                 <div class="col col-6 col-sm-6 col-md-3">
                                                     <label for="selectValidadeMesCredito">Validade</label>
                                                     <div class="button dropdown">
@@ -124,7 +127,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row row-payment-card">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputCPFCredito">CPF do titular do cartão</label>
                                                     <input type="text" id="inputCPFCredito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
@@ -140,11 +143,47 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-check fc-checkbox">
+                                            <div class="form-check fc-checkbox row-payment-card">
                                                 <input type="checkbox" id="checkGravarCartaoCredito" class="form-check-input" name="gravar_cartao_credito">
                                                 <label class="form-check-label" for="checkGravarCartaoCredito">Gravar dados para futuras compras</label>
                                             </div>
+                                            
+                                            <div class="form-group row row-card-token">
+                                                <div class="col col-12 col-sm-12">
+                                                	<br>
+                                                    <h6 style="color: rgb(70, 117, 184); text-transform: uppercase; font-weight: 700;">PAGAMENTO DINÂMICO</h6>
+                                                    <label>Informe apenas o código de segurança do seu cartão</label>
+                                                    <input type="hidden" id="inputSaveCardId"  name="save_card_id">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row row-card-token">
+                                            	<div class="col col-12 col-sm-8">
+                                                    <label for="inputNomeSaveCard">Nome Impresso</label>
+                                                    <input type="text" id="inputNomeSaveCard"  class="form-control" name="nome_impresso_save_card" placeholder="Nome impresso" readonly="readonly">
+                                                </div>
+                                                <div class="col col-12 col-sm-4">
+                                                    <label for="inputNumFinalSaveCard">Final do Cartão</label>
+                                                    <input type="text" id="inputNumFinalSaveCard"  class="form-control" name="num_final_save_card" placeholder="Final do cartão" readonly="readonly">
+                                                </div>   
+                                            </div>
+                                            <div class="form-group row row-card-token">
+                                                <div class="col col-12 col-sm-4">
+                                                    <label for="inputExpirationDateSaveCard">Validade</label>
+                                                    <input type="text" id="inputExpirationDateSaveCard"  class="form-control" name="expiration_date_save_card" placeholder="Validade" readonly="readonly">
+                                                </div>
+                                                <div class="col col-12 col-sm-4">
+                                                	<label for="inputBrandSaveCard">Bandeira</label>
+                                                    <input type="text" id="inputBrandSaveCard"  class="form-control" name="brand_save_card" placeholder="Bandeira" readonly="readonly">
+                                                </div>
+                                                <div class="col col-12 col-sm-4">
+                                                	<label for="inputCodigoSegSaveCard" class="label-codigo-seguranca">Código seg.</label>
+                                                    <div class="area-codigo-seguranca">
+                                                        <input type="text" id="inputCodigoSegSaveCard" class="form-control" name="cod_seg_save_card" placeholder="000" maxlength="3">
+                                                    </div>
+                                                </div>   
+                                            </div>
                                         </div>
+                                        
                                         <!-- Formulário cartão de Débito -->
                                         <div id="debito" class="formas-pagamento">
                                             <div class="form-group row area-label">
@@ -418,6 +457,9 @@
 
                 $(function () {
                     $('#selectFormaPagamento').change(function () {
+                    	$('.row-payment-card').css('display', 'flex');
+                    	$('.row-card-token').css('display', 'none');
+                    	$('#selectCartaoCredito').prop('selectedIndex',0);
                         if($(this).val() == 'debito') {
                             $('#parcelamento-content').hide();
                             $('#resumo_compra_tipo_cartao').html('Cartão de débito')

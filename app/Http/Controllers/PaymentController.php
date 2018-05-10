@@ -196,6 +196,9 @@ class PaymentController extends Controller
         
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
         
+        $save_card = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
+        //dd($save_card);
+        
         $valor_total = CVXCart::getTotal();
         $valor_desconto = 10;
         
@@ -355,7 +358,7 @@ class PaymentController extends Controller
                     		->where('paciente_id', $paciente_id)
                     		->orderBy('nome_impresso', 'desc')->get();
                     	
-                    	if (sizeof($cartoes_paciente)) {
+                    	if (sizeof($cartoes_paciente) == 0) {
                     		
                     		$cartao_paciente = new CartaoPaciente();
                     		 

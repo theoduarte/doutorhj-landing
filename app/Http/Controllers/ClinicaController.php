@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PacienteSender;
 use App\Consulta;
+use App\CartaoPaciente;
 
 class ClinicaController extends Controller
 {
@@ -721,8 +722,10 @@ class ClinicaController extends Controller
     	        $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
     	    }
     	}
+    	
+    	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
 
-    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos'));
+    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados'));
     }
 
     public function informaBeneficiario(){
