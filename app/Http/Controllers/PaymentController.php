@@ -196,6 +196,25 @@ class PaymentController extends Controller
         
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
         
+        //--verifica se as condicoes de agendamento estao disponiveis------
+        $agendamento_disponivel = true;
+        $agendamentos = CVXRequest::post('agendamentos');
+         
+        for ($i = 0; $i < sizeof($agendamentos); $i++) {
+        	 
+        	$item_agendamento = json_decode($agendamentos[$i]);
+        
+        	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->whereDate('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+        
+        	if (sizeof($agendamento) > 0) {
+        		$agendamento_disponivel = false;
+        	}
+        }
+         
+        if (!$agendamento_disponivel) {
+        	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+        }
+        
         $save_card = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
         //dd($save_card);
         
@@ -448,5 +467,205 @@ class PaymentController extends Controller
         } else {
             return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
         }
+    }
+    
+    /**
+     * realiza o pagamento na Cielo por cartao de credito cadastrado no padrao completo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function fullTransactionSaveCard(Request $request)
+    {
+    	$merchantKey    = env('CIELO_MERCHANT_KEY');
+    	$merchantId     = env('CIELO_MERCHANT_ID');
+    	$url            = env('CIELO_URL').'/1/sales';
+    	
+    	//--verifica se as condicoes de agendamento estao disponiveis------
+    	$agendamento_disponivel = true;
+    	$agendamentos = CVXRequest::post('agendamentos');
+    	
+    	for ($i = 0; $i < sizeof($agendamentos); $i++) {
+    	
+    		$item_agendamento = json_decode($agendamentos[$i]);
+    		
+    		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->whereDate('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+    		
+    		if (sizeof($agendamento) > 0) {
+    			$agendamento_disponivel = false;
+    		}
+    	}
+    	
+    	/* if (!$agendamento_disponivel) {
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+    	} */
+    
+    	$tp_pagamento = CVXRequest::post('tipo_pagamento');
+    	$cartao_paciente = CVXRequest::post('cartao_paciente');
+    
+    	$valor_total = CVXCart::getTotal();
+    	$valor_desconto = 10;
+    
+    	//-- determina o numero de parcelas -------
+    	$valor_parcelamento = $valor_total-$valor_desconto;
+    
+    	$pedido = new Pedido();
+    	$titulo_pedido = CVXRequest::post('titulo_pedido');
+    	$descricao = '';
+    	$dt_pagamento = date('Y-m-d H:i:s');
+    	$paciente_id = CVXRequest::post('paciente_id');
+    
+    	$pedido->titulo         = $titulo_pedido;
+    	$pedido->descricao      = $descricao;
+    	$pedido->dt_pagamento   = $dt_pagamento;
+    	$pedido->tp_pagamento   = 'cadastrado';
+    	$pedido->paciente_id    = $paciente_id;
+    
+    	if (!$pedido->save()) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+    	}
+    
+    	//-- pedido id do DoctorHoje----------------------------------
+    	$MerchantOrderId = $pedido->id;
+    	
+    	//--cartao cadastrado do paciente-----------------------------
+    	$cartao_cadastrado = CartaoPaciente::findorfail($cartao_paciente);
+    
+    	//-- dados do comprador---------------------------------------
+    	$customer = Paciente::findorfail($paciente_id);
+    	$customer->load('user');
+    	$customer->load('documentos');
+    
+    	$customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
+    	$customer_identity              = $customer->documentos->first()->te_documento;
+    	$customer_Identity_type         = $customer->documentos->first()->tp_documento;
+    	$customer_email                 = $customer->user->email;
+    	$customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
+    
+    	$payment_type                   = 'CreditCard'; //-- usado no pagamento por credito apenas, no tipo pagamento, SaveCard
+    	$payment_amount                 = ($valor_total-$valor_desconto)*100;
+    	$payment_currency               = 'BRL';
+    	$payment_country                = 'BRA';
+    	
+    	$payment_installments           = 1;
+    	$payment_softdescriptor         = 'DoctorHoje';
+    	$payment_card_token       		= $cartao_cadastrado->card_token; 
+    	$payment_holder                 = $cartao_cadastrado->nome_impresso;
+    	$payment_security_code          = CVXRequest::post('cod_seg_cartao');
+    	$payment_brand                  = $cartao_cadastrado->bandeira;
+    
+    	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Installments":"'.$payment_installments.'","SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardToken":"'.$payment_card_token.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
+    
+    	//dd($payload);
+    
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_URL, $url);
+    	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey));
+    	curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	$output = curl_exec($ch);
+    	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    	//dd($output);
+    	if ($httpcode == 201) {
+    
+    		$cielo_result = json_decode($output);
+    		//dd($cielo_result);
+    		$result_agendamentos = [];
+    		$agendamentos = CVXRequest::post('agendamentos');
+    
+    		for ($i = 0; $i < sizeof($agendamentos); $i++) {
+    
+    			$item_agendamento = json_decode($agendamentos[$i]);
+    			//dd($item_agendamento);
+    			$agendamento = new Agendamento();
+    
+    			$agendamento->te_ticket         = UtilController::getAccessToken();
+    			$agendamento->cs_status         = 10;
+    			$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento.":00";
+    			$agendamento->bo_remarcacao     = 'N';
+    			$agendamento->bo_retorno        = 'N';
+    			$agendamento->paciente_id       = $item_agendamento->paciente_id;
+    			$agendamento->clinica_id        = $item_agendamento->clinica_id;
+    			$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
+    			$agendamento->profissional_id   = $item_agendamento->profissional_id;
+    
+    			if ($agendamento->save()) {
+    				$agendamento_id = $agendamento->id;
+    				$agendamento->load('atendimento');
+    				$agendamento->load('clinica');
+    				$agendamento->load('profissional');
+    				$agendamento->load('paciente');
+    
+    				$item_pedido = new Itempedido();
+    
+    				$item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento;
+    				$item_pedido->pedido_id = $MerchantOrderId;
+    				$item_pedido->agendamento_id = $agendamento_id;
+    
+    				if(!$item_pedido->save()) {
+    					echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+    				}
+    
+    				$agendamento->load('itempedidos');
+    
+    				array_push($result_agendamentos, $agendamento);
+    				
+    			}
+    
+    		}
+    
+    		$pagamento = new Payment();
+    
+    		$pagamento->merchant_order_id 		= $cielo_result->MerchantOrderId;
+    		$pagamento->payment_id 				= $cielo_result->Payment->PaymentId;
+    		$pagamento->tid 					= $cielo_result->Payment->Tid;
+    		$pagamento->payment_type 			= $cielo_result->Payment->Type;
+    		$pagamento->amount 					= $cielo_result->Payment->Amount;
+    		$pagamento->currency 				= $cielo_result->Payment->Currency;
+    		$pagamento->country 				= $cielo_result->Payment->Country;
+    		$pagamento->service_tax_amount 		= $cielo_result->Payment->ServiceTaxAmount;
+    		$pagamento->installments 			= $cielo_result->Payment->Installments;
+    		$pagamento->interest 				= $cielo_result->Payment->Interest;
+    		$pagamento->capture 				= $cielo_result->Payment->Capture;
+    		$pagamento->authenticate 			= $cielo_result->Payment->Authenticate;
+    		$pagamento->recurrent 				= $cielo_result->Payment->Recurrent;
+    		$pagamento->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
+    		$pagamento->crc_holder 				= $payment_holder;
+    		$pagamento->crc_expiration_date 	= $cartao_cadastrado->dt_validade;
+    		$pagamento->crc_save_card			= 'false';
+    		$pagamento->crc_brand 				= $cielo_result->Payment->CreditCard->Brand;
+    		$pagamento->cielo_result 			= $output;
+    		$pagamento->pedido_id 				= $cielo_result->MerchantOrderId;
+    
+    		$pagamento->save();
+    		
+    		$crc_response = new CreditCardResponse();
+    		
+    		$crc_response->tid 					= $cielo_result->Payment->Tid;
+    		$crc_response->proof_of_sale 		= isset($cielo_result->Payment->ProofOfSale) ? $cielo_result->Payment->ProofOfSale : '';
+    		$crc_response->authorization_code 	= isset($cielo_result->Payment->AuthorizationCode) ? $cielo_result->Payment->AuthorizationCode : '';
+    		$crc_response->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
+    		$crc_response->crc_status 			= $cielo_result->Payment->Status;
+    		$crc_response->return_code 			= $cielo_result->Payment->ReturnCode;
+    		$crc_response->return_message 		= $cielo_result->Payment->ReturnMessage;
+    		$crc_response->payment_id 			= $pagamento->id;
+    		
+    		$crc_response->save();
+    
+    		CVXCart::clear();
+    
+    		$valor_total_pedido = $valor_total-$valor_desconto;
+    
+    		$request->session()->put('result_agendamentos', $result_agendamentos);
+    		$request->session()->put('pedido', $pedido);
+    		$request->session()->put('valor_total_pedido', $valor_total_pedido);
+    
+    		//return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+    
+    		//return redirect()->route('payments.pedido-finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
+    		return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $output]);
+    	} else {
+    		return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+    	}
     }
 }

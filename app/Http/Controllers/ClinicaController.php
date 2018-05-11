@@ -787,6 +787,7 @@ class ClinicaController extends Controller
 
     	return response()->json(['status' => false, 'mensagem' => 'O Item não foi removido. Por favor, tente novamente']);
     }
+    
     public function homeLogado(){
 
     	/* $verify_hash = "teste";

@@ -298,7 +298,7 @@ function pagarCartaoCredito() {
 	var cpf_titular 	= $('#inputCPFCredito');
 	var parcelamento 	= $('#selectParcelamentoCredito');
 	
-	if(numero_cartao.val().length == 0) {
+	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
 		numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
 		
@@ -445,7 +445,7 @@ function pagarCartaoDebito() {
 	var cod_seg 		= $('#inputCodigoDebito');
 	var cpf_titular 	= $('#inputCPFDebito');
 	
-	if(numero_cartao.val().length == 0) {
+	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
 		numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
 		
@@ -589,47 +589,11 @@ function pagarCartaoCadastrado() {
 	var dt_validade 	= $('#inputExpirationDateSaveCard');
 	var cod_seg 		= $('#inputCodigoSegSaveCard');
 	
-	if(numero_cartao.val().length == 0) {
-		numero_cartao.parent().addClass('cvx-has-error');
-		numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
+	if(cartao_id.val().length == 0) {
+		cartao_id.parent().addClass('cvx-has-error');
+		cartao_id.parent().append('<span class="help-block text-danger"><strong>Nenhum Cartão foi selecionado</strong></span>');
 		
-		$('#inputNumeroCartaoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(nome_impresso.val().length == 0) {
-		nome_impresso.parent().addClass('cvx-has-error');
-		nome_impresso.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputNomeCartaoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(mes_credito.val().length == 0) {
-		mes_credito.parent().addClass('cvx-has-error');
-		mes_credito.parent().append('<span class="help-block text-danger"><strong>Mês Cartão</strong></span>');
-		
-		$('#selectValidadeMesCredito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(ano_credito.val().length == 0) {
-		ano_credito.parent().addClass('cvx-has-error');
-		ano_credito.parent().append('<span class="help-block text-danger"><strong>Ano Cartão</strong></span>');
-		
-		$('#selectValidadeAnoCredito').change(function(){
+		$('#selectCartaoCredito').change(function(){
 			$(this).parent().removeClass('cvx-has-error');
 			$(this).parent().find('span.help-block').remove();
 		});
@@ -641,19 +605,7 @@ function pagarCartaoCadastrado() {
 		cod_seg.parent().addClass('cvx-has-error');
 		cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
 		
-		$('#inputCodigoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(cpf_titular.val().length == 0) {
-		cpf_titular.parent().addClass('cvx-has-error');
-		cpf_titular.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCPFCredito').keypress(function(){
+		$('#inputCodigoSegSaveCard').keypress(function(){
 			$(this).parent().removeClass('cvx-has-error');
 			$(this).parent().find('span.help-block').remove();
 		});
@@ -674,33 +626,29 @@ function pagarCartaoCadastrado() {
     $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
     setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
 	
-	var tipo_pagamento = $('#selectFormaPagamento').val();
+	var tipo_pagamento = 'cadastrado';
 	var titulo_pedido = $('#titulo_pedido').val();
 	var paciente_id = $('#paciente_id').val();
 	
-	var num_cartao_credito = numero_cartao.val();
+	var cartao_paciente = cartao_id.val();
 	var nome_impresso_cartao_credito = nome_impresso.val();
-	var mes_cartao_credito = mes_credito.val();
-	var ano_cartao_credito = ano_credito.val();
+	var final_cartao_credito = final_cartao.val();
+	var validade_cartao_credito = dt_validade.val();
 	var cod_seg_cartao_credito = cod_seg.val();
-	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
-	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
 	
 	$.ajax({
 		type:'post',
 		   dataType:'json',
-		   url: '/finalizar_pedido',
+		   url: '/finalizar_pedido_cartao_cadastrado',
 		   data: {
 			   'tipo_pagamento': tipo_pagamento,
 			   'titulo_pedido': titulo_pedido,
 			   'paciente_id': paciente_id,
-			   'num_cartao': num_cartao_credito,
+			   'cartao_paciente': cartao_paciente,
 			   'nome_impresso_cartao': nome_impresso_cartao_credito,
-			   'mes_cartao': mes_cartao_credito,
-			   'ano_cartao': ano_cartao_credito,
+			   'final_cartao_credito': final_cartao_credito,
+			   'validade_cartao_credito': validade_cartao_credito,
 			   'cod_seg_cartao': cod_seg_cartao_credito,
-			   'gravar_cartao': gravar_cartao_credito,
-			   'bandeira_cartao': bandeira_cartao_credito,
 			   'agendamentos': agendamentos,
 			   '_token': laravel_token
 		   },
@@ -710,6 +658,10 @@ function pagarCartaoCadastrado() {
 			  if(result.status) {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
+			  } else {
+				  $.Notification.notify('info','top right', 'DrHoje', result.mensagem);
+				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+		          $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
