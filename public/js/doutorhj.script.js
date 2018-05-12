@@ -297,6 +297,7 @@ function pagarCartaoCredito() {
 	var cod_seg 		= $('#inputCodigoCredito');
 	var cpf_titular 	= $('#inputCPFCredito');
 	var parcelamento 	= $('#selectParcelamentoCredito');
+	var cupom_desconto 	= $('#inputCupom');
 	
 	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
@@ -394,6 +395,7 @@ function pagarCartaoCredito() {
 	var cod_seg_cartao_credito = cod_seg.val();
 	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
 	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
+	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	$.ajax({
 		type:'post',
@@ -410,6 +412,7 @@ function pagarCartaoCredito() {
 			   'cod_seg_cartao': cod_seg_cartao_credito,
 			   'gravar_cartao': gravar_cartao_credito,
 			   'bandeira_cartao': bandeira_cartao_credito,
+			   'cod_cupom_desconto': cod_cupom_desconto,
 			   'agendamentos': agendamentos,
 			   '_token': laravel_token
 		   },
@@ -440,10 +443,11 @@ function pagarCartaoDebito() {
 	var result = true;
 	var numero_cartao 	= $('#inputNumeroCartaoDebito');
 	var nome_impresso 	= $('#inputNomeCartaoDebito');
-	var mes_debito 	= $('#selectValidadeMesDebito');
-	var ano_debito 	= $('#selectValidadeAnoDebito');
+	var mes_debito 		= $('#selectValidadeMesDebito');
+	var ano_debito 		= $('#selectValidadeAnoDebito');
 	var cod_seg 		= $('#inputCodigoDebito');
 	var cpf_titular 	= $('#inputCPFDebito');
+	var cupom_desconto 	= $('#inputCupom');
 	
 	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
@@ -540,6 +544,7 @@ function pagarCartaoDebito() {
 	var ano_cartao_debito = ano_debito.val();
 	var cod_seg_cartao_debito = cod_seg.val();
 	var bandeira_cartao_debito = $('#inputBandeiraCartaoDebito').val();
+	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	$.ajax({
 		type:'post',
@@ -555,6 +560,7 @@ function pagarCartaoDebito() {
 			   'ano_cartao': ano_cartao_debito,
 			   'cod_seg_cartao': cod_seg_cartao_debito,
 			   'bandeira_cartao': bandeira_cartao_debito,
+			   'cod_cupom_desconto': cod_cupom_desconto,
 			   'agendamentos': agendamentos,
 			   '_token': laravel_token
 		   },

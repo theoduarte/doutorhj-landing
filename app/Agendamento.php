@@ -2,22 +2,47 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Support\Carbon;
+use Kyslik\ColumnSortable\Sortable;
+use Illuminate\Database\Eloquent\Model;
 
 class Agendamento extends Model
 {
     use Sortable;
-    
-    public $fillable  = ['id', 'te_ticket', 'dt_consulta1', 'dt_consulta2', 'dt_consulta3', 'obs_agendamento', 
-                         'obs_cancelamento', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status'];
-    
-    public $sortable  = ['id', 'te_ticket', 'dt_consulta1', 'dt_consulta2', 'dt_consulta3', 'dt_atendimento', 'cs_status'];
-    
-    public $dates 	  = ['dt_atendimento', 'dt_consulta1', 'dt_consulta2', 'dt_consulta3'];
+        
+    public $fillable  = ['id', 'te_ticket', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status'];
+    public $sortable  = ['id', 'te_ticket', 'dt_atendimento', 'cs_status'];
+    public $dates 	  = ['dt_atendimento'];
     
     
+    /*
+     * Constants
+     */
+    const PRE_AGENDADO   = 10;
+    const CONFIRMADO     = 20;
+    const NAO_CONFIRMADO = 30;
+    const FINALIZADO     = 40;
+    const AUSENTE        = 50;
+    const CANCELADO      = 60;
+    const AGENDADO       = 70;
+    const RETORNO        = 80;
+    
+    protected static $cs_status = array(
+        self::PRE_AGENDADO   => 'Pré-Agendado',
+        self::CONFIRMADO     => 'Confirmado',
+        self::NAO_CONFIRMADO => 'Não Confirmado',
+        self::FINALIZADO     => 'Finalizado',
+        self::AUSENTE        => 'Ausente',
+        self::CANCELADO      => 'Cancelado',
+        self::AGENDADO       => 'Agendado',
+        self::RETORNO        => 'Retorno'
+    );
+    
+    
+    
+    /*
+     * Relationship
+     */
     public function paciente()
     {
         return $this->belongsTo('App\Paciente');
@@ -33,19 +58,20 @@ class Agendamento extends Model
         return $this->belongsTo('App\Profissional');
     }
     
-    public function atendimento()
+    public function cupom_desconto()
     {
-        return $this->belongsTo('App\Atendimento');
+        return $this->belongsTo('App\CupomDesconto');
     }
     
-    public function itempedidos()
-    {
-        return $this->hasMany('App\ItemPedido');
+    /*
+     * Getters and Setters
+     */
+    public function getCsStatusAttribute($cdStatus) {
+        return static::$cs_status[$cdStatus];
     }
     
-    public function getDtConsultaPrimariaAttribute()
-    {
-        $date = new Carbon($this->attributes['dt_consulta_primaria']);
-        return $date->format('d/m/Y g:i A');
+    public function getDtAtendimentoAttribute($data) {
+        $obData = new Carbon($data);
+        return $obData->format('d/m/Y H:i');
     }
 }

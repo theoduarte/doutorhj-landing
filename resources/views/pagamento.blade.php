@@ -26,11 +26,11 @@
                                 <form>
                                     <div class="form-group row">
                                         <div class="col col-lg-7 col-xl-8">
-                                            <input type="text" class="form-control" id="inputCupom"
-                                                   placeholder="Cupom de desconto">
+                                            <input type="text" class="form-control" id="inputCupom" name="inputCupom" placeholder="Cupom de desconto">
+                                            <i class="cvx-check-cupom-desconto cvx-no-loading fa fa-check-circle text-success"></i>
                                         </div>
                                         <div class="col col-lg-5 col-xl-4">
-                                            <button type="submit" class="btn btn-vermelho">Validar</button>
+                                            <button type="button" id="btn-validar-cupom" class="btn btn-vermelho">Validar</button>
                                         </div>
                                     </div>
                                 </form>
@@ -359,7 +359,7 @@
                                                     <span>Forma de pagamento:</span>
                                                 </div>
                                                 <div class="dados-resumo">
-                                                    <p><span id="resumo_compra_tipo_cartao"></span> - Final XXXX</p>
+                                                    <p><span id="resumo_compra_tipo_cartao"></span> - Final <span id="resumo_compra_final_cartao">XXXX</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -372,6 +372,7 @@
                                             <div class="col-md-7">
                                                 <div class="dados-resumo">
                                                     <p>R$ {{ number_format( $valor_total,  2, ',', '.') }}</p>
+                                                    <input type="hidden" id="valor_servicos" value="{{ $valor_total }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -384,6 +385,7 @@
                                             <div class="col-md-7">
                                                 <div class="dados-resumo">
                                                     <p>- R$ {{ number_format( $valor_desconto,  2, ',', '.') }}</p>
+                                                    <input type="hidden" id="valor_desconto" value="{{ $valor_desconto }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -407,7 +409,8 @@
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="dados-resumo">
-                                                    <p>10x com juros (1,29% a.m.) de R$ 48,50</p>
+                                                    <!-- <p>10x com juros (1,29% a.m.) de R$ 48,50</p> -->
+                                                    <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -448,7 +451,8 @@
 
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
-
+                localStorage.setItem('activeCupom', 'f');
+                
                 /*********************************
                  *
                  * ALTERA FORMULARIO PAGAMENTO
@@ -472,6 +476,56 @@
                     });
 
                     
+                });
+
+                $('#inputNumeroCartaoCredito').keydown(function(){
+                    if($(this).val().length == 16) {
+                        var num_cartao = $('#inputNumeroCartaoCredito').val();
+                        $('#resumo_compra_final_cartao').html(num_cartao.substr(-4));
+                    } else {
+                    	$('#resumo_compra_final_cartao').html('XXXX');
+                    }
+                });
+
+                $('#btn-validar-cupom').click(function(){
+
+                	var codigo = $('#inputCupom').val();
+                	var activeCupom = localStorage.getItem('activeCupom');
+                	
+                    if(codigo.length == 0 | activeCupom == 't') { return false; }
+
+                    $.ajax({
+                		type:'post',
+                		   dataType:'json',
+                		   url: '/validar-cupom-desconto',
+                		   data: {
+                			   'codigo': codigo,
+                			   '_token': laravel_token
+                		   },
+                		   timeout: 15000,
+                		   success: function (result) {
+                			   
+                    		   if(result.status) {
+
+                        		   var valor_total = $('#valor_servicos').val();
+                        		   var desconto = valor_total*result.percentual;
+                        		   var valor_com_desconto = valor_total-desconto;
+                        		   
+                        		   //localStorage.setItem('activeCupom', 'f');
+                        		   $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
+                        		   $('#valor_desconto').parent().find('p').html('- R$ '+numberToReal(desconto));
+                        		   $('.valor-total-produtos').find('p').html('- R$ '+numberToReal(valor_com_desconto));
+                        		   
+                        		} else {
+                            		
+                    			   $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+                    			   
+                    			}
+                		  },
+                		  error: function (result) {
+                          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+                          }
+                	});
                 });
 
                 /*********************************

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\CreditCardResponse;
 use App\DebitCardResponse;
 use App\CartaoPaciente;
+use App\CupomDesconto;
 
 class PaymentController extends Controller
 {
@@ -195,6 +196,12 @@ class PaymentController extends Controller
         $url            = env('CIELO_URL').'/1/sales';
         
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
+        $cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
+        $percentual_desconto = 1; // '1' indica que o cliente vai pagar 100% do valor total dos produtos-----
+        
+        if($cod_cupom_desconto != '') {
+            $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
+        }
         
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
@@ -219,7 +226,7 @@ class PaymentController extends Controller
         //dd($save_card);
         
         $valor_total = CVXCart::getTotal();
-        $valor_desconto = 10;
+        $valor_desconto = $valor_total*$percentual_desconto;
         
         //-- determina o numero de parcelas -------
         $valor_parcelamento = $valor_total-$valor_desconto;
@@ -501,10 +508,18 @@ class PaymentController extends Controller
     	} */
     
     	$tp_pagamento = CVXRequest::post('tipo_pagamento');
+    	
+    	$cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
+    	$percentual_desconto = 1; // '1' indica que o cliente vai pagar 100% do valor total dos produtos-----
+    	
+    	if($cod_cupom_desconto != '') {
+    	    $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
+    	}
+    	
     	$cartao_paciente = CVXRequest::post('cartao_paciente');
     
     	$valor_total = CVXCart::getTotal();
-    	$valor_desconto = 10;
+    	$valor_desconto = $valor_total*$percentual_desconto;
     
     	//-- determina o numero de parcelas -------
     	$valor_parcelamento = $valor_total-$valor_desconto;
@@ -667,5 +682,32 @@ class PaymentController extends Controller
     	} else {
     		return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
     	}
+    }
+    
+    /**
+     * validarCupomDesconto a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function validarCupomDesconto($cod_cupom_desconto)
+    {
+        $cupom_desconto = [];
+        
+        if ($cod_cupom_desconto == '') {
+            return 1;
+        }
+        
+        $ct_date = date('Y-m-d H:i:s');
+        
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        
+        if($cupom_desconto === null) {
+            return 1;
+        }
+        
+        $percentual = $cupom_desconto->first()->percentual/100;
+        
+        return $percentual;
     }
 }

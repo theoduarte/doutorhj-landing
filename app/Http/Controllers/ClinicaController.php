@@ -705,21 +705,26 @@ class ClinicaController extends Controller
     	}
 
     	$valor_total = CVXCart::getTotal();
-    	$valor_desconto = 10;
+    	$valor_desconto = 0;
 
     	$cpf_titular = $user_session->documentos->first()->te_documento;
 
     	$valor_parcelamento = $valor_total-$valor_desconto;
     	$parcelamentos = array(
-    	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
+    	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.').' sem juros'
     	);
 
     	if ($valor_total > 200) {
     	    $parcelamentos = [];
 
-    	    for ($i = 2; $i <= 3; $i++) {
+    	    for ($i = 2; $i <= 5; $i++) {
     	        $item_valor =  $valor_parcelamento/$i;
-    	        $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
+    	        
+    	        if ($i <= 3) {
+    	            $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+    	        } elseif ($i > 3) {
+    	            $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.').' com juros (1,29% a.m.)';
+    	        }
     	    }
     	}
     	
@@ -822,16 +827,164 @@ HEREDOC;
 
         $verify_hash = "teste";
          $from = 'contato@doctorhoje.com.br';
-         $to = 'kenobipaulo@gmail.com';
+         $to = 'teocomp@msn.com';
          $subject = 'Contato DoctorHoje';
          $url = route('ativar_conta', $verify_hash);
          $html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
-<head><title>DoctorHoje Ativação</title></head>
-<body>
-    <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2>
-</body>
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+        <title>DoctorHoje</title>
+    </head>
+    <body style='margin: 0;'>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr style='background-color:#fff;'>
+                <td width='480' style='text-align:left'>&nbsp;</td>
+                <td width='120' style='text-align:right'>&nbsp;</td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr style='background-color:#fff;'>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoctorHoje - Confirmação de cadastro</span></td>
+                <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
+            </tr>
+        </table>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td><img src='h1.png' width='600' height='113' alt=''/></td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px;'><strong>Confirmação de cadastro</strong></td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 28px; line-height: 50px; color: #434342; background-color: #fff; text-align: center;'>
+                    Olá, <strong style='color: #1d70b7;'>Thaiane</strong>
+                </td>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
+                    <strong>Seja bem-vindo(a)</strong> e obrigado(a) por escolher o Doctor Hoje. Estamos muito felizes em saber que agora você faz parte da melhor plataforma de consultas e exames do Distrito Federal. Nosso objetivo é facilitar sua vida e buscar os melhores serviços de saúde à preços acessíveis. Você pode consultar seus dados cadastrais no nosso site e em breve pelo seu celular no aplicativo Doctor Hoje.
+                </td>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='220' style='background-color: #fff;'>&nbsp;</td>
+                <td width='159' style='text-align: center;'>
+                    <img src='devices.png' width='155' height='74' alt=''/>
+                </td>
+                <td width='221' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='130' style='background-color: #fff;'>&nbsp;</td>
+                <td width='340' style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; font-size: 14px; line-height: 50px; color: #434342; text-align: center;'>
+                    <a href='#' style='color: #ffffff; text-decoration: none;'><strong style='color: #ffffff;'>CLIQUE AQUI PARA ATIVAR SEU CADASTRO</strong></a>
+                </td>
+                <td width='130' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
+                    Seu cadastro foi realizado através do e-mail:
+                    <span style='color: #1d70b7;'><strong>thaianepinheiro.1@gmail.com</strong></span><br>
+                    <br>
+                    Para logar no seu perfil, digite seu e-mail e token recebido por SMS
+                    a cada novo acesso.                     
+                </td>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
+                    Abraços,<br>
+                    Equipe Doctor Hoje                    
+                </td>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
+            <tr style='background-color: #f9f9f9;'>
+                <td width='513'>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
+            <tr style='background-color: #f9f9f9;'>
+                <td width='209'></td>
+                <td width='27'><a href='#'><img src='facebook.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='youtube.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='instagram.png' width='27' height='24' alt=''/></a></td>
+                <td width='210'></td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
+            <tr style='background-color: #f9f9f9;'>
+                <td width='513'>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr style='background-color: #f9f9f9;'>
+                <td width='30'></td>
+                <td width='540' style='line-height:16px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#434342; text-align: center;'>
+                    Em caso de qualquer dúvida, fique à vontade <br>
+                    para responder esse e-mail ou
+                    nos contatar no <br><br>
+                    <a href='mailto:meajuda@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>meajuda@doctorhoje.com.br</a>
+                    <br><br>
+                    Ou ligue para (61) 3221-5350, o atendimento é de<br>
+                    segunda à sexta-feira
+                    das 8h00 às 18h00. <br><br>
+                    <strong>Doctor Hoje</strong> 2018 
+                </td>
+                <td width='30'></td>
+            </tr>
+        </table>
+        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
+            <tr style='background-color: #f9f9f9;'>
+                <td width='513'>
+                    &nbsp;
+                </td>
+            </tr>
+        </table>
+    </body>
 </html>
 HEREDOC;
 
@@ -839,9 +992,9 @@ HEREDOC;
          //dd($html_message);
 
          $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
-         //dd($send_message);
+         dd($send_message);
          if ($send_message) {
-         dd('O e-mail foi enviado com sucesso!');
+            dd('O e-mail foi enviado com sucesso!');
          //dd($output);
          }
 

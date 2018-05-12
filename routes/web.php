@@ -57,6 +57,7 @@ Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
 Route::post('remover-item_carrinho', 'ClinicaController@RemoverItemCarrinho');
+Route::post('validar-cupom-desconto', 'CupomDescontoController@validarCupomDesconto')->name('validar_cupom_desconto');
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');

@@ -230,7 +230,7 @@
 
                 	
             	}
-            });;
+            });
             
             jQuery('.selecionaHora').datetimepicker({ 
                 datepicker:false,
