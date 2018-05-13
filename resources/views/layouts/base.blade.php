@@ -172,7 +172,7 @@
                                 <a class="nav-link" href="#vantagens">Vantagens</a>
                             </li>
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="#">Sou profissional de saúde</a>
+                                <a class="nav-link" href="https://prestador.doctorhoje.com.br/login">Sou profissional de saúde</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>

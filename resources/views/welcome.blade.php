@@ -1,7 +1,10 @@
 @extends('layouts.base')
-@section('title', 'Home - DoctorHJ')
+
+@section('title', 'Home: DoctorHoje')
+
 @push('scripts')
 @endpush
+
 @section('content')
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
