@@ -273,6 +273,29 @@ header .navbar-collapse {
     height: 52px !important;
 }
 
+.form-busca-home .select2-container {
+    width: 100%!important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da!important;
+    border-radius: .25rem!important;
+}
+
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single,
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single{
+    padding-top: 11px!important;
+}
+
+.select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single .select2-selection__rendered,
+.select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single .select2-selection__rendered {
+    font-size: 13px!important;
+    color: rgb(124, 124, 124)!important;
+    text-transform: uppercase!important;
+    height: 52px!important;
+    padding-left: 14px!important;
+}
+
 .form-busca-home select option {
     font-size: 16px;
     text-transform: none;
@@ -2543,6 +2566,12 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 991px) {
+    .area-banner {
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
     .area-banner .frase {
         margin-right: auto;
         text-align: center;
