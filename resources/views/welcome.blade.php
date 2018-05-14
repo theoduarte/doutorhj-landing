@@ -70,7 +70,23 @@
                                                     <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
                                                 </div>
                                                 <div class="col-lg-5">
+                                                	@if($agendamento->getRawCsStatusAttribute() == 10)
+                                                    <span class="status pre-agendado">Pré-Agendado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                                    <span class="status confirmado">Confirmado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                                    <span class="status nao-confirmado">Não Confirmado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                    <span class="status finalizado">Finalizado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                                    <span class="status ausente">Não compareceu</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                                    <span class="status cancelado">Cancelado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 70)
                                                     <span class="status agendado">Agendado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                                    <span class="status retorno">Retorno de Consulta</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

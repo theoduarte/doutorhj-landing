@@ -33,7 +33,10 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="local">Local de antedimento</label>
-                            <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul">
+                            <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
+                            <select id="local_atendimento" class="form-control select2" name="local_atendimento">
+                                <option value="" disabled selected hidden>Ex.: Asa Sul</option>
+                            </select>
                             <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                             <input type="hidden" id="endereco_id" name="endereco_id">
                         </div>
@@ -52,9 +55,9 @@
                 	<div class="agendamentos">
                         <div class="row">
                             <div class="col col-lg-2 area-data">
-                                <p class="dia">{{ date('d', strtotime($agendamento->dt_atendimento))}}</p>
-                                <p class="mes">{{ strftime('%B', strtotime($agendamento->dt_atendimento)) }}</p>
-                                <p class="mes" style="font-size: 28px;">{{ date('H:i', strtotime($agendamento->dt_atendimento)) }}</p>
+                                <p class="dia">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}</p>
+                                <p class="mes text-center">{{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }}</p>
+                                <p class="mes" style="font-size: 28px;">{{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
                             </div>
                             <div class="col col-lg-5 area-informacoes">
                                 <div class="nome-status">
@@ -63,7 +66,23 @@
                                             <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
                                         </div>
                                         <div class="col-lg-5">
+                                        	@if($agendamento->getRawCsStatusAttribute() == 10)
                                             <span class="status pre-agendado">Pré-Agendado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                            <span class="status confirmado">Confirmado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                            <span class="status nao-confirmado">Não Confirmado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                            <span class="status finalizado">Finalizado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                            <span class="status ausente">Não compareceu</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                            <span class="status cancelado">Cancelado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 70)
+                                            <span class="status agendado">Agendado</span>
+                                            @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                            <span class="status retorno">Retorno de Consulta</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
