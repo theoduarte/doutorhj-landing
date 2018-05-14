@@ -17,4 +17,9 @@ class Documento extends Model
 	public function estado(){
 		return $this->belongsTo('App\Estado'); 
 	}
+	
+	public function dependentes()
+	{
+		return $this->hasMany('App\Dependente');
+	}
 }

@@ -38,6 +38,11 @@ class Paciente extends Model
 	{
 		return $this->hasMany('App\CartaoPaciente');
 	}
+	
+	public function dependentes()
+	{
+		return $this->hasMany('App\Dependente');
+	}
     
 	public function setDtNascimentoAttribute($data)
 	{

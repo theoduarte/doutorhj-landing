@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Minha Conta - DoctorHj')
+@section('title', 'DoctorHj: Minha Conta')
 
 @push('scripts')
 
@@ -18,27 +18,25 @@
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="tipo">Tipo de atendimento</label>
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                <option>Ex.: Consulta</option>
-                                <option value="saude">Consulta Médica</option>
-                                <option value="odonto">Consulta Odontológica</option>
-                                <option value="exame">Exames</option>
-                                <option value="procedimento">Procedimento</option>
+                            	<option value="" disabled selected hidden>Ex.: Consulta</option>
+                            	<option value="saude">Consulta Médica</option>
+                            	<option value="odonto">Consulta Odontológica</option>
+                            	<option value="exame">Exames</option>
+                            	<!-- <option value="procedimento">Procedimento</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="especialidade">Especialidade ou exame</label>
                             <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                <option>Ex.: Clínica Médica</option>
-                                <option>Opção 1</option>
-                                <option>Opção 2</option>
-                                <option>Opção 3</option>
-                                <option>Opção 4</option>
+                                <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="local">Local de antedimento</label>
-                            <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento"
-                                   name="local_atendimento" placeholder="Ex.: Asa Sul">
+                            <select id="local_atendimento" class="form-control select2" name="local_atendimento">
+                            	<option value="" disabled selected hidden>Ex.: Asa Sul</option>
+                            </select>
+                            <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                             <input type="hidden" id="endereco_id" name="endereco_id">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -122,25 +120,28 @@
                                     <div class="col-md-12 col-lg-6 col-lista-dependentes">
                                         <span class="label-titulo">Dependentes</span>
                                         <div class="lista-dependentes">
+                                        	@for($i = 0; $i < sizeof($dependentes); $i++)
                                             <div class="dependente">
                                                 <div class="row">
                                                     <div class="col-md-10">
-                                                        <span class="nm-dependente">Nome Dependente 1</span>
+                                                        <span class="nm-dependente">Dep0{{ ($i+1) }}: {{ $dependentes[$i]->nm_primario.' '.$dependentes[$i]->nm_secundario }}</span>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><i
-                                                                    class="fa fa-trash"></i></a>
+                                                        <a class="exclui-dependente" href="#"><iclass="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="dependente">
+                                            @endfor
+                                            @if(sizeof($dependentes) == 0)
+                                            NENHUM DEPENDENTE ENCONTRADO!
+                                            @endif
+                                            <!-- <div class="dependente">
                                                 <div class="row">
                                                     <div class="col-md-10">
                                                         <span class="nm-dependente">Nome Dependente 2</span>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><i
-                                                                    class="fa fa-trash"></i></a>
+                                                        <a class="exclui-dependente" href="#"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,11 +151,10 @@
                                                         <span class="nm-dependente">Nome Dependente 3</span>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><i
-                                                                    class="fa fa-trash"></i></a>
+                                                        <a class="exclui-dependente" href="#"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <button type="button" class="btn btn-light btn-add-dependente"
@@ -165,16 +165,12 @@
 
                                         <!-- Modal adicionar dependente -->
 
-                                        <div class="modal fade" id="modalAdicionaDependente" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-adiciona-dependente"
-                                                 role="document">
+                                        <div class="modal fade" id="modalAdicionaDependente" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-adiciona-dependente" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Novo
-                                                            Dependente</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Novo Dependente</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -182,27 +178,32 @@
                                                         <form>
                                                             <div class="form-group">
                                                                 <label for="inputNomeDependente">Nome</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="inputNomeDependente"
-                                                                       placeholder="Nome *">
+                                                                <input type="text" class="form-control" id="inputNomeDependente" placeholder="Nome *">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputEmailDependente">E-mail</label>
-                                                                <input type="email" class="form-control"
-                                                                       id="inputEmailDependente"
-                                                                       placeholder="E-mail">
+                                                                <input type="email" class="form-control" id="inputEmailDependente" placeholder="E-mail">
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="tp_documento_dependente" class="control-label">Tipo Documento</label>
+										                            <select id="tp_documento_dependente" class="form-control" name="tp_documento_dependente">
+										                            	<option value="RG">RG</option>
+										                            	<option value="CPF">CPF</option>
+										                            	<option value="CNASC">Certi. Nasc.</option>
+										                            	<option value="CTPS">Cart. Trabalho</option>
+										                            </select>
+                                                                </div>
+                                                                <div class="form-group col-md-8">
+                                                                    <label for="te_documento_dependente" class="control-label">Nr. Documento</label>
+											                        <input type="text" id="te_documento_dependente" class="form-control" name="te_documento_dependente" placeholder="Nr. Documento">
+                                                                </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputTelefoneDependente">Telefone</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="inputTelefoneDependente"
-                                                                       placeholder="Telefone">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="selectGenero">Gênero</label>
-                                                                <select id="selectGenero" class="form-control">
-                                                                    <option>Masculino</option>
-                                                                    <option>Feminino</option>
+                                                                <label for="selectGeneroDependente">Gênero</label>
+                                                                <select id="selectGeneroDependente" class="form-control">
+                                                                    <option value="M">Masculino</option>
+                                                                    <option value="F">Feminino</option>
                                                                 </select>
                                                             </div>
                                                             <div class="form-group fc-tit-dn">
@@ -210,35 +211,42 @@
                                                             </div>
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-4">
-                                                                    <select id="selectDiaDependente"
-                                                                            class="form-control">
+                                                                    <select id="selectDiaDependente" class="form-control">
                                                                         <option>Dia</option>
+                                                                        @for($i = 1; $i <= 31; $i++)
+			                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
+			                                                            @endfor
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group col-md-4">
-                                                                    <select id="selectMesDependente"
-                                                                            class="form-control">
+                                                                    <select id="selectMesDependente" class="form-control">
                                                                         <option>Mês</option>
+                                                                        @for($i = 1; $i <= 12; $i++)
+			                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
+			                                                            @endfor
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group col-md-4">
-                                                                    <select id="selectAnoDependente"
-                                                                            class="form-control">
+                                                                    <select id="selectAnoDependente" class="form-control">
                                                                         <option>Ano</option>
+                                                                        @for($i = date('Y'); $i >= (date('Y'))-110; $i--)
+			                                                            <option value="{{ $i }}">{{ $i }}</option>
+			                                                            @endfor
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <button type="button" class="btn btn-vermelho">Adicionar
-                                                            </button>
+                                                            <div class="form-row">
+                                                            	<div class="col-md-12 text-center">
+                                                            		<button type="button" id="btn-add-dependente" class="btn btn-vermelho" style="width: 200px;"><i class="fa fa-floppy-o"></i><span id="lbl-add-dependente" style="margin-left: 10px;"> Adicionar <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
+                                                            	</div>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <span class="label-titulo">Alteração Cadastral</span>
-                                        <p>Para alterar as informações do seu cadastro é necessário entrar em contato
-                                            com a nossa central de atendimento pelo número: <strong>(61)
-                                                3221-5350</strong></p>
+                                        <p>Para alterar as informações do seu cadastro é necessário entrar em contato com a nossa central de atendimento pelo número: <strong>(61) 3221-5350</strong></p>
                                     </div>
                                 </div>
                             </div>
@@ -784,6 +792,131 @@
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
+
+                $('#btn-add-dependente').click(function() {
+
+                	$('#btn-add-dependente').attr('disabled', 'disabled')
+                    $('#lbl-add-dependente').html('Enviando <i class="fa fa-spin fa-spinner" style="display: inline-block; float: right; font-size: 16px;"></i>');
+                    return;
+
+                	var result = true;
+                    var nome_dependente = $('#inputNomeDependente');
+
+                	if(nome_dependente.val().length == 0) {
+                		nome_dependente.parent().addClass('cvx-has-error');
+                		nome_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#inputNomeDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var email_dependente = $('#inputEmailDependente');
+
+                	if(nome_dependente.val().length == 0) {
+                		nome_dependente.parent().addClass('cvx-has-error');
+                		nome_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#inputEmailDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var tp_documento = $('#tp_documento_dependente');
+
+                	if(tp_documento.val().length == 0) {
+                		tp_documento.parent().addClass('cvx-has-error');
+                		tp_documento.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#tp_documento_dependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var nr_documento = $('#te_documento_dependente');
+
+                	if(nr_documento.val().length == 0) {
+                		nr_documento.parent().addClass('cvx-has-error');
+                		nr_documento.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#te_documento_dependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var sexo_dependente = $('#selectGeneroDependente');
+
+                	if(sexo_dependente.val().length == 0) {
+                		sexo_dependente.parent().addClass('cvx-has-error');
+                		sexo_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#selectGeneroDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var dt_nasc_dia_dependente = $('#selectDiaDependente');
+
+                	if(dt_nasc_dia_dependente.val().length == 0) {
+                		dt_nasc_dia_dependente.parent().addClass('cvx-has-error');
+                		dt_nasc_dia_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#selectDiaDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var dt_nasc_mes_dependente = $('#selectMesDependente');
+
+                	if(dt_nasc_mes_dependente.val().length == 0) {
+                		dt_nasc_mes_dependente.parent().addClass('cvx-has-error');
+                		dt_nasc_mes_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#selectMesDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	var dt_nasc_ano_dependente = $('#selectAnoDependente');
+
+                	if(dt_nasc_ano_dependente.val().length == 0) {
+                		dt_nasc_ano_dependente.parent().addClass('cvx-has-error');
+                		dt_nasc_ano_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#selectAnoDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
+                	if(!result) { return false; }
+
+                	
+                	
+                });
             });
 
             /*********************************

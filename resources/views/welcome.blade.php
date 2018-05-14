@@ -61,7 +61,7 @@
                                 @foreach($agendamentos_home as $agendamento)
                                     <div class="tit-pc">
                                         <p>Sua próxima consulta é</p>
-                                        <p class="data-consulta">{{ date('d', strtotime($agendamento->dt_atendimento))}} de {{ strftime('%B', strtotime($agendamento->dt_atendimento)) }}</p>
+                                        <p class="data-consulta">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
                                     </div>
                                     <div class="resumo">
                                         <div class="nome-status">

@@ -353,9 +353,12 @@ class AgendamentoController extends Controller
         
         $user_paciente = Auth::user();
         $user_paciente->paciente->load('contatos');
+        $user_paciente->paciente->load('dependentes');
+        
+        $dependentes = $user_paciente->paciente->dependentes;
         
         $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento'));
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes'));
     }
 }
