@@ -281,6 +281,12 @@ header .navbar-collapse {
     border: 1px solid #ced4da!important;
     border-radius: .25rem!important;
 }
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single:focus,
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single:focus,
+#select2-tipo_especialidade-container:focus,
+#select2-local_atendimento-container:focus {
+    outline: none;
+}
 
 .form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single,
 .form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single{
