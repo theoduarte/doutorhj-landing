@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PacientesRequest;
-use Illuminate\Support\Facades\DB;
+use App\Cargo;
 use App\Cidade;
 use App\Endereco;
-use App\User;
-use Illuminate\Support\Facades\Crypt;
+use App\Estado;
+use App\Especialidade;
 use App\Paciente;
+use App\User;
+
+use Illuminate\Support\Facades\Request;
+use App\Http\Requests\PacientesRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request as CVXRequest;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -22,13 +28,11 @@ class PacienteController extends Controller
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(){
-        $arCargos        = \App\Cargo::orderBy('ds_cargo')->get(['id', 'ds_cargo']);
-        $arEstados       = \App\Estado::orderBy('ds_estado')->get();
-        $arEspecialidade = \App\Especialidade::orderBy('ds_especialidade')->get();
+        $arCargos        = Cargo::orderBy('ds_cargo')->get(['id', 'ds_cargo']);
+        $arEstados       = Estado::orderBy('ds_estado')->get();
+        $arEspecialidade = Especialidade::orderBy('ds_especialidade')->get();
         
-        return view('paciente', ['arEstados' => $arEstados, 
-                                 'arCargos'=> $arCargos, 
-                                 'arEspecialidade'=>$arEspecialidade]);
+        return view('paciente', ['arEstados' => $arEstados, 'arCargos'=> $arCargos, 'arEspecialidade'=>$arEspecialidade]);
     }
     
     /**
@@ -124,10 +128,50 @@ class PacienteController extends Controller
             DB::commit();
             
             return redirect()->route('home', ['nome' => $request->input('nm_primario')]);
-        }catch (\Exception $e){
+        } catch (\Exception $e){
             DB::rollBack(); 
             
             throw new \Exception($e->getCode().'-'.$e->getMessage());
         }
+    }
+    
+    /**
+     * addDependenteStore a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addDependenteStore(Request $request)
+    {
+        $nm_primario_dep    = CVXRequest::post('nome');
+        $nm_secundario_dep  = CVXRequest::post('sobrenome');
+        $tp_documento_dep   = CVXRequest::post('tp_documento');
+        $nr_documento_dep   = CVXRequest::post('nr_documento');
+        $sexo_dep           = CVXRequest::post('sexo');
+        $parentesco_dep     = CVXRequest::post('parentesco');
+        $dia_nasc_dep       = CVXRequest::post('dia_nasc');
+        $mes_nasc_dep       = CVXRequest::post('mes_nasc');
+        $ano_nasc_dep       = CVXRequest::post('ano_nasc');
+        
+        $dependente                 = new Paciente();
+        $dependente->nm_primario    = $nm_primario_dep;
+        $dependente->nm_secundario  = $nm_secundario_dep;
+        $dependente->parentesco     = $parentesco_dep;
+        $dependente->cs_sexo        = $sexo_dep;
+        $dependente->dt_nascimento  = $ano_nasc_dep.'-'.$mes_nasc_dep.'-'.$dia_nasc_dep.' 00:00:00';
+        
+        $usuario->password  = bcrypt($request->input('password'));
+        $usuario->tp_user   = 'CLI';
+        $usuario->cs_status = 'A';
+        $usuario->perfiluser_id = 2;
+        $usuario->save();
+        
+        if (!$atendimento->save()) {
+            return response()->json(['status' => false, 'mensagem' => 'O Procedimento não foi salvo. Por favor, tente novamente.']);
+        }
+        
+        $atendimento->load('procedimento');
+        
+        return response()->json(['status' => true, 'mensagem' => 'O Procedimento foi salvo com sucesso!', 'atendimento' => $atendimento->toJson()]);
     }
 }

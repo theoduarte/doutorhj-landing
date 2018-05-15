@@ -177,12 +177,14 @@
                                                     <div class="modal-body">
                                                         <form>
                                                             <div class="form-group">
+                                                            </div>
+                                                            <div class="form-row">
                                                                 <label for="inputNomeDependente">Nome</label>
-                                                                <input type="text" class="form-control" id="inputNomeDependente" placeholder="Nome *">
+                                                                <input type="text" class="form-control" id="inputNomeDependente" placeholder="Nome *" maxlength="50">
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputEmailDependente">E-mail</label>
-                                                                <input type="email" class="form-control" id="inputEmailDependente" placeholder="E-mail">
+                                                                <label for="inputNomeDependente">Sobrenome</label>
+                                                                	<input type="text" class="form-control" id="inputNmSecundarioDependente" placeholder="Sobrenome *" maxlength="100">
                                                             </div>
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-4">
@@ -199,12 +201,28 @@
 											                        <input type="text" id="te_documento_dependente" class="form-control" name="te_documento_dependente" placeholder="Nr. Documento">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="selectGeneroDependente">Gênero</label>
-                                                                <select id="selectGeneroDependente" class="form-control">
-                                                                    <option value="M">Masculino</option>
-                                                                    <option value="F">Feminino</option>
-                                                                </select>
+                                                            <div class="form-group form-row">
+                                                                <div class="col-md-4">
+                                                                    <label for="selectGeneroDependente">Gênero</label>
+                                                                    <select id="selectGeneroDependente" class="form-control">
+                                                                        <option value="M">Masc.</option>
+                                                                        <option value="F">Fem.</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                	<label for="selectParentescoDependente">Parentesco</label>
+                                                                    <select id="selectParentescoDependente" class="form-control">
+                                                                        <option value="">Selecione</option>
+                                                                        <option value="avo">Avô/Avó</option>
+                                                                        <option value="conjuge">Cônjuge/Companheiro</option>
+                                                                        <option value="enteado">Enteado(a)</option>
+                                                                        <option value="filho">Filho(a)</option>
+                                                                        <option value="irmao">Irmã(ão)</option>
+                                                                        <option value="pai">Mãe</option>
+                                                                        <option value="pai">Pai</option>
+                                                                        <option value="outros">Outros</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                             <div class="form-group fc-tit-dn">
                                                                 <label>Data de Nascimento</label>
@@ -212,7 +230,7 @@
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-4">
                                                                     <select id="selectDiaDependente" class="form-control">
-                                                                        <option>Dia</option>
+                                                                        <option value="">Dia</option>
                                                                         @for($i = 1; $i <= 31; $i++)
 			                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
 			                                                            @endfor
@@ -220,7 +238,7 @@
                                                                 </div>
                                                                 <div class="form-group col-md-4">
                                                                     <select id="selectMesDependente" class="form-control">
-                                                                        <option>Mês</option>
+                                                                        <option value="">Mês</option>
                                                                         @for($i = 1; $i <= 12; $i++)
 			                                                            <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
 			                                                            @endfor
@@ -228,7 +246,7 @@
                                                                 </div>
                                                                 <div class="form-group col-md-4">
                                                                     <select id="selectAnoDependente" class="form-control">
-                                                                        <option>Ano</option>
+                                                                        <option value="">Ano</option>
                                                                         @for($i = date('Y'); $i >= (date('Y'))-110; $i--)
 			                                                            <option value="{{ $i }}">{{ $i }}</option>
 			                                                            @endfor
@@ -795,16 +813,12 @@
 
                 $('#btn-add-dependente').click(function() {
 
-                	$('#btn-add-dependente').attr('disabled', 'disabled')
-                    $('#lbl-add-dependente').html('Enviando <i class="fa fa-spin fa-spinner" style="display: inline-block; float: right; font-size: 16px;"></i>');
-                    return;
-
                 	var result = true;
-                    var nome_dependente = $('#inputNomeDependente');
+                    var nm_primario_dependente = $('#inputNomeDependente');
 
-                	if(nome_dependente.val().length == 0) {
-                		nome_dependente.parent().addClass('cvx-has-error');
-                		nome_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                	if(nm_primario_dependente.val().length == 0) {
+                		nm_primario_dependente.parent().addClass('cvx-has-error');
+                		nm_primario_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
                 		$('#inputNomeDependente').keypress(function(){
                 			$(this).parent().removeClass('cvx-has-error');
@@ -814,23 +828,23 @@
                 		result = false;
                 	}
 
-                	var email_dependente = $('#inputEmailDependente');
+                	var nm_secundario_dependente = $('#inputNmSecundarioDependente');
 
-                	if(nome_dependente.val().length == 0) {
-                		nome_dependente.parent().addClass('cvx-has-error');
-                		nome_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                	if(nm_secundario_dependente.val().length == 0) {
+                		nm_secundario_dependente.parent().addClass('cvx-has-error');
+                		nm_secundario_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
-                		$('#inputEmailDependente').keypress(function(){
+                		$('#inputNmSecundarioDependente').keypress(function(){
                 			$(this).parent().removeClass('cvx-has-error');
                 			$(this).parent().find('span.help-block').remove();
                 		});
                 		
                 		result = false;
                 	}
-
+                	
                 	var tp_documento = $('#tp_documento_dependente');
 
-                	if(tp_documento.val().length == 0) {
+                	if(tp_documento.val() == '') {
                 		tp_documento.parent().addClass('cvx-has-error');
                 		tp_documento.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
@@ -858,7 +872,7 @@
 
                 	var sexo_dependente = $('#selectGeneroDependente');
 
-                	if(sexo_dependente.val().length == 0) {
+                	if(sexo_dependente.selectedIndex == 0) {
                 		sexo_dependente.parent().addClass('cvx-has-error');
                 		sexo_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
@@ -872,7 +886,7 @@
 
                 	var dt_nasc_dia_dependente = $('#selectDiaDependente');
 
-                	if(dt_nasc_dia_dependente.val().length == 0) {
+                	if(dt_nasc_dia_dependente.val() == '') {
                 		dt_nasc_dia_dependente.parent().addClass('cvx-has-error');
                 		dt_nasc_dia_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
@@ -886,7 +900,7 @@
 
                 	var dt_nasc_mes_dependente = $('#selectMesDependente');
 
-                	if(dt_nasc_mes_dependente.val().length == 0) {
+                	if(dt_nasc_mes_dependente.val() == '') {
                 		dt_nasc_mes_dependente.parent().addClass('cvx-has-error');
                 		dt_nasc_mes_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
@@ -900,7 +914,7 @@
 
                 	var dt_nasc_ano_dependente = $('#selectAnoDependente');
 
-                	if(dt_nasc_ano_dependente.val().length == 0) {
+                	if(dt_nasc_ano_dependente.val() == '') {
                 		dt_nasc_ano_dependente.parent().addClass('cvx-has-error');
                 		dt_nasc_ano_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
                 		
@@ -912,9 +926,64 @@
                 		result = false;
                 	}
 
+                	var parentesco_dependente = $('#selectParentescoDependente');
+
+                	if(parentesco_dependente.val() == '') {
+                		parentesco_dependente.parent().addClass('cvx-has-error');
+                		parentesco_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+                		
+                		$('#selectParentescoDependente').keypress(function(){
+                			$(this).parent().removeClass('cvx-has-error');
+                			$(this).parent().find('span.help-block').remove();
+                		});
+                		
+                		result = false;
+                	}
+
                 	if(!result) { return false; }
 
-                	
+                	$('#btn-add-dependente').attr('disabled', 'disabled')
+                    $('#lbl-add-dependente').html('Enviando <i class="fa fa-spin fa-spinner" style="display: inline-block; float: right; font-size: 16px;"></i>');
+
+                    var nome_dep 			= nm_primario_dependente.val();
+                    var sobrenome_dep 		= nm_secundario_dependente.val();
+                    var tp_documento_dep 	= tp_documento.val();
+                    var nr_documento_dep 	= nr_documento.val();
+                    var sexo_dep 			= sexo_dependente.val();
+                    var parentesco_dep 		= parentesco_dependente.val();
+                    var dia_nasc_dep 		= dt_nasc_dia_dependente.val();
+                    var mes_nasc_dep 		= dt_nasc_mes_dependente.val();
+                    var ano_nasc_dep 		= dt_nasc_ano_dependente.val();
+                    var paciente_id 		= $('#paciente_id').val();
+
+                	jQuery.ajax({
+            			type: 'POST',
+            			url: '/add-dependente',
+            			data: {
+                			'nome': nome_dep,
+                			'sobrenome': sobrenome_dep,
+                			'tp_documento': tp_documento_dep,
+                			'nr_documento': nr_documento_dep,
+                			'sexo': sexo_dep,
+                			'parentesco': parentesco_dep,
+                			'dia_nasc': dia_nasc_dep,
+                			'mes_nasc': mes_nasc_dep
+            				'ano_nasc': ano_nasc_dep,
+            				'_token': laravel_token
+            			},
+                        success: function (result) {
+                            
+                            var profissional = JSON.parse(result.profissional);
+                            
+            	            if(result.status) {
+            	            	$(element).parent().parent().remove();
+            	            	$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+            	            }
+                        },
+                        error: function (result) {
+                            $.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+                        }
+            		});
                 	
                 });
             });

@@ -10,8 +10,8 @@ class Paciente extends Model
 {
 	use Sortable;
 	
-	public $fillable      = ['id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'cargo_id'];
-	public $sortable      = ['id', 'nm_primario', 'nm_secundario'];
+	public $fillable      = ['id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'parentesto', 'user_id', 'cargo_id', 'responsavel_id'];
+	public $sortable      = ['id', 'nm_primario', 'nm_secundario', 'parentesto' ];
 	public $dates 	      = ['dt_nascimento'];
     
 	public function cargo(){
@@ -41,7 +41,7 @@ class Paciente extends Model
 	
 	public function dependentes()
 	{
-		return $this->hasMany('App\Dependente');
+		return $this->hasMany('App\Paciente', 'responsavel_id');
 	}
     
 	public function setDtNascimentoAttribute($data)

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 }); */
 
 Route::get('/', 'Controller@home')->name('landing-page');
+//Route::get('/provisorio', 'Controller@home')->name('landing-page');
+//Route::get('/', 'Controller@provisorio')->name('provisorio');
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
@@ -70,6 +72,8 @@ Route::post('clinicas/{clinica}/edit/add-precificacao-procedimento', 'ClinicaCon
 Route::post('clinicas/{clinica}/edit/delete-procedimento', 'ClinicaController@deleteProcedimentoDestroy')->middleware('auth');
 Route::post('clinicas/{clinica}/edit/add-precificacao-consulta', 'ClinicaController@addConsultaPrecoStore')->middleware('auth');
 Route::post('clinicas/{clinica}/edit/delete-consulta', 'ClinicaController@deleteConsultaDestroy')->middleware('auth');
+
+Route::post('add-dependente', 'PacienteController@addDependenteStore')->middleware('auth');
 
 Auth::routes();
 
