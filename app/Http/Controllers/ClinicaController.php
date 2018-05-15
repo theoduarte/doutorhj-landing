@@ -186,8 +186,7 @@ class ClinicaController extends Controller
         $precoconsultas->load('consulta');
 
 
-        return view('clinicas.show', compact('estados', 'cargos', 'prestador', 'user', 'cargo',
-                                                'cidade', 'documentoprofissional', 'precoprocedimentos', 'precoconsultas'));
+        return view('clinicas.show', compact('estados', 'cargos', 'prestador', 'user', 'cargo', 'cidade', 'documentoprofissional', 'precoprocedimentos', 'precoconsultas'));
     }
 
     /**

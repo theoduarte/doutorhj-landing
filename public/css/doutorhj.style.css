@@ -94,6 +94,10 @@ a.jstree-anchor i.ti-na {
     visibility: visible;
 }
 
+.exclui-dependente {
+	cursor: pointer;
+}
+
 #btn-finalizar-pedido {
 	width: 250px;
 }

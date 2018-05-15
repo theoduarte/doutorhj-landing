@@ -68,6 +68,11 @@ class Agendamento extends Model
         return $this->belongsTo('App\CupomDesconto');
     }
     
+    public function itens_pedido()
+    {
+    	return $this->hasMany('App\Itempedido');
+    }
+    
     /*
      * Getters and Setters
      */
