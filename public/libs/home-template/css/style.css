@@ -2331,6 +2331,100 @@ header .nav-item-mobile {
     font-size: 14px;
 }
 
+
+/*********************************
+*
+*  SWEET ALERT
+*
+*********************************/
+
+/* Título */
+
+.swal2-modal {
+    padding: 0!important;
+}
+
+.swal2-modal .swal2-icon {
+    display: none!important;
+}
+
+.swal2-modal .swal2-title {    
+    text-align: center;
+    margin: 0 0;
+    padding: 0;
+}
+
+.swal2-modal .tit-sweet {
+    padding: 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.swal2-modal .tit-sweet i {
+    font-size: 20px;
+    margin-right: 5px;
+
+}
+
+.swal2-modal .tit-success {
+    color: #285b2a;
+    background-color: #dbefdc;
+}
+
+.swal2-modal .tit-warning {
+    color: #852d12;
+    background-color: #ffddd3;
+}
+
+.swal2-modal .tit-info {
+    color: #02587f;
+    background-color: #cdeefd;
+}
+
+.swal2-modal .tit-question {
+    color: #212a5e;
+    background-color: #d9dcf0;
+}
+
+.swal2-modal .tit-error {
+    color: #7f231c;
+    background-color: #fdd9d7;
+}
+
+/* Conteúdo */
+
+.swal2-modal .swal2-content {
+    clear: both;
+    font-weight: 400;    
+    padding: 20px;
+}
+
+/* Botão */
+
+.swal2-modal .swal2-buttonswrapper {
+    margin: 0;
+    padding: 0 20px 20px 20px;
+}
+
+.swal2-modal button.swal2-confirm {
+    font-size: 13px;
+    color: rgb(46, 46, 46);
+    height: 34px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(234, 234, 234)!important;
+    border: 0;
+    padding: 8px 16px;
+}
+
+.swal2-modal button.swal2-confirm:hover {
+    color: rgb(163, 36, 49);
+}
+
+.swal2-modal button.swal2-confirm:focus {
+    box-shadow: none !important;
+}
+
 /*********************************
 *
 *  X FOOTER

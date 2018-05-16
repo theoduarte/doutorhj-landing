@@ -19,10 +19,13 @@
     	
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-5/css/fontawesome-all.css" />
         
         <!-- Switchery CSS-->
     	<link rel="stylesheet" href="/libs/switchery/switchery.min.css">
+
+        <!-- Sweet Alert css -->
+        <link href="/libs/sweet-alert/sweetalert2.css" rel="stylesheet" type="text/css" />
         
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/jquery.datetimepicker.min.css" />
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css" />

@@ -580,6 +580,81 @@
                         }
                     }
                 });
+
+            /*********************************
+            *
+            * Alerta
+            *
+            *********************************/
+
+            /* Success
+
+            $(document).ready(function () {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-success"><i class="far fa-check-circle"></i> Sucesso!</div>',
+                        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
+                    }
+                );
+            });
+
+            */
+
+            /* Warning
+
+            $(document).ready(function () {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-warning"><i class="fas fa-exclamation-circle"></i> Atenção!</div>',
+                        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
+                    }
+                );
+            });
+
+            */
+
+            /* Info 
+
+            $(document).ready(function () {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-info"><i class="fas fa-info-circle"></i> Informação</div>',
+                        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
+                    }
+                );
+            });
+
+            */
+
+            /* Question 
+
+            $(document).ready(function () {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-question"><i class="fas fa-question-circle"></i> Tem certeza?</div>',
+                        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
+                    }
+                );
+            });
+
+            */
+
+            /* Error 
+
+            $(document).ready(function () {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-error"><i class="fas fa-times-circle"></i> Ocorreu um erro</div>',
+                        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
+                    }
+                );
+            });
+
+            */
+
         </script>
+
+        
+
     @endpush
 @endsection
