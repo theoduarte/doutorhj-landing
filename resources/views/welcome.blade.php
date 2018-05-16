@@ -580,7 +580,7 @@
                         }
                     }
                 });
-                
+
 
             /*********************************
             *
@@ -593,7 +593,7 @@
             $(document).ready(function () {
                 swal(
                     {
-                        title: '<div class="tit-sweet tit-success"><i class="far fa-check-circle"></i> Sucesso!</div>',
+                        title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
                         text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
                     }
                 );
@@ -601,12 +601,12 @@
 
             */
 
-            /* Warning
+            /* Warning 
 
             $(document).ready(function () {
                 swal(
                     {
-                        title: '<div class="tit-sweet tit-warning"><i class="fas fa-exclamation-circle"></i> Atenção!</div>',
+                        title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
                         text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
                     }
                 );
@@ -619,7 +619,7 @@
             $(document).ready(function () {
                 swal(
                     {
-                        title: '<div class="tit-sweet tit-info"><i class="fas fa-info-circle"></i> Informação</div>',
+                        title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
                         text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
                     }
                 );
@@ -632,7 +632,7 @@
             $(document).ready(function () {
                 swal(
                     {
-                        title: '<div class="tit-sweet tit-question"><i class="fas fa-question-circle"></i> Tem certeza?</div>',
+                        title: '<div class="tit-sweet tit-question"><i class="fa fa-question-circle" aria-hidden="true"></i> Tem certeza?</div>',
                         text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
                     }
                 );
@@ -645,7 +645,7 @@
             $(document).ready(function () {
                 swal(
                     {
-                        title: '<div class="tit-sweet tit-error"><i class="fas fa-times-circle"></i> Ocorreu um erro</div>',
+                        title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
                         text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
                     }
                 );
