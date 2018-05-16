@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PacienteSender;
 use App\Consulta;
 use App\CartaoPaciente;
+use App\Paciente;
 
 class ClinicaController extends Controller
 {
@@ -728,8 +729,11 @@ class ClinicaController extends Controller
     	}
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
+    	
+    	$responsavel_id = $user_session->id;
+    	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
 
-    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados'));
+    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     public function informaBeneficiario(){
