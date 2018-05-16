@@ -68,7 +68,7 @@ class Agendamento extends Model
         return $this->belongsTo('App\CupomDesconto');
     }
     
-    public function itens_pedido()
+    public function itempedidos()
     {
     	return $this->hasMany('App\Itempedido');
     }

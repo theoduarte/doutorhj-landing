@@ -473,9 +473,9 @@
                                                                 {{ $agendamento->clinica->nm_fantasia }}
                                                             </p>
                                                             <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">{{ $agendamento->itens_pedido->first()->pedido->cartao_paciente->bandeira }} </span>
+                                                                <span class="bandeira-extenso">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->bandeira }} </span>
                                                                 <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">{{ $agendamento->itens_pedido->first()->pedido->cartao_paciente->numero }}</span>
+                                                                <span class="final">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->numero }}</span>
                                                             </p>
                                                         </div>
                                                         <div class="col-sm-3">

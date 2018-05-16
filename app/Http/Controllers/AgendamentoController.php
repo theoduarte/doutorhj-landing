@@ -370,7 +370,7 @@ class AgendamentoController extends Controller
         $cartoes_paciente = CartaoPaciente::where('paciente_id', $responsavel_id)->get();
         
         //--busca os agendamentos do paciente----------
-        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itens_pedido')->where('paciente_id', '=', $responsavel_id)->orderBy('dt_atendimento', 'desc')->get();
+        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->orderBy('dt_atendimento', 'desc')->get();
         
         return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
     }

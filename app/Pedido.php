@@ -22,7 +22,7 @@ class Pedido extends Model
 		return $this->belongsTo('App\CartaoPaciente', 'cartao_id');
 	}
 	
-	public function itens_pedido()
+	public function itempedidos()
 	{
 		return $this->hasMany('App\ItemPedido');
 	}
