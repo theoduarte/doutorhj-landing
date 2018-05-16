@@ -409,7 +409,7 @@ function pagarCartaoCredito() {
 	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.', {autoHide: false, showDuration: 30});
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
 		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
       	$('#btn-finalizar-pedido').removeAttr('disabled');
 		
