@@ -19,10 +19,10 @@ class Pedido extends Model
 	
 	public function cartao_paciente()
 	{
-		return $this->belongsTo('App\CartaoPaciente');
+		return $this->belongsTo('App\CartaoPaciente', 'cartao_id');
 	}
 	
-	public function itens_pedido()
+	public function itempedidos()
 	{
 		return $this->hasMany('App\ItemPedido');
 	}

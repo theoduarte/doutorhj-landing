@@ -74,6 +74,7 @@ Route::post('clinicas/{clinica}/edit/add-precificacao-consulta', 'ClinicaControl
 Route::post('clinicas/{clinica}/edit/delete-consulta', 'ClinicaController@deleteConsultaDestroy')->middleware('auth');
 
 Route::post('add-dependente', 'PacienteController@addDependenteStore')->middleware('auth');
+Route::post('delete-dependente', 'PacienteController@deleteDependenteDestroy')->middleware('auth');
 
 Auth::routes();
 

@@ -15,6 +15,7 @@ use App\Http\Requests\PacientesRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\Crypt;
+use App\Documento;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -152,26 +153,70 @@ class PacienteController extends Controller
         $dia_nasc_dep       = CVXRequest::post('dia_nasc');
         $mes_nasc_dep       = CVXRequest::post('mes_nasc');
         $ano_nasc_dep       = CVXRequest::post('ano_nasc');
+        $responsavel_id     = CVXRequest::post('paciente_id');
         
+        # salva o documento do dependente
+        $documento_ids = [];
+        $documento = new Documento();
+        $documento->tp_documento = $tp_documento_dep;
+        $documento->te_documento = UtilController::retiraMascara($nr_documento_dep);
+        $documento->save();
+        $documento_ids = [$documento->id];
+        
+        # salva os dados do dependente
         $dependente                 = new Paciente();
+        $dependente 				= $this->setDependenteRelations($dependente, $documento_ids);
+        
         $dependente->nm_primario    = $nm_primario_dep;
         $dependente->nm_secundario  = $nm_secundario_dep;
         $dependente->parentesco     = $parentesco_dep;
         $dependente->cs_sexo        = $sexo_dep;
-        $dependente->dt_nascimento  = $ano_nasc_dep.'-'.$mes_nasc_dep.'-'.$dia_nasc_dep.' 00:00:00';
+        $dependente->dt_nascimento  = $ano_nasc_dep.'-'.$mes_nasc_dep.'-'.$dia_nasc_dep;
+        $dependente->responsavel_id = $responsavel_id;
         
-        $usuario->password  = bcrypt($request->input('password'));
-        $usuario->tp_user   = 'CLI';
-        $usuario->cs_status = 'A';
-        $usuario->perfiluser_id = 2;
-        $usuario->save();
-        
-        if (!$atendimento->save()) {
-            return response()->json(['status' => false, 'mensagem' => 'O Procedimento não foi salvo. Por favor, tente novamente.']);
+        if (!$dependente->save()) {
+            return response()->json(['status' => false, 'mensagem' => 'O Dependente não foi salvo. Por favor, tente novamente.']);
         }
         
-        $atendimento->load('procedimento');
+        $dependente->load('documentos');
         
-        return response()->json(['status' => true, 'mensagem' => 'O Procedimento foi salvo com sucesso!', 'atendimento' => $atendimento->toJson()]);
+        return response()->json(['status' => true, 'mensagem' => 'O Dependente foi salvo com sucesso!', 'dependente' => $dependente->toJson()]);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteDependenteDestroy()
+    {
+    	$paciente_id = CVXRequest::post('paciente_id');
+    	$dependente = Paciente::findorfail($paciente_id);
+    	$dependente->cs_status = 'I';
+    
+    	if (!$dependente->save()) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Dependente não foi desabilitado. Por favor, tente novamente.']);
+    	}
+    	
+    	$responsavel_id = $dependente->responsavel_id;
+    	$dependentes_restante = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
+    	
+    	$num_dependentes = sizeof($dependentes_restante);
+    
+    	return response()->json(['status' => true, 'mensagem' => 'O Dependente foi desabilitado com sucesso!', 'dependente' => $dependente->toJson(), 'num_dependentes' => $num_dependentes]);
+    }
+    
+    //############# PERFORM RELATIONSHIP ##################
+    /**
+     * Perform relationship.
+     *
+     * @param  \App\Perfiluser  $perfiluser
+     * @return \Illuminate\Http\Response
+     */
+    private function setDependenteRelations(Paciente $dependente, array $documento_ids)
+    {
+    	$dependente->documentos()->sync($documento_ids);
+    
+    	return $dependente;
     }
 }

@@ -197,7 +197,7 @@ class PaymentController extends Controller
         
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
         $cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
-        $percentual_desconto = 1; // '1' indica que o cliente vai pagar 100% do valor total dos produtos-----
+        $percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----
         
         if($cod_cupom_desconto != '') {
             $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
@@ -370,6 +370,17 @@ class PaymentController extends Controller
                         echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
                     }
                     
+                    //--busca pelas especialidades do atendimento--------------------------------------
+                    $agendamento->profissional->load('especialidades');
+                    $nome_especialidade = "";
+                    
+                    foreach ($agendamento->profissional->especialidades as $especialidade) {
+                        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+                    }
+                    
+                    $agendamento->nome_especialidade = $nome_especialidade;
+                    
+                    //--busca os itens de pedido relacionados------------------------------------------
                     $agendamento->load('itempedidos');
                     
                     array_push($result_agendamentos, $agendamento);
@@ -503,14 +514,14 @@ class PaymentController extends Controller
     		}
     	}
     	
-    	/* if (!$agendamento_disponivel) {
-    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
-    	} */
+    	if (!$agendamento_disponivel) {
+        	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+        }
     
     	$tp_pagamento = CVXRequest::post('tipo_pagamento');
     	
     	$cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
-    	$percentual_desconto = 1; // '1' indica que o cliente vai pagar 100% do valor total dos produtos-----
+    	$percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----
     	
     	if($cod_cupom_desconto != '') {
     	    $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
@@ -620,6 +631,16 @@ class PaymentController extends Controller
     				if(!$item_pedido->save()) {
     					echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
     				}
+    				
+    				//--busca pelas especialidades do atendimento--------------------------------------
+    				$agendamento->profissional->load('especialidades');
+    				$nome_especialidade = "";
+    				
+    				foreach ($agendamento->profissional->especialidades as $especialidade) {
+    				    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+    				}
+    				
+    				$agendamento->nome_especialidade = $nome_especialidade;
     
     				$agendamento->load('itempedidos');
     

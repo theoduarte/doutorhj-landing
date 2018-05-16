@@ -298,6 +298,7 @@ function pagarCartaoCredito() {
 	var cpf_titular 	= $('#inputCPFCredito');
 	var parcelamento 	= $('#selectParcelamentoCredito');
 	var cupom_desconto 	= $('#inputCupom');
+	var pacientes		= $('.paciente_agendamento_id');
 	
 	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
@@ -371,6 +372,16 @@ function pagarCartaoCredito() {
 		result = false;
 	}
 	
+	pacientes.each(function(){
+		
+		if($(this).val() == '0') {
+			
+			$.Notification.notify('error','top right', 'DrHoje', 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!');
+			
+			result = false;
+		}
+	});
+	
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
 	
@@ -396,6 +407,14 @@ function pagarCartaoCredito() {
 	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
 	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
 	var cod_cupom_desconto = $('#inputCupom').val();
+	
+	if(!result) {
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+      	$('#btn-finalizar-pedido').removeAttr('disabled');
+		
+		return false;
+	}
 	
 	$.ajax({
 		type:'post',
@@ -430,11 +449,7 @@ function pagarCartaoCredito() {
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
 	});
-	
-	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-	}
-	
+		
 	return result;
 }
 
@@ -546,6 +561,14 @@ function pagarCartaoDebito() {
 	var bandeira_cartao_debito = $('#inputBandeiraCartaoDebito').val();
 	var cod_cupom_desconto = $('#inputCupom').val();
 	
+	if(!result) {
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+      	$('#btn-finalizar-pedido').removeAttr('disabled');
+		
+		return false;
+	}
+	
 	$.ajax({
 		type:'post',
 		   dataType:'json',
@@ -570,6 +593,10 @@ function pagarCartaoDebito() {
 			  if(result.status) {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
+			  } else {
+				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				  $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
@@ -578,10 +605,6 @@ function pagarCartaoDebito() {
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
 	});
-	
-	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-	}
 	
 	return result;
 }
@@ -642,6 +665,14 @@ function pagarCartaoCadastrado() {
 	var validade_cartao_credito = dt_validade.val();
 	var cod_seg_cartao_credito = cod_seg.val();
 	
+	if(!result) {
+		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+      	$('#btn-finalizar-pedido').removeAttr('disabled');
+		
+		return false;
+	}
+	
 	$.ajax({
 		type:'post',
 		   dataType:'json',
@@ -676,10 +707,6 @@ function pagarCartaoCadastrado() {
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
 	});
-	
-	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-	}
 	
 	return result;
 }

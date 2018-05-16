@@ -119,21 +119,22 @@
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-lista-dependentes">
                                         <span class="label-titulo">Dependentes</span>
-                                        <div class="lista-dependentes">
+                                        <div id="lista-dependentes" class="lista-dependentes">
                                         	@for($i = 0; $i < sizeof($dependentes); $i++)
                                             <div class="dependente">
                                                 <div class="row">
                                                     <div class="col-md-10">
-                                                        <span class="nm-dependente">Dep0{{ ($i+1) }}: {{ $dependentes[$i]->nm_primario.' '.$dependentes[$i]->nm_secundario }}</span>
+                                                        <span class="nm-dependente"><strong>Dep0{{ ($i+1) }}</strong>: {{ $dependentes[$i]->nm_primario.' '.$dependentes[$i]->nm_secundario }}</span>
+                                                        <input type="hidden" id="dependente_{{ $dependentes[$i]->id }}" class="dependente_id" value="{{ $dependentes[$i]->id }}">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><iclass="fa fa-trash"></i></a>
+                                                        <a class="exclui-dependente"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             @endfor
                                             @if(sizeof($dependentes) == 0)
-                                            NENHUM DEPENDENTE ENCONTRADO!
+                                            <span id="lbl-no-dependents">NENHUM DEPENDENTE ENCONTRADO!</span>
                                             @endif
                                             <!-- <div class="dependente">
                                                 <div class="row">
@@ -157,9 +158,7 @@
                                             </div> -->
                                         </div>
 
-                                        <button type="button" class="btn btn-light btn-add-dependente"
-                                                data-toggle="modal"
-                                                data-target="#modalAdicionaDependente">
+                                        <button type="button" class="btn btn-light btn-add-dependente" data-toggle="modal" data-target="#modalAdicionaDependente">
                                             <i class="fa fa-plus"></i> Adicionar dependente
                                         </button>
 
@@ -181,6 +180,7 @@
                                                             <div class="form-row">
                                                                 <label for="inputNomeDependente">Nome</label>
                                                                 <input type="text" class="form-control" id="inputNomeDependente" placeholder="Nome *" maxlength="50">
+                                                                <input type="hidden" id="inputPacienteId" value="{{ $user_paciente->paciente->id }}">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputNomeDependente">Sobrenome</label>
@@ -290,7 +290,26 @@
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
                                             <div class="box-pagamento lista-cartoes">
-                                                <div class="cartao">
+                                            	@foreach($cartoes_paciente as $cartao)
+	                                            <div class="cartao">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="bandeira {{ strtolower($cartao->bandeira) }}"></div>
+                                                            <p>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">{{ $cartao->numero }}</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a class="exclui-cartao"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+	                                            @endforeach
+	                                            @if(sizeof($cartoes_paciente) == 0)
+	                                            <span id="lbl-cartao-paciente">NENHUM CARTÃO ENCONTRADO!</span>
+	                                            @endif
+                                                <!-- <div class="cartao">
                                                     <div class="row">
                                                         <div class="col-md-10">
                                                             <div class="bandeira visa"></div>
@@ -349,13 +368,11 @@
                                                                         class="fa fa-trash"></i></a>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
-                                            <button type="button" class="btn btn-light btn-add-cartao"
-                                                    data-toggle="modal" data-target="#modalAdicionarCartao"><i
-                                                        class="fa fa-plus"></i>
-                                                Adicionar cartão
-                                            </button>
+                                            <!-- <button type="button" class="btn btn-light btn-add-cartao" data-toggle="modal" data-target="#modalAdicionarCartao">
+                                            	<i class="fa fa-plus"></i> Adicionar cartão
+                                            </button> -->
                                             <div class="modal fade" id="modalAdicionarCartao" tabindex="-1"
                                                  role="dialog"
                                                  aria-labelledby="modalAdicionarCartao" aria-hidden="true">
@@ -433,7 +450,45 @@
                                         <div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Últimas Transações</span>
                                             <div class="box-pagamento lista-transacoes">
-                                                <div class="transacoes">
+                                            	@foreach($agendamentos as $agendamento)
+	                                            <div class="transacoes">
+                                                    <div class="row">
+                                                        <div class="col-sm-3 area-data">
+                                                            <p class="dia">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
+                                                            <p class="mes">{{ ucfirst(substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3)) }}</p>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="tipo">
+                                                            	@if($agendamento->atendimento->consulta_id != null)
+                                                            	Consulta: 
+                                                            	@elseif($agendamento->atendimento->procedimento_id != null)
+                                                            	Exame: 
+                                                            	@endif
+                                                                {{ substr($agendamento->atendimento->ds_preco, 0, 14) }}
+                                                                @if(strlen($agendamento->atendimento->ds_preco > 14))
+                                                                ...
+                                                                @endif
+                                                            </p>
+                                                            <p class="clinica">
+                                                                {{ $agendamento->clinica->nm_fantasia }}
+                                                            </p>
+                                                            <p class="cartao-utilizado">
+                                                                <span class="bandeira-extenso">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->bandeira }} </span>
+                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
+                                                                <span class="final">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->numero }}</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <p class="valor">R$ <span>{{ $agendamento->atendimento->getVlComercialAtendimento() }}</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+	                                            @endforeach
+	                                            @if(sizeof($cartoes_paciente) == 0)
+	                                            <span id="lbl-pedido-paciente">NENHUM PEDIDO ENCONTRADO!</span>
+	                                            @endif
+                                                
+                                                <!-- <div class="transacoes">
                                                     <div class="row">
                                                         <div class="col-sm-3 area-data">
                                                             <p class="dia">
@@ -516,7 +571,7 @@
                                                             <p class="valor">R$ <span>100</span></p>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> 
                                                 <div class="transacoes">
                                                     <div class="row">
                                                         <div class="col-sm-3 area-data">
@@ -544,35 +599,7 @@
                                                             <p class="valor">R$ <span>100</span></p>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="transacoes">
-                                                    <div class="row">
-                                                        <div class="col-sm-3 area-data">
-                                                            <p class="dia">
-                                                                28
-                                                            </p>
-                                                            <p class="mes">
-                                                                Abr
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <p class="tipo">
-                                                                Consulta Cardiologia
-                                                            </p>
-                                                            <p class="clinica">
-                                                                Clínica Alvorada
-                                                            </p>
-                                                            <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">Visa </span>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="valor">R$ <span>100</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -954,7 +981,7 @@
                     var dia_nasc_dep 		= dt_nasc_dia_dependente.val();
                     var mes_nasc_dep 		= dt_nasc_mes_dependente.val();
                     var ano_nasc_dep 		= dt_nasc_ano_dependente.val();
-                    var paciente_id 		= $('#paciente_id').val();
+                    var paciente_id 		= $('#inputPacienteId').val();
 
                 	jQuery.ajax({
             			type: 'POST',
@@ -967,20 +994,46 @@
                 			'sexo': sexo_dep,
                 			'parentesco': parentesco_dep,
                 			'dia_nasc': dia_nasc_dep,
-                			'mes_nasc': mes_nasc_dep
+                			'mes_nasc': mes_nasc_dep,
             				'ano_nasc': ano_nasc_dep,
+            				'paciente_id': paciente_id,
             				'_token': laravel_token
             			},
                         success: function (result) {
                             
-                            var profissional = JSON.parse(result.profissional);
-                            
             	            if(result.status) {
-            	            	$(element).parent().parent().remove();
+                	            
+            	            	var dependente = JSON.parse(result.dependente);
+            	            	$('#lbl-no-dependents').empty();
+            	            	var index = ($('#lista-dependentes').find('div.dependente').length)+1;
+            	            	
+            	            	var content = '<div class="dependente"> \
+                                  <div class="row"> \
+	                                  <div class="col-md-10"> \
+	                                      <span class="nm-dependente"><strong>Dep0'+index+'</strong>: '+dependente.nm_primario+' '+dependente.nm_secundario+'</span> \
+	                                      <input type="hidden" id="dependente_'+dependente.id+'" class="dependente_id" value="'+dependente.id+'"> \
+	                                  </div> \
+	                                  <div class="col-md-2"> \
+	                                  	  <a class="exclui-dependente"><i class="fa fa-trash"></i></a> \
+	                                  </div> \
+	                              </div> \
+	                          	</div>';
+
+	                          	$('#modalAdicionaDependente').find('input.form-control').val('');
+	                          	$('#modalAdicionaDependente').find('select.form-control').prop('selectedIndex',0);
+	                          	
+	                          	$('#modalAdicionaDependente').modal('toggle');
+            	            	$('#lista-dependentes').append(content);
+            	            	
             	            	$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
             	            }
+
+            	            $('#btn-add-dependente').removeAttr('disabled')
+                            $('#lbl-add-dependente').html('Adicionar <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                         },
                         error: function (result) {
+                        	$('#btn-add-dependente').removeAttr('disabled')
+                            $('#lbl-add-dependente').html('Adicionar <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                             $.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
                         }
             		});
@@ -995,8 +1048,40 @@
              *********************************/
             $(".exclui-dependente").on("click", function (event) {
                 event.preventDefault();
+                var element = $(this);
                 if (confirm("Tem certeza que deseja excluir esse dependente?")) {
-                    $(this).parent().parent().parent().remove();
+
+                    var paciente_id = $(element).parent().parent().find('.dependente_id').val();
+
+                	jQuery.ajax({
+            			type: 'POST',
+            			url: '/delete-dependente',
+            			data: {
+            				'paciente_id': paciente_id,
+            				'_token': laravel_token
+            			},
+                        success: function (result) {
+                            
+                            var dependente = JSON.parse(result.dependente);
+                            var num_dependentes = result.num_dependentes;
+                            
+            	            if(result.status) {
+                	            
+            	            	$(element).parent().parent().parent().remove();
+            	            	
+            	            	for(var i = 0; i < num_dependentes; i++) {
+                	            	var index = i+1;
+            	            		$('#lista-dependentes').find('div.dependente:eq('+i+')').find('span.nm-dependente').find('strong').html('Dep0'+index);
+            	            		//$('#lista-dependentes').find('div.dependente:eq(0)').find('span.nm-dependente').find('strong').html()
+            	            		//alert($('#lista-dependentes').find('div.dependente:eq('+i+')').find('span.nm-dependente').find('strong').html());
+            	            	}
+            	            	$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+            	            }
+                        },
+                        error: function (result) {
+                            $.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+                        }
+            		});
                 }
             });
 
@@ -1006,6 +1091,7 @@
                     $(this).parent().parent().parent().remove();
                 }
             });
+            
 
             /*********************************
              *

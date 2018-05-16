@@ -74,7 +74,7 @@
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
                                                         <select class="form-control" id="selectCartaoCredito" name="selectCartaoCredito">
-                                                            <option>Selecione</option>
+                                                            <option value="">Selecione</option>
                                                             @foreach($cartoes_gravados as $item)
                                                             <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
                                     						@endforeach
@@ -282,6 +282,16 @@
                                                     <span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="valor-produto col-12 col-sm-12">
+                                                    <select id="selectPacienteAgendamento" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
+                                                    	<option>Selecione o Paciente deste Atendimento</option>
+                                                    	@foreach($pacientes as $paciente)
+                                                    	<option value="{{ $paciente->id }}">@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
+                                                    	@endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div id="collapse_{{ $item['item_id'] }}" class="collapse" aria-labelledby="heading_{{ $item['item_id'] }}" data-parent="#accordion">
                                             <div class="card-body">
@@ -289,9 +299,9 @@
                                                     <div class="titulo-resumo">
                                                         <span>Pessoa que utilizará o serviço:</span>
                                                     </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ isset($item['paciente']) ? $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario : '--------' }}</p>
-                                                        <input type="hidden" id="paciente_id_{{ $index }}" name="paciente_id_[{{ $index }}]" value="{{ isset($item['paciente']) ? $item['paciente']->id : 0 }}">
+                                                    <div class="dados-resumo dados-resumo-paciente">
+                                                        <p class="text-danger">-- PACIENTE AINDA NÃO INDICADO--</p>
+                                                        <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="0">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -476,6 +486,19 @@
                     });
 
                     
+                });
+
+                $('#selectPacienteAgendamento').change(function(){
+
+                    if($(this).val() == 0){ return false; }
+
+                    var paciente_id = $("#selectPacienteAgendamento :selected").val();
+                    var nome_paciente = $("#selectPacienteAgendamento :selected").text();
+                    nome_paciente = nome_paciente.replace("(T)", "");
+                    nome_paciente = nome_paciente.replace("(D)", "");
+                    
+                    $(this).parent().parent().parent().parent().find('div.collapse').find('div.dados-resumo-paciente').find('input.paciente_agendamento_id').val(paciente_id);
+                    $(this).parent().parent().parent().parent().find('div.collapse').find('div.dados-resumo-paciente').find('p').html(nome_paciente).removeClass('text-danger').addClass('text-primary');
                 });
 
                 $('#inputNumeroCartaoCredito').keydown(function(){

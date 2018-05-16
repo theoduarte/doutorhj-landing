@@ -15,6 +15,9 @@ use App\Http\Requests\AgendamentoRequest;
 use App\Itempedido;
 //use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Paciente;
+use App\CartaoPaciente;
+use App\Pedido;
 
 class AgendamentoController extends Controller
 {
@@ -350,15 +353,25 @@ class AgendamentoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function minhaConta(){
+    	
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
         
         $user_paciente = Auth::user();
         $user_paciente->paciente->load('contatos');
-        $user_paciente->paciente->load('dependentes');
+        //$user_paciente->paciente->load('dependentes');
+        $responsavel_id = $user_paciente->paciente->id;
         
-        $dependentes = $user_paciente->paciente->dependentes;
+        $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes'));
+        //--busca os cartoes de credito do paciente----------
+        $cartoes_paciente = CartaoPaciente::where('paciente_id', $responsavel_id)->get();
+        
+        //--busca os agendamentos do paciente----------
+        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->orderBy('dt_atendimento', 'desc')->get();
+        
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
     }
 }
