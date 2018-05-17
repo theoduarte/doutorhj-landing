@@ -58,9 +58,7 @@
                                                                     <span>Data pré-agendada:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{ date('d/m/Y', strtotime($agendamento->dt_atendimento)) }}
-                                                                        - {{ strftime('%A', strtotime($agendamento->dt_atendimento)) }}
-                                                                    </p>
+                                                                    <p>{{ date('d/m/Y', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} - {{ strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="linha-resumo">
@@ -68,7 +66,7 @@
                                                                     <span>Horário pré-agendado: </span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{ date('H', strtotime($agendamento->dt_atendimento)).'h'.date('i', strtotime($agendamento->dt_atendimento)).'min' }}</p>
+                                                                    <p>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())).'h'.date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())).'min' }}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="linha-resumo">
@@ -89,10 +87,7 @@
                                                                     <p>
                                                                         Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}
                                                                     </p>
-                                                                    <input type="hidden"
-                                                                           id="profissional_id_{{ $index }}"
-                                                                           name="profissional_id_[{{ $index }}]"
-                                                                           value="{{ isset($agendamento->profissional) ? $agendamento->profissional->id : 0 }}">
+                                                                    <input type="hidden" id="profissional_id_{{ $index }}" name="profissional_id_[{{ $index }}]" value="{{ isset($agendamento->profissional) ? $agendamento->profissional->id : 0 }}">
                                                                 </div>
                                                             </div>
                                                             <div class="linha-resumo">
@@ -100,7 +95,7 @@
                                                                     <span>Especialidade:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{  $agendamento->atendimento->nome_especialidade }}</p>
+                                                                    <p>{{  $agendamento->nome_especialidade }}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="linha-resumo">

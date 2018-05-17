@@ -593,6 +593,10 @@ function pagarCartaoDebito() {
 			  if(result.status) {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
+			  } else {
+				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				  $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
