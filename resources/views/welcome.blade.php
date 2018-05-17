@@ -62,6 +62,8 @@
                                     <div class="tit-pc">
                                         <p>Sua próxima consulta é</p>
                                         <p class="data-consulta">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
+                                        <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} hora(s) 
+                                        @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00') e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} minuto(s) @endif</span>
                                     </div>
                                     <div class="resumo">
                                         <div class="nome-status">

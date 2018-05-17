@@ -19,7 +19,8 @@
     	
     	<!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-5/css/fontawesome-all.css" />
+        <!-- <link type="text/css" rel="stylesheet" href="/libs/font-awesome-5/css/fontawesome-all.css" /> -->
+        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css" />
         
         <!-- Switchery CSS-->
     	<link rel="stylesheet" href="/libs/switchery/switchery.min.css">

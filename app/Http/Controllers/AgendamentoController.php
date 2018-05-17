@@ -333,7 +333,11 @@ class AgendamentoController extends Controller
             
             $paciente_id = Auth::user()->paciente->id;
             
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente_id)->orderBy('dt_atendimento', 'desc')->get();
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')
+	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente_id));})
+	            ->select('agendamentos.*')
+	            ->distinct()
+	            ->orderBy('dt_atendimento', 'desc')->get();
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');

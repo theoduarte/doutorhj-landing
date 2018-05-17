@@ -210,9 +210,9 @@ class PaymentController extends Controller
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
         	 
         	$item_agendamento = json_decode($agendamentos[$i]);
-        
-        	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->whereDate('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-        
+        	
+        	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+        	
         	if (sizeof($agendamento) > 0) {
         		$agendamento_disponivel = false;
         	}
@@ -362,7 +362,7 @@ class PaymentController extends Controller
                     
                     $item_pedido = new Itempedido();
                     
-                    $item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento;
+                    $item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento*(1-$percentual_desconto);
                     $item_pedido->pedido_id = $MerchantOrderId;
                     $item_pedido->agendamento_id = $agendamento_id;
                     
@@ -507,7 +507,7 @@ class PaymentController extends Controller
     	
     		$item_agendamento = json_decode($agendamentos[$i]);
     		
-    		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->whereDate('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+    		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
     		
     		if (sizeof($agendamento) > 0) {
     			$agendamento_disponivel = false;
@@ -624,7 +624,7 @@ class PaymentController extends Controller
     
     				$item_pedido = new Itempedido();
     
-    				$item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento;
+    				$item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento*(1-$percentual_desconto);
     				$item_pedido->pedido_id = $MerchantOrderId;
     				$item_pedido->agendamento_id = $agendamento_id;
     
@@ -716,7 +716,7 @@ class PaymentController extends Controller
         $cupom_desconto = [];
         
         if ($cod_cupom_desconto == '') {
-            return 1;
+            return 0;
         }
         
         $ct_date = date('Y-m-d H:i:s');
@@ -724,7 +724,7 @@ class PaymentController extends Controller
         $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
         if($cupom_desconto === null) {
-            return 1;
+            return 0;
         }
         
         $percentual = $cupom_desconto->first()->percentual/100;

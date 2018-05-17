@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use App\Agendamento;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -57,7 +58,11 @@ class Controller extends BaseController
             
             $paciente = Auth::user()->paciente->id;
             
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->where('paciente_id', '=', $paciente)->orderBy('dt_atendimento', 'desc')->get();
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')
+            		->join('pacientes', function($join1) use ($paciente) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente));})
+            		->select('agendamentos.*')
+            		->distinct()
+            		->orderBy('dt_atendimento', 'desc')->get();
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');
