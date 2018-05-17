@@ -19,6 +19,8 @@ Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
 Route::get('login-prestador', 'ClinicaController@loginPrestador');
 Route::get('minha-conta', 'AgendamentoController@minhaConta')->name('minha-conta')->middleware('auth');
 Route::get('meus-agendamentos', 'AgendamentoController@meusAgendamentos')->name('meus-agendamentos')->middleware('auth');
+Route::post('remarcar-agendamento', 'AgendamentoController@remarcarAgendamento')->name('remarcar_agendamento')->middleware('auth');
+Route::post('cancelar-agendamento', 'AgendamentoController@cancelarAgendamento')->name('cancelar_agendamento')->middleware('auth');
 
 Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
 Route::get('home-logado', 'ClinicaController@homeLogado');

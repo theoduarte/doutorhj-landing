@@ -333,7 +333,7 @@ class AgendamentoController extends Controller
             
             $paciente_id = Auth::user()->paciente->id;
             
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
 	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente_id));})
 	            ->select('agendamentos.*')
 	            ->distinct()
@@ -343,11 +343,98 @@ class AgendamentoController extends Controller
                 $agendamentos_home[$i]->clinica->load('enderecos');
                 $agendamentos_home[$i]->clinica->enderecos->first()->load('cidade');
                 $agendamentos_home[$i]->endereco_completo = $agendamentos_home[$i]->clinica->enderecos->first()->te_endereco.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->te_bairro.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->nm_cidade.'/'.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->estado->sg_estado;
+                $agendamentos_home[$i]->itempedidos->first()->load('pedido');
+                $agendamentos_home[$i]->itempedidos->first()->pedido->load('pagamentos');
+                $agendamentos_home[$i]->valor_total = sizeof($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
             }
             
         }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
+    }
+    
+    /**
+     * remarcarAgendamento a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function remarcarAgendamento(Request $request)
+    {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	
+    	$clinica_id 		= CVXRequest::post('clinica_id');
+    	$profissional_id 	= CVXRequest::post('profissional_id');
+    	$agendamento_id 	= CVXRequest::post('agendamento_id');
+    	
+    	$data_agendamento 	= CVXRequest::post('data_agendamento');
+    	$hora_agendamento 	= CVXRequest::post('hora_agendamento');
+    	
+    	$data_temp = explode('/', $data_agendamento);
+    	$data = $data_temp[2].'-'.$data_temp[1].'-'.$data_temp[0];
+    	$hora = $hora_agendamento.":00";
+    	
+    	
+    	$agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('profissional_id', $profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
+    	
+    	$agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
+    	
+    	if (!$agendamento_disponivel) {
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+    	}
+    	
+    	$agendamento = Agendamento::findorfail($agendamento_id);
+    	
+    	if (!isset($agendamento)) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
+    	}
+    	
+    	$agendamento->cs_status = 10;
+    	$agendamento->dt_atendimento    = $data.' '.$hora;
+    
+    	if (!$agendamento->save()) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi remarcado. Por favor, tente novamente.']);
+    	}
+    	
+    	$agendamento->dia_agendamento 	= $data_temp[0];
+    	$agendamento->mes_agendamento 	= substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3);
+    	$agendamento->hora_agendamento 	= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute()));
+    
+    	return response()->json(['status' => true, 'mensagem' => 'O Agendamento foi remarcado com sucesso!', 'agendamento' => $agendamento->toJson()]);
+    }
+    
+    /**
+     * cancelarAgendamento a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cancelarAgendamento(Request $request)
+    {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    	    	
+    	$agendamento_id 	= CVXRequest::post('agendamento_id');
+    	 
+    	$agendamento = Agendamento::findorfail($agendamento_id);
+    	 
+    	if (!isset($agendamento)) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
+    	}
+    	 
+    	$agendamento->cs_status = 60;
+    	$agendamento->dt_atendimento    = date('Y-m-d H:i:s');
+    
+    	if (!$agendamento->save()) {
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi Cancelado. Por favor, tente novamente.']);
+    	}
+    	 
+    	$agendamento->dia_agendamento 	= '--';
+    	$agendamento->mes_agendamento 	= '---';
+    	$agendamento->hora_agendamento 	= '----';
+    
+    	return response()->json(['status' => true, 'mensagem' => 'O Agendamento foi Cancelado com sucesso!', 'agendamento' => $agendamento->toJson()]);
     }
     
     /**

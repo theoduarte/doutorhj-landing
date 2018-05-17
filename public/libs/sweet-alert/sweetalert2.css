@@ -25,7 +25,7 @@ body.swal2-iosfix {
     -webkit-transition: background-color .1s;
     transition: background-color .1s; }
   .swal2-container.swal2-shown {
-    background-color: rgba(0, 0, 0, 0.4); }
+    background-color: rgba(0, 0, 0, 0.8); }
 
 .swal2-modal {
   background-color: #fff;

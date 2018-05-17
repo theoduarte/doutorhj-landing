@@ -51,10 +51,8 @@ $(document).ready(function () {
 $(document).ready(function () {
 swal(
         {
-            title: 'Solicitação Concluída!',
-            text: '{{ $message }}',
-            type: 'success',
-            confirmButtonClass: 'btn btn-confirm mt-2'
+            title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
+            text: '{{ $message }}'
         }
     );
 });
@@ -65,12 +63,10 @@ swal(
 @if ($message = Session::get('error-alert'))
 <script type="text/javascript">
 $(document).ready(function () {
-swal(
+    swal(
         {
-            title: 'Solicitação Falhou!',
-            text: '{{ $message }}',
-            type: 'error',
-            confirmButtonClass: 'btn btn-confirm mt-2'
+            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+            text: '{{ $message }}'
         }
     );
 });
@@ -80,12 +76,10 @@ swal(
 @if ($message = Session::get('warning-alert'))
 <script type="text/javascript">
 $(document).ready(function () {
-swal(
+    swal(
         {
-            title: 'Atenção!',
-            text: '{{ $message }}',
-            type: 'warning',
-            confirmButtonClass: 'btn btn-confirm mt-2'
+            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+            text: '{{ $message }}'
         }
     );
 });
@@ -95,12 +89,10 @@ swal(
 @if ($message = Session::get('info-alert'))
 <script type="text/javascript">
 $(document).ready(function () {
-swal(
+    swal(
         {
-            title: 'DoctorHJ Informa!',
-            text: '{{ $message }}',
-            type: 'info',
-            confirmButtonClass: 'btn btn-confirm mt-2'
+            title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
+            text: '{{ $message }}.'
         }
     );
 });
@@ -110,8 +102,12 @@ swal(
 @if ($errors->any())
 <script type="text/javascript">
 $(document).ready(function () {
-
-	$.Notification.notify('error','top right', 'Operação Falhou!', 'Por favor, verifique sua operação e tente novamente.');
+    swal(
+        {
+            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Operação Falhou!</div>',
+            text: 'Por favor, verifique sua operação e tente novamente.'
+        }
+    );
 });
 </script>
 @endif

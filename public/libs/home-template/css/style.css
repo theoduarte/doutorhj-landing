@@ -2418,10 +2418,23 @@ header .nav-item-mobile {
 }
 
 .swal2-modal button.swal2-confirm:hover {
-    color: rgb(163, 36, 49);
+    color: #545454;
 }
 
 .swal2-modal button.swal2-confirm:focus {
+    box-shadow: none !important;
+}
+
+.swal2-buttonswrapper .btn-cancel {
+    background-color: rgb(220, 53, 69)!important;
+}
+
+.swal2-buttonswrapper .btn-cancel:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(200, 35, 51)!important;
+}
+
+.swal2-buttonswrapper .btn-cancel:focus {
     box-shadow: none !important;
 }
 

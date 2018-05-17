@@ -58,7 +58,7 @@ class Controller extends BaseController
             
             $paciente = Auth::user()->paciente->id;
             
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')
+            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
             		->join('pacientes', function($join1) use ($paciente) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente));})
             		->select('agendamentos.*')
             		->distinct()
@@ -68,6 +68,9 @@ class Controller extends BaseController
                 $agendamentos_home[$i]->clinica->load('enderecos');
                 $agendamentos_home[$i]->clinica->enderecos->first()->load('cidade');
                 $agendamentos_home[$i]->endereco_completo = $agendamentos_home[$i]->clinica->enderecos->first()->te_endereco.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->te_bairro.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->nm_cidade.'/'.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->estado->sg_estado;
+                $agendamentos_home[$i]->itempedidos->first()->load('pedido');
+                $agendamentos_home[$i]->itempedidos->first()->pedido->load('pagamentos');
+                $agendamentos_home[$i]->valor_total = sizeof($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
             }
             
         }

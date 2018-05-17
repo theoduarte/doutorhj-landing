@@ -55,9 +55,9 @@
                 	<div class="agendamentos">
                         <div class="row">
                             <div class="col col-lg-2 area-data">
-                                <p class="dia">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}</p>
-                                <p class="mes text-center">{{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }}</p>
-                                <p class="mes" style="font-size: 28px;">{{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
+                                <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else -- @endif</p>
+                                <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else --- @endif</p>
+                                <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else ---- @endif</p>
                             </div>
                             <div class="col col-lg-5 area-informacoes">
                                 <div class="nome-status">
@@ -67,28 +67,28 @@
                                         </div>
                                         <div class="col-lg-5">
                                         	@if($agendamento->getRawCsStatusAttribute() == 10)
-                                            <span class="status pre-agendado">Pré-Agendado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                            <span class="status confirmado">Confirmado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                            <span class="status nao-confirmado">Não Confirmado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                            <span class="status finalizado">Finalizado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                            <span class="status ausente">Não compareceu</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                            <span class="status cancelado">Cancelado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                            <span class="status agendado">Agendado</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
                                             @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                            <span class="status retorno">Retorno de Consulta</span>
+                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
                                 <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                <p class="valor">R$ <span>{{ $agendamento->atendimento->getVlComercialAtendimento() }}</span></p>
+                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>
                                 <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                             </div>
                             <div class="col col-lg-4">
@@ -104,124 +104,23 @@
                                 </div>
                             </div>
                             <div class="col-lg-1">
-                                <div class="btn-group dropleft">
+                            	@if($agendamento->getRawCsStatusAttribute() != 60)
+                                <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
                                     <button type="button" class="btn"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes">
-                                        <p><a href="">Remarcar</a></p>
-                                        <p><a href="">Cancelar</a></p>
+                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                        <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
 
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-                	
                     @endforeach
-                    <!-- 
-                    <div class="agendamentos">
-                        <div class="row">
-                            <div class="col col-lg-2 area-data">
-                                <p class="dia">28</p>
-                                <p class="mes">Abril</p>
-                            </div>
-                            <div class="col col-lg-5 area-informacoes">
-                                <div class="nome-status">
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <p class="beneficiario">Luiza</p>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <span class="status confirmado">Confirmado</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="tipo">Consulta Clínica Geral</p>
-                                <p class="profissional">Dr. João Camarinha</p>
-                                <p class="valor">R$ <span>120,00</span></p>
-                                <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
-                                    Sousa - Asa Sul - Brasília/DF</p>
-                            </div>
-                            <div class="col col-lg-4">
-                                <p class="tit-token">Token</p>
-                                <p class="txt-token">Apresente este código no momento da consulta</p>
-                                <div class="area-token">
-                                    <p class="token" id="token">456 813</p>
-                                    <p>
-                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
-                                        <br>
-                                        <span id="successMsg" style="display:none;">Copiado!</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-1">
-                                <div class="btn-group dropleft">
-                                    <button type="button" class="btn"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu ddm-opcoes">
-                                        <p><a href="">Remarcar</a></p>
-                                        <p><a href="">Cancelar</a></p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="agendamentos">
-                        <div class="row">
-                            <div class="col col-lg-2 area-data">
-                                <p class="dia">28</p>
-                                <p class="mes">Abril</p>
-                            </div>
-                            <div class="col col-lg-5 area-informacoes">
-                                <div class="nome-status">
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <p class="beneficiario">Luiza</p>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <span class="status cancelado">Cancelado</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="tipo">Consulta Clínica Geral</p>
-                                <p class="profissional">Dr. João Camarinha</p>
-                                <p class="valor">R$ <span>120,00</span></p>
-                                <p class="endereco">SCS Quadra 03, Bloco A, Nº 107, Sala 103 - Ed. Antônia Alves P. de
-                                    Sousa - Asa Sul - Brasília/DF</p>
-                            </div>
-                            <div class="col col-lg-4">
-                                <p class="tit-token">Token</p>
-                                <p class="txt-token">Apresente este código no momento da consulta</p>
-                                <div class="area-token">
-                                    <p class="token" id="token">456 813</p>
-                                    <p>
-                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
-                                        <br>
-                                        <span id="successMsg" style="display:none;">Copiado!</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-1">
-                                <div class="btn-group dropleft">
-                                    <button type="button" class="btn"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu ddm-opcoes">
-                                        <p><a href="">Remarcar</a></p>
-                                        <p><a href="">Cancelar</a></p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     -->
                 </div>
             </div>
         </div>
@@ -291,6 +190,240 @@
                 }
 
             });
+
+            function remarcarAgendamento(input, clinica_id, profissional_id, agendamento_id) {
+
+            	swal({
+                    title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Atenção</div>',
+                    html: '<span style="margin-bottom: 10px;">Informe a Data/hora para solicitar a Remarcação: </span>' +
+                    		'<div style="margin-top: 10px;">'+
+		                    '<div class="escolher-data">' +
+		                    '<input type="text" id="selecionaDataRemarcar" class="selecionaDataRemarcar mascaraDataAgendamento" name="data_atendimento" placeholder="Data">'+
+		                    '<label for="selecionaData1623"><i class="fa fa-calendar"></i></label>'+
+		                    '</div>'+
+		                    '<div class="escolher-hora">'+
+		                    '<input type="text" id="selecionaHoraRemarcar" class="selecionaHoraRemarcar mascaraHoraAgendamento" name="hora_atendimento" placeholder="Horário">'+
+		                    '<label for="selecionaHora1623"><i class="fa fa-clock-o"></i></label>'+
+		                    '<input type="hidden" id="resultAgendamento" value="false">'+
+		                    '<input type="hidden" id="messageAgendamento" value="">'+
+		                    '</div> </div>',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                    cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                    confirmButtonText: 'Solicitar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: false,
+                    preConfirm: function (input) {
+                        return new Promise(function (resolve, reject) {
+
+                            var data_agendamento = $('#selecionaDataRemarcar').val()
+                            var hora_agendamento = $('#selecionaHoraRemarcar').val()
+                            
+                            if(clinica_id.length == 0 | profissional_id.length == 0 | agendamento_id.length == 0 ) {
+
+                            	reject('Agendamento não disponível');
+                            	return false;
+                            }
+
+                            if(data_agendamento.length == 0 | hora_agendamento.length == 0) {
+
+                            	reject('A Data/hora informada não é válida. Por favor, tente novamente.');
+                            	return false;
+                            }
+                            
+                        	$.ajax({
+                        		type:'post',
+                        		   dataType:'json',
+                        		   url: '/remarcar-agendamento',
+                        		   data: {
+                        			   'clinica_id': clinica_id,
+                        			   'profissional_id': profissional_id,
+                        			   'agendamento_id': agendamento_id,
+                        			   'data_agendamento': data_agendamento,
+                        			   'hora_agendamento': hora_agendamento,
+                        			   '_token': laravel_token
+                        		   },
+                        		   timeout: 15000,
+                        		   success: function (result) {
+
+                        			  if(result.status) {
+                            			  
+                        				  var agendamento = JSON.parse(result.agendamento);
+                        				  
+                        				  $('#resultAgendamento').val('true');
+                                          $('#messageAgendamento').val(result.mensagem);
+                                          $('#status_agendamento_'+agendamento.id).attr('class', 'status pre-agendado').html('Pré-Agendado');
+                                          
+                                          $('#dia_'+agendamento.id).html(agendamento.dia_agendamento);
+                                          $('#mes_'+agendamento.id).html(agendamento.mes_agendamento);
+                                          $('#hora_'+agendamento.id).html(agendamento.hora_agendamento);
+                                      	  
+                        			  } else {
+                        				  $('#resultAgendamento').val('false');
+                                          $('#messageAgendamento').val(result.mensagem);
+                        			  }
+                        			  
+                        			  resolve();
+                        		  },
+                        		  error: function (result) {
+                        			$('#resultAgendamento').val('false');
+                        			$('#messageAgendamento').val('Falha na operação!');
+                                  	resolve();
+                                  }
+                        	});
+                        })
+                    },
+                }).then(function (e) {
+                    var element = e.target;
+                    var result = $('#resultAgendamento').val();
+                    var data = $('#selecionaDataRemarcar').val();
+                    var hora = $('#selecionaHoraRemarcar').val();
+                    var mensagem = $('#messageAgendamento').val();
+                	//alert('teste: '+data);
+                	
+                	if(result == 'true') {
+                    	swal(
+                           {
+                               title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
+                               text: mensagem
+                           }
+                        );
+                	} else if(result == 'false') {
+                		swal(
+                        	{
+                            	title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                            	text: mensagem
+                            }
+                        );
+                	}
+                });
+
+            	var today_date = new Date();
+                var min_date = today_date.setDate(today_date.getDate() + 2);
+
+                jQuery.datetimepicker.setLocale('pt-BR');
+
+            	jQuery('.selecionaDataRemarcar').datetimepicker({                
+                    timepicker:false,
+                    format:'d/m/Y',
+                    minDate: min_date
+                }).on("input blur", function(e){
+                	//console.log("Date changed: ", e.target.value);
+                	if(e.target.value != '') {
+                		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                    	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                    	
+                		if(ct_date <= today_date) {
+                			ct_date.setDate(today_date.getDate());
+                			var ct_mes = pad((ct_date.getMonth()+1));
+                			$(this).val(ct_date.getDate()+'.'+ct_mes+'.'+ct_date.getFullYear());
+                		}
+
+                    	
+                	}
+                });
+                
+                jQuery('.selecionaHoraRemarcar').datetimepicker({ 
+                    datepicker:false,
+                    format:'H:i',
+                    step: 30,
+                });
+
+                $(".mascaraDataAgendamento").inputmask({
+                    mask: ["99/99/9999"],
+                    keepStatic: true
+                });
+            	
+            	$(".mascaraHoraAgendamento").inputmask({
+                    mask: ["99:99"],
+                    keepStatic: true
+                });
+            }
+
+            function cancelarAgendamento(input, agendamento_id) {
+
+            	swal({
+                    title: '<div class="tit-sweet tit-question"><i class="fa fa-question-circle" aria-hidden="true"></i> Atenção</div>',
+                    html: '<span style="margin-bottom: 10px;">Tem certeza que deseja Solicitar o Cancelamento deste Agendamento?</span>',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                    cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+                    confirmButtonText: 'Solicitar',
+                    cancelButtonText: 'Cancelar',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: false,
+                    preConfirm: function (input) {
+                        return new Promise(function (resolve, reject) {
+                            
+                            if(agendamento_id.length == 0 ) {
+
+                            	reject('Agendamento não disponível');
+                            	return false;
+                            }
+                            
+                        	$.ajax({
+                        		type:'post',
+                        		   dataType:'json',
+                        		   url: '/cancelar-agendamento',
+                        		   data: {
+                        			   'agendamento_id': agendamento_id,
+                        			   '_token': laravel_token
+                        		   },
+                        		   timeout: 15000,
+                        		   success: function (result) {
+
+                        			  if(result.status) {
+                            			  
+                        				  var agendamento = JSON.parse(result.agendamento);
+                        				  
+                        				  $('#resultAgendamento').val('true');
+                                          $('#messageAgendamento').val(result.mensagem);
+                                      	  $('#status_agendamento_'+agendamento.id).attr('class', 'status cancelado').html('Cancelado');
+                                      	  $('#btn_remarcar_agendamento_'+agendamento.id).remove();
+                                          
+                                          $('#dia_'+agendamento.id).html(agendamento.dia_agendamento);
+                                          $('#mes_'+agendamento.id).html(agendamento.mes_agendamento);
+                                          $('#hora_'+agendamento.id).html(agendamento.hora_agendamento);
+                                      	  
+                        			  } else {
+                        				  $('#resultAgendamento').val('false');
+                                          $('#messageAgendamento').val(result.mensagem);
+                        			  }
+                        			  
+                        			  resolve();
+                        		  },
+                        		  error: function (result) {
+                        			$('#resultAgendamento').val('false');
+                        			$('#messageAgendamento').val('Falha na operação!');
+                                  	resolve();
+                                  }
+                        	});
+                        })
+                    },
+                }).then(function (e) {
+                    var mensagem = $('#messageAgendamento').val();
+
+                	
+                	if(result == 'true') {
+                    	swal(
+                           {
+                               title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
+                               text: mensagem
+                           }
+                        );
+                	} else if(result == 'false') {
+                		swal(
+                        	{
+                            	title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                            	text: mensagem
+                            }
+                        );
+                	}
+                });
+            }
         </script>
     @endpush
 
