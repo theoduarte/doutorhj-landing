@@ -1,5 +1,8 @@
 $(document).ready(function () {
 	
+	$('#tipo_especialidade option:first').prop("selected", true);
+    $('#local_atendimento option:first').prop("selected", true);
+	
 	$('#tipo_atendimento').change(function(){
 		var tipo_atendimento = $(this).val();
 		
@@ -22,6 +25,41 @@ $(document).ready(function () {
 						var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
 						$('#tipo_especialidade').append($(option));
 					}
+					
+					var atendimento_id = $('#tipo_especialidade option:first').val();
+					
+					if(atendimento_id == '') { return false; }
+					
+					jQuery.ajax({
+			    		type: 'POST',
+			    	  	url: '/consulta-todos-locais-atendimento',
+			    	  	data: {
+							'tipo_atendimento': tipo_atendimento,
+			    	  		'atendimento_id': atendimento_id,
+							'_token': laravel_token
+						},
+						success: function (result) {
+
+							if( result != null) {
+								var json = result.endereco;
+								
+								$('#local_atendimento').empty();
+								for(var i=0; i < json.length; i++) {
+									var option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+									$('#local_atendimento').append($(option));
+								}
+								
+								if(json.length > 0) {
+									$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
+									$('#endereco_id').val(json[0].id);
+								}
+								
+							}
+			            },
+			            error: function (result) {
+			            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			            }
+			    	});
 					
 				}
             },
@@ -228,6 +266,11 @@ $(document).ready(function () {
 					for(var i=0; i < json.length; i++) {
 						var option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
 						$('#local_atendimento').append($(option));
+					}
+					
+					if(json.length > 0) {
+						$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
+						$('#endereco_id').val(json[0].id);
 					}
 					
 				}

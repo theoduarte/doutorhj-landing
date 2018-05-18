@@ -486,7 +486,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
-                var resizefunc = [];
+                var resizefunc = [];                
             });
 
             /*********************************
