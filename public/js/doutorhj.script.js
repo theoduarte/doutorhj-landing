@@ -452,7 +452,13 @@ function pagarCartaoCredito() {
 	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		swal(
+				{
+                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                    text: 'Por favor, verifique os campos e tente novamente.'
+                }
+            );
 		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
       	$('#btn-finalizar-pedido').removeAttr('disabled');
 		
@@ -485,13 +491,24 @@ function pagarCartaoCredito() {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
 			  } else {
-				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+//				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+				  swal(
+							{
+			                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
+			                    text: result.mensagem
+			                }
+			            );
 				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
 				  $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
-          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			  swal(
+						{
+		                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+		                    text: 'Falha na operação!'
+		                }
+		            );
           	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
@@ -609,7 +626,13 @@ function pagarCartaoDebito() {
 	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		swal(
+				{
+                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                    text: 'Por favor, verifique os campos e tente novamente.'
+                }
+            );
 		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
       	$('#btn-finalizar-pedido').removeAttr('disabled');
 		
@@ -641,13 +664,24 @@ function pagarCartaoDebito() {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
 			  } else {
-				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+				  swal(
+							{
+			                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
+			                    text: result.mensagem
+			                }
+			            );
 				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
 				  $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
-          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			swal(
+						{
+		                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+		                    text: 'Falha na operação!'
+		                }
+		            );
           	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
@@ -713,7 +747,13 @@ function pagarCartaoCadastrado() {
 	var cod_seg_cartao_credito = cod_seg.val();
 	
 	if(!result) {
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+		swal(
+				{
+                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                    text: 'Por favor, verifique os campos e tente novamente.'
+                }
+            );
 		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
       	$('#btn-finalizar-pedido').removeAttr('disabled');
 		
@@ -743,13 +783,25 @@ function pagarCartaoCadastrado() {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
 			  } else {
-				  $.Notification.notify('info','top right', 'DrHoje', result.mensagem);
+//				  $.Notification.notify('info','top right', 'DrHoje', result.mensagem);
+				  swal(
+		                    {
+		                        title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
+		                        text: result.mensagem
+		                    }
+		                );
 				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
 		          $('#btn-finalizar-pedido').removeAttr('disabled');
 			  }
 		  },
 		  error: function (result) {
-          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+		  swal(
+					{
+	                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+	                    text: 'Falha na operação!'
+	                }
+	            );
           	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
           	$('#btn-finalizar-pedido').removeAttr('disabled');
           }
@@ -784,7 +836,13 @@ function buscarEndereco(input, tipo_atendimento, atendimento_id) {
 			  }
 		  },
 		  error: function (result) {
-          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			  swal(
+					  {
+						  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+						  text: 'Falha na operação!'
+					  }
+		       	);
           }
 	});
 }
@@ -808,13 +866,20 @@ function validaBuscaAtendimento() {
 	
 	var tipo_atendimento = $('#tipo_atendimento');
 	var tipo_especialidade = $('#tipo_especialidade');
+	var local_atendimento = $('#local_atendimento');
 	var endereco_id = $('#endereco_id');
 	
-	if( tipo_atendimento.val().length == 0 ) {
+	if( tipo_atendimento[0].selectedIndex === 0 ) {
 		
 		tipo_atendimento.parent().addClass('cvx-has-error');
 		tipo_atendimento.focus();
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione o Tipo de Atentimento');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione o Tipo de Atentimento');
+		swal(
+				  {
+					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
+					  text: 'Selecione o Tipo de Atendimento para Prosseguir'
+				  }
+	       	);
 		
 		$('.cvx-has-error .form-control').change(function(){
 			$(this).parent().removeClass('cvx-has-error');
@@ -823,10 +888,16 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( tipo_especialidade.val().length == 0 ) {
+	if( tipo_especialidade[0].selectedIndex === 0 ) {
 		tipo_especialidade.parent().addClass('cvx-has-error');
 		tipo_especialidade.focus();
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
+		swal(
+				  {
+					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
+					  text: 'Selecione a Especialidade/Exame para Prosseguir'
+				  }
+	       	);
 		
 		$('.cvx-has-error .form-control').change(function(){
 			$(this).parent().removeClass('cvx-has-error');
@@ -835,10 +906,16 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( endereco_id.val().length == 0 ) {
+	if( local_atendimento[0].selectedIndex === 0 | endereco_id[0].selectedIndex === 0 ) {
 		endereco_id.parent().addClass('cvx-has-error');
 		endereco_id.focus();
-		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
+//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
+		swal(
+				  {
+					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
+					  text: 'Endereço não localizado. Por favor, tente novamente.'
+				  }
+	       	);
 		
 		$('.cvx-has-error .form-control').keyup(function(){
 			$(this).parent().removeClass('cvx-has-error');

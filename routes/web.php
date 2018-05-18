@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
     return view('welcome');
 }); */
 
-Route::get('/', 'Controller@home')->name('landing-page');
-//Route::get('/provisorio', 'Controller@home')->name('landing-page');
-//Route::get('/', 'Controller@provisorio')->name('provisorio');
+//Route::get('/', 'Controller@home')->name('landing-page');
+Route::get('/provisorio', 'Controller@home')->name('landing-page');
+Route::get('/', 'Controller@provisorio')->name('provisorio');
 
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
 Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
@@ -26,6 +26,7 @@ Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinh
 Route::get('home-logado', 'ClinicaController@homeLogado');
 
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
+Route::post('participe', 'MensagemController@participe');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
 Route::resource('profissionals','ProfissionalController')->middleware('auth');

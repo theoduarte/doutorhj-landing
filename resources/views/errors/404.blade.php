@@ -80,82 +80,7 @@
             </div>
         </div>  -->        
         <header>
-        	@if (Auth::check())
         	<nav class="navbar navbar-expand-xl">
-        		<div class="container">
-        			<a class="navbar-brand" href="/">
-        				<h1>Doutor Hoje</h1>
-        			</a>
-        			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
-        				<i class="fa fa-bars"></i>
-        			</button>
-        			<div class="collapse navbar-collapse" id="navbarMobile">
-        				<ul class="navbar-nav ml-auto">
-        					<li class="nav-item">
-                                <a class="nav-link" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route("meus-agendamentos") }}">Meus Agendamentos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route("minha-conta") }}">Minha Conta</a>
-                            </li>
-        				</ul>
-        				<div class="menu-area-logada">
-                                <ul>
-                                    <li>
-                                        <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown opcoes-menu-usuario drop-notificacoes">
-                                            <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span>Notificações </span><i class="fa fa-bell"></i>
-                                                <div class="numero-notificacoes">
-                                                    <span>0</span>
-                                                </div>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownNotificacoes">
-                                                <ul>
-                                                    <li class="dropdown-item desativado">
-                                                        <span>Notificações</span>
-                                                    </li>
-                                                    <!-- <li class="dropdown-item mensagens-menu">
-                                                        <a href="#">O Dr. Hoje tem uma mensagem urgente. </a>
-                                                        <span>Há 3 horas</span>
-                                                    </li>
-                                                    <li class="dropdown-item mensagens-menu">
-                                                        <a href="#">Seu EXAME foi confirmado.</a>
-                                                        <span>Há 1 semana</span>
-                                                    </li>
-                                                    <li class="dropdown-item mensagens-menu">
-                                                        <a href="#">Sua CONSULTA ODONTOLÓGICA está agendada.</a>
-                                                        <span>Há 2 semanas</span>
-                                                    </li> -->
-                                                    <li class="dropdown-item mensagens-menu">
-                                                        <a href="#">NENHUM ENCONTRADA</a>
-                                                        <!-- <span>Há 2 semanas</span> -->
-                                                    </li>
-                                                </ul>                                                
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown opcoes-menu-usuario drop-carrinho">
-                                            <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
-                                               <a href="/carrinho" class="btn-carrinho"><i class="fa fa-cart-plus"></i></a>
-                                               <div class="numero-notificacoes">
-                                                    <span>{{ $cvx_num_itens_carrinho }}</span>
-                                                </div>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-            </nav>
-        	@else
-            <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
                         <h1>Doutor Hoje</h1>
@@ -184,11 +109,46 @@
                     </div>
                 </div>
             </nav>
-            @endif
         </header>
 
-		@include('flash-message')
-        @yield('content')
+		<div class="ex-page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <svg class="svg-box" width="380px" height="500px" viewBox="0 0 837 1045" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"
+                               sketch:type="MSPage">
+                                <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z"
+                                      id="Polygon-1" stroke="#3bafda" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                                <path d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z"
+                                      id="Polygon-2" stroke="#7266ba" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                                <path d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z"
+                                      id="Polygon-3" stroke="#f76397" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                                <path d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z"
+                                      id="Polygon-4" stroke="#00b19d" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                                <path d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z"
+                                      id="Polygon-5" stroke="#ffaa00" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="message-box">
+                            <h1 class="m-b-0">404</h1>
+                            <h4>Página Não Encontrada</h4>
+                            <div class="buttons-con">
+                                <div class="action-link-wrap">
+                                    <a onclick="history.back(-1)" href="" class="btn btn-info waves-effect waves-light m-t-20">Voltar Página anterior</a>
+                                    <a href="" class="btn btn-primary waves-effect waves-light m-t-20">Ir para Home</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <footer>
             <div class="container">
@@ -241,9 +201,7 @@
             </div>
         </footer>        
     </div>
-    @push('scripts')
-    	<script>
-    		var laravel_token = '{{ csrf_token() }}';
+    <script>
     		var resizefunc = [];
     	</script>
     	
@@ -295,10 +253,6 @@
 		
 		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     	<script src="/js/utilitarios.js"></script>
-    	
-    @endpush
-    
-    @stack('scripts')
     
 </body>
 </html>

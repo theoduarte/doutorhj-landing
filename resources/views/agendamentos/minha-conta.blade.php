@@ -473,9 +473,15 @@
                                                                 {{ $agendamento->clinica->nm_fantasia }}
                                                             </p>
                                                             <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->bandeira }} </span>
+                                                            	@if($agendamento->itempedidos->first()->pedido->cartao_paciente == null)
+                                                            	<span class="bandeira-extenso">-</span>
+                                                                <span class="numero-oculto">Nenhum Cartão informado</span>
+                                                                <span class="final">-</span>
+                                                            	@else
+                                                            	<span class="bandeira-extenso">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->bandeira }} </span>
                                                                 <span class="numero-oculto">●●●● ●●●● ●●●● </span>
                                                                 <span class="final">{{ $agendamento->itempedidos->first()->pedido->cartao_paciente->numero }}</span>
+                                                            	@endif
                                                             </p>
                                                         </div>
                                                         <div class="col-sm-3">

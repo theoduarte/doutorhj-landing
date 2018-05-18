@@ -159,7 +159,7 @@ class UtilController extends Controller
 	}
 	
 	/**
-	 * sendSms method
+	 * sendMail method
 	 *
 	 * @param string $number Destinatários que receberam a mensagem. DDD+Número, separados por vírgula caso possua mais de um.
 	 * @param string $remetente Nome do Remetente até 32 caracteres. Utilizado somente na organização dos relatórios

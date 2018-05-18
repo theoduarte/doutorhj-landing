@@ -1,114 +1,78 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Http\Controllers;
 
-use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use App\Http\Controllers\UtilController;
-use Whoops\Exception\ErrorException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Mensagem;
 
-class Handler extends ExceptionHandler
+class MensagemController extends Controller
 {
+    
     /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array
+     * Marca notificaao como visualizada.
+     * 
+     * @param integer $idMensagem
      */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
-     */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
-
-    /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $exception
-     * @return void
-     */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
-    }
-
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, \Exception $exception)
-    {   
-    	$result = '';
-    	
-    	/* if ($exception instanceof \HttpResponseException) {
-    		return $exception->getResponse();
-    		
-    	} elseif ($exception instanceof ModelNotFoundException) {
-    		
-    		//$exception = new NotFoundHttpException($exception->getMessage(), $exception);
-    		
-    		try {
-    			$result = str_replace(array('\r','\n'),'','model: '.$exception->getModel().' | message: '.$exception->getMessage().' | code:'.$exception->getCode().' | file:'.$exception->getFile().' | line:'.$exception->getLine());
-    			$this->sendException($result);
-    		} catch (\Exception $e) {}
-    		
-    		return response()->view('errors.404', [], 404);
-    		
-    	} elseif ($exception instanceof \AuthenticationException) {
-    		
-    		return $this->unauthenticated($request, $exception);
-    		
-    	} elseif ($exception instanceof \AuthorizationException) {
-    		
-    		$exception = new HttpException(403, $exception->getMessage());
-    		
-    	} elseif ($exception instanceof \ValidationException && $exception->getResponse()) {
-    		
-    		return $exception->getResponse();
-    		
-    	} elseif ($exception instanceof \ErrorException ) {
-    		
-    		try {
-    			$result = str_replace(array('\r','\n'),'', 'message: '.$exception->getMessage().' | code:'.$exception->getCode().' | file:'.$exception->getFile().' | line:'.$exception->getLine());
-    			$this->sendException($result);
-    		} catch (\Exception $e) {}
-    		
-        	return response()->view('errors.500', [], 500);
-    	}
-    	
-    	if ($this->isHttpException($exception)) {
-    		return $this->toIlluminateResponse($this->renderHttpException($exception), $exception);
-    	} */
-    	
-        return parent::render($request, $exception);
+    public function setStatusVisualizado($idMensagem){
+        $mensagem = Mensagem::findorfail($idMensagem);
+        $mensagem->update(['visualizado'=>true]);   
     }
     
-    public function sendException($text_exception) {
+    /**
+     * Consulta 
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function getListaNotificacoes(){
+        
+        $mensagems = Mensagem::where('cs_status', \App\Mensagem::ATIVO)
+                          ->whereHas('clinica.responsavel', function($query){
+                              $query->where('user_id', Auth::user()->id);
+                          })
+                          ->where('visualizado', false)
+                          ->orderBy('created_at', 'desc')
+                          ->sortable()
+                          ->paginate(6);
+        
+        return view('notificacao.index', compact('mensagems'));
+    }
+    
+    /**
+     * participe a newly external user created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function participe(Request $request)
+    {
+    	
+    	 
+    	# dados da mensagem
+    	$mensagem            		= new Mensagem();
+    	$mensagem->remetente     	= $request->input('nome');
+    	$mensagem->destinatario     = 'doctorhoje';
+    	$mensagem->titulo     		= 'Campanha de Lançamento';
+    	$mensagem->descricao     	= 'Contato de Interessado';
+    	
+    	$nome 		= $request->input('nome');
+    	$email 		= $request->input('email');
+    	$telefone 	= $request->input('telefone');
+
+    	if(!$mensagem->save()) {
+    		return redirect()->route('provisorio')->with('error', 'A Sua mensagem não foi enviada. Por favor, tente novamente');
+    	}
+    	
     	$from = 'contato@doctorhoje.com.br';
-    	$to = 'teocomp@gmail.com';
-    	$subject = 'Exceção Sistema DoctorHoje';
-    	
-    	$text_exception = str_replace('\\', '|', "<pre>model: App\Endereco | message: No query results for model [App\Endereco]  | code:0 | file:/var/www/html/cvxdoutorhj-landing/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php | line:333</pre>");
-    	
+    	$to = 'theo@comvex.com.br';
+    	$subject = 'Contato de Interessado';
+    	 
     	$html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>Log Sistema DoctorHoje</title>
+        <title>DoctorHoje</title>
     </head>
     <body style='margin: 0;'>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -119,7 +83,7 @@ class Handler extends ExceptionHandler
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Log Sistema DoctorHoje</span></td>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoctorHoje - Contato de Interessado</span></td>
                 <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
             </tr>
         </table>
@@ -131,19 +95,51 @@ class Handler extends ExceptionHandler
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px;'><strong>Log Sistema DoctorHoje</strong></td>
+                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px;'><strong>Contato de Interessado</strong></td>
             </tr>
         </table>
+        <br>
         <br>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: justify;'>
-                    <strong>$text_exception</strong>
+                    <strong>O Interessado abaixo fez cadastro para a Campanha de Lançamento:</strong>
+                    <br>
+                    <br>
+                    <p><strong>Nome: </strong> $nome</p>
+                    <p><strong>E-mail: </strong> $email</p>
+                    <p><strong>Telefone: </strong> $telefone</p>
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
         </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='220' style='background-color: #fff;'>&nbsp;</td>
+                <td width='159' style='text-align: center;'>
+                    <img src='https://doctorhoje.com.br/libs/home-template/img/email/devices.png' width='155' height='74' alt=''/>
+                </td>
+                <td width='221' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
+            <tr>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
+                    Abraços,<br>
+                    Equipe Doctor Hoje
+                </td>
+                <td width='30' style='background-color: #fff;'>&nbsp;</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <br>
         <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
             <tr style='background-color: #f9f9f9;'>
                 <td width='513'>
@@ -192,5 +188,6 @@ HEREDOC;
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	 
     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
+    	return redirect()->route('provisorio')->with('success', 'A Sua mensagem foi enviada com sucesso!');
     }
 }

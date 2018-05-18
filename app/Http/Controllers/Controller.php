@@ -77,4 +77,18 @@ class Controller extends BaseController
         
         return view('welcome', compact('agendamentos_home', 'cvx_num_itens_carrinho'));
     }
+    
+    /**
+     * carrega dados na landing page provisoria
+     *
+     */
+    public function provisorio()
+    {
+    	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+    	date_default_timezone_set('America/Sao_Paulo');
+    
+    	$agendamentos_home = [];
+    
+    	return view('provisorio', compact('agendamentos_home'));
+    }
 }
