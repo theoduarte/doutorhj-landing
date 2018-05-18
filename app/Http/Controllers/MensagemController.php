@@ -188,6 +188,6 @@ HEREDOC;
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	 
     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
-    	return redirect()->route('provisorio')->with('success', 'A Sua mensagem foi enviada com sucesso!');
+    	//return redirect()->route('provisorio')->with('success', 'A Sua mensagem foi enviada com sucesso!');
     }
 }
