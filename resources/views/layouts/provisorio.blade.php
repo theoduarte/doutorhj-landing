@@ -143,6 +143,10 @@
         	$(document).ready(function () {
         		//$.Notification.notify('success', 'top right', 'Solicitação Concluída!', 'A Sua mensagem foi enviada com sucesso!');
         	});
+
+        	function validaParticipacao() {
+            	return true;
+        	}
             const countdown = document.querySelector('.countdown');
             
             // Set Launch Date (ms)
