@@ -141,7 +141,7 @@
         
         <script>
         	$(document).ready(function () {
-        		$.Notification.notify('success', 'top right', 'Solicitação Concluída!', 'A Sua mensagem foi enviada com sucesso!');
+        		//$.Notification.notify('success', 'top right', 'Solicitação Concluída!', 'A Sua mensagem foi enviada com sucesso!');
         	});
             const countdown = document.querySelector('.countdown');
             
