@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>jQuery Card Validator Input Demo</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.creditCardValidator.js"></script>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style type="text/css">
+#checkout_card_number {
+  background-image: url(cards.png);
+  background-position: 3px 3px;
+  background-size: 40px 252px; /* 89 x 560 */
+  background-repeat: no-repeat;
+  padding-left: 48px;
+}
+</style>
+</head>
+<body>
+<h1>jQuery Card Validator Input Demo</h1>
+<div class="jquery-script-ads" style="margin:20px 0"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="form-row col-md-8 form-group woocommerce-validated">
+  <label>Card Number <span class="required">*</span></label><br>
+<br>
+
+  <input id="checkout_card_number" class="input-text form-control" type="text" size="19" maxlength="19" data-stripe="number" placeholder="1234 5678 9012 3456">
+  <span class="payment-errors required"></span> </div>
+<script type="text/javascript">
+	var $cardinput = $('#checkout_card_number');
+	$('#checkout_card_number').validateCreditCard(function(result)
+	{		
+		//console.log(result);
+		if (result.card_type != null)
+		{				
+			switch (result.card_type.name)
+			{
+				case "visa":
+					$cardinput.css('background-position', '3px -34px');
+					$cardinput.addClass('card_visa');
+					break;
+
+				case "visa_electron":
+					$cardinput.css('background-position', '3px -72px');
+					$cardinput.addClass('card_visa_electron');
+					break;
+
+				case "mastercard":
+					$cardinput.css('background-position', '3px -110px');
+					$cardinput.addClass('card_mastercard');
+					break;
+
+				case "maestro":
+					$cardinput.css('background-position', '3px -148px');
+					$cardinput.addClass('card_maestro');
+					break;
+
+				case "discover":
+					$cardinput.css('background-position', '3px -186px');
+					$cardinput.addClass('card_discover');
+					break;
+
+				case "amex":
+					$cardinput.css('background-position', '3px -223px');
+					$cardinput.addClass('card_amex');
+					break;
+
+				default:
+					$cardinput.css('background-position', '3px 3px');
+					break;					
+			}
+		} else {
+			$cardinput.css('background-position', '3px 3px');
+		}
+
+		// Check for valid card numbere - only show validation checks for invalid Luhn when length is correct so as not to confuse user as they type.
+		if (result.length_valid || $cardinput.val().length > 16)
+		{
+			if (result.luhn_valid) {
+				$cardinput.parent().removeClass('has-error').addClass('has-success');
+			} else {
+				$cardinput.parent().removeClass('has-success').addClass('has-error');
+			}
+		} else {
+			$cardinput.parent().removeClass('has-success').removeClass('has-error');
+		}
+});
+
+</script><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

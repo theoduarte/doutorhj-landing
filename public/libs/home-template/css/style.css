@@ -1,0 +1,3023 @@
+/*----------------------------------------------------------------------------------------
+Theme name: Doutor Hoje - 2018
+Author name: @PauloKenobi
+Tag: tab mobile,computer,desktop,responsive design,all browser supported,html5,html4,css3.
+Verson: 1.0
+==========================================================================================
+1 GERAL
+2 TOPO E MENU
+3 BANNER
+4 SEÇÕES HOME
+5 RESULTADO DA BUSCA
+6 LOGIN/CADASTRO
+7 MENU ÁREA LOGADA
+8 INFORMA BENEFICIÁRIO
+9 PAGAMENTO
+10 CONFIRMAÇÃO AGENDAMENTO
+11 HOME PRESTADOR
+12 MINHA CONTA
+13 MEUS AGENDAMENTOS
+14 HOME LOGADA
+X FOOTER
+X MEDIA QUERIES
+----------------------------------------------------------------------------------------*/
+
+/*********************************
+*
+*  1 GERAL
+* 
+*********************************/
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+html,
+body,
+.tudo {
+    width: 100%;
+    height: 100%;
+}
+
+.btn-vermelho {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(163, 36, 49);
+    border: 0;
+}
+
+.btn-vermelho:hover {
+    background-color: rgb(117, 27, 36);
+}
+
+.btn-vermelho:focus {
+    box-shadow: none !important;
+}
+
+.btn-azul {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 34px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(70, 117, 184);
+    border: 0;
+}
+
+.btn-azul:hover {
+    background-color: rgb(57, 98, 157);
+}
+
+.btn-azul:focus {
+    box-shadow: none !important;
+}
+
+.tooltip {
+    font-size: 12px;
+}
+
+.resultado,
+.carrinho,
+.login,
+.confirma-cadastro,
+.pagamento,
+.confirma-beneficiario,
+.confirmacao,
+.login-prestador {
+    padding: 10px 0 60px 0;
+    background-color: rgb(236, 243, 247);
+    box-sizing: border-box;
+    min-height: 70%;
+}
+
+.resultado .area-container,
+.carrinho .area-container,
+.login .area-container,
+.confirma-cadastro .area-container,
+.pagamento .area-container,
+.confirma-beneficiario .area-container,
+.confirmacao .area-container,
+.login-prestador .area-container{
+    border-radius: 4px;
+    padding: 30px 25px;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.resultado .area-container .titulo strong,
+.carrinho .area-container .titulo strong,
+.login .area-container .titulo strong,
+.confirma-cadastro .area-container .titulo strong,
+.pagamento .area-container .titulo strong,
+.confirma-beneficiario .area-container .titulo strong,
+.confirmacao .area-container .titulo strong,
+.login-prestador .area-container .titulo strong {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: rgb(70, 117, 184);
+    font-weight: 700;
+}
+
+.resultado .area-container .titulo p,
+.carrinho .area-container .titulo p,
+.login .area-container .titulo p,
+.pagamento .area-container .titulo p,
+.confirma-beneficiario .area-container .titulo p,
+.confirmacao .area-container .titulo p,
+.login-prestador .area-container .titulo p {
+    font-size: 15px;
+    color: rgb(115, 115, 115);
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+}
+
+/*********************************
+*
+*  2 TOPO E MENU
+* 
+*********************************/
+
+header {
+    padding: 40px 0 0 0;
+}
+
+header .container {
+    height: 82px;
+    padding-top: 15px;
+}
+
+header .navbar-brand {
+    display: block;
+    width: 255px;
+    height: 55px;
+    background-image: url(../img/logo-padrao.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: -30px;
+}
+
+header .nav-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding-bottom: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+header .nav-link:hover {
+    color: rgb(163, 36, 49);
+    text-decoration: none;
+}
+
+header .btn-profissional a {
+    background-color: rgb(234, 234, 234);
+    border-radius: 3px;
+    margin: 0 10px;
+}
+
+header .btn-entrar a {
+    color: rgb(255, 255, 255);
+    background-color: rgb(163, 36, 49);
+    border-radius: 3px;
+}
+
+header .btn-entrar a:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(117, 27, 36);
+}
+
+header .navbar-toggler i {
+    color: rgb(70, 117, 184);
+}
+
+header .navbar-collapse {
+    background: rgb(255, 255, 255);
+}
+
+/*********************************
+*
+*  3 BANNER
+* 
+*********************************/
+
+.area-banner {
+    background-image: url(../img/banner1.png);
+    background-position: left top;
+    padding: 250px 0 60px 0;
+}
+
+.area-banner .frase p {
+    font-size: 46px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.area-banner .frase {
+    width: 470px;
+    line-height: 50px;
+    margin-left: auto;
+}
+
+.area-banner .frase p:last-child {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 28px;
+    text-transform: none;
+}
+
+.busca-home {
+    margin: 0 auto;
+    padding: 20px 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.busca-home .titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.busca-home .titulo span {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 34px;
+    color: rgb(163, 36, 49);
+}
+
+.form-busca-home label {
+    font-size: 16px;
+    color: rgb(22, 22, 22);
+}
+
+.form-busca-home select {
+    font-size: 13px;
+    color: rgb(124, 124, 124);
+    text-transform: uppercase;
+    height: 52px !important;
+}
+
+.form-busca-home .select2-container {
+    width: 100%!important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da!important;
+    border-radius: .25rem!important;
+}
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single:focus,
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single:focus,
+#select2-tipo_especialidade-container:focus,
+#select2-local_atendimento-container:focus {
+    outline: none;
+}
+
+.form-group .select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single,
+.form-group .select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single{
+    padding-top: 11px!important;
+}
+
+.select2-container--default span[aria-labelledby='select2-tipo_especialidade-container'].select2-selection--single .select2-selection__rendered,
+.select2-container--default span[aria-labelledby='select2-local_atendimento-container'].select2-selection--single .select2-selection__rendered {
+    font-size: 13px!important;
+    color: rgb(124, 124, 124)!important;
+    text-transform: uppercase!important;
+    height: 52px!important;
+    padding-left: 14px!important;
+}
+
+.form-busca-home select option {
+    font-size: 16px;
+    text-transform: none;
+}
+
+.form-busca-home button {
+    width: 100%;
+    margin-top: 32px;
+}
+
+.form-busca-home .btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: rgb(117, 27, 36);
+}
+
+/*********************************
+*
+*  4 SEÇÕES HOME
+* 
+*********************************/
+
+.area-sobre {
+    padding: 60px 0;
+}
+
+.area-sobre .col1-sobre p {
+    color: rgb(45, 45, 45);
+    font-size: 31px;
+    font-weight: 700;
+}
+
+.area-sobre .col1-sobre p strong {
+    font-weight: 300;
+    font-style: italic;
+}
+
+.area-sobre .col1-sobre p:first-child {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.area-sobre .col2-sobre {
+    padding-top: 36px;
+}
+
+.area-sobre .col2-sobre p {
+    color: rgb(131, 131, 131);
+    font-size: 17px;
+    line-height: 30px;
+    font-weight: 400;
+}
+
+.area-sobre .col2-sobre a {
+    color: rgb(163, 36, 49);
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.area-passos {
+    padding: 60px 0;
+    background-color: rgb(163, 36, 49);
+    background-image: url(../img/bg-passos.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    /*background-size: auto 100%;*/;
+}
+
+.area-passos .container .titulo-home {
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.area-passos .container .titulo-home span {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.area-passos .container .titulo-home h3 {
+    font-size: 34px;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.area-passos .container .titulo-home p {
+    font-size: 17px;
+}
+
+.steps {
+    width: 100%;
+    overflow: auto;
+    margin-top: 70px;
+}
+
+.steps .step {
+    width: 20%;
+    float: left;
+    text-align: center;
+}
+
+.steps .step .icone {
+    margin-bottom: 24px;
+}
+
+.steps .step .icone img {
+    height: 48px;
+    margin: 0 auto;
+}
+
+.steps .step .traco {
+    width: 100%;
+    height: 12px;
+    background-image: url(../img/linha-steps.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: 15px;
+}
+
+.steps .step .numero {
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+}
+
+.steps .step .texto {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+}
+
+.steps-mobile {
+    display: none;
+}
+
+.area-vantagens {
+    padding: 60px 0;
+}
+
+.area-vantagens .titulo-home {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.area-vantagens .titulo-home span {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
+}
+
+.area-vantagens .titulo-home h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+}
+
+.area-vantagens .row {
+    margin-bottom: 80px;
+}
+
+.icone-vantagem {
+    float: left;
+    padding-right: 20px;
+    height: 100%;
+}
+
+.icone-vantagem img {
+    width: 72px;
+}
+
+.texto-vantagem h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+}
+
+.texto-vantagem p {
+    font-size: 16px;
+    color: rgb(131, 131, 131);
+}
+
+.area-participe {
+    padding: 60px 0;
+    background-color: rgb(241, 239, 230);
+}
+
+.area-participe .titulo-home span {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
+}
+
+.area-participe .titulo-home h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+}
+
+.area-participe .btn {
+    padding: 6px 40px;
+}
+
+.area-participe p {
+    font-size: 17px;
+    color: rgb(43, 43, 43);
+}
+
+.box-banner-conheca .area-imagem {
+    width: 80%;
+    margin-top: -116px;
+    position: relative;
+}
+
+.box-banner-conheca .area-imagem img {
+    width: 100%;
+    position: absolute;
+    left: 10%;
+    -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.3);
+}
+
+.area-aplicativo {
+    padding: 100px 0 60px 0;
+}
+
+.area-aplicativo .titulo-home span {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgb(131, 131, 131);
+}
+
+.area-aplicativo .titulo-home h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(136, 36, 49);
+}
+
+.area-aplicativo p {
+    font-size: 17px;
+    color: rgb(43, 43, 43);
+}
+
+.area-aplicativo p strong {
+    font-style: italic;
+    display: block;
+    margin-top: 30px;
+}
+
+.area-imagem-aplicativo img {
+    display: block;
+    margin: 0 auto;
+}
+
+.area-texto-aplicativo {
+    padding-top: 120px;
+}
+
+.link-aplicativos {
+    list-style: none;
+    padding: 0 !important;
+}
+
+.link-aplicativos li {
+    float: left;
+}
+
+.link-aplicativos li:first-child {
+    margin-right: 30px;
+}
+
+.link-aplicativos li a {
+    display: block;
+    width: 171px;
+    height: 51px;
+    background-size: 100% 100%;
+    text-indent: -9999px;
+}
+
+.link-aplicativos li:first-child a {
+    background-image: url(../img/app-google.png);
+}
+
+.link-aplicativos li:last-child a {
+    background-image: url(../img/app-apple.png);
+}
+
+/*********************************
+*
+*  5 RESULTADO DA BUSCA
+* 
+*********************************/
+
+.area-alt-busca {
+    width: 100%;
+    overflow: auto;
+    display: none;
+}
+
+.area-alt-busca .btn-alt-busca {
+    width: 100%;
+    background-color: rgb(54, 96, 156);
+    border-radius: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.area-alt-busca .btn-alt-busca i {
+    font-weight: 300;
+    margin-left: 10px;
+}
+
+.form-busca-resultado {
+    background-color: rgb(70, 117, 184);
+    padding: 10px 10px;
+}
+
+.form-busca-resultado .form-group {
+    margin-bottom: 0;
+}
+
+.form-busca-resultado .form-group select,
+.form-busca-resultado .form-group .btn {
+    width: 100%;
+    height: 38px;
+    border: 0;
+    font-size: 14px;
+}
+
+.form-busca-resultado .form-group .btn i {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.div-filtro {
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.div-filtro select {
+    width: 100%;
+    height: 38px !important;
+    float: left;
+    padding: 6px 12px;
+    border: 1px solid rgb(206, 121, 218);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.lista-resultado {
+    padding-top: 20px;
+}
+
+.lista-resultado .card {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.lista-resultado .card .card-title {
+    font-size: 16px;
+    color: rgb(70, 117, 184);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.lista-resultado .card .card-subtitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(47, 47, 47);
+    margin-bottom: 10px;
+}
+
+.lista-resultado .card .card-text {
+    font-size: 14px;
+    color: rgb(47, 47, 47);
+    margin-bottom: 8px;
+}
+
+.lista-resultado .card .card-text:last-child {
+    margin-bottom: 0;
+}
+
+.link-mapa-mobile {
+    font-size: 11px;
+    text-transform: uppercase;
+    display: none;
+}
+
+.card-footer .mais-detalhes-marcacao {
+    color: rgb(163, 36, 49);
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.card-footer strong {
+    float: right;
+    line-height: 33px;
+}
+
+.area-escolher-data {
+    padding: 20px;
+    background-color: rgb(247, 229, 232);
+}
+
+.titulo-escolhe-data {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.escolher-data, .escolher-hora {
+    position: relative;
+    width: 48%;
+}
+
+.escolher-data {
+    float: left;
+}
+
+.escolher-hora {
+    float: right;
+}
+
+.escolher-data input, .escolher-hora input {
+    width: 100%;
+    height: 50px;
+    padding: 6px 38px 6px 12px;
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.escolher-data label, .escolher-hora label {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    margin-bottom: 0;
+}
+
+.escolher-data label i, .escolher-hora label i {
+    font-size: 24px;
+    color: rgb(183, 183, 183);
+}
+
+.area-escolher-data .btn {
+    width: 100%;
+}
+
+.area-escolher-data .confirma-data {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: rgb(163, 36, 49);
+    padding: 10px 0;
+    clear: both;
+}
+
+.area-escolher-data .mensagem-confirma-data {
+    font-size: 13px;
+    text-transform: none;
+    color: rgb(163, 36, 49);
+    padding: 0 0 10px 0;
+    clear: both;
+}
+
+.area-escolher-data .valor-total {
+    font-size: 15px;
+    color: rgb(45, 45, 45);
+    padding: 0 0 14px 0;
+}
+
+.area-seleciona-profissional {
+    float: left;
+    background-color: rgb(226, 226, 226);
+    padding: 5px 10px 5px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 23px;
+    text-transform: uppercase;
+    color: rgb(163, 36, 49);
+    cursor: pointer;
+}
+
+.form-check-input {
+    display: none;
+}
+
+.area-seleciona-profissional input,
+.area-seleciona-profissional label {
+    cursor: pointer;
+}
+
+.mapa-resultado {
+    position: sticky;
+    top: 20px;
+    left: 0;
+    overflow: auto;
+    width: 100%;
+    height: 530px;
+}
+
+#map {
+    width: 100%;
+    height: 530px;
+}
+
+.card-resultado {
+    border-radius: 5px;
+}
+
+.card-resultado .card-body {
+    border-radius: 5px 5px 0 0;
+}
+
+.card-resultado .card-footer {
+    border-radius: 0 0 5px 5px;
+}
+
+.card-resultado:hover .card-body,
+.card-resultado-active .card-body {
+    background-color: rgb(136, 36, 49);
+}
+
+.card-resultado:hover .card-body h5,
+.card-resultado:hover .card-body h6,
+.card-resultado:hover .card-body p,
+.card-resultado:hover .link-mapa-mobile,
+.card-resultado:hover .card-footer strong,
+.card-resultado-active .card-body h5,
+.card-resultado-active .card-body h6,
+.card-resultado-active .card-body p,
+.card-resultado-active .link-mapa-mobile,
+.card-resultado-active .card-footer strong {
+    color: rgb(255, 255, 255) !important;
+}
+
+.card-resultado:hover .link-mapa-mobile,
+.card-resultado-active .link-mapa-mobile {
+    text-decoration: underline;
+}
+
+.card-resultado:hover .card-footer,
+.card-resultado-active .card-footer {
+    background-color: rgb(119, 26, 36);
+}
+
+/*********************************
+*
+*  6 LOGIN/CADASTRO
+* 
+*********************************/
+
+.login .area-container {
+    border-radius: 4px;
+    padding: 30px 25px;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-formulario .card-header {
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 117, 184);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.card-formulario .card-body {
+    padding-top: 10px;
+}
+
+.card-formulario .card-span {
+    color: rgb(115, 115, 115);
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.card-formulario .card-title {
+    color: rgb(47, 61, 74);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.card-formulario form label {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.card-formulario form input, .card-formulario form select {
+    height: 38px;
+    font-size: 12px;
+}
+
+.card-formulario form button {
+    color: rgb(255, 255, 255);
+    width: 100%;
+    font-size: 11px;
+    padding: 0 12px;
+    height: 38px;
+}
+
+.area-label {
+    margin-bottom: 0;
+}
+
+.c-login form .col:nth-child(1) {
+    padding-right: 5px;
+}
+
+.c-login form .col:nth-child(2) {
+    padding-left: 5px;
+}
+
+.c-login .links-login {
+    font-size: 12px;
+}
+
+.card-formulario form .fc-checkbox .form-check-input {
+    display: block;
+    height: auto;
+}
+
+.card-formulario form .fc-checkbox .form-check-label {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+}
+
+.card-formulario form .btn-criar-conta {
+    /*width: 130px;*/
+    margin-top: 20px;
+}
+
+.confirma-cadastro .titulo {
+    margin-bottom: 20px;
+}
+
+.confirma-cadastro .titulo {
+    margin-bottom: 20px;
+}
+
+.confirma-cadastro .p {
+    font-size: 17px;
+}
+
+/*********************************
+*
+*  7 MENU ÁREA LOGADA
+* 
+*********************************/
+
+.menu-area-logada {
+    background-color: rgb(230, 230, 230);
+    padding: 78px 15px 22px 15px;
+    margin-top: -55px;
+    margin-left: 15px;
+}
+
+.menu-area-logada ul {
+    list-style: none;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-area-logada ul li {
+    float: left;
+}
+
+.menu-area-logada ul li .al-nome-usuario {
+    line-height: 37px;
+    cursor: default;
+}
+
+.menu-area-logada ul li span {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: rgb(70, 117, 184);
+}
+
+.menu-area-logada button {
+    background: transparent;
+}
+
+.menu-area-logada button:hover,
+.menu-area-logada button:active,
+.menu-area-logada button:focus,
+.menu-area-logada button:visited {
+    background: transparent;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+}
+
+.menu-area-logada button a.btn-carrinho {
+	color: rgb(46, 46, 46);
+}
+
+.menu-area-logada button:hover a.btn-carrinho {
+	color: #007bff;
+}
+
+.opcoes-menu-usuario .dropdown-menu {
+    padding-bottom: 0;
+}
+
+.opcoes-menu-usuario .dropdown-menu a {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.opcoes-menu-usuario .dropdown-menu .desativado span {
+    font-size: 18px;
+    color: rgb(220, 220, 220);
+    font-weight: 600;
+}
+
+.opcoes-menu-usuario .dropdown-menu .desativado,
+.opcoes-menu-usuario .dropdown-menu .desativado:hover {
+    cursor: default;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(206, 206, 206);
+    text-align: center;
+}
+
+.opcoes-menu-usuario .btn-area-logada {
+    position: relative;
+}
+
+.opcoes-menu-usuario .btn-area-logada .numero-notificacoes {
+    background-color: rgb(163, 36, 49);
+    border-radius: 50% 50%;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 0;
+}
+
+.opcoes-menu-usuario .btn-area-logada .numero-notificacoes span {
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    line-height: 17px;
+    font-weight: 400;
+    display: block;
+}
+
+.drop-notificacoes {
+    padding-right: 0;
+}
+
+.drop-notificacoes .btn-area-logada .numero-notificacoes {
+    right: 0;
+}
+
+.drop-carrinho {
+    padding-right: 0;
+}
+
+.drop-carrinho .btn-area-logada .numero-notificacoes {
+    right: 0;
+}
+
+.drop-notificacoes .dropdown-toggle::after,
+.drop-carrinho .dropdown-toggle::after {
+    display: none !important;
+}
+
+.opcoes-menu-usuario .dropdown-menu {
+    left: auto;
+    right: 0;
+    min-width: 230px;
+}
+
+header .nav-item-mobile {
+    display: none;
+}
+
+.drop-notificacoes button span,
+.drop-carrinho button span {
+    display: none;
+}
+
+.opcoes-menu-usuario .dropdown-item {
+    white-space: normal;
+}
+
+.opcoes-menu-usuario .dropdown-item span {
+    display: block;
+}
+
+.opcoes-menu-usuario .mensagens-menu {
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding: 10px 24px;
+}
+
+.opcoes-menu-usuario .mensagens-menu:last-child {
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.opcoes-menu-usuario .mensagens-menu a {
+    font-size: 13px;
+    text-transform: none;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    display: block;
+}
+
+.opcoes-menu-usuario .mensagens-menu a:hover {
+    color: rgb(70, 117, 184);
+    text-decoration: none;
+}
+
+.opcoes-menu-usuario .mensagens-menu span {
+    font-size: 12px;
+    text-transform: none;
+    color: rgb(167, 167, 167);
+    font-weight: 400;
+}
+
+.opcoes-menu-usuario .dropdown-item.active, .opcoes-menu-usuario .dropdown-item:active {
+    background-color: rgb(255, 255, 255);
+}
+
+/*********************************
+*
+*  8 INFORMA BENEFICIÁRIO
+* 
+*********************************/
+
+.confirma-beneficiario .btn {
+    color: rgb(255, 255, 255);
+}
+
+.confirma-beneficiario .btn-beneficiario {
+    font-size: 13px;
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 0;
+    color: rgb(33, 37, 41);
+    background-color: rgb(234, 234, 234);
+}
+
+.confirma-beneficiario .btn-beneficiario:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+.area-dados-beneficiario {
+    margin-top: 30px;
+}
+
+.area-dados-beneficiario h4 {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(70, 117, 184);
+    font-weight: 700;
+    padding: 15px 0;
+}
+
+.area-dados-beneficiario form label {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.area-dados-beneficiario form input {
+    height: 38px;
+    font-size: 12px;
+}
+
+.area-dados-beneficiario .grupo-sexo label {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+}
+
+.area-dados-beneficiario .grupo-sexo input {
+    display: block;
+    height: auto;
+}
+
+.area-dados-beneficiario .titulo-sexo-beneficiario {
+    margin-bottom: 0;
+}
+
+/*********************************
+*
+*  9 PAGAMENTO
+* 
+*********************************/
+
+.pagamento .area-container .titulo {
+    margin-bottom: 30px;
+}
+
+.pagamento .card-formulario {
+    margin-bottom: 40px;
+}
+
+.formas-pagamento {
+    display: none;
+}
+
+.codigo-seguranca .area-codigo-seguranca {
+    position: relative;
+}
+
+.codigo-seguranca .area-codigo-seguranca i {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: rgb(183, 183, 183);
+}
+
+.card-resumo-compra {
+    margin-bottom: 10px;
+}
+
+.card-resumo-compra .card-header {
+    background-color: rgb(245, 245, 245);
+    border-bottom: none;
+}
+
+.card-resumo-compra .card-header .nome-produto {
+    color: rgb(69, 112, 172);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.card-resumo-compra .card-header .nome-produto:hover {
+    text-decoration: underline;
+}
+
+.card-resumo-compra .card-header .excluir-produto i {
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.card-resumo-compra .card-header .valor-produto {
+    color: rgb(70, 74, 78);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+    line-height: 24px;
+}
+
+.card-resumo-compra .linha-resumo {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.card-resumo-compra .titulo-resumo {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(69, 112, 172);
+    margin-bottom: 3px;
+}
+
+.card-resumo-compra .dados-resumo {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
+}
+
+.card-resumo-compra .dados-resumo p {
+    margin-bottom: 0;
+}
+
+.resumo-compra {
+    margin-top: 30px;
+}
+
+.resumo-compra .titulo-resumo {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(69, 112, 172);
+    margin-bottom: 3px;
+}
+
+.resumo-compra .dados-resumo {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
+}
+
+.resumo-compra .dados-resumo p {
+    margin-bottom: 0;
+}
+
+.linha-forma-pagamento {
+    margin-bottom: 15px;
+}
+
+.linha-forma-pagamento .dados-resumo {
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgb(195, 195, 195);
+}
+
+.resumo-compra .valor-total-produtos p {
+    font-weight: 700;
+}
+
+.area-btn-finalizar {
+    padding-top: 30px;
+}
+
+.area-btn-finalizar .btn-continuar-comprando {
+    float: left;
+    font-size: 12px;
+    line-height: 38px;
+    background-color: rgb(241, 241, 241);
+}
+
+.area-btn-finalizar .btn-continuar-comprando:hover {
+    background-color: rgb(230, 230, 230);
+    text-decoration: none;
+}
+
+.area-btn-finalizar .btn-finalizar {
+    color: rgb(255, 255, 255);
+    float: right;
+}
+
+.produtos-carrinho {
+    background-color: rgb(249, 250, 251);
+    border: 1px solid rgb(238, 238, 238);
+    margin-top: 15px;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .valor-produto {
+    text-align: left;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto,
+.produtos-carrinho .card-resumo-compra .card-header .excluir-produto {
+    text-align: center;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto {
+    color: rgb(69, 112, 172);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.produtos-carrinho .card-resumo-compra .card-header .detalhes-produto:hover {
+    text-decoration: underline;
+}
+
+.produtos-carrinho .resumo-compra .titulo-resumo {
+    text-align: right;
+}
+
+/*********************************
+*
+*  10 CONFIRMAÇÃO AGENDAMENTO
+* 
+*********************************/
+
+.dados-confirmacao {
+    background-color: rgb(247, 247, 247);
+    padding: 30px;
+}
+
+.confirmacao .texto-confirmacao p {
+    margin: 15px 0 25px 0;
+}
+
+.dados-confirmacao ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.dados-confirmacao ul li {
+    font-size: 14px;
+}
+
+.dados-confirmacao ul li i {
+    font-size: 22px;
+    color: rgb(216, 216, 216);
+    margin: 0 15px 30px 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    float: left;
+    text-align: center;
+}
+
+.dados-confirmacao ul li {
+    clear: both;
+}
+
+/*********************************
+*
+*  11 HOME PRESTADOR
+* 
+*********************************/
+
+.home-prestador .area-banner {
+    text-align: center;
+    background-image: url(../img/banner-prestador.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.home-prestador .area-banner h2 {
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.home-prestador .area-banner p {
+    font-size: 27px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.home-prestador .titulo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.home-prestador .titulo h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    text-transform: uppercase;
+}
+
+.home-prestador .areas {
+    padding: 30px 0;
+}
+
+.home-prestador .titulo .linha {
+    width: 75px;
+    height: 2px;
+    margin: 0 auto;
+    background-color: rgb(70, 117, 184);
+}
+
+.home-prestador .passos-cadastro {
+    text-align: center;
+}
+
+.home-prestador .passos-cadastro .icone {
+    border-radius: 54px;
+    width: 104px;
+    height: 104px;
+    background-color: rgb(84, 112, 163);
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.home-prestador .passos-cadastro .icone img {
+    height: 64px;
+    margin: 20px 20px;
+}
+
+.home-prestador .passos-cadastro .titulo {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.home-prestador .passos-cadastro .texto {
+    font-size: 17px;
+}
+
+.home-prestador .area-sobre p {
+    text-align: center;
+    font-size: 17px;
+}
+
+.home-prestador .area-como-funciona {
+    padding-top: 150px;
+}
+
+.home-prestador .area-como-funciona .container {
+    background-color: rgb(84, 112, 163);
+}
+
+.home-prestador .area-como-funciona .titulo h3,
+.home-prestador .area-como-funciona .titulo p {
+    text-align: left;
+    color: rgb(255, 255, 255);
+}
+.home-prestador .area-texto-como-funciona {
+    padding: 40px;
+}
+
+.home-prestador .area-como-funciona .titulo h3 {
+    margin: 10px 0 10px 0;
+}
+
+.home-prestador .area-como-funciona .titulo p {
+    font-size: 17px;
+}
+
+.home-prestador .area-como-funciona .titulo .linha {
+    margin-left: 0;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.home-prestador .area-como-funciona ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.home-prestador .area-como-funciona ul li {
+    clear: both;
+    margin-bottom: 30px;
+    overflow: auto;
+}
+
+.home-prestador .area-como-funciona ul li img {
+    width: 52px;
+    float: left;
+    display: block;
+    margin-right: 15px;
+}
+
+.home-prestador .area-como-funciona ul li p {
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 0;
+    line-height: 22px;
+}
+
+.home-prestador .area-imagem-passos-prestador {
+    position: relative;
+}
+.home-prestador .area-imagem-passos-prestador img {
+    position: absolute;
+    right: 0;
+    top: -90px;
+    -webkit-box-shadow: 0 10px 30px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px 5px rgba(0,0,0,0.3);
+}
+
+.home-prestador .area-beneficios {
+    padding-bottom: 0;
+}
+
+.home-prestador .area-beneficios .titulo p {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.home-prestador .area-beneficios ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/*.home-prestador .area-beneficios .lista-beneficios {
+    -moz-column-count: 2;
+    -moz-column-gap: 30px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 30px;
+    column-count: 2;
+    column-gap: 30px;
+}*/
+
+.home-prestador .area-beneficios .lb1 {
+    text-align: left;
+}
+
+.home-prestador .area-beneficios .lb2 {
+    text-align: right;
+}
+
+.home-prestador .area-beneficios .lista-beneficios li {
+    margin-bottom: 40px;
+}
+
+.home-prestador .area-beneficios .lista-beneficios span {
+    font-size: 17px;
+    color: rgb(84, 112, 163);
+    font-weight: 700;
+}
+
+.home-prestador .area-beneficios .lista-beneficios p {
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.parte-medico img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.medico-parte-2 img {
+    margin-top: -60px;
+}
+
+.remove-imagem-medico img {
+    display: none;
+}
+
+/*********************************
+*
+*  12 MINHA CONTA
+*
+*********************************/
+
+.area-busca-interna {
+    padding-top: 85px;
+    background-image: url(../img/banner-internas.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.box-minha-conta {
+    margin: 85px 0 85px 0;
+    padding-left: 15px;
+    background-color: rgb(236, 239, 242);
+}
+
+.box-minha-conta .row .menu {
+    padding: 20px 0;
+    background-color: rgb(25, 118, 188);
+}
+
+.box-minha-conta .row .menu .nav .nav-link {
+    padding-left: 20px;
+    color: rgb(163, 200, 225);
+}
+
+.box-minha-conta .row .menu .nav .nav-link i {
+    display: none;
+}
+
+.box-minha-conta .row .menu .nav .nav-link:hover {
+    color: rgb(255, 255, 255);
+}
+
+.box-minha-conta .row .menu .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    background-color: transparent;
+    padding-left: 0;
+}
+
+.box-minha-conta .row .menu .nav-pills .nav-link.active i {
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.box-minha-conta .row .conteudo {
+    padding: 30px 40px;
+    min-height: 605px;
+}
+
+.box-minha-conta .row .conteudo form label {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.box-minha-conta .row .conteudo .label-titulo {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.box-minha-conta .row .conteudo form input::placeholder,
+.box-minha-conta .row .conteudo form select {
+    color: rgb(140, 140, 140);
+    font-size: 14px;
+}
+
+.box-minha-conta .row .conteudo form .fc-tit-dn {
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes {
+    margin-top: 48px;
+    background-color: rgb(237, 237, 237);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 16px;
+    border-radius: 4px;
+    max-height: 220px;
+    overflow: auto;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes .dependente {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.box-minha-conta .row .conteudo .lista-dependentes .dependente .exclui-dependente {
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .btn-add-dependente {
+    width: 100%;
+    margin: 10px 0 40px 0;
+}
+
+.box-minha-conta .row .conteudo .modal-adiciona-dependente {
+    max-width: 400px;
+}
+
+.box-minha-conta .row .conteudo .modal-title {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.box-minha-conta .row .conteudo .modal-adiciona-dependente input,
+.box-minha-conta .row .conteudo .modal-adiciona-dependente select {
+    background-color: rgb(255, 255, 255);
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .row {
+    padding: 10px 0;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
+    font-size: 14px;
+    line-height: 34px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .btn {
+    font-size: 14px;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-opcoes-notificacao {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.box-minha-conta .row .conteudo .opcoes-notificacao .tit-not-mob {
+    margin-top: 30px;
+}
+
+.box-minha-conta .row .conteudo  .nota-avaliacao {
+    margin-bottom: 4px;
+}
+
+.box-minha-conta .row .conteudo  .nota-avaliacao p {
+    color: rgb(70, 117, 184);
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+    width: 100%;
+}
+
+.rating {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.rating-input {
+    float: right;
+    width: 18px;
+    height: 16px;
+    margin: 0 0 0 -16px;
+    opacity: 0;
+}
+
+.rating-star {
+    cursor: pointer;
+    position: relative;
+    display: block;
+    width: 18px;
+    height: 16px;
+    float: right;
+    background: url('../img/icone-star.png') 0 -16px;
+}
+
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    background-position: 0 0;
+}
+
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 18px;
+    height: 16px;
+    background: url('../img/icone-star.png') 0 -16px;
+}
+
+.box-minha-conta .row .conteudo .itens-sair {
+    width: 100%;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .itens-sair span {
+    color: rgb(70, 117, 184);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.box-minha-conta .row .conteudo .itens-sair {
+    margin-bottom: 20px;
+}
+
+.box-minha-conta .row .conteudo .itens-sair .btn {
+    font-size: 13px;
+    width: 100px;
+    height: 52px;
+    margin: 0 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 0;
+}
+.box-minha-conta .row .conteudo .area-tipo-plano {
+    background-color: transparent;
+    border: 1px solid rgb(220, 220, 220);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .nome-plano,
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-plano {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-anuidade,
+.box-minha-conta .row .conteudo .area-tipo-plano .link-indique-amigo {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .valor-plano {
+    color: rgb(126, 211, 33);
+}
+
+.box-minha-conta .row .conteudo .area-tipo-plano .atp2 {
+    text-align: right;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento {
+    background-color: rgb(237, 237, 237);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 370px;
+    overflow: auto;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao p {
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.box-minha-conta .row .conteudo .box-pagamento .cartao .bandeira {
+    background: url(../img/bandeiras-cartoes.png) no-repeat;
+    background-size: 100%;
+    display: block;
+    width: 30px;
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 2px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .visa {
+    background-position: center 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .mastercard {
+    background-position: center -19px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .diners {
+    background-position: center -38px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .amex {
+    background-position: center -58px;
+}
+
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao p .numero-oculto {
+    color: rgb(175, 175, 175);
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .exclui-cartao {
+    color: rgb(163, 36, 49);
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.box-minha-conta .row .conteudo .btn-add-cartao {
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .area-data {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .dia {
+    text-align: center;
+    font-size: 36px;
+    line-height: 36px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .mes {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .tipo {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .clinica {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .cartao-utilizado {
+    font-size: 11px;
+    color: rgb(155, 155, 155);
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .box-pagamento .transacoes .valor {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(126, 211, 33);
+    margin-bottom: 0;
+}
+
+/*********************************
+*
+*  13 MEUS AGENDAMENTOS
+*
+*********************************/
+
+.box-meus-agendamentos {
+    margin: 85px 0 85px 0;
+    border-radius: 10px 10px 0 0;
+    background-color: transparent;
+    -webkit-box-shadow: 0 10px 20px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px 3px rgba(0,0,0,0.1);
+}
+
+.box-meus-agendamentos .titulo-box {
+    text-align: center;
+    padding: 30px 30px;
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+    border-radius: 10px 10px 0 0;
+    background: rgb(25, 118, 188);
+    background: -moz-linear-gradient(left, #40bbff 0%, #1976bc 100%);
+    background: -webkit-linear-gradient(left, #40bbff 0%,#1976bc 100%);
+    background: linear-gradient(to right, #40bbff 0%,#1976bc 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40bbff', endColorstr='#1976bc',GradientType=1 );
+}
+
+.box-meus-agendamentos .lista-agendamentos {
+    background-color: rgb(236, 239, 242);
+    padding: 40px 20px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos {
+    padding: 15px;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 15px;
+    -webkit-box-shadow: 0 10px 20px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px 3px rgba(0,0,0,0.1);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-data {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .col {
+    padding: 0 30px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes {
+    border-right: 1px solid rgb(220, 220, 220);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dia {
+    text-align: center;
+    font-size: 100px;
+    line-height: 100px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .mes {
+    text-align: center;
+    font-size: 34px;
+    line-height: 34px;
+    color: rgb(111, 111, 111);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .beneficiario {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .status {
+    font-size: 11px;
+    color: rgb(10, 10, 10);
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
+    background-color: rgb(233, 237, 240);
+    padding: 5px 10px;
+    border-left: 4px solid rgb(255, 255, 255);
+    margin: 5px 0;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
+    border-left: 4px solid rgb(70, 117, 184);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .pre-agendado {
+    border-left: 4px solid rgb(248, 231, 28);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado {
+    border-left: 4px solid rgb(126, 211, 33);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
+    border-left: 4px solid rgb(249, 51, 71);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .tipo,
+.box-meus-agendamentos .lista-agendamentos .agendamentos .profissional {
+    font-size: 18px;
+    line-height: 18px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .valor {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .endereco {
+    font-size: 14px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .tit-token {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .txt-token {
+    font-size: 12px;
+    color: rgb(111, 111, 111);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-token {
+    text-align: center;
+    padding: 5px 10px 10px 10px;
+    border-radius: 3px;
+    background-color: rgb(233, 237, 240);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-token p:nth-child(2) {
+    margin-bottom: 0;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-token .token {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn {
+    color: rgb(70, 117, 184);
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 50px 50px 0;
+    text-align: center;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn:hover {
+    color: rgb(70, 117, 184);
+    background-color: transparent;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .btn:focus {
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,.15);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes {
+    padding: 10px;
+    -webkit-box-shadow: 0 10px 20px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes p {
+    margin-bottom: 0;
+    line-height: 40px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .dropleft .ddm-opcoes a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: rgb(10, 10, 10);
+}
+
+/*********************************
+*
+*  14 HOME LOGADO
+*
+*********************************/
+
+
+.home-logado .busca-home {
+    margin-bottom: 85px;
+}
+
+.box-resumo-home {
+    padding: 100px 0;
+    background-image: url("../img/bg-resumo-home.jpg");
+}
+
+
+.box-resumo-home .link-agendamentos {
+    text-align: center;
+    padding: 0 0 60px 0;
+}
+
+.box-resumo-home .link-agendamentos p {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+}
+
+.box-resumo-home .link-agendamentos .btn {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: rgb(158, 39, 49);
+    font-weight: 600;
+}
+
+.box-resumo-home .proxima-consulta {
+    padding-bottom: 30px;
+}
+
+.box-resumo-home .proxima-consulta .area-pc {
+    padding: 40px 30px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+}
+
+.box-resumo-home .proxima-consulta .data-consulta {
+    font-size: 38px;
+}
+
+.box-resumo-home .proxima-consulta .tit-pc {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0 0 15px 0;
+}
+
+.box-resumo-home .proxima-consulta .tit-pc p {
+    margin-bottom: 0;
+}
+
+.box-resumo-home .proxima-consulta .beneficiario {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgb(10, 10, 10);
+    text-transform: uppercase;
+}
+
+.box-resumo-home .proxima-consulta .tipo,
+.box-resumo-home .proxima-consulta .profissional {
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(111, 111, 111);
+}
+
+.box-resumo-home .proxima-consulta .valor {
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+.box-resumo-home .proxima-consulta .endereco {
+    font-size: 13px;
+    color: rgb(111, 111, 111);
+    margin-bottom: 0;
+}
+
+.box-resumo-home .proxima-consulta .status {
+    font-size: 11px;
+    color: rgb(10, 10, 10);
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
+    background-color: rgb(233, 237, 240);
+    padding: 5px 10px;
+    border-left: 4px solid rgb(255, 255, 255);
+    margin: 5px 0;
+}
+
+.box-resumo-home .proxima-consulta .resumo {
+    border: 1px solid rgb(120, 120, 120);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
+    border-left: 4px solid rgb(70, 117, 184);
+}
+
+.box-resumo-home .proxima-consulta .resumo .nome-status .pre-agendado {
+    border-left: 4px solid rgb(248, 231, 28);
+}
+
+.box-resumo-home .proxima-consulta .resumo .nome-status .confirmado {
+    border-left: 4px solid rgb(126, 211, 33);
+}
+
+.box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
+    border-left: 4px solid rgb(249, 51, 71);
+}
+
+.box-noticias-home {
+    padding: 70px 0 100px 0;
+    background: rgb(3, 38, 65) url("../img/bg-blog-home.jpg") top left;
+}
+
+.box-noticias-home .titulo {
+    font-size: 64px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+}
+
+.box-noticias-home .card .card-body .card-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.box-noticias-home .card .card-body .card-text {
+    font-size: 14px;
+}
+
+
+/*********************************
+*
+*  SWEET ALERT
+*
+*********************************/
+
+/* Título */
+
+.swal2-modal {
+    padding: 0!important;
+}
+
+.swal2-modal .swal2-icon {
+    display: none!important;
+}
+
+.swal2-modal .swal2-title {    
+    text-align: center;
+    margin: 0 0;
+    padding: 0;
+}
+
+.swal2-modal .tit-sweet {
+    padding: 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.swal2-modal .tit-sweet i {
+    font-size: 20px;
+    margin-right: 5px;
+
+}
+
+.swal2-modal .tit-success {
+    color: #285b2a;
+    background-color: #dbefdc;
+}
+
+.swal2-modal .tit-warning {
+    color: #852d12;
+    background-color: #ffddd3;
+}
+
+.swal2-modal .tit-info {
+    color: #02587f;
+    background-color: #cdeefd;
+}
+
+.swal2-modal .tit-question {
+    color: #212a5e;
+    background-color: #d9dcf0;
+}
+
+.swal2-modal .tit-error {
+    color: #7f231c;
+    background-color: #fdd9d7;
+}
+
+/* Conteúdo */
+
+.swal2-modal .swal2-content {
+    clear: both;
+    font-weight: 400;    
+    padding: 20px;
+}
+
+/* Botão */
+
+.swal2-modal .swal2-buttonswrapper {
+    margin: 0;
+    padding: 0 20px 20px 20px;
+}
+
+.swal2-modal button.swal2-confirm {
+    font-size: 13px;
+    color: rgb(46, 46, 46);
+    height: 34px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(234, 234, 234)!important;
+    border: 0;
+    padding: 8px 16px;
+}
+
+.swal2-modal button.swal2-confirm:hover {
+    color: #545454;
+}
+
+.swal2-modal button.swal2-confirm:focus {
+    box-shadow: none !important;
+}
+
+.swal2-buttonswrapper .btn-cancel {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 34px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(220, 53, 69)!important;
+    border: 0;
+    padding: 8px 16px;
+    background-color: rgb(220, 53, 69)!important;
+}
+
+.swal2-buttonswrapper .btn-cancel:hover {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(200, 35, 51)!important;
+}
+
+.swal2-buttonswrapper .btn-cancel:focus {
+    box-shadow: none !important;
+}
+
+/* TERMOS DE USO */
+
+.modal-termos span {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+/*********************************
+*
+*  X FOOTER
+*
+*********************************/
+
+footer {
+    clear: both;
+    background-color: rgb(25, 42, 66);
+    padding: 60px 0 20px 0;
+}
+
+.area-logo-rodape {
+    width: 100%;
+    overflow: auto;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.area-logo-rodape img {
+    width: 240px;
+    margin: 0 auto;
+    display: block;
+}
+
+.logo-rodape {
+    width: 240px;
+    display: block;
+}
+
+.info-atendimento {
+    margin-top: 50px;
+    background-image: url(../img/icone-atendimento.png);
+    background-repeat: no-repeat;
+    background-size: 52px 52px;
+    padding-left: 65px;
+}
+
+.info-atendimento img {
+    float: left;
+}
+
+.info-atendimento p {
+    color: rgb(255, 255, 255);
+}
+
+.info-atendimento p:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.info-atendimento p strong {
+    font-size: 26px;
+    font-style: italic;
+    line-height: 26px;
+}
+
+footer ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+footer h5 {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 26px 0 26px 0;
+}
+
+footer ul li a {
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+}
+
+footer ul li a:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: underline;
+}
+
+.endereco-site {
+    text-align: center;
+    background-color: rgb(163, 36, 49);
+    padding: 10px 0;
+}
+
+.endereco-site a {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+}
+
+/*********************************
+*
+*  X MEDIA QUERIES
+* 
+*********************************/
+
+@media only screen and (min-width: 1200px) {
+    header .nav-link:before,
+    header .nav-link:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 4px;
+        bottom: -24px;
+        background: rgb(163, 36, 49);
+    }
+
+    header .nav-link:before {
+        left: 0;
+    }
+
+    header .nav-link:after {
+        right: 0;
+        background: rgb(163, 36, 49);
+        transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    header .nav-link:hover:before {
+        background: rgb(163, 36, 49);
+        width: 100%;
+        transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    header .nav-link:hover:after {
+        background: transparent;
+        width: 100%;
+        transition: 0s;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    header {
+        padding: 40px 0 38px 0;
+    }
+
+    header .navbar .container {
+        height: auto;
+    }
+
+    header .navbar-collapse {
+        padding-top: 30px;
+    }
+
+    .btn-profissional a {
+        margin: 0;
+        text-align: center;
+        width: 234px;
+    }
+
+    .btn-entrar a {
+        text-align: center;
+        width: 234px;
+        margin-top: 10px;
+    }
+
+    .form-busca-home button {
+        margin-top: 15px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -37px;
+    }
+
+    .area-seleciona-profissional {
+        font-size: 11px;
+    }
+
+    .card-footer strong {
+        font-size: 13px;
+    }
+
+    .area-logo-rodape {
+        display: block;
+    }
+
+    .logo-rodape {
+        display: none;
+    }
+
+    .info-atendimento {
+        margin-top: 26px;
+    }
+
+    .menu-area-logada {
+        background-color: rgb(255, 255, 255);
+        padding: 5px 0 0 0;
+        margin-top: 0;
+        border-top: 1px solid rgb(220, 220, 220);
+    }
+
+    header .nav-item-mobile {
+        display: inline-block;
+    }
+
+    .drop-menu {
+        display: none;
+    }
+
+    .menu-area-logada ul li {
+        float: none;
+    }
+
+    .drop-notificacoes button,
+    .drop-carrinho button {
+        padding: 0 25px 0 0;
+    }
+
+    .drop-notificacoes button span,
+    .drop-carrinho button span {
+        display: block;
+    }
+
+    .drop-notificacoes button i,
+    .drop-carrinho button i {
+        display: none;
+    }
+
+    .opcoes-menu-usuario {
+        padding: 5px 0;
+    }
+
+    .opcoes-menu-usuario .dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+
+    .condicoes {
+        margin-top: 30px;
+    }
+    .medico-parte-1, .medico-parte-2 {
+        display: none;
+    }
+    .home-prestador .area-beneficios .lb2 {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .area-banner {
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    .area-banner .frase {
+        margin-right: auto;
+        text-align: center;
+        width: 100%;
+    }
+
+    .box-banner-conheca {
+        height: 160px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -486px;
+    }
+
+    .area-vantagens {
+        padding-bottom: 390px;
+    }
+
+    .area-imagem-aplicativo img {
+        width: 100%;
+    }
+
+    .area-texto-aplicativo {
+        padding-top: 44px;
+    }
+
+    .area-alt-busca {
+        display: block;
+    }
+
+    .col-mapa {
+        display: none;
+    }
+
+    .form-busca-resultado .form-group select {
+        margin-bottom: 15px;
+    }
+
+    .link-mapa-mobile {
+        display: inline-block;
+    }
+
+    .card-formulario {
+        margin-bottom: 40px;
+    }
+    .home-prestador .area-imagem-passos-prestador img {
+        display: none;
+    }
+    .home-prestador .area-como-funciona {
+        padding-top: 30px;
+    }
+    .home-prestador .area-como-funciona .titulo h3,
+    .home-prestador .area-como-funciona .titulo p {
+        text-align: center;
+    }
+    .home-prestador .area-como-funciona .titulo .linha {
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+    .minha-conta .col-dados-cadastro {
+        margin-bottom: 20px;
+    }
+    .box-minha-conta .row .conteudo .lista-dependentes {
+        margin-top: 10px;
+    }
+    .box-minha-conta .row .conteudo .box-pagamento {
+        margin-bottom: 20px;
+    }
+    .box-minha-conta .row .conteudo .itens-sair img {
+        width: 100%;
+    }
+    .box-minha-conta .row .conteudo {
+        min-height: 100px;
+    }
+    .box-resumo-home .link-agendamentos {
+        padding: 0 0 60px 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .area-passos {
+        background-size: cover;
+    }
+
+    .steps {
+        display: none;
+    }
+
+    .steps-mobile {
+        display: block;
+        width: 100%;
+        overflow: auto;
+        margin-top: 70px;
+    }
+
+    .steps-mobile .step {
+        width: 340px;
+        text-align: left;
+        overflow: auto;
+        margin: 0 auto;
+    }
+
+    .steps-mobile .step .numero {
+        font-size: 28px;
+        color: rgb(255, 255, 255);
+        float: left;
+        display: block;
+        width: 30px;
+        margin-top: 28px;
+    }
+
+    .steps-mobile .step .traco {
+        width: 12px;
+        height: 100px;
+        margin-right: 12px;
+        background-image: url(../img/linha-steps-mobile.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        float: left;
+    }
+
+    .steps-mobile .step .icone {
+        margin-bottom: 0;
+        float: left;
+        margin-top: 24px;
+    }
+
+    .steps-mobile .step .icone img {
+        height: 48px;
+        margin: 0 auto;
+    }
+
+    .steps-mobile .step .texto {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: rgb(255, 255, 255);
+        margin: 30px 0 0 20px;
+        display: block;
+        float: left;
+    }
+
+    .steps-mobile .step5 .texto {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: rgb(255, 255, 255);
+        margin: 18px 0 0 20px;
+        display: block;
+        float: left;
+    }
+
+    .area-vantagens .row {
+        margin-bottom: 0;
+    }
+
+    .area-vantagens .row .col-sm-12 {
+        margin-bottom: 30px;
+    }
+
+    .area-vantagens {
+        padding-bottom: 320px;
+    }
+
+    .box-banner-conheca {
+        height: 104px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -374px;
+    }
+
+    .area-imagem-aplicativo img {
+        width: 50%;
+    }
+
+    .area-seleciona-profissional {
+        font-size: 10px;
+    }
+
+    .select-validade-mes {
+        margin-bottom: 5px;
+    }
+
+    .area-btn-finalizar .btn-finalizar {
+        float: left;
+    }
+    .home-prestador .passos-cadastro .texto {
+        margin-bottom: 30px;
+    }
+    .home-prestador .area-beneficios .lb1,
+    .home-prestador .area-beneficios .lb2 {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .pagamento .form-group {
+        margin-bottom: 16px;
+    }
+
+    .pagamento .area-label {
+        margin-bottom: 0;
+    }
+
+    .pagamento .form-group .input-numero-cartao {
+        margin-bottom: 16px;
+    }
+
+    .pagamento .form-group .input-cpf-titular {
+        margin-bottom: 16px;
+    }
+
+    .pagamento .form-group .label-codigo-seguranca {
+        margin-top: 16px;
+    }
+
+    .card-resumo-compra .card-header .valor-produto {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .box-banner-conheca {
+        height: 95px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -328px;
+    }
+
+    .link-aplicativos li:first-child {
+        margin-right: 20px;
+    }
+
+    .link-aplicativos li a {
+        width: 140px;
+        height: 42px;
+    }
+
+    .escolher-data input, .escolher-hora input {
+        font-size: 12px;
+        padding: 6px 12px 6px 12px;
+    }
+
+    .escolher-data label, .escolher-hora label {
+        display: none;
+    }
+
+    .area-escolher-data .confirma-data {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .card-footer {
+        position: relative;
+        height: 84px;
+    }
+
+    .card-footer .form-check, .card-footer strong {
+        position: absolute;
+    }
+
+    .card-footer .form-check {
+        top: 38px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 226px;
+        text-align: center;
+    }
+
+    .card-footer strong {
+        line-height: 18px;
+        font-size: 16px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 150px;
+        text-align: center;
+    }
+
+    .area-escolher-data .btn {
+        font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .area-vantagens {
+        padding-bottom: 236px;
+    }
+
+    .box-banner-conheca {
+        height: 45px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -258px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .area-vantagens {
+        padding-bottom: 190px;
+    }
+
+    .box-banner-conheca .area-imagem {
+        margin-top: -228px;
+    }
+
+    .box-banner-conheca {
+        height: 38px;
+    }
+}
