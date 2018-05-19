@@ -7,13 +7,18 @@ use Illuminate\Support\Facades\Auth;
     return view('welcome');
 }); */
 
-//Route::get('/', 'Controller@home')->name('landing-page');
-Route::get('/provisorio', 'Controller@home')->name('landing-page');
-Route::get('/', 'Controller@provisorio')->name('provisorio');
+Route::get('/', 'Controller@home')->name('landing-page');
+// Route::get('/provisorio', 'Controller@home')->name('landing-page');
+// Route::get('/', 'Controller@provisorio')->name('provisorio');
 
+Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
+Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
+Route::get('informa-beneficiario', 'AgendamentoController@informaBeneficiario')->middleware('auth')->name('informa-beneficiario');
+Route::post('atualiza-carrinho', 'AgendamentoController@atualizaCarrinho')->name('atualiza-carrinho');
+Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
-Route::get('informa-beneficiario', 'ClinicaController@informaBeneficiario');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
+
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
 Route::get('login-prestador', 'ClinicaController@loginPrestador');
@@ -22,10 +27,9 @@ Route::get('meus-agendamentos', 'AgendamentoController@meusAgendamentos')->name(
 Route::post('remarcar-agendamento', 'AgendamentoController@remarcarAgendamento')->name('remarcar_agendamento')->middleware('auth');
 Route::post('cancelar-agendamento', 'AgendamentoController@cancelarAgendamento')->name('cancelar_agendamento')->middleware('auth');
 
-Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
 Route::get('home-logado', 'ClinicaController@homeLogado');
 
-Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
+
 Route::post('participe', 'MensagemController@participe');
 
 Route::resource('clinicas','ClinicaController')->middleware('auth');
@@ -57,7 +61,6 @@ Route::get('concluir_pedido', 'PaymentController@fullTransactionDoctorhj');
 Route::get('teste_concluir_pedido', 'PaymentController@fullTransactionTeste');
 Route::get('teste-envio-email', 'ClinicaController@testeEnviarEmail');
 
-Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');

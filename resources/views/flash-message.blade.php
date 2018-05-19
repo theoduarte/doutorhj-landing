@@ -49,13 +49,13 @@ $(document).ready(function () {
 @if ($message = Session::get('success-alert'))
 <script type="text/javascript">
 $(document).ready(function () {
-swal(
-        {
-            title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
-            text: '{{ $message }}'
-        }
-    );
-});
+    swal(
+            {
+                title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
+                text: '{{ $message }}'
+            }
+        );
+    });
 </script>
 @endif
 

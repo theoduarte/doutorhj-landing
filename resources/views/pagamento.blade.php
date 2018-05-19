@@ -284,10 +284,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="valor-produto col-12 col-sm-12">
-                                                    <select id="selectPacienteAgendamento" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
+                                                    <select id="selectPacienteAgendamento_{{ $item['item_id'] }}" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
                                                     	<option>Selecione o Paciente deste Atendimento</option>
                                                     	@foreach($pacientes as $paciente)
-                                                    	<option value="{{ $paciente->id }}">@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
+                                                    	<option value="{{ $paciente->id }}" @if($item['paciente']->id == $paciente->id) selected="selected" @endif>@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
                                                     	@endforeach
                                                     </select>
                                                 </div>
@@ -300,8 +300,10 @@
                                                         <span>Pessoa que utilizará o serviço:</span>
                                                     </div>
                                                     <div class="dados-resumo dados-resumo-paciente">
-                                                        <p class="text-danger">-- PACIENTE AINDA NÃO INDICADO--</p>
-                                                        <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="0">
+                                                        <p class=" @if($item['paciente']->id != null) text-primary @else text-danger @endif">
+                                                        @if($item['paciente']->id != null) {{ $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario }} @else -- PACIENTE AINDA NÃO INDICADO-- @endif
+                                                        </p>
+                                                        <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -488,12 +490,13 @@
                     
                 });
 
-                $('#selectPacienteAgendamento').change(function(){
+                $('.select-paciente-agendamento').change(function(){
 
+                	var element_id = $(this).attr('id');
                     if($(this).val() == 0){ return false; }
 
-                    var paciente_id = $("#selectPacienteAgendamento :selected").val();
-                    var nome_paciente = $("#selectPacienteAgendamento :selected").text();
+                    var paciente_id = $('#'+element_id+" :selected").val();
+                    var nome_paciente = $('#'+element_id+" :selected").text();
                     nome_paciente = nome_paciente.replace("(T)", "");
                     nome_paciente = nome_paciente.replace("(D)", "");
                     
@@ -540,8 +543,13 @@
                         		   $('.valor-total-produtos').find('p').html('- R$ '+numberToReal(valor_com_desconto));
                         		   
                         		} else {
-                            		
-                    			   $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+                            	
+                    			   swal(
+                						{
+                		                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                		                    text: result.mensagem
+                		                }
+                		            );
                     			   
                     			}
                 		  },

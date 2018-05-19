@@ -645,10 +645,13 @@ class ClinicaController extends Controller
     		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
     		$profissional_tmp_id = $item['attributes']['profissional_id'];
     		$clinica_tmp_id = $item['attributes']['clinica_id'];
+    		$paciente_tmp_id = $item['attributes']['paciente_id'];
 
     		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
     		$profissional = Profissional::findOrFail($profissional_tmp_id);
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
+    		$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+    		
     		$url = $item['attributes']['current_url'];
 
     		if ($atendimento->procedimento_id != null) {
@@ -695,7 +698,7 @@ class ClinicaController extends Controller
     				'atendimento' 			=> $atendimento,
     				'profissional' 			=> $profissional,
     				'clinica' 				=> $clinica,
-    				'paciente'				=> $user_session,
+    		        'paciente'				=> $paciente,
     				'data_agendamento' 		=> $item['attributes']['data_atendimento'],
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
     				'current_url' 			=> $url
@@ -708,25 +711,26 @@ class ClinicaController extends Controller
     	$valor_desconto = 0;
 
     	$cpf_titular = $user_session->documentos->first()->te_documento;
-
+    	
     	$valor_parcelamento = $valor_total-$valor_desconto;
+    	$parcelamentos = [];
     	$parcelamentos = array(
     	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.').' sem juros'
     	);
 
     	if ($valor_total > 200) {
-    	    $parcelamentos = [];
 
     	    for ($i = 2; $i <= 5; $i++) {
     	        $item_valor =  $valor_parcelamento/$i;
     	        
     	        if ($i <= 3) {
-    	            $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+    	            $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
     	        } elseif ($i > 3) {
-    	            $valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.').' com juros (1,29% a.m.)';
+    	            $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.0129,  2, ',', '.').' com juros (1,29% a.m.)';
     	        }
     	    }
     	}
+    	//dd($parcelamentos);
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
     	
@@ -735,33 +739,7 @@ class ClinicaController extends Controller
 
     	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
-
-    public function informaBeneficiario(){
-    	/*$user_id = 17;
-
-    	\Cart::session($user_id)->add(455, 'Sample Item', 100.99, 2, array());
-    	\Cart::clear();
-    	\Cart::add(array(
-			      'id' => 456,
-			      'name' => 'Sample Item 1',
-			      'price' => 67.99,
-			      'quantity' => 4,
-			      'attributes' => array()
-			  ));
-
-    	\Cart::add(array(
-    			'id' => 568,
-			      'name' => 'Sample Item 2',
-			      'price' => 69.25,
-			      'quantity' => 4,
-			      'attributes' => array(
-			        'size' => 'L',
-			        'color' => 'blue'
-			      )
-    	));*/
-
-        return view('informa-beneficiario');
-    }
+    
     public function confirmaAgendamento(){
         return view('confirmacao');
     }

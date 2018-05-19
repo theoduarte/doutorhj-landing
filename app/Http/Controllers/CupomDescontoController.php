@@ -116,8 +116,8 @@ class CupomDescontoController extends Controller
         
         $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
-        if($cupom_desconto === null) {
-            return response()->json(['status' => false, 'mensagem' => 'Nenhum CUPOM DE DESCONTO ativo foi encontrado.']);
+        if(sizeof($cupom_desconto) <= 0) {
+            return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
         }
         
         $percentual = $cupom_desconto->first()->percentual/100;

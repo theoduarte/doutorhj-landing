@@ -218,7 +218,7 @@
                                                                         <option value="enteado">Enteado(a)</option>
                                                                         <option value="filho">Filho(a)</option>
                                                                         <option value="irmao">Irmã(ão)</option>
-                                                                        <option value="pai">Mãe</option>
+                                                                        <option value="mes">Mãe</option>
                                                                         <option value="pai">Pai</option>
                                                                         <option value="outros">Outros</option>
                                                                     </select>
@@ -309,66 +309,6 @@
 	                                            @if(sizeof($cartoes_paciente) == 0)
 	                                            <span id="lbl-cartao-paciente">NENHUM CARTÃO ENCONTRADO!</span>
 	                                            @endif
-                                                <!-- <div class="cartao">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <div class="bandeira visa"></div>
-                                                            <p>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <a class="exclui-cartao" href="#"><i
-                                                                        class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="cartao">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <div class="bandeira mastercard"></div>
-                                                            <p>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">4385</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <a class="exclui-cartao" href="#"><i
-                                                                        class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="cartao">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <div class="bandeira diners"></div>
-                                                            <p>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">6573</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <a class="exclui-cartao" href="#"><i
-                                                                        class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="cartao">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <div class="bandeira amex"></div>
-                                                            <p>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">5048</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <a class="exclui-cartao" href="#"><i
-                                                                        class="fa fa-trash"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
                                             <!-- <button type="button" class="btn btn-light btn-add-cartao" data-toggle="modal" data-target="#modalAdicionarCartao">
                                             	<i class="fa fa-plus"></i> Adicionar cartão
@@ -494,118 +434,6 @@
 	                                            <span id="lbl-pedido-paciente">NENHUM PEDIDO ENCONTRADO!</span>
 	                                            @endif
                                                 
-                                                <!-- <div class="transacoes">
-                                                    <div class="row">
-                                                        <div class="col-sm-3 area-data">
-                                                            <p class="dia">
-                                                                28
-                                                            </p>
-                                                            <p class="mes">
-                                                                Abr
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <p class="tipo">
-                                                                Consulta Cardiologia
-                                                            </p>
-                                                            <p class="clinica">
-                                                                Clínica Alvorada
-                                                            </p>
-                                                            <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">Visa </span>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="valor">R$ <span>100</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="transacoes">
-                                                    <div class="row">
-                                                        <div class="col-sm-3 area-data">
-                                                            <p class="dia">
-                                                                28
-                                                            </p>
-                                                            <p class="mes">
-                                                                Abr
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <p class="tipo">
-                                                                Consulta Cardiologia
-                                                            </p>
-                                                            <p class="clinica">
-                                                                Clínica Alvorada
-                                                            </p>
-                                                            <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">Visa </span>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="valor">R$ <span>100</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="transacoes">
-                                                    <div class="row">
-                                                        <div class="col-sm-3 area-data">
-                                                            <p class="dia">
-                                                                28
-                                                            </p>
-                                                            <p class="mes">
-                                                                Abr
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <p class="tipo">
-                                                                Consulta Cardiologia
-                                                            </p>
-                                                            <p class="clinica">
-                                                                Clínica Alvorada
-                                                            </p>
-                                                            <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">Visa </span>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="valor">R$ <span>100</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                                <div class="transacoes">
-                                                    <div class="row">
-                                                        <div class="col-sm-3 area-data">
-                                                            <p class="dia">
-                                                                28
-                                                            </p>
-                                                            <p class="mes">
-                                                                Abr
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <p class="tipo">
-                                                                Consulta Cardiologia
-                                                            </p>
-                                                            <p class="clinica">
-                                                                Clínica Alvorada
-                                                            </p>
-                                                            <p class="cartao-utilizado">
-                                                                <span class="bandeira-extenso">Visa </span>
-                                                                <span class="numero-oculto">●●●● ●●●● ●●●● </span>
-                                                                <span class="final">9010</span>
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <p class="valor">R$ <span>100</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

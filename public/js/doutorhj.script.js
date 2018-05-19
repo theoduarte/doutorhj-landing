@@ -419,7 +419,12 @@ function pagarCartaoCredito() {
 		
 		if($(this).val() == '0') {
 			
-			$.Notification.notify('error','top right', 'DrHoje', 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!');
+			swal(
+		        {
+		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+		            text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+		        }
+		    );
 			
 			result = false;
 		}
@@ -430,7 +435,9 @@ function pagarCartaoCredito() {
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+$('#paciente_id_'+i).val()+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+		var paciente_agendamento_id = $('#paciente_id_'+i).val();
+		
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
 		agendamentos.push(item);
 	}
 	
@@ -527,6 +534,7 @@ function pagarCartaoDebito() {
 	var cod_seg 		= $('#inputCodigoDebito');
 	var cpf_titular 	= $('#inputCPFDebito');
 	var cupom_desconto 	= $('#inputCupom');
+	var pacientes		= $('.paciente_agendamento_id');
 	
 	if(numero_cartao.val().length < 16) {
 		numero_cartao.parent().addClass('cvx-has-error');
@@ -600,12 +608,29 @@ function pagarCartaoDebito() {
 		result = false;
 	}
 	
+	pacientes.each(function(){
+		
+		if($(this).val() == '0') {
+			
+			swal(
+		        {
+		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+		            text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+		        }
+		    );
+			
+			result = false;
+		}
+	});	
+	
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+$('#paciente_id_'+i).val()+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+		var paciente_agendamento_id = $('#paciente_id_'+i).val();
+		
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
 		agendamentos.push(item);
 	}
 	
@@ -698,6 +723,7 @@ function pagarCartaoCadastrado() {
 	var final_cartao 	= $('#inputNumFinalSaveCard');
 	var dt_validade 	= $('#inputExpirationDateSaveCard');
 	var cod_seg 		= $('#inputCodigoSegSaveCard');
+	var pacientes		= $('.paciente_agendamento_id');
 	
 	if(cartao_id.val().length == 0) {
 		cartao_id.parent().addClass('cvx-has-error');
@@ -723,12 +749,29 @@ function pagarCartaoCadastrado() {
 		result = false;
 	}
 	
+	pacientes.each(function(){
+		
+		if($(this).val() == '0') {
+			
+			swal(
+		        {
+		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+		            text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+		        }
+		    );
+			
+			result = false;
+		}
+	});
+	
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+$('#paciente_id_'+i).val()+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+		var paciente_agendamento_id = $('#paciente_id_'+i).val();
+		
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
 		agendamentos.push(item);
 	}
 	

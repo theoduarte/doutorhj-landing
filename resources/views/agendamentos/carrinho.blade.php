@@ -66,7 +66,7 @@
                                                 <span>Pessoa que utilizará o serviço:</span>
                                             </div>
                                             <div class="dados-resumo">
-                                                <p>{{ isset($item['paciente']) ? $item['paciente']->name : '--------' }}</p>
+                                                <p>{{ isset($item['paciente']) ? $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario : '--------' }}</p>
                                             </div>
                                         </div>
                                         <div class="linha-resumo">
