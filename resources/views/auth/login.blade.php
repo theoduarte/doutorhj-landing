@@ -21,23 +21,22 @@
                                 Já é cadastrado?
                             </div>
                             <div class="card-body">
-                                <span class="card-span">E-mail ou Celular obrigatórios para o login.</span>
+                                <span class="card-span">Celular obrigatório para o login.</span>
                                 <h5 class="card-title">Dados de acesso</h5>
                                 <form action="{{ route('login') }}" method="post">
 
                                     {{ csrf_field() }}
 
                                     <div class="form-group row area-label btn-send-token">
-                                        <label for="inputEmailTelefone" class="col-sm-12">E-mail ou Celular</label>
+                                        <label for="inputEmailTelefone" class="col-sm-12">Celular</label>
                                     </div>
                                     <div class="form-group row btn-send-token">
-                                        <div class="col col-lg-7 col-xl-8">
+                                        <div class="col col-lg-6 col-xl-7">
                                             <input type="text" id="inputEmailTelefone"
-                                                   class="form-control mascaraTelefone" placeholder="E-mail ou Celular">
+                                                   class="form-control mascaraTelefone" placeholder="Número do Celular">
                                         </div>
-                                        <div class="col col-lg-5 col-xl-4">
-                                            <button type="button" id="btn-send-token" class="btn btn-vermelho"><i class="fa fa-key"></i> Enviar Token
-                                            </button>
+                                        <div class="col col-lg-6 col-xl-5">
+                                            <button type="button" id="btn-send-token" class="btn btn-vermelho"><i class="fa fa-key"></i> <span id="lbl-enviar-token">Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
                                         </div>
                                     </div>
                                     <div class="form-group row area-label btn-login-token">
@@ -158,12 +157,22 @@
                 $('.btn-login-token').hide();
 
                 $('#btn-send-token').click(function () {
-                    if ($('#inputEmailTelefone').val() == '') {
+                    if ($('#inputEmailTelefone').val().length < 15) {
+                    	swal(
+                	        {
+                	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DoctorHoje Informa:</div>',
+                	            text: 'O telefone informado não é válido'
+                	        }
+                	    );
                         return false;
                     }
 
                     var ds_contato = $('#inputEmailTelefone').val();
                     $('#input_hidden_EmailTelefone').val(ds_contato);
+
+                    $('#btn-send-token').attr('disabled', 'disabled');
+                    $('#btn-send-token').find('#lbl-enviar-token').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+                    setTimeout(function(){ $('#btn-send-token').find('#lbl-enviar-token').html('Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-send-token').removeAttr('disabled'); }, 30000);
 
                     jQuery.ajax({
                         type: 'POST',
@@ -174,36 +183,29 @@
                         },
                         success: function (result) {
 
-                            if (result != null) {
-                                $.Notification.notify('success', 'top right', 'DrHoje', 'Seu TOKEN foi enviado via SMS com sucesso!');
+                            if (result.status) {
+                                $.Notification.notify('success', 'top right', 'DrHoje', result.mensagem);
 
                                 $('.btn-send-token').hide();
                                 $('.btn-login-token').show();
 
-                                var json = JSON.parse(result.endereco);
-
-                                $('#te_endereco').val(json.logradouro);
-                                $('#te_bairro').val(json.bairro);
-                                $('#nm_cidade').val(json.cidade);
-                                $('#sg_estado').val(json.estado);
-                                $('#cd_cidade_ibge').val(json.ibge);
-                                $('#nr_latitude_gps').val(json.latitude);
-                                $('#nr_longitute_gps').val(json.longitude);
-
                             } else {
 
-                                $('#te_endereco').val('');
-                                $('#te_bairro').val('');
-                                $('#nm_cidade').val('');
-                                $('#sg_estado').val('');
-                                $('#cd_cidade_ibge').val('');
-                                $('#sg_logradouro').prop('selectedIndex', 0);
-                                $('#nr_latitude_gps').val('');
-                                $('#nr_longitute_gps').val('');
+                            	swal(
+                        	        {
+                        	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DoctorHoje Informa:</div>',
+                        	            text: result.mensagem
+                        	        }
+                        	    );
                             }
+
+                            $('#btn-send-token').find('#lbl-enviar-token').html('Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+                            $('#btn-send-token').removeAttr('disabled');
                         },
                         error: function (result) {
                             $.Notification.notify('error', 'top right', 'DrHoje', 'Falha na operação!');
+                            $('#btn-send-token').find('#lbl-enviar-token').html('Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+                            $('#btn-send-token').removeAttr('disabled');
                         }
                     });
                 });

@@ -33,17 +33,25 @@ class User extends Authenticatable
     }
     
     public function paciente(){
-        return $this->hasOne(Paciente::class);
+        return $this->hasOne('App\Paciente');
     }
     
     public function profissional(){
-        return $this->hasOne(Profissional::class);
+        return $this->hasOne('App\Profissional');
     }
     
     public function responsavel()
     {
         return $this->hasMany('App\Responsavel');
         
+    }
+    
+    public function mensagems(){
+        return $this->hasMany('App\Mensagem', 'remetente_id');
+    }
+    
+    public function destinatarios(){
+        return $this->hasMany('App\MensagemDestinatario', 'destinatario_id');
     }
     
 }
