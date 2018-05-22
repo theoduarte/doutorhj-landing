@@ -20,8 +20,8 @@ class Mensagem extends Model
         return $this->belongsTo('App\User');
     }
     
-    public function destinarios(){
-        return $this->hasMany('App\MensagemDestinatario');
+    public function mensagem_destinatarios(){
+        return $this->hasMany('App\MensagemDestinatario', 'destinatario_id');
     }
     
     public function getCreatedAtAttribute($data){

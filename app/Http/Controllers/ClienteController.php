@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PacientesEditRequest;
 use App\User;
 use App\Cidade;
+use App\Especialidade;
+use App\Estado;
+use App\Cargo;
+use App\Paciente;
 
 class ClienteController extends Controller
 {
@@ -77,8 +81,8 @@ class ClienteController extends Controller
     public function show($id)
     {
         try{
-            $arEspecialidade = \App\Especialidade::orderBy('ds_especialidade')->get();
-            $arEstados       = \App\Estado::orderBy('ds_estado')->get();
+            $arEspecialidade = Especialidade::orderBy('ds_especialidade')->get();
+            $arEstados       = Estado::orderBy('ds_estado')->get();
             
             $usuarios  = \App\User::findorfail($id);
             
@@ -109,13 +113,13 @@ class ClienteController extends Controller
     public function edit($idUsuario)
     {
         try{
-            $arCargos        = \App\Cargo::orderBy('ds_cargo')->get(['id', 'ds_cargo']);
-            $arEstados       = \App\Estado::orderBy('ds_estado')->get();
-            $arEspecialidade = \App\Especialidade::orderBy('ds_especialidade')->get();
+            $arCargos        = Cargo::orderBy('ds_cargo')->get(['id', 'ds_cargo']);
+            $arEstados       = Estado::orderBy('ds_estado')->get();
+            $arEspecialidade = Especialidade::orderBy('ds_especialidade')->get();
             
-            $usuarios = \App\User::findorfail($idUsuario);
+            $usuarios = User::findorfail($idUsuario);
             
-            $pacientes = \App\Paciente::where('user_id', '=', $idUsuario)->get()->first();
+            $pacientes = Paciente::where('user_id', '=', $idUsuario)->get()->first();
             $pacientes->load('cargo');
             $pacientes->load('user');
             $pacientes->load('documentos');

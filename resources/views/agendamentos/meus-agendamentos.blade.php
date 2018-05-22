@@ -95,19 +95,19 @@
                                 <p class="tit-token">Token</p>
                                 <p class="txt-token">Apresente este código no momento da consulta</p>
                                 <div class="area-token">
-                                    <p class="token" id="token">{{ $agendamento->te_ticket }}</p>
+                                    <p id="token_{{ $agendamento->id }}" class="token">{{ $agendamento->te_ticket }}</p>
                                     <p>
-                                        <button class="btn btn-azul" type="button" id="copyButton">Copiar</button>
+                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton">Copiar</button>
                                         <br>
-                                        <span id="successMsg" style="display:none;">Copiado!</span>
+                                        <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
+                                        
                                     </p>
                                 </div>
                             </div>
                             <div class="col-lg-1">
                             	@if($agendamento->getRawCsStatusAttribute() != 60)
                                 <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
-                                    <button type="button" class="btn"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes">
@@ -140,13 +140,14 @@
 
             jQuery(function ($) {
 
-                $('#copyButton').click(function () {
-                    var pElement = $('#token')[0];
-                    copyToClipboard(pElement, showSuccessMsg);
+                $('.copyButton').click(function () {
+                    var pElement = $(this).parent().parent().find('.token')[0];
+                    var element = $(this).parent().parent().find('.successMsg');
+                    copyToClipboard(pElement, showSuccessMsg(element));
                 });
 
-                function showSuccessMsg() {
-                    $('#successMsg').finish().fadeIn(300).fadeOut(1000);
+                function showSuccessMsg(element) {
+                	element.finish().fadeIn(300).fadeOut(1000);
                 }
 
                 function copyToClipboard(element, successCallback) {

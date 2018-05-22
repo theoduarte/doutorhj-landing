@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
     return view('welcome');
 }); */
 
-Route::get('/', 'Controller@home')->name('landing-page');
-// Route::get('/provisorio', 'Controller@home')->name('landing-page');
-// Route::get('/', 'Controller@provisorio')->name('provisorio');
+//Route::get('/', 'Controller@home')->name('landing-page');
+Route::get('/provisorio', 'Controller@home')->name('landing-page');
+Route::get('/', 'Controller@provisorio')->name('provisorio');
 
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
@@ -28,7 +28,6 @@ Route::post('remarcar-agendamento', 'AgendamentoController@remarcarAgendamento')
 Route::post('cancelar-agendamento', 'AgendamentoController@cancelarAgendamento')->name('cancelar_agendamento')->middleware('auth');
 
 Route::get('home-logado', 'ClinicaController@homeLogado');
-
 
 Route::post('participe', 'MensagemController@participe');
 

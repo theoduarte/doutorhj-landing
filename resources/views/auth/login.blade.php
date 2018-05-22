@@ -69,7 +69,7 @@
                             <div class="card-body">
                                 <span class="card-span">Cadastre-se para obter acesso e continuar.</span>
                                 <h5 class="card-title">Dados cadastrais</h5>
-
+                                
                                 <form class="form-horizontal " action="{{ route('registrar') }}" method="post" onsubmit="return validaRegistrar()">
 
                                     {{ csrf_field() }}
@@ -114,6 +114,7 @@
                                         <div class="col col-sm-6 {{ $errors->has('dt_nascimento') ? ' cvx-has-error' : '' }}">
                                             <label for="inputTelefone">Data de Nascimento</label>
                                             <input type="text" id="inputNascimento" class="form-control mascaraData" name="dt_nascimento" value="{{ old('dt_nascimento') }}" placeholder="Data de Nascimento" required="required">
+
                                             @if ($errors->has('dt_nascimento'))
                                                 <span class="help-block"><strong>{{ $errors->first('dt_nascimento') }}</strong></span>
                                             @endif
@@ -136,10 +137,116 @@
                                         </div>
                                     </div>
                                     <div class="form-check fc-checkbox">
-                                        <input type="checkbox" class="form-check-input" id="termoCheck" required="required">
-                                        <label class="form-check-label" for="termoCheck">Declaro que li e concordo com os <a href="#">termos de uso do Doctor Hoje</a></label>
+                                        <input type="checkbox" class="form-check-input" id="termoCheck"
+                                               required="required">
+                                        <label class="form-check-label" for="termoCheck">Declaro que li e concordo com
+                                            os <a href="#" data-toggle="modal" data-target="#modalTermos">termos de uso do Doctor Hoje</a></label>
                                     </div>
-                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta"><i class="fa fa-user"></i> <span id="lbl-criar-conta">Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
+                                    <div class="modal fade modal-termos" id="modalTermos" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Termos de uso do Doctor Hoje</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Mussum Ipsum, cacilds vidis litro abertis. Interagi no mé, cursus
+                                                        quis, vehicula ac nisi. Vehicula non. Ut sed ex eros. Vivamus
+                                                        sit
+                                                        amet nibh non tellus tristique interdum. In elementis mé pra
+                                                        quem é
+                                                        amistosis quis leo. Leite de capivaris, leite de mula manquis
+                                                        sem
+                                                        cabeça.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Copo furadis é disculpa de bebadis, arcu quam euismod magna.
+                                                        Praesent malesuada urna nisi, quis volutpat erat hendrerit non.
+                                                        Nam
+                                                        vulputate dapibus. Posuere libero varius. Nullam a nisl ut ante
+                                                        blandit hendrerit. Aenean sit amet nisi. Sapien in monti
+                                                        palavris
+                                                        qui num significa nadis i pareci latim.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
+                                                        Delegadis gente finis, bibendum egestas augue arcu ut est.
+                                                        Aenean
+                                                        aliquam molestie leo, vitae iaculis nisl. Paisis, filhis,
+                                                        espiritis
+                                                        santis.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Cevadis im ampola pa arma uma pindureta. Manduma pindureta quium
+                                                        dia
+                                                        nois paga. Per aumento de cachacis, eu reclamis. Todo mundo vê
+                                                        os
+                                                        porris que eu tomo, mas ninguém vê os tombis que eu levo!</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>A ordem dos tratores não altera o pão duris. Tá deprimidis, eu
+                                                        conheço uma cachacis que pode alegrar sua vidis. Viva Forevis
+                                                        aptent
+                                                        taciti sociosqu ad litora torquent. Mauris nec dolor in eros
+                                                        commodo
+                                                        tempor. Aenean aliquam molestie leo, vitae iaculis nisl.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Interessantiss quisso pudia ce receita de bolis, mais bolis eu
+                                                        num
+                                                        gostis. Pra lá , depois divoltis porris, paradis. Suco de
+                                                        cevadiss
+                                                        deixa as pessoas mais interessantis. Atirei o pau no gatis, per
+                                                        gatis num morreus.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Quem manda na minha terra sou euzis! Si u mundo tá muito paradis?
+                                                        Toma um mé que o mundo vai girarzis! Suco de cevadiss, é um
+                                                        leite
+                                                        divinis, qui tem lupuliz, matis, aguis e fermentis. Quem num
+                                                        gosta
+                                                        di mé, boa gentis num é.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Nec orci ornare consequat. Praesent lacinia ultrices consectetur.
+                                                        Sed non ipsum felis. Quem num gosta di mim que vai caçá sua
+                                                        turmis!
+                                                        Si num tem leite então bota uma pinga aí cumpadi! Detraxit
+                                                        consequat
+                                                        et quo num tendi nada.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Nullam volutpat risus nec leo commodo, ut interdum diam laoreet.
+                                                        Sed
+                                                        non consequat odio. Não sou faixa preta cumpadi, sou preto
+                                                        inteiris,
+                                                        inteiris. Em pé sem cair, deitado sem dormir, sentado sem
+                                                        cochilar e
+                                                        fazendo pose. Admodum accumsan disputationi eu sit. Vide
+                                                        electram
+                                                        sadipscing et per.</p>
+
+                                                    <span>Mussum Ipsun</span>
+                                                    <p>Diuretics paradis num copo é motivis de denguis. Mé faiz
+                                                        elementum
+                                                        girarzis, nisi eros vermeio. Praesent vel viverra nisi. Mauris
+                                                        aliquet nunc non turpis scelerisque, eget. Casamentiss faiz
+                                                        malandris se pirulitá.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-vermelho"
+                                                            data-dismiss="modal">Concordo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta">
+                                        <i class="fa fa-user"></i> <span id="lbl-criar-conta">Criar conta <i
+                                                    class="fa fa-spin fa-spinner"
+                                                    style="display: none; float: right; font-size: 16px;"></i></span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
