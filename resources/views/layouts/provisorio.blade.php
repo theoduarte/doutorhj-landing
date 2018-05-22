@@ -64,7 +64,7 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <!-- Slide One - Set the background image for this slide in the line below -->
-                    <div class="carousel-item active" style="background-image: url('/libs/provisorio/img/bg3.jpg')">
+                    <div class="carousel-item active" style="background-image: url('/libs/provisorio/img/bg5.jpg')">
                         <div class="carousel-caption d-md-block">
                             <img src="/libs/provisorio/img/agende-consultas-com-segurança-do-atendimento-rapido-de-qualidade.png" alt="">
                             <img src="/libs/provisorio/img/logo-doctor-hoje.png" alt="">
