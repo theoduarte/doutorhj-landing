@@ -538,8 +538,8 @@ HEREDOC;
         $number = UtilController::retiraMascara($contato->ds_contato);
         $remetente = 'DoctorHoje';
         $message = "Seu Novo Token de acesso ao DoctorHoje: $access_token";
-        
-        UtilController::sendSms($number, $remetente, $message);
+
+        $send_sms_token = UtilController::sendSms($number, $remetente, $message);
         
         //$timestamp = date('Y-m-d H:i:s')->setTimezone('America/Sao_Paulo');
         

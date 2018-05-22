@@ -10,8 +10,8 @@ class Mensagem extends Model
 {
     use Sortable;
     
-    public $fillable = ['assunto', 'conteudo', 'remetente_id'];
-    public $sortable = ['assunto', 'conteudo'];
+    public $fillable = ['assunto', 'conteudo', 'rma_nome', 'rma_email', 'remetente_id'];
+    public $sortable = ['assunto', 'conteudo', 'rma_nome', 'rma_email'];
     
     protected $dates = ['created_at', 'updated_at'];
     protected $dateFormat = 'Y-m-d H:i:s.u';
@@ -20,8 +20,8 @@ class Mensagem extends Model
         return $this->belongsTo('App\User');
     }
     
-    public function destinarios(){
-        return $this->hasMany('App\MensagemDestinatario');
+    public function mensagem_destinatarios(){
+        return $this->hasMany('App\MensagemDestinatario', 'destinatario_id');
     }
     
     public function getCreatedAtAttribute($data){

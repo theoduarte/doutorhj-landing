@@ -2228,6 +2228,10 @@ header .nav-item-mobile {
 }
 
 .box-resumo-home .proxima-consulta {
+    padding-bottom: 30px;
+}
+
+.box-resumo-home .proxima-consulta .area-pc {
     padding: 40px 30px;
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
@@ -2426,6 +2430,14 @@ header .nav-item-mobile {
 }
 
 .swal2-buttonswrapper .btn-cancel {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 34px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(220, 53, 69)!important;
+    border: 0;
+    padding: 8px 16px;
     background-color: rgb(220, 53, 69)!important;
 }
 
@@ -2438,6 +2450,13 @@ header .nav-item-mobile {
     box-shadow: none !important;
 }
 
+/* TERMOS DE USO */
+
+.modal-termos span {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+}
 
 /*********************************
 *

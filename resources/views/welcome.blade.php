@@ -50,55 +50,66 @@
             <div class="box-resumo-home">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12 col-lg-6">
+                        <div class="col-12">
                             <div class="link-agendamentos">
                                 <p>Não se esqueça da sua<br> próxima consulta e/ou exame</p>
-                                <button type="button" class="btn btn-light" onclick="window.location.href='{{ route("meus-agendamentos") }}'">Meus agendamentos</button>
+                                <button type="button" class="btn btn-light"
+                                        onclick="window.location.href='{{ route("meus-agendamentos") }}'">Meus
+                                    agendamentos
+                                </button>
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-6">
-                            <div class="proxima-consulta">
+                        <div class="col-12">
+                            <div class="row">
                                 @foreach($agendamentos_home as $agendamento)
-                                    <div class="tit-pc">
-                                        <p>Sua próxima consulta é</p>
-                                        <p class="data-consulta">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
-                                        <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} hora(s) 
-                                        @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00') e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} minuto(s) @endif</span>
-                                    </div>
-                                    <div class="resumo">
-                                        <div class="nome-status">
-                                            <div class="row">
-                                                <div class="col-lg-7">
-                                                    <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+                                    <div class="proxima-consulta col-sm-12 col-md-6">
+                                        <div class="area-pc">
+                                            <div class="tit-pc">
+                                                <p>Sua próxima consulta é</p>
+                                                <p class="data-consulta">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+                                                    de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
+                                                <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                    hora(s)
+                                                    @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
+                                                        e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                        minuto(s) @endif</span>
+                                            </div>
+                                            <div class="resumo">
+                                                <div class="nome-status">
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            @if($agendamento->getRawCsStatusAttribute() == 10)
+                                                                <span class="status pre-agendado">Pré-Agendado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                                                <span class="status confirmado">Confirmado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                                                <span class="status nao-confirmado">Não Confirmado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                                <span class="status finalizado">Finalizado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                                                <span class="status ausente">Não compareceu</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                                                <span class="status cancelado">Cancelado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 70)
+                                                                <span class="status agendado">Agendado</span>
+                                                            @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                                                <span class="status retorno">Retorno de Consulta</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-5">
-                                                	@if($agendamento->getRawCsStatusAttribute() == 10)
-                                                    <span class="status pre-agendado">Pré-Agendado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                                    <span class="status confirmado">Confirmado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                                    <span class="status nao-confirmado">Não Confirmado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                                    <span class="status finalizado">Finalizado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                                    <span class="status ausente">Não compareceu</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                                    <span class="status cancelado">Cancelado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                                    <span class="status agendado">Agendado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                                    <span class="status retorno">Retorno de Consulta</span>
-                                                    @endif
-                                                </div>
+                                                <p class="tipo">{{ $agendamento->atendimento->ds_preco }}
+                                                    <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                                <p class="profissional">
+                                                    Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>
+                                                <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                                             </div>
                                         </div>
-                                        <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
-                                        <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                        <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>
-                                        <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                                     </div>
-                                    <br>
-                                    <hr style="border-bottom:  1px solid #B32530;">
                                 @endforeach
                             </div>
                         </div>
@@ -114,9 +125,12 @@
                                 <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
                                      alt="Card image cap">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pesquisa da USP comprova mais 20 novas funções para o CBD </h5>
-                                    <p class="card-text">However, the American Food and Drug Administration (FDA) has not
-                                        approved the medicinal use of CBD. Research is ongoing, and the legal status of this
+                                    <h5 class="card-title">Pesquisa da USP comprova mais 20 novas funções para o
+                                        CBD </h5>
+                                    <p class="card-text">However, the American Food and Drug Administration (FDA) has
+                                        not
+                                        approved the medicinal use of CBD. Research is ongoing, and the legal status of
+                                        this
                                         and other cannabinoids varies.
                                     </p>
                                     <a href="#" class="btn btn-link">Leia mais</a>
@@ -656,8 +670,6 @@
             */
 
         </script>
-
-        
 
     @endpush
 @endsection

@@ -18,11 +18,11 @@
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="tipo">Tipo de atendimento</label>
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                            	<option value="" disabled selected hidden>Ex.: Consulta</option>
-                            	<option value="saude">Consulta Médica</option>
-                            	<option value="odonto">Consulta Odontológica</option>
-                            	<option value="exame">Exames</option>
-                            	<!-- <option value="procedimento">Procedimento</option> -->
+                                <option value="" disabled selected hidden>Ex.: Consulta</option>
+                                <option value="saude">Consulta Médica</option>
+                                <option value="odonto">Consulta Odontológica</option>
+                                <option value="exame">Exames</option>
+                                <!-- <option value="procedimento">Procedimento</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -34,7 +34,7 @@
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="local">Local de antedimento</label>
                             <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                            	<option value="" disabled selected hidden>Ex.: Asa Sul</option>
+                                <option value="" disabled selected hidden>Ex.: Asa Sul</option>
                             </select>
                             <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                             <input type="hidden" id="endereco_id" name="endereco_id">
@@ -136,28 +136,8 @@
                                             @if(sizeof($dependentes) == 0)
                                             <span id="lbl-no-dependents">NENHUM DEPENDENTE ENCONTRADO!</span>
                                             @endif
-                                            <!-- <div class="dependente">
-                                                <div class="row">
-                                                    <div class="col-md-10">
-                                                        <span class="nm-dependente">Nome Dependente 2</span>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><i class="fa fa-trash"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="dependente">
-                                                <div class="row">
-                                                    <div class="col-md-10">
-                                                        <span class="nm-dependente">Nome Dependente 3</span>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <a class="exclui-dependente" href="#"><i class="fa fa-trash"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </div>
-
+                                        
                                         <button type="button" class="btn btn-light btn-add-dependente" data-toggle="modal" data-target="#modalAdicionaDependente">
                                             <i class="fa fa-plus"></i> Adicionar dependente
                                         </button>
@@ -170,6 +150,7 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLongTitle">Novo Dependente</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -390,6 +371,7 @@
                                         <div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Últimas Transações</span>
                                             <div class="box-pagamento lista-transacoes">
+
                                             	@foreach($agendamentos as $agendamento)
 	                                            <div class="transacoes">
                                                     <div class="row">
@@ -454,8 +436,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleLembrete" checked type="checkbox" data-toggle="toggle"
-                                                   data-on="Sim" data-off="Não">
+                                            <input id="toggleLembrete" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -464,8 +445,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleConfirmacao" checked type="checkbox" data-toggle="toggle"
-                                                   data-on="Sim" data-off="Não">
+                                            <input id="toggleConfirmacao" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -474,8 +454,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleCancelamento" checked type="checkbox" data-toggle="toggle"
-                                                   data-on="Sim" data-off="Não">
+                                            <input id="toggleCancelamento" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="tit-opcoes-notificacao tit-not-mob">
@@ -487,8 +466,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleLembreteMobile" checked type="checkbox"
-                                                   data-toggle="toggle" data-on="Sim" data-off="Não">
+                                            <input id="toggleLembreteMobile" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -498,8 +476,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleConfirmacaoMobile" checked type="checkbox"
-                                                   data-toggle="toggle" data-on="Sim" data-off="Não">
+                                            <input id="toggleConfirmacaoMobile" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -509,8 +486,7 @@
                                                 exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input id="toggleCancelamentoMobile" checked type="checkbox"
-                                                   data-toggle="toggle" data-on="Sim" data-off="Não">
+                                            <input id="toggleCancelamentoMobile" checked type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não">
                                         </div>
                                     </div>
                                 </div>
@@ -925,7 +901,6 @@
                     $(this).parent().parent().parent().remove();
                 }
             });
-            
 
             /*********************************
              *
@@ -936,6 +911,39 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
+
+            /*********************************
+             *
+             * SWITCHERY
+             *
+             *********************************/
+
+            var elem = document.querySelector('.email-lembrete');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+            var elem = document.querySelector('.email-confirmacao');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+            var elem = document.querySelector('.email-cancelamento');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+
+            var elem = document.querySelector('.mobile-lembrete');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+            var elem = document.querySelector('.mobile-confirmacao');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+            var elem = document.querySelector('.mobile-cancelamento');
+            var init = new Switchery(elem, {
+                size: 'default', // small, default, large
+            });
+
         </script>
 
     @endpush
