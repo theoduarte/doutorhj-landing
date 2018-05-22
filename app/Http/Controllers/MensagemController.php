@@ -51,9 +51,9 @@ class MensagemController extends Controller
     	 
     	# dados da mensagem
     	$mensagem            		= new Mensagem();
-
-//     	$mensagem->remetente     	= $request->input('nome');
-//     	$mensagem->destinatario     = 'doctorhoje';
+    	
+    	$mensagem->rma_nome     	= isset($request->input('nome')) ? $request->input('nome') : '';
+    	$mensagem->rma_email        = isset($request->input('email')) ? $request->input('email') : '';
     	$mensagem->assunto     		= 'Campanha de Lançamento';
     	
     	$nome 		= $request->input('nome');

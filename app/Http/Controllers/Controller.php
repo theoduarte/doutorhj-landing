@@ -58,11 +58,14 @@ class Controller extends BaseController
             
             $paciente = Auth::user()->paciente->id;
             
+//             DB::enableQueryLog();
             $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-            		->join('pacientes', function($join1) use ($paciente) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente));})
+            		->join('pacientes', function($join1) use ($paciente) { $join1->on(function ($query) use ($paciente) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente))->orOn('pacientes.id', '=', DB::raw($paciente));})->on('pacientes.id', '=', 'agendamentos.paciente_id');})
             		->select('agendamentos.*')
             		->distinct()
             		->orderBy('dt_atendimento', 'desc')->get();
+//            	$query_temp = DB::getQueryLog();
+//             dd($query_temp);
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');
