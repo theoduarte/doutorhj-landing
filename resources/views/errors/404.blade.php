@@ -71,14 +71,7 @@
     @stack('style')
 </head>
 <body>
-	<div class="tudo">		
-        <!-- <div class="page-loader page-loader-variant-1">
-            <div><img class='img-responsive' style='margin-top: -20px;margin-left: -18px;' width='330' height='67' src='/libs/home-template/img/logos/logo-doutor-hoje-vertical.svg' alt='' />
-                <div class="offset-top-41 text-center">
-                    <div class="spinner"></div>
-                </div>
-            </div>
-        </div>  -->        
+	<div class="tudo">
         <header>
         	<nav class="navbar navbar-expand-xl">
                 <div class="container">
@@ -110,8 +103,76 @@
                 </div>
             </nav>
         </header>
-
-		<div class="ex-page-content">
+        <section class="pagina-erro">
+            <div class="">
+                <div class="error">
+                    <div class="container-floud">
+                        <div class="col-xs-12 ground-color text-center">
+                            <div class="container-error-404">
+                                <div class="clip"><div class="shadow"><span class="digit thirdDigit"></span></div></div>
+                                <div class="clip"><div class="shadow"><span class="digit secondDigit"></span></div></div>
+                                <div class="clip"><div class="shadow"><span class="digit firstDigit"></span></div></div>
+                                {{--<div class="msg">OOPS!<span class="triangle"></span></div>--}}
+                            </div>
+                            <h2 class="h1">Desculpe! Página não encontrada.</h2>
+                            <div class="action-link-wrap">
+                                <a onclick="history.back(-1)" href="" class="btn btn-light waves-effect waves-light m-t-20"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar Página anterior</a>
+                                <a href="" class="btn btn-secondary waves-effect waves-light m-t-20"><i class="fa fa-home" aria-hidden="true"></i> Ir para Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            function randomNum()
+            {
+                "use strict";
+                return Math.floor(Math.random() * 9)+1;
+            }
+            var loop1,loop2,loop3,time=30, i=0, number, selector3 = document.querySelector('.thirdDigit'), selector2 = document.querySelector('.secondDigit'),
+                selector1 = document.querySelector('.firstDigit');
+            loop3 = setInterval(function()
+            {
+                "use strict";
+                if(i > 40)
+                {
+                    clearInterval(loop3);
+                    selector3.textContent = 4;
+                }else
+                {
+                    selector3.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+            loop2 = setInterval(function()
+            {
+                "use strict";
+                if(i > 80)
+                {
+                    clearInterval(loop2);
+                    selector2.textContent = 0;
+                }else
+                {
+                    selector2.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+            loop1 = setInterval(function()
+            {
+                "use strict";
+                if(i > 100)
+                {
+                    clearInterval(loop1);
+                    selector1.textContent = 4;
+                }else
+                {
+                    selector1.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+        </script>
+		{{--<div class="ex-page-content">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
@@ -148,8 +209,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>--}}
         <footer>
             <div class="container">
                 <div class="area-logo-rodape">
