@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Resultado - Doctor HJ')
+@section('title', 'DoctorHoje: Resultado')
 
 @push('scripts')
 
@@ -23,11 +23,11 @@
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
             </div>
             <div class="collapseFormulario collapse show" id="collapseFormulario">
-                <form action="/resultado" class="form-busca-resultado" method="get" >
+                <form action="/resultado" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()" >
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                <option value="">Tipo de atendimento</option>
+                                <option value="" disabled selected hidden>Tipo de atendimento</option>
                                 <option value="saude" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude' ) selected='selected' @endif >Consulta Médica</option>
                                 <option value="odonto" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif >Consulta Odontológica</option>
                                 <option value="exame" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame' ) selected='selected' @endif >Exames</option>
@@ -36,20 +36,21 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
-                                <option>Especialidade</option>
+                                <option value="" disabled selected hidden>Especialidade</option>
                                 @foreach($list_atendimentos as $atendimento)
                                 <option value="{{ $atendimento['id'] }}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento['id'] ) selected="selected" @endif>{{ $atendimento['descricao'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select id="endereco_id" class="form-control" name="endereco_id">
-                                <option>Local</option>
+                            <select id="local_atendimento" class="form-control" name="local_atendimento">
+                                <option value="" disabled selected hidden>Local</option>
                                 @foreach($list_enderecos as $endereco)
                                 <option value="{{ $endereco['id'] }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco['id'] ) selected="selected" @endif>{{ $endereco['value'] }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}">
+                            <!-- <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}"> -->
+                            <input type="hidden" id="endereco_id" name="endereco_id" value="@if( isset($_GET['endereco_id']) ) {{ $_GET['endereco_id'] }} @endif">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="submit" class="btn btn-primary btn-vermelho"><i class="fa fa-search"></i> Alterar Busca</button>
@@ -126,49 +127,6 @@
                                 </div>
                             </div>
                             @endforeach
-                            <!-- <div class="card card-resultado">
-                                <div class="card-body">
-                                    <h5 class="card-title">ACREDITAR CLÍNICA MÉDICA S.A</h5>
-                                    <h6 class="card-subtitle">Dr. Alexandre José</h6>
-                                    <p class="card-text">Clínica médica</p>
-                                    <p class="card-text">Edifício Pio X - 716 Sul (Asa Sul) Brasilia, DF <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="form-check area-seleciona-profissional">
-                                        <input id="inputProfissional2" class="form-check-input" name="radioProfissional" type="radio" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <label class="form-check-label" for="inputProfissional2">
-                                        Agendar com este profissional
-                                        </label>
-                                    </div>
-                                    <strong>R$ 173,00</strong>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                    <div class="area-escolher-data">
-                                        <div class="titulo-escolhe-data">
-                                            Escolha data e horário
-                                        </div>
-                                        <div class="escolher-data">                                    
-                                            <input id="selecionaData2" class="selecionaData" type="text" placeholder="Data">
-                                            <label for="selecionaData2"><i class="fa fa-calendar"></i></label>
-                                        </div>
-                                        <div class="escolher-hora">                                    
-                                            <input id="selecionaHora2" class="selecionaData" type="text" placeholder="Horário">
-                                            <label for="selecionaHora2"><i class="fa fa-clock-o"></i></label>
-                                        </div>
-                                        <div class="confirma-data">
-                                            <span>26/03/2018 - Segunda-feira - 10h30min</span>
-                                        </div>
-                                        <div class="mensagem-confirma-data">
-                                            <span>Data e horário sugeito a confirmação</span>
-                                        </div>
-                                        <div class="valor-total">
-                                            <span><strong>Total a pagar:</strong> R$ 173,00</span>
-                                        </div>
-                                        <button type="button" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
-                                    </div>
-                                </div>
-                            </div>
-                             -->
                         </div>
                     </div>
                     <div class="col-mapa col-lg-7">
