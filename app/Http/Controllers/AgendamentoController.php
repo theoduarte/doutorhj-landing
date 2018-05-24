@@ -447,12 +447,17 @@ class AgendamentoController extends Controller
             
             $paciente_id = Auth::user()->paciente->id;
             
+            //DB::enableQueryLog();
             $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->on('pacientes.id', '=', DB::raw($paciente_id));})
+	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(
+	            function($query) use ($paciente_id) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));});})
 	            ->select('agendamentos.*')
 	            ->whereNotNull('agendamentos.atendimento_id')
 	            ->distinct()
 	            ->orderBy('dt_atendimento', 'desc')->get();
+	        
+	       //$query_temp = DB::getQueryLog();
+	       //dd($query_temp);
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');

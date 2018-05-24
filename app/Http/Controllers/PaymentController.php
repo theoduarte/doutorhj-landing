@@ -15,6 +15,7 @@ use App\CreditCardResponse;
 use App\DebitCardResponse;
 use App\CartaoPaciente;
 use App\CupomDesconto;
+use App\Atendimento;
 
 class PaymentController extends Controller
 {
@@ -206,7 +207,10 @@ class PaymentController extends Controller
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
         $agendamentos = CVXRequest::post('agendamentos');
-         
+        
+        //--verifica se todos os agendamentos possuem um atendimento relacionado------
+        $agendamento_atendimento = true;
+        
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
         	 
         	$item_agendamento = json_decode($agendamentos[$i]);
@@ -216,10 +220,21 @@ class PaymentController extends Controller
         	if (sizeof($agendamento) > 0) {
         		$agendamento_disponivel = false;
         	}
+        	
+        	$atendimento_id_temp = $item_agendamento->atendimento_id;
+        	$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+        	
+        	if ($item_atendimento == null) {
+        		$agendamento_atendimento = false;
+        	}
         }
          
         if (!$agendamento_disponivel) {
         	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+        }
+         
+        if (!$agendamento_atendimento) {
+        	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
         }
         
         $save_card = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
@@ -503,20 +518,34 @@ class PaymentController extends Controller
     	$agendamento_disponivel = true;
     	$agendamentos = CVXRequest::post('agendamentos');
     	
+    	//--verifica se todos os agendamentos possuem um atendimento relacionado------
+    	$agendamento_atendimento = true;
+    	
     	for ($i = 0; $i < sizeof($agendamentos); $i++) {
     	
     		$item_agendamento = json_decode($agendamentos[$i]);
-    		
+    		 
     		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-    		
+    		 
     		if (sizeof($agendamento) > 0) {
     			$agendamento_disponivel = false;
     		}
+    		 
+    		$atendimento_id_temp = $item_agendamento->atendimento_id;
+    		$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+    		 
+    		if ($item_atendimento == null) {
+    			$agendamento_atendimento = false;
+    		}
     	}
-    	
+    	 
     	if (!$agendamento_disponivel) {
-        	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
-        }
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+    	}
+    	 
+    	if (!$agendamento_atendimento) {
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
+    	}
     
     	$tp_pagamento = CVXRequest::post('tipo_pagamento');
     	
