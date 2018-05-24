@@ -32,8 +32,7 @@
                                     </div>
                                     <div class="form-group row btn-send-token">
                                         <div class="col col-lg-6 col-xl-7">
-                                            <input type="text" id="inputEmailTelefone"
-                                                   class="form-control mascaraTelefone" placeholder="Número do Celular">
+                                            <input type="text" id="inputEmailTelefone" class="form-control mascaraTelefone" placeholder="Número do Celular">
                                         </div>
                                         <div class="col col-lg-6 col-xl-5">
                                             <button type="button" id="btn-send-token" class="btn btn-vermelho"><i class="fa fa-key"></i> <span id="lbl-enviar-token">Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
@@ -91,11 +90,16 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-group row area-label {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
-                                        <label for="inputEmail" class="col col-sm-12">E-mail</label>
-                                    </div>
-                                    <div class="form-group row {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
-                                        <div class="col col-sm-12">
+                                    <div class="form-group row ">
+                                    	<div class="col col-sm-5 {{ $errors->has('te_documento') ? ' cvx-has-error' : '' }}">
+                                            <label for="inputCPF">CPF</label>
+                                            <input type="text" id="inputCPF" class="form-control mascaraCPF" name="te_documento" value="{{ old('te_documento') }}" placeholder="CPF" required="required">
+                                            @if ($errors->has('te_documento'))
+                                                <span class="help-block"><strong>{{ $errors->first('te_documento') }}</strong></span>
+                                            @endif
+                                        </div>
+                                        <div class="col col-sm-7 {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
+                                        	<label for="inputEmail" class="col col-sm-12">E-mail</label>
                                             <input type="email" id="inputEmail" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required="required">
                                             @if ($errors->has('email'))
                                                 <span class="help-block"> <strong>{{ $errors->first('email') }}</strong></span>
@@ -121,18 +125,18 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col col-sm-6 {{ $errors->has('te_documento') ? ' cvx-has-error' : '' }}">
-                                            <label for="inputCPF">CPF</label>
-                                            <input type="text" id="inputCPF" class="form-control mascaraCPF" name="te_documento" value="{{ old('te_documento') }}" placeholder="CPF" required="required">
-                                            @if ($errors->has('te_documento'))
-                                                <span class="help-block"><strong>{{ $errors->first('te_documento') }}</strong></span>
-                                            @endif
-                                        </div>
                                         <div class="col col-sm-6 {{ $errors->has('ds_contato') ? ' cvx-has-error' : '' }}">
                                             <label for="inputCelular">Celular</label>
                                             <input type="text" id="inputCelular" class="form-control mascaraTelefone" name="ds_contato" value="{{ old('ds_contato') }}" placeholder="Celular" required="required">
                                             @if ($errors->has('ds_contato'))
                                                 <span class="help-block"><strong>{{ $errors->first('ds_contato') }}</strong></span>
+                                            @endif
+                                        </div>
+                                        <div class="col col-sm-6 {{ $errors->has('ds_contato_confirmation') ? ' cvx-has-error' : '' }}">
+                                            <label for="inputCelularConfirma">Confirme o Celular</label>
+                                            <input type="text" id="inputCelularConfirma" class="form-control mascaraTelefone" name="ds_contato_confirmation" value="{{ old('ds_contato_confirmation') }}" placeholder="Confirme o Celular" required="required">
+                                            @if ($errors->has('ds_contato_confirm'))
+                                                <span class="help-block"><strong>{{ $errors->first('ds_contato_confirmation') }}</strong></span>
                                             @endif
                                         </div>
                                     </div>

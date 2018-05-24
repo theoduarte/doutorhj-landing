@@ -56,12 +56,15 @@ class Controller extends BaseController
         
         if (Auth::check()) {
             
-            $paciente = Auth::user()->paciente->id;
+            $paciente_id = Auth::user()->paciente->id;
             
 //             DB::enableQueryLog();
-            $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-            		->join('pacientes', function($join1) use ($paciente) { $join1->on(function ($query) use ($paciente) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente))->orOn('pacientes.id', '=', DB::raw($paciente));})->on('pacientes.id', '=', 'agendamentos.paciente_id');})
+            		
+           $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
+            		->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(
+            		function($query) use ($paciente_id) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));});})
             		->select('agendamentos.*')
+            		->whereNotNull('agendamentos.atendimento_id')
             		->distinct()
             		->orderBy('dt_atendimento', 'desc')->get();
 //            	$query_temp = DB::getQueryLog();

@@ -312,7 +312,7 @@ class AgendamentoController extends Controller
     		$profissional = Profissional::findOrFail($profissional_tmp_id);
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
     		
-    		$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+    		$paciente = $paciente_tmp_id != null && $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
     		
     		$url = $item['attributes']['current_url'];
     	
@@ -361,10 +361,14 @@ class AgendamentoController extends Controller
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
     				'current_url' 			=> $url
     		);
-    	
-    		array_push($carrinho, $item_carrinho);
+    		
+    		if (sizeof($paciente) > 0) {
+    			array_push($carrinho, $item_carrinho);
+    		} else {
+    			CVXCart::remove($item_carrinho['item_id']);
+    		}
     	}
-    	 
+    	
     	$valor_total = CVXCart::getTotal();
     	
     	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
