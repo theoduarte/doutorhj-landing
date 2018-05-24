@@ -448,7 +448,7 @@ class AgendamentoController extends Controller
             $paciente_id = Auth::user()->paciente->id;
             
             $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente_id));})
+	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->on('pacientes.id', '=', DB::raw($paciente_id));})
 	            ->select('agendamentos.*')
 	            ->whereNotNull('agendamentos.atendimento_id')
 	            ->distinct()
