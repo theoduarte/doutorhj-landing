@@ -464,6 +464,8 @@ class AgendamentoController extends Controller
             
         }
         
+        dd($agendamentos_home);
+        
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }
     
