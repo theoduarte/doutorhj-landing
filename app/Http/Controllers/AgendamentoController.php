@@ -450,6 +450,7 @@ class AgendamentoController extends Controller
             $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
 	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente_id));})
 	            ->select('agendamentos.*')
+	            ->whereNotNull('agendamentos.atendimento_id')
 	            ->distinct()
 	            ->orderBy('dt_atendimento', 'desc')->get();
             
@@ -464,7 +465,7 @@ class AgendamentoController extends Controller
             
         }
         
-        dd($agendamentos_home);
+        //dd($agendamentos_home);
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }
@@ -577,7 +578,7 @@ class AgendamentoController extends Controller
         $cartoes_paciente = CartaoPaciente::where('paciente_id', $responsavel_id)->get();
         
         //--busca os agendamentos do paciente----------
-        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->orderBy('dt_atendimento', 'desc')->get();
+        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();
         
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');
