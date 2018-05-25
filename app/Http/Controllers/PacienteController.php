@@ -49,9 +49,10 @@ class PacienteController extends Controller
         $paciente_id = Crypt::decryptString($verify_hash);
         
         $paciente = Paciente::findOrFail($paciente_id);
+        dd($paciente);
         
         if($paciente === null) {
-            return view('welcome');
+        	return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não foi ativada. Por favor, tente novamente!');
         }
         
         $user_id = $paciente->user->id;
