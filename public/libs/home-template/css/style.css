@@ -2451,16 +2451,56 @@ header .nav-item-mobile {
     box-shadow: none !important;
 }
 
-/*********************************
-*
-*  X ERRO 404
-*
-*********************************/
+/* TERMOS DE USO - CADASTRO */
 
-.modal-termos span {
-    font-weight: 600;
+.modal-termos .modal-header {
+    color: rgb(255, 255, 255);
+    background-color: rgb(70, 117, 184);
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 2px 2px 0 0;
+    padding: 30px 1rem;
+}
+
+.modal-termos p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgb(103, 103, 103);
+}
+
+.modal-termos p span {
+    font-weight: 700;
     font-size: 18px;
     line-height: 30px;
+    text-transform: uppercase;
+    color: rgb(90, 90, 90);
+}
+
+.modal-termos .tabela-termos {
+    text-align: center;
+    font-size: 13px;
+    border: 1px solid rgb(210, 210, 210);
+    border-bottom: 0;
+    padding: 0 14px;
+}
+
+.modal-termos .tabela-termos .titulo {
+    background-color: rgb(70, 117, 184);
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    line-height: 30px;
+}
+
+.modal-termos .tabela-termos .linha {
+    padding: 15px 15px;
+    border-bottom: 1px solid rgb(210, 210, 210);
+}
+
+@media only screen and (min-width: 576px) {
+    .modal-dialog {
+        max-width: 700px !important;
+    }
 }
 
 /*********************************
