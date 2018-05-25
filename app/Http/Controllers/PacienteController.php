@@ -49,16 +49,19 @@ class PacienteController extends Controller
         $paciente_id = Crypt::decryptString($verify_hash);
         
         $paciente = Paciente::findOrFail($paciente_id);
-        dd($paciente);
         
         if($paciente === null) {
         	return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não foi ativada. Por favor, tente novamente!');
         }
         
-        $user_id = $paciente->user->id;
-        $user = User::findOrFail($user_id);
-        $user->cs_status = 'A';
-        $user->save();
+        
+        $paciente->load('user');
+        $user_activate_temp = $paciente->user;
+        $user_id = $user_activate_temp->id;
+        $user_activate = User::findOrFail($user_id);
+        dd($user_activate);
+        $user_activate->cs_status = 'A';
+        $user_activate->save();
         
         return view('pacientes.activate');
     }
