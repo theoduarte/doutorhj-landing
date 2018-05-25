@@ -59,7 +59,7 @@ class PacienteController extends Controller
         $user_activate_temp = $paciente->user;
         $user_id = $user_activate_temp->id;
         $user_activate = User::findOrFail($user_id);
-        dd($user_activate);
+        //dd($user_activate);
         $user_activate->cs_status = 'A';
         $user_activate->save();
         
