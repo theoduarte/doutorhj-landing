@@ -60,7 +60,6 @@ class PacienteController extends Controller
         $user_activate = User::findOrFail($user_id);
         $user_activate->cs_status = 'A';
         $user_activate->save();
-        dd($user_activate);
         
         return view('pacientes.activate');
     }
