@@ -54,14 +54,13 @@ class PacienteController extends Controller
         	return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não foi ativada. Por favor, tente novamente!');
         }
         
-        
         $paciente->load('user');
         $user_activate_temp = $paciente->user;
         $user_id = $user_activate_temp->id;
         $user_activate = User::findOrFail($user_id);
-        //dd($user_activate);
         $user_activate->cs_status = 'A';
         $user_activate->save();
+        dd($user_activate);
         
         return view('pacientes.activate');
     }
