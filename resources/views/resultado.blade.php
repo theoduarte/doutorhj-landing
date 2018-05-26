@@ -194,6 +194,8 @@
                 datepicker:false,
                 format:'H:i',
                 step: 30,
+                minTime:'08:00',
+                maxTime:'18:10',
             }).on("input change", function(e){
             	//console.log("Time changed: ", e.target.value);
             	if(e.target.value != '') {
@@ -212,6 +214,8 @@
                 datepicker:false,
                 format:'H:i',
                 step: 30,
+                minTime:'08:00',
+                maxTime:'18:10',
             });
                 
             /*********************************
