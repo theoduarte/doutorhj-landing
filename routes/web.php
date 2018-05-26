@@ -58,7 +58,7 @@ Route::get('concluir_pedido', 'PaymentController@fullTransactionDoctorhj');
 
 #rotas de teste
 Route::get('teste_concluir_pedido', 'PaymentController@fullTransactionTeste');
-Route::get('teste-envio-email', 'ClinicaController@testeEnviarEmail');
+Route::get('teste-envio-email', 'PaymentController@testeEnviarEmail');
 
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');

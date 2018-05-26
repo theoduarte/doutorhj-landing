@@ -58,7 +58,7 @@ class MensagemController extends Controller
     	$email 		= $request->input('email');
     	$telefone 	= $request->input('telefone');
     	
-    	$mensagem->conteudo     	= "<h4>Contato de Interessado:</h4><br><br><ul><li>Nome: $nome</li><li>E-mail: $email</li><li>Telefone: $telefone</li></ul>";
+    	$mensagem->conteudo     	= "<h4>Contato de Interessado:</h4><br><ul><li>Nome: $nome</li><li>E-mail: $email</li><li>Telefone: $telefone</li></ul>";
 
     	if(!$mensagem->save()) {
     		return redirect()->route('provisorio')->with('error', 'A Sua mensagem não foi enviada. Por favor, tente novamente');

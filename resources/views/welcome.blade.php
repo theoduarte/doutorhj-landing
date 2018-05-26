@@ -500,7 +500,10 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
-                var resizefunc = [];                
+                var resizefunc = [];     
+
+                $('#tipo_especialidade option:first').prop("selected", true);
+                $('#local_atendimento option:first').prop("selected", true);           
             });
 
             /*********************************

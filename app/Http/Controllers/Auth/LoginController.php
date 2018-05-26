@@ -56,30 +56,41 @@ class LoginController extends Controller
     	$contato = $contato1->first();
     	$contato_id = $contato->id;
     	
+    	//DB::enableQueryLog();
     	$paciente_temp = Paciente::with('user')
 	    	->join('contato_paciente', function($join1) { $join1->on('pacientes.id', '=', 'contato_paciente.paciente_id');})
 	    	->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	    	->select('pacientes.*')
 	    	->get();
-    	 
-    	$user = $paciente_temp->first()->user;
     	
-    	$username = $user->email;
+	    //$query = DB::getQueryLog();
+	    //dd($query);
+    	$user_login = $paciente_temp->first()->user;
+    	
+    	$username = $user_login->email;
     	$password = $cvx_token;
     	
-    	$active = $user->cs_status;
+    	$active = $user_login->cs_status;
     	
     	$credentials = ['email' => $username, 'password' => $password, 'cs_status' => 'A'];
+    	//dd($user_login);
     	
-    	if($user === null) {
-    		return view('login');
+    	if($active == 'I') {
+    		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
     	}
-    
+    	
+    	if($user_login === null) {
+    		//return view('login');
+    		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
+    	}
+    	
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		Auth::user()->load('paciente');
     		
     		return redirect()->intended('/');
+    	} else {
+    		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
     	}
     }
     

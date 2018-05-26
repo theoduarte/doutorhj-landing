@@ -513,11 +513,10 @@ HEREDOC;
 	        ->select('pacientes.*')
 	        ->get();
 	    
-        $user = $paciente_temp->first()->user;
+        $user_send_token = $paciente_temp->first()->user;
         
         //--quando o usuario tenta logar sem ter se cadastrado
-        if($user === null) {
-            //return view('login');
+        if($user_send_token === null) {
             return response()->json(['status' => false, 'mensagem' => 'Usuário não foi localizado. Por favor, tente novamente.']);
         }
         
@@ -532,8 +531,8 @@ HEREDOC;
         $paciente->save();
         
         # realiza a criptografia do token do paciente
-        $user->password = bcrypt($access_token);
-        $user->save();
+        $user_send_token->password = bcrypt($access_token);
+        $user_send_token->save();
         
         $number = UtilController::retiraMascara($contato->ds_contato);
         $remetente = 'DoctorHoje';
@@ -543,7 +542,7 @@ HEREDOC;
         
         //$timestamp = date('Y-m-d H:i:s')->setTimezone('America/Sao_Paulo');
         
-        $email_destinatario     = $user->email;
+        $email_destinatario     = $user_send_token->email;
         $paciente_nm_primario   = $paciente->nm_primario;
         $data_solicitacao       = date('d.m.Y').' às '.date('H:i:s');
         //$data_solicitacao       = date('d.m.Y', strtotime($timestamp)).' às '.date('H:i:s', strtotime($timestamp));

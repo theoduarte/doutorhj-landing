@@ -312,7 +312,7 @@ class AgendamentoController extends Controller
     		$profissional = Profissional::findOrFail($profissional_tmp_id);
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
     		
-    		$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+    		$paciente = $paciente_tmp_id != null && $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
     		
     		$url = $item['attributes']['current_url'];
     	
@@ -361,10 +361,14 @@ class AgendamentoController extends Controller
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
     				'current_url' 			=> $url
     		);
-    	
-    		array_push($carrinho, $item_carrinho);
+    		
+    		if (sizeof($paciente) > 0) {
+    			array_push($carrinho, $item_carrinho);
+    		} else {
+    			CVXCart::remove($item_carrinho['item_id']);
+    		}
     	}
-    	 
+    	
     	$valor_total = CVXCart::getTotal();
     	
     	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
@@ -447,11 +451,17 @@ class AgendamentoController extends Controller
             
             $paciente_id = Auth::user()->paciente->id;
             
+            //DB::enableQueryLog();
             $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->on('pacientes.id', '=', 'agendamentos.paciente_id')->orOn('pacientes.id', '=', DB::raw($paciente_id));})
+	            ->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(
+	            function($query) use ($paciente_id) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));});})
 	            ->select('agendamentos.*')
+	            ->whereNotNull('agendamentos.atendimento_id')
 	            ->distinct()
 	            ->orderBy('dt_atendimento', 'desc')->get();
+	        
+	       //$query_temp = DB::getQueryLog();
+	       //dd($query_temp);
             
             for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
                 $agendamentos_home[$i]->clinica->load('enderecos');
@@ -463,6 +473,8 @@ class AgendamentoController extends Controller
             }
             
         }
+        
+        //dd($agendamentos_home);
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }
@@ -575,7 +587,7 @@ class AgendamentoController extends Controller
         $cartoes_paciente = CartaoPaciente::where('paciente_id', $responsavel_id)->get();
         
         //--busca os agendamentos do paciente----------
-        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->orderBy('dt_atendimento', 'desc')->get();
+        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();
         
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');

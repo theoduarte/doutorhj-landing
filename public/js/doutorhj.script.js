@@ -1,8 +1,5 @@
 $(document).ready(function () {
 	
-	$('#tipo_especialidade option:first').prop("selected", true);
-    $('#local_atendimento option:first').prop("selected", true);
-	
 	$('#tipo_atendimento').change(function(){
 		var tipo_atendimento = $(this).val();
 		
@@ -912,7 +909,7 @@ function validaBuscaAtendimento() {
 	var local_atendimento = $('#local_atendimento');
 	var endereco_id = $('#endereco_id');
 	
-	if( tipo_atendimento[0].selectedIndex === 0 ) {
+	if( tipo_atendimento.val().length == 0 ) {
 		
 		tipo_atendimento.parent().addClass('cvx-has-error');
 		tipo_atendimento.focus();
@@ -931,7 +928,7 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( tipo_especialidade[0].selectedIndex === 0 ) {
+	if( tipo_especialidade.val().length == 0 ) {
 		tipo_especialidade.parent().addClass('cvx-has-error');
 		tipo_especialidade.focus();
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
@@ -949,7 +946,7 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( local_atendimento[0].selectedIndex === 0 | endereco_id[0].selectedIndex === 0 ) {
+	if( local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
 		endereco_id.parent().addClass('cvx-has-error');
 		endereco_id.focus();
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
