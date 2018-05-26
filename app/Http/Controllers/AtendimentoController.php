@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Atendimento;
 use App\Endereco;
 use App\Cidade;
+use App\Agendamento;
 
 class AtendimentoController extends Controller
 {
@@ -59,7 +60,7 @@ class AtendimentoController extends Controller
         	   ->join('clinica_endereco',      function($join3) { $join3->on('clinicas.id', '=', 'clinica_endereco.clinica_id');})
         	   ->join('enderecos',             function($join4) use ($local_atendimento) { $join4->on('clinica_endereco.endereco_id', '=', 'enderecos.id')->where(
         	       function($query) use ($local_atendimento) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));});})
-        	   ->where('atendimentos.consulta_id', '=', $ct_atendimento->consulta_id)
+        	   ->where('atendimentos.consulta_id', '=', $ct_atendimento->consulta_id)->where('atendimentos.cs_status', '=', 'A')
         	   ->orderBy('atendimentos.vl_com_atendimento', $sort_item)
         	   ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.consulta_id')
         	   ->distinct()
@@ -71,6 +72,7 @@ class AtendimentoController extends Controller
         	//-- seleciona os itens de atendimento removendo as repeticoes-----------
         	$atendimentos_temp = DB::table('atendimentos')
         	   ->join('consultas', function($join1) use ($tipo_atendimento_id) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
+        	   ->where('atendimentos.cs_status', '=', 'A')
         	   ->orderBy('atendimentos.ds_preco', 'asc')
         	   ->select('atendimentos.*')
         	   ->distinct()
@@ -162,7 +164,7 @@ class AtendimentoController extends Controller
                 ->join('clinica_endereco',      function($join3) { $join3->on('clinicas.id', '=', 'clinica_endereco.clinica_id');})
                 ->join('enderecos',             function($join4) use ($local_atendimento) { $join4->on('clinica_endereco.endereco_id', '=', 'enderecos.id')->where(
                     function($query) use ($local_atendimento) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));});})
-                ->where('atendimentos.procedimento_id', '=', $ct_atendimento->procedimento_id)
+                ->where('atendimentos.procedimento_id', '=', $ct_atendimento->procedimento_id)->where('atendimentos.cs_status', '=', 'A')
                 ->orderBy('atendimentos.vl_com_atendimento', $sort_item)
                 ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.procedimento_id')
                 ->distinct()
@@ -171,6 +173,7 @@ class AtendimentoController extends Controller
             //-- seleciona os itens de atendimento removendo as repeticoes-----------
             $atendimentos_temp = DB::table('atendimentos')
                 ->join('procedimentos', function($join1) use ($tipo_atendimento_id) { $join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
+                ->where('atendimentos.cs_status', '=', 'A')
                 ->orderBy('atendimentos.ds_preco', 'asc')
                 ->select('atendimentos.*')
                 ->distinct()

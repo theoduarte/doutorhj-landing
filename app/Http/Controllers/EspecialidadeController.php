@@ -28,6 +28,7 @@ class EspecialidadeController extends Controller
             //DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
             	->join('consultas', function ($join1) use ($tipo_atendimento_id) {$join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
+            	->where('atendimentos.cs_status', '=', 'A')
                 ->orderBy('atendimentos.ds_preco', 'asc')
                 ->select('atendimentos.*')
                 ->distinct()
@@ -58,6 +59,7 @@ class EspecialidadeController extends Controller
             DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
             	->join('procedimentos', function ($join1) use ($tipo_atendimento_id) {$join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
+            	->where('atendimentos.cs_status', '=', 'A')
                 ->orderBy('atendimentos.ds_preco', 'asc')
                 ->select('atendimentos.*')
                 ->distinct()

@@ -34,13 +34,13 @@ class LogSuccessfulLogin
         //$nome = $event->user->nome;
         $user_id = $event->user->id;
         
-        $menus_app = Menu::with('itemmenus')
+        /* $menus_app = Menu::with('itemmenus')
             ->join('menu_perfiluser', function($join1) { $join1->on('menus.id', '=', 'menu_perfiluser.menu_id');})
             ->join('perfilusers', function($join2) { $join2->on('menu_perfiluser.perfiluser_id', '=', 'perfilusers.id');})
             ->join('users', function($join3) use($user_id) { $join3->on('perfilusers.id', '=', 'users.perfiluser_id')->on('users.id', '=', DB::raw($user_id));})
             ->select('menus.*', 'menus.id', 'menus.titulo')
-            ->orderBy('itemmenus.titulo', 'asc')
-            ->get();
+            ->get(); */
+        $menus_app = [];
         
         //dd($menus_app);
         Session::put('menus_app', $menus_app);

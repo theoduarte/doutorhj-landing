@@ -88,7 +88,7 @@
                                     <strong>R$ {{ $atendimento->getVlComercialAtendimento() }}</strong>
                                 </div>
                                 <div id="collapse_{{ $atendimento->id.$atendimento->profissional->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->profissional->id }}" data-parent="#accordion">
-                                	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post">
+                                	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
                                     	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $atendimento->profissional->id }}">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
@@ -104,11 +104,11 @@
 	                                            Escolha data e horário
 	                                        </div>
 	                                        <div class="escolher-data">                                    
-	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData mascaraDataAgendamento" name="data_atendimento" placeholder="Data" >
+	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData mascaraDataAgendamento" name="data_atendimento" placeholder="Data" autocomplete="off" >
 	                                            <label for="selecionaData{{ $atendimento->id }}"><i class="fa fa-calendar"></i></label>
 	                                        </div>
 	                                        <div class="escolher-hora">                                    
-	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora mascaraHoraAgendamento" name="hora_atendimento" placeholder="Horário" >
+	                                            <input type="text" id="selecionaHora{{ $atendimento->id }}" class="selecionaHora mascaraHoraAgendamento" name="hora_atendimento" placeholder="Horário" autocomplete="off" >
 	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="fa fa-clock-o"></i></label>
 	                                        </div>
 	                                        <div class="confirma-data">
@@ -121,7 +121,7 @@
 	                                        <div class="valor-total">
 	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->getVlComercialAtendimento() }}</span>
 	                                        </div>
-	                                        <button type="submit" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
+	                                        <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento{{ $atendimento->id }}')">Prosseguir para pagamento</button>
 	                                    </div>
                                     </form>
                                 </div>
@@ -153,12 +153,15 @@
             jQuery.datetimepicker.setLocale('pt-BR');
 
             var today_date = new Date();
+            var today_date_range = new Date();
             var min_date = today_date.setDate(today_date.getDate() + 2);
+            var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);
                 
             jQuery('.selecionaData').datetimepicker({                
                 timepicker:false,
                 format:'d.m.Y',
-                minDate: min_date
+                minDate: min_date,
+                maxDate: max_date,
             }).on("input change", function(e){
             	//console.log("Date changed: ", e.target.value);
             	if(e.target.value != '') {
@@ -176,17 +179,57 @@
             }).on("input blur", function(e){
             	//console.log("Date changed: ", e.target.value);
             	if(e.target.value != '') {
-            		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
-                	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+            		var ct_date_input = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                	var ct_date = new Date(ct_date_input[2], ct_date_input[1] - 1, ct_date_input[0]);
                 	
             		if(ct_date <= today_date) {
             			ct_date.setDate(today_date.getDate());
             			var ct_mes = pad((ct_date.getMonth()+1));
             			$(this).val(ct_date.getDate()+'.'+ct_mes+'.'+ct_date.getFullYear());
-                		//alert('A Data informada não está disponível para a Agendamento');
+            			//alert('A Data informada não está disponível para a Agendamento'+ct_date+' | '+today_date+' | '+ct_date_input+' | '+ct_date_input[2]+'-'+(ct_date_input[1] - 1)+'-'+ct_date_input[0]);
             		}
 
-                	
+            		var ct_hora = jQuery(this).parent().parent().find('.selecionaHora').val();
+            		if(ct_hora != '') {
+
+                		var clinica_id 		= jQuery(this).parent().parent().parent().find('#clinica_id').val();
+                		var profissional_id = jQuery(this).parent().parent().parent().find('#profissional_id').val();
+                		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+                		
+                		if(clinica_id == '') { return false; }
+                		if(profissional_id == '') { return false; }
+                		
+                		jQuery.ajax({
+                    		type: 'POST',
+                    	  	url: '/consulta-agendamento-disponivel',
+                    	  	data: {
+                				'clinica_id': clinica_id,
+                    	  		'profissional_id': profissional_id,
+                    	  		'data_agendamento': dt_agendamento,
+                    	  		'hora_agendamento': ct_hora,
+                				'_token': laravel_token
+                			},
+                			success: function (result) {
+
+                				if( !result.status) {
+                					swal(
+            					        {
+            					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+            					            text: result.mensagem
+            					        }
+            					    );
+                				}
+                            },
+                            error: function (result) {
+                            	swal(
+                        	        {
+                        	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                        	            text: 'Falha na operação!'
+                        	        }
+                        	    );
+                            }
+                    	});
+            		}
             	}
             });
             
@@ -201,14 +244,58 @@
             	if(e.target.value != '') {
 	            	var ct_hora_temp = (e.target.value).split(':');
 	            	var ct_date = jQuery('.selecionaData').parent().parent().find('.confirma-data span.span-data').html();
+	            	var ct_date_input = (jQuery(this).parent().parent().find('.selecionaData').val()).split('.');
 	            	jQuery(this).parent().parent().find('.confirma-data span.span-hora').html(ct_hora_temp[0]+"H"+ct_hora_temp[1]+"MIN");
+
+	            	var ct_hora = ct_hora_temp[0]+':'+ct_hora_temp[1];
+            		if(ct_hora != '') {
+
+                		var clinica_id 		= jQuery(this).parent().parent().parent().find('#clinica_id').val();
+                		var profissional_id = jQuery(this).parent().parent().parent().find('#profissional_id').val();
+                		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+                		
+                		if(clinica_id == '') { return false; }
+                		if(profissional_id == '') { return false; }
+                		
+                		jQuery.ajax({
+                    		type: 'POST',
+                    	  	url: '/consulta-agendamento-disponivel',
+                    	  	data: {
+                				'clinica_id': clinica_id,
+                    	  		'profissional_id': profissional_id,
+                    	  		'data_agendamento': dt_agendamento,
+                    	  		'hora_agendamento': ct_hora,
+                				'_token': laravel_token
+                			},
+                			success: function (result) {
+
+                				if( !result.status) {
+                					swal(
+            					        {
+            					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+            					            text: result.mensagem
+            					        }
+            					    );
+                				}
+                            },
+                            error: function (result) {
+                            	swal(
+                        	        {
+                        	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                        	            text: 'Falha na operação!'
+                        	        }
+                        	    );
+                            }
+                    	});
+            		}
             	}
             });
                 
             jQuery('#selecionaData2').datetimepicker({                
                 timepicker:false,
                 format:'d.m.Y',
-                minDate: min_date
+                minDate: min_date,
+                maxDate: max_date,
             });
             jQuery('#selecionaHora2').datetimepicker({ 
                 datepicker:false,
@@ -252,7 +339,61 @@
             });
             //Fire it when the page first loads:
             alterClass();
-            });             
+            });
+
+            function validaAgendarAtendimento(form_id) {
+            	
+            	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
+        		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
+        		var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
+        		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+        		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
+        		
+        		if(clinica_id == '') { return false; }
+        		if(profissional_id == '') { return false; }
+        		if(dt_agendamento == '') { return false; }
+        		if(ct_hora == '') { return false; }
+        		
+        		jQuery.ajax({
+            		type: 'POST',
+            	  	url: '/consulta-agendamento-disponivel',
+            	  	data: {
+        				'clinica_id': clinica_id,
+            	  		'profissional_id': profissional_id,
+            	  		'data_agendamento': dt_agendamento,
+            	  		'hora_agendamento': ct_hora,
+        				'_token': laravel_token
+        			},
+        			success: function (result) {
+
+        				if( !result.status) {
+        					swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: result.mensagem
+    					        }
+    					    );
+
+    					    return false;
+        				} else {
+        					jQuery('#'+form_id).submit();
+            				return true;
+        				}
+                    },
+                    error: function (result) {
+                    	swal(
+                	        {
+                	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                	            text: 'Falha na operação!'
+                	        }
+                	    );
+                    	return false;
+                    }
+            	});
+            	
+            	
+            	return false;
+            }            
 
             /*********************************
             *

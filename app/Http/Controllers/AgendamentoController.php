@@ -595,4 +595,39 @@ class AgendamentoController extends Controller
         
         return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
     }
+    
+    /**
+     * consultaAgendamentoDisponivel a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function consultaAgendamentoDisponivel(Request $request)
+    {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
+        $clinica_id 		= CVXRequest::post('clinica_id');
+        $profissional_id 	= CVXRequest::post('profissional_id');
+        
+        $data_agendamento 	= CVXRequest::post('data_agendamento');
+        $hora_agendamento 	= CVXRequest::post('hora_agendamento');
+        
+        $data = $data_agendamento;
+        $hora = $hora_agendamento.":00";
+        
+        
+        //DB::enableQueryLog();
+        $agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('profissional_id', $profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
+        //$query = DB::getQueryLog();
+        //dd($query);
+        
+        $agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
+        
+        if (!$agendamento_disponivel) {
+            return response()->json(['status' => false, 'mensagem' => 'O horário escolhido não está disponível, pois já existe um atendimento marcado. Por favor, tente outro horário.']);
+        }
+        
+        return response()->json(['status' => true, 'mensagem' => 'Agendamento disponível!']);
+    }
 }

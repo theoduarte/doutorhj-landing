@@ -48,6 +48,7 @@ Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocal
 Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
 Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@consultaEnderecoLocalAtendimento');
+Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAgendamentoDisponivel');
 
 #rota de notificacao CIELO
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
