@@ -411,7 +411,7 @@
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <p class="valor">R$
-                                                                    <span>{{ $agendamento->atendimento->getVlComercialAtendimento() }}</span>
+                                                                    <span>{{ $agendamento->valor_total }}</span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -508,12 +508,11 @@
                                         <span>Por E-mail</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
-                                            <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou
-                                                exame</label>
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                            <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou  exame</label>
                                         </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleLembrete" type="checkbox" class="email-lembrete" checked>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleLembrete" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -522,51 +521,46 @@
                                                 ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleConfirmacao" type="checkbox" class="email-confirmacao" checked>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleConfirmacao" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
-                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de
-                                                consulta ou
-                                                exame</label>
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou exame</label>
                                         </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleCancelamento" type="checkbox" class="email-cancelamento" checked>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleCancelamento" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
+
                                         </div>
                                     </div>
                                     <div class="tit-opcoes-notificacao tit-not-mob">
                                         <span>No Celular</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
-                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta
-                                                ou
-                                                exame</label>
+
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou exame</label>
                                         </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleLembreteMobile" type="checkbox" class="mobile-lembrete" checked>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
-                                            <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de
-                                                consulta ou
-                                                exame</label>
-                                        </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleConfirmacaoMobile" type="checkbox" class="mobile-confirmacao" checked>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleLembreteMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" >
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
-                                            <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de
-                                                consulta ou
-                                                exame</label>
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                            <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de consulta ou exame</label>
                                         </div>
-                                        <div class="col-3 col-md-3 col-lg-2">
-                                            <input id="toggleCancelamentoMobile" type="checkbox" class="mobile-cancelamento" checked>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleConfirmacaoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                            <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de consulta ou exame</label>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2">
+                                            <input type="checkbox" id="toggleCancelamentoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" >
+
                                         </div>
                                     </div>
                                 </div>

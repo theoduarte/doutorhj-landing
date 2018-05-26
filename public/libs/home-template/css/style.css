@@ -1985,7 +1985,7 @@ header .nav-item-mobile {
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .bandeira {
-    background: url(../img/bandeiras-cartoes.png) no-repeat;
+    background-image: url(../../jquery-credit-card/cards.png);
     background-size: 100%;
     display: block;
     width: 30px;
@@ -1997,20 +1997,25 @@ header .nav-item-mobile {
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .visa {
-    background-position: center 0;
+    background-position: center -58;
 }
 
-.box-minha-conta .row .conteudo .box-pagamento .cartao .mastercard {
-    background-position: center -19px;
+.box-minha-conta .row .conteudo .box-pagamento .cartao .master {
+    background-position: center -88px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .diners {
-    background-position: center -38px;
+    background-position: center -147px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .amex {
-    background-position: center -58px;
+    background-position: center -207px;
 }
+
+.box-minha-conta .row .conteudo .box-pagamento .cartao .elo {
+    background-position: center -236px;
+}
+
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao p .numero-oculto {
     color: rgb(175, 175, 175);
