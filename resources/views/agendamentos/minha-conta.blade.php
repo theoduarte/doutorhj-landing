@@ -53,7 +53,9 @@
                                 Cadastro</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Pagamento</a>
-                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                            {{--<a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Mensagens</a>--}}
+                            <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Notificações</a>
                             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Deixe sua Sugestão</a>
@@ -424,70 +426,146 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="v-pills-notificacoes" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
 
-                            <!-- Notificações -->
+                                <div class="lista-notificacoes">
+                                    <div class="accordion" id="accordionNotificacoes">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                <h5 class="mb-0">
+                                                    <span class="titulo-notificacao">Pré-Agendamento Solicitado</span>
+                                                    <span class="status-notificacao">Não lido</span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <p class="titulo">Informações sobre seu Pré-Agendamento</p>
+                                                    <ul>
+                                                        <li>Nº do Pedido: <span>0000000031</span></li>
+                                                        <li>Especialidade/exame: <span>CIRURGIA GERAL | CIRURGIA VIDEOLAPAROSCÓPICA | COLOPROCTOLOGIA</span>
+                                                        </li>
+                                                        <li>Dr(a): <span>ANDRÉ ARAÚJO DE MEDEIROS SILVA</span></li>
+                                                        <li>Data: <span>16 de Junho / Sábado</span></li>
+                                                        <li>Horário: <span>12:00 (por ordem de chegada)</span></li>
+                                                        <li>Endereço: <span>QNE 05 LOTE 13, TAGUATINGA NORTE (TAGUATINGA), Brasília/ DF</span>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="close-div btn btn-secondary" title="Apagar mensagem">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <h5 class="mb-0">
+                                                    <span class="titulo-notificacao">Você possui um cupom de desconto</span>
+                                                    <span class="status-notificacao sn-lido">Lido</span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <p class="titulo">Informações sobre seu Pré-Agendamento</p>
+                                                    <p class="texto">Você possui um cupom que garante <strong>10% de
+                                                            desconto</strong> no seu primeiro agendamento feito pelo
+                                                        site Doctor Hoje. Aproveite, é por tempo limitado. Na tela de
+                                                        finalização de compra insira o código: <strong>DOCTOR10</strong>
+                                                    </p>
+                                                    <button type="button" class="close-div btn btn-secondary" title="Apagar mensagem">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                <h5 class="mb-0">
+                                                    <span class="titulo-notificacao">Bem vindo ao Doctor Hoje!</span>
+                                                    <span class="status-notificacao sn-lido">Lido</span>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <p class="titulo">Informações sobre seu Pré-Agendamento</p>
+                                                    <ul>
+                                                        <li>Nº do Pedido: <span>0000000031</span></li>
+                                                        <li>Especialidade/exame: <span>CIRURGIA GERAL | CIRURGIA VIDEOLAPAROSCÓPICA | COLOPROCTOLOGIA</span>
+                                                        </li>
+                                                        <li>Dr(a): <span>ANDRÉ ARAÚJO DE MEDEIROS SILVA</span></li>
+                                                        <li>Data: <span>16 de Junho / Sábado</span></li>
+                                                        <li>Horário: <span>12:00 (por ordem de chegada)</span></li>
+                                                        <li>Endereço: <span>QNE 05 LOTE 13, TAGUATINGA NORTE (TAGUATINGA), Brasília/ DF</span>
+                                                        </li>
+                                                    </ul>
+                                                    <button type="button" class="close-div btn btn-secondary" title="Apagar mensagem">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="tab-pane fade" id="v-pills-notificacoes" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                 <div class="opcoes-notificacao">
                                     <div class="tit-opcoes-notificacao">
-                                        <span>E-mail</span>
+                                        <span>Por E-mail</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleLembrete" type="checkbox" class="email-lembrete" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleConfirmacao"><strong>Confirmação</strong> de consulta ou
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
+                                            <label for="toggleConfirmacao"><strong>Confirmação</strong> de consulta
+                                                ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleConfirmacao" type="checkbox" class="email-confirmacao" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
+                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de
+                                                consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleCancelamento" type="checkbox" class="email-cancelamento" checked>
                                         </div>
                                     </div>
                                     <div class="tit-opcoes-notificacao tit-not-mob">
-                                        <span>Mobile</span>
+                                        <span>No Celular</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
+                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta
+                                                ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleLembreteMobile" type="checkbox" class="mobile-lembrete" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de
                                                 consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleConfirmacaoMobile" type="checkbox" class="mobile-confirmacao" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de
                                                 consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input id="toggleCancelamentoMobile" type="checkbox" class="mobile-cancelamento" checked>
                                         </div>
                                     </div>
@@ -501,7 +579,8 @@
                                     <div class="col-md-12 col-lg-6">
                                         <span class="label-titulo">Avalie o Doctor Hoje</span>
                                         <p>Deixe sua avaliação e nos ajude a deixar o Doctor Hoje melhor ainda.</p>
-                                        <p>Dê uma nota de 1 a 5 estrelas para cada tópico abaixo, sendo 1 para péssimo e
+                                        <p>Dê uma nota de 1 a 5 estrelas para cada tópico abaixo, sendo 1 para
+                                            péssimo e
                                             5 para excelente.</p>
                                         <div class="nota-avaliacao nota-servico">
                                             <p>Serviço</p>
@@ -611,7 +690,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -898,30 +976,42 @@
 
             var elem = document.querySelector('.email-lembrete');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
             var elem = document.querySelector('.email-confirmacao');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
             var elem = document.querySelector('.email-cancelamento');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
 
             var elem = document.querySelector('.mobile-lembrete');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
             var elem = document.querySelector('.mobile-confirmacao');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
             var elem = document.querySelector('.mobile-cancelamento');
             var init = new Switchery(elem, {
-                size: 'default', // small, default, large
+                size: 'small', // small, default, large
             });
 
+            /*********************************
+             *
+             * REMOVE PRODUTO
+             *
+             *********************************/
+
+            $(".close-div").on("click", function(event) {
+                event.preventDefault();
+                if(confirm("Tem certeza que deseja apagar essa mensagem?")) {
+                    $(this).parent().parent().parent().remove();
+                }
+            });
         </script>
 
     @endpush
