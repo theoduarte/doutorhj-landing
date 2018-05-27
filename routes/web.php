@@ -31,15 +31,15 @@ Route::get('home-logado', 'ClinicaController@homeLogado');
 
 Route::post('participe', 'MensagemController@participe');
 
-Route::resource('clinicas','ClinicaController')->middleware('auth');
-Route::resource('profissionals','ProfissionalController')->middleware('auth');
-Route::resource('clientes', 'ClienteController')->middleware('auth');
-Route::resource('cargos','CargoController')->middleware('auth');
-Route::resource('menus','MenuController')->middleware('auth');
-Route::resource('itemmenus','ItemmenuController')->middleware('auth');
-Route::resource('perfilusers','PerfiluserController')->middleware('auth');
-Route::resource('permissaos','PermissaoController')->middleware('auth');
-Route::resource('agendamentos','AgendamentoController')->middleware('auth');
+//Route::resource('clinicas','ClinicaController')->middleware('auth');
+//Route::resource('profissionals','ProfissionalController')->middleware('auth');
+//Route::resource('clientes', 'ClienteController')->middleware('auth');
+//Route::resource('cargos','CargoController')->middleware('auth');
+//Route::resource('menus','MenuController')->middleware('auth');
+//Route::resource('itemmenus','ItemmenuController')->middleware('auth');
+//Route::resource('perfilusers','PerfiluserController')->middleware('auth');
+//Route::resource('permissaos','PermissaoController')->middleware('auth');
+//Route::resource('agendamentos','AgendamentoController')->middleware('auth');
 
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
@@ -82,7 +82,11 @@ Route::post('clinicas/{clinica}/edit/delete-consulta', 'ClinicaController@delete
 Route::post('add-dependente', 'PacienteController@addDependenteStore')->middleware('auth');
 Route::post('delete-dependente', 'PacienteController@deleteDependenteDestroy')->middleware('auth');
 
+Route::get('notificacoes','MensagemController@getListaNotificacoes')->middleware('auth');
+Route::get('notificacoes/visualizado/{id}','MensagemController@setStatusVisualizado')->middleware('auth');
+Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middleware('auth');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');

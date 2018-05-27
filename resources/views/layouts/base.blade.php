@@ -108,14 +108,23 @@
                                             <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span>Notificações </span><i class="fa fa-bell"></i>
                                                 <div class="numero-notificacoes">
-                                                    <span>0</span>
+                                                    <span>{{ $num_total_notificacoes }}</span>
                                                 </div>
                                             </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownNotificacoes">
+                                            <div class="dropdown-menu dropdownNotificacoes" aria-labelledby="dropdownNotificacoes">
                                                 <ul>
                                                     <li class="dropdown-item desativado">
-                                                        <span>Notificações</span>
+                                                        <span style="font-size: 14px;">Notificações</span>
                                                     </li>
+                                                    @for($i = 0; $i < sizeof($notificacoes_app); $i++)
+                            						<!-- item-->
+                            						<a href="javascript:void(0);" class="dropdown-item notify-item">
+                            							<div class="notify-icon @if($notificacoes_app[$i]->visualizado) bg-primary @else bg-success @endif">
+                            								<i class="fa @if($notificacoes_app[$i]->visualizado)  fa-envelope-open  @else fa-envelope-o @endif"></i>
+                            							</div>
+                            							<p class="notify-details">Contato <b>{{ $notificacoes_app[$i]->nome_remetente }}</b><br><small class="text-muted">{{ $notificacoes_app[$i]->time_ago }}</small></p>
+                            						</a>
+                            						@endfor
                                                     <!-- <li class="dropdown-item mensagens-menu">
                                                         <a href="#">O Dr. Hoje tem uma mensagem urgente. </a>
                                                         <span>Há 3 horas</span>
@@ -128,10 +137,14 @@
                                                         <a href="#">Sua CONSULTA ODONTOLÓGICA está agendada.</a>
                                                         <span>Há 2 semanas</span>
                                                     </li> -->
+                                                    @if(sizeof($notificacoes_app) > 0)
+                                                    <a href="/notificacoes" class="dropdown-item notify-item notify-all">Ver Tudo</a>
+                                                    @else
                                                     <li class="dropdown-item mensagens-menu">
                                                         <a href="#">NENHUM ENCONTRADA</a>
                                                         <!-- <span>Há 2 semanas</span> -->
                                                     </li>
+                                                    @endif
                                                 </ul>                                                
                                             </div>
                                         </div>

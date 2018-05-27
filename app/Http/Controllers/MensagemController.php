@@ -22,9 +22,10 @@ class MensagemController extends Controller
     }
     
     /**
-     * Consulta 
-     * 
-     * @return \Illuminate\View\View
+     * getListaNotificacoes a newly external user created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function getListaNotificacoes(){
         
@@ -32,9 +33,42 @@ class MensagemController extends Controller
         
         $mensagems = Mensagem::with('remetente')
             ->join('mensagem_destinatarios', function($join1) { $join1->on('mensagem_destinatarios.mensagem_id', '=', 'mensagems.id');})
-            ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')->where(DB::raw('mensagem_destinatarios.tipo_destinatario'), '=', 'CN')->orderBy('mensagem_destinatarios.updated_at', 'desc')->paginate(20);
+            ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')->where(DB::raw('mensagem_destinatarios.tipo_destinatario'), '=', 'PC')
+            ->orderBy('mensagem_destinatarios.created_at', 'desc')->paginate(20);
         
-        return view('mensagems.index', compact('mensagems'));
+       $total_notificacoes = Mensagem::with('remetente')
+            ->join('mensagem_destinatarios', function($join1) { $join1->on('mensagem_destinatarios.mensagem_id', '=', 'mensagems.id');})
+            ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')
+            ->orderBy('mensagem_destinatarios.updated_at', 'desc')
+            ->get();
+       
+        //dd($mensagems); 
+        return view('mensagems.index', compact('mensagems', 'total_notificacoes'));
+    }
+    
+    /**
+     * Marca notificaao como visualizada.
+     *
+     * @param integer $idMensagem
+     */
+    public function verNotificacao($idMensagem){
+        
+        $user_session = Auth::user();
+        
+        $mensagem = MensagemDestinatario::findorfail($idMensagem);
+        $mensagem->update(['visualizado'=>true]);
+        $mensagem->load('mensagem');
+        
+        $total_notificacoes = Mensagem::with('remetente')
+            ->join('mensagem_destinatarios', function($join1) { $join1->on('mensagem_destinatarios.mensagem_id', '=', 'mensagems.id');})
+            ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')
+            ->orderBy('mensagem_destinatarios.updated_at', 'desc')
+            ->get();
+        
+        $mensagem->mensagem->load('remetente');
+        $remetente = $mensagem->mensagem->remetente;
+        
+        return view('mensagems.show', compact('mensagem', 'total_notificacoes', 'remetente'));
     }
     
     /**

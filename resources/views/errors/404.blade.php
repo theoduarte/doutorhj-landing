@@ -116,7 +116,7 @@
                             </div>
                             <h2 class="h1">Desculpe! Página não encontrada.</h2>
                             <div class="action-link-wrap">
-                                <a onclick="history.back(-1)" href="" class="btn btn-light waves-effect waves-light m-t-20"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar Página anterior</a>
+                                <a onclick="history.back(-1)" href="javascript:void(0)" class="btn btn-light waves-effect waves-light m-t-20"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar Página anterior</a>
                                 <a href="" class="btn btn-secondary waves-effect waves-light m-t-20"><i class="fa fa-home" aria-hidden="true"></i> Ir para Home</a>
                             </div>
                         </div>

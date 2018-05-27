@@ -46,6 +46,25 @@
   padding-left: 50px;
 }
 
+.dropdownNotificacoes .notify-item .notify-icon {
+    float: left;
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    text-align: center;
+    margin-right: 10px;
+    border-radius: 50%;
+    color: #ffffff;
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: not-allowed;
+  text-decoration: none;
+  background-color: #ccc;
+  border-color: #ddd;
+}
+
 .form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #ccc;
 }
