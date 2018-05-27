@@ -33,7 +33,9 @@ class MenuComposer
 	    //--busca as notificacoes do paciente-----------------------
 	    $notificacoes_app = Mensagem::with('remetente')
     	    ->join('mensagem_destinatarios', function($join1) { $join1->on('mensagem_destinatarios.mensagem_id', '=', 'mensagems.id');})
-    	    ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')->where(DB::raw('mensagem_destinatarios.visualizado'), '=', 'false')
+    	    ->where(function ($query) use ($user_session) { $query->where('mensagem_destinatarios.destinatario_id', $user_session->id);})
+    	    ->where(DB::raw('mensagem_destinatarios.cs_status'), '=', 'A')
+    	    ->where(DB::raw('mensagem_destinatarios.visualizado'), '=', 'false')
     	    ->orderBy('mensagem_destinatarios.created_at', 'desc')
     	    ->limit(3)
     	    ->get();
