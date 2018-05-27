@@ -257,9 +257,14 @@ class PaymentController extends Controller
         	if ($valor_total > 200) {
         		$parcelamentos = [];
         	
-        		for ($i = 2; $i <= 3; $i++) {
-        			$item_valor =  $valor_parcelamento/$i;
-        			$valor_parcelamento[$i] = "$ix R$ ".number_format( $item_valor,  2, ',', '.');
+        		for ($i = 1; $i < 5; $i++) {
+        		    $item_valor =  $valor_parcelamento/$i;
+        		    
+        		    if ($i <= 3) {
+        		        $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+        		    } elseif ($i > 3) {
+        		        $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.0129,  2, ',', '.').' com juros (1,29% a.m.)';
+        		    }
         		}
         	}
         }
@@ -371,6 +376,13 @@ class PaymentController extends Controller
                 $agendamento->atendimento_id    = $item_agendamento->atendimento_id;
                 $agendamento->profissional_id   = $item_agendamento->profissional_id;
                 
+                //--busca o cupom de desconto------------
+                $cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
+                
+                if (sizeof($cupom_desconto) > 0) {
+                    $agendamento->cupom_id = $cupom_desconto->first()->id;
+                }
+                
                 if ($agendamento->save()) {
                     $agendamento_id = $agendamento->id;
                     $agendamento->load('atendimento');
@@ -425,6 +437,10 @@ class PaymentController extends Controller
                     		$cartao_paciente->paciente_id		= $paciente_id;
                     		 
                     		$cartao_paciente->save();
+                    		
+                    		//--relaciona o cartao do cliente ao pedido----------------
+                    		$pedido->cartao_id = $cartao_paciente->id;
+                    		$pedido->save();
                     	}
                     }
                     
@@ -445,17 +461,27 @@ class PaymentController extends Controller
             $pagamento->amount 					= $cielo_result->Payment->Amount;
             $pagamento->currency 				= $cielo_result->Payment->Currency;
             $pagamento->country 				= $cielo_result->Payment->Country;
-            $pagamento->service_tax_amount 		= $cielo_result->Payment->ServiceTaxAmount;
-            $pagamento->installments 			= $cielo_result->Payment->Installments;
-            $pagamento->interest 				= $cielo_result->Payment->Interest;
-            $pagamento->capture 				= $cielo_result->Payment->Capture;
-            $pagamento->authenticate 			= $cielo_result->Payment->Authenticate;
-            $pagamento->recurrent 				= $cielo_result->Payment->Recurrent;
-            $pagamento->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
-            $pagamento->crc_holder 				= $cielo_result->Payment->CreditCard->Holder;
-            $pagamento->crc_expiration_date 	= $cielo_result->Payment->CreditCard->ExpirationDate;
-            $pagamento->crc_save_card			= $cielo_result->Payment->CreditCard->SaveCard;
-            $pagamento->crc_brand 				= $cielo_result->Payment->CreditCard->Brand;
+            $pagamento->service_tax_amount 		= $tp_pagamento == 'credito' ? $cielo_result->Payment->ServiceTaxAmount : 0;
+            $pagamento->installments 			= 0;
+            $pagamento->interest 				= $tp_pagamento == 'credito' ? $cielo_result->Payment->Interest : '';
+            $pagamento->capture 				= $tp_pagamento == 'credito' ? $cielo_result->Payment->Capture : false;
+            $pagamento->authenticate 			= $tp_pagamento == 'credito' ? $cielo_result->Payment->Authenticate : false;
+            $pagamento->recurrent 				= $tp_pagamento == 'credito' ? $cielo_result->Payment->Recurrent : false;
+            $pagamento->soft_descriptor 		= $tp_pagamento == 'credito' ? $cielo_result->Payment->SoftDescriptor : '';
+            
+            if($tp_pagamento == 'credito') {
+                $pagamento->crc_card_number 	    = $cielo_result->Payment->CreditCard->CardNumber;
+                $pagamento->crc_holder 				= $cielo_result->Payment->CreditCard->Holder;
+                $pagamento->crc_expiration_date 	= $cielo_result->Payment->CreditCard->ExpirationDate;
+                $pagamento->crc_save_card			= $cielo_result->Payment->CreditCard->SaveCard;
+                $pagamento->crc_brand 				= $cielo_result->Payment->CreditCard->Brand;
+            } else {
+                $pagamento->dbc_card_number 	    = $cielo_result->Payment->DebitCard->CardNumber;
+                $pagamento->dbc_holder 				= $cielo_result->Payment->DebitCard->Holder;
+                $pagamento->dbc_expiration_date 	= $cielo_result->Payment->DebitCard->ExpirationDate;
+                $pagamento->crc_save_card			= $cielo_result->Payment->DebitCard->SaveCard;
+                $pagamento->dbc_brand 				= $cielo_result->Payment->DebitCard->Brand;
+            }
             $pagamento->cielo_result 			= $output;
             $pagamento->pedido_id 				= $cielo_result->MerchantOrderId;
             
@@ -482,12 +508,9 @@ class PaymentController extends Controller
             	$dbc_response = new DebitCardResponse();
             
             	$dbc_response->tid 					= $cielo_result->Payment->Tid;
-            	$dbc_response->proof_of_sale 		= isset($cielo_result->Payment->ProofOfSale) ? $cielo_result->Payment->ProofOfSale : '';
-            	$dbc_response->authorization_code 	= isset($cielo_result->Payment->AuthorizationCode) ? $cielo_result->Payment->AuthorizationCode : '';
-            	$dbc_response->soft_descriptor 		= $cielo_result->Payment->SoftDescriptor;
-            	$dbc_response->crc_status 			= $cielo_result->Payment->Status;
+            	$dbc_response->authentication_url 	= isset($cielo_result->Payment->AuthenticationUrl) ? $cielo_result->Payment->AuthenticationUrl : '';
+            	$dbc_response->dbc_status 			= $cielo_result->Payment->Status;
             	$dbc_response->return_code 			= $cielo_result->Payment->ReturnCode;
-            	$dbc_response->return_message 		= $cielo_result->Payment->ReturnMessage;
             	$dbc_response->payment_id 			= $pagamento->id;
             
             	$dbc_response->save();
@@ -554,7 +577,8 @@ class PaymentController extends Controller
     	if (!$agendamento_atendimento) {
     		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
     	}
-    
+    	
+    	//--verifica se eh credito ou debito---------------
     	$tp_pagamento = CVXRequest::post('tipo_pagamento');
     	
     	$cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
@@ -571,7 +595,28 @@ class PaymentController extends Controller
     
     	//-- determina o numero de parcelas -------
     	$valor_parcelamento = $valor_total-$valor_desconto;
-    
+    	
+    	
+    	$parcelamentos = array(
+    	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
+    	);
+    	
+    	if ($tp_pagamento == 'credito') {
+    	    if ($valor_total > 200) {
+    	        $parcelamentos = [];
+    	        
+    	        for ($i = 1; $i < 5; $i++) {
+    	            $item_valor =  $valor_parcelamento/$i;
+    	            
+    	            if ($i <= 3) {
+    	                $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+    	            } elseif ($i > 3) {
+    	                $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.0129,  2, ',', '.').' com juros (1,29% a.m.)';
+    	            }
+    	        }
+    	    }
+    	}
+    	
     	$pedido = new Pedido();
     	$titulo_pedido = CVXRequest::post('titulo_pedido');
     	$descricao = '';
@@ -598,6 +643,7 @@ class PaymentController extends Controller
     	$customer = Paciente::findorfail($paciente_id);
     	$customer->load('user');
     	$customer->load('documentos');
+    	$customer->load('contatos');
     
     	$customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
     	$customer_identity              = $customer->documentos->first()->te_documento;
@@ -610,7 +656,7 @@ class PaymentController extends Controller
     	$payment_currency               = 'BRL';
     	$payment_country                = 'BRA';
     	
-    	$payment_installments           = 1;
+    	$payment_installments           = sizeof($parcelamentos);
     	$payment_softdescriptor         = 'DoctorHoje';
     	$payment_card_token       		= $cartao_cadastrado->card_token; 
     	$payment_holder                 = $cartao_cadastrado->nome_impresso;
@@ -651,6 +697,13 @@ class PaymentController extends Controller
     			$agendamento->clinica_id        = $item_agendamento->clinica_id;
     			$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
     			$agendamento->profissional_id   = $item_agendamento->profissional_id;
+    			
+    			//--busca o cupom de desconto------------
+    			$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
+    			
+    			if (sizeof($cupom_desconto) > 0) {
+    			    $agendamento->cupom_id = $cupom_desconto->first()->id;
+    			}
     
     			if ($agendamento->save()) {
     				$agendamento_id = $agendamento->id;
@@ -683,6 +736,14 @@ class PaymentController extends Controller
     
     				array_push($result_agendamentos, $agendamento);
     				
+    				//--relaciona o cartao do cliente ao pedido----------------
+    				$pedido->cartao_id = $cartao_cadastrado->id;
+    				$pedido->save();
+    				
+    				//--enviar mensagem informando o pre agendamento da solicitacao----------------
+    				try {
+    				    $this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
+    				} catch (Exception $e) {}
     			}
     
     		}
@@ -767,6 +828,31 @@ class PaymentController extends Controller
         $percentual = $cupom_desconto->first()->percentual/100;
         
         return $percentual;
+    }
+    
+    /**
+     * buscaCupomDesconto a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function buscaCupomDesconto($cod_cupom_desconto)
+    {
+        $cupom_desconto = [];
+        
+        if ($cod_cupom_desconto == '') {
+            return $cupom_desconto;
+        }
+        
+        $ct_date = date('Y-m-d H:i:s');
+        
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        
+        if($cupom_desconto === null) {
+            return $cupom_desconto;
+        }
+        
+        return $cupom_desconto;
     }
     
     
@@ -871,6 +957,7 @@ class PaymentController extends Controller
     	$mensagem_cliente->rma_nome     	= 'Contato DoctorHoje';
     	$mensagem_cliente->rma_email       	= 'contato@doctorhoje.com.br';
     	$mensagem_cliente->assunto     		= 'Pré-Agendamento Solicitado';
+    	$mensagem_cliente->conteudo     	= "<h4>Seu Pré-Agendamento:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>Horário: $hora_agendamento (por ordem de chegada)</li><li>Endereço: $endereco_agendamento</li></ul>";
     	$mensagem_cliente->save();
     	
     	$destinatario                      = new MensagemDestinatario();

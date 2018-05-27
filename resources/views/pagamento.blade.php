@@ -420,7 +420,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
-                                                <div class="dados-resumo">
+                                                <div id="resumo_parcelamento" class="dados-resumo">
                                                     <!-- <p>10x com juros (1,29% a.m.) de R$ 48,50</p> -->
                                                     <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
                                                 </div>
@@ -517,6 +517,7 @@
 
                 	var codigo = $('#inputCupom').val();
                 	var activeCupom = localStorage.getItem('activeCupom');
+                	var valor_total = $('#valor_servicos').val();
                 	
                     if(codigo.length == 0 | activeCupom == 't') { return false; }
 
@@ -526,21 +527,30 @@
                 		   url: '/validar-cupom-desconto',
                 		   data: {
                 			   'codigo': codigo,
+                			   'valor_parcelamento': valor_total,
                 			   '_token': laravel_token
                 		   },
                 		   timeout: 15000,
                 		   success: function (result) {
                 			   
                     		   if(result.status) {
-
-                        		   var valor_total = $('#valor_servicos').val();
+                        		   
                         		   var desconto = valor_total*result.percentual;
                         		   var valor_com_desconto = valor_total-desconto;
+                        		   var parcelamentos = result.parcelamentos;
                         		   
                         		   //localStorage.setItem('activeCupom', 'f');
                         		   $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
                         		   $('#valor_desconto').parent().find('p').html('- R$ '+numberToReal(desconto));
                         		   $('.valor-total-produtos').find('p').html('- R$ '+numberToReal(valor_com_desconto));
+
+                        		   $('#selectParcelamentoCredito').empty();
+               						for(var i=0; i < parcelamentos.length; i++) {
+               							var option = '<option value="'+(i+1)+'">'+parcelamentos[i]+'</option>';
+               							$('#selectParcelamentoCredito').append($(option));
+               						}
+
+               						$('#resumo_parcelamento p').html(result.resumo_parcelamento);
                         		   
                         		} else {
                             	

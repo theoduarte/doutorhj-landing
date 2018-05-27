@@ -720,6 +720,8 @@ function pagarCartaoCadastrado() {
 	var final_cartao 	= $('#inputNumFinalSaveCard');
 	var dt_validade 	= $('#inputExpirationDateSaveCard');
 	var cod_seg 		= $('#inputCodigoSegSaveCard');
+	var parcelamento 	= $('#selectParcelamentoCredito');
+	var cupom_desconto 	= $('#inputCupom');
 	var pacientes		= $('.paciente_agendamento_id');
 	
 	if(cartao_id.val().length == 0) {
@@ -813,6 +815,7 @@ function pagarCartaoCadastrado() {
 			   'final_cartao_credito': final_cartao_credito,
 			   'validade_cartao_credito': validade_cartao_credito,
 			   'cod_seg_cartao': cod_seg_cartao_credito,
+			   'cod_cupom_desconto': cod_cupom_desconto,
 			   'agendamentos': agendamentos,
 			   '_token': laravel_token
 		   },

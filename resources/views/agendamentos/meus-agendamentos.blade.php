@@ -95,9 +95,9 @@
                                 <p class="tit-token">Token</p>
                                 <p class="txt-token">Apresente este código no momento da consulta</p>
                                 <div class="area-token">
-                                    <p id="token_{{ $agendamento->id }}" class="token">{{ $agendamento->te_ticket }}</p>
+                                    <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
                                     <p>
-                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton">Copiar</button>
+                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >Copiar</button>
                                         <br>
                                         <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
                                         
@@ -110,7 +110,7 @@
                                     <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
-                                    <div class="dropdown-menu ddm-opcoes">
+                                    <div class="dropdown-menu ddm-opcoes"  >
                                         <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
                                         <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
 
@@ -344,7 +344,8 @@
             }
 
             function cancelarAgendamento(input, agendamento_id) {
-
+                var cancelamento_result = false;
+                var cancelamento_mensagem = '';
             	swal({
                     title: '<div class="tit-sweet tit-question"><i class="fa fa-question-circle" aria-hidden="true"></i> Atenção</div>',
                     html: '<span style="margin-bottom: 10px;">Tem certeza que deseja Solicitar o Cancelamento deste Agendamento?</span>',
@@ -382,18 +383,18 @@
                         				  
                         				  $('#resultAgendamento').val('true');
                                           $('#messageAgendamento').val(result.mensagem);
-                                      	  $('#status_agendamento_'+agendamento.id).attr('class', 'status cancelado').html('Cancelado');
-                                      	  $('#btn_remarcar_agendamento_'+agendamento.id).remove();
+//                                       	  $('#status_agendamento_'+agendamento.id).attr('class', 'status cancelado').html('Cancelado');
+//                                       	  $('#btn_remarcar_agendamento_'+agendamento.id).remove();
                                           
-                                          $('#dia_'+agendamento.id).html(agendamento.dia_agendamento);
-                                          $('#mes_'+agendamento.id).html(agendamento.mes_agendamento);
-                                          $('#hora_'+agendamento.id).html(agendamento.hora_agendamento);
-                                      	  
+//                                           $('#dia_'+agendamento.id).html(agendamento.dia_agendamento);
+//                                           $('#mes_'+agendamento.id).html(agendamento.mes_agendamento);
+//                                           $('#hora_'+agendamento.id).html(agendamento.hora_agendamento);
+                                          cancelamento_result = true;
                         			  } else {
                         				  $('#resultAgendamento').val('false');
                                           $('#messageAgendamento').val(result.mensagem);
                         			  }
-                        			  
+                        			  cancelamento_mensagem = result.mensagem;
                         			  resolve();
                         		  },
                         		  error: function (result) {
@@ -408,18 +409,18 @@
                     var mensagem = $('#messageAgendamento').val();
 
                 	
-                	if(result == 'true') {
+                	if(cancelamento_result) {
                     	swal(
                            {
                                title: '<div class="tit-sweet tit-success"><i class="fa fa-check-circle" aria-hidden="true"></i> Sucesso!</div>',
-                               text: mensagem
+                               text: cancelamento_mensagem
                            }
                         );
-                	} else if(result == 'false') {
+                	} else if(!cancelamento_result) {
                 		swal(
                         	{
                             	title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                            	text: mensagem
+                            	text: 'Sua Solicitação falhou. Por favor, tente novamente.'
                             }
                         );
                 	}

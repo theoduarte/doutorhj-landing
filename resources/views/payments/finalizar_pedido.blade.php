@@ -34,7 +34,8 @@
                                                     </div>
                                                     <div class="numero-token col-12 col-sm-5">
                                                         <div>
-                                                            <span>TOKEN DE ATENDIMENTO: {{ $agendamento->te_ticket }}</span>
+                                                            <?php /* <span>TOKEN DE ATENDIMENTO: {{ $agendamento->te_ticket }}</span> */ ?>
+                                                            <span>●●●●●●</span>
                                                         </div>
                                                     </div>
                                                 </div>
