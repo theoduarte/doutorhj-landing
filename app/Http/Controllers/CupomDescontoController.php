@@ -139,9 +139,11 @@ class CupomDescontoController extends Controller
                 $item_valor =  $valor_parcelamento/$i;
                 
                 if ($i <= 3) {
-                    $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+                    $index_parcelamento = $i+1;
+                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
                 } elseif ($i > 3) {
-                    $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.0129,  2, ',', '.').' com juros (1,29% a.m.)';
+                    $index_parcelamento = $i+1;
+                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (1,05% a.m.)';
                 }
             }
         }
@@ -151,6 +153,7 @@ class CupomDescontoController extends Controller
 
         
         $resumo_parcelamento = $parcelamentos[sizeof($parcelamentos)-1];
+        //dd($parcelamentos);
                 
         return response()->json(['status' => true, 'mensagem' => 'O Cupom foi encontrado com sucesso!', 'percentual' => $percentual, 'resumo_parcelamento' => $resumo_parcelamento, 'parcelamentos' => $parcelamentos]);
     }

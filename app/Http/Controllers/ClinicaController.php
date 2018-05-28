@@ -726,7 +726,7 @@ class ClinicaController extends Controller
     	        if ($i <= 3) {
     	            $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
     	        } elseif ($i > 3) {
-    	            $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.0129,  2, ',', '.').' com juros (1,29% a.m.)';
+    	            $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (5% a.m.)';
     	        }
     	    }
     	}

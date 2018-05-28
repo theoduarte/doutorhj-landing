@@ -421,7 +421,7 @@
                                             </div>
                                             <div class="col-md-7">
                                                 <div id="resumo_parcelamento" class="dados-resumo">
-                                                    <!-- <p>10x com juros (1,29% a.m.) de R$ 48,50</p> -->
+                                                    <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
                                                     <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
                                                 </div>
                                             </div>
@@ -505,12 +505,18 @@
                 });
 
                 $('#inputNumeroCartaoCredito').keydown(function(){
-                    if($(this).val().length == 16) {
+                    if($(this).val().length >= 15) {
+                    	//alert($(this).val());
                         var num_cartao = $('#inputNumeroCartaoCredito').val();
                         $('#resumo_compra_final_cartao').html(num_cartao.substr(-4));
                     } else {
                     	$('#resumo_compra_final_cartao').html('XXXX');
                     }
+                });
+
+                $('#inputNumeroCartaoCredito').blur(function(){
+                	var num_cartao = $(this).val();
+                	$('#resumo_compra_final_cartao').html(num_cartao.substr(-4));
                 });
 
                 $('#btn-validar-cupom').click(function(){
