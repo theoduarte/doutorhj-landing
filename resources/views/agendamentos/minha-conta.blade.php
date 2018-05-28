@@ -409,7 +409,7 @@
                                                             </div>
                                                             <div class="col-sm-3">
                                                                 <p class="valor">R$
-                                                                    <span>{{ $agendamento->atendimento->getVlComercialAtendimento() }}</span>
+                                                                    <span>{{ $agendamento->valor_total }}</span>
                                                                 </p>
                                                             </div>
                                                         </div>

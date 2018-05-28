@@ -472,6 +472,7 @@ class AgendamentoController extends Controller
                 $agendamentos_home[$i]->itempedidos->first()->load('pedido');
                 $agendamentos_home[$i]->itempedidos->first()->pedido->load('pagamentos');
                 $agendamentos_home[$i]->valor_total = sizeof($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
+                $agendamentos_home[$i]->data_pagamento = sizeof($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
             }
             
         }
@@ -626,6 +627,8 @@ class AgendamentoController extends Controller
         
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');
+        	$agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
+        	$agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
         }
         
         return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
