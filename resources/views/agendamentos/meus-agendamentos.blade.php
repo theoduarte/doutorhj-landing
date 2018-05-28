@@ -88,7 +88,7 @@
                                 </div>
                                 <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
                                 <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>
+                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span> <span class="dt-pagamento">pago em 28/05/2018</span></p>
                                 <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                             </div>
                             <div class="col col-lg-4">
