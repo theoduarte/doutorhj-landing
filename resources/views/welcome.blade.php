@@ -54,7 +54,7 @@
                             <div class="link-agendamentos">
                                 <p>Não se esqueça da sua<br> próxima consulta e/ou exame</p>
                                 <button type="button" class="btn btn-light"
-                                        onclick="window.location.href='{{ route("meus-agendamentos") }}'">Meus
+                                        onclick="window.location.href='{{ route("meus-agendamentos") }}'">Ver meus
                                     agendamentos
                                 </button>
                             </div>
@@ -65,22 +65,23 @@
                                     <div class="proxima-consulta col-sm-12 col-md-6">
                                         <div class="area-pc">
                                             <div class="tit-pc">
-                                                <p>Sua próxima consulta é</p>
-                                                <p class="data-consulta">{{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
-                                                    de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}</p>
-                                                <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                    hora(s)
-                                                    @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
-                                                        e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                        minuto(s) @endif</span>
+                                                {{--<p>Sua próxima consulta é</p>--}}
+                                                <p class="data-consulta">Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+                                                    de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                    às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                        hora(s)
+                                                        @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
+                                                            e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                            minuto(s) @endif</span></p>
+
                                             </div>
                                             <div class="resumo">
                                                 <div class="nome-status">
                                                     <div class="row">
-                                                        <div class="col-lg-7">
+                                                        <div class="col-6">
                                                             <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
                                                         </div>
-                                                        <div class="col-lg-5">
+                                                        <div class="col-6">
                                                             @if($agendamento->getRawCsStatusAttribute() == 10)
                                                                 <span class="status pre-agendado">Pré-Agendado</span>
                                                             @elseif($agendamento->getRawCsStatusAttribute() == 20)
@@ -101,12 +102,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <p class="tipo">{{ $agendamento->atendimento->ds_preco }}
-                                                    <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
-                                                <p class="profissional">
+                                                <p class="tipo">
+                                                    <span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
+                                                    <br>
+                                                    <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
+                                                </p>
+                                                {{--<p class="profissional">
                                                     Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>
-                                                <p class="endereco">{{ $agendamento->endereco_completo }}</p>
+                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+                                                <p class="endereco"><strong>Endereço:</strong> {{ $agendamento->endereco_completo }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +124,7 @@
                 <div class="container">
                     <div class="titulo">Saúde Hoje</div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
                                 <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
                                      alt="Card image cap">
@@ -137,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
                                 <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
                                      alt="Card image cap">
@@ -151,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
                                 <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
                                      alt="Card image cap">

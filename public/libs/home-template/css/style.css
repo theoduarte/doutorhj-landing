@@ -2227,6 +2227,8 @@ header .nav-item-mobile {
     text-transform: uppercase;
     color: rgb(158, 39, 49);
     font-weight: 600;
+    -webkit-box-shadow: 0 3px 0 1px rgb(113, 19, 29);
+    box-shadow: 0 3px 0 1px rgb(113, 19, 29);
 }
 
 .box-resumo-home .proxima-consulta {
@@ -2234,13 +2236,14 @@ header .nav-item-mobile {
 }
 
 .box-resumo-home .proxima-consulta .area-pc {
-    padding: 40px 30px;
+    padding: 20px;
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
 }
 
 .box-resumo-home .proxima-consulta .data-consulta {
-    font-size: 48px;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .box-resumo-home .proxima-consulta .tit-pc {
@@ -2251,22 +2254,34 @@ header .nav-item-mobile {
     padding: 0 0 15px 0;
 }
 
+.box-resumo-home .proxima-consulta .nome-status {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.box-resumo-home .proxima-consulta .nome-status p {
+    line-height: 36px;
+}
+
 .box-resumo-home .proxima-consulta .tit-pc p {
     margin-bottom: 0;
 }
 
 .box-resumo-home .proxima-consulta .beneficiario {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 600;
     color: rgb(10, 10, 10);
     text-transform: uppercase;
+    margin: 0;
 }
 
 .box-resumo-home .proxima-consulta .tipo,
 .box-resumo-home .proxima-consulta .profissional {
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 28px;
     color: rgb(111, 111, 111);
+    margin-bottom: 0;
 }
 
 .box-resumo-home .proxima-consulta .valor {
@@ -2279,6 +2294,7 @@ header .nav-item-mobile {
     font-size: 14px;
     color: rgb(111, 111, 111);
     margin-bottom: 0;
+    line-height: 28px;
 }
 
 .box-resumo-home .proxima-consulta .status {
@@ -2294,7 +2310,7 @@ header .nav-item-mobile {
 }
 
 .box-resumo-home .proxima-consulta .resumo {
-    border: 1px solid rgb(120, 120, 120);
+    border: 1px solid rgb(208, 208, 208);
     border-radius: 5px;
     padding: 20px;
 }
@@ -2326,6 +2342,10 @@ header .nav-item-mobile {
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 60px;
+}
+
+.box-noticias-home .card-post {
+    margin-bottom: 30px;
 }
 
 .box-noticias-home .card .card-body .card-title {
@@ -3164,6 +3184,10 @@ footer ul li a:hover {
 
     .card-resumo-compra .card-header .valor-produto {
         text-align: left;
+    }
+    .box-resumo-home .proxima-consulta .data-consulta {
+        font-size: 18px;
+        font-weight: 700;
     }
 }
 
