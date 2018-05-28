@@ -9,7 +9,7 @@
 @section('content')
     <section class="area-busca-interna minha-conta">
         <div class="container">
-            <div class="busca-home">
+            {{--<div class="busca-home">
                 <div class="titulo">
                     <span>Quero agendar</span>
                 </div>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>--}}
             <div class="box-minha-conta">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-3 menu">
