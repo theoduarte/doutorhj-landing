@@ -144,6 +144,27 @@ p {
 * 
 *********************************/
 
+.mensagem-cupom {
+    text-align: center;
+    padding: 10px;
+    background: rgb(25, 118, 188);
+    background: -moz-linear-gradient(left, #40bbff 0%, #1976bc 100%);
+    background: -webkit-linear-gradient(left, #40bbff 0%, #1976bc 100%);
+    background: linear-gradient(to right, #40bbff 0%, #1976bc 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40bbff', endColorstr='#1976bc', GradientType=1);
+}
+
+.mensagem-cupom p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.mensagem-cupom p span {
+    font-weight: 700;
+}
+
 header {
     padding: 40px 0 0 0;
 }
@@ -2213,7 +2234,7 @@ header .nav-item-mobile {
 
 .box-resumo-home .link-agendamentos {
     text-align: center;
-    padding: 0 0 100px 0;
+    padding: 0 0 60px 0;
 }
 
 .box-resumo-home .link-agendamentos p {
@@ -2233,6 +2254,13 @@ header .nav-item-mobile {
 
 .box-resumo-home .proxima-consulta {
     padding-bottom: 30px;
+}
+
+.box-resumo-home .tit-pc {
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-size: 22px;
+    margin-bottom: 40px;
 }
 
 .box-resumo-home .proxima-consulta .area-pc {

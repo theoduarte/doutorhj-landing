@@ -75,7 +75,10 @@
                     <div class="spinner"></div>
                 </div>
             </div>
-        </div>  -->        
+        </div>  -->
+        <div class="mensagem-cupom">
+            <p>Não perca a oportunidade de ganhar um desconto em sua primeira consulta! Use o cupom de desconto: <span>DOCTOR10</span></p>
+        </div>
         <header>
         	@if (Auth::check())
         	<nav class="navbar navbar-expand-xl">
