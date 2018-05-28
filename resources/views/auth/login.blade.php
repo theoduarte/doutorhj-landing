@@ -23,7 +23,7 @@
                             <div class="card-body">
                                 <span class="card-span">Celular obrigatório para o login.</span>
                                 <h5 class="card-title">Dados de acesso</h5>
-                                <form action="{{ route('login') }}" method="post">
+                                <form action="{{ route('login') }}" method="post" onsubmit="return validaCriarConta()">
 
                                     {{ csrf_field() }}
 
@@ -498,6 +498,15 @@
                     $('#btn-criar-conta').find('#lbl-criar-conta').html('Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                     $('#btn-criar-conta').removeAttr('disabled');
                 }, 30000);
+
+                return true;
+            }
+
+            function validaCriarConta() {
+
+                if ($('#inputEmailTelefone').val().length == 0) return false;
+                if ($('#input_hidden_EmailTelefone').val().length == 0) return false;
+                if ($('#inputToken').val().length == 0) return false;
 
                 return true;
             }

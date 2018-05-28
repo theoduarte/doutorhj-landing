@@ -363,8 +363,8 @@ class AgendamentoController extends Controller
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
     				'current_url' 			=> $url
     		);
-    		
-    		if (sizeof($paciente) > 0) {
+    		//dd($paciente);
+    		if (!empty($paciente)) {
     			array_push($carrinho, $item_carrinho);
     		} else {
     			CVXCart::remove($item_carrinho['item_id']);
