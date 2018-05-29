@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box-noticias-home">
+            {{--<div class="box-noticias-home">
                 <div class="container">
                     <div class="titulo">Saúde Hoje</div>
                     <div class="row">
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </section>
     @else
         <section>
