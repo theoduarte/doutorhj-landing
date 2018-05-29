@@ -234,6 +234,7 @@ class EspecialidadeController extends Controller
 	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
 	    		->join('consultas', 		function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
 	    		->select('enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
+	    		->where('clinicas.cs_status', '=', 'A')
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
@@ -259,7 +260,7 @@ class EspecialidadeController extends Controller
 	    		->join('profissionals', 	function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
 	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
 	    		->join('consultas', 		function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
-	    		->whereNotIn('enderecos.id', $list_endereco_ids)
+	    		->whereNotIn('enderecos.id', $list_endereco_ids)->where('clinicas.cs_status', '=', 'A')
 	    		->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
@@ -288,6 +289,7 @@ class EspecialidadeController extends Controller
 	    		->join('atendimentos', 		function ($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
 	    		->join('procedimentos', 	function ($join6) use ($procedimento_id) {$join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
 	    		->select('enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
+	    		->where('clinicas.cs_status', '=', 'A')
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
@@ -317,7 +319,7 @@ class EspecialidadeController extends Controller
 	    		->join('profissionals', 	function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
 	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
 	    		->join('procedimentos', 	function($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
-	    		->whereNotIn('enderecos.id', $list_endereco_ids)
+	    		->whereNotIn('enderecos.id', $list_endereco_ids)->where('clinicas.cs_status', '=', 'A')
 	    		->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
@@ -370,6 +372,7 @@ class EspecialidadeController extends Controller
                 ->join('consultas',             function ($join6) use ($consulta_id) {$join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
             // ->join('consultas', function($join6) use ($atendimento_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('consultas.id', '=', DB::raw($procedimento_id));})
                 ->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
+                ->where('clinicas.cs_status', '=', 'A')
                 ->distinct()
                 ->get();
             
