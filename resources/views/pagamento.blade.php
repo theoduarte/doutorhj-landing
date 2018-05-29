@@ -548,7 +548,7 @@
                         		   //localStorage.setItem('activeCupom', 'f');
                         		   $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
                         		   $('#valor_desconto').parent().find('p').html('- R$ '+numberToReal(desconto));
-                        		   $('.valor-total-produtos').find('p').html('- R$ '+numberToReal(valor_com_desconto));
+                        		   $('.valor-total-produtos').find('p').html('R$ '+numberToReal(valor_com_desconto));
 
                         		   $('#selectParcelamentoCredito').empty();
                						for(var i=0; i < parcelamentos.length; i++) {
