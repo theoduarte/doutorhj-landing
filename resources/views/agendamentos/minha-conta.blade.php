@@ -964,6 +964,19 @@
 
             /*********************************
              *
+             * APAGA MENSAGEM
+             *
+             *********************************/
+
+            $(".close-div").on("click", function (event) {
+                event.preventDefault();
+                if (confirm("Tem certeza que deseja apagar essa mensagem?")) {
+                    $(this).parent().parent().parent().remove();
+                }
+            });
+
+            /*********************************
+             *
              * SWITCHERY
              *
              *********************************/
@@ -992,19 +1005,6 @@
             var elem = document.querySelector('.mobile-cancelamento');
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
-            });
-
-            /*********************************
-             *
-             * APAGA MENSGEM
-             *
-             *********************************/
-
-            $(".close-div").on("click", function (event) {
-                event.preventDefault();
-                if (confirm("Tem certeza que deseja apagar essa mensagem?")) {
-                    $(this).parent().parent().parent().remove();
-                }
             });
         </script>
 
