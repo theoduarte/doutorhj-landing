@@ -77,7 +77,7 @@
             </div>
         </div>  -->
         <div class="mensagem-cupom">
-            <p>Não perca a oportunidade de ganhar um desconto em sua primeira consulta! Use o cupom de desconto: <span>DOCTOR10</span></p>
+            <p>Agende <span>agora</span> sua <span>1ª consulta</span> e GANHE 10% de <span>desconto</span>. Aproveite, por tempo limitado! Use o cupom de desconto: <span>DOCTOR10</span></p>
         </div>
         <header>
         	@if (Auth::check())
