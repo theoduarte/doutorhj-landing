@@ -504,11 +504,11 @@
                                         <span>Quais notificações deseja receber por E-mail?</span>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleLembrete" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
                                         </div>
                                     </div>
@@ -518,16 +518,16 @@
                                                 ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleConfirmacao" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleCancelamento" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
 
                                         </div>
@@ -537,31 +537,30 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou
                                                 exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleLembreteMobile" data-plugin="switchery" data-color="#3bafda" data-size="small">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de
                                                 consulta ou exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleConfirmacaoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="tit-opc-not col-md-9 col-lg-5">
+                                        <div class="tit-opc-not col-9 col-md-9 col-lg-5">
                                             <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de
                                                 consulta ou exame</label>
                                         </div>
-                                        <div class="col-md-3 col-lg-2">
+                                        <div class="col-3 col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleCancelamentoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small">
-
                                         </div>
                                     </div>
                                 </div>
@@ -997,7 +996,7 @@
 
             /*********************************
              *
-             * REMOVE PRODUTO
+             * APAGA MENSGEM
              *
              *********************************/
 
