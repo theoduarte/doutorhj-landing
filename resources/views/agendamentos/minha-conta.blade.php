@@ -484,17 +484,13 @@
                                             </div>
                                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                                 <div class="card-body">
-                                                    <p class="titulo">Informações sobre seu Pré-Agendamento</p>
-                                                    <ul>
-                                                        <li>Nº do Pedido: <span>0000000031</span></li>
-                                                        <li>Especialidade/exame: <span>CIRURGIA GERAL | CIRURGIA VIDEOLAPAROSCÓPICA | COLOPROCTOLOGIA</span>
-                                                        </li>
-                                                        <li>Dr(a): <span>ANDRÉ ARAÚJO DE MEDEIROS SILVA</span></li>
-                                                        <li>Data: <span>16 de Junho / Sábado</span></li>
-                                                        <li>Horário: <span>12:00 (por ordem de chegada)</span></li>
-                                                        <li>Endereço: <span>QNE 05 LOTE 13, TAGUATINGA NORTE (TAGUATINGA), Brasília/ DF</span>
-                                                        </li>
-                                                    </ul>
+                                                    <p class="titulo">Olá, Theogenes</p>
+                                                    <p class="texto">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                                        elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna.
+                                                        In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed
+                                                        pretium, ligula sollicitudin laoreet viverra, tortor libero
+                                                        sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut
+                                                        justo. Suspendisse potenti.</p>
                                                     <button type="button" class="close-div btn btn-secondary" title="Apagar mensagem">
                                                         <i class="fa fa-trash" aria-hidden="true"></i></button>
                                                 </div>
@@ -505,11 +501,12 @@
 
                                 <div class="opcoes-notificacao">
                                     <div class="tit-opcoes-notificacao">
-                                        <span>Por E-mail</span>
+                                        <span>Quais notificações deseja receber por E-mail?</span>
                                     </div>
                                     <div class="row">
                                         <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou  exame</label>
+                                            <label for="toggleLembrete"><strong>Lembrete</strong> de consulta ou
+                                                exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleLembrete" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
@@ -527,7 +524,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou exame</label>
+                                            <label for="toggleCancelamento"><strong>Cancelamento</strong> de consulta ou
+                                                exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleCancelamento" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
@@ -535,20 +533,22 @@
                                         </div>
                                     </div>
                                     <div class="tit-opcoes-notificacao tit-not-mob">
-                                        <span>No Celular</span>
+                                        <span>Quais notificações deseja receber no Celular?</span>
                                     </div>
                                     <div class="row">
 
                                         <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou exame</label>
+                                            <label for="toggleLembreteMobile"><strong>Lembrete</strong> de consulta ou
+                                                exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input type="checkbox" id="toggleLembreteMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" >
+                                            <input type="checkbox" id="toggleLembreteMobile" data-plugin="switchery" data-color="#3bafda" data-size="small">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de consulta ou exame</label>
+                                            <label for="toggleConfirmacaoMobile"><strong>Confirmação</strong> de
+                                                consulta ou exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
                                             <input type="checkbox" id="toggleConfirmacaoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" checked>
@@ -556,10 +556,11 @@
                                     </div>
                                     <div class="row">
                                         <div class="tit-opc-not col-md-9 col-lg-5">
-                                            <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de consulta ou exame</label>
+                                            <label for="toggleCancelamentoMobile"><strong>Cancelamento</strong> de
+                                                consulta ou exame</label>
                                         </div>
                                         <div class="col-md-3 col-lg-2">
-                                            <input type="checkbox" id="toggleCancelamentoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small" >
+                                            <input type="checkbox" id="toggleCancelamentoMobile" data-plugin="switchery" data-color="#3bafda" data-size="small">
 
                                         </div>
                                     </div>
@@ -1000,9 +1001,9 @@
              *
              *********************************/
 
-            $(".close-div").on("click", function(event) {
+            $(".close-div").on("click", function (event) {
                 event.preventDefault();
-                if(confirm("Tem certeza que deseja apagar essa mensagem?")) {
+                if (confirm("Tem certeza que deseja apagar essa mensagem?")) {
                     $(this).parent().parent().parent().remove();
                 }
             });

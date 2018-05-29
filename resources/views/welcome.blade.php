@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <p class="tit-pc">Resumo dos próximos agendamentos</p>
+                            <p class="tit-box-pc">Resumo dos próximos agendamentos</p>
                             <div class="row">
                                 @foreach($agendamentos_home as $agendamento)
                                     <div class="proxima-consulta col-sm-12 col-md-6">

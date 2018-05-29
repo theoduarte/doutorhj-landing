@@ -1841,7 +1841,7 @@ header .nav-item-mobile {
 
 .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opcoes-notificacao {
     color: rgb(70, 117, 184);
-    font-size: 16px;
+    font-size: 15px;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 20px;
@@ -1997,7 +1997,7 @@ header .nav-item-mobile {
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .visa {
-    background-position: center -58;
+    background-position: center -58px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .master {
@@ -2318,7 +2318,7 @@ header .nav-item-mobile {
     padding-bottom: 30px;
 }
 
-.box-resumo-home .tit-pc {
+.box-resumo-home .tit-box-pc {
     text-align: center;
     color: rgb(255, 255, 255);
     font-size: 22px;
