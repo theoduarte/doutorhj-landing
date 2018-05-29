@@ -787,6 +787,7 @@ function pagarCartaoCadastrado() {
 	var final_cartao_credito = final_cartao.val();
 	var validade_cartao_credito = dt_validade.val();
 	var cod_seg_cartao_credito = cod_seg.val();
+	var cod_cupom_desconto = $('#inputCupom').val();
 	
 	if(!result) {
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
