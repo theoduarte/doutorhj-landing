@@ -207,6 +207,7 @@
     @include('flash-message')
     @yield('content')
 
+	@if (!Auth::check())
     <footer class="footer-default">
         <div class="container">
             <div class="area-logo-rodape">
@@ -498,7 +499,9 @@
             </div>
         </div>
     </footer>
+    @endif
 
+	@if (Auth::check())
     <footer class="footer-logado">
         <div class="container">
             <div class="area-logo-rodape">
@@ -769,7 +772,8 @@
             </div>
         </div>
     </footer>
-
+    @endif
+    
 </div>
 @push('scripts')
     <script>
