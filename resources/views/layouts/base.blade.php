@@ -10,7 +10,7 @@
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
-    <title>@yield('title', 'Doutor HJ')</title>
+    <title>@yield('title', 'Doctor HJ')</title>
 
 @push('style')
 
@@ -83,7 +83,7 @@
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
-                        <h1>Doutor Hoje</h1>
+                        <h1>Doctor Hoje</h1>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
@@ -174,7 +174,7 @@
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
-                        <h1>Doutor Hoje</h1>
+                        <h1>Doctor Hoje</h1>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
@@ -182,7 +182,7 @@
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#area-sobre">O que é o Doutor Hoje?</a>
+                                <a class="nav-link" href="#area-sobre">O que é o Doctor Hoje?</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#como-funciona">Como funciona?</a>
@@ -225,7 +225,7 @@
                 <div class="col-sm-6 col-md-3">
                     <h5>Sobre Nós</h5>
                     <ul>
-                        <li><a href="#area-sobre">O que é o Doutor Hoje?</a></li>
+                        <li><a href="#area-sobre">O que é o Doctor Hoje?</a></li>
                         <li><a href="#como-funciona">Como Funciona</a></li>
                         <li><a href="#vantagens">Vantagens</a></li>
                         <li><a href="">Política de Privacidade</a></li>
@@ -298,7 +298,7 @@
 
                         <p><span>Das responsabilidades do Prestador</span></p>
                         <p>23. O PRESTADOR escolhido pelo USUÁRIO prestará os serviços para os quais está contratado junto ao DOCTOR HOJE e cadastrado no Site, diretamente ao USUÁRIO, de forma autônoma e independente, na região onde desenvolve a sua atividade, estando livre para realizar o seu diagnóstico e tratamento da forma como melhor lhe aprouver, inclusive respondendo por eventuais danos médicos causados aos USUÁRIOS, não havendo qualquer ingerência do DOCTOR HOJE em relação ao ato médico realizado, estando todas as Partes absolutamente cientes e concordantes com o fato de que o DOCTOR HOJE é apenas uma plataforma de serviços tecnológicos que não presta serviços de saúde, nem opera como agente ou plano de saúde.</p>
-                        <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOUTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
+                        <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOCTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
                         <p>25. O PRESTADOR se compromete a não prestar serviço ao USUÁRIO que não esteja de posse da senha de atendimento fornecida pelo DOCTOR HOJE, a qual deverá ser validada em sistema na área privativa do prestador no portal <a href="www.doctorhoje.com.br" target="_blank">www.doctorhoje.com.br</a>.</p>
                         <p>26. Oferecer aos USUÁRIOS da plataforma digital DOCTOR HOJE a mesma atenção em relação aos demais pacientes, bem como que o atendimento seja pautado pelo exercício ético da medicina, com base em parâmetros de competência, excelência, autonomia, sigilo e respeito.</p>
                         <p>27. Não cobrar do USUÁRIO qualquer valor extra referente aos serviços de saúde prestados. </p>
@@ -425,7 +425,7 @@
                                 </div>
 
                                 <div class="col-md-4 linha">
-                                    Cancelamento da conta DOUTOR HOJE
+                                    Cancelamento da conta DOCTOR HOJE
                                 </div>
                                 <div class="col-md-4 linha">
                                     Realizar até 30 dias após pedido de cancelamento da conta
@@ -502,12 +502,12 @@
     <footer class="footer-logado">
         <div class="container">
             <div class="area-logo-rodape">
-                <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                <img src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
             </div>
             <!-- teste smartgit -->
             <div class="row">
                 <div class="col-sm-6 col-md-9">
-                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
                     <div class="info-atendimento">
                         <p>Central de Atendimento</p>
                         <p><strong>(61) 3221-5350</strong></p>
@@ -569,7 +569,7 @@
 
                         <p><span>Das responsabilidades do Prestador</span></p>
                         <p>23. O PRESTADOR escolhido pelo USUÁRIO prestará os serviços para os quais está contratado junto ao DOCTOR HOJE e cadastrado no Site, diretamente ao USUÁRIO, de forma autônoma e independente, na região onde desenvolve a sua atividade, estando livre para realizar o seu diagnóstico e tratamento da forma como melhor lhe aprouver, inclusive respondendo por eventuais danos médicos causados aos USUÁRIOS, não havendo qualquer ingerência do DOCTOR HOJE em relação ao ato médico realizado, estando todas as Partes absolutamente cientes e concordantes com o fato de que o DOCTOR HOJE é apenas uma plataforma de serviços tecnológicos que não presta serviços de saúde, nem opera como agente ou plano de saúde.</p>
-                        <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOUTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
+                        <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOCTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
                         <p>25. O PRESTADOR se compromete a não prestar serviço ao USUÁRIO que não esteja de posse da senha de atendimento fornecida pelo DOCTOR HOJE, a qual deverá ser validada em sistema na área privativa do prestador no portal <a href="www.doctorhoje.com.br" target="_blank">www.doctorhoje.com.br</a>.</p>
                         <p>26. Oferecer aos USUÁRIOS da plataforma digital DOCTOR HOJE a mesma atenção em relação aos demais pacientes, bem como que o atendimento seja pautado pelo exercício ético da medicina, com base em parâmetros de competência, excelência, autonomia, sigilo e respeito.</p>
                         <p>27. Não cobrar do USUÁRIO qualquer valor extra referente aos serviços de saúde prestados. </p>
@@ -696,7 +696,7 @@
                                 </div>
 
                                 <div class="col-md-4 linha">
-                                    Cancelamento da conta DOUTOR HOJE
+                                    Cancelamento da conta DOCTOR HOJE
                                 </div>
                                 <div class="col-md-4 linha">
                                     Realizar até 30 dias após pedido de cancelamento da conta

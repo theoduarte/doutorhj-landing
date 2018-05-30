@@ -32,7 +32,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <label for="local">Local de antedimento</label>
+                            <label for="local">Local de atendimento</label>
                             <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                 <option value="" disabled selected hidden>Ex.: Asa Sul</option>
                             </select>

@@ -212,7 +212,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12 col-lg-3">
-                                    <label for="local">Local de antedimento</label>
+                                    <label for="local">Local de atendimento</label>
                                     <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                     <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                         <option value="">Ex.: Asa Sul</option>
