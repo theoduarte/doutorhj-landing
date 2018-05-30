@@ -2879,7 +2879,6 @@ footer ul li a:hover {
 }
 
 .endereco-site {
-    text-align: center;
     background-color: rgb(163, 36, 49);
     padding: 10px 0;
 }
@@ -2887,6 +2886,16 @@ footer ul li a:hover {
 .endereco-site a {
     color: rgb(255, 255, 255);
     font-size: 18px;
+}
+
+.endereco-site .redes-sociais {
+    float: right;
+}
+
+.endereco-site .redes-sociais i {
+    float: right;
+    font-size: 28px;
+    margin-right: 16px;
 }
 
 /*********************************
