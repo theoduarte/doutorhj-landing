@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'DoutorHJ: Login')
+@section('title', 'DoctorHJ: Login')
 
 @push('scripts')
 
@@ -201,7 +201,7 @@
 
                                                     <p><span>Das responsabilidades do Prestador</span></p>
                                                     <p>23. O PRESTADOR escolhido pelo USUÁRIO prestará os serviços para os quais está contratado junto ao DOCTOR HOJE e cadastrado no Site, diretamente ao USUÁRIO, de forma autônoma e independente, na região onde desenvolve a sua atividade, estando livre para realizar o seu diagnóstico e tratamento da forma como melhor lhe aprouver, inclusive respondendo por eventuais danos médicos causados aos USUÁRIOS, não havendo qualquer ingerência do DOCTOR HOJE em relação ao ato médico realizado, estando todas as Partes absolutamente cientes e concordantes com o fato de que o DOCTOR HOJE é apenas uma plataforma de serviços tecnológicos que não presta serviços de saúde, nem opera como agente ou plano de saúde.</p>
-                                                    <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOUTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
+                                                    <p>24. O USUÁRIO e o PRESTADOR se comprometem a não utilizar o site do DOCTOR HOJE para agendar a prestação de serviços de internação hospitalar de qualquer natureza, de URGÊNCIA e EMERGÊNCIA ou de aconselhamento médico, por telefone ou vídeo, aos USUÁRIOS do DOCTOR HOJE.</p>
                                                     <p>25. O PRESTADOR se compromete a não prestar serviço ao USUÁRIO que não esteja de posse da senha de atendimento fornecida pelo DOCTOR HOJE, a qual deverá ser validada em sistema na área privativa do prestador no portal <a href="www.doctorhoje.com.br" target="_blank">www.doctorhoje.com.br</a>.</p>
                                                     <p>26. Oferecer aos USUÁRIOS da plataforma digital DOCTOR HOJE a mesma atenção em relação aos demais pacientes, bem como que o atendimento seja pautado pelo exercício ético da medicina, com base em parâmetros de competência, excelência, autonomia, sigilo e respeito.</p>
                                                     <p>27. Não cobrar do USUÁRIO qualquer valor extra referente aos serviços de saúde prestados. </p>
@@ -328,7 +328,7 @@
                                                             </div>
 
                                                             <div class="col-md-4 linha">
-                                                                Cancelamento da conta DOUTOR HOJE
+                                                                Cancelamento da conta DOCTOR HOJE
                                                             </div>
                                                             <div class="col-md-4 linha">
                                                                 Realizar até 30 dias após pedido de cancelamento da conta
