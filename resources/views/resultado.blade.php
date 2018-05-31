@@ -162,19 +162,37 @@
                 format:'d.m.Y',
                 minDate: min_date,
                 maxDate: max_date,
+                beforeShowDay: function(date){ return [date.getDay() == 1 || date.getDay() == 2 || date.getDay() == 3 || date.getDay() == 4 || date.getDay() == 5,""]},
             }).on("input change", function(e){
             	//console.log("Date changed: ", e.target.value);
             	if(e.target.value != '') {
             		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
                 	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
                 	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
+                	if(ct_date.getDay() == 0 || ct_date.getDay() == 6) {
+                		$(this).val('');
+                		swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'Atendimento não disponível para ser Realizado aos Sábados e Domingos'
+					        }
+					    );
+                	}
                 	
                 	jQuery(this).parent().parent().find('.confirma-data span.span-data').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
 
-                	/* if(ct_date <= today_date) {
-                		$(this).val(today_date.getDate()+'.'+(today_date.getMonth()+1)+'.'+today_date.getFullYear());
+                	if(ct_date <= today_date) {
+                		$(this).val('');
                     	//alert('A Data informada não está disponível para a Agendamento');
-                	} */
+                		swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'A Data informada não está disponível para a Agendamento'
+					        }
+					    );
+					    
+                	}
             	}
             }).on("input blur", function(e){
             	//console.log("Date changed: ", e.target.value);
@@ -185,8 +203,13 @@
             		if(ct_date <= today_date) {
             			ct_date.setDate(today_date.getDate());
             			var ct_mes = pad((ct_date.getMonth()+1));
-            			$(this).val(ct_date.getDate()+'.'+ct_mes+'.'+ct_date.getFullYear());
-            			//alert('A Data informada não está disponível para a Agendamento'+ct_date+' | '+today_date+' | '+ct_date_input+' | '+ct_date_input[2]+'-'+(ct_date_input[1] - 1)+'-'+ct_date_input[0]);
+            			$(this).val('');
+            			swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'A Data informada não está disponível para a Agendamento'
+					        }
+					    );
             		}
 
             		var ct_hora = jQuery(this).parent().parent().find('.selecionaHora').val();
@@ -296,6 +319,7 @@
                 format:'d.m.Y',
                 minDate: min_date,
                 maxDate: max_date,
+                beforeShowDay: function(date){ return [date.getDay() == 1 || date.getDay() == 2 || date.getDay() == 3 || date.getDay() == 4 || date.getDay() == 5,""]}
             });
             jQuery('#selecionaHora2').datetimepicker({ 
                 datepicker:false,
