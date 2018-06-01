@@ -57,7 +57,7 @@
                                             <div class="button dropdown">
                                                 <select id="selectFormaPagamento" class="form-control" name="tipo_pagamento">
                                                     <option value="">Selecione</option>
-                                                    <option value="credito">Crédito</option>
+                                                    <!-- <option value="credito">Crédito</option> -->
                                                     <option value="debito">Débito</option>
                                                 </select>
                                             </div>
