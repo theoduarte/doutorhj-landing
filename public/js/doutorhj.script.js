@@ -41,8 +41,11 @@ $(document).ready(function () {
 								var json = result.endereco;
 								
 								$('#local_atendimento').empty();
+								var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
+								$('#local_atendimento').append($(option));
+								
 								for(var i=0; i < json.length; i++) {
-									var option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+									option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
 									$('#local_atendimento').append($(option));
 								}
 								
@@ -260,8 +263,11 @@ $(document).ready(function () {
 					var json = result.endereco;
 					
 					$('#local_atendimento').empty();
+					var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
+					$('#local_atendimento').append($(option));
+					
 					for(var i=0; i < json.length; i++) {
-						var option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+						option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
 						$('#local_atendimento').append($(option));
 					}
 					

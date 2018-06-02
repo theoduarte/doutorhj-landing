@@ -45,6 +45,7 @@
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="local_atendimento" class="form-control" name="local_atendimento">
                                 <option value="" disabled selected hidden>Local</option>
+                                <option value="TODOS" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == 'TODOS' ) selected="selected" @endif>TODOS OS LOCAIS</option>
                                 @foreach($list_enderecos as $endereco)
                                 <option value="{{ $endereco['id'] }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco['id'] ) selected="selected" @endif>{{ $endereco['value'] }}</option>
                                 @endforeach

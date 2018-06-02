@@ -132,6 +132,22 @@ a.jstree-anchor i.ti-na {
     border: 1px solid rgb(70, 117, 184);
 }
 
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_disabled {
+	background-color: #87a0c4;
+    opacity: .5;
+    -ms-filter: "alpha(opacity=50)";
+}
+
+/* .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_day_of_week0,
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_day_of_week6 {
+	background-color: #d37a85;
+} */
+
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month, .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled, .xdsoft_datetimepicker .xdsoft_time_box>div>div.xdsoft_disabled {
+    cursor: not-allowed;
+    background-color: lightcoral;
+}
+
 .table-doutorhj tr th,
 .table-doutorhj tr td {
     text-align: center;

@@ -377,8 +377,6 @@ class PaymentController extends Controller
         
         //dd($payload);
         
-        //dd($payload);
-        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey));

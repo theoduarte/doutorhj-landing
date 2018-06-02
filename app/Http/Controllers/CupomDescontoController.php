@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\DB;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
+use Illuminate\Support\Facades\Auth;
+use App\Agendamento;
 
 class CupomDescontoController extends Controller
 {
@@ -119,6 +121,16 @@ class CupomDescontoController extends Controller
         
         if(sizeof($cupom_desconto) <= 0) {
             return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
+        }
+        
+        $user_session = Auth::user();
+        $paciente_id = $user_session->paciente->id;
+        $cupom_id = $cupom_desconto->first()->id;
+        
+        $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
+        
+        if(!empty($agendamento_cupom)) {
+            return response()->json(['status' => false, 'mensagem' => 'O CUPOM DE DESCONTO informado, já foi utilizado por você em um outro Agendamento e não está mais disponível.']);
         }
         
         $percentual = $cupom_desconto->first()->percentual/100;
