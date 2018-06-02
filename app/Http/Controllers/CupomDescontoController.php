@@ -117,7 +117,7 @@ class CupomDescontoController extends Controller
         
         $ct_date = date('Y-m-d H:i:s');
         
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
         if(sizeof($cupom_desconto) <= 0) {
             return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
@@ -129,7 +129,7 @@ class CupomDescontoController extends Controller
         
         $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
         
-        if(!empty($agendamento_cupom)) {
+        if(sizeof($agendamento_cupom) > 0) {
             return response()->json(['status' => false, 'mensagem' => 'O CUPOM DE DESCONTO informado, já foi utilizado por você em um outro Agendamento e não está mais disponível.']);
         }
         

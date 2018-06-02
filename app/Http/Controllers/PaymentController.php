@@ -19,6 +19,7 @@ use App\Atendimento;
 use App\Mensagem;
 use App\MensagemDestinatario;
 use App\Contato;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -940,9 +941,19 @@ class PaymentController extends Controller
         
         $ct_date = date('Y-m-d H:i:s');
         
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
         if($cupom_desconto === null) {
+            return 0;
+        }
+        
+        $user_session = Auth::user();
+        $paciente_id = $user_session->paciente->id;
+        $cupom_id = $cupom_desconto->first()->id;
+        
+        $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
+        
+        if(sizeof($agendamento_cupom) > 0) {
             return 0;
         }
         
@@ -967,10 +978,20 @@ class PaymentController extends Controller
         
         $ct_date = date('Y-m-d H:i:s');
         
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
         if($cupom_desconto === null) {
             return $cupom_desconto;
+        }
+        
+        $user_session = Auth::user();
+        $paciente_id = $user_session->paciente->id;
+        $cupom_id = $cupom_desconto->first()->id;
+        
+        $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
+        
+        if(sizeof($agendamento_cupom) > 0) {
+            return [];
         }
         
         return $cupom_desconto;
