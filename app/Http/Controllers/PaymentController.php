@@ -392,8 +392,8 @@ class PaymentController extends Controller
         	//dd($cielo_result);
         	try {
         		$cielo_status = $cielo_result->Payment->Status;
-        		if ($cielo_status == 2) {
-        			
+        		if ($cielo_status == 1 | $cielo_status == 2) {
+        		    
         			$result_agendamentos = [];
         			$agendamentos = CVXRequest::post('agendamentos');
         			 
@@ -496,8 +496,6 @@ class PaymentController extends Controller
         			
         			if ($cielo_status == 0) {
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "0". O Pagamento não foi Finalizado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
-        			} elseif ($cielo_status == 1) {
-        				return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
         			} elseif ($cielo_status == 3) {
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "3". O Pagamento foi Negado pelo Autorizador. Por favor, tente novamente.']);
         			} elseif ($cielo_status == 10) {
@@ -510,7 +508,9 @@ class PaymentController extends Controller
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "13". O Pagamento foi Cancelado por falha no Processamento. Por favor, tente novamente.']);
         			} elseif ($cielo_status == 20) {
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "20". O Pagamento foi registrado como Recorrência, devido a uma falha e será cancelado. Por favor, tente novamente.']);
-        			}
+        			}/*  elseif ($cielo_status == 1) {
+        			    return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
+        			} */
         			
         			return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
         		}
@@ -761,7 +761,7 @@ class PaymentController extends Controller
     		//dd($cielo_result);
     		try {
     			$cielo_status = $cielo_result->Payment->Status;
-    			if ($cielo_status == 2) {
+    			if ($cielo_status == 1 | $cielo_status == 2) {
     				
     				$result_agendamentos = [];
     				$agendamentos = CVXRequest::post('agendamentos');
@@ -840,8 +840,6 @@ class PaymentController extends Controller
     				 
     				if ($cielo_status == 0) {
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "0". O Pagamento não foi Finalizado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
-    				} elseif ($cielo_status == 1) {
-    					return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
     				} elseif ($cielo_status == 3) {
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "3". O Pagamento foi Negado pelo Autorizador. Por favor, tente novamente.']);
     				} elseif ($cielo_status == 10) {
@@ -854,7 +852,9 @@ class PaymentController extends Controller
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "13". O Pagamento foi Cancelado por falha no Processamento. Por favor, tente novamente.']);
     				} elseif ($cielo_status == 20) {
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "20". O Pagamento foi registrado como Recorrência, devido a uma falha e será cancelado. Por favor, tente novamente.']);
-    				}
+    				}/*  elseif ($cielo_status == 1) {
+    				    return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
+    				} */
     				 
     				return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
     				
