@@ -56,6 +56,7 @@
         <script src="/libs/home-template/js/popper.min.js"></script>
 
         <script src="/libs/home-template/js/bootstrap.min.js"></script>
+        <script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>

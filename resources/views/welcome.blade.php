@@ -177,57 +177,145 @@
             </div>
         </section>
     @else
-        <section>
-            <div class="area-banner">
+        <section class="banner-slider-home">
+
+            <header>
+                <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="4"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="5"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_medicos.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Ampla rede <br>de médicos<br>credenciados.</h3>
+                                        <p>Agende consultas e exames.<br>É simples, é rápido, é online!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira consulta.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_agilidade.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Mais agilidade,<br>mais conforto,<br>mais conveniência.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_consultas.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Marque consultas<br>e exames em<br>qualquer lugar.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Preços justos<br>que cabem no<br>seu bolso.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_qualidade.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Segurança e<br>qualidade.<br>Faça parte!</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="busca-home" class="busca-welcome">
+                            <div class="titulo">
+                                <span>Quero agendar</span>
+                            </div>
+                            <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
+                                <div class="row">
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="tipo">Tipo de atendimento</label>
+                                        <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
+                                            <option value="" disabled selected hidden>Ex.: Consulta</option>
+                                            <option value="saude">Consulta Médica</option>
+                                            <option value="odonto">Consulta Odontológica</option>
+                                            <option value="exame">Exames</option>
+                                            <!-- <option value="procedimento">Procedimento</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="especialidade">Especialidade ou exame</label>
+                                        <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
+                                            <option value="">Ex.: Clínica Médica</option>
+                                            <!-- <option>Opção 1</option>
+                                                <option>Opção 2</option>
+                                                <option>Opção 3</option>
+                                                <option>Opção 4</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="local">Local de atendimento</label>
+                                        <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
+                                        <select id="local_atendimento" class="form-control select2" name="local_atendimento">
+                                            <option value="">Ex.: Asa Sul</option>
+                                        </select>
+                                        <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
+                                        <input type="hidden" id="endereco_id" name="endereco_id">
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#carouselBannerHome" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselBannerHome" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </header>
+
+
+            {{--<div class="area-banner">
                 <div class="container">
                     <div class="frase">
                         <p>Conheça o novo jeito de cuidar da sua saúde</p>
                         <p>Agende consultas e exames.<br>
                             É simples, é rápido, é online! </p>
                     </div>
-                    <div id="busca-home" class="busca-home">
-                        <div class="titulo">
-                            <span>Quero agendar</span>
-                        </div>
-                        <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
-                            <div class="row">
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="tipo">Tipo de atendimento</label>
-                                    <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                        <option value="" disabled selected hidden>Ex.: Consulta</option>
-                                        <option value="saude">Consulta Médica</option>
-                                        <option value="odonto">Consulta Odontológica</option>
-                                        <option value="exame">Exames</option>
-                                        <!-- <option value="procedimento">Procedimento</option> -->
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="especialidade">Especialidade ou exame</label>
-                                    <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                        <option value="">Ex.: Clínica Médica</option>
-                                        <!-- <option>Opção 1</option>
-                                            <option>Opção 2</option>
-                                            <option>Opção 3</option>
-                                            <option>Opção 4</option> -->
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="local">Local de atendimento</label>
-                                    <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
-                                    <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                                        <option value="">Ex.: Asa Sul</option>
-                                    </select>
-                                    <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
-                                    <input type="hidden" id="endereco_id" name="endereco_id">
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
-            </div>
+            </div>--}}
             <div id="area-sobre" class="area-sobre">
                 <div class="container">
                     <div class="row">

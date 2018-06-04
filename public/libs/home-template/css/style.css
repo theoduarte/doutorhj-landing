@@ -239,7 +239,61 @@ header .navbar-collapse {
 .area-banner {
     background-image: url(../img/banner1.jpg);
     background-position: left top;
+}
+
+.banner-slider-home .carousel-inner {
+    position: relative;
+}
+
+.banner-slider-home .carousel-item {
+    height: 738px;
     padding: 250px 0 60px 0;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.banner-slider-home .carousel-caption {
+    right: 0;
+    left: 0;
+    bottom: 276px;
+}
+
+.banner-slider-home .carousel-caption .area-texto {
+    width: 1110px;
+    margin: 0 auto;
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto {
+    float: right;
+    text-align: left;
+    width: 540px;
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto h3 {
+    font-size: 44px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto h3 span {
+    color: rgb(185, 7, 7);
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto p {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 28px;
+    text-transform: none;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .carousel-control-next, .banner-slider-home .carousel-control-prev {
+    z-index: 10;
 }
 
 .area-banner .frase p {
@@ -261,6 +315,30 @@ header .navbar-collapse {
     font-weight: 300;
     line-height: 28px;
     text-transform: none;
+}
+
+.busca-welcome {
+    width: 1110px;
+    position: absolute;
+    bottom: 60px;
+    left:50%;
+    margin-left:-555px;
+    padding: 20px 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 20;
+}
+
+.busca-welcome .titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.busca-welcome .titulo span {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 34px;
+    color: rgb(163, 36, 49);
 }
 
 .busca-home {
@@ -2171,20 +2249,33 @@ header .nav-item-mobile {
     margin: 5px 0;
 }
 
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
-    border-left: 4px solid rgb(70, 117, 184);
-}
-
+/* PRÉ AGENDADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .pre-agendado {
-    border-left: 4px solid rgb(248, 231, 28);
+    border-left: 4px solid rgb(255, 149, 0);
 }
-
+/* PRÉ AGENDADO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
+    border-left: 4px solid rgb(0, 122, 255);
+}
+/* NÃO CONFIRMADO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-confirmado {
+    border-left: 4px solid rgb(179, 0, 134);
+}
+/* NÃO COMPARECEU */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-compareceu {
+    border-left: 4px solid rgb(88, 86, 214);
+}
+/* CONFIRMADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado {
-    border-left: 4px solid rgb(126, 211, 33);
+    border-left: 4px solid rgb(76, 217, 100);
 }
-
+/* CANCELADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
-    border-left: 4px solid rgb(249, 51, 71);
+    border-left: 4px solid rgb(255, 58, 48);
+}
+/* RETORNO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
+    border-left: 4px solid rgb(74, 74, 74);
 }
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos .tipo,
@@ -2406,20 +2497,33 @@ header .nav-item-mobile {
     padding: 20px;
 }
 
-.box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
-    border-left: 4px solid rgb(70, 117, 184);
-}
-
+/* PRÉ AGENDADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .pre-agendado {
-    border-left: 4px solid rgb(248, 231, 28);
+    border-left: 4px solid rgb(255, 149, 0);
 }
-
+/* PRÉ AGENDADO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
+    border-left: 4px solid rgb(0, 122, 255);
+}
+/* NÃO CONFIRMADO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .nao-confirmado {
+    border-left: 4px solid rgb(179, 0, 134);
+}
+/* NÃO COMPARECEU */
+.box-resumo-home .proxima-consulta .resumo .nome-status .nao-compareceu {
+    border-left: 4px solid rgb(88, 86, 214);
+}
+/* CONFIRMADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .confirmado {
-    border-left: 4px solid rgb(126, 211, 33);
+    border-left: 4px solid rgb(76, 217, 100);
 }
-
+/* CANCELADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
-    border-left: 4px solid rgb(249, 51, 71);
+    border-left: 4px solid rgb(255, 58, 48);
+}
+/* RETORNO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
+    border-left: 4px solid rgb(74, 74, 74);
 }
 
 .box-noticias-home {
@@ -2963,8 +3067,17 @@ footer ul li a:hover {
         margin-top: 10px;
     }
 
-    .form-busca-home button {
-        margin-top: 15px;
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        margin-right: 134px;
+    }
+
+    .busca-welcome {
+        width: 900px;
+        margin-left: -450px;
+    }
+
+    .busca-welcome .form-busca-home label {
+        font-size: 15px;
     }
 
     .box-banner-conheca .area-imagem {
@@ -3048,6 +3161,39 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 991px) {
+    .banner-slider-home .carousel-item {
+        height: 900px;
+        padding: 60px 0 60px 0;
+    }
+
+    .banner-slider-home .carousel-caption {
+        bottom: 560px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 720px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 540px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 600px;
+        bottom: 86px;
+        margin-left: -300px;
+    }
+
+    .form-busca-home label {
+        font-size: 15px;
+    }
+
+    .form-busca-home button {
+        margin-top: 0px;
+    }
     .area-banner {
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -3145,6 +3291,31 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 768px) {
+    .banner-slider-home .carousel-caption .area-texto .texto h3 {
+        font-size: 32px;
+    }
+
+    .banner-slider-home .carousel-caption {
+        bottom: 560px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 400px;
+        left: 50%;
+        margin-left: -200px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 400px;
+        bottom: 86px;
+        margin-left: -200px;
+    }
+
     .area-banner,
     .area-busca-interna {
         background-position: -280px top;
@@ -3246,6 +3417,31 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 575px) {
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 400px;
+        left: 50%;
+        margin-left: -200px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 400px;
+        bottom: 86px;
+        margin-left: -200px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto h3 {
+        font-size: 30px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto p {
+        font-size: 20px;
+    }
+
     .pagamento .form-group {
         margin-bottom: 16px;
     }
@@ -3288,6 +3484,23 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 480px) {
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 320px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 320px;
+        left: 50%;
+        margin-left: -160px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 320px;
+        bottom: 86px;
+        margin-left: -160px;
+    }
+
     .box-banner-conheca {
         height: 95px;
     }
