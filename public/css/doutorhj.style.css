@@ -132,20 +132,19 @@ a.jstree-anchor i.ti-na {
     border: 1px solid rgb(70, 117, 184);
 }
 
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_disabled {
-	background-color: #87a0c4;
-    opacity: .5;
-    -ms-filter: "alpha(opacity=50)";
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend:hover,
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_disabled:hover {
+
 }
 
-/* .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_day_of_week0,
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_day_of_week6 {
-	background-color: #d37a85;
-} */
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend,
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend:hover {
+    color: #d35050!important;
+}
 
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month, .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled, .xdsoft_datetimepicker .xdsoft_time_box>div>div.xdsoft_disabled {
-    cursor: not-allowed;
-    background-color: lightcoral;
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled:hover,
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_disabled:hover {
+    color: #000!important;
 }
 
 .table-doutorhj tr th,
