@@ -185,47 +185,14 @@
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="4"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="5"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_medicos.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Ampla rede <br>de médicos<br>credenciados.</h3>
-                                        <p>Agende consultas e exames.<br>É simples, é rápido, é online!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
                                         <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira consulta.</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_agilidade.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Mais agilidade,<br>mais conforto,<br>mais conveniência.</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_consultas.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Marque consultas<br>e exames em<br>qualquer lugar.</h3>
                                     </div>
                                 </div>
                             </div>
@@ -241,11 +208,12 @@
                             </div>
                         </div>
 
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_qualidade.jpg')">
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
-                                        <h3>Segurança e<br>qualidade.<br>Faça parte!</h3>
+                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
+                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
                                     </div>
                                 </div>
                             </div>
