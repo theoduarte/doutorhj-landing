@@ -188,7 +188,18 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
+                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -203,17 +214,6 @@
                                 <div class="area-texto">
                                     <div class="texto">
                                         <h3>Preços justos<br>que cabem no<br>seu bolso.</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
-                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
                                     </div>
                                 </div>
                             </div>
