@@ -248,7 +248,7 @@ header .navbar-collapse {
 .banner-slider-home .carousel-item {
     height: 738px;
     padding: 250px 0 60px 0;
-    background: no-repeat center center scroll;
+    background: no-repeat left center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
