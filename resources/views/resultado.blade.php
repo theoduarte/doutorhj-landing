@@ -492,6 +492,19 @@
                             infowindow.open(map, marker);
                         }
                     })(marker, i));
+
+                    google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+
+                    /* google.maps.event.addListener(marker, 'mouseout', (function (marker, i) {
+                         return function () {
+                             infowindow.close(map, marker);
+                         }
+                   	})(marker, i)); */
                 }
             }        
 	</script>
