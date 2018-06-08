@@ -261,6 +261,19 @@ header .navbar-collapse {
     bottom: 276px;
 }
 
+.banner-slider-home .carousel-caption .area-cupom {
+    width: 1110px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.banner-slider-home .carousel-caption .area-cupom img {
+    position: absolute;
+    top: -190px;
+    left: -410px;
+    width: 800px;
+}
+
 .banner-slider-home .carousel-caption .area-texto {
     width: 1110px;
     margin: 0 auto;
@@ -3071,6 +3084,19 @@ footer ul li a:hover {
         margin-top: 10px;
     }
 
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -118px;
+        left: -318px;
+        width: 648px;
+    }
+
     .banner-slider-home .carousel-caption .area-texto .texto {
         margin-right: 134px;
     }
@@ -3175,7 +3201,7 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-texto {
-        width: 720px;
+        width: 600px;
     }
 
     .banner-slider-home .carousel-caption .area-texto .texto {
@@ -3183,6 +3209,34 @@ footer ul li a:hover {
         left: 50%;
         margin-left: -270px;
         margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -118px;
+        left: -318px;
+        width: 486px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 600px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 430px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 36px;
     }
 
     .busca-welcome {
@@ -3312,6 +3366,34 @@ footer ul li a:hover {
         left: 50%;
         margin-left: -200px;
         margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 400px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -166px;
+        left: -198px;
+        width: 472px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 330px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 28px;
     }
 
     .busca-welcome {
@@ -3444,6 +3526,34 @@ footer ul li a:hover {
 
     .banner-slider-home .carousel-caption .area-texto .texto p {
         font-size: 20px;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 400px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -166px;
+        left: -198px;
+        width: 472px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 330px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 26px;
     }
 
     .pagamento .form-group {

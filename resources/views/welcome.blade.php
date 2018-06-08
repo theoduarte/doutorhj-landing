@@ -201,8 +201,11 @@
 
                         <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
+                                <div class="area-cupom">
+                                    <img src="/libs/home-template/img/cupom.png" alt="">
+                                </div>
+                                <div class="area-texto area-texto-cupom">
+                                    <div class="texto texto-cupom">
                                         <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira consulta.</h3>
                                     </div>
                                 </div>
@@ -569,6 +572,16 @@
 
                 $('#tipo_especialidade option:first').prop("selected", true);
                 $('#local_atendimento option:first').prop("selected", true);
+            });
+
+            /*********************************
+             *
+             * VELOCIDADE CARROSSEL
+             *
+             *********************************/
+
+            $('.carousel').carousel({
+                interval: 7000
             });
 
             /*********************************
