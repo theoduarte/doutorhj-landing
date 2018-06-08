@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
@@ -22,9 +21,7 @@
         <link rel="stylesheet" href="/css/doutorhj.style.css">
         <!--[if lt IE 10]>
         <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;">
-            <a href="http://windows.microsoft.com/en-US/internet-explorer/"><img
-                    src="/libs/home-template/img/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820"
-                    alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
+            <a href="http://windows.microsoft.com/en-US/internet-explorer/"><img src="/libs/home-template/img/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
         </div>
         <script src="js/html5shiv.min.js"></script>
         <![endif]-->
@@ -49,8 +46,7 @@
                 <a class="navbar-brand" href="/">
                     <h1>Doutor Hoje</h1>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile"
-                        aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMobile">

@@ -239,7 +239,74 @@ header .navbar-collapse {
 .area-banner {
     background-image: url(../img/banner1.jpg);
     background-position: left top;
+}
+
+.banner-slider-home .carousel-inner {
+    position: relative;
+}
+
+.banner-slider-home .carousel-item {
+    height: 738px;
     padding: 250px 0 60px 0;
+    background: no-repeat left center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.banner-slider-home .carousel-caption {
+    right: 0;
+    left: 0;
+    bottom: 276px;
+}
+
+.banner-slider-home .carousel-caption .area-cupom {
+    width: 1110px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.banner-slider-home .carousel-caption .area-cupom img {
+    position: absolute;
+    top: -190px;
+    left: -410px;
+    width: 800px;
+}
+
+.banner-slider-home .carousel-caption .area-texto {
+    width: 1110px;
+    margin: 0 auto;
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto {
+    float: right;
+    text-align: left;
+    width: 540px;
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto h3 {
+    font-size: 44px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto h3 span {
+    color: rgb(185, 7, 7);
+}
+
+.banner-slider-home .carousel-caption .area-texto .texto p {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 28px;
+    text-transform: none;
+    text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .carousel-control-next, .banner-slider-home .carousel-control-prev {
+    z-index: 10;
 }
 
 .area-banner .frase p {
@@ -261,6 +328,30 @@ header .navbar-collapse {
     font-weight: 300;
     line-height: 28px;
     text-transform: none;
+}
+
+.busca-welcome {
+    width: 1110px;
+    position: absolute;
+    bottom: 60px;
+    left:50%;
+    margin-left:-555px;
+    padding: 20px 20px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 20;
+}
+
+.busca-welcome .titulo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.busca-welcome .titulo span {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 34px;
+    color: rgb(163, 36, 49);
 }
 
 .busca-home {
@@ -889,10 +980,11 @@ header .navbar-collapse {
 }
 
 .card-formulario .card-header {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255)!important;
     background-color: rgb(70, 117, 184);
     font-size: 16px;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .card-formulario .card-body {
@@ -1778,6 +1870,57 @@ header .nav-item-mobile {
     padding: 10px 0;
 }
 
+.box-minha-conta .row .conteudo .lista-notificacoes {
+    margin-bottom: 40px;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card {
+    margin-bottom: 5px;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-header {
+    cursor: pointer;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-header .titulo-notificacao {
+    font-weight: 600;
+    font-size: 13px;
+    float: left;
+    line-height: 26px;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-header .status-notificacao {
+    font-size: 9px;
+    float: right;
+    font-weight: 700;
+    display: inline-block;
+    padding: 8px 10px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    color: rgb(94, 145, 254);
+    background: rgb(212, 223, 251);
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-header .sn-lido {
+    color: rgb(145, 153, 174);
+    background: rgb(222, 225, 232);
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-body .titulo {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-body ul li {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .lista-notificacoes .card-body .btn {
+    float: right;
+    margin-bottom: 20px;
+}
+
 .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
     font-size: 14px;
     line-height: 34px;
@@ -1790,7 +1933,7 @@ header .nav-item-mobile {
 
 .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opcoes-notificacao {
     color: rgb(70, 117, 184);
-    font-size: 16px;
+    font-size: 15px;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 20px;
@@ -1946,7 +2089,7 @@ header .nav-item-mobile {
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .visa {
-    background-position: center -58;
+    background-position: center -58px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao .master {
@@ -2119,20 +2262,33 @@ header .nav-item-mobile {
     margin: 5px 0;
 }
 
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
-    border-left: 4px solid rgb(70, 117, 184);
-}
-
+/* PRÉ AGENDADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .pre-agendado {
-    border-left: 4px solid rgb(248, 231, 28);
+    border-left: 4px solid rgb(255, 149, 0);
 }
-
+/* PRÉ AGENDADO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
+    border-left: 4px solid rgb(0, 122, 255);
+}
+/* NÃO CONFIRMADO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-confirmado {
+    border-left: 4px solid rgb(179, 0, 134);
+}
+/* NÃO COMPARECEU */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-compareceu {
+    border-left: 4px solid rgb(88, 86, 214);
+}
+/* CONFIRMADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado {
-    border-left: 4px solid rgb(126, 211, 33);
+    border-left: 4px solid rgb(76, 217, 100);
 }
-
+/* CANCELADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
-    border-left: 4px solid rgb(249, 51, 71);
+    border-left: 4px solid rgb(255, 58, 48);
+}
+/* RETORNO */
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
+    border-left: 4px solid rgb(74, 74, 74);
 }
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos .tipo,
@@ -2267,7 +2423,7 @@ header .nav-item-mobile {
     padding-bottom: 30px;
 }
 
-.box-resumo-home .tit-pc {
+.box-resumo-home .tit-box-pc {
     text-align: center;
     color: rgb(255, 255, 255);
     font-size: 22px;
@@ -2354,25 +2510,42 @@ header .nav-item-mobile {
     padding: 20px;
 }
 
-.box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
-    border-left: 4px solid rgb(70, 117, 184);
-}
-
+/* PRÉ AGENDADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .pre-agendado {
-    border-left: 4px solid rgb(248, 231, 28);
+    border-left: 4px solid rgb(255, 149, 0);
 }
-
+/* PRÉ AGENDADO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
+    border-left: 4px solid rgb(0, 122, 255);
+}
+/* NÃO CONFIRMADO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .nao-confirmado {
+    border-left: 4px solid rgb(179, 0, 134);
+}
+/* NÃO COMPARECEU */
+.box-resumo-home .proxima-consulta .resumo .nome-status .nao-compareceu {
+    border-left: 4px solid rgb(88, 86, 214);
+}
+/* CONFIRMADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .confirmado {
-    border-left: 4px solid rgb(126, 211, 33);
+    border-left: 4px solid rgb(76, 217, 100);
 }
-
+/* CANCELADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
-    border-left: 4px solid rgb(249, 51, 71);
+    border-left: 4px solid rgb(255, 58, 48);
+}
+/* RETORNO */
+.box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
+    border-left: 4px solid rgb(74, 74, 74);
 }
 
 .box-noticias-home {
     padding: 70px 0 100px 0;
     background: rgb(3, 38, 65) url("../img/bg-blog-home.jpg") top left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .box-noticias-home .titulo {
@@ -2827,7 +3000,6 @@ footer ul li a:hover {
 }
 
 .endereco-site {
-    text-align: center;
     background-color: rgb(163, 36, 49);
     padding: 10px 0;
 }
@@ -2835,6 +3007,16 @@ footer ul li a:hover {
 .endereco-site a {
     color: rgb(255, 255, 255);
     font-size: 18px;
+}
+
+.endereco-site .redes-sociais {
+    float: right;
+}
+
+.endereco-site .redes-sociais i {
+    float: right;
+    font-size: 28px;
+    margin-right: 16px;
 }
 
 /*********************************
@@ -2902,8 +3084,30 @@ footer ul li a:hover {
         margin-top: 10px;
     }
 
-    .form-busca-home button {
-        margin-top: 15px;
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 900px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -118px;
+        left: -318px;
+        width: 648px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        margin-right: 134px;
+    }
+
+    .busca-welcome {
+        width: 900px;
+        margin-left: -450px;
+    }
+
+    .busca-welcome .form-busca-home label {
+        font-size: 15px;
     }
 
     .box-banner-conheca .area-imagem {
@@ -2987,6 +3191,67 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 991px) {
+    .banner-slider-home .carousel-item {
+        height: 900px;
+        padding: 60px 0 60px 0;
+    }
+
+    .banner-slider-home .carousel-caption {
+        bottom: 560px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 600px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 540px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -118px;
+        left: -318px;
+        width: 486px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 600px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 430px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 36px;
+    }
+
+    .busca-welcome {
+        width: 600px;
+        bottom: 86px;
+        margin-left: -300px;
+    }
+
+    .form-busca-home label {
+        font-size: 15px;
+    }
+
+    .form-busca-home button {
+        margin-top: 0px;
+    }
     .area-banner {
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -3084,28 +3349,81 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 768px) {
+    .banner-slider-home .carousel-caption .area-texto .texto h3 {
+        font-size: 32px;
+    }
+
+    .banner-slider-home .carousel-caption {
+        bottom: 560px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 400px;
+        left: 50%;
+        margin-left: -200px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 400px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -166px;
+        left: -198px;
+        width: 472px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 330px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 28px;
+    }
+
+    .busca-welcome {
+        width: 400px;
+        bottom: 86px;
+        margin-left: -200px;
+    }
+
+    .area-banner,
+    .area-busca-interna {
+        background-position: -280px top;
+    }
     .area-passos {
         background-size: cover;
     }
-
     .steps {
         display: none;
     }
-
     .steps-mobile {
         display: block;
         width: 100%;
         overflow: auto;
         margin-top: 70px;
     }
-
     .steps-mobile .step {
         width: 340px;
         text-align: left;
         overflow: auto;
         margin: 0 auto;
     }
-
     .steps-mobile .step .numero {
         font-size: 28px;
         color: rgb(255, 255, 255);
@@ -3114,7 +3432,6 @@ footer ul li a:hover {
         width: 30px;
         margin-top: 28px;
     }
-
     .steps-mobile .step .traco {
         width: 12px;
         height: 100px;
@@ -3124,18 +3441,15 @@ footer ul li a:hover {
         background-position: center center;
         float: left;
     }
-
     .steps-mobile .step .icone {
         margin-bottom: 0;
         float: left;
         margin-top: 24px;
     }
-
     .steps-mobile .step .icone img {
         height: 48px;
         margin: 0 auto;
     }
-
     .steps-mobile .step .texto {
         font-size: 13px;
         text-transform: uppercase;
@@ -3144,7 +3458,6 @@ footer ul li a:hover {
         display: block;
         float: left;
     }
-
     .steps-mobile .step5 .texto {
         font-size: 13px;
         text-transform: uppercase;
@@ -3153,47 +3466,36 @@ footer ul li a:hover {
         display: block;
         float: left;
     }
-
     .area-vantagens .row {
         margin-bottom: 0;
     }
-
     .area-vantagens .row .col-sm-12 {
         margin-bottom: 30px;
     }
-
     .area-vantagens {
         padding-bottom: 320px;
     }
-
     .box-banner-conheca {
         height: 104px;
     }
-
     .box-banner-conheca .area-imagem {
         margin-top: -374px;
     }
-
     .area-imagem-aplicativo img {
         width: 50%;
     }
-
     .area-seleciona-profissional {
         font-size: 10px;
     }
-
     .select-validade-mes {
         margin-bottom: 5px;
     }
-
     .area-btn-finalizar .btn-finalizar {
         float: left;
     }
-
     .home-prestador .passos-cadastro .texto {
         margin-bottom: 30px;
     }
-
     .home-prestador .area-beneficios .lb1,
     .home-prestador .area-beneficios .lb2 {
         text-align: center;
@@ -3201,6 +3503,59 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 575px) {
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 400px;
+        left: 50%;
+        margin-left: -200px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 400px;
+        bottom: 86px;
+        margin-left: -200px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto h3 {
+        font-size: 30px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto p {
+        font-size: 20px;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom {
+        width: 400px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .banner-slider-home .carousel-caption .area-cupom img {
+        position: absolute;
+        top: -166px;
+        left: -198px;
+        width: 472px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom {
+        width: 400px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
+        width: 330px;
+        left: 50%;
+        margin-left: -270px;
+        margin-right: auto;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
+        font-size: 26px;
+    }
+
     .pagamento .form-group {
         margin-bottom: 16px;
     }
@@ -3228,9 +3583,38 @@ footer ul li a:hover {
         font-size: 18px;
         font-weight: 700;
     }
+    .box-minha-conta .row .conteudo .lista-notificacoes .card-header .titulo-notificacao {
+        float: none;
+        display: inline-block;
+        width: 100%;
+    }
+    .box-minha-conta .row .conteudo .lista-notificacoes .card-header .status-notificacao {
+        float: none;
+        clear: both;
+    }
+    .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
+        line-height: 20px;
+    }
 }
 
 @media only screen and (max-width: 480px) {
+    .banner-slider-home .carousel-caption .area-texto {
+        width: 320px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto .texto {
+        width: 320px;
+        left: 50%;
+        margin-left: -160px;
+        margin-right: auto;
+    }
+
+    .busca-welcome {
+        width: 320px;
+        bottom: 86px;
+        margin-left: -160px;
+    }
+
     .box-banner-conheca {
         height: 95px;
     }

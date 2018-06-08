@@ -9,7 +9,7 @@
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
             <div class="container">
-                <div class="busca-home">
+                <div id="busca-home" class="busca-home">
                     <div class="titulo">
                         <span>Quero agendar</span>
                     </div>
@@ -53,21 +53,22 @@
                         <div class="col-12">
                             <div class="link-agendamentos">
                                 <p>Não se esqueça da sua<br> próxima consulta e/ou exame</p>
-                                <button type="button" class="btn btn-light"
-                                        onclick="window.location.href='{{ route("meus-agendamentos") }}'">Ver meus
+                                <button type="button" class="btn btn-light" onclick="window.location.href='{{ route("meus-agendamentos") }}'">
+                                    Ver meus
                                     agendamentos
                                 </button>
                             </div>
                         </div>
                         <div class="col-12">
-                            <p class="tit-pc">Resumo dos próximos agendamentos</p>
+                            <p class="tit-box-pc">Resumo dos próximos agendamentos</p>
                             <div class="row">
                                 @foreach($agendamentos_home as $agendamento)
                                     <div class="proxima-consulta col-sm-12 col-md-6">
                                         <div class="area-pc">
                                             <div class="tit-pc">
                                                 {{--<p>Sua próxima consulta é</p>--}}
-                                                <p class="data-consulta">Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+                                                <p class="data-consulta">
+                                                    Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
                                                     de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
                                                     às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
                                                         hora(s)
@@ -111,7 +112,8 @@
                                                 {{--<p class="profissional">
                                                     Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
                                                 <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
-                                                <p class="endereco"><strong>Endereço:</strong> {{ $agendamento->endereco_completo }}</p>
+                                                <p class="endereco">
+                                                    <strong>Endereço:</strong> {{ $agendamento->endereco_completo }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -127,46 +129,46 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
-                                <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
-                                     alt="Card image cap">
+                                <img class="card-img-top" src="/libs/home-template/img/cancer-de-mama.png" alt="">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pesquisa da USP comprova mais 20 novas funções para o
-                                        CBD </h5>
-                                    <p class="card-text">However, the American Food and Drug Administration (FDA) has
-                                        not
-                                        approved the medicinal use of CBD. Research is ongoing, and the legal status of
-                                        this
-                                        and other cannabinoids varies.
-                                    </p>
-                                    <a href="#" class="btn btn-link">Leia mais</a>
+                                    <h5 class="card-title">A doença que mais afeta as mulheres</h5>
+                                    <p class="card-text">Câncer de Mama - Esse tipo de câncer é o que mais comum entre
+                                        mulheres no Brasil e no Mundo, correspondendo a 25% de novos casos de câncer
+                                        todos os anos. Segundo o Instituto Nacional do Câncer (INCA), no ano passado, os
+                                        casos de câncer de Mama ultrapassaram a casa de 57mil no Brasil. Existem vários
+                                        tipo desse câncer, na maioria deles, quando diagnosticados em fases iniciais, é
+                                        passível de tratamento, com boas perspectivas de cura. Atente-se. </p>
+                                    {{--<a href="#" class="btn btn-link">Leia mais</a>--}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
-                                <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
-                                     alt="Card image cap">
+                                <img class="card-img-top" src="/libs/home-template/img/gripe.png" alt="">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pesquisa da USP comprova mais 20 novas funções para o CBD </h5>
-                                    <p class="card-text">However, the American Food and Drug Administration (FDA) has not
-                                        approved the medicinal use of CBD. Research is ongoing, and the legal status of this
-                                        and other cannabinoids varies.
-                                    </p>
-                                    <a href="#" class="btn btn-link">Leia mais</a>
+                                    <h5 class="card-title">Proteja-se das doenças causadas pelo frio</h5>
+                                    <p class="card-text">Vale lembrar que em 95% dos casos a gripe é causada por vírus,
+                                        e apenas 5% por bactéria. Em determinado casos, a infecção por vírus pode acabar
+                                        facilitando a infecção por bactéria, já que por conta da infecção há uma redução
+                                        das defesas. A vacina não causa gripe nos pacientes imunizados, mas leva de
+                                        quatro a oito semanas para ter eficácia plena, por isso a pessoa que tomou a
+                                        vacina pode chegar a ficar doente nesse período. Fique esperto. </p>
+                                    {{--<a href="#" class="btn btn-link">Leia mais</a>--}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-4 card-post">
                             <div class="card">
-                                <img class="card-img-top" src="/libs/home-template/img/blog-capa-post-1.jpg"
-                                     alt="Card image cap">
+                                <img class="card-img-top" src="/libs/home-template/img/beba-agua.png" alt="">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pesquisa da USP comprova mais 20 novas funções para o CBD </h5>
-                                    <p class="card-text">However, the American Food and Drug Administration (FDA) has not
-                                        approved the medicinal use of CBD. Research is ongoing, and the legal status of this
-                                        and other cannabinoids varies.
-                                    </p>
-                                    <a href="#" class="btn btn-link">Leia mais</a>
+                                    <h5 class="card-title">Os benefícios de beber água diariamente</h5>
+                                    <p class="card-text">Apesar de não haver contra-indicação, é importante estar atento
+                                        à quantidade correta de água que deve ser ingerida. Para isso, existe um cálculo
+                                        simples e rápido: basta multiplicar seu peso por 35 para obter o resultado em
+                                        ml. Mas por que 35? A resposta é fácil: a conta matemática considera que são
+                                        necessários 35 mililitros de água para cada quilograma de peso corporal .Uma
+                                        pessoa que pesa 70kg deve ingerir aproximadamente 2,4 litros de água.</p>
+                                    {{--<a href="#" class="btn btn-link">Leia mais</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -175,75 +177,133 @@
             </div>
         </section>
     @else
-        <section>
-            <div class="area-banner">
+        <section class="banner-slider-home">
+
+            <header>
+                <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
+                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-cupom">
+                                    <img src="/libs/home-template/img/cupom.png" alt="">
+                                </div>
+                                <div class="area-texto area-texto-cupom">
+                                    <div class="texto texto-cupom">
+                                        <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira consulta.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <h3>Preços justos<br>que cabem no<br>seu bolso.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="busca-home" class="busca-welcome">
+                            <div class="titulo">
+                                <span>Quero agendar</span>
+                            </div>
+                            <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
+                                <div class="row">
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="tipo">Tipo de atendimento</label>
+                                        <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
+                                            <option value="" disabled selected hidden>Ex.: Consulta</option>
+                                            <option value="saude">Consulta Médica</option>
+                                            <option value="odonto">Consulta Odontológica</option>
+                                            <option value="exame">Exames</option>
+                                            <!-- <option value="procedimento">Procedimento</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="especialidade">Especialidade ou exame</label>
+                                        <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
+                                            <option value="">Ex.: Clínica Médica</option>
+                                            <!-- <option>Opção 1</option>
+                                                <option>Opção 2</option>
+                                                <option>Opção 3</option>
+                                                <option>Opção 4</option> -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <label for="local">Local de atendimento</label>
+                                        <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
+                                        <select id="local_atendimento" class="form-control select2" name="local_atendimento">
+                                            <option value="">Ex.: Asa Sul</option>
+                                        </select>
+                                        <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
+                                        <input type="hidden" id="endereco_id" name="endereco_id">
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-3">
+                                        <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#carouselBannerHome" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselBannerHome" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </header>
+
+
+            {{--<div class="area-banner">
                 <div class="container">
                     <div class="frase">
                         <p>Conheça o novo jeito de cuidar da sua saúde</p>
                         <p>Agende consultas e exames.<br>
-                            É simples, é rápido, é online!
-                        </p>
+                            É simples, é rápido, é online! </p>
                     </div>
-                    <div class="busca-home">
-                        <div class="titulo">
-                            <span>Quero agendar</span>
-                        </div>
-                        <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
-                            <div class="row">
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="tipo">Tipo de atendimento</label>
-                                    <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                        <option value="" disabled selected hidden>Ex.: Consulta</option>
-                                        <option value="saude">Consulta Médica</option>
-                                        <option value="odonto">Consulta Odontológica</option>
-                                        <option value="exame">Exames</option>
-                                        <!-- <option value="procedimento">Procedimento</option> -->
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="especialidade">Especialidade ou exame</label>
-                                    <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                        <option value="">Ex.: Clínica Médica</option>
-                                        <!-- <option>Opção 1</option>
-                                            <option>Opção 2</option>
-                                            <option>Opção 3</option>
-                                            <option>Opção 4</option> -->
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <label for="local">Local de antedimento</label>
-                                    <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
-                                    <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-	                                    <option value="">Ex.: Asa Sul</option>
-	                                </select>
-                                    <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
-                                    <input type="hidden" id="endereco_id" name="endereco_id">
-                                </div>
-                                <div class="form-group col-md-12 col-lg-3">
-                                    <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
-            </div>
+            </div>--}}
             <div id="area-sobre" class="area-sobre">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col1-sobre">
                             <p>O que é o Doctor hoje?</p>
                             <p>O Doctor Hoje é uma<br>plataforma digital que facilita o <strong>acesso a consultas e
-                                    exames</strong> com <strong>preços justos</strong> que cabem no seu orçamento.
-                            </p>
+                                    exames</strong> com <strong>preços justos</strong> que cabem no seu orçamento. </p>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-sm-12 col-md-5 col2-sobre">
                             <p>O Doctor Hoje reúne uma ampla rede de profissionais de saúde em Brasília que, por meio da
                                 plataforma, oferecem o acesso a consultas
-                                e exames com preços reduzidos. Não é cobrado mensalidades, carências ou taxas de adesão (NÃO
-                                somos um plano ou seguro saúde).
-                            </p>
-                            <a href="#">Acesse e comece a usar agora mesmo <i class="fa fa-angle-right"></i></a>
+                                e exames com preços reduzidos. Não é cobrado mensalidades, carências ou taxas de adesão
+                                (NÃO
+                                somos um plano ou seguro saúde). </p>
+                            <a href="https://doctorhoje.com.br/login">Acesse e comece a usar agora mesmo
+                                <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -254,8 +314,7 @@
                         <span>É tão fácil que você não vai acreditar</span>
                         <h3>Veja como é fácil levar saúde para sua família</h3>
                         <p>São apenas 5 passos para você cuidar da sua saúde.<br>
-                            Chega de mensalidades caras para serviços que nem sempre você usa.
-                        </p>
+                            Chega de mensalidades caras para serviços que nem sempre você usa. </p>
                     </div>
                     <div class="steps">
                         <div class="step step1">
@@ -405,7 +464,8 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Controle total</h4>
-                                <p>Pague somente ao utilizar e acompanhe todo o histórico de suas consultas e exames. </p>
+                                <p>Pague somente ao utilizar e acompanhe todo o histórico de suas consultas e
+                                    exames. </p>
                             </div>
                         </div>
                     </div>
@@ -416,9 +476,9 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Não fique esperando</h4>
-                                <p>Realize suas consultas ou exames o quanto antes. No máximo em 10 dias você será atendido
-                                    com o médico de sua preferência.
-                                </p>
+                                <p>Realize suas consultas ou exames o quanto antes. No máximo em 10 dias você será
+                                    atendido
+                                    com o médico de sua preferência. </p>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
@@ -427,7 +487,8 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Moderno</h4>
-                                <p>A agendamento online oferece a comodidade do agendamento da consulta e exame no seu computador ou celular.</p>
+                                <p>A agendamento online oferece a comodidade do agendamento da consulta e exame no seu
+                                    computador ou celular.</p>
                             </div>
                         </div>
                     </div>
@@ -468,9 +529,10 @@
                             </div>
                             <p>Entre em contato e venha participar da nossa plataforma. O Doctor Hoje conecta você a
                                 milhares de clientes. Oferecemos sistema para o gerenciamento da sua agenda e
-                                pagamentos.
-                            </p>
-                            <button type="button" class="btn btn-primary btn-vermelho">Saiba mais</button>
+                                pagamentos. </p>
+                            <form action="https://prestador.doctorhoje.com.br/">
+                                <button type="submit" class="btn btn-primary btn-vermelho">Saiba mais</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -486,14 +548,15 @@
                                 <span>a comodidade anda junto com você </span>
                                 <h3>Aplicativo Doctor Hoje</h3>
                             </div>
-                            <p>Com o aplicativo Doctor Hoje, você poderá ter acesso a todas as funcionalidades na palma da
-                                sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro das
-                                novidades.
-                            </p>
+                            <p>Com o aplicativo Doctor Hoje, você poderá ter acesso a todas as funcionalidades na palma
+                                da
+                                sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
+                                das
+                                novidades. </p>
                             <p><strong>Em breve disponível:</strong></p>
                             <ul class="link-aplicativos">
-                                <li><a href="https://play.google.com/store/apps" target="_blank">Google Play</a></li>
-                                <li><a href="https://www.apple.com/br/itunes/" target="_blank">App Store</a></li>
+                                <li><a>Google Play</a></li>
+                                <li><a>App Store</a></li>
                             </ul>
                         </div>
                     </div>
@@ -505,17 +568,27 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
-                var resizefunc = [];     
+                var resizefunc = [];
 
                 $('#tipo_especialidade option:first').prop("selected", true);
-                $('#local_atendimento option:first').prop("selected", true);           
+                $('#local_atendimento option:first').prop("selected", true);
             });
 
             /*********************************
-            *
-            * COPIA TOKEN
-            *
-            *********************************/
+             *
+             * VELOCIDADE CARROSSEL
+             *
+             *********************************/
+
+            $('.carousel').carousel({
+                interval: 7000
+            });
+
+            /*********************************
+             *
+             * COPIA TOKEN
+             *
+             *********************************/
 
             jQuery(function ($) {
 
@@ -579,7 +652,7 @@
             $('a[href*="#"]')
                 .not('[href="#"]')
                 .not('[href="#0"]')
-                .click(function(event) {
+                .click(function (event) {
                     if (
                         location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
                         &&
@@ -591,15 +664,16 @@
                             event.preventDefault();
                             $('html, body').animate({
                                 scrollTop: target.offset().top
-                            }, 1000, function() {
+                            }, 1000, function () {
                                 var $target = $(target);
                                 $target.focus();
                                 if ($target.is(":focus")) {
                                     return false;
                                 } else {
-                                    $target.attr('tabindex','-1');
+                                    $target.attr('tabindex', '-1');
                                     $target.focus();
-                                };
+                                }
+                                ;
                             });
                         }
                     }
@@ -607,10 +681,10 @@
 
 
             /*********************************
-            *
-            * Alerta
-            *
-            *********************************/
+             *
+             * Alerta
+             *
+             *********************************/
 
             /* Success
 
@@ -625,7 +699,7 @@
 
             */
 
-            /* Warning 
+            /* Warning
 
             $(document).ready(function () {
                 swal(
@@ -638,7 +712,7 @@
 
             */
 
-            /* Info 
+            /* Info
 
             $(document).ready(function () {
                 swal(
@@ -651,7 +725,7 @@
 
             */
 
-            /* Question 
+            /* Question
 
             $(document).ready(function () {
                 swal(
@@ -664,7 +738,7 @@
 
             */
 
-            /* Error 
+            /* Error
 
             $(document).ready(function () {
                 swal(

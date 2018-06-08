@@ -132,6 +132,21 @@ a.jstree-anchor i.ti-na {
     border: 1px solid rgb(70, 117, 184);
 }
 
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend:hover,
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_disabled:hover {
+
+}
+
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend,
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_weekend:hover {
+    color: #d35050!important;
+}
+
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled:hover,
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_disabled:hover {
+    color: #000!important;
+}
+
 .table-doutorhj tr th,
 .table-doutorhj tr td {
     text-align: center;

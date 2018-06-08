@@ -302,27 +302,118 @@
                 });
 
             	var today_date = new Date();
+            	var today_date_range = new Date();
                 var min_date = today_date.setDate(today_date.getDate() + 2);
+                var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);
 
                 jQuery.datetimepicker.setLocale('pt-BR');
 
             	jQuery('.selecionaDataRemarcar').datetimepicker({                
                     timepicker:false,
                     format:'d/m/Y',
-                    minDate: min_date
+                    minDate: min_date,
+                    maxDate: max_date,
+                    beforeShowDay: function(date){ return [date.getDay() == 1 || date.getDay() == 2 || date.getDay() == 3 || date.getDay() == 4 || date.getDay() == 5,""]},
+                }).on("input change", function(e){
+                	//console.log("Date changed: ", e.target.value);
+                	if(e.target.value != '') {
+                		var ct_date_temp = ((e.target.value).replace('/', '-').replace('/', '-')).split('-');
+                    	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                    	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
+                    	if(ct_date.getDay() == 0 || ct_date.getDay() == 6) {
+                    		$(this).val('');
+                    		swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: 'Atendimento não disponível para ser Realizado aos Sábados e Domingos'
+    					        }
+    					    );
+                    	}
+                    	
+                    	jQuery(this).parent().parent().find('.confirma-data span.span-data').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
+
+                    	if(ct_date <= today_date) {
+                    		$(this).val('');
+                        	//alert('A Data informada não está disponível para a Agendamento');
+                    		swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: 'A Data informada não está disponível para a Agendamento'
+    					        }
+    					    );
+    					    
+                    	}
+                	}
                 }).on("input blur", function(e){
                 	//console.log("Date changed: ", e.target.value);
                 	if(e.target.value != '') {
-                		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
-                    	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                		var ct_date_input = ((e.target.value).replace('/', '-').replace('/', '-')).split('-');
+                    	var ct_date = new Date(ct_date_input[2], ct_date_input[1] - 1, ct_date_input[0]);
+    
+                    	if(ct_date.getDay() == 0 || ct_date.getDay() == 6) {
+                    		$(this).val('');
+                    		swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: 'Atendimento não disponível para ser Realizado aos Sábados e Domingos'
+    					        }
+    					    );
+                    	}
                     	
                 		if(ct_date <= today_date) {
                 			ct_date.setDate(today_date.getDate());
                 			var ct_mes = pad((ct_date.getMonth()+1));
-                			$(this).val(ct_date.getDate()+'.'+ct_mes+'.'+ct_date.getFullYear());
+                			$(this).val('');
+                			swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: 'A Data informada não está disponível para a Agendamento'
+    					        }
+    					    );
                 		}
-
-                    	
+    
+                		var ct_hora = jQuery(this).parent().parent().find('.selecionaHora').val();
+                		if(ct_hora != '') {
+    
+                    		var clinica_id 		= jQuery(this).parent().parent().parent().find('#clinica_id').val();
+                    		var profissional_id = jQuery(this).parent().parent().parent().find('#profissional_id').val();
+                    		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+                    		
+                    		if(clinica_id == '') { return false; }
+                    		if(profissional_id == '') { return false; }
+                    		
+                    		jQuery.ajax({
+                        		type: 'POST',
+                        	  	url: '/consulta-agendamento-disponivel',
+                        	  	data: {
+                    				'clinica_id': clinica_id,
+                        	  		'profissional_id': profissional_id,
+                        	  		'data_agendamento': dt_agendamento,
+                        	  		'hora_agendamento': ct_hora,
+                    				'_token': laravel_token
+                    			},
+                    			success: function (result) {
+    
+                    				if( !result.status) {
+                    					swal(
+                					        {
+                					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+                					            text: result.mensagem
+                					        }
+                					    );
+                    				}
+                                },
+                                error: function (result) {
+                                	swal(
+                            	        {
+                            	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                            	            text: 'Falha na operação!'
+                            	        }
+                            	    );
+                                }
+                        	});
+                		}
                 	}
                 });
                 

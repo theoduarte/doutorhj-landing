@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\DB;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
+use Illuminate\Support\Facades\Auth;
+use App\Agendamento;
 
 class CupomDescontoController extends Controller
 {
@@ -115,10 +117,20 @@ class CupomDescontoController extends Controller
         
         $ct_date = date('Y-m-d H:i:s');
         
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
         
         if(sizeof($cupom_desconto) <= 0) {
             return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
+        }
+        
+        $user_session = Auth::user();
+        $paciente_id = $user_session->paciente->id;
+        $cupom_id = $cupom_desconto->first()->id;
+        
+        $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
+        
+        if(sizeof($agendamento_cupom) > 0) {
+            return response()->json(['status' => false, 'mensagem' => 'O CUPOM DE DESCONTO informado, já foi utilizado por você em um outro Agendamento e não está mais disponível.']);
         }
         
         $percentual = $cupom_desconto->first()->percentual/100;
@@ -143,7 +155,7 @@ class CupomDescontoController extends Controller
                     $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
                 } elseif ($i > 3) {
                     $index_parcelamento = $i+1;
-                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (1,05% a.m.)';
+                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (5% a.m.)';
                 }
             }
         }

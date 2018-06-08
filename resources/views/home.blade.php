@@ -287,7 +287,7 @@
                                                 <td><span class="badge badge-warning">Coming soon</span></td>
                                                 <td>Coderthemes</td>
                                             </tr>
-    
+
                                             </tbody>
                                         </table>
                                     </div>
