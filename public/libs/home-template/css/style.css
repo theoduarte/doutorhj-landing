@@ -2529,6 +2529,10 @@ header .nav-item-mobile {
 .box-noticias-home {
     padding: 70px 0 100px 0;
     background: rgb(3, 38, 65) url("../img/bg-blog-home.jpg") top left;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .box-noticias-home .titulo {
