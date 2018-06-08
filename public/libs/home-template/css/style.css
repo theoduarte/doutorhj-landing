@@ -2967,13 +2967,13 @@ footer {
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
 }
 
 .info-atendimento p strong {
-    font-size: 26px;
+    font-size: 19px;
     font-style: italic;
-    line-height: 26px;
+    line-height: 25px;
 }
 
 footer ul {
