@@ -16,7 +16,7 @@
     <div class="container">
         <div class="area-container">
             <div class="titulo">
-                <strong>Resultados da sua pesquisa</strong>
+                <strong>{{count($atendimentos)}} @if(count($atendimentos)>1)Resultados @else Resultado @endif da sua pesquisa</strong>
                 <p>Após a escolha do prestador, indique a data e horário para realizar o seu agendamento.</p>
             </div>
             <div class="area-alt-busca">
