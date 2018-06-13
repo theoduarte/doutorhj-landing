@@ -385,7 +385,7 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //dd($output);
+        dd($output);
         if ($httpcode == 201) {
             
         	$cielo_result = json_decode($output);
