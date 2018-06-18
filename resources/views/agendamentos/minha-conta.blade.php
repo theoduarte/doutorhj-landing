@@ -211,7 +211,7 @@
                                                                         <option value="enteado">Enteado(a)</option>
                                                                         <option value="filho">Filho(a)</option>
                                                                         <option value="irmao">Irmã(ão)</option>
-                                                                        <option value="mes">Mãe</option>
+                                                                        <option value="mae">Mãe</option>
                                                                         <option value="pai">Pai</option>
                                                                         <option value="outros">Outros</option>
                                                                     </select>
