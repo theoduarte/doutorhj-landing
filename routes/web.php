@@ -3,15 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
 
 Route::get('/', 'Controller@home')->name('landing-page');
-//Route::get('/provisorio', 'Controller@home')->name('landing-page');
-//Route::get('/', 'Controller@provisorio')->name('provisorio');
 
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
+Route::get('resultado-checkup', 'CheckupController@consultaCheckup');
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::get('informa-beneficiario', 'AgendamentoController@informaBeneficiario')->middleware('auth')->name('informa-beneficiario');
 Route::post('atualiza-carrinho', 'AgendamentoController@atualizaCarrinho')->name('atualiza-carrinho');
