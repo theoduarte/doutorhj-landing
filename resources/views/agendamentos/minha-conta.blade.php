@@ -20,7 +20,7 @@
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Ex.: Consulta</option>
                                 <option value="saude">Consulta Médica</option>
-                                <option value="odonto">Consulta Odontológica</option>
+                                <!-- <option value="odonto">Consulta Odontológica</option> -->
                                 <option value="exame">Exames</option>
                                 <!-- <option value="procedimento">Procedimento</option> -->
                             </select>
