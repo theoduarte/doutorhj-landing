@@ -902,7 +902,7 @@ header .navbar-collapse {
     cursor: pointer;
 }
 
-.form-check-input {
+.area-seleciona-profissional .form-check-input {
     display: none;
 }
 
@@ -968,7 +968,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  6 LOGIN/CADASTRO
-* 
+*
 *********************************/
 
 .login .area-container {
@@ -1073,7 +1073,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  7 MENU ÁREA LOGADA
-* 
+*
 *********************************/
 
 .menu-area-logada {
@@ -1252,7 +1252,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  8 INFORMA BENEFICIÁRIO
-* 
+*
 *********************************/
 
 .confirma-beneficiario .btn {
@@ -1316,7 +1316,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  9 PAGAMENTO
-* 
+*
 *********************************/
 
 .pagamento .area-container .titulo {
@@ -1488,7 +1488,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  10 CONFIRMAÇÃO AGENDAMENTO
-* 
+*
 *********************************/
 
 .dados-confirmacao {
@@ -1527,7 +1527,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  11 HOME PRESTADOR
-* 
+*
 *********************************/
 
 .home-prestador .area-banner {
@@ -2919,6 +2919,200 @@ header .nav-item-mobile {
 
 /*********************************
 *
+*  X RESULTADO CHECKUP
+*
+*********************************/
+
+/* TÍTULO PÁGINA*/
+
+.resultado-checkup .titulo {
+    margin: 15px 0 15px 0;
+}
+
+/* TABS RESULTADO*/
+
+.resultado-checkup .lista .card {
+    border-radius: 0;
+    margin-bottom: 30px;
+}
+
+.resultado-checkup .lista .card-active .card-header,
+.resultado-checkup .lista .card:hover .card-header {
+    background-color: #f1f1f1;
+    transition: all .15s ease;
+}
+
+.resultado-checkup .lista .card-header {
+    background-color: #fff;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote {
+    padding: 20px 20px 40px 20px;
+    position: relative;
+    height: 100%;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote h4 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote span.incluso {
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade {
+    padding: 0;
+    list-style-type: none;
+}
+
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade li {
+    color: #555;
+    font-size: 14px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade li span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote .btn {
+    padding: 0;
+    font-size: 14px;
+    color: #a32431;
+    position: absolute;
+    left: 20px;
+    bottom: 14px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote .btn:hover {
+    color: #a32431;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores {
+    text-align: center;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado,
+.resultado-checkup .lista .card-header .resumo .valores .drhj {
+    background-color: #f1f1f1;
+    padding: 8px 10px 6px 10px;
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado p,
+.resultado-checkup .lista .card-header .resumo .valores .drhj p {
+    color: #999999;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado span,
+.resultado-checkup .lista .card-header .resumo .valores .drhj span {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup {
+    color: #4675b8;
+    background-color: #fff;
+    padding: 8px 10px 10px 10px;
+    border-left: 1px solid rgba(0,0,0,.125);
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup span {
+    font-size: 30px;
+    font-weight: 700;
+    display: inline-block;
+    width: 100%;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
+    margin-top: 6px;
+    height: 40px;
+    padding: 10px 10px;
+}
+
+/* LISTA DE PROCEDIMENTOS */
+
+.resultado-checkup .lista .card-body {
+    border-top: 1px solid rgba(0,0,0,.125);
+    background-color: #f9f9f9;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .titulo {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 15px 15px;
+    background-color: #4675b8;
+    margin: 0;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento {
+    padding: 15px 15px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento:last-child {
+    margin-bottom: 30px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .multi-exames .informativo {
+    font-size: 14px;
+    color: #dc5260;
+    font-weight: 600;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome .btn-tooltip {
+    padding: 0;
+    background-color: transparent;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome .btn-tooltip i {
+    color: #4675b8;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .clinicas {
+    color: #555555;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .clinicas .form-check-input {
+    margin-top: 4px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos button.prosseguir {
+    margin-top: 20px;
+}
+
+/**/
+
+/*********************************
+*
 *  X FOOTER
 *
 *********************************/
@@ -3022,7 +3216,7 @@ footer ul li a:hover {
 /*********************************
 *
 *  X MEDIA QUERIES
-* 
+*
 *********************************/
 
 @media only screen and (min-width: 1200px) {
@@ -3346,6 +3540,14 @@ footer ul li a:hover {
     .box-resumo-home .link-agendamentos {
         padding: 0 0 60px 0;
     }
+
+    .resultado-checkup .lista .card-header .resumo .resumo-pacote h4 {
+        font-size: 20px;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .resumo-pacote ul {
+        margin-bottom: 10px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -3499,6 +3701,33 @@ footer ul li a:hover {
     .home-prestador .area-beneficios .lb1,
     .home-prestador .area-beneficios .lb2 {
         text-align: center;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .mercado,
+    .resultado-checkup .lista .card-header .resumo .valores .drhj {
+        background-color: #f1f1f1;
+        padding: 8px 10px 6px 10px;
+        border-top: 1px solid rgba(0,0,0,.125);
+        border-left: none;
+        border-bottom: none;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .mercado p,
+    .resultado-checkup .lista .card-header .resumo .valores .drhj p {
+        display: inline-block;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup {
+        border-top: 1px solid rgba(0,0,0,.125);
+        border-left: none;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup p {
+        display: inline-block;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
+        margin-top: 0;
     }
 }
 
