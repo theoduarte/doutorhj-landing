@@ -48,7 +48,7 @@
                     <p>Escolha abaixo um dos pacotes de exames para seu checkup</p>
                 </div>
                 <div class="lista">
-                    <div class="accordion">
+                    <div class="accordion" id="accordionResultado">
                         <div class="card">
                             <div class="card-header" id="headingUm">
                                 <div class="resumo">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <div id="collapseUm" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseUm" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
                                 <div class="card-body">
 
                                     {{-- CONSULTAS --}}
@@ -478,7 +478,7 @@
                                         <div class="titulo">
                                             <div class="row">
                                                 <div class="col-xl-8">
-                                                    Imagem
+                                                    Avaliação
                                                 </div>
                                                 <div class="col-xl-4">
                                                     Escolha data e horário
@@ -489,7 +489,7 @@
                                             <div class="row">
                                                 <div class="col-xl-8">
                                                     <div class="nome">
-                                                        RX tórax PA
+                                                        Teste Ergométrico com Eletrocardiograma em repouso
                                                         <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="<u>BREVE</u> <b>descrição</b> <em>do procedimento.</em> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.">
                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </button>
@@ -498,7 +498,7 @@
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="clinicaProcedimento013" id="clinicaProcedimento013" value="option1" checked>
                                                             <label class="form-check-label" for="clinicaProcedimento013">
-                                                                CRB - SHLS Conj. B Bloco A - Brasília, DF
+                                                                Biovida - Superquadra Sudoeste 305 Bloco 3, Brasília - DF
                                                             </label>
                                                         </div>
                                                     </div>
@@ -566,7 +566,7 @@
                                 </div>
                             </div>
 
-                            <div id="collapseDois" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseDois" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
                                 <div class="card-body">
 
                                     {{-- CONSULTAS --}}
@@ -953,7 +953,7 @@
                                         <div class="titulo">
                                             <div class="row">
                                                 <div class="col-xl-8">
-                                                    Imagem
+                                                    Avaliação
                                                 </div>
                                                 <div class="col-xl-4">
                                                     Escolha data e horário
@@ -964,7 +964,7 @@
                                             <div class="row">
                                                 <div class="col-xl-8">
                                                     <div class="nome">
-                                                        RX tórax PA
+                                                        Teste Ergométrico com Eletrocardiograma em repouso
                                                         <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="<u>BREVE</u> <b>descrição</b> <em>do procedimento.</em> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.">
                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </button>
@@ -973,7 +973,7 @@
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="clinicaProcedimento026" id="clinicaProcedimento026" value="option1" checked>
                                                             <label class="form-check-label" for="clinicaProcedimento026">
-                                                                CRB - SHLS Conj. B Bloco A - Brasília, DF
+                                                                Biovida - Superquadra Sudoeste 305 Bloco 3, Brasília - DF
                                                             </label>
                                                         </div>
                                                     </div>
@@ -1041,7 +1041,7 @@
                                 </div>
                             </div>
 
-                            <div id="collapseTres" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseTres" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
                                 <div class="card-body">
 
                                     {{-- CONSULTAS --}}
@@ -1428,7 +1428,7 @@
                                         <div class="titulo">
                                             <div class="row">
                                                 <div class="col-xl-8">
-                                                    Imagem
+                                                    Avaliação
                                                 </div>
                                                 <div class="col-xl-4">
                                                     Escolha data e horário
@@ -1439,7 +1439,7 @@
                                             <div class="row">
                                                 <div class="col-xl-8">
                                                     <div class="nome">
-                                                        RX tórax PA
+                                                        Teste Ergométrico com Eletrocardiograma em repouso
                                                         <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="<u>BREVE</u> <b>descrição</b> <em>do procedimento.</em> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.">
                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </button>
@@ -1448,7 +1448,7 @@
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="clinicaProcedimento039" id="clinicaProcedimento039" value="option1" checked>
                                                             <label class="form-check-label" for="clinicaProcedimento039">
-                                                                CRB - SHLS Conj. B Bloco A - Brasília, DF
+                                                                Biovida - Superquadra Sudoeste 305 Bloco 3, Brasília - DF
                                                             </label>
                                                         </div>
                                                     </div>

@@ -1485,6 +1485,33 @@ header .nav-item-mobile {
     text-align: right;
 }
 
+.produtos-carrinho .card-resumo-compra .procedimentos p {
+    text-transform: uppercase;
+    color: #000;
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+.produtos-carrinho .card-resumo-compra .procedimentos p span {
+    font-weight: 700;
+}
+.produtos-carrinho .card-resumo-compra .procedimentos ul li {
+    font-weight: 300;
+}
+
+.produtos-carrinho .card-resumo-compra .procedimentos ul li .clinica {
+    margin-bottom: 2px;
+}
+
+.produtos-carrinho .card-resumo-compra .procedimentos ul li .endereco {
+    margin-bottom: 10px;
+}
+
+.produtos-carrinho .card-resumo-compra .procedimentos ul li .clinica span,
+.produtos-carrinho .card-resumo-compra .procedimentos ul li .endereco span {
+    font-weight: 600;
+}
+
 /*********************************
 *
 *  10 CONFIRMAÇÃO AGENDAMENTO
