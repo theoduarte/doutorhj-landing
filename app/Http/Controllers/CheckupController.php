@@ -11,9 +11,23 @@ class CheckupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function consultaCheckup()
+    public function resultadoCheckup()
     {
         return view('checkup.index');
     }
-    
+
+    public function carrinhoCheckup()
+    {
+        return view('checkup.carrinho');
+    }
+
+    public function pagamentoCheckup()
+    {
+        return view('checkup.pagamento');
+    }
+
+    public function confirmacaoCheckup()
+    {
+        return view('checkup.confirmacao');
+    }
 }

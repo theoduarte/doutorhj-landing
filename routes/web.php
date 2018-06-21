@@ -7,13 +7,16 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', 'Controller@home')->name('landing-page');
 
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
-Route::get('resultado-checkup', 'CheckupController@consultaCheckup');
+Route::get('resultado-checkup', 'CheckupController@resultadoCheckup');
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::get('informa-beneficiario', 'AgendamentoController@informaBeneficiario')->middleware('auth')->name('informa-beneficiario');
 Route::post('atualiza-carrinho', 'AgendamentoController@atualizaCarrinho')->name('atualiza-carrinho');
 Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
+Route::get('carrinho-checkup', 'CheckupController@carrinhoCheckup');
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
+Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
+Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
