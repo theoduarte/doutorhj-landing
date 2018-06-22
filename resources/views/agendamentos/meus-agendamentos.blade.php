@@ -51,76 +51,433 @@
                     Meus Agendamentos
                 </div>
                 <div class="lista-agendamentos">
-                	@foreach($agendamentos_home as $agendamento)
-                	<div class="agendamentos">
-                        <div class="row">
-                            <div class="col col-lg-2 area-data">
-                                <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else -- @endif</p>
-                                <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else --- @endif</p>
-                                <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else ---- @endif</p>
-                            </div>
-                            <div class="col col-lg-5 area-informacoes">
-                                <div class="nome-status">
+                    <ul class="nav nav-tabs" id="tabAgendamentos" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#consultas" role="tab" aria-controls="home" aria-selected="true">Consultas e Exames</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#checkup" role="tab" aria-controls="profile" aria-selected="false">Checkup</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="contentAgendamentos">
+
+                        {{-- EXAMES/CONSULTAS --}}
+
+                        <div class="tab-pane fade show active" id="consultas" role="tabpanel" aria-labelledby="home-tab">
+                            @foreach($agendamentos_home as $agendamento)
+                                <div class="agendamentos">
                                     <div class="row">
-                                        <div class="col-lg-7">
-                                            <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+                                        <div class="col col-lg-2 area-data">
+                                            <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else -- @endif</p>
+                                            <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else --- @endif</p>
+                                            <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else ---- @endif</p>
                                         </div>
-                                        <div class="col-lg-5">
-                                        	@if($agendamento->getRawCsStatusAttribute() == 10)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
-                                            @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
+                                        <div class="col col-lg-5 area-informacoes">
+                                            <div class="nome-status">
+                                                <div class="row">
+                                                    <div class="col-lg-7">
+                                                        <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        @if($agendamento->getRawCsStatusAttribute() == 10)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 70)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
+                                                        @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                                            <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                            <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+                                            <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span> <span class="dt-pagamento">pago em {{ $agendamento->data_pagamento }}</span></p>
+                                            <p class="endereco">{{ $agendamento->endereco_completo }}</p>
+                                        </div>
+                                        <div class="col col-lg-4">
+                                            <p class="tit-token">Token</p>
+                                            <p class="txt-token">Apresente este código no momento da consulta</p>
+                                            <div class="area-token">
+                                                <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
+                                                <p>
+                                                    <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >Copiar</button>
+                                                    <br>
+                                                    <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            @if($agendamento->getRawCsStatusAttribute() != 60)
+                                                <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
+                                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu ddm-opcoes"  >
+                                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                                        <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
+
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-                                <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
-                                <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span> <span class="dt-pagamento">pago em {{ $agendamento->data_pagamento }}</span></p>
-                                <p class="endereco">{{ $agendamento->endereco_completo }}</p>
-                            </div>
-                            <div class="col col-lg-4">
-                                <p class="tit-token">Token</p>
-                                <p class="txt-token">Apresente este código no momento da consulta</p>
-                                <div class="area-token">
-                                    <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
-                                    <p>
-                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >Copiar</button>
-                                        <br>
-                                        <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
-                                        
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-lg-1">
-                            	@if($agendamento->getRawCsStatusAttribute() != 60)
-                                <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
-                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="dropdown-menu ddm-opcoes"  >
-                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
-                                        <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
+                            @endforeach
+                        </div>
 
+                        {{-- CHECKUP --}}
+
+                        <div class="tab-pane fade" id="checkup" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="agendamentos">
+                                <div class="row">
+                                    <div class="col col-lg-8 area-informacoes">
+                                        <div class="nome-status">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <p class="beneficiario">Paulo</p>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    @if($agendamento->getRawCsStatusAttribute() == 10)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 70)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
+                                                    @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="linha-resumo linha-resumo-minha-conta">
+                                            <div class="titulo-resumo">
+                                                <span>Procedimentos inclusos no Checkup</span>
+                                            </div>
+                                            <div class="dados-resumo">
+
+                                                {{--CONSULTAS--}}
+
+                                                <div class="procedimentos consultas">
+                                                    <p><span>4 </span>Consultas</p>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                {{--EXAMES--}}
+
+                                                <div class="procedimentos exames">
+                                                    <p><span>6 </span>Exames</p>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                {{--IMAGENS--}}
+
+                                                <div class="procedimentos imagem">
+                                                    <p><span>3 </span>Imagens</p>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                {{--AVALIAÇÕES--}}
+
+                                                <div class="procedimentos avaliacoes">
+                                                    <p><span>1 </span>Avaliação</p>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <div class="clinica">
+                                                                        Consulta Clínico-cardiológica com smokerlyser para
+                                                                        tabagistas, no dia <span>29/02/2018</span>, às <span>14:30</span>
+                                                                    </div>
+                                                                    <div class="endereco">
+                                                                        <span>Local: </span>Biocárdios - SEPS Q 709/909 BL F -
+                                                                        Asa Sul, Brasília - DF
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col col-lg-3">
+                                        <p class="tit-token">Token</p>
+                                        <p class="txt-token">Apresente este código no momento da consulta</p>
+                                        <div class="area-token">
+                                            <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
+                                            <p>
+                                                <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >Copiar</button>
+                                                <br>
+                                                <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        @if($agendamento->getRawCsStatusAttribute() != 60)
+                                            <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
+                                                <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu ddm-opcoes"  >
+                                                    <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                                    <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
+
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
-                                @endif
                             </div>
                         </div>
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
