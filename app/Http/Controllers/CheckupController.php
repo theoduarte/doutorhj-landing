@@ -13,7 +13,7 @@ class CheckupController extends Controller
      */
     public function resultadoCheckup()
     {
-        return view('checkup.index');
+        return view('checkup.resultado');
     }
 
     public function carrinhoCheckup()

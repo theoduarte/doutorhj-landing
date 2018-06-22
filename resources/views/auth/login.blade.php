@@ -37,7 +37,7 @@
                                         <div class="col col-lg-6 col-xl-5">
                                             <button type="button" id="btn-send-token" class="btn btn-vermelho">
                                                 <i class="fa fa-key"></i>
-                                                <span id="lbl-enviar-token">Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span>
+                                                <span id="lbl-enviar-token">Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
                                             </button>
                                         </div>
                                     </div>
@@ -393,7 +393,7 @@
                                     </div>
                                     <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta">
                                         <i class="fa fa-user"></i>
-                                        <span id="lbl-criar-conta">Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span>
+                                        <span id="lbl-criar-conta">Criar conta <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
                                     </button>
                                 </form>
                             </div>
@@ -426,9 +426,9 @@
                     $('#input_hidden_EmailTelefone').val(ds_contato);
 
                     $('#btn-send-token').attr('disabled', 'disabled');
-                    $('#btn-send-token').find('#lbl-enviar-token').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+                    $('#btn-send-token').find('#lbl-enviar-token').html('Processando... <i class="fa fa-spin fa-spinner" style="display: inline-block; font-size: 14px; margin-left: 5px;"></i>');
                     setTimeout(function () {
-                        $('#btn-send-token').find('#lbl-enviar-token').html('Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+                        $('#btn-send-token').find('#lbl-enviar-token').html('Enviar Token <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i>');
                         $('#btn-send-token').removeAttr('disabled');
                     }, 30000);
 

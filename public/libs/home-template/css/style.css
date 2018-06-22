@@ -1070,6 +1070,8 @@ header .navbar-collapse {
     font-size: 17px;
 }
 
+.lbl-enviar-token i.fa-spinner
+
 /*********************************
 *
 *  7 MENU ÁREA LOGADA
@@ -1549,6 +1551,33 @@ header .nav-item-mobile {
 
 .dados-confirmacao ul li {
     clear: both;
+}
+
+.card-concluir .card-resumo-compra .procedimentos p {
+    text-transform: uppercase;
+    color: #000;
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+.card-concluir .card-resumo-compra .procedimentos p span {
+    font-weight: 700;
+}
+.card-concluir .card-resumo-compra .procedimentos ul li {
+    font-weight: 300;
+}
+
+.card-concluir .card-resumo-compra .procedimentos ul li .clinica {
+    margin-bottom: 2px;
+}
+
+.card-concluir .card-resumo-compra .procedimentos ul li .endereco {
+    margin-bottom: 10px;
+}
+
+.card-concluir .card-resumo-compra .procedimentos ul li .clinica span,
+.card-concluir .card-resumo-compra .procedimentos ul li .endereco span {
+    font-weight: 600;
 }
 
 /*********************************
