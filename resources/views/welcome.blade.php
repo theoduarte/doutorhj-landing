@@ -70,11 +70,10 @@
                                                 <p class="data-consulta">
                                                     Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
                                                     de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                    às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                        hora(s)
+                                                    às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}h
                                                         @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
                                                             e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                            minuto(s) @endif</span></p>
+                                                            min. @endif</span></p>
 
                                             </div>
                                             <div class="resumo">
@@ -118,6 +117,34 @@
                                         </div>
                                     </div>
                                 @endforeach
+
+                                    <div class="proxima-consulta col-sm-12 col-md-6">
+                                        <div class="area-pc">
+                                            <div class="tit-pc">
+                                                {{--<p>Sua próxima consulta é</p>--}}
+                                                <p class="data-consulta">
+                                                    Diferentes datas e horários</p>
+
+                                            </div>
+                                            <div class="resumo">
+                                                <div class="nome-status">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <p class="beneficiario">Paulo</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="tipo">
+                                                    <span><strong>Procedimento:</strong> Checkup acima de 60 anos - Masculino</span>
+                                                </p>
+                                                {{--<p class="profissional">
+                                                    Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+                                                <a href="#" class="link-detalhes-checkup">Clique aqui para ver todos os detalhes do Checkup</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -549,10 +576,8 @@
                                 <h3>Aplicativo Doctor Hoje</h3>
                             </div>
                             <p>Com o aplicativo Doctor Hoje, você poderá ter acesso a todas as funcionalidades na palma
-                                da
-                                sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
-                                das
-                                novidades. </p>
+                                da sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
+                                das novidades. </p>
                             <p><strong>Em breve disponível:</strong></p>
                             <ul class="link-aplicativos">
                                 <li><a>Google Play</a></li>

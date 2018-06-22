@@ -2529,6 +2529,10 @@ header .nav-item-mobile {
     border-bottom: 1px solid rgb(238, 238, 238);
 }
 
+.box-resumo-home .proxima-consulta .link-detalhes-checkup {
+    font-size: 14px;
+}
+
 .box-resumo-home .proxima-consulta .nome-status p {
     line-height: 36px;
 }
