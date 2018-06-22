@@ -37,6 +37,10 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css"/>
         <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css"/>
 
+        <!-- Sweet Alert css -->
+        <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.theme.default.min.css">
+
         <!-- JQuery Autocomplete -->
         <link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
 
@@ -54,13 +58,13 @@
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
         <script src="/libs/home-template/js/popper.min.js"></script>
-
         <script src="/libs/home-template/js/bootstrap.min.js"></script>
         <script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
         <script src="/libs/switchery/switchery.min.js"></script>
+        <script src="/libs/owlcarousel/owl.carousel.min.js"></script>
 
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 

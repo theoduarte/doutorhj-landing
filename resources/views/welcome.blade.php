@@ -124,7 +124,6 @@
                                                 {{--<p>Sua próxima consulta é</p>--}}
                                                 <p class="data-consulta">
                                                     Diferentes datas e horários</p>
-
                                             </div>
                                             <div class="resumo">
                                                 <div class="nome-status">
@@ -587,6 +586,24 @@
                     </div>
                 </div>
             </div>
+            <div class="area-parceiros">
+                <div class="container">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item"><h4>1</h4></div>
+                        <div class="item"><h4>2</h4></div>
+                        <div class="item"><h4>3</h4></div>
+                        <div class="item"><h4>4</h4></div>
+                        <div class="item"><h4>5</h4></div>
+                        <div class="item"><h4>6</h4></div>
+                        <div class="item"><h4>7</h4></div>
+                        <div class="item"><h4>8</h4></div>
+                        <div class="item"><h4>9</h4></div>
+                        <div class="item"><h4>10</h4></div>
+                        <div class="item"><h4>11</h4></div>
+                        <div class="item"><h4>12</h4></div>
+                    </div>
+                </div>
+            </div>
         </section>
     @endif
     @push('scripts')
@@ -607,6 +624,31 @@
 
             $('.carousel').carousel({
                 interval: 7000
+            });
+
+            /*********************************
+             *
+             * CARROSSEL PARCEIROS
+             *
+             *********************************/
+
+            $(document).ready(function(){
+                $('.owl-carousel').owlCarousel({
+                    loop:true,
+                    margin:10,
+                    nav:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:4
+                        },
+                        1000:{
+                            items:8
+                        }
+                    }
+                })
             });
 
             /*********************************
