@@ -20,6 +20,7 @@ use App\CartaoPaciente;
 use App\Pedido;
 use App\Mensagem;
 use App\MensagemDestinatario;
+use App\Filial;
 
 class AgendamentoController extends Controller
 {
@@ -44,7 +45,11 @@ class AgendamentoController extends Controller
     }
     
     
-    
+    /**
+     * informaBeneficiario a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function informaBeneficiario(){
         /*$user_id = 17;
         
@@ -93,11 +98,13 @@ class AgendamentoController extends Controller
             $atendimento_tmp_id = $item['attributes']['atendimento_id'];
             $profissional_tmp_id = $item['attributes']['profissional_id'];
             $clinica_tmp_id = $item['attributes']['clinica_id'];
+            $filial_tmp_id = $item['attributes']['filial_id'];
             $paciente_tmp_id = $item['attributes']['paciente_id'];
             
             $atendimento = Atendimento::findOrFail($atendimento_tmp_id);
             $profissional = Profissional::findOrFail($profissional_tmp_id);
             $clinica = Clinica::findOrFail($clinica_tmp_id);
+            $filial = Filial::findOrFail($filial_tmp_id);
             $paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
             $url = $item['attributes']['current_url'];
             
@@ -145,12 +152,17 @@ class AgendamentoController extends Controller
                 $clinica->load('enderecos');
             }
             
+            if (isset($filial)) {
+                $filial->load('endereco');
+            }
+            
             $item_carrinho = array(
                 'item_id' 				=> $item['id'],
                 'valor' 				=> $item['price'],
                 'atendimento' 			=> $atendimento,
                 'profissional' 			=> $profissional,
                 'clinica' 				=> $clinica,
+                'filial' 				=> $filial,
                 'titular'               => $titular,
                 'paciente'				=> $paciente,
                 'data_agendamento' 		=> $item['attributes']['data_atendimento'],
@@ -197,6 +209,7 @@ class AgendamentoController extends Controller
     	$profissional_id	= $request->input('profissional_id');
     	$paciente_id		= $request->input('paciente_id');
     	$clinica_id			= $request->input('clinica_id');
+    	$filial_id			= $request->input('filial_id');
     	$data_atendimento	= $request->input('data_atendimento');
     	$hora_atendimento	= $request->input('hora_atendimento');
     	$vl_com_atendimento = $request->input('vl_com_atendimento');
@@ -230,6 +243,7 @@ class AgendamentoController extends Controller
         	        'profissional_id' => $profissional_id,
         	        'paciente_id' => $paciente_id,
         	        'clinica_id' => $clinica_id,
+    		        'filial_id' => $filial_id,
         	        'data_atendimento' => $data_atendimento,
         	        'hora_atendimento' => $hora_atendimento,
     				'current_url' => $url
@@ -270,6 +284,7 @@ class AgendamentoController extends Controller
         $profissional_id	= $request->input('profissional_id');
         $paciente_id		= $request->input('paciente_id');
         $clinica_id			= $request->input('clinica_id');
+        $filial_id			= $request->input('filial_id');
         $data_atendimento	= $request->input('data_atendimento');
         $hora_atendimento	= $request->input('hora_atendimento');
         $vl_com_atendimento = $request->input('vl_com_atendimento');
@@ -277,13 +292,14 @@ class AgendamentoController extends Controller
         
         CVXCart::update($item_id, array(
             'attributes' => array(
-                'atendimento_id' => $atendimento_id,
-                'profissional_id' => $profissional_id,
-                'paciente_id' => $paciente_id,
-                'clinica_id' => $clinica_id,
-                'data_atendimento' => $data_atendimento,
-                'hora_atendimento' => $hora_atendimento,
-                'current_url' => $url
+                'atendimento_id'    => $atendimento_id,
+                'profissional_id'   => $profissional_id,
+                'paciente_id'       => $paciente_id,
+                'clinica_id'        => $clinica_id,
+                'filial_id'         => $filial_id,
+                'data_atendimento'  => $data_atendimento,
+                'hora_atendimento'  => $hora_atendimento,
+                'current_url'       => $url
             )
         ));
         
@@ -308,11 +324,13 @@ class AgendamentoController extends Controller
     		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
     		$profissional_tmp_id = $item['attributes']['profissional_id'];
     		$clinica_tmp_id = $item['attributes']['clinica_id'];
+    		$filial_tmp_id = $item['attributes']['filial_id'];
     		$paciente_tmp_id = $item['attributes']['paciente_id'];
     	
     		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
     		$profissional = Profissional::findOrFail($profissional_tmp_id);
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
+    		$filial = Filial::findOrFail($filial_tmp_id);
     		
     		$paciente = $paciente_tmp_id != null && $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
     		
@@ -351,6 +369,10 @@ class AgendamentoController extends Controller
     		if (isset($clinica)) {
     			$clinica->load('enderecos');
     		}
+    		
+    		if (isset($filial)) {
+    		    $filial->load('endereco');
+    		}
     	
     		$item_carrinho = array(
     				'item_id' 				=> $item['id'],
@@ -358,6 +380,7 @@ class AgendamentoController extends Controller
     				'atendimento' 			=> $atendimento,
     				'profissional' 			=> $profissional,
     				'clinica' 				=> $clinica,
+    		        'filial' 				=> $filial,
     		        'paciente'				=> $paciente,
     				'data_agendamento' 		=> $item['attributes']['data_atendimento'],
     				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],

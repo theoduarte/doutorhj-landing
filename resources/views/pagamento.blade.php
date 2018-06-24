@@ -78,9 +78,6 @@
                                                             @foreach($cartoes_gravados as $item)
                                                             <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
                                     						@endforeach
-                                                            <!-- <option>Cartão Visa - final 0889</option>
-                                                            <option>Cartão MasterCard - final 0685</option>
-                                                            <option>Cartão Cielo - final 6854</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
@@ -328,8 +325,9 @@
                                                         <span>Prestador:</span>
                                                     </div>
                                                     <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->nm_fantasia }}</p>
+                                                        <p>{{ $item['clinica']->nm_fantasia }}  - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
                                                         <input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($item['clinica']) ? $item['clinica']->id : 0 }}">
+                                                        <input type="hidden" id="filial_id_{{ $index }}" name="filial_id_[{{ $index }}]" value="{{ isset($item['filial']) ? $item['filial']->id : 0 }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -337,7 +335,7 @@
                                                         <span>Endereço:</span>
                                                     </div>
                                                     <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->enderecos->first()->te_endereco.', '.$item['clinica']->enderecos->first()->nr_logradouro.', '.$item['clinica']->enderecos->first()->te_bairro }}</p>
+                                                        <p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">

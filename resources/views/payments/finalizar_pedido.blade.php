@@ -75,7 +75,7 @@
                                                                     <span>Endereço:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{ $agendamento->clinica->enderecos->first()->te_endereco.', '.$agendamento->clinica->enderecos->first()->nr_logradouro.', '.$agendamento->clinica->enderecos->first()->te_bairro }}</p>
+                                                                    <p>{{ $agendamento->filial->endereco->te_endereco.', '.$agendamento->filial->endereco->nr_logradouro.', '.$agendamento->filial->endereco->te_bairro }}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -104,10 +104,9 @@
                                                                     <span>Prestador:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{ $agendamento->clinica->nm_fantasia }}</p>
-                                                                    <input type="hidden" id="clinica_id_{{ $index }}"
-                                                                           name="clinica_id_[{{ $index }}]"
-                                                                           value="{{ isset($agendamento->clinica) ? $agendamento->clinica->id : 0 }}">
+                                                                    <p>{{ $agendamento->clinica->nm_fantasia }} - Und: ( {{ $agendamento->filial->nm_nome_fantasia }} )</p>
+                                                                    <input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($agendamento->clinica) ? $agendamento->clinica->id : 0 }}">
+                                                                    <input type="hidden" id="filial_id_{{ $index }}" name="filial_id_[{{ $index }}]" value="{{ isset($agendamento->filial) ? $agendamento->filial->id : 0 }}">
                                                                 </div>
                                                             </div>
                                                         </div>

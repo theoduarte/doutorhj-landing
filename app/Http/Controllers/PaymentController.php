@@ -181,27 +181,14 @@ class PaymentController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-        //$result_agendamentos = Agendamento::with('atendimento')->with('clinica')->with('profissional')->with('itempedidos')->with('paciente')->get();
         $result_agendamentos = $request->session()->get('result_agendamentos');
         
         if ($result_agendamentos == null) {
             return redirect()->route('landing-page');
         }
-        //dd($result_agendamentos);
-        //$pedido = [];
+
         $pedido = $request->session()->get('pedido');
         
-        /* $valor_total_pedido = 0;
-        
-        foreach ($result_agendamentos as $agendamento) {
-            if (isset($agendamento->itempedidos) && sizeof($agendamento->itempedidos) > 0) {
-                
-                $agendamento->itempedidos->first()->load('pedido');
-                //             dd($result_agendamentos);
-                $pedido = $agendamento->itempedidos->first()->pedido;
-                $valor_total_pedido = $valor_total_pedido+$agendamento->itempedidos->first()->valor;
-            }
-        } */
         $valor_total_pedido = $request->session()->get('valor_total_pedido');
         
         $request->session()->forget('result_agendamentos');
@@ -303,6 +290,7 @@ class PaymentController extends Controller
         $descricao = '';
         $dt_pagamento = date('Y-m-d H:i:s');
         $paciente_id = CVXRequest::post('paciente_id');
+        $num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
         
         $pedido->titulo         = $titulo_pedido;
         $pedido->descricao      = $descricao;
@@ -354,7 +342,7 @@ class PaymentController extends Controller
         $payment_currency               = 'BRL';
         $payment_country                = 'BRA';
         $payment_serv_taxa              = 0;
-        $payment_installments           = sizeof($parcelamentos);
+        $payment_installments           = intval($num_parcela_selecionado); //sizeof($parcelamentos);
         $payment_interest               = "ByMerchant";
         $payment_capture                = 'true';
         $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'true'; //-- usado no pagamento por debito tambem
@@ -410,6 +398,7 @@ class PaymentController extends Controller
         				$agendamento->bo_retorno        = 'N';
         				$agendamento->paciente_id       = $item_agendamento->paciente_id;
         				$agendamento->clinica_id        = $item_agendamento->clinica_id;
+        				$agendamento->filial_id         = $item_agendamento->filial_id;
         				$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
         				$agendamento->profissional_id   = $item_agendamento->profissional_id;
         				 
@@ -424,6 +413,7 @@ class PaymentController extends Controller
         					$agendamento_id = $agendamento->id;
         					$agendamento->load('atendimento');
         					$agendamento->load('clinica');
+        					$agendamento->load('filial');
         					$agendamento->load('profissional');
         					$agendamento->load('paciente');
         					 
@@ -519,6 +509,7 @@ class PaymentController extends Controller
             	########### FINISHIING TRANSACTION ##########
             	DB::rollback();
             	#############################################
+            	//dd($e->getMessage());
             	return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
             }
             
@@ -699,6 +690,7 @@ class PaymentController extends Controller
     	$descricao = '';
     	$dt_pagamento = date('Y-m-d H:i:s');
     	$paciente_id = CVXRequest::post('paciente_id');
+    	$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
     
     	$pedido->titulo         = $titulo_pedido;
     	$pedido->descricao      = $descricao;
@@ -736,7 +728,7 @@ class PaymentController extends Controller
     	$payment_currency               = 'BRL';
     	$payment_country                = 'BRA';
     	
-    	$payment_installments           = sizeof($parcelamentos);
+    	$payment_installments           = intval($num_parcela_selecionado); //sizeof($parcelamentos);
     	$payment_softdescriptor         = 'DoctorHoje';
     	$payment_card_token       		= $cartao_cadastrado->card_token; 
     	$payment_holder                 = $cartao_cadastrado->nome_impresso;
@@ -779,6 +771,7 @@ class PaymentController extends Controller
     					$agendamento->bo_retorno        = 'N';
     					$agendamento->paciente_id       = $item_agendamento->paciente_id;
     					$agendamento->clinica_id        = $item_agendamento->clinica_id;
+    					$agendamento->filial_id         = $item_agendamento->filial_id;
     					$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
     					$agendamento->profissional_id   = $item_agendamento->profissional_id;
     					 
@@ -793,6 +786,7 @@ class PaymentController extends Controller
     						$agendamento_id = $agendamento->id;
     						$agendamento->load('atendimento');
     						$agendamento->load('clinica');
+    						$agendamento->load('filial');
     						$agendamento->load('profissional');
     						$agendamento->load('paciente');
     				
@@ -1060,9 +1054,10 @@ class PaymentController extends Controller
     	$endereco_agendamento = '--------------------';
     	
     	$agendamento->clinica->load('enderecos');
-    	$enderecos_clinica = $agendamento->clinica->enderecos->first();
+    	$agendamento->filial->load('endereco');
+    	$enderecos_clinica = $agendamento->filial->endereco;
     	
-    	if ($agendamento->clinica->enderecos != null) {
+    	if ($agendamento->filial->endereco != null) {
     		$enderecos_clinica->load('cidade');
     		$cidade_clinica = $enderecos_clinica->cidade;
     		

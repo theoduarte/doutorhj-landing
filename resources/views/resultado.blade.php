@@ -73,10 +73,10 @@
                         	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }}</h5>
+                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }} - Und: ( {{ $atendimento->filial_result->nm_nome_fantasia }} )</h5>
                                     <h6 class="card-subtitle">Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}</h6>
                                     <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->ds_preco }} @else {{ $atendimento->ds_preco }} @endif </p>
-                                    <p class="card-text">{{ $atendimento->clinica->enderecos[0]->te_endereco.' ('.$atendimento->clinica->enderecos[0]->te_bairro.') '.$atendimento->clinica->enderecos[0]->cidade->nm_cidade.'-'.$atendimento->clinica->enderecos[0]->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    <p class="card-text">{{ $atendimento->filial_result->endereco->te_endereco.' ('.$atendimento->filial_result->endereco->te_bairro.') '.$atendimento->filial_result->endereco->cidade->nm_cidade.'-'.$atendimento->filial_result->endereco->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>
                                 <div class="card-footer">
@@ -94,6 +94,7 @@
                                     	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $atendimento->profissional->id }}">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
                                     	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
+                                    	<input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">
                                     	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_com_atendimento }}">
                                     	
                                     	<!-- <input type="hidden" name="current_url" value="{{ Request::root().'/'.Request::path().'/'.str_replace(Request::url(), '',Request::fullUrl()) }}"> -->

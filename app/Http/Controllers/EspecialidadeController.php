@@ -21,9 +21,10 @@ class EspecialidadeController extends Controller
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
         $result = [];
         
-        if ($tipo_atendimento == 'saude' | $tipo_atendimento == 'odonto') {
+        if ($tipo_atendimento == 'saude') {
             
-            $tipo_atendimento_id = $tipo_atendimento == 'saude' ? 1 : 2;
+            $tipo_atendimento_id = 1;
+            //$tipo_atendimento_id = $tipo_atendimento == 'saude' ? 1 : 2;
             
             //DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
@@ -35,8 +36,8 @@ class EspecialidadeController extends Controller
                 ->distinct()
                 ->get(['consultas.cd_consulta']);
             
-            //$query = DB::getQueryLog();
-            //dd($query);
+//             $query = DB::getQueryLog();
+//             dd($query);
             
             foreach ($atendimentos as $atend) {
                 
@@ -53,9 +54,10 @@ class EspecialidadeController extends Controller
                 }
             }
             
-        } elseif ($tipo_atendimento == 'exame') {
+        } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             
-            $tipo_atendimento_id = 3;
+            //$tipo_atendimento_id = 3;
+            $tipo_atendimento_id = $tipo_atendimento == 'exame' ? 3 : 2;
             
             DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
@@ -115,7 +117,7 @@ class EspecialidadeController extends Controller
         
         $result = [];
         
-        if ($tipo_atendimento == 'saude' | $tipo_atendimento == 'odonto') {
+        if ($tipo_atendimento == 'saude') {
 
         	
             //dd($tipo_especialidade);
@@ -150,7 +152,7 @@ class EspecialidadeController extends Controller
 	        	array_push($result, $arResultado);
 	       	}
 	       	
-        } elseif ($tipo_atendimento == 'exame') {
+        } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             
             $procedimento_id = $ct_atendimento->procedimento_id;
             
@@ -188,7 +190,7 @@ class EspecialidadeController extends Controller
     public function consultaTodosLocaisAtendimento()
     {	
     	$atendimento_id = CVXRequest::post('atendimento_id');
-    	
+    	//dd($atendimento_id);
     	$ct_atendimento = Atendimento::findorfail($atendimento_id);
     	$ct_atendimento->load('clinica');
     	$ct_atendimento->clinica->load('enderecos');
@@ -204,7 +206,7 @@ class EspecialidadeController extends Controller
     	$list_endereco_ids = [];
     	$result = [];
     
-    	if ($tipo_atendimento == 'saude' | $tipo_atendimento == 'odonto') {
+    	if ($tipo_atendimento == 'saude') {
     		
     		$ct_atendimento->load('consulta');
     		$consulta_id = $ct_atendimento->consulta->id;
@@ -222,7 +224,7 @@ class EspecialidadeController extends Controller
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
-    		
+	    	
     		//-- realiza a conversao dos itens para exibicao no droplist da landing page ---------------
 	    	$arResultado = [ 'id' =>  $endereco->id, 'cidade_id' => $endereco->cidade_id, 'value' => ucwords(strtolower($endereco->te_bairro)).': '.$endereco->cidade->nm_cidade, 'te_bairro' =>  $endereco->te_bairro ];
 	    	array_push($result, $arResultado);
@@ -260,7 +262,7 @@ class EspecialidadeController extends Controller
     			}
     		}
     		
-    	} elseif ($tipo_atendimento == 'exame') {
+    	} elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
     
     		$procedimento_id = $ct_atendimento->procedimento_id;
     
