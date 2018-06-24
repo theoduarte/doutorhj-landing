@@ -37,12 +37,12 @@
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css"/>
         <link type="text/css" rel="stylesheet" href="/libs/select2/css/select2.min.css"/>
 
-        <!-- Sweet Alert css -->
+        <!-- Carosssel logo parceiros -->
         <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.theme.default.min.css">
 
         <!-- Float WhatsApp -->
-        <link rel="stylesheet" href="/libs/floating-whatsapp/floating-wpp.min.css">
+        <link rel="stylesheet" href="/libs/floating-whatsapp/floating-wpp.css">
 
         <!-- JQuery Autocomplete -->
         <link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
@@ -861,14 +861,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         $(function () {
             $('.floating-wpp').floatingWhatsApp({
                 phone: '+5561986792680',
-                popupMessage: 'Bem vindo ao Doctor Hoje!',
+                popupMessage: 'Bem vindo! Envie sua dúvida e logo responderemos:',
                 showPopup: true,
                 position: 'right', // left or right
                 autoOpen: false, // true or false
                 //autoOpenTimer: 4000,
-                message: 'Digite aqui sua mensagem',
+                message: '',
                 //headerColor: 'orange', // enable to change msg box color
-                headerTitle: 'Whatsapp',
+                headerTitle: 'Whatsapp do Doctor Hoje',
             });
         });
     </script>
