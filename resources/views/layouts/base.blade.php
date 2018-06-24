@@ -41,6 +41,9 @@
         <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.carousel.min.css">
         <link rel="stylesheet" href="/libs/owlcarousel/assets/owl.theme.default.min.css">
 
+        <!-- Float WhatsApp -->
+        <link rel="stylesheet" href="/libs/floating-whatsapp/floating-wpp.min.css">
+
         <!-- JQuery Autocomplete -->
         <link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
 
@@ -65,6 +68,7 @@
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
         <script src="/libs/switchery/switchery.min.js"></script>
         <script src="/libs/owlcarousel/owl.carousel.min.js"></script>
+        <script src="/libs/floating-whatsapp/floating-wpp.min.js"></script>
 
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
@@ -229,6 +233,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 	@if (!Auth::check())
     <footer class="footer-default">
+        <div class="floating-wpp"></div>
         <div class="container">
             <div class="area-logo-rodape">
                 <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
@@ -851,6 +856,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     <script src="/js/utilitarios.js"></script>
+
+    <script>
+        $(function () {
+            $('.floating-wpp').floatingWhatsApp({
+                phone: '+5561986792680',
+                popupMessage: 'Bem vindo ao Doctor Hoje!',
+                showPopup: true,
+                position: 'right', // left or right
+                autoOpen: false, // true or false
+                //autoOpenTimer: 4000,
+                message: 'Digite aqui sua mensagem',
+                //headerColor: 'orange', // enable to change msg box color
+                headerTitle: 'Whatsapp',
+            });
+        });
+    </script>
 
 @endpush
 

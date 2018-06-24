@@ -3206,6 +3206,22 @@ header .nav-item-mobile {
 *
 *********************************/
 
+.chatWhatsapp {
+    text-decoration: none;
+    padding: 1em;
+    margin-top: 1em;
+    background: #1ebea5;
+    color: #fff;
+    border-radius: 2em;
+    text-align: center;
+    font-size: 14px;
+}
+
+.chatWhatsapp:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
 .contato-prestador {
     background-color: rgb(249, 249, 249);
 }

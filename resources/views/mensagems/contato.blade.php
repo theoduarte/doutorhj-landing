@@ -70,6 +70,11 @@
                         <h4><i class="fa fa-envelope-o"></i> Envie-nos um E-mail</h4>
                         <p>prestador@doctorhoje.com.br<br><br></p>
                     </div>
+                    <div class="contact-box">
+                        <a href="https://web.whatsapp.com/send?phone=5561986792680&text=" class="chatWhatsapp" target="_blank">
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Envie uma mensagem pelo Whatsapp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
