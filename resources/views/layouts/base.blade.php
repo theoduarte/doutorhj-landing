@@ -200,17 +200,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#area-sobre">O que é o Doctor Hoje?</a>
+                                <a class="nav-link" href="#area-sobre">O que é o Doctor Hoje</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#como-funciona">Como funciona?</a>
+                                <a class="nav-link" href="#como-funciona">Como funciona</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#vantagens">Vantagens</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contato">Contato</a>
+                            </li>
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="https://prestador.doctorhoje.com.br">Sou profissional de
-                                    saúde</a>
+                                <a class="nav-link" href="https://prestador.doctorhoje.com.br">Seja um parceiro</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>

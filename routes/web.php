@@ -18,6 +18,9 @@ Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
 
+/*colocar essa rota no local correto*/
+Route::get('contato', 'ClinicaController@contatoHomePublica');
+
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
 Route::get('login-prestador', 'ClinicaController@loginPrestador');

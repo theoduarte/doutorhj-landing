@@ -3200,7 +3200,60 @@ header .nav-item-mobile {
     margin-top: 20px;
 }
 
-/**/
+/*********************************
+*
+*  X CONTATO
+*
+*********************************/
+
+.contato-prestador {
+    background-color: rgb(249, 249, 249);
+}
+
+.contato-prestador .area-contato
+{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.contato-prestador .area-contato form .row {
+    margin-bottom: 20px;
+}
+
+.contato-prestador .area-contato form input {
+    height: 50px;
+}
+
+.contato-prestador .area-contato .area-form {
+    margin-bottom: 60px;
+}
+
+.contato-prestador .area-contato .area-form .form {
+    padding: 30px;
+    border: 1px solid rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
+}
+
+.contato-prestador .area-contato .area-form h2 {
+    font-size: 24px;
+}
+
+.contato-prestador .area-contato .contact-box {
+    margin-bottom: 30px;
+}
+
+.contato-prestador .area-contato .contact-box h4 {
+    font-size: 18px;
+}
+
+.contato-prestador .area-contato .contact-box h4 i {
+    color: rgb(163, 36, 49);
+    margin-right: 6px;
+}
+
+.contato-prestador .area-contato .contact-box p {
+    font-size: 16px;
+}
 
 /*********************************
 *

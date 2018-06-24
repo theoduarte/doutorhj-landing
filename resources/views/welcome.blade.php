@@ -123,7 +123,7 @@
                                             <div class="tit-pc">
                                                 {{--<p>Sua próxima consulta é</p>--}}
                                                 <p class="data-consulta">
-                                                    Diferentes datas e horários</p>
+                                                    Checkup</p>
                                             </div>
                                             <div class="resumo">
                                                 <div class="nome-status">
