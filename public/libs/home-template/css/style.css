@@ -705,6 +705,19 @@ header .navbar-collapse {
     background-image: url(../img/app-apple.png);
 }
 
+.area-parceiros {
+    padding: 30px 0;
+    background-color: #f1f1f1;
+}
+
+.area-parceiros .titulo-home h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    text-align: center;
+}
+
 /*********************************
 *
 *  5 RESULTADO DA BUSCA
