@@ -201,6 +201,45 @@
                     </div>
                 </div>
             </div>
+            <div class="area-parceiros">
+                <div class="container">
+                    <div class="titulo-home">
+                        <h3>Alguns de nossos parceiros</h3>
+                    </div>
+                    <div class="owl-carousel owl-theme">
+                        <div class="item"><img src="/libs/home-template/img/parceiros/alianca.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/bela-vista.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biocardios.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biovida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cardio-fitness.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/centro-clinico-lorena-de-fatima.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cimed.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cinthia-rojas.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-fisio-evidence.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-vila-rica.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cliped.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/crb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/digidoc.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/exame.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fenelon.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fisiolabor.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/equilibrio.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/hospital-pacini.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ibramer.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ila.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/implante-vida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/infinita.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/instituto-mulher.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/icb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/dermaline.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/sabin.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/micra.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/policlinica-mais.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/santa-paula.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/visao.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
         </section>
     @else
         <section class="banner-slider-home">
