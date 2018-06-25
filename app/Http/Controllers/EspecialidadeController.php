@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
@@ -81,7 +82,21 @@ class EspecialidadeController extends Controller
                     array_push($result, $item);
                 }
             }
-        } /*
+        } elseif ($tipo_atendimento == 'checkup') {
+            $tipo_atendimento_id = 4;
+            
+            $item = [
+                'id' => $atend->id,
+                'tipo' => 'exame',
+                'descricao' => $atend->ds_preco,
+                'codigo' => $atend->procedimento_id
+            ];
+            
+            array_push($result, $item);
+        }
+        
+        
+        /*
            * elseif ($tipo_atendimento == 'procedimento') {
            *
            * $tp_atendimento = DB::table('procedimentos')
@@ -186,7 +201,7 @@ class EspecialidadeController extends Controller
     }
     
     public function consultaTodosLocaisAtendimento()
-    {	
+    {
     	$atendimento_id = CVXRequest::post('atendimento_id');
     	
     	$ct_atendimento = Atendimento::findorfail($atendimento_id);
