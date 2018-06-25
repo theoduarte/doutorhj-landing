@@ -59,16 +59,20 @@ class EspecialidadeController extends Controller
             //$tipo_atendimento_id = 3;
             $tipo_atendimento_id = $tipo_atendimento == 'exame' ? 3 : 2;
             
-            DB::enableQueryLog();
+            //DB::enableQueryLog();
             $atendimentos = DB::table('atendimentos')
             	->join('procedimentos', 	function ($join1) use ($tipo_atendimento_id) {$join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
             	->join('clinicas', 			function ($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
+            	->join('tag_populars', 		function ($join3) { $join3->on('tag_populars.procedimento_id', '=', 'procedimentos.id');})
             	->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
-                ->orderBy('atendimentos.ds_preco', 'asc')
-                ->select('atendimentos.*')
+                ->orderBy('tag_populars.id', 'asc')
+                ->select(DB::raw('on (tag_populars.id) tag_populars.id'), 'atendimentos.id as idatendimento', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'tag_populars.cs_tag as ds_preco', 'atendimentos.cs_status', 'atendimentos.created_at', 'atendimentos.updated_at', 'atendimentos.clinica_id', 'atendimentos.consulta_id', 'atendimentos.procedimento_id', 'atendimentos.profissional_id')
                 ->distinct()
                 ->get(['procedimentos.cd_procedimento']);
-            
+           
+            //$query = DB::getQueryLog();
+            //print_r($query);
+                
             foreach ($atendimentos as $atend) {
                 
                 if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->procedimento_id)) {
