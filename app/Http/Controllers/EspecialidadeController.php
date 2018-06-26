@@ -30,9 +30,10 @@ class EspecialidadeController extends Controller
             $atendimentos = DB::table('atendimentos')
             	->join('consultas', 		function ($join1) use ($tipo_atendimento_id) {$join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
             	->join('clinicas', 			function ($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
+            	->join('tag_populars', 		function ($join3) { $join3->on('tag_populars.consulta_id', '=', 'consultas.id');})
             	->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
-                ->orderBy('atendimentos.ds_preco', 'asc')
-                ->select('atendimentos.*')
+            	->orderBy('tag_populars.id', 'asc')
+            	->select(DB::raw('on (tag_populars.id) tag_populars.id'), 'atendimentos.id as idatendimento', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'tag_populars.cs_tag as ds_preco', 'atendimentos.cs_status', 'atendimentos.created_at', 'atendimentos.updated_at', 'atendimentos.clinica_id', 'atendimentos.consulta_id', 'atendimentos.procedimento_id', 'atendimentos.profissional_id')
                 ->distinct()
                 ->get(['consultas.cd_consulta']);
             
@@ -44,7 +45,7 @@ class EspecialidadeController extends Controller
                 if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->consulta_id)) {
                     
                     $item = [
-                        'id' => $atend->id,
+                        'id' => $atend->idatendimento,
                         'tipo' => 'consulta',
                         'descricao' => $atend->ds_preco,
                         'codigo' => $atend->consulta_id
@@ -78,7 +79,7 @@ class EspecialidadeController extends Controller
                 if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->procedimento_id)) {
                     
                     $item = [
-                        'id' => $atend->id,
+                        'id' => $atend->idatendimento,
                         'tipo' => 'exame',
                         'descricao' => $atend->ds_preco,
                         'codigo' => $atend->procedimento_id
