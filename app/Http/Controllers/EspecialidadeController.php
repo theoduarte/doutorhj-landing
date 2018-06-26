@@ -73,6 +73,7 @@ class EspecialidadeController extends Controller
            
             //$query = DB::getQueryLog();
             //print_r($query);
+            dd($atendimentos);
                 
             foreach ($atendimentos as $atend) {
                 
@@ -129,14 +130,16 @@ class EspecialidadeController extends Controller
             $consulta_id = $ct_atendimento->consulta_id;
 //         	DB::enableQueryLog();
         	$enderecos = DB::table('enderecos')
-        		->join('cidades', function($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
+        		->join('cidades', 				function($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
         	    function($query) use ($search_term) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$search_term."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$search_term."%'"));});})
-	        	->join('clinica_endereco', function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	        	->join('clinicas', function($join3) { $join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-	        	->join('profissionals', function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	        	->join('atendimentos', function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+	        	//->join('clinica_endereco', function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+        		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+	        	->join('clinicas', 				function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
+	        	->join('profissionals', 		function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+	        	->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+	        	->join('atendimentos', 			function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
 	        	//->join('consultas', function($join6) use ($atendimento_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('consultas.id', '=', DB::raw($procedimento_id));})
-	        	->join('consultas', function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
+	        	->join('consultas', 			function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
 	        	->where('clinicas.cs_status', '=', 'A')
 	        	->select('enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	        	->distinct()
@@ -163,13 +166,15 @@ class EspecialidadeController extends Controller
             
             $enderecos = Endereco::with('cidade')
             	//->join('cidades', function ($join1) use ($search_term) {$join1->on('cidades.id', '=', 'enderecos.cidade_id')->on(DB::raw('to_str(cidades.nm_cidade)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%" . $search_term . "%'"));})
-	            ->join('cidades', function($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
+	            ->join('cidades', 				function($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
 	            function($query) use ($search_term) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$search_term."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$search_term."%'"));});})
-                ->join('clinica_endereco', function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-                ->join('clinicas', function ($join3) {$join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-                ->join('profissionals', function ($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-                ->join('atendimentos', function ($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-                ->join('procedimentos', function ($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
+                //->join('clinica_endereco', function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+	            ->join('filials',        		function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+                ->join('clinicas', 				function ($join3) {$join3->on('filials.clinica_id', '=', 'clinicas.id');})
+                //->join('profissionals', 		function ($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+                //->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+                ->leftJoin('atendimentos', 		function($join5) { $join5->on('atendimentos.clinica_id', '=', 'clinicas.id');})
+                ->join('procedimentos', 		function ($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
                 ->where('clinicas.cs_status', '=', 'A')
                 ->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
                 ->distinct()
@@ -195,7 +200,7 @@ class EspecialidadeController extends Controller
     public function consultaTodosLocaisAtendimento()
     {	
     	$atendimento_id = CVXRequest::post('atendimento_id');
-    	//dd($atendimento_id);
+    	dd($atendimento_id);
     	$ct_atendimento = Atendimento::findorfail($atendimento_id);
     	$ct_atendimento->load('clinica');
     	$ct_atendimento->clinica->load('enderecos');
@@ -210,6 +215,8 @@ class EspecialidadeController extends Controller
     	
     	$list_endereco_ids = [];
     	$result = [];
+    	
+    	dd($ct_atendimento->clinica);
     
     	if ($tipo_atendimento == 'saude') {
     		
@@ -217,13 +224,15 @@ class EspecialidadeController extends Controller
     		$consulta_id = $ct_atendimento->consulta->id;
     		
     		$enderecos = Endereco::with('cidade')
-	    		->join('cidades', 			function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
+	    		->join('cidades', 				function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
 	    		function($query) use ($local_atendimento) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));});})
-	    		->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	    		->join('clinicas', 			function($join3) { $join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-	    		->join('profissionals', 	function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-	    		->join('consultas', 		function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
+	    		//->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+	    		->join('filials',           	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+	    		->join('clinicas', 				function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
+	    		->join('profissionals', 		function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+	    		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+	    		->join('atendimentos', 			function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+	    		->join('consultas', 			function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
 	    		->select('enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->where('clinicas.cs_status', '=', 'A')
 	    		->distinct()
@@ -245,12 +254,14 @@ class EspecialidadeController extends Controller
     		
     		//-- busca os demais enderecos disponíveis de atendimento --------------------
     		$outros_enderecos = Endereco::with('cidade')
-	    		->join('cidades', 			function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
-	    		->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	    		->join('clinicas', 			function($join3) { $join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-	    		->join('profissionals', 	function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-	    		->join('consultas', 		function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
+	    		->join('cidades', 				function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
+	    		//->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+	    		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+	    		->join('clinicas', 				function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
+	    		->join('profissionals', 		function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+	    		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+	    		->join('atendimentos', 			function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+	    		->join('consultas', 			function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
 	    		->whereNotIn('enderecos.id', $list_endereco_ids)->where('clinicas.cs_status', '=', 'A')
 	    		->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->distinct()
@@ -272,13 +283,15 @@ class EspecialidadeController extends Controller
     		$procedimento_id = $ct_atendimento->procedimento_id;
     
     		$enderecos = Endereco::with('cidade')->with('cidade')
-	    		->join('cidades', 			function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
+	    		->join('cidades', 				function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
 	    		function($query) use ($local_atendimento) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));});})
-	    		->join('clinica_endereco', 	function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	    		->join('clinicas', 			function ($join3) {$join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-	    		->join('profissionals', 	function ($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	    		->join('atendimentos', 		function ($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-	    		->join('procedimentos', 	function ($join6) use ($procedimento_id) {$join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
+	    		//->join('clinica_endereco', 	function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+	    		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+	    		->join('clinicas', 				function($join3) {$join3->on('filials.clinica_id', '=', 'clinicas.id');})
+	    		->join('profissionals', 		function($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+	    		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+	    		->join('atendimentos', 			function($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+	    		->join('procedimentos', 		function($join6) use ($procedimento_id) {$join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
 	    		->select('enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->where('clinicas.cs_status', '=', 'A')
 	    		->distinct()
@@ -304,12 +317,14 @@ class EspecialidadeController extends Controller
     		
     		//-- busca os demais enderecos disponíveis de atendimento --------------------
     		$outros_enderecos = Endereco::with('cidade')
-	    		->join('cidades', 			function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
-	    		->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	    		->join('clinicas', 			function($join3) { $join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-	    		->join('profissionals', 	function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	    		->join('atendimentos', 		function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-	    		->join('procedimentos', 	function($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
+	    		->join('cidades', 				function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
+	    		//->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+	    		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+	    		->join('clinicas', 				function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
+	    		->join('profissionals', 		function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+	    		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+	    		->join('atendimentos', 			function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+	    		->join('procedimentos', 		function($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
 	    		->whereNotIn('enderecos.id', $list_endereco_ids)->where('clinicas.cs_status', '=', 'A')
 	    		->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
 	    		->distinct()
@@ -344,12 +359,14 @@ class EspecialidadeController extends Controller
             // DB::enableQueryLog();
             $consulta_id = $ct_atendimento->consulta_id;
             $enderecos = Endereco::with('cidade')
-            	->join('cidades',               function ($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on(DB::raw('to_str(cidades.nm_cidade)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%" . $search_term . "%'"));})
-                ->join('clinica_endereco',      function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-                ->join('clinicas',              function ($join3) {$join3->on('clinica_endereco.clinica_id', '=', 'clinicas.id');})
-                ->join('profissionals',         function ($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-                ->join('atendimentos',          function ($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-                ->join('consultas',             function ($join6) use ($consulta_id) {$join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
+            	->join('cidades',               function($join1) use ($search_term) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on(DB::raw('to_str(cidades.nm_cidade)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%" . $search_term . "%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%" . $search_term . "%'"));})
+                //->join('clinica_endereco',      function ($join2) {$join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
+                ->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
+                ->join('clinicas',              function($join3) {$join3->on('filials.clinica_id', '=', 'clinicas.id');})
+                ->join('profissionals',         function($join4) {$join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
+                ->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+                ->join('atendimentos',          function($join5) {$join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
+                ->join('consultas',             function($join6) use ($consulta_id) {$join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
             // ->join('consultas', function($join6) use ($atendimento_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('consultas.id', '=', DB::raw($procedimento_id));})
                 ->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
                 ->where('clinicas.cs_status', '=', 'A')
