@@ -39,10 +39,13 @@ Route::post('participe', 'MensagemController@participe');
 
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
+
+# rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
-Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
+
+Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
 Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@consultaEnderecoLocalAtendimento');
 Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAgendamentoDisponivel');
 

@@ -69,6 +69,7 @@
                                                 <p>{{ isset($item['paciente']) ? $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario : '--------' }}</p>
                                             </div>
                                         </div>
+                                        @if($item['profissional'] != null)
                                         <div class="linha-resumo">
                                             <div class="titulo-resumo">
                                                 <span>Médico:</span>
@@ -85,6 +86,16 @@
                                                 <p>{{  $item['atendimento']->nome_especialidade }}</p>
                                             </div>
                                         </div>
+                                        @else
+                                        <div class="linha-resumo">
+                                            <div class="titulo-resumo">
+                                                <span>Descrição do Atendimento:</span>
+                                            </div>
+                                            <div class="dados-resumo">
+                                                <p>{{  $item['atendimento']->nome_especialidade }}</p>
+                                            </div>
+                                        </div>
+                                        @endif
                                         <div class="linha-resumo">
                                             <div class="titulo-resumo">
                                                 <span>Prestador:</span>
@@ -101,6 +112,7 @@
                                                 <p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
                                             </div>
                                         </div>
+                                        @if($item['data_agendamento'] != null && $item['data_agendamento'] != 'null')
                                         <div class="linha-resumo">
                                             <div class="titulo-resumo">
                                                 <span>Data pré-agendada:</span>
@@ -117,6 +129,16 @@
                                                 <p>{{ date('H', strtotime($item['hora_agendamento'])).'h'.date('i', strtotime($item['hora_agendamento'])).'min' }}</p>
                                             </div>
                                         </div>
+                                        @else
+                                        <div class="linha-resumo">
+                                            <div class="titulo-resumo">
+                                                <span>Observação do Atendimento: </span>
+                                            </div>
+                                            <div class="dados-resumo">
+                                                <p>{{ $item['clinica']->obs_procedimento }}</p>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

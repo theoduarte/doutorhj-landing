@@ -54,6 +54,7 @@
                                                                         <p>{{ isset($agendamento->paciente) ? $agendamento->paciente->nm_primario.' '.$agendamento->paciente->nm_secundario : '--------' }}</p>
                                                                     </div>
                                                             </div>
+                                                             @if($agendamento->profissional_id != null && $agendamento->profissional_id != 'null')
                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Data pré-agendada:</span>
@@ -70,6 +71,16 @@
                                                                     <p>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())).'h'.date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())).'min' }}</p>
                                                                 </div>
                                                             </div>
+                                                             @else
+                                                            <div class="linha-resumo">
+                                                                <div class="titulo-resumo">
+                                                                    <span>Observação do Atendimento: </span>
+                                                                </div>
+                                                                <div class="dados-resumo">
+                                                                    <p>{{ $agendamento->clinica->obs_procedimento }}</p>
+                                                                </div>
+                                                            </div>
+                                                            @endif
                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Endereço:</span>
@@ -80,6 +91,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-sm-4">
+                                                        	@if( $agendamento->profissional_id != null &&  $agendamento->profissional_id != 'null')
                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Médico:</span>
@@ -91,7 +103,7 @@
                                                                     <input type="hidden" id="profissional_id_{{ $index }}" name="profissional_id_[{{ $index }}]" value="{{ isset($agendamento->profissional) ? $agendamento->profissional->id : 0 }}">
                                                                 </div>
                                                             </div>
-                                                            <div class="linha-resumo">
+                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Especialidade:</span>
                                                                 </div>
@@ -99,6 +111,17 @@
                                                                     <p>{{  $agendamento->nome_especialidade }}</p>
                                                                 </div>
                                                             </div>
+                                                           	@else
+                                                           	<div class="linha-resumo">
+                                                                <div class="titulo-resumo">
+                                                                    <span>Descrição do Atendimento:</span>
+                                                                </div>
+                                                                <div class="dados-resumo">
+                                                                    <p>{{  $agendamento->nome_especialidade }}</p>
+                                                                </div>
+                                                            </div>
+                                                            @endif
+                                                           
                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Prestador:</span>

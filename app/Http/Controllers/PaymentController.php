@@ -225,22 +225,25 @@ class PaymentController extends Controller
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
         
+        //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
-        	 
-        	$item_agendamento = json_decode($agendamentos[$i]);
-        	
-        	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-        	
-        	if (sizeof($agendamento) > 0) {
-        		$agendamento_disponivel = false;
-        	}
-        	
-        	$atendimento_id_temp = $item_agendamento->atendimento_id;
-        	$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-        	
-        	if ($item_atendimento == null) {
-        		$agendamento_atendimento = false;
-        	}
+            
+            $item_agendamento = json_decode($agendamentos[$i]);
+            
+            if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+                $agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+                
+                if (sizeof($agendamento) > 0) {
+                    $agendamento_disponivel = false;
+                }
+                
+                $atendimento_id_temp = $item_agendamento->atendimento_id;
+                $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+                
+                if ($item_atendimento == null) {
+                    $agendamento_atendimento = false;
+                }
+            }
         }
          
         if (!$agendamento_disponivel) {
@@ -393,7 +396,7 @@ class PaymentController extends Controller
         				 
         				$agendamento->te_ticket         = UtilController::getAccessToken();
         				$agendamento->cs_status         = 10;
-        				$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento.":00";
+        				$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento && $item_agendamento->dt_atendimento != 'null' ? $item_agendamento->dt_atendimento.":00" : null;
         				$agendamento->bo_remarcacao     = 'N';
         				$agendamento->bo_retorno        = 'N';
         				$agendamento->paciente_id       = $item_agendamento->paciente_id;
@@ -428,11 +431,16 @@ class PaymentController extends Controller
         					}
         					 
         					//--busca pelas especialidades do atendimento--------------------------------------
-        					$agendamento->profissional->load('especialidades');
         					$nome_especialidade = "";
-        					 
-        					foreach ($agendamento->profissional->especialidades as $especialidade) {
-        						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+        					if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+        					    $agendamento->profissional->load('especialidades');
+        					    
+        					    foreach ($agendamento->profissional->especialidades as $especialidade) {
+        					        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+        					    }
+        					} else {
+        					    $agendamento->atendimento->load('procedimento');
+        					    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
         					}
         					 
         					$agendamento->nome_especialidade = $nome_especialidade;
@@ -510,9 +518,8 @@ class PaymentController extends Controller
             	DB::rollback();
             	#############################################
             	//dd($e->getMessage());
-            	return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
+            	return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha. Por favor, tente novamente.']);
             }
-            
             $pagamento = new Payment();
             
             $pagamento->merchant_order_id 		= $cielo_result->MerchantOrderId;
@@ -616,22 +623,26 @@ class PaymentController extends Controller
     	//--verifica se todos os agendamentos possuem um atendimento relacionado------
     	$agendamento_atendimento = true;
     	
+    	
     	for ($i = 0; $i < sizeof($agendamentos); $i++) {
     	
-    		$item_agendamento = json_decode($agendamentos[$i]);
-    		 
-    		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-    		 
-    		if (sizeof($agendamento) > 0) {
-    			$agendamento_disponivel = false;
-    		}
-    		 
-    		$atendimento_id_temp = $item_agendamento->atendimento_id;
-    		$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-    		 
-    		if ($item_atendimento == null) {
-    			$agendamento_atendimento = false;
-    		}
+    	    $item_agendamento = json_decode($agendamentos[$i]);
+    	    
+    	    if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+        		 
+        		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+        		 
+        		if (sizeof($agendamento) > 0) {
+        			$agendamento_disponivel = false;
+        		}
+        		 
+        		$atendimento_id_temp = $item_agendamento->atendimento_id;
+        		$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+        		 
+        		if ($item_atendimento == null) {
+        			$agendamento_atendimento = false;
+        		}
+    	    }
     	}
     	 
     	if (!$agendamento_disponivel) {
@@ -766,7 +777,7 @@ class PaymentController extends Controller
     				
     					$agendamento->te_ticket         = UtilController::getAccessToken();
     					$agendamento->cs_status         = 10;
-    					$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento.":00";
+    					$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento && $item_agendamento->dt_atendimento != 'null' ? $item_agendamento->dt_atendimento.":00" : null;
     					$agendamento->bo_remarcacao     = 'N';
     					$agendamento->bo_retorno        = 'N';
     					$agendamento->paciente_id       = $item_agendamento->paciente_id;
@@ -801,11 +812,17 @@ class PaymentController extends Controller
     						}
     				
     						//--busca pelas especialidades do atendimento--------------------------------------
-    						$agendamento->profissional->load('especialidades');
     						$nome_especialidade = "";
     				
-    						foreach ($agendamento->profissional->especialidades as $especialidade) {
-    							$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+    						if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+    						    $agendamento->profissional->load('especialidades');
+    						    
+    						    foreach ($agendamento->profissional->especialidades as $especialidade) {
+    						        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+    						    }
+    						} else {
+    						    $agendamento->atendimento->load('procedimento');
+    						    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
     						}
     				
     						$agendamento->nome_especialidade = $nome_especialidade;
@@ -1047,10 +1064,18 @@ class PaymentController extends Controller
     	
     	$nm_primario 			= $paciente->nm_primario;
     	$nr_pedido 				= sprintf("%010d", $pedido->id);
-    	$nome_especialidade 	= $agendamento->nome_especialidade;
-    	$nome_profissional		= $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario;
-    	$data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
-    	$hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
+    	$nome_especialidade 	= "Especialidade/exame: <span>".$agendamento->nome_especialidade."</span>";
+    	
+    	$nome_profissional = '---------';
+    	$data_agendamento = '---------';
+    	$hora_agendamento = '---------';
+    	
+    	if ($agendamento->profissional_id) {
+    	    $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
+    	    $data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
+    	    $hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
+    	    $nome_especialidade 	= "Descrição do atendimento: <span>".$agendamento->nome_especialidade."</span>";
+    	}
     	$endereco_agendamento = '--------------------';
     	
     	$agendamento->clinica->load('enderecos');
@@ -1094,7 +1119,7 @@ class PaymentController extends Controller
     	$mensagem_cliente->rma_nome     	= 'Contato DoctorHoje';
     	$mensagem_cliente->rma_email       	= 'contato@doctorhoje.com.br';
     	$mensagem_cliente->assunto     		= 'Pré-Agendamento Solicitado';
-    	$mensagem_cliente->conteudo     	= "<h4>Seu Pré-Agendamento:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>Horário: $hora_agendamento (por ordem de chegada)</li><li>Endereço: $endereco_agendamento</li></ul>";
+    	$mensagem_cliente->conteudo     	= "<h4>Seu Pré-Agendamento:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>$nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>Horário: $hora_agendamento (por ordem de chegada)</li><li>Endereço: $endereco_agendamento</li></ul>";
     	$mensagem_cliente->save();
     	
     	$destinatario                      = new MensagemDestinatario();
@@ -1198,7 +1223,7 @@ class PaymentController extends Controller
                 <td width='30'></td>
                 <td width='34'><img src='https://doctorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
                 <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Especialidade/exame: <span>$nome_especialidade</span></td>
+                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>$nome_especialidade</td>
                 <td width='30'></td>
             </tr>
         </table>
@@ -1214,7 +1239,7 @@ class PaymentController extends Controller
                 <td width='30'></td>
                 <td width='34'><img src='https://doctorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
                 <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Dr(a): <span>$nome_profissional</span></td>
+                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>$nome_profissional</td>
                 <td width='30'></td>
             </tr>
         </table>

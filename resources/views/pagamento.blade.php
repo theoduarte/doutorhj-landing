@@ -303,6 +303,7 @@
                                                         <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
                                                     </div>
                                                 </div>
+                                                @if($item['profissional'] != null && $item['profissional'] != 'null')
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Médico:</span>
@@ -320,6 +321,16 @@
                                                         <p>{{  $item['atendimento']->nome_especialidade }}</p>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <div class="linha-resumo">
+                                                    <div class="titulo-resumo">
+                                                        <span>Descrição do Atendimento:</span>
+                                                    </div>
+                                                    <div class="dados-resumo">
+                                                        <p>{{  $item['atendimento']->nome_especialidade }}</p>
+                                                    </div>
+                                                </div>
+                                                @endif
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Prestador:</span>
@@ -336,15 +347,16 @@
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
+                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                     </div>
                                                 </div>
+                                                @if($item['data_agendamento'] != null && $item['data_agendamento'] != 'null')
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Data pré-agendada:</span>
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
-                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                         <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
                                                         <input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
                                                     </div>
@@ -357,6 +369,16 @@
                                                         <p>{{ date('H', strtotime($item['hora_agendamento'])).'h'.date('i', strtotime($item['hora_agendamento'])).'min' }}</p>
                                                     </div>
                                                 </div>
+                                                 @else
+                                                <div class="linha-resumo">
+                                                    <div class="titulo-resumo">
+                                                        <span>Observação do Atendimento: </span>
+                                                    </div>
+                                                    <div class="dados-resumo">
+                                                        <p>{{ $item['clinica']->obs_procedimento }}</p>
+                                                    </div>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

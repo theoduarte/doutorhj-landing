@@ -31,15 +31,15 @@
             	
             	<input type="hidden" id="item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
         		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
-            	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $proximo_item['profissional']->id }}">
+            	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
             	<input type="hidden" id="paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
             	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
             	<input type="hidden" id="filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
             	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
             	<input type="hidden" id="current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
             	
-            	<input type="hidden" id="data_atendimento" name="data_atendimento" value="{{ $proximo_item['data_agendamento'] }}" >
-            	<input type="hidden" id="hora_atendimento" name="hora_atendimento" value="{{ $proximo_item['hora_agendamento'] }}" >
+            	<input type="hidden" id="data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
+            	<input type="hidden" id="hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >
             	
             	
                	<button type="submit" class="btn btn-vermelho">É para mim</button>
@@ -47,15 +47,15 @@
             
             <input type="hidden" id="pr_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
         	<input type="hidden" id="pr_atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
-        	<input type="hidden" id="pr_profissional_id" name="profissional_id" value="{{ $proximo_item['profissional']->id }}">
+        	<input type="hidden" id="pr_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
         	<input type="hidden" id="pr_paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
         	<input type="hidden" id="pr_clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
         	<input type="hidden" id="pr_filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
         	<input type="hidden" id="pr_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
         	<input type="hidden" id="pr_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
         	
-        	<input type="hidden" id="pr_data_atendimento" name="data_atendimento" value="{{ $proximo_item['data_agendamento'] }}" >
-        	<input type="hidden" id="pr_hora_atendimento" name="hora_atendimento" value="{{ $proximo_item['hora_agendamento'] }}" >            
+        	<input type="hidden" id="pr_data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
+        	<input type="hidden" id="pr_hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >            
         </div>
         <div class="collapse area-dados-beneficiario" id="collapseDadosBeneficiario">
             <div class="card card-body">
@@ -70,15 +70,15 @@
                             {!! csrf_field() !!}
                             <input type="hidden" id="dep_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
                     		<input type="hidden" id="dep_atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
-                        	<input type="hidden" id="dep_profissional_id" name="profissional_id" value="{{ $proximo_item['profissional']->id }}">
+                        	<input type="hidden" id="dep_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
                         	<input type="hidden" id="dep_paciente_id" name="paciente_id" value="{{ $dependentes[$i]->id }}">
                         	<input type="hidden" id="dep_clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
                         	<input type="hidden" id="dep_filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
                         	<input type="hidden" id="dep_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
                         	<input type="hidden" id="dep_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
                         	
-                        	<input type="hidden" id="dep_data_atendimento" name="data_atendimento" value="{{ $proximo_item['data_agendamento'] }}" >
-                        	<input type="hidden" id="dep_hora_atendimento" name="hora_atendimento" value="{{ $proximo_item['hora_agendamento'] }}" >
+                        	<input type="hidden" id="dep_data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
+                        	<input type="hidden" id="dep_hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >
                         </div>
                         <div class="form-group col-sm-1">
                             <label for="emailBeneficiario">Sexo</label>

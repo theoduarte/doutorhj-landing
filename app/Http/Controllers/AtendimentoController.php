@@ -64,6 +64,7 @@ class AtendimentoController extends Controller
         	 
             //-- realiza a lista dos atendimentos do tipo CONSULTA MEDICA OU ODONTOLOGICA---------------
             $consulta_id = $ct_atendimento->consulta_id;
+            
         	//DB::enableQueryLog();
         	$atendimentos = Atendimento::with('clinica')
         	   ->join('consultas',             function($join1) use ($tipo_atendimento_id) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
@@ -76,7 +77,7 @@ class AtendimentoController extends Controller
         	   ->join('filial_profissional',   function($join6) { $join6->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
         	   ->where('atendimentos.consulta_id', '=', $consulta_id)->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
         	   ->orderBy('atendimentos.vl_com_atendimento', $sort_item)
-        	   ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.consulta_id')
+        	   ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.procedimento_id', 'filials.id as filial_id')
         	   ->distinct()
         	   ->get();
         	
@@ -87,6 +88,7 @@ class AtendimentoController extends Controller
         	$atendimentos_temp = DB::table('atendimentos')
         	   ->join('consultas', 		function($join1) use ($tipo_atendimento_id) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
         	   ->join('clinicas',    	function($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
+        	   ->join('filials',           function($join4) { $join4->on('clinicas.id', '=', 'filials.clinica_id');})
         	   ->join('tag_populars', 	function ($join3) { $join3->on('tag_populars.consulta_id', '=', 'consultas.id');})
         	   ->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
         	   ->orderBy('tag_populars.id', 'asc')
@@ -126,7 +128,7 @@ class AtendimentoController extends Controller
         		->distinct()
         		->orderby('enderecos.te_bairro', 'asc')
         		->get();
-        	
+            
         	//-- lista enderecos id usada para aplicar clausula NOI IN na lista dos demais enderecos ---
         	$list_endereco_ids = [];
         	
@@ -183,7 +185,7 @@ class AtendimentoController extends Controller
             $procedimento_id = $ct_atendimento->procedimento_id;
             
             //-- realiza a lista dos atendimentos do tipo EXAME---------------
-            DB::enableQueryLog();
+            //DB::enableQueryLog();
             $atendimentos = Atendimento::with('clinica')
                 ->join('procedimentos',         function($join1) use ($tipo_atendimento_id) { $join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
                 ->join('clinicas',              function($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
@@ -198,14 +200,14 @@ class AtendimentoController extends Controller
                 ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.procedimento_id', 'filials.id as filial_id')
                 ->distinct()
                 ->get();
-            $query = DB::getQueryLog();
-            print_r($query);
-            //dd($atendimentos);
+            //$query = DB::getQueryLog();
+            //print_r($query);
                 
             //-- seleciona os itens de atendimento removendo as repeticoes-----------
             $atendimentos_temp = DB::table('atendimentos')
                 ->join('procedimentos', 	function($join1) use ($tipo_atendimento_id) { $join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
                 ->join('clinicas',          function($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
+                ->join('filials',           function($join4) { $join4->on('clinicas.id', '=', 'filials.clinica_id');})
                 ->join('tag_populars', 		function ($join3) { $join3->on('tag_populars.procedimento_id', '=', 'procedimentos.id');})
                 ->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
                 ->orderBy('tag_populars.id', 'asc')

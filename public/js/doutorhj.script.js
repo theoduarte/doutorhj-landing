@@ -438,9 +438,15 @@ function pagarCartaoCredito() {
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
+		var profissional_id_temp = $('#profissional_id_'+i).val();
+		
+		if(typeof profissional_id_temp === 'undefined') {
+			dt_atendimento = 'null';
+			profissional_id_temp = 'null';
+		}
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
 		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -633,9 +639,16 @@ function pagarCartaoDebito() {
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
+		var profissional_id_temp = $('#profissional_id_'+i).val();
+		
+		if(typeof  profissional_id_temp === 'undefined') {
+			dt_atendimento = 'null';
+			profissional_id_temp = 'null';
+		}
+		
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
 		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
 		agendamentos.push(item);
 	}
 	

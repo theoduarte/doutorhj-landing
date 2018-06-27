@@ -650,7 +650,7 @@ class ClinicaController extends Controller
     		$paciente_tmp_id = $item['attributes']['paciente_id'];
 
     		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
-    		$profissional = Profissional::findOrFail($profissional_tmp_id);
+    		$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
     		$clinica = Clinica::findOrFail($clinica_tmp_id);
     		$filial = Filial::findOrFail($filial_tmp_id);
     		$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
@@ -659,14 +659,14 @@ class ClinicaController extends Controller
 
     		if ($atendimento->procedimento_id != null) {
     			$atendimento->load('procedimento');
-    			$atendimento->load('profissional');
-    			$atendimento->profissional->load('especialidades');
+    			//$atendimento->load('profissional');
+    			//$atendimento->profissional->load('especialidades');
 
-    			$nome_especialidade = "";
+    			$nome_especialidade = $atendimento->procedimento->ds_procedimento;
 
-    			foreach ($atendimento->profissional->especialidades as $especialidade) {
+    			/* foreach ($atendimento->profissional->especialidades as $especialidade) {
     			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-    			}
+    			} */
 
     			$atendimento->nome_especialidade = $nome_especialidade;
 
@@ -698,6 +698,9 @@ class ClinicaController extends Controller
     		if (isset($filial)) {
     		    $filial->load('endereco');
     		}
+    		
+    		$data_atendimento = $item['attributes']['data_atendimento'];
+    		$hora_atendimento = $item['attributes']['hora_atendimento'];
 
     		$item_carrinho = array(
     				'item_id' 				=> $item['id'],
@@ -707,8 +710,8 @@ class ClinicaController extends Controller
     				'clinica' 				=> $clinica,
     		        'filial' 				=> $filial,
     		        'paciente'				=> $paciente,
-    				'data_agendamento' 		=> $item['attributes']['data_atendimento'],
-    				'hora_agendamento' 		=> $item['attributes']['hora_atendimento'],
+    		        'data_agendamento' 		=> isset($data_atendimento) ? $data_atendimento : null,
+    		        'hora_agendamento' 		=> isset($hora_atendimento) ? $hora_atendimento : null,
     				'current_url' 			=> $url
     		);
 
