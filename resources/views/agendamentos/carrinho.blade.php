@@ -44,7 +44,7 @@
                                 <div class="card-header" id="heading_{{ $item['item_id'] }}">
                                     <div class="row">
                                         <div class="nome-produto col-10 col-sm-7" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="#collapse_{{ $item['item_id'] }}">
-                                            <span>{{ $item['atendimento']->ds_preco }}</span>
+                                            <span>{{ $item['atendimento']->ds_atendimento }}</span>
                                         </div>
                                         <div class="detalhes-produto col-12 col-sm-2" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="collapse_{{ $item['item_id'] }}">
                                             <span>+ detalhes</span>
@@ -92,7 +92,7 @@
                                                 <span>Descrição do Atendimento:</span>
                                             </div>
                                             <div class="dados-resumo">
-                                                <p>{{  $item['atendimento']->nome_especialidade }}</p>
+                                                <p>{{ $item['atendimento']->ds_atendimento }} <br><em>({{  $item['atendimento']->nome_especialidade }})</em></p>
                                             </div>
                                         </div>
                                         @endif

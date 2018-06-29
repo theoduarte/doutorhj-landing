@@ -38,8 +38,8 @@ class EspecialidadeController extends Controller
                 ->distinct()
                 ->get(['consultas.cd_consulta']);
             
-//             $query = DB::getQueryLog();
-//             dd($query);
+             //$query = DB::getQueryLog();
+             //print_r($query);
             
             foreach ($atendimentos as $atend) {
                 
@@ -206,12 +206,16 @@ class EspecialidadeController extends Controller
     	$ct_atendimento->load('clinica');
     	$ct_atendimento->clinica->load('enderecos');
     	$ct_atendimento->clinica->enderecos->first()->load('cidade');
+    	$ct_atendimento->clinica->load('filials');
+    	$filials = $ct_atendimento->clinica->filials;
     	
-    	$cidade_id = $ct_atendimento->clinica->enderecos->first()->cidade->id;
+    	//$cidade_id = $ct_atendimento->clinica->enderecos->first()->cidade->id;
+    	$cidade_id = $filials->first()->endereco->cidade->id;
     	
     	$tipo_atendimento = CVXRequest::post('tipo_atendimento');
     	
-    	$endereco = $ct_atendimento->clinica->enderecos->first();
+    	//$endereco = $ct_atendimento->clinica->enderecos->first();
+    	$endereco = $filials->first()->endereco;
     	$local_atendimento = UtilController::toStr($endereco->te_bairro);
     	
     	$list_endereco_ids = [];
@@ -224,6 +228,7 @@ class EspecialidadeController extends Controller
     		$ct_atendimento->load('consulta');
     		$consulta_id = $ct_atendimento->consulta->id;
     		
+    		//DB::enableQueryLog();
     		$enderecos = Endereco::with('cidade')
 	    		->join('cidades', 				function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
 	    		function($query) use ($local_atendimento) { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));});})
@@ -240,6 +245,8 @@ class EspecialidadeController extends Controller
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
 	    	
+	    	//$query = DB::getQueryLog();
+	    	//print_r($query);
     		//-- realiza a conversao dos itens para exibicao no droplist da landing page ---------------
 	    	$arResultado = [ 'id' =>  $endereco->id, 'cidade_id' => $endereco->cidade_id, 'value' => ucwords(strtolower($endereco->te_bairro)).': '.$endereco->cidade->nm_cidade, 'te_bairro' =>  $endereco->te_bairro ];
 	    	array_push($result, $arResultado);
@@ -252,8 +259,10 @@ class EspecialidadeController extends Controller
     			}
     			array_push($list_endereco_ids, $query->id);
     		}
+    		//dd($result);
     		
     		//-- busca os demais enderecos disponíveis de atendimento --------------------
+    		
     		$outros_enderecos = Endereco::with('cidade')
 	    		->join('cidades', 				function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
 	    		//->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
@@ -268,7 +277,8 @@ class EspecialidadeController extends Controller
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
-    		
+	    	//dd($list_endereco_ids);
+	    	
     		//-- realiza a conversao dos itens para exibicao no droplist da landing page ---------------
     		foreach ($outros_enderecos as $query)
     		{

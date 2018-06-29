@@ -9,17 +9,27 @@ class Procedimento extends Model
 {
 	use Sortable;
 	
-	public $fillable = ['cd_procedimento', 'ds_procedimento'];
-    public $sortable = ['id', 'cd_procedimento', 'ds_procedimento'];
+	public $fillable = ['cd_procedimento', 'ds_procedimento', 'tipoatendimento_id', 'grupoprocedimento_id'];
+    public $sortable = ['id', 'cd_procedimento', 'ds_procedimento', 'tipoatendimento_id', 'grupoprocedimento_id'];
     
-    public function tipo_atendimento()
+    public function tipoatendimento()
     {
         return $this->belongsTo('App\TipoAtendimento');
+    }
+    
+    public function grupoprocedimento()
+    {
+    	return $this->belongsTo('App\GrupoProcedimento');
     }
     
     public function atendimentos()
     {
         return $this->hasMany('App\Atendimento');
+    }
+    
+    public function tag_populars()
+    {
+    	return $this->hasMany('App\TagPopular');
     }
     
     public function especialidades()

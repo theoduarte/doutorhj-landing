@@ -75,7 +75,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }} - Und: ( {{ $atendimento->filial_result->nm_nome_fantasia }} )</h5>
                                     <h6 class="card-subtitle">@if($atendimento->consulta_id != null) Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }} @endif</h6>
-                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->ds_preco }} @else {{ $atendimento->ds_preco }} @endif </p>
+                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->consulta->tag_populars->first()->cs_tag }} @else {{ $atendimento->procedimento->tag_populars->first()->cs_tag }} @endif </p>
                                     <p class="card-text">{{ $atendimento->filial_result->endereco->te_endereco.' ('.$atendimento->filial_result->endereco->te_bairro.') '.$atendimento->filial_result->endereco->cidade->nm_cidade.'-'.$atendimento->filial_result->endereco->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>
@@ -102,7 +102,7 @@
                                     	{!! csrf_field() !!}
                                 	
 	                                    <div class="area-escolher-data">
-	                                    	@if($atendimento->consulta_id != null)
+	                                    	@if($atendimento->consulta_id != null | $atendimento->clinica->tp_prestador == 'CLI')
 	                                        <div class="titulo-escolhe-data">
 	                                            Escolha data e horário
 	                                        </div>

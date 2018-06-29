@@ -112,6 +112,7 @@ class AtendimentoController extends Controller
     		}
     		    		
     		//-- busca dos enderecos disponíveis de atendimento --------------------
+    		//DB::enableQueryLog();
     		$enderecos = Endereco::with('cidade')
 	    		->join('cidades',             function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->where(
 	    		    function($query) use ($local_atendimento) { if ($local_atendimento == 'todos') { $query->where(DB::raw("1"), '=', DB::raw("1")); } else { $query->where(DB::raw('to_str(enderecos.te_endereco)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"))->orOn(DB::raw('to_str(enderecos.te_bairro)'), 'LIKE', DB::raw("'%".$local_atendimento."%'"));}});})
@@ -119,7 +120,7 @@ class AtendimentoController extends Controller
         		->join('filials',             function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
         		->join('clinicas',            function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
         		->join('profissionals',       function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-        		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
+        		->join('filial_profissional', function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
         		->join('atendimentos',        function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
         		//->join('consultas', function($join6) use ($atendimento_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('consultas.id', '=', DB::raw($procedimento_id));})
         		->join('consultas',           function($join6) use ($consulta_id) { $join6->on('consultas.id', '=', 'atendimentos.consulta_id')->on('atendimentos.consulta_id', '=', DB::raw($consulta_id));})
@@ -128,6 +129,8 @@ class AtendimentoController extends Controller
         		->distinct()
         		->orderby('enderecos.te_bairro', 'asc')
         		->get();
+        	//$query = DB::getQueryLog();
+        	//print_r($query);
             
         	//-- lista enderecos id usada para aplicar clausula NOI IN na lista dos demais enderecos ---
         	$list_endereco_ids = [];

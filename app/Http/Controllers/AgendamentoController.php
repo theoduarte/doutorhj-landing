@@ -342,12 +342,14 @@ class AgendamentoController extends Controller
     			//$atendimento->profissional->load('especialidades');
     			
     			$nome_especialidade = $atendimento->procedimento->ds_procedimento;
+    			$ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
     			
     			/*foreach ($atendimento->profissional->especialidades as $especialidade) {
     			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
     			}*/
     			
     			$atendimento->nome_especialidade = $nome_especialidade;
+    			$atendimento->ds_atendimento = $ds_atendimento;
     		}
     	
     		if ($atendimento->consulta_id != null) {
@@ -360,8 +362,11 @@ class AgendamentoController extends Controller
     			foreach ($atendimento->profissional->especialidades as $especialidade) {
     			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
     			}
+    			    			
+    			$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
     			
     			$atendimento->nome_especialidade = $nome_especialidade;
+    			$atendimento->ds_atendimento = $ds_atendimento;
     		}
     	
     		//dd($atendimento);
@@ -531,7 +536,13 @@ class AgendamentoController extends Controller
     	$hora = $hora_agendamento.":00";
     	
     	
-    	$agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('profissional_id', $profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
+    	$agendamentos = [];
+    	
+    	if($profissional_id != '0') {
+    		$agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('profissional_id', $profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
+    	} else {
+    		$agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
+    	}
     	
     	$agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
     	

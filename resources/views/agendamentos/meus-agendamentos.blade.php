@@ -86,8 +86,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="tipo">{{ $agendamento->atendimento->ds_preco }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
-                                <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+                                @if($agendamento->atendimento->consulta_id != null)
+                                <p class="tipo">{{ $agendamento->atendimento->consulta->tag_populars->first()->cs_tag }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                @elseif($agendamento->atendimento->procedimento_id != null)
+                                <p class="tipo">{{ $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                @endif
+                                
+                                @if($agendamento->profissional_id != null) <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p> @endif
                                 <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span> <span class="dt-pagamento">pago em {{ $agendamento->data_pagamento }}</span></p>
                                 <p class="endereco">{{ $agendamento->endereco_completo }}</p>
                             </div>
@@ -111,7 +116,7 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes"  >
-                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '@if($agendamento->profissional_id != null){{ $agendamento->profissional->id }}@else 0 @endif', '{{ $agendamento->id }}')">Remarcar</a></p>
                                         <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
 
                                     </div>

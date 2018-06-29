@@ -417,7 +417,7 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                                @if(sizeof($cartoes_paciente) == 0)
+                                                @if(sizeof($agendamentos) == 0)
                                                     <span id="lbl-pedido-paciente">NENHUM PEDIDO ENCONTRADO!</span>
                                                 @endif
 

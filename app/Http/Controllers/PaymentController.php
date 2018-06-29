@@ -226,9 +226,14 @@ class PaymentController extends Controller
         $agendamento_atendimento = true;
         
         //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
+        //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
             
             $item_agendamento = json_decode($agendamentos[$i]);
+            
+            $atendimento_id_temp = $item_agendamento->atendimento_id;
+            $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+            $item_atendimento->load('clinica');
             
             if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
                 $agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
@@ -237,12 +242,17 @@ class PaymentController extends Controller
                     $agendamento_disponivel = false;
                 }
                 
-                $atendimento_id_temp = $item_agendamento->atendimento_id;
-                $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-                
-                if ($item_atendimento == null) {
-                    $agendamento_atendimento = false;
-                }
+            } elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
+            	
+            	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+            	
+            	if (sizeof($agendamento) > 0) {
+            		$agendamento_disponivel = false;
+            	}
+            }
+            
+            if ($item_atendimento == null) {
+            	$agendamento_atendimento = false;
             }
         }
          
@@ -432,17 +442,27 @@ class PaymentController extends Controller
         					 
         					//--busca pelas especialidades do atendimento--------------------------------------
         					$nome_especialidade = "";
+        					$ds_atendimento = "";
+        					
         					if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
         					    $agendamento->profissional->load('especialidades');
         					    
         					    foreach ($agendamento->profissional->especialidades as $especialidade) {
         					        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
         					    }
+        					    
         					} else {
         					    $agendamento->atendimento->load('procedimento');
         					    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
+        					    $ds_atendimento = $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag;
+        					}
+        					
+        					if($agendamento->atendimento->consulta_id != null) {
+        						$agendamento->atendimento->load('consulta');
+        						$ds_atendimento = $agendamento->atendimento->consulta->tag_populars->first()->cs_tag;
         					}
         					 
+        					$agendamento->ds_atendimento = $ds_atendimento;
         					$agendamento->nome_especialidade = $nome_especialidade;
         					 
         					//--busca os itens de pedido relacionados------------------------------------------
@@ -623,10 +643,15 @@ class PaymentController extends Controller
     	//--verifica se todos os agendamentos possuem um atendimento relacionado------
     	$agendamento_atendimento = true;
     	
-    	
+    	//--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
+    	//--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
     	for ($i = 0; $i < sizeof($agendamentos); $i++) {
     	
     	    $item_agendamento = json_decode($agendamentos[$i]);
+    	    
+    	    $atendimento_id_temp = $item_agendamento->atendimento_id;
+    	    $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+    	    $item_atendimento->load('clinica');
     	    
     	    if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
         		 
@@ -635,13 +660,18 @@ class PaymentController extends Controller
         		if (sizeof($agendamento) > 0) {
         			$agendamento_disponivel = false;
         		}
-        		 
-        		$atendimento_id_temp = $item_agendamento->atendimento_id;
-        		$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-        		 
-        		if ($item_atendimento == null) {
-        			$agendamento_atendimento = false;
-        		}
+        		
+    	    } elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
+            	
+            	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
+            	
+            	if (sizeof($agendamento) > 0) {
+            		$agendamento_disponivel = false;
+            	}
+            }
+    	    
+    	    if ($item_atendimento == null) {
+    	    	$agendamento_atendimento = false;
     	    }
     	}
     	 
@@ -813,6 +843,7 @@ class PaymentController extends Controller
     				
     						//--busca pelas especialidades do atendimento--------------------------------------
     						$nome_especialidade = "";
+    						$ds_atendimento = "";
     				
     						if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
     						    $agendamento->profissional->load('especialidades');
@@ -823,8 +854,15 @@ class PaymentController extends Controller
     						} else {
     						    $agendamento->atendimento->load('procedimento');
     						    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
+    						    $ds_atendimento = $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag;
     						}
-    				
+    						
+    						if($agendamento->atendimento->consulta_id != null) {
+    							$agendamento->atendimento->load('consulta');
+    							$ds_atendimento = $agendamento->atendimento->consulta->tag_populars->first()->cs_tag;
+    						}
+    						
+    						$agendamento->ds_atendimento = $ds_atendimento;
     						$agendamento->nome_especialidade = $nome_especialidade;
     				
     						$agendamento->load('itempedidos');
@@ -1072,10 +1110,15 @@ class PaymentController extends Controller
     	
     	if ($agendamento->profissional_id) {
     	    $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
-    	    $data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
-    	    $hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
-    	    $nome_especialidade 	= "Descrição do atendimento: <span>".$agendamento->nome_especialidade."</span>";
     	}
+    	
+    	if($agendamento->consulta_id != null | $agendamento->clinica->tp_prestador == 'CLI') {
+    		$data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
+    		$hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
+    	}
+    	
+    	$nome_especialidade 	= "Descrição do atendimento: <span>".$agendamento->ds_atendimento." (".$agendamento->nome_especialidade.")</span>";
+    	
     	$endereco_agendamento = '--------------------';
     	
     	$agendamento->clinica->load('enderecos');

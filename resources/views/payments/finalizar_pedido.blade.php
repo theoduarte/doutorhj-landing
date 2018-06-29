@@ -54,7 +54,7 @@
                                                                         <p>{{ isset($agendamento->paciente) ? $agendamento->paciente->nm_primario.' '.$agendamento->paciente->nm_secundario : '--------' }}</p>
                                                                     </div>
                                                             </div>
-                                                             @if($agendamento->profissional_id != null && $agendamento->profissional_id != 'null')
+                                                             @if(($agendamento->profissional_id != null && $agendamento->profissional_id != 'null') | $agendamento->clinica->tp_prestador == 'CLI')
                                                             <div class="linha-resumo">
                                                                 <div class="titulo-resumo">
                                                                     <span>Data pré-agendada:</span>
@@ -108,7 +108,7 @@
                                                                     <span>Especialidade:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{  $agendamento->nome_especialidade }}</p>
+                                                                    <p>{{ $agendamento->ds_atendimento }} <br><em>({{  $agendamento->nome_especialidade }})</em></p>
                                                                 </div>
                                                             </div>
                                                            	@else
@@ -117,7 +117,7 @@
                                                                     <span>Descrição do Atendimento:</span>
                                                                 </div>
                                                                 <div class="dados-resumo">
-                                                                    <p>{{  $agendamento->nome_especialidade }}</p>
+                                                                    <p>{{ $agendamento->ds_atendimento }} <br><em>({{  $agendamento->nome_especialidade }})</em></p>
                                                                 </div>
                                                             </div>
                                                             @endif

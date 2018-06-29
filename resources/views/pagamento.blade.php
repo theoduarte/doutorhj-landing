@@ -74,7 +74,7 @@
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
                                                         <select class="form-control" id="selectCartaoCredito" name="selectCartaoCredito">
-                                                            <option value="">Selecione</option>
+                                                            <option value="">Novo Cartão</option>
                                                             @foreach($cartoes_gravados as $item)
                                                             <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
                                     						@endforeach
@@ -270,7 +270,7 @@
                                         <div class="card-header" id="heading_{{ $item['item_id'] }}">
                                             <div class="row">
                                                 <div class="nome-produto col-12 col-sm-9" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="collapse_{{ $item['item_id'] }}">
-                                                    <span>{{ $item['atendimento']->ds_preco }}</span>
+                                                    <span>{{ $item['atendimento']->ds_atendimento }}</span>
                                                 </div>
                                                 <!--<div class="excluir-produto col-2 col-sm-1">
                                                     <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
@@ -327,7 +327,7 @@
                                                         <span>Descrição do Atendimento:</span>
                                                     </div>
                                                     <div class="dados-resumo">
-                                                        <p>{{  $item['atendimento']->nome_especialidade }}</p>
+                                                        <p>{{ $item['atendimento']->ds_atendimento }} <br><em>({{  $item['atendimento']->nome_especialidade }})</em></p>
                                                     </div>
                                                 </div>
                                                 @endif
