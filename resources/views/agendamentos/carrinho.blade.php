@@ -69,7 +69,7 @@
                                                 <p>{{ isset($item['paciente']) ? $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario : '--------' }}</p>
                                             </div>
                                         </div>
-                                        @if($item['profissional'] != null)
+                                        @if($item['profissional'] != null && $item['atendimento']->consulta_id != null)
                                         <div class="linha-resumo">
                                             <div class="titulo-resumo">
                                                 <span>Médico:</span>
