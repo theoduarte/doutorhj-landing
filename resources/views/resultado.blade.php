@@ -81,14 +81,14 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
-                                        <input id="inputProfissional_{{ $atendimento->id.$atendimento->profissional->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->profissional->id }}" type="radio" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->profissional->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->profissional->id }}">
-                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->profissional->id }}">
+                                        <input id="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" type="radio" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}">
+                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}">
                                         Agendar com este profissional
                                         </label>
                                     </div>
                                     <strong>R$ {{ $atendimento->getVlComercialAtendimento() }}</strong>
                                 </div>
-                                <div id="collapse_{{ $atendimento->id.$atendimento->profissional->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->profissional->id }}" data-parent="#accordion">
+                                <div id="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_result->id }}" data-parent="#accordion">
                                 	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
                                     	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->profissional->cs_status != 'I') {{ $atendimento->profissional->id }} @endif">
