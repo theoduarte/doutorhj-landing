@@ -303,7 +303,7 @@
                                                         <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
                                                     </div>
                                                 </div>
-                                                @if($item['profissional'] != null && $item['profissional'] != 'null')
+                                                @if($item['profissional'] != null && $item['profissional'] != 'null' & $item['atendimento']->consulta_id != null)
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Médico:</span>
