@@ -198,6 +198,7 @@ class AtendimentoController extends Controller
                 ->select('atendimentos.*', 'atendimentos.id', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'atendimentos.ds_preco', 'atendimentos.procedimento_id', 'filials.id as filial_id')
                 ->distinct()
                 ->get();
+            //dd($atendimentos);
             //$query = DB::getQueryLog();
             //print_r($query);
                 
