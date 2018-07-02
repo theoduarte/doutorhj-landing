@@ -739,7 +739,12 @@ class ClinicaController extends Controller
 
     	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
-    
+
+    /*colocar essa rota no local correto*/
+    public function contatoHomePublica(){
+        return view('mensagems.contato');
+    }
+
     public function confirmaAgendamento(){
         return view('confirmacao');
     }

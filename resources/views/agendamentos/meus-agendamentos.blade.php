@@ -159,27 +159,8 @@
                                     <div class="col col-lg-8 area-informacoes">
                                         <div class="nome-status">
                                             <div class="row">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                     <p class="beneficiario">Paulo</p>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    @if($agendamento->getRawCsStatusAttribute() == 10)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
-                                                    @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                                        <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
