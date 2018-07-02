@@ -23,7 +23,6 @@
                                     <option value="odonto">Consulta Odontológica</option>
                                     <option value="exame">Exames</option>
                                     <option value="checkup">Check-ups</option>
-                                    <!-- <option value="procedimento">Procedimento</option> -->
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
@@ -32,7 +31,7 @@
                                     <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-12 col-lg-3">
+                            <div class="form-group col-md-12 col-lg-3" id="dvLocalAtendimento">
                                 <label for="local">Local de antedimento</label>
                                 <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                 <select id="local_atendimento" class="form-control select2" name="local_atendimento">
@@ -308,15 +307,10 @@
                                         <label for="especialidade">Especialidade ou exame</label>
                                         <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
                                             <option value="">Ex.: Clínica Médica</option>
-                                            <!-- <option>Opção 1</option>
-                                                <option>Opção 2</option>
-                                                <option>Opção 3</option>
-                                                <option>Opção 4</option> -->
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-12 col-lg-3">
+                                    <div class="form-group col-md-12 col-lg-3" id="localAtendimento">
                                         <label for="local">Local de atendimento</label>
-                                        <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                         <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                             <option value="">Ex.: Asa Sul</option>
                                         </select>

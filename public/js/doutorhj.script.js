@@ -5,6 +5,15 @@ $(document).ready(function () {
 		
 		if(tipo_atendimento == '') { return false; }
 		
+		// mostra / oculta campos em função do tipo de atendimento
+		if( $(this).val() == 'saude' || $(this).val() == 'odonto' || $(this).val() == 'exame' ){
+			$('label[for="especialidade"]').text("Tipo de Atendimento");
+			$('#localAtendimento').show();
+		}else if( $(this).val() == 'checkup' ){
+			$('label[for="especialidade"]').text("Tipo de Check-up");
+			$('#localAtendimento').hide();
+		}
+		
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
@@ -27,39 +36,42 @@ $(document).ready(function () {
 					
 					if(atendimento_id == '') { return false; }
 					
-					jQuery.ajax({
-			    		type: 'POST',
-			    	  	url: '/consulta-todos-locais-atendimento',
-			    	  	data: {
-							'tipo_atendimento': tipo_atendimento,
-			    	  		'atendimento_id': atendimento_id,
-							'_token': laravel_token
-						},
-						success: function (result) {
 
-							if( result != null) {
-								var json = result.endereco;
-								
-								$('#local_atendimento').empty();
-								var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
-								$('#local_atendimento').append($(option));
-								
-								for(var i=0; i < json.length; i++) {
-									option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+					if( $(this).val() != 'checkup' ){
+						jQuery.ajax({
+				    		type: 'POST',
+				    	  	url: '/consulta-todos-locais-atendimento',
+				    	  	data: {
+								'tipo_atendimento': tipo_atendimento,
+				    	  		'atendimento_id': atendimento_id,
+								'_token': laravel_token
+							},
+							success: function (result) {
+	
+								if( result != null) {
+									var json = result.endereco;
+									
+									$('#local_atendimento').empty();
+									var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
 									$('#local_atendimento').append($(option));
+									
+									for(var i=0; i < json.length; i++) {
+										option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+										$('#local_atendimento').append($(option));
+									}
+									
+									if(json.length > 0) {
+										$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
+										$('#endereco_id').val(json[0].id);
+									}
+									
 								}
-								
-								if(json.length > 0) {
-									$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-									$('#endereco_id').val(json[0].id);
-								}
-								
-							}
-			            },
-			            error: function (result) {
-			            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-			            }
-			    	});
+				            },
+				            error: function (result) {
+				            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				            }
+				    	});
+					}
 					
 				}
             },
@@ -67,7 +79,6 @@ $(document).ready(function () {
             	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
             }
     	});
-		
 	});
 	
 	try {
@@ -248,6 +259,8 @@ $(document).ready(function () {
 		var tipo_atendimento = $('#tipo_atendimento').val();
 		
 		if(atendimento_id == '') { return false; }
+		
+		
 		
 		jQuery.ajax({
     		type: 'POST',
@@ -913,7 +926,6 @@ function pad(n){
 }
 
 function validaBuscaAtendimento() {
-	
 	var tipo_atendimento = $('#tipo_atendimento');
 	var tipo_especialidade = $('#tipo_especialidade');
 	var local_atendimento = $('#local_atendimento');
@@ -956,7 +968,8 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
+
+	if( $('#tipo_atendimento').val() != 'checkup' && local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
 		endereco_id.parent().addClass('cvx-has-error');
 		endereco_id.focus();
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
@@ -973,7 +986,6 @@ function validaBuscaAtendimento() {
 		
 		return false;
 	}
-	
 	
 	return true;
 }

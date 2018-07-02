@@ -80,16 +80,15 @@ class EspecialidadeController extends Controller
         } elseif ($tipo_atendimento == 'checkup') {
             $checkup = DB::table('checkups')
                         ->select(['checkups.titulo', 'checkups.tipo', ])
-                        ->where('checkups.cs_status', \App\Checkup::INATIVO)
+                        ->where('checkups.cs_status', \App\Checkup::ATIVO)
                         ->distinct()
+                        ->orderBy('checkups.titulo', 'asc')
                         ->get();
                         
             foreach($checkup as $dado){
                 $item = [
-//                     'id' => $dado->id,
                     'tipo' => 'checkup',
-                    'descricao' => $dado->titulo.'-'.$dado->tipo,
-//                     'codigo' => $dado->id
+                    'descricao' => $dado->titulo
                 ];         
                 array_push($result, $item);
             }
