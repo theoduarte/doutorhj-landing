@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request as CVXRequest;
+use App\Cidade;
 use App\Endereco;
 use App\Atendimento;
-use App\Cidade;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request as CVXRequest;
 
 class EspecialidadeController extends Controller
 {
-
     // ############# PUBLIC SERVICES - NOT AUTHENTICATED ##################
     /**
      * Display a listing of the resource.
@@ -23,7 +22,6 @@ class EspecialidadeController extends Controller
         $result = [];
         
         if ($tipo_atendimento == 'saude' | $tipo_atendimento == 'odonto') {
-            
             $tipo_atendimento_id = $tipo_atendimento == 'saude' ? 1 : 2;
             
             //DB::enableQueryLog();
@@ -55,7 +53,6 @@ class EspecialidadeController extends Controller
             }
             
         } elseif ($tipo_atendimento == 'exame') {
-            
             $tipo_atendimento_id = 3;
             
             DB::enableQueryLog();
@@ -69,9 +66,7 @@ class EspecialidadeController extends Controller
                 ->get(['procedimentos.cd_procedimento']);
             
             foreach ($atendimentos as $atend) {
-                
                 if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->procedimento_id)) {
-                    
                     $item = [
                         'id' => $atend->id,
                         'tipo' => 'exame',
@@ -83,16 +78,21 @@ class EspecialidadeController extends Controller
                 }
             }
         } elseif ($tipo_atendimento == 'checkup') {
-            $tipo_atendimento_id = 4;
-            
-            $item = [
-                'id' => $atend->id,
-                'tipo' => 'exame',
-                'descricao' => $atend->ds_preco,
-                'codigo' => $atend->procedimento_id
-            ];
-            
-            array_push($result, $item);
+            $checkup = DB::table('checkups')
+                        ->select(['checkups.titulo', 'checkups.tipo', ])
+                        ->where('checkups.cs_status', \App\Checkup::INATIVO)
+                        ->distinct()
+                        ->get();
+                        
+            foreach($checkup as $dado){
+                $item = [
+//                     'id' => $dado->id,
+                    'tipo' => 'checkup',
+                    'descricao' => $dado->titulo.'-'.$dado->tipo,
+//                     'codigo' => $dado->id
+                ];         
+                array_push($result, $item);
+            }
         }
         
         
