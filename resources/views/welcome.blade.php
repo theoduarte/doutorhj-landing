@@ -300,7 +300,7 @@
                                             <option value="saude">Consulta Médica</option>
                                             <option value="odonto">Consulta Odontológica</option>
                                             <option value="exame">Exames</option>
-                                            <option value="checkup">Checkups</option>
+                                            <option value="checkup">Check-up</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12 col-lg-3">

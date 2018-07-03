@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	
 	$('#tipo_atendimento').change(function(){
 		var tipo_atendimento = $(this).val();
 		
@@ -164,7 +163,6 @@ $(document).ready(function () {
 	} catch (e) {}
 	
 	$('#btn-finalizar-pedido').click(function(){
-		
 		var tipo_pagamento = $('#selectFormaPagamento').val();
 		var cartao_cadastrado = $('#selectCartaoCredito').val();
 		
@@ -175,8 +173,6 @@ $(document).ready(function () {
 		} else if(cartao_cadastrado != '') {
 			pagarCartaoCadastrado();
 		}
-		
-		
 	});
 	
 	$(".select2").select2({
