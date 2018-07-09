@@ -256,7 +256,7 @@ $(document).ready(function () {
 		
 		if(atendimento_id == '') { return false; }
 		
-		
+		window.alert('OK!');
 		
 		jQuery.ajax({
     		type: 'POST',
