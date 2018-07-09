@@ -11,4 +11,5 @@ class Checkup extends Model
     const ATIVO = 'A';
     const INATIVO = 'I';
     
+    
 }

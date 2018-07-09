@@ -74,13 +74,10 @@
                                                 <div class="col col-md-6">
                                                     <div class="button dropdown">
                                                         <select class="form-control" id="selectCartaoCredito" name="selectCartaoCredito">
-                                                            <option value="">Selecione</option>
+                                                            <option value="">Novo Cartão</option>
                                                             @foreach($cartoes_gravados as $item)
                                                             <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
                                     						@endforeach
-                                                            <!-- <option>Cartão Visa - final 0889</option>
-                                                            <option>Cartão MasterCard - final 0685</option>
-                                                            <option>Cartão Cielo - final 6854</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
@@ -273,7 +270,7 @@
                                         <div class="card-header" id="heading_{{ $item['item_id'] }}">
                                             <div class="row">
                                                 <div class="nome-produto col-12 col-sm-9" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="collapse_{{ $item['item_id'] }}">
-                                                    <span>{{ $item['atendimento']->ds_preco }}</span>
+                                                    <span>{{ $item['atendimento']->ds_atendimento }}</span>
                                                 </div>
                                                 <!--<div class="excluir-produto col-2 col-sm-1">
                                                     <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
@@ -306,6 +303,7 @@
                                                         <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
                                                     </div>
                                                 </div>
+                                                @if($item['profissional'] != null && $item['profissional'] != 'null' & $item['atendimento']->consulta_id != null)
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Médico:</span>
@@ -323,13 +321,24 @@
                                                         <p>{{  $item['atendimento']->nome_especialidade }}</p>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <div class="linha-resumo">
+                                                    <div class="titulo-resumo">
+                                                        <span>Descrição do Atendimento:</span>
+                                                    </div>
+                                                    <div class="dados-resumo">
+                                                        <p>{{ $item['atendimento']->ds_atendimento }} <br><em>({{  $item['atendimento']->nome_especialidade }})</em></p>
+                                                    </div>
+                                                </div>
+                                                @endif
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Prestador:</span>
                                                     </div>
                                                     <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->nm_fantasia }}</p>
+                                                        <p>{{ $item['clinica']->nm_fantasia }}  - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
                                                         <input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($item['clinica']) ? $item['clinica']->id : 0 }}">
+                                                        <input type="hidden" id="filial_id_{{ $index }}" name="filial_id_[{{ $index }}]" value="{{ isset($item['filial']) ? $item['filial']->id : 0 }}">
                                                     </div>
                                                 </div>
                                                 <div class="linha-resumo">
@@ -337,16 +346,17 @@
                                                         <span>Endereço:</span>
                                                     </div>
                                                     <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->enderecos->first()->te_endereco.', '.$item['clinica']->enderecos->first()->nr_logradouro.', '.$item['clinica']->enderecos->first()->te_bairro }}</p>
+                                                        <p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
+                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                     </div>
                                                 </div>
+                                                @if($item['data_agendamento'] != null && $item['data_agendamento'] != 'null')
                                                 <div class="linha-resumo">
                                                     <div class="titulo-resumo">
                                                         <span>Data pré-agendada:</span>
                                                     </div>
                                                     <div class="dados-resumo">
                                                         <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
-                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
                                                         <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
                                                         <input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
                                                     </div>
@@ -359,6 +369,16 @@
                                                         <p>{{ date('H', strtotime($item['hora_agendamento'])).'h'.date('i', strtotime($item['hora_agendamento'])).'min' }}</p>
                                                     </div>
                                                 </div>
+                                                 @else
+                                                <div class="linha-resumo">
+                                                    <div class="titulo-resumo">
+                                                        <span>Observação do Atendimento: </span>
+                                                    </div>
+                                                    <div class="dados-resumo">
+                                                        <p>{{ $item['clinica']->obs_procedimento }}</p>
+                                                    </div>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

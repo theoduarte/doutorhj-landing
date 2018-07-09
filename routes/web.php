@@ -16,6 +16,7 @@ Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')
 Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
+Route::get('consulta-tipos-checkup/{titulo}','CheckupController@getTipoCheckup');
 
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
@@ -44,10 +45,13 @@ Route::post('participe', 'MensagemController@participe');
 
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
+
+# rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
 Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
-Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
+
+Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
 Route::post('consulta-endereco-local-atendimento', 'EspecialidadeController@consultaEnderecoLocalAtendimento');
 Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAgendamentoDisponivel');
 
@@ -86,6 +90,7 @@ Route::post('delete-dependente', 'PacienteController@deleteDependenteDestroy')->
 Route::get('notificacoes','MensagemController@getListaNotificacoes')->middleware('auth');
 Route::get('notificacoes/visualizado/{id}','MensagemController@setStatusVisualizado')->middleware('auth');
 Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middleware('auth');
+
 
 Auth::routes();
 

@@ -20,7 +20,7 @@
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Ex.: Consulta</option>
                                 <option value="saude">Consulta Médica</option>
-                                <option value="odonto">Consulta Odontológica</option>
+                                <!-- <option value="odonto">Consulta Odontológica</option> -->
                                 <option value="exame">Exames</option>
                                 <!-- <option value="procedimento">Procedimento</option> -->
                             </select>
@@ -211,7 +211,7 @@
                                                                         <option value="enteado">Enteado(a)</option>
                                                                         <option value="filho">Filho(a)</option>
                                                                         <option value="irmao">Irmã(ão)</option>
-                                                                        <option value="mes">Mãe</option>
+                                                                        <option value="mae">Mãe</option>
                                                                         <option value="pai">Pai</option>
                                                                         <option value="outros">Outros</option>
                                                                     </select>
@@ -417,7 +417,7 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                                @if(sizeof($cartoes_paciente) == 0)
+                                                @if(sizeof($agendamentos) == 0)
                                                     <span id="lbl-pedido-paciente">NENHUM PEDIDO ENCONTRADO!</span>
                                                 @endif
 

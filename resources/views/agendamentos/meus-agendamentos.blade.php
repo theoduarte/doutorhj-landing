@@ -1,9 +1,7 @@
 @extends('layouts.base')
-
 @section('title', 'DoctorHj: Meus Agendamentos')
 
 @push('scripts')
-
 @endpush
 
 @section('content')
@@ -20,13 +18,14 @@
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Ex.: Consulta</option>
                                 <option value="saude">Consulta Médica</option>
-                                <option value="odonto">Consulta Odontológica</option>
+                                <!-- <option value="odonto">Consulta Odontológica</option> -->
                                 <option value="exame">Exames</option>
                                 <!-- <option value="procedimento">Procedimento</option> -->
                             </select>
                         </div>
+       
                         <div class="form-group col-md-12 col-lg-3">
-                            <label for="especialidade">Especialidade ou exame</label>
+                            <label Dfor="especialidade">Especialidade ou exame</label>
                             <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
                                 <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                             </select>
@@ -39,13 +38,13 @@
                             </select>
                             <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                             <input type="hidden" id="endereco_id" name="endereco_id">
-                        </div>
+                        </div>@if($agendamento->atendimento->consulta_id != null)
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
                         </div>
-                    </div>
+                    </div>@if($agendamento->atendimento->consulta_id != null)
                 </form>
-            </div>
+            </div>meus-agendamentos.blade.php
             <div class="box-meus-agendamentos">
                 <div class="titulo-box">
                     Meus Agendamentos
@@ -150,6 +149,39 @@
                                 </div>
                             @endforeach
                         </div>
+                                @if($agendamento->atendimento->consulta_id != null)
+                                <p class="tipo">{{ $agendamento->atendimento->consulta->tag_populars->first()->cs_tag }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                @elseif($agendamento->atendimento->procedimento_id != null)
+                                <p class="tipo">{{ $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag }} <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
+                                @endif
+                                
+                                @if($agendamento->profissional_id != null) <p class="profissional">Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p> @endif
+                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span> <span class="dt-pagamento">pago em {{ $agendamento->data_pagamento }}</span></p>
+                                <p class="endereco">{{ $agendamento->endereco_completo }}</p>
+                            </div>
+                            <div class="col col-lg-4">
+                                <p class="tit-token">Token</p>
+                                <p class="txt-token">Apresente este código no momento da consulta</p>
+                                <div class="area-token">
+                                    <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
+                                    <p>
+                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >Copiar</button>
+                                        <br>
+                                        <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                            	@if($agendamento->getRawCsStatusAttribute() != 60)
+                                <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
+                                    <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu ddm-opcoes"  >
+                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '@if($agendamento->profissional_id != null){{ $agendamento->profissional->id }}@else 0 @endif', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                        <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
+
 
                         {{-- CHECKUP --}}
 

@@ -47,6 +47,11 @@ class Profissional extends Model
 	    return $this->belongsTo('App\User');
 	}
 	
+	public function filials()
+	{
+	    return $this->belongsToMany('App\Filial');
+	}
+	
 	public function setDtNascimentoAttribute($value)
 	{
 	    $date = new Carbon($value);

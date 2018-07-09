@@ -73,27 +73,28 @@
                         	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }}</h5>
-                                    <h6 class="card-subtitle">Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}</h6>
-                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->ds_preco }} @else {{ $atendimento->ds_preco }} @endif </p>
-                                    <p class="card-text">{{ $atendimento->clinica->enderecos[0]->te_endereco.' ('.$atendimento->clinica->enderecos[0]->te_bairro.') '.$atendimento->clinica->enderecos[0]->cidade->nm_cidade.'-'.$atendimento->clinica->enderecos[0]->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }} - Und: ( {{ $atendimento->filial_result->nm_nome_fantasia }} )</h5>
+                                    <h6 class="card-subtitle">@if($atendimento->consulta_id != null) Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }} @endif</h6>
+                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->consulta->tag_populars->first()->cs_tag }} @else {{ $atendimento->procedimento->tag_populars->first()->cs_tag }} @endif </p>
+                                    <p class="card-text">{{ $atendimento->filial_result->endereco->te_endereco.' ('.$atendimento->filial_result->endereco->te_bairro.') '.$atendimento->filial_result->endereco->cidade->nm_cidade.'-'.$atendimento->filial_result->endereco->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
-                                        <input id="inputProfissional_{{ $atendimento->id.$atendimento->profissional->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->profissional->id }}" type="radio" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->profissional->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->profissional->id }}">
-                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->profissional->id }}">
+                                        <input id="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" type="radio" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}">
+                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}">
                                         Agendar com este profissional
                                         </label>
                                     </div>
                                     <strong>R$ {{ $atendimento->getVlComercialAtendimento() }}</strong>
                                 </div>
-                                <div id="collapse_{{ $atendimento->id.$atendimento->profissional->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->profissional->id }}" data-parent="#accordion">
+                                <div id="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_result->id }}" data-parent="#accordion">
                                 	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
-                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="{{ $atendimento->profissional->id }}">
+                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->profissional->cs_status != 'I' & $atendimento->consulta_id != null) {{ $atendimento->profissional->id }} @endif">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
                                     	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
+                                    	<input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">
                                     	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_com_atendimento }}">
                                     	
                                     	<!-- <input type="hidden" name="current_url" value="{{ Request::root().'/'.Request::path().'/'.str_replace(Request::url(), '',Request::fullUrl()) }}"> -->
@@ -101,6 +102,7 @@
                                     	{!! csrf_field() !!}
                                 	
 	                                    <div class="area-escolher-data">
+	                                    	@if($atendimento->consulta_id != null | $atendimento->clinica->tp_prestador == 'CLI')
 	                                        <div class="titulo-escolhe-data">
 	                                            Escolha data e horário
 	                                        </div>
@@ -119,6 +121,10 @@
 	                                        <div class="mensagem-confirma-data">
 	                                            <span>Data e horário sujeito a confirmação</span>
 	                                        </div>
+	                                        @else
+	                                        <span><strong>{{ $atendimento->clinica->obs_procedimento }}</strong></span>
+	                                        <hr>
+	                                        @endif
 	                                        <div class="valor-total">
 	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->getVlComercialAtendimento() }}</span>
 	                                        </div>
@@ -370,14 +376,15 @@
             	
             	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
         		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
-        		var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
-        		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
-        		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
         		
         		if(clinica_id == '') { return false; }
-        		if(profissional_id == '') { return false; }
-        		if(dt_agendamento == '') { return false; }
-        		if(ct_hora == '') { return false; }
+        		if(profissional_id != '') {
+        			var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
+            		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+            		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
+           		}
+        		if(profissional_id != '' && dt_agendamento == '') { return false; }
+        		if(profissional_id != '' && ct_hora == '') { return false; }
         		
         		jQuery.ajax({
             		type: 'POST',
