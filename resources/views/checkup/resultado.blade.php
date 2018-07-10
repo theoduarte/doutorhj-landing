@@ -3,7 +3,28 @@
 @section('title', 'DoctorHoje: Resultado')
 
 @push('scripts')
+	<script>
+        $(document).ready(function () {
+            if( $('#tipo_atendimento').val() == 'saude' || 
+        			$('#tipo_atendimento').val() == 'odonto' || 
+        				$('#tipo_atendimento').val() == 'exame' ){
+        		
+            	$('.form-busca-resultado').attr('action', '/resultado');
+            	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaAtendimento()');
+            	
+            }else if( $('#tipo_atendimento').val() == 'checkup' ){
+                
+            	$('.form-busca-resultado').attr('action', '/resultado-checkup');
+            	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaCheckup()');
+            	
+            }
+            
+            $('#local_atendimento').empty();
 
+            $('#tipo_especialidade').change();
+        });
+
+	</script>
 @endpush
 
 @section('content')
@@ -15,24 +36,27 @@
                         Busca <i class="fa fa-edit"></i></a>
                 </div>
                 <div class="collapseFormulario collapse show" id="collapseFormulario">
-                    <form action="/resultado" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()">
+                    <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()">
                         <div class="row">
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                    <option>Checkup</option>
+                                    <option value="" disabled selected hidden>Tipo de atendimento</option>
+                                    <option value="saude" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude' ) selected='selected' @endif >Consulta Médica</option>
+                                    <option value="odonto" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif >Consulta Odontológica</option>
+                                    <option value="exame" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame' ) selected='selected' @endif >Exames</option>
+                                    <option value="checkup" @if( isset($_GET['tipo_atendimento']) ) selected='selected' @endif >Check-up</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
-                                    <option>Acima de 60 anos - Masculino</option>
+                                    <option value="" disabled selected hidden>Especialidade</option>
+                                    @foreach($checkup as $obj)
+                                    	<option value="{{$obj->titulo}}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $obj->titulo ) selected='selected' @endif>{{$obj->titulo}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="local_atendimento" class="form-control" name="local_atendimento">
-                                    <option>Todos</option>
-                                    <option>Básico</option>
-                                    <option>Intermediário</option>
-                                    <option>Completo</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
@@ -817,7 +841,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+$(this)
                                         <div class="procedimento multi-exames">
                                             <div class="row">
                                                 <div class="col-xl-8">
@@ -974,7 +998,7 @@
                                                             <input class="form-check-input" type="radio" name="clinicaProcedimento026" id="clinicaProcedimento026" value="option1" checked>
                                                             <label class="form-check-label" for="clinicaProcedimento026">
                                                                 Biovida - Superquadra Sudoeste 305 Bloco 3, Brasília - DF
-                                                            </label>
+                    $(this)                                        </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1483,13 +1507,12 @@
         <script type="text/javascript">
             var laravel_token = '{{ csrf_token() }}';
             var resizefunc = [];
-
+			
             /*********************************
              *
              * COLLAPSE FORM BUSCA MOBILE
              *
              *********************************/
-
             jQuery(document).ready(function($) {
                 var alterClass = function() {
                     var ww = document.body.clientWidth;
@@ -1511,7 +1534,6 @@
              * TROCA COR CARD AO CLICAR
              *
              *********************************/
-
             $('.card').on('show.bs.collapse hide.bs.collapse', function (e) {
                 if (e.type == 'show') {
                     $(this).addClass("card-active");
@@ -1525,18 +1547,15 @@
              * DATA E HORA
              *
              *********************************/
-
             jQuery.datetimepicker.setLocale('pt-BR');
 
             /* DATA */
-
             jQuery('.selecionaData').datetimepicker({
                 timepicker: false,
                 format: 'd.m.Y'
             });
 
             /* HORA */
-
             jQuery('.selecionaHora').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
@@ -1547,5 +1566,4 @@
 
         </script>
     @endpush
-
 @endsection

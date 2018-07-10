@@ -22,21 +22,21 @@ $(document).ready(function () {
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
-				'tipo_atendimento': $(this).val(),
+				'tipo_atendimento': tipo_atendimento,
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
 				if( result != null) {
 					var json = JSON.parse(result.atendimento);
-					
-					$('#tipo_especialidade').empty();
-					for(var i=0; i < json.length; i++) {
-						var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-						$('#tipo_especialidade').append($(option));
-					}
-					
 
-					if( $(this).val() != 'checkup' ){
+					$('#tipo_especialidade').empty();
+
+					if( $('#tipo_atendimento').val() != 'checkup' ){
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
 						var atendimento_id = $('#tipo_especialidade option:first').val();
 						if(atendimento_id == '') { return false; }
 
@@ -71,10 +71,16 @@ $(document).ready(function () {
 				            }
 				    	});
 					}else{
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].descricao+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
 						jQuery.ajax({
-							type: 'GET',
-							url: '/consulta-tipos-checkup/' + $('select[id="tipo_especialidade"]').find('option:selected').text(),
+							type: 'POST',
+							url: '/consulta-tipos-checkup',
 							data: {
+								'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
 								'_token': laravel_token
 							},
 							success: function (result) {
@@ -92,7 +98,6 @@ $(document).ready(function () {
 									
 									if(json.length > 0) {
 										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-										$('#endereco_id').val(json[0].tipo);
 									}									
 								}
 							},
@@ -249,9 +254,10 @@ $(document).ready(function () {
 	    	});
 		}else{
 			jQuery.ajax({
-				type: 'GET',
-				url: '/consulta-tipos-checkup/' + $('select[id="tipo_especialidade"]').find('option:selected').text(),
+				type: 'POST',
+				url: '/consulta-tipos-checkup',
 				data: {
+					'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
 					'_token': laravel_token
 				},
 				success: function (result) {
@@ -1013,16 +1019,16 @@ function validaBuscaAtendimento() {
 
 
 function validaBuscaCheckup() {
-	var tipo_atendimento = $('#tipo_atendimento');
-	var tipo_especialidade = $('#tipo_especialidade');
-	var local_atendimento = $('#local_atendimento');
-	var endereco_id = $('#endereco_id');
+	var tipo_atendimento 	= $('select[id="tipo_atendimento"]').find('option:selected').text();
+	var tipo_especialidade  = $('select[id="tipo_especialidade"]').find('option:selected').text();
+	var local_atendimento   = $('select[id="local_atendimento"]').find('option:selected').text();
+	
 	
 	if( tipo_atendimento.val().length == 0 ) {
 		
 		tipo_atendimento.parent().addClass('cvx-has-error');
 		tipo_atendimento.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione o Tipo de Atentimento');
+
 		swal(
 				  {
 					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
@@ -1040,11 +1046,11 @@ function validaBuscaCheckup() {
 	if( tipo_especialidade.val().length == 0 ) {
 		tipo_especialidade.parent().addClass('cvx-has-error');
 		tipo_especialidade.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
+		
 		swal(
 				  {
 					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
-					  text: 'Selecione a Especialidade/Exame para Prosseguir'
+					  text: 'Selecione um Check-up para Prosseguir'
 				  }
 	       	);
 		
@@ -1054,25 +1060,7 @@ function validaBuscaCheckup() {
 		
 		return false;
 	}
-	
 
-	if( $('#tipo_atendimento').val() != 'checkup' && local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
-		endereco_id.parent().addClass('cvx-has-error');
-		endereco_id.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
-		swal(
-				  {
-					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
-					  text: 'Endereço não localizado. Por favor, tente novamente.'
-				  }
-	       	);
-		
-		$('.cvx-has-error .form-control').keyup(function(){
-			$(this).parent().removeClass('cvx-has-error');
-		});
-		
-		return false;
-	}
 	
 	return true;
 }
@@ -1081,11 +1069,9 @@ function validaBuscaCheckup() {
 function onlyNumbers(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
-
     var keychar = String.fromCharCode(key);
-    //alert(keychar);
     var keycheck = /^[0-9_\b]+$/;
-
+	
     if (!(key == 8 || key == 9 || key == 17 || key == 27 || key == 44 || key == 46 || key == 37 || key == 39)) {
         if (!keycheck.test(keychar)) {
             theEvent.returnValue = false;//for IE

@@ -16,7 +16,7 @@ Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')
 Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
-Route::get('consulta-tipos-checkup/{titulo}','CheckupController@getTipoCheckupAtivo');
+Route::post('consulta-tipos-checkup','CheckupController@getTipoCheckupAtivo');
 
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');

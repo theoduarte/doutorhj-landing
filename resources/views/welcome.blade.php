@@ -33,7 +33,6 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-3" id="dvLocalAtendimento">
                                 <label for="local">Local de antedimento</label>
-                                <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                 <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                     <option value="" disabled selected hidden>Ex.: Asa Sul</option>
                                 </select>
@@ -667,8 +666,8 @@
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
 
-                $('#tipo_especialidade option:first').prop("selected", true);
-                $('#local_atendimento option:first').prop("selected", true);
+                $('#tipo_especialidade option:first').prop("selected", false);
+                $('#local_atendimento option:first').prop("selected", false);
             });
 
             /*********************************
