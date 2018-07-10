@@ -16,7 +16,7 @@ Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')
 Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
-Route::get('consulta-tipos-checkup/{titulo}','CheckupController@getTipoCheckup');
+Route::get('consulta-tipos-checkup/{titulo}','CheckupController@getTipoCheckupAtivo');
 
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
@@ -32,16 +32,6 @@ Route::post('cancelar-agendamento', 'AgendamentoController@cancelarAgendamento')
 Route::get('home-logado', 'ClinicaController@homeLogado');
 
 Route::post('participe', 'MensagemController@participe');
-
-//Route::resource('clinicas','ClinicaController')->middleware('auth');
-//Route::resource('profissionals','ProfissionalController')->middleware('auth');
-//Route::resource('clientes', 'ClienteController')->middleware('auth');
-//Route::resource('cargos','CargoController')->middleware('auth');
-//Route::resource('menus','MenuController')->middleware('auth');
-//Route::resource('itemmenus','ItemmenuController')->middleware('auth');
-//Route::resource('perfilusers','PerfiluserController')->middleware('auth');
-//Route::resource('permissaos','PermissaoController')->middleware('auth');
-//Route::resource('agendamentos','AgendamentoController')->middleware('auth');
 
 # rotas autocomplete
 Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
@@ -94,5 +84,4 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
