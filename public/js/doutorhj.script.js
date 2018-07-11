@@ -1081,3 +1081,16 @@ function onlyNumbers(evt) {
         }
     }
 }
+
+function trataFormConsulta(){
+    if( $('#tipo_atendimento').val() == 'saude' || $('#tipo_atendimento').val() == 'odonto' || $('#tipo_atendimento').val() == 'exame' ){
+		
+    	$('.form-busca-resultado').attr('action', '/resultado');
+    	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaAtendimento()');
+    	
+    }else if( $('#tipo_atendimento').val() == 'checkup' ){
+        
+    	$('.form-busca-resultado').attr('action', '/resultado-checkup');
+    	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaCheckup()');
+    }
+}

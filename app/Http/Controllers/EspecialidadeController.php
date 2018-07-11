@@ -216,7 +216,6 @@ class EspecialidadeController extends Controller
     	} elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
     
     		$procedimento_id = $ct_atendimento->procedimento_id;
-    		//DB::enableQueryLog();
     		$outros_enderecos = Endereco::with('cidade')->with('cidade')
 	    		->join('cidades', 				function($join1) use ($local_atendimento) { $join1->on('cidades.id', '=', 'enderecos.cidade_id');})
 	    		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
@@ -229,42 +228,7 @@ class EspecialidadeController extends Controller
 	    		->distinct()
 	    		->orderby('enderecos.te_bairro', 'asc')
 	    		->get();
-	    	//$query = DB::getQueryLog();
-	    	//print_r($query);
-	    	//dd($procedimento_id);	
-	    	//-- lista enderecos id usada para aplicar clausula NOI IN na lista dos demais enderecos ---
-	    	/* $list_endereco_ids = [];
 	    	
-	    	//-- realiza a conversao dos itens para exibicao no droplist da landing page ---------------
-	    	$arResultado = [ 'id' =>  $endereco->id, 'cidade_id' => $endereco->cidade_id, 'value' => ucwords(strtolower($endereco->te_bairro)).': '.$endereco->cidade->nm_cidade, 'te_bairro' => $endereco->te_bairro ];
-	    	array_push($result, $arResultado);
-    
-    		foreach ($enderecos as $query) {
-    			
-    		    $arResultado = [ 'id' =>  $query->id, 'cidade_id' => $query->cidade_id, 'value' => ucwords(strtolower($query->te_bairro)).': '.$query->cidade->nm_cidade, 'te_bairro' => $query->te_bairro ];
-    			
-    			if (!EspecialidadeController::checkIfExistsInArray($query->te_bairro, $result)) {
-    				array_push($result, $arResultado);
-    			}
-    			array_push($list_endereco_ids, $query->id);
-    		}
-    		
-    		//-- busca os demais enderecos disponíveis de atendimento --------------------
-    		$outros_enderecos = Endereco::with('cidade')
-	    		->join('cidades', 				function($join1) use ($cidade_id) { $join1->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.id', '=', DB::raw($cidade_id));})
-	    		//->join('clinica_endereco', 	function($join2) { $join2->on('enderecos.id', '=', 'clinica_endereco.endereco_id');})
-	    		->join('filials',             	function($join2) { $join2->on('enderecos.id', '=', 'filials.endereco_id');})
-	    		->join('clinicas', 				function($join3) { $join3->on('filials.clinica_id', '=', 'clinicas.id');})
-	    		->join('profissionals', 		function($join4) { $join4->on('profissionals.clinica_id', '=', 'clinicas.id');})
-	    		->join('filial_profissional',   function($join7) { $join7->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
-	    		->join('atendimentos', 			function($join5) { $join5->on('atendimentos.profissional_id', '=', 'profissionals.id');})
-	    		->join('procedimentos', 		function($join6) use ($procedimento_id) { $join6->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->on('atendimentos.procedimento_id', '=', DB::raw($procedimento_id));})
-	    		->whereNotIn('enderecos.id', $list_endereco_ids)->where('clinicas.cs_status', '=', 'A')
-	    		->select('enderecos.*', 'enderecos.id', 'enderecos.te_endereco', 'enderecos.te_bairro', 'enderecos.cidade_id')
-	    		->distinct()
-	    		->orderby('enderecos.te_bairro', 'asc')
-	    		->get(); */
-    		
     		//-- realiza a conversao dos itens para exibicao no droplist da landing page ---------------
     		foreach ($outros_enderecos as $query)
     		{

@@ -47,8 +47,9 @@ class CheckupController extends Controller
     {
         $consulta = $this->_consultaCheckup();
         $checkup  = $this->getTituloCheckupAtivo();
+        $local_atendimento = CVXRequest::get('local_atendimento');
         
-        return view('checkup.resultado', compact('checkup', 'consulta'));
+        return view('checkup.resultado', compact('checkup', 'consulta', 'local_atendimento'));
     }
 
     public function carrinhoCheckup()
@@ -67,7 +68,7 @@ class CheckupController extends Controller
     }
     
     /**
-     * Consulta check-up
+     * Consulta check-up utilizado na busca de landing.
      * 
      * @return array
      */
@@ -96,8 +97,6 @@ class CheckupController extends Controller
                     ->whereNotNull('atendimentos.vl_net_checkup')
                     ->where('clinicas.cs_status', 'A')
                     ->where('atendimentos.cs_status', 'A')
-                    ->whereDate('checkups.created_at', '=', \Carbon\Carbon::now())
-                    ->orWhereDate('checkups.updated_at', '=', \Carbon\Carbon::now())
                     ->distinct()
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
