@@ -34,7 +34,9 @@ Route::get('home-logado', 'ClinicaController@homeLogado');
 Route::post('participe', 'MensagemController@participe');
 
 # rotas autocomplete
-Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
+Route::get('consulta-cep/cep/{cep}', 'Controller@cuse Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+onsultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');

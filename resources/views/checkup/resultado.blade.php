@@ -4,89 +4,17 @@
 @push('scripts')
 	<script>
         $(document).ready(function () {
-            var local_atendimento = '{{$local_atendimento}}';
-            $('#tipo_especialidade').change();
+        	$('#tipo_atendimento').change();			
 			
+        	$('#tipo_atendimento').change(function(){
+        		$('#tipo_atendimento').alert('OK!');
+        	});        	
+			
+        	
+//         	$('.form-busca-resultado').attr('action')
+			
+        	
             trataFormConsulta();
-			
-			// override
-            $('#tipo_especialidade').change(function(){
-        		if( $('#tipo_atendimento').val() != 'checkup' ){
-        			var atendimento_id = $(this).val();
-        			var tipo_atendimento = $('#tipo_atendimento').val();
-        			
-        			if(atendimento_id == '') { return false; }
-        			
-        			
-        			jQuery.ajax({
-        	    		type: 'POST',
-        	    	  	url: '/consulta-todos-locais-atendimento',
-        	    	  	data: {
-        					'tipo_atendimento': tipo_atendimento,
-        	    	  		'atendimento_id': atendimento_id,
-        					'_token': laravel_token
-        				},
-        				success: function (result) {
-        					if( result != null) {
-        						var json = result.endereco;
-								parecer = (json[i].value == local_atendimento) ? 'selected' : null;
-
-        						
-        						$('#local_atendimento').empty();
-        						var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
-        						$('#local_atendimento').append($(option));
-        						
-        						for(var i=0; i < json.length; i++) {
-        							option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
-        							$('#local_atendimento').append($(option));
-        						}
-        						
-        						if(json.length > 0) {
-        							$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-        							$('#endereco_id').val(json[0].id);
-        						}
-        						
-        					}
-        	            },
-        	            error: function (result) {
-        	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-        	            }
-        	    	});
-        		}else{
-        			jQuery.ajax({
-        				type: 'POST',
-        				url: '/consulta-tipos-checkup',
-        				data: {
-        					'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
-        					'_token': laravel_token
-        				},
-        				success: function (result) {
-        					if( result != null) {
-        						var json = result;
-        						parecer = (json[i].value == local_atendimento) ? 'selected' : null;
-
-        						
-        						$('#local_atendimento').empty();
-        						var option = '<option value="TODOS" '+parecer+'>TODOS</option>';
-        						$('#local_atendimento').append($(option));
-        						
-        						for(var i=0; i < json.length; i++) {
-        							option = '<option value="'+json[i].tipo+'" '+parecer+'>'+json[i].tipo+'</option>';
-        							$('#local_atendimento').append($(option));
-        						}
-        						
-        						if(json.length > 0) {
-        							$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-        							$('#endereco_id').val(json[0].tipo);
-        						}									
-        					}
-        				},
-        				error: function (result) {
-        					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-        				}
-        			});
-        		}
-        	});
         });
 	</script>
 @endpush
@@ -100,12 +28,12 @@
                         Busca <i class="fa fa-edit"></i></a>
                 </div>
                 <div class="collapseFormulario collapse show" id="collapseFormulario">
-                    <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()">
+                    <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaCheckup()">
                         <div class="row">
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                     <option value="" disabled selected hidden>Tipo de atendimento</option>
-                                    <option value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'   ) selected='selected' @endif >Consulta Médica</option>
+                                    <o<button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento2348')">Prosseguir para pagamento</button>ption value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'   ) selected='selected' @endif >Consulta Médica</option>
                                     <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto'  ) selected='selected' @endif >Consulta Odontológica</option>
                                     <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'   ) selected='selected' @endif >Exames</option>
                                     <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup' ) selected='selected' @endif >Check-up</option>
@@ -181,50 +109,51 @@
           
                               <div id="collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
                                   <div class="card-body">
-      	  						@foreach($checkup['camadas'] as $titulo => $procedimento)
-      	  							<div id="consultas" class="pacote-procedimentos">
-                                              <div class="titulo">
-                                                  <div class="row">
-                                                      <div class="col-xl-8">
-                                                          {{$titulo}}
-                                                      </div>
-                                                      <div class="col-xl-4">
-                                                          Escolha data e horário
-                                                      </div>
-                                                       </div>
-                                              </div>
-                                              @foreach($procedimento as $codigo => $descricao)
-                                                  <div class="procedimento">
+          	  						@foreach($checkup['camadas'] as $titulo => $procedimento)
+          	  							<div id="consultas" class="pacote-procedimentos">
+                                                  <div class="titulo">
                                                       <div class="row">
                                                           <div class="col-xl-8">
-                                                              <div class="nome">
-                                                                  <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
-                                                                      <i class="fa fa-info-circle" aria-hidden="true">{{@$descricao['descricao']}}</i>
-                                                                  </button>
+                                                              {{$titulo}}
+                                                          </div>
+                                                          <div class="col-xl-4">
+                                                              Escolha data e horário
+                                                          </div>
+                                                           </div>
+                                                  </div>
+                                                  @foreach($procedimento as $codigo => $descricao)
+                                                      <div class="procedimento">
+                                                          <div class="row">
+                                                              <div class="col-xl-8">
+                                                                  <div class="nome">
+                                                                      <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
+                                                                          <i class="fa fa-info-circle" aria-hidden="true">{{@$descricao['descricao']}}</i>
+                                                                      </button>
+                                                                  </div>
+                                                                  <div class="clinicas">
+                                                                      <div class="form-check">
+                                                                          <label class="form-check-label" for="clinicaProcedimento027">
+                                                                              {{@$descricao['prestador']}} - {{@$descricao['endereco']}}
+                                                                          </label>
+                                                                      </div>
+                                                                  </div>
                                                               </div>
-                                                              <div class="clinicas">
-                                                                  <div class="form-check">
-                                                                      <label class="form-check-label" for="clinicaProcedimento027">
-                                                                          {{@$descricao['prestador']}} - {{@$descricao['endereco']}}
-                                                                      </label>
+                                                              <div class="col-xl-4">
+                                                                  <div class="escolher-data">
+                                                                      <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
+                                                                      <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
+                                                                  </div>
+                                                                  <div class="escolher-hora">
+                                                                      <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">
+                                                                      <label for="selecionaHoraUm"><i class="fa fa-clock-o"></i></label>
                                                                   </div>
                                                               </div>
                                                           </div>
-                                                          <div class="col-xl-4">
-                                                              <div class="escolher-data">
-                                                                  <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
-                                                                  <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
-                                                              </div>
-                                                              <div class="escolher-hora">
-                                                                  <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">
-                                                                  <label for="selecionaHoraUm"><i class="fa fa-clock-o"></i></label>
-                                                              </div>
-                                                          </div>
                                                       </div>
-                                                  </div>
-      	  								@endforeach
-                                          </div>																			
-      	  						@endforeach
+          	  								@endforeach
+                                              </div>																			
+          	  						@endforeach
+    							    <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarCheckup('form-agendamento2348')">Prosseguir para pagamento</button>
                                   </div>
                               </div>
                           </div>
@@ -295,6 +224,60 @@
                 maxTime: '18:10',
             });
 
+           
+           function validaAgendarCheckup(form_id) {
+            	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
+        		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
+        		
+        		if(clinica_id == '') { return false; }
+        		if(profissional_id != '') {
+        			var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
+            		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+            		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
+           		}
+        		if(profissional_id != '' && dt_agendamento == '') { return false; }
+        		if(profissional_id != '' && ct_hora == '') { return false; }
+        		
+        		jQuery.ajax({
+            		type: 'POST',
+            	  	url: '/consulta-agendamento-disponivel',
+            	  	data: {
+        				'clinica_id': clinica_id,
+            	  		'profissional_id': profissional_id,
+            	  		'data_agendamento': dt_agendamento,
+            	  		'hora_agendamento': ct_hora,
+        				'_token': laravel_token
+        			},
+        			
+        			success: function (result) {
+
+        				if( !result.status) {
+        					swal(
+    					        {
+    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+    					            text: result.mensagem
+    					        }
+    					    );
+
+    					    return false;
+        				} else {
+        					jQuery('#'+form_id).submit();
+            				return true;
+        				}
+                    },
+                    error: function (result) {
+                    	swal(
+                	        {
+                	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                	            text: 'Falha na operação!'
+                	        }
+                	    );
+                    	return false;
+                    }
+            	});
+				
+        		return false;
+            }
         </script>
     @endpush
 @endsection

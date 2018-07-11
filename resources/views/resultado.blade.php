@@ -302,8 +302,7 @@
             					        {
             					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
             					            text: result.mensagem
-            					        }
-            					        Horário de atendimento das 9h às 18h, de segunda à sexta-feira, excetos feriados.        
+            					        }        
             					    );
                 				}
                             },

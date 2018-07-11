@@ -34,7 +34,7 @@ class CheckupController extends Controller
      * @return Collection
      */
     public function getTipoCheckupAtivo()
-    {        
+    {
         return DB::table('checkups')
                  ->select('checkups.tipo')
                  ->where('checkups.cs_status', \App\Checkup::ATIVO)
@@ -45,11 +45,10 @@ class CheckupController extends Controller
     
     public function resultadoCheckup()
     {
-        $consulta = $this->_consultaCheckup();
+        $consulta = $this->_consultaCheckup( CVXRequest::all() );
         $checkup  = $this->getTituloCheckupAtivo();
-        $local_atendimento = CVXRequest::get('local_atendimento');
         
-        return view('checkup.resultado', compact('checkup', 'consulta', 'local_atendimento'));
+        return view('checkup.resultado', compact('checkup', 'consulta'));
     }
 
     public function carrinhoCheckup()
@@ -72,15 +71,17 @@ class CheckupController extends Controller
      * 
      * @return array
      */
-    private function _consultaCheckup()
+    private function _consultaCheckup($dados)
     {
+        $titulo = $dados['tipo_especialidade'];
+        $tipo = $dados['local_atendimento'];
+        
         $resumo = DB::table('atendimentos')
                     ->select(['checkups.id', 'clinicas.nm_razao_social', 'enderecos.te_endereco', 'enderecos.te_bairro',
-                              'cidades.nm_cidade', 'estados.sg_estado', 'grupo_procedimentos.ds_grupo',
-                              'procedimentos.cd_procedimento', 'procedimentos.ds_procedimento', 'atendimentos.vl_com_checkup',
-                              'atendimentos.vl_net_checkup', 'item_checkups.vl_mercado',
-                              'consultas.cd_consulta', 'consultas.ds_consulta', 'especialidades.ds_especialidade',
-                              'checkups.titulo', 'checkups.tipo', 'atendimentos.vl_com_atendimento',
+                              'cidades.nm_cidade', 'estados.sg_estado', 'procedimentos.cd_procedimento', 
+                              'procedimentos.ds_procedimento', 'atendimentos.vl_com_checkup', 'atendimentos.vl_net_checkup', 
+                              'item_checkups.vl_mercado', 'consultas.cd_consulta', 'consultas.ds_consulta', 
+                              'especialidades.ds_especialidade', 'checkups.titulo', 'checkups.tipo', 'atendimentos.vl_com_atendimento',
                               'atendimentos.vl_net_atendimento', 'item_checkups.ds_categoria'])
                     ->join('clinicas', 'atendimentos.clinica_id', '=', 'clinicas.id')
                     ->leftjoin('consultas', 'atendimentos.consulta_id', '=', 'consultas.id')
@@ -92,11 +93,14 @@ class CheckupController extends Controller
                     ->join('enderecos', 'enderecos.id', '=', 'clinica_endereco.endereco_id')
                     ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
                     ->join('estados', 'estados.id', '=', 'cidades.estado_id')
-                    ->leftjoin('grupo_procedimentos', 'procedimentos.grupoprocedimento_id', '=', 'grupo_procedimentos.id')
                     ->whereNotNull('atendimentos.vl_com_checkup')
                     ->whereNotNull('atendimentos.vl_net_checkup')
                     ->where('clinicas.cs_status', 'A')
                     ->where('atendimentos.cs_status', 'A')
+                    ->where(function($query)use($titulo, $tipo){
+                        if(!empty($titulo) and $titulo!='TODOS'){ $query->where(DB::Raw('to_str(checkups.titulo)'), '=', UtilController::toStr($titulo)); }
+                        if(!empty($tipo)and $tipo!='TODOS'){ $query->where(DB::Raw('to_str(checkups.tipo)'), '=', UtilController::toStr($tipo)); }
+                    })
                     ->distinct()
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
