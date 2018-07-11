@@ -91,7 +91,7 @@
                                 <div id="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_result->id }}" data-parent="#accordion">
                                 	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
-                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->profissional->cs_status != 'I' & $atendimento->consulta_id != null) {{ $atendimento->profissional->id }} @endif">
+                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->consulta_id != null && $atendimento->profissional->cs_status != 'I') {{ $atendimento->profissional->id }} @endif">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
                                     	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
                                     	<input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">

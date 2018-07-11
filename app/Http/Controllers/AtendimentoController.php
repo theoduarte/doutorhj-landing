@@ -313,6 +313,8 @@ class AtendimentoController extends Controller
             array_push($locais_google_maps, $item_google_maps);
         }
         
+        //dd($atendimentos);
+        
         return view('resultado', compact('atendimentos', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }
