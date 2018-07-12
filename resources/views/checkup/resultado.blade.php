@@ -56,7 +56,10 @@
 				<div class="lista">
                   <div class="accordion" id="accordionResultado">
       	  			  @foreach( $consulta as $checkup )
-      	  				<form id="form-agendamento-checkup{{$checkup['id']}}" >
+      	  				<form id="form-agendamento-checkup{{$checkup['id']}}" action="/agendar-atendimento" method="post" >
+      	  				
+      	  					<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="checkup">
+      	  					<input type="hidden" id="checkup_id" name="checkup_id" value="{{ $checkup['id'] }}">
                               <div class="card">
                                   <div class="card-header" id="headingTres">
                                       <div class="resumo">
@@ -88,6 +91,9 @@
                                                       <div class="checkup">
                                                           <p>Valor do Checkup</p>
                                                           <span>R$ {{$checkup['total_com_checkup']}}</span>
+                                                          
+                                                          <input type="hidden" id="vl_total_checkup" name="vl_total_checkup" value="{{ $checkup['total_com_checkup'] }}">
+                                                          
                                                           <button class="btn btn-vermelho" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
                                                               Agendar este Checkup
                                                           </button>
@@ -113,12 +119,14 @@
                                                                </div>
                                                       </div>
                                                       @foreach($procedimento as $codigo => $descricao)
+                                                      
                                                           <div class="procedimento">
                                                               <div class="row">
                                                                   <div class="col-xl-8">
                                                                       <div class="nome">
-                                                                          <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
-                                                                              <i class="fa fa-info-circle" aria-hidden="true">{{@$descricao['descricao']}}</i>
+                                                                          <button type="button" class="btn btn-tooltip text-left" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
+                                                                              <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                                              <span class="text-primary" style="white-space: normal;">{{@$descricao['descricao']}} @if($descricao['nm_profissional'] != null)- Dr. {{ @$descricao['nm_profissional'] }} @endif</span>
                                                                           </button>
                                                                       </div>
                                                                       <div class="clinicas">
@@ -130,21 +138,23 @@
                                                                       </div>
                                                                   </div>
                                                                   <div class="col-xl-4">
+                                                                  	  @if($descricao['tp_prestador'] == 'CLI')
                                                                       <div class="escolher-data">
-                                                                          <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
-                                                                          <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
+                                                                          <label for="selecionaData_{{ $descricao['idatendimento'] }}"><i class="fa fa-calendar"></i></label>
+                                                                          <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data">
                                                                       </div>
                                                                       <div class="escolher-hora">
-                                                                          <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">
-                                                                          <label for="selecionaHoraUm"><i class="fa fa-clock-o"></i></label>
+                                                                      	  <label for="selecionaHora_{{ $descricao['idatendimento'] }}"><i class="fa fa-clock-o"></i></label>
+                                                                          <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário">
                                                                       </div>
+                                                                      @endif
                                                                   </div>
                                                               </div>
                                                           </div>
               	  								@endforeach
                                                   </div>																			
               	  						@endforeach
-        							    <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarCheckup('form-agendamento-checkup{{$checkup['id']}}')">Prosseguir para pagamento</button>
+        							    <button type="submit" class="btn btn-primary btn-vermelho" >Prosseguir para pagamento</button>
                                       </div>
                                   </div>
                               </div>
@@ -202,18 +212,167 @@
             jQuery.datetimepicker.setLocale('pt-BR');
 
             /* DATA */
-            jQuery('.selecionaData').datetimepicker({
-                timepicker: false,
-                format: 'd.m.Y'
+            var today_date = new Date();
+            var today_date_range = new Date();
+            var min_date = today_date.setDate(today_date.getDate() + 2);
+            var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);
+                
+            jQuery('.selecionaData').datetimepicker({                
+                timepicker:false,
+                format:'d.m.Y',
+                minDate: min_date,
+                maxDate: max_date,
+                beforeShowDay: function(date){ return [date.getDay() == 1 || date.getDay() == 2 || date.getDay() == 3 || date.getDay() == 4 || date.getDay() == 5,""]},
+            }).on("input change", function(e){
+            	//console.log("Date changed: ", e.target.value);
+            	if(e.target.value != '') {
+            		var ct_date_temp = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                	var ct_date = new Date(ct_date_temp[2], ct_date_temp[1] - 1, ct_date_temp[0]);
+                	var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
+                	if(ct_date.getDay() == 0 || ct_date.getDay() == 6) {
+                		$(this).val('');
+                		swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'Atendimento não disponível para ser Realizado aos Sábados e Domingos'
+					        }
+					    );
+                	}
+                	
+                	jQuery(this).parent().parent().find('.confirma-data span.span-data').html((e.target.value).replace('.', '/').replace('.', '/')+"- "+days[ ct_date.getDay() ]+" - ");
+
+                	if(ct_date <= today_date) {
+                		$(this).val('');
+                    	//alert('A Data informada não está disponível para a Agendamento');
+                		swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'A Data informada não está disponível para a Agendamento'
+					        }
+					    );
+					    
+                	}
+            	}
+            }).on("input blur", function(e){
+            	//console.log("Date changed: ", e.target.value);
+            	if(e.target.value != '') {
+            		var ct_date_input = ((e.target.value).replace('.', '-').replace('.', '-')).split('-');
+                	var ct_date = new Date(ct_date_input[2], ct_date_input[1] - 1, ct_date_input[0]);
+                	
+            		if(ct_date <= today_date) {
+            			ct_date.setDate(today_date.getDate());
+            			var ct_mes = pad((ct_date.getMonth()+1));
+            			$(this).val('');
+            			swal(
+					        {
+					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+					            text: 'A Data informada não está disponível para a Agendamento'
+					        }
+					    );
+            		}
+
+            		var ct_hora = jQuery(this).parent().parent().find('.selecionaHora').val();
+            		if(ct_hora != '') {
+
+                		var clinica_id 		= jQuery(this).parent().parent().parent().find('#clinica_id').val();
+                		var profissional_id = jQuery(this).parent().parent().parent().find('#profissional_id').val();
+                		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+                		
+                		if(clinica_id == '') { return false; }
+                		if(profissional_id == '') { return false; }
+                		
+                		jQuery.ajax({
+                    		type: 'POST',
+                    	  	url: '/consulta-agendamento-disponivel',
+                    	  	data: {
+                				'clinica_id': clinica_id,
+                    	  		'profissional_id': profissional_id,
+                    	  		'data_agendamento': dt_agendamento,
+                    	  		'hora_agendamento': ct_hora,
+                				'_token': laravel_token
+                			},
+                			success: function (result) {
+
+                				if( !result.status) {
+                					swal(
+            					        {
+            					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+            					            text: result.mensagem
+            					        }
+            					    );
+                				}
+                            },
+                            error: function (result) {
+                            	swal(
+                        	        {
+                        	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                        	            text: 'Falha na operação!'
+                        	        }
+                        	    );
+                            }
+                    	});
+            		}
+            	}
             });
 
             /* HORA */
-            jQuery('.selecionaHora').datetimepicker({
-                datepicker: false,
-                format: 'H:i',
+            jQuery('.selecionaHora').datetimepicker({ 
+                datepicker:false,
+                format:'H:i',
                 step: 30,
-                minTime: '08:00',
-                maxTime: '18:10',
+                minTime:'08:00',
+                maxTime:'18:10',
+            }).on("input change", function(e){
+            	//console.log("Time changed: ", e.target.value);
+            	if(e.target.value != '') {
+	            	var ct_hora_temp = (e.target.value).split(':');
+	            	var ct_date = jQuery('.selecionaData').parent().parent().find('.confirma-data span.span-data').html();
+	            	var ct_date_input = (jQuery(this).parent().parent().find('.selecionaData').val()).split('.');
+	            	jQuery(this).parent().parent().find('.confirma-data span.span-hora').html(ct_hora_temp[0]+"H"+ct_hora_temp[1]+"MIN");
+
+	            	var ct_hora = ct_hora_temp[0]+':'+ct_hora_temp[1];
+            		if(ct_hora != '') {
+
+                		var clinica_id 		= jQuery(this).parent().parent().parent().find('#clinica_id').val();
+                		var profissional_id = jQuery(this).parent().parent().parent().find('#profissional_id').val();
+                		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+                		
+                		if(clinica_id == '') { return false; }
+                		if(profissional_id == '') { return false; }
+                		
+                		jQuery.ajax({
+                    		type: 'POST',
+                    	  	url: '/consulta-agendamento-disponivel',
+                    	  	data: {
+                				'clinica_id': clinica_id,
+                    	  		'profissional_id': profissional_id,
+                    	  		'data_agendamento': dt_agendamento,
+                    	  		'hora_agendamento': ct_hora,
+                				'_token': laravel_token
+                			},
+                			success: function (result) {
+
+                				if( !result.status) {
+                					swal(
+            					        {
+            					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
+            					            text: result.mensagem
+            					        }        
+            					    );
+                				}
+                            },
+                            error: function (result) {
+                            	swal(
+                        	        {
+                        	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                        	            text: 'Falha na operação!'
+                        	        }
+                        	    );
+                            }
+                    	});
+            		}
+            	}
             });
 
            /*  */

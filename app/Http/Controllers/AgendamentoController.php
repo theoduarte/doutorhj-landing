@@ -21,6 +21,7 @@ use App\Pedido;
 use App\Mensagem;
 use App\MensagemDestinatario;
 use App\Filial;
+use App\Checkup;
 
 class AgendamentoController extends Controller
 {
@@ -208,50 +209,95 @@ class AgendamentoController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-        $atendimento_id		= $request->input('atendimento_id');
-    	$profissional_id	= $request->input('profissional_id');
-    	$paciente_id		= $request->input('paciente_id');
-    	$clinica_id			= $request->input('clinica_id');
-    	$filial_id			= $request->input('filial_id');
-    	$data_atendimento	= $request->input('data_atendimento');
-    	$hora_atendimento	= $request->input('hora_atendimento');
-    	$vl_com_atendimento = $request->input('vl_com_atendimento');
-    	$url = $request->input('current_url');
+    	$tipo_atendimento	= $request->input('tipo_atendimento');
     	
     	//\Cart::clear();
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
-    	
+    	 
     	$cartCollection = CVXCart::getContent();
     	$num_itens = $cartCollection->count();
-    	
+    	 
     	if (!isset($item_pedido) & $num_itens == 0) {
-    	    $cart_id = 1;
+    		$cart_id = 1;
     	} elseif (isset($item_pedido) & $num_itens == 0) {
-    	    $cart_id = $item_pedido->id;
+    		$cart_id = $item_pedido->id;
     	} elseif (isset($item_pedido) & $num_itens > 0) {
-    	    $cart_id = $item_pedido->id;
-    	    $cart_id = $cart_id + $num_itens + 1;
+    		$cart_id = $item_pedido->id;
+    		$cart_id = $cart_id + $num_itens + 1;
     	} else {
-    	    $cart_id = $num_itens + 1;
+    		$cart_id = $num_itens + 1;
     	}
     	
-    	CVXCart::add(array(
-    	    'id' => $cart_id,
-    	    'name' => 'Agendamento Item '.strval($num_itens + 1),
-    	    'price' => $vl_com_atendimento,
-    	    'quantity' => 1,
-    		'attributes' => array(
-    				'atendimento_id' => $atendimento_id,
-        	        'profissional_id' => $profissional_id,
-        	        'paciente_id' => $paciente_id,
-        	        'clinica_id' => $clinica_id,
-    		        'filial_id' => $filial_id,
-        	        'data_atendimento' => $data_atendimento,
-        	        'hora_atendimento' => $hora_atendimento,
-    				'current_url' => $url
-    		)
-    	));
+    	if ($tipo_atendimento == 'simples') {
+    		$atendimento_id		= $request->input('atendimento_id');
+    		$profissional_id	= $request->input('profissional_id');
+    		$paciente_id		= $request->input('paciente_id');
+    		$clinica_id			= $request->input('clinica_id');
+    		$filial_id			= $request->input('filial_id');
+    		$data_atendimento	= $request->input('data_atendimento');
+    		$hora_atendimento	= $request->input('hora_atendimento');
+    		$vl_com_atendimento = $request->input('vl_com_atendimento');
+    		$url 				= $request->input('current_url');
+    		
+    		CVXCart::add(array(
+    				'id' => $cart_id,
+    				'name' => 'Agendamento Item '.strval($num_itens + 1),
+    				'price' => $vl_com_atendimento,
+    				'quantity' => 1,
+    				'attributes' => array(
+    						'atendimento_id' => $atendimento_id,
+    						'profissional_id' => $profissional_id,
+    						'paciente_id' => $paciente_id,
+    						'clinica_id' => $clinica_id,
+    						'filial_id' => $filial_id,
+    						'data_atendimento' => $data_atendimento,
+    						'hora_atendimento' => $hora_atendimento,
+    						'current_url' => $url
+    				)
+    		));
+    	} else {
+    		
+    		$checkup_id			= $request->input('checkup_id');
+    		$vl_total_checkup	= $request->input('vl_total_checkup');
+    		$url = "";
+    		
+    		$datas_atend_checkup = [];
+    		$horas_atend_checkup = [];
+    		
+    		$checkup = Checkup::findorfail($checkup_id);
+    		$checkup->load('itemcheckups');
+    		
+    		$items_checkup = $checkup->itemcheckups;
+    		
+    		foreach ($items_checkup as $item) {
+    			
+    			if ($request->input('selecionaData_'.$item->atendimento_id)) {
+    				$item['data_agendamento'] = $request->input('selecionaData_'.$item->atendimento_id); 
+    				$item['hora_agendamento'] = $request->input('selecionaHora_'.$item->atendimento_id);
+    			}
+    		}
+    		
+    		CVXCart::add(array(
+    				'id' => $cart_id,
+    				'name' => 'Agendamento Item '.strval($num_itens + 1),
+    				'price' => $vl_total_checkup,
+    				'quantity' => 1,
+    				'attributes' => array(
+    						'atendimento_id' => null,
+    						'profissional_id' => null,
+    						'paciente_id' => null,
+    						'clinica_id' => null,
+    						'filial_id' => null,
+    						'data_atendimento' => null,
+    						'hora_atendimento' => null,
+    						'datas_atend_checkup' => $datas_atend_checkup,
+    						'horas_atend_checkup' => $horas_atend_checkup,
+    						'checkup_id' => $checkup_id,
+    						'current_url' => $url
+    				)
+    		));
+    	}
     	
 //     	$atendimento = Atendimento::findOrFail($atendimento_id);
 //     	dd($atendimento);
