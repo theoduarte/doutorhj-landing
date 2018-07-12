@@ -120,15 +120,18 @@ class AgendamentoController extends Controller
             
             if ($atendimento->procedimento_id != null) {
                 $atendimento->load('procedimento');
-                $atendimento->load('profissional');
-                $atendimento->profissional->load('especialidades');
+                //$atendimento->load('profissional');
+                //$atendimento->profissional->load('especialidades');
                 
-                $nome_especialidade = "";
+                //$nome_especialidade = "";
+                $nome_especialidade = $atendimento->procedimento->ds_procedimento;
+                $ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
                 
-                foreach ($atendimento->profissional->especialidades as $especialidade) {
+                /* foreach ($atendimento->profissional->especialidades as $especialidade) {
                     $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-                }
+                } */
                 
+                $nome_especialidade = $atendimento->procedimento->ds_procedimento;
                 $atendimento->nome_especialidade = $nome_especialidade;
             }
             
@@ -195,7 +198,7 @@ class AgendamentoController extends Controller
     }
     
     /**
-     * Realiza o agendamento de um usuário autenticado.
+     * Realiza o agendamento de um usuÃ¡rio autenticado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -547,20 +550,20 @@ class AgendamentoController extends Controller
     	$agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
     	
     	if (!$agendamento_disponivel) {
-    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento nÃ£o foi realizado, pois um dos horÃ¡rios escolhidos nÃ£o estÃ£o disponÃ­veis. Por favor, tente novamente.']);
     	}
     	
     	$agendamento = Agendamento::findorfail($agendamento_id);
     	
     	if (!isset($agendamento)) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi encontrado. Por favor, tente novamente.']);
     	}
     	
     	$agendamento->cs_status = 10;
     	$agendamento->dt_atendimento    = $data.' '.$hora;
     
     	if (!$agendamento->save()) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi remarcado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi remarcado. Por favor, tente novamente.']);
     	}
     	
     	$agendamento->dia_agendamento 	= $data_temp[0];
@@ -586,14 +589,14 @@ class AgendamentoController extends Controller
     	$agendamento = Agendamento::findorfail($agendamento_id);
     	 
     	if (!isset($agendamento)) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi encontrado. Por favor, tente novamente.']);
     	}
     	 
     	//$agendamento->cs_status = 60;
     	//$agendamento->dt_atendimento    = date('Y-m-d H:i:s');
     
     	if (!$agendamento->save()) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi Cancelado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi Cancelado. Por favor, tente novamente.']);
     	}
     	 
     	$agendamento->dia_agendamento 	= '--';
@@ -633,7 +636,7 @@ class AgendamentoController extends Controller
     	    $this->enviarEmailCancelarAgendamento($paciente, $pedido, $agendamento);
     	} catch (Exception $e) {}
     
-    	return response()->json(['status' => true, 'mensagem' => 'A Solicitação de Cancelamento foi realizada com sucesso!', 'agendamento' => $agendamento->toJson()]);
+    	return response()->json(['status' => true, 'mensagem' => 'A SolicitaÃ§Ã£o de Cancelamento foi realizada com sucesso!', 'agendamento' => $agendamento->toJson()]);
     }
     
     /**
@@ -700,10 +703,10 @@ class AgendamentoController extends Controller
         $agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
         
         if (!$agendamento_disponivel) {
-            return response()->json(['status' => false, 'mensagem' => 'O horário escolhido não está disponível, pois já existe um atendimento marcado. Por favor, tente outro horário.']);
+            return response()->json(['status' => false, 'mensagem' => 'O horÃ¡rio escolhido nÃ£o estÃ¡ disponÃ­vel, pois jÃ¡ existe um atendimento marcado. Por favor, tente outro horÃ¡rio.']);
         }
         
-        return response()->json(['status' => true, 'mensagem' => 'Agendamento disponível!']);
+        return response()->json(['status' => true, 'mensagem' => 'Agendamento disponÃ­vel!']);
     }
     
     /**
@@ -755,7 +758,7 @@ class AgendamentoController extends Controller
         $mensagem_drhj->save();
         
         /* if(!$mensagem->save()) {
-         return redirect()->route('landing-page')->with('error', 'A Sua mensagem não foi enviada. Por favor, tente novamente');
+         return redirect()->route('landing-page')->with('error', 'A Sua mensagem nÃ£o foi enviada. Por favor, tente novamente');
          } */
         
         $destinatario                      = new MensagemDestinatario();
@@ -775,8 +778,8 @@ class AgendamentoController extends Controller
         
         $mensagem_cliente->rma_nome     	= 'Contato DoctorHoje';
         $mensagem_cliente->rma_email       	= 'contato@doctorhoje.com.br';
-        $mensagem_cliente->assunto     		= 'Pré-Agendamento Solicitado';
-        $mensagem_cliente->conteudo     	= "<h4>Sua solicitação de <strong>cancelamento</strong> está em análise:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>Horário: $hora_agendamento (por ordem de chegada)</li><li>Endereço: $endereco_agendamento</li></ul>";
+        $mensagem_cliente->assunto     		= 'PrÃ©-Agendamento Solicitado';
+        $mensagem_cliente->conteudo     	= "<h4>Sua solicitaÃ§Ã£o de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise:</h4><br><ul><li>NÂº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>HorÃ¡rio: $hora_agendamento (por ordem de chegada)</li><li>EndereÃ§o: $endereco_agendamento</li></ul>";
         $mensagem_cliente->save();
         
         $destinatario                      = new MensagemDestinatario();
@@ -826,7 +829,7 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 28px; line-height: 50px; color: #434342; background-color: #fff; text-align: center;'>
-                    Olá, <strong style='color: #1d70b7;'>$nm_primario</strong>
+                    OlÃ¡, <strong style='color: #1d70b7;'>$nm_primario</strong>
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -837,8 +840,8 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Sua solicitação de <strong>cancelamento</strong> está em análise. Aguarde
-                    contato telefônico do Doctor Hoje para confirmação do
+                    Sua solicitaÃ§Ã£o de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise. Aguarde
+                    contato telefÃ´nico do Doctor Hoje para confirmaÃ§Ã£o do
                     cancelamento. 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
@@ -865,7 +868,7 @@ class AgendamentoController extends Controller
                 <td width='30'></td>
                 <td width='34'><img src='https://doctorhoje.com.br/libs/home-template/img/email/numero-pedido.png' width='34' height='30' alt=''/></td>
                 <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Nº do pedido: <span>$nr_pedido</span></td>
+                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>NÂº do pedido: <span>$nr_pedido</span></td>
                 <td width='30'></td>
             </tr>
         </table>
@@ -986,8 +989,8 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Atenção as regras de cancelamento descritas abaixo. Conforme
-                    Termo de Uso, <strong>Art.nº XX</strong>. 
+                    AtenÃ§Ã£o as regras de cancelamento descritas abaixo. Conforme
+                    Termo de Uso, <strong>Art.nÂº XX</strong>. 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -1006,8 +1009,8 @@ class AgendamentoController extends Controller
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='30'></td>
-                <td width='180' style='background-color: #307ec1; font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 50px; color: #ffffff; text-align: center;'><strong style='color: #ffffff;'>SOLICITAÇÃO/PERÍODO</strong></td>
-                <td width='180' style='background-color: #307ec1; font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 50px; color: #ffffff; text-align: center;'><strong style='color: #ffffff;'>ATÉ 24 HORAS</strong></td>
+                <td width='180' style='background-color: #307ec1; font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 50px; color: #ffffff; text-align: center;'><strong style='color: #ffffff;'>SOLICITAÃ‡ÃƒO/PERÃ�ODO</strong></td>
+                <td width='180' style='background-color: #307ec1; font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 50px; color: #ffffff; text-align: center;'><strong style='color: #ffffff;'>ATÃ‰ 24 HORAS</strong></td>
                 <td width='180' style='background-color: #307ec1; font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 50px; color: #ffffff; text-align: center;'><strong style='color: #ffffff;'>INFERIOR A 24 HORAS</strong></td>
                 <td width='30'></td>
             </tr>
@@ -1026,8 +1029,8 @@ class AgendamentoController extends Controller
                 <td width='30'></td>
                 <td width='180' style='background-color: #f9f9f9; font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; text-align: center;'>Cancelamento</td>
                 <td width='179' style='border-left:1px solid #ddd; background-color: #f9f9f9; font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; text-align: center;'>Reembolso de 50%<br>
-                    do valor pago em até<br>
-                    5 dias úteis.
+                    do valor pago em atÃ©<br>
+                    5 dias Ãºteis.
                 </td>
                 <td width='179' style='border-left:1px solid #ddd; background-color: #f9f9f9; font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; text-align: center;'>Sem direito a<br>
                     reembolso.
@@ -1050,8 +1053,8 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Sabemos que imprevisto acontecem, mas não deixe de cuidar da
-                    sua saúde! 
+                    Sabemos que imprevisto acontecem, mas nÃ£o deixe de cuidar da
+                    sua saÃºde! 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -1061,7 +1064,7 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
-                    Abraços,<br>
+                    AbraÃ§os,<br>
                     Equipe Doctor Hoje
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
@@ -1097,14 +1100,14 @@ class AgendamentoController extends Controller
             <tr style='background-color: #f9f9f9;'>
                 <td width='30'></td>
                 <td width='540' style='line-height:16px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#434342; text-align: center;'>
-                    Em caso de qualquer dúvida, fique à vontade <br>
+                    Em caso de qualquer dÃºvida, fique Ã  vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
                     <a href='mailto:meajuda@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>meajuda@doctorhoje.com.br</a>
                     <br><br>
-                    Ou ligue para (61) 3221-5350, o atendimento é de<br>
-                    segunda à sexta-feira
-                    das 8h00 às 18h00. <br><br>
+                    Ou ligue para (61) 3221-5350, o atendimento Ã© de<br>
+                    segunda Ã  sexta-feira
+                    das 8h00 Ã s 18h00. <br><br>
                     <strong>Doctor Hoje</strong> 2018 
                 </td>
                 <td width='30'></td>

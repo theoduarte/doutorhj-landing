@@ -131,8 +131,8 @@
                                                                   </div>
                                                                   <div class="col-xl-4">
                                                                       <div class="escolher-data">
-                                                                          <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
                                                                           <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
+                                                                          <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
                                                                       </div>
                                                                       <div class="escolher-hora">
                                                                           <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">

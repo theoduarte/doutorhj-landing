@@ -55,7 +55,7 @@ class CheckupController extends Controller
         
         return view('checkup.resultado', compact('checkup', 'consulta'));
     }
-
+    
     /**
      * 
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
@@ -98,7 +98,7 @@ class CheckupController extends Controller
         $resumo = DB::table('atendimentos')
                     ->select(['checkups.id', 'clinicas.nm_razao_social', 'enderecos.te_endereco', 'enderecos.te_bairro',
                               'cidades.nm_cidade', 'estados.sg_estado', 'procedimentos.cd_procedimento', 
-                              'procedimentos.ds_procedimento', 'atendimentos.vl_com_checkup', 'atendimentos.vl_net_checkup', 
+                              'procedimentos.ds_procedimento', 'item_checkups.vl_com_checkup', 'item_checkups.vl_net_checkup', 
                               'item_checkups.vl_mercado', 'consultas.cd_consulta', 'consultas.ds_consulta', 
                               'especialidades.ds_especialidade', 'checkups.titulo', 'checkups.tipo', 'atendimentos.vl_com_atendimento',
                               'atendimentos.vl_net_atendimento', 'item_checkups.ds_categoria'])
@@ -112,8 +112,8 @@ class CheckupController extends Controller
                     ->join('enderecos', 'enderecos.id', '=', 'clinica_endereco.endereco_id')
                     ->join('cidades', 'enderecos.cidade_id', '=', 'cidades.id')
                     ->join('estados', 'estados.id', '=', 'cidades.estado_id')
-                    ->whereNotNull('atendimentos.vl_com_checkup')
-                    ->whereNotNull('atendimentos.vl_net_checkup')
+                    ->whereNotNull('item_checkups.vl_com_checkup')
+                    ->whereNotNull('item_checkups.vl_net_checkup')
                     ->where('clinicas.cs_status', \App\Clinica::ATIVO)
                     ->where('atendimentos.cs_status', \App\Clinica::ATIVO)
                     ->where(function($query)use($titulo, $tipo){
