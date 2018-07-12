@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\Request as CVXRequest;
 
 /**
@@ -43,6 +44,10 @@ class CheckupController extends Controller
                  ->get();
     }
     
+    /**
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function resultadoCheckup()
     {
         $consulta = $this->_consultaCheckup( CVXRequest::all() );
@@ -51,16 +56,30 @@ class CheckupController extends Controller
         return view('checkup.resultado', compact('checkup', 'consulta'));
     }
 
+    /**
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function carrinhoCheckup()
     {
+        
+        
         return view('checkup.carrinho');
     }
     
+    /**
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function pagamentoCheckup()
     {
         return view('checkup.pagamento');
     }
 
+    /**
+     * 
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function confirmacaoCheckup()
     {
         return view('checkup.confirmacao');
@@ -71,7 +90,7 @@ class CheckupController extends Controller
      * 
      * @return array
      */
-    private function _consultaCheckup($dados)
+    private function _consultaCheckup(array $dados)
     {
         $titulo = $dados['tipo_especialidade'];
         $tipo = $dados['local_atendimento'];
@@ -95,8 +114,8 @@ class CheckupController extends Controller
                     ->join('estados', 'estados.id', '=', 'cidades.estado_id')
                     ->whereNotNull('atendimentos.vl_com_checkup')
                     ->whereNotNull('atendimentos.vl_net_checkup')
-                    ->where('clinicas.cs_status', 'A')
-                    ->where('atendimentos.cs_status', 'A')
+                    ->where('clinicas.cs_status', \App\Clinica::ATIVO)
+                    ->where('atendimentos.cs_status', \App\Clinica::ATIVO)
                     ->where(function($query)use($titulo, $tipo){
                         if(!empty($titulo) and $titulo!='TODOS'){ $query->where(DB::Raw('to_str(checkups.titulo)'), '=', UtilController::toStr($titulo)); }
                         if(!empty($tipo)and $tipo!='TODOS'){ $query->where(DB::Raw('to_str(checkups.tipo)'), '=', UtilController::toStr($tipo)); }
@@ -105,11 +124,17 @@ class CheckupController extends Controller
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
                     ->get();
-        
+                    
         return $this->_trataVetorConsultaCheckup($resumo);
     }
     
-    private function _trataVetorConsultaCheckup($resumo)
+    /**
+     * Monta vetor agrupando resultado da busca por camadas.
+     * 
+     * @param \Illuminate\Database\Eloquent\Collection $resumo
+     * @return array|number
+     */
+    private function _trataVetorConsultaCheckup(Collection $resumo)
     {
         $dados                 = [];
         $arQtCamadas           = [];
@@ -130,7 +155,7 @@ class CheckupController extends Controller
                 $qtTotalProcedimentos = 0;
                 $dsCheckupAnterior = $p->titulo.'-'.$p->tipo;
             }
-            
+            $dados[$p->titulo.'-'.$p->tipo]['id'] = $p->id;
             $dados[$p->titulo.'-'.$p->tipo]['titulo'] = $p->titulo;
             $dados[$p->titulo.'-'.$p->tipo]['tipo'] = $p->tipo;
             $dados[$p->titulo.'-'.$p->tipo]['prestador'] = $p->nm_razao_social;

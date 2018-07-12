@@ -4,17 +4,7 @@
 @push('scripts')
 	<script>
         $(document).ready(function () {
-        	$('#tipo_atendimento').change();			
-			
-        	$('#tipo_atendimento').change(function(){
-        		$('#tipo_atendimento').alert('OK!');
-        	});        	
-			
-        	
-//         	$('.form-busca-resultado').attr('action')
-			
-        	
-            trataFormConsulta();
+        	$('#tipo_atendimento').change();
         });
 	</script>
 @endpush
@@ -65,99 +55,101 @@
                 </div>
 				<div class="lista">
                   <div class="accordion" id="accordionResultado">
-      	  			@foreach( $consulta as $checkup )
-                          <div class="card">
-                              <div class="card-header" id="headingTres">
-                                  <div class="resumo">
-                                      <div class="row">
-                                          <div class="col-md-6 col-lg-8 col-xl-9">
-                                              <div class="resumo-pacote">
-                                                  <h4>Checkup {{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
-                                                  <span class="incluso">Incluso nesse pacote:</span>
-                                                  <ul class="quantidade">
-                                                  	@foreach( $checkup['total_camadas'] as $camada => $total )
-                                                      <li><span>{{$total}}</span> {{$camada}}</li>
-                                                      @endforeach
-                                                  </ul>
-                                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
-                                                      ver lista de procedimentos
-                                                  </button>
-                                              </div>
-                                          </div>
-                                          <div class="col-md-6 col-lg-4 col-xl-3">
-                                              <div class="valores">
-                                                  <div class="mercado">
-                                                      <p>Valor de mercado</p>
-                                                      <span>R$ {{$checkup['total_vl_mercado']}}</span>
-                                                  </div>
-                                                  <div class="drhj">
-                                                      <p>Procedimentos individuais no Doctor Hoje</p>
-                                                      <span>R$ {{$checkup['total_vl_individual']}}</span>
-                                                  </div>
-                                                  <div class="checkup">
-                                                      <p>Valor do Checkup</p>
-                                                      <span>R$ {{$checkup['total_com_checkup']}}</span>
-                                                      <button class="btn btn-vermelho" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
-                                                          Agendar este Checkup
+      	  			  @foreach( $consulta as $checkup )
+      	  				<form id="form-agendamento-checkup{{$checkup['id']}}" >
+                              <div class="card">
+                                  <div class="card-header" id="headingTres">
+                                      <div class="resumo">
+                                          <div class="row">
+                                              <div class="col-md-6 col-lg-8 col-xl-9">
+                                                  <div class="resumo-pacote">
+                                                      <h4>Checkup {{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
+                                                      <span class="incluso">Incluso nesse pacote:</span>
+                                                      <ul class="quantidade">
+                                                      	@foreach( $checkup['total_camadas'] as $camada => $total )
+                                                          <li><span>{{$total}}</span> {{$camada}}</li>
+                                                          @endforeach
+                                                      </ul>
+                                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
+                                                          ver lista de procedimentos
                                                       </button>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-6 col-lg-4 col-xl-3">
+                                                  <div class="valores">
+                                                      <div class="mercado">
+                                                          <p>Valor de mercado</p>
+                                                          <span>R$ {{$checkup['total_vl_mercado']}}</span>
+                                                      </div>
+                                                      <div class="drhj">
+                                                          <p>Procedimentos individuais no Doctor Hoje</p>
+                                                          <span>R$ {{$checkup['total_vl_individual']}}</span>
+                                                      </div>
+                                                      <div class="checkup">
+                                                          <p>Valor do Checkup</p>
+                                                          <span>R$ {{$checkup['total_com_checkup']}}</span>
+                                                          <button class="btn btn-vermelho" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
+                                                              Agendar este Checkup
+                                                          </button>
+                                                      </div>
                                                   </div>
                                               </div>
                                           </div>
                                       </div>
                                   </div>
-                              </div>
-          
-                              <div id="collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
-                                  <div class="card-body">
-          	  						@foreach($checkup['camadas'] as $titulo => $procedimento)
-          	  							<div id="consultas" class="pacote-procedimentos">
-                                                  <div class="titulo">
-                                                      <div class="row">
-                                                          <div class="col-xl-8">
-                                                              {{$titulo}}
-                                                          </div>
-                                                          <div class="col-xl-4">
-                                                              Escolha data e horário
-                                                          </div>
-                                                           </div>
-                                                  </div>
-                                                  @foreach($procedimento as $codigo => $descricao)
-                                                      <div class="procedimento">
+              
+                                  <div id="collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionResultado">
+                                      <div class="card-body">
+              	  						@foreach($checkup['camadas'] as $titulo => $procedimento)
+              	  							<div id="consultas" class="pacote-procedimentos">
+                                                      <div class="titulo">
                                                           <div class="row">
                                                               <div class="col-xl-8">
-                                                                  <div class="nome">
-                                                                      <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
-                                                                          <i class="fa fa-info-circle" aria-hidden="true">{{@$descricao['descricao']}}</i>
-                                                                      </button>
+                                                                  {{$titulo}}
+                                                              </div>
+                                                              <div class="col-xl-4">
+                                                                  Escolha data e horário
+                                                              </div>
+                                                               </div>
+                                                      </div>
+                                                      @foreach($procedimento as $codigo => $descricao)
+                                                          <div class="procedimento">
+                                                              <div class="row">
+                                                                  <div class="col-xl-8">
+                                                                      <div class="nome">
+                                                                          <button type="button" class="btn btn-tooltip" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
+                                                                              <i class="fa fa-info-circle" aria-hidden="true">{{@$descricao['descricao']}}</i>
+                                                                          </button>
+                                                                      </div>
+                                                                      <div class="clinicas">
+                                                                          <div class="form-check">
+                                                                              <label class="form-check-label" for="clinicaProcedimento027">
+                                                                                  {{@$descricao['prestador']}} - {{@$descricao['endereco']}}
+                                                                              </label>
+                                                                          </div>
+                                                                      </div>
                                                                   </div>
-                                                                  <div class="clinicas">
-                                                                      <div class="form-check">
-                                                                          <label class="form-check-label" for="clinicaProcedimento027">
-                                                                              {{@$descricao['prestador']}} - {{@$descricao['endereco']}}
-                                                                          </label>
+                                                                  <div class="col-xl-4">
+                                                                      <div class="escolher-data">
+                                                                          <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
+                                                                          <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
+                                                                      </div>
+                                                                      <div class="escolher-hora">
+                                                                          <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">
+                                                                          <label for="selecionaHoraUm"><i class="fa fa-clock-o"></i></label>
                                                                       </div>
                                                                   </div>
                                                               </div>
-                                                              <div class="col-xl-4">
-                                                                  <div class="escolher-data">
-                                                                      <input id="selecionaDataUm" class="selecionaData" type="text" placeholder="Data">
-                                                                      <label for="selecionaDataUm"><i class="fa fa-calendar"></i></label>
-                                                                  </div>
-                                                                  <div class="escolher-hora">
-                                                                      <input id="selecionaHoraUm" class="selecionaHora" type="text" placeholder="Horário">
-                                                                      <label for="selecionaHoraUm"><i class="fa fa-clock-o"></i></label>
-                                                                  </div>
-                                                              </div>
                                                           </div>
-                                                      </div>
-          	  								@endforeach
-                                              </div>																			
-          	  						@endforeach
-    							    <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarCheckup('form-agendamento2348')">Prosseguir para pagamento</button>
+              	  								@endforeach
+                                                  </div>																			
+              	  						@endforeach
+        							    <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarCheckup('form-agendamento-checkup{{$checkup['id']}}')">Prosseguir para pagamento</button>
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-      	  			@endforeach
+                          </form>
+      	  		      @endforeach
                   </div>
             	</div>
             </div>
@@ -224,26 +216,19 @@
                 maxTime: '18:10',
             });
 
-           
+           /*  */
            function validaAgendarCheckup(form_id) {
-            	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
-        		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
-        		
-        		if(clinica_id == '') { return false; }
-        		if(profissional_id != '') {
-        			var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
-            		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
-            		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
-           		}
-        		if(profissional_id != '' && dt_agendamento == '') { return false; }
-        		if(profissional_id != '' && ct_hora == '') { return false; }
+            	var checkup_id 		= jQuery('#'+form_id).find('#clinica_id').val();
+            	
+        		if(checkup_id == '') { return false; }
+        		if(dt_agendamento == '') { return false; }
+        		if(ct_hora == '') { return false; }
         		
         		jQuery.ajax({
             		type: 'POST',
-            	  	url: '/consulta-agendamento-disponivel',
+            	  	url: '/adiciona-checkup-carrinho',
             	  	data: {
-        				'clinica_id': clinica_id,
-            	  		'profissional_id': profissional_id,
+            	  		'checkup_id': checkup_id,
             	  		'data_agendamento': dt_agendamento,
             	  		'hora_agendamento': ct_hora,
         				'_token': laravel_token

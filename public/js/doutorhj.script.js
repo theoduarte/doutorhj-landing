@@ -1018,54 +1018,6 @@ function validaBuscaAtendimento() {
 }
 
 
-function validaBuscaCheckup() {
-	var tipo_atendimento 	= $('select[id="tipo_atendimento"]').find('option:selected').text();
-	var tipo_especialidade  = $('select[id="tipo_especialidade"]').find('option:selected').text();
-	var local_atendimento   = $('select[id="local_atendimento"]').find('option:selected').text();
-	
-	
-	if( tipo_atendimento.val().length == 0 ) {
-		
-		tipo_atendimento.parent().addClass('cvx-has-error');
-		tipo_atendimento.focus();
-
-		swal(
-				  {
-					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
-					  text: 'Selecione o Tipo de Atendimento para Prosseguir'
-				  }
-	       	);
-		
-		$('.cvx-has-error .form-control').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-		});
-		
-		return false;
-	}
-	
-	if( tipo_especialidade.val().length == 0 ) {
-		tipo_especialidade.parent().addClass('cvx-has-error');
-		tipo_especialidade.focus();
-		
-		swal(
-				  {
-					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
-					  text: 'Selecione um Check-up para Prosseguir'
-				  }
-	       	);
-		
-		$('.cvx-has-error .form-control').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-		});
-		
-		return false;
-	}
-
-	
-	return true;
-}
-
-
 function onlyNumbers(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
@@ -1079,18 +1031,5 @@ function onlyNumbers(evt) {
                 theEvent.preventDefault();//Firefox
             }
         }
-    }
-}
-
-function trataFormConsulta(){
-    if( $('#tipo_atendimento').val() == 'saude' || $('#tipo_atendimento').val() == 'odonto' || $('#tipo_atendimento').val() == 'exame' ){
-		
-    	$('.form-busca-resultado').attr('action', '/resultado');
-    	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaAtendimento()');
-    	
-    }else if( $('#tipo_atendimento').val() == 'checkup' ){
-        
-    	$('.form-busca-resultado').attr('action', '/resultado-checkup');
-    	$('.form-busca-resultado').attr('onsubmit', 'return validaBuscaCheckup()');
     }
 }

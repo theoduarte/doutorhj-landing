@@ -12,6 +12,9 @@ class Clinica extends Model
     public $fillable = ['nm_razao_social', 'nm_fantasia', 'tp_prestador', 'cs_status', 'obs_procedimento'];
     public $sortable = ['id', 'nm_razao_social', 'nm_fantasia', 'tp_prestador',  'cs_status', 'obs_procedimento'];
 	
+    const ATIVO = 'A';
+    const INATIVO = 'I';
+    
     public function responsavel(){
         return $this->belongsTo('App\Responsavel');
     }
