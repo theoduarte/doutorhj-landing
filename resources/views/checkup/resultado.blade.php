@@ -60,6 +60,7 @@
       	  				
       	  					<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="checkup">
       	  					<input type="hidden" id="checkup_id" name="checkup_id" value="{{ $checkup['id'] }}">
+      	  					{!! csrf_field() !!}
                               <div class="card">
                                   <div class="card-header" id="headingTres">
                                       <div class="resumo">
@@ -378,6 +379,10 @@
            /*  */
            function validaAgendarCheckup(form_id) {
             	var checkup_id 		= jQuery('#'+form_id).find('#clinica_id').val();
+
+            	var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
+        		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
+        		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
             	
         		if(checkup_id == '') { return false; }
         		if(dt_agendamento == '') { return false; }

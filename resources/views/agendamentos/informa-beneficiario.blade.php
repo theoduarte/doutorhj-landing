@@ -30,11 +30,11 @@
             	{!! csrf_field() !!}
             	
             	<input type="hidden" id="item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-        		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
+        		<input type="hidden" id="atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
             	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
             	<input type="hidden" id="paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
-            	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
-            	<input type="hidden" id="filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
+            	<input type="hidden" id="clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
+            	<input type="hidden" id="filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
             	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
             	<input type="hidden" id="current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
             	
@@ -46,11 +46,11 @@
             </form>
             
             <input type="hidden" id="pr_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-        	<input type="hidden" id="pr_atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
+        	<input type="hidden" id="pr_atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
         	<input type="hidden" id="pr_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
         	<input type="hidden" id="pr_paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
-        	<input type="hidden" id="pr_clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
-        	<input type="hidden" id="pr_filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
+        	<input type="hidden" id="pr_clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
+        	<input type="hidden" id="pr_filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
         	<input type="hidden" id="pr_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
         	<input type="hidden" id="pr_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
         	
@@ -69,11 +69,11 @@
                             <input type="text" id="nomeBeneficiario" class="form-control" name="nomeBeneficiario" value="{{ $dependentes[$i]->nm_primario.' '.$dependentes[$i]->nm_secundario }}" placeholder="Nome completo" readonly="readonly">
                             {!! csrf_field() !!}
                             <input type="hidden" id="dep_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-                    		<input type="hidden" id="dep_atendimento_id" name="atendimento_id" value="{{ $proximo_item['atendimento']->id }}">
+                    		<input type="hidden" id="dep_atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
                         	<input type="hidden" id="dep_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
                         	<input type="hidden" id="dep_paciente_id" name="paciente_id" value="{{ $dependentes[$i]->id }}">
-                        	<input type="hidden" id="dep_clinica_id" name="clinica_id" value="{{ $proximo_item['clinica']->id }}">
-                        	<input type="hidden" id="dep_filial_id" name="filial_id" value="{{ $proximo_item['filial']->id }}">
+                        	<input type="hidden" id="dep_clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
+                        	<input type="hidden" id="dep_filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
                         	<input type="hidden" id="dep_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
                         	<input type="hidden" id="dep_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
                         	

@@ -86,7 +86,7 @@ class AgendamentoController extends Controller
         
         $cartCollection = CVXCart::getContent();
         $itens = $cartCollection->toArray();
-        
+        //dd($itens);
         $carrinho = [];
         $user_session = Auth::user();
         $url = '';
@@ -96,90 +96,142 @@ class AgendamentoController extends Controller
         $proximo_item = [];
         
         foreach ($itens as $item) {
-            $atendimento_tmp_id = $item['attributes']['atendimento_id'];
-            $profissional_tmp_id = $item['attributes']['profissional_id'];
-            $clinica_tmp_id = $item['attributes']['clinica_id'];
-            $filial_tmp_id = $item['attributes']['filial_id'];
-            $paciente_tmp_id = $item['attributes']['paciente_id'];
             
-            $atendimento = Atendimento::findOrFail($atendimento_tmp_id);
-            $profissional = isset($profissional_tmp_id) ? Profissional::findOrFail($profissional_tmp_id) : null;
-            $clinica = Clinica::findOrFail($clinica_tmp_id);
-            $filial = Filial::findOrFail($filial_tmp_id);
-            $paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
-            $url = $item['attributes']['current_url'];
-            
-            $titular = false;
-            if(sizeof($paciente) > 0) {
-                if($user_session->paciente->id == $paciente->id) {
-                    $titular = true;
-                    $tem_titular = true;
+            if($item['attributes']['tipo_atendimento'] == 'simples') {
+                
+                $atendimento_tmp_id = $item['attributes']['atendimento_id'];
+                $profissional_tmp_id = $item['attributes']['profissional_id'];
+                $clinica_tmp_id = $item['attributes']['clinica_id'];
+                $filial_tmp_id = $item['attributes']['filial_id'];
+                $paciente_tmp_id = $item['attributes']['paciente_id'];
+                
+                $atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+                $profissional = isset($profissional_tmp_id) ? Profissional::findOrFail($profissional_tmp_id) : null;
+                $clinica = Clinica::findOrFail($clinica_tmp_id);
+                $filial = Filial::findOrFail($filial_tmp_id);
+                $paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+                $url = $item['attributes']['current_url'];
+                
+                $titular = false;
+                if(sizeof($paciente) > 0) {
+                    if($user_session->paciente->id == $paciente->id) {
+                        $titular = true;
+                        $tem_titular = true;
+                    }
+                    
+                    $tem_pacientes = true;
                 }
                 
-                $tem_pacientes = true;
-            }
-            
-            if ($atendimento->procedimento_id != null) {
-                $atendimento->load('procedimento');
-                //$atendimento->load('profissional');
-                //$atendimento->profissional->load('especialidades');
-                
-                //$nome_especialidade = "";
-                $nome_especialidade = $atendimento->procedimento->ds_procedimento;
-                $ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
-                
-                /* foreach ($atendimento->profissional->especialidades as $especialidade) {
-                    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-                } */
-                
-                $nome_especialidade = $atendimento->procedimento->ds_procedimento;
-                $atendimento->nome_especialidade = $nome_especialidade;
-            }
-            
-            if ($atendimento->consulta_id != null) {
-                $atendimento->load('consulta');
-                $atendimento->load('profissional');
-                $atendimento->profissional->load('especialidades');
-                
-                $nome_especialidade = "";
-                
-                foreach ($atendimento->profissional->especialidades as $especialidade) {
-                    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+                if ($atendimento->procedimento_id != null) {
+                    $atendimento->load('procedimento');
+                    //$atendimento->load('profissional');
+                    //$atendimento->profissional->load('especialidades');
+                    
+                    //$nome_especialidade = "";
+                    $nome_especialidade = $atendimento->procedimento->ds_procedimento;
+                    $ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
+                    
+                    /* foreach ($atendimento->profissional->especialidades as $especialidade) {
+                     $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+                     } */
+                    
+                    $nome_especialidade = $atendimento->procedimento->ds_procedimento;
+                    $atendimento->nome_especialidade = $nome_especialidade;
                 }
                 
-                $atendimento->nome_especialidade = $nome_especialidade;
-            }
-            
-            //dd($atendimento);
-            
-            if (isset($clinica)) {
-                $clinica->load('enderecos');
-            }
-            
-            if (isset($filial)) {
-                $filial->load('endereco');
-            }
-            
-            $item_carrinho = array(
-                'item_id' 				=> $item['id'],
-                'valor' 				=> $item['price'],
-                'atendimento' 			=> $atendimento,
-                'profissional' 			=> $profissional,
-                'clinica' 				=> $clinica,
-                'filial' 				=> $filial,
-                'titular'               => $titular,
-                'paciente'				=> $paciente,
-                'data_agendamento' 		=> isset($item['attributes']['data_atendimento']) ? $item['attributes']['data_atendimento'] : null,
-                'hora_agendamento' 		=> isset($item['attributes']['hora_atendimento']) ? $item['attributes']['hora_atendimento'] : null,
-                'current_url' 			=> $url
-            );
-            
-            if ($titular) {
-                $item_titular = $item_carrinho;
-            }
-            
-            if(sizeof($paciente) <= 0) {
-                $proximo_item = $item_carrinho;
+                if ($atendimento->consulta_id != null) {
+                    $atendimento->load('consulta');
+                    $atendimento->load('profissional');
+                    $atendimento->profissional->load('especialidades');
+                    
+                    $nome_especialidade = "";
+                    
+                    foreach ($atendimento->profissional->especialidades as $especialidade) {
+                        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+                    }
+                    
+                    $atendimento->nome_especialidade = $nome_especialidade;
+                }
+                
+                //dd($atendimento);
+                
+                if (isset($clinica)) {
+                    $clinica->load('enderecos');
+                }
+                
+                if (isset($filial)) {
+                    $filial->load('endereco');
+                }
+                
+                $item_carrinho = array(
+                    'item_id' 				=> $item['id'],
+                    'valor' 				=> $item['price'],
+                    'atendimento' 			=> $atendimento,
+                    'profissional' 			=> $profissional,
+                    'clinica' 				=> $clinica,
+                    'filial' 				=> $filial,
+                    'titular'               => $titular,
+                    'paciente'				=> $paciente,
+                    'data_agendamento' 		=> isset($item['attributes']['data_atendimento']) ? $item['attributes']['data_atendimento'] : null,
+                    'hora_agendamento' 		=> isset($item['attributes']['hora_atendimento']) ? $item['attributes']['hora_atendimento'] : null,
+                    'current_url' 			=> $url
+                );
+                
+                if ($titular) {
+                    $item_titular = $item_carrinho;
+                }
+                
+                if(sizeof($paciente) <= 0) {
+                    $proximo_item = $item_carrinho;
+                }
+                
+            } else {
+                
+                $atendimento_tmp_id = '';
+                $profissional_tmp_id = '';
+                $clinica_tmp_id = '';
+                $filial_tmp_id = '';
+                $paciente_tmp_id = '';
+                
+                $atendimento = null;
+                $profissional = null;
+                $clinica = null;
+                $filial = null;
+                $paciente = [];
+                $url = '';
+                
+                $titular = false;
+                if(sizeof($paciente) > 0) {
+                    if($user_session->paciente->id == $paciente->id) {
+                        $titular = true;
+                        $tem_titular = true;
+                    }
+                    
+                    $tem_pacientes = true;
+                }
+                
+                $item_carrinho = array(
+                    'item_id' 				=> $item['id'],
+                    'valor' 				=> $item['price'],
+                    'atendimento' 			=> $atendimento,
+                    'profissional' 			=> $profissional,
+                    'clinica' 				=> $clinica,
+                    'filial' 				=> $filial,
+                    'titular'               => $titular,
+                    'paciente'				=> $paciente,
+                    'data_agendamento' 		=> null,
+                    'hora_agendamento' 		=> null,
+                    'items_checkup'         => $item['attributes']['items_checkup'],
+                    'current_url' 			=> $url
+                );
+                
+                if ($titular) {
+                    $item_titular = $item_carrinho;
+                }
+                
+                if(sizeof($paciente) <= 0) {
+                    $proximo_item = $item_carrinho;
+                }
             }
             
             array_push($carrinho, $item_carrinho);
@@ -199,7 +251,7 @@ class AgendamentoController extends Controller
     }
     
     /**
-     * Realiza o agendamento de um usuÃ¡rio autenticado.
+     * Realiza o agendamento de um usuário autenticado.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -212,6 +264,7 @@ class AgendamentoController extends Controller
     	$tipo_atendimento	= $request->input('tipo_atendimento');
     	
     	//\Cart::clear();
+    	
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
     	 
@@ -253,6 +306,7 @@ class AgendamentoController extends Controller
     						'filial_id' => $filial_id,
     						'data_atendimento' => $data_atendimento,
     						'hora_atendimento' => $hora_atendimento,
+    				        'tipo_atendimento' => 'simples',
     						'current_url' => $url
     				)
     		));
@@ -270,12 +324,25 @@ class AgendamentoController extends Controller
     		
     		$items_checkup = $checkup->itemcheckups;
     		
+//     		{
+//     		    "paciente_id": 45,
+//     		    "checkup_id": 1,
+//     		    "itens": [
+//     		    {"itemcheckup_id": 1,"dt_agendamento": "05/07/2018 13:00"},
+//     		    {"itemcheckup_id": 3,"dt_agendamento": "05/07/2018 11:00"},
+//     		    {"itemcheckup_id": 2,"dt_agendamento": "05/07/2018 05:00"}
+//     		    ]
+//     		}
+    		
     		foreach ($items_checkup as $item) {
     			
-    			if ($request->input('selecionaData_'.$item->atendimento_id)) {
-    				$item['data_agendamento'] = $request->input('selecionaData_'.$item->atendimento_id); 
-    				$item['hora_agendamento'] = $request->input('selecionaHora_'.$item->atendimento_id);
-    			}
+    		    $selecionaData = $request->input('selecionaData_'.$item->atendimento_id);
+    		    $selecionaHora = $request->input('selecionaHora_'.$item->atendimento_id);
+    		    //$selecionaData = "";
+    		    //$selecionaHora = "";
+    		    
+    		    $item->data_agendamento = isset($selecionaData) && $selecionaData != '' ? $selecionaData : '';
+    		    $item->hora_agendamento = isset($selecionaHora) && $selecionaHora != '' ? $selecionaHora : '';
     		}
     		
     		CVXCart::add(array(
@@ -291,8 +358,8 @@ class AgendamentoController extends Controller
     						'filial_id' => null,
     						'data_atendimento' => null,
     						'hora_atendimento' => null,
-    						'datas_atend_checkup' => $datas_atend_checkup,
-    						'horas_atend_checkup' => $horas_atend_checkup,
+    				        'items_checkup' => $items_checkup,
+    				        'tipo_atendimento' => 'checkup',
     						'checkup_id' => $checkup_id,
     						'current_url' => $url
     				)
@@ -749,10 +816,10 @@ class AgendamentoController extends Controller
         $agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
         
         if (!$agendamento_disponivel) {
-            return response()->json(['status' => false, 'mensagem' => 'O horÃ¡rio escolhido nÃ£o estÃ¡ disponÃ­vel, pois jÃ¡ existe um atendimento marcado. Por favor, tente outro horÃ¡rio.']);
+            return response()->json(['status' => false, 'mensagem' => 'O horário escolhido não estão disponível, pois já existe um atendimento marcado. Por favor, tente outro horário.']);
         }
         
-        return response()->json(['status' => true, 'mensagem' => 'Agendamento disponÃ­vel!']);
+        return response()->json(['status' => true, 'mensagem' => 'Agendamento disponível!']);
     }
     
     /**
