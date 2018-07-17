@@ -15,7 +15,7 @@
 
     <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <meta name="description" content="Comvex">
-    <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
+    <meta name="keywords" content="doctorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
     <title>@yield('title', 'Doctor HJ')</title>
@@ -225,12 +225,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <footer class="footer-default">
         <div class="container">
             <div class="area-logo-rodape">
-                <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                <img src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
             </div>
             <!-- teste smartgit -->
             <div class="row">
                 <div class="col-sm-6 col-md-3">
-                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
                     <div class="info-atendimento">
                         <p>Central de Atendimento</p>
                         <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
@@ -463,7 +463,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <p><span>Pagamento pelos serviços contratados no site e taxa de agendamento</span></p>
                         <p>43. A remuneração pela contratação do PRESTADOR será paga pelo USUÁRIO por meio da plataforma digital DOCTOR HOJE, por meio de cartão de débito ou crédito.</p>
                         <p>44. O USUÁRIO concorda que o DOCTOR HOJE cobrará uma taxa de utilização do serviço tecnológico prestado, que incidirá sobre o preço de cada consulta ou exame agendado por meio do Site, a qual estará incluída no valor total cobrado por cada consulta ou exame.</p>
-                        <p>44.1. Para a utilização do serviço tecnológico o USUÁRIO pagará ao DOCTOR HOJE o valor anual de R$ 9,99 (nove reais e noventa e nove centavos), estando isentos do pagamento da anuidade os USUÁRIOS que se inscreverem no Site até 30 de setembro de 2018. </p>
+                        <p>44.1. Para a utilização do serviço tecnológico o USUÁRIO pagará ao DOCTOR HOJE o valor anual de R$ 48,80 (quarenta e oito reais e oitenta centavos). O USUÁRIO que se cadastrar no DOCTOR HOJE até 30/09/2018, terá desconto de 50% na primeira anuidade, pagando o valor de R$ 24,40 (vinte e quatro reais e quarenta centavos) somente no 6º (sexto) mês após a adesão. A anuidade seguinte será integral, válida para os próximos 12 (doze) meses contados da data da adesão.</p>
                         <p>44.2. O DOCTOR HOJE deixa claro que o valor anual refere-se a utilização do serviço tecnológico e não se trata, nem se equipara a mensalidades ou pagamentos a planos privados de assistência à saúde.</p>
                         <p>45. O USUÁRIO concorda em pagar por todo e qualquer serviço intermediado por meio da plataforma digital DOCTOR HOJE utilizando seu nome, cartão de débito ou crédito ou outras formas de pagamento. Todos os pagamentos feitos através de cartão de débito ou crédito estarão sujeitos à autorização e aprovação da administradora do cartão.</p>
                         <p>45.1. O USUÁRIO, a seu critério, poderá optar pelo armazenamento dos dados de seu cartão de débito ou crédito para facilitar futuras compras. </p>

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <meta name="description" content="Comvex">
-    <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
+    <meta name="keywords" content="doctorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
-    <title>@yield('title', 'Doutor HJ')</title>
+    <title>@yield('title', 'Doctor HJ')</title>
 @push('style')
     <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-xl">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <h1>Doutor Hoje</h1>
+                    <h1>Doctor Hoje</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
@@ -52,7 +52,7 @@
                 <div class="collapse navbar-collapse" id="navbarMobile">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">O que é o Doutor Hoje?</a>
+                            <a class="nav-link" href="#">O que é o Doctor Hoje?</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Como funciona?</a>
@@ -75,11 +75,11 @@
     <footer>
         <div class="container">
             <div class="area-logo-rodape">
-                <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                <img src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
             </div>
             <div class="row">
                 <div class="col-sm-6 col-md-3">
-                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
+                    <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
                     <div class="info-atendimento">
                         <p>Central de Atendimento</p>
                         <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="endereco-site">
-            <a href="www.doutorhoje.com.br">www.doutorhoje.com.br</a>
+            <a href="www.doctorhoje.com.br">www.doctorhoje.com.br</a>
         </div>
     </footer>
 </div>
