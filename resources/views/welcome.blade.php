@@ -71,9 +71,8 @@
                                                     de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
                                                     às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}h
                                                         @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
-                                                            e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                            min. @endif</span></p>
-
+															e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min. @endif</span></p>
+                                                            e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min @endif</span></p>
                                             </div>
                                             <div class="resumo">
                                                 <div class="nome-status">
@@ -270,7 +269,8 @@
                                 </div>
                                 <div class="area-texto area-texto-cupom">
                                     <div class="texto texto-cupom">
-                                        <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira consulta.</h3>
+                                        <h3>Use o código: <span><br>DOCTOR10<br></span>e ganhe 10% na<br>primeira
+                                            consulta.</h3>
                                     </div>
                                 </div>
                             </div>
@@ -352,15 +352,14 @@
                         <div class="col-sm-12 col-md-6 col1-sobre">
                             <p>O que é o Doctor hoje?</p>
                             <p>O Doctor Hoje é uma<br>plataforma digital que facilita o <strong>acesso a consultas e
-                                    exames</strong> com <strong>preços justos</strong> que cabem no seu orçamento. </p>
+                                    exames</strong> com <strong>preços acessíveis</strong> que cabem no seu orçamento.
+                            </p>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-sm-12 col-md-5 col2-sobre">
                             <p>O Doctor Hoje reúne uma ampla rede de profissionais de saúde em Brasília que, por meio da
-                                plataforma, oferecem o acesso a consultas
-                                e exames com preços reduzidos. Não é cobrado mensalidades, carências ou taxas de adesão
-                                (NÃO
-                                somos um plano ou seguro saúde). </p>
+                                plataforma, oferecem o acesso a consultas e exames com preços acessíveis. (NÃO somos um
+                                plano ou seguro saúde).</p>
                             <a href="https://doctorhoje.com.br/login">Acesse e comece a usar agora mesmo
                                 <i class="fa fa-angle-right"></i></a>
                         </div>
@@ -514,7 +513,7 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Mais barato</h4>
-                                <p>Consultas e exames com preços reduzidos, sem mensalidades e sem carências.</p>
+                                <p>Consultas e exames com preços acessíveis, sem burocracia ou carências.</p>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
