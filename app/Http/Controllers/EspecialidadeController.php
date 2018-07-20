@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Agendamento;
 use App\Cidade;
 use App\Endereco;
 use App\Atendimento;

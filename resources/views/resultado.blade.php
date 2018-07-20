@@ -21,7 +21,7 @@
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
             </div>
             <div class="collapseFormulario collapse show" id="collapseFormulario">
-                <form action="/resultado" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()" >
+                <form action="/resultado" class="form-busca-resultado form-busca" method="get" onsubmit="return validaBuscaAtendimento()" >
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">

@@ -26,36 +26,18 @@
         <div class="">
             <button type="button" class="btn btn-light btn-beneficiario" data-toggle="collapse" href="#collapseDadosBeneficiario" role="button" aria-expanded="false" aria-controls="collapseDadosBeneficiario" style="float: left; margin-right: 10px;">Para outra pessoa</button>
             <form id="form-seleciona-beneficiario-{{ $paciente_titular->id }}" action="/atualiza-carrinho" method="post">
-            
             	{!! csrf_field() !!}
             	
             	<input type="hidden" id="item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-        		<input type="hidden" id="atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
-            	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
             	<input type="hidden" id="paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
-            	<input type="hidden" id="clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
-            	<input type="hidden" id="filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
-            	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
             	<input type="hidden" id="current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
-            	
-            	<input type="hidden" id="data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
-            	<input type="hidden" id="hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >
-            	
-            	
+
                	<button type="submit" class="btn btn-vermelho">É para mim</button>
             </form>
             
             <input type="hidden" id="pr_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-        	<input type="hidden" id="pr_atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
-        	<input type="hidden" id="pr_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
         	<input type="hidden" id="pr_paciente_id" name="paciente_id" value="{{ $paciente_titular->id }}">
-        	<input type="hidden" id="pr_clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
-        	<input type="hidden" id="pr_filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
-        	<input type="hidden" id="pr_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
         	<input type="hidden" id="pr_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
-        	
-        	<input type="hidden" id="pr_data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
-        	<input type="hidden" id="pr_hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >            
         </div>
         <div class="collapse area-dados-beneficiario" id="collapseDadosBeneficiario">
             <div class="card card-body">
@@ -69,16 +51,8 @@
                             <input type="text" id="nomeBeneficiario" class="form-control" name="nomeBeneficiario" value="{{ $dependentes[$i]->nm_primario.' '.$dependentes[$i]->nm_secundario }}" placeholder="Nome completo" readonly="readonly">
                             {!! csrf_field() !!}
                             <input type="hidden" id="dep_item_id" name="item_id" value="{{ $proximo_item['item_id'] }}">
-                    		<input type="hidden" id="dep_atendimento_id" name="atendimento_id" value="@if($proximo_item['atendimento'] != null) {{ $proximo_item['atendimento']->id }} @endif">
-                        	<input type="hidden" id="dep_profissional_id" name="profissional_id" value="@if($proximo_item['profissional'] != null ) {{ $proximo_item['profissional']->id }} @else null @endif">
                         	<input type="hidden" id="dep_paciente_id" name="paciente_id" value="{{ $dependentes[$i]->id }}">
-                        	<input type="hidden" id="dep_clinica_id" name="clinica_id" value="@if($proximo_item['clinica'] != null) {{ $proximo_item['clinica']->id }} @endif">
-                        	<input type="hidden" id="dep_filial_id" name="filial_id" value="@if($proximo_item['filial'] != null) {{ $proximo_item['filial']->id }} @endif">
-                        	<input type="hidden" id="dep_vl_com_atendimento" name="vl_com_atendimento" value="{{ $proximo_item['valor'] }}">
                         	<input type="hidden" id="dep_current_url" name="current_url" value="{{ $proximo_item['current_url'] }}">
-                        	
-                        	<input type="hidden" id="dep_data_atendimento" name="data_atendimento" value="@if($proximo_item['data_agendamento'] != null ) {{ $proximo_item['data_agendamento'] }} @else null @endif" >
-                        	<input type="hidden" id="dep_hora_atendimento" name="hora_atendimento" value="@if($proximo_item['hora_agendamento'] != null ) {{ $proximo_item['hora_agendamento'] }} @else null @endif" >
                         </div>
                         <div class="form-group col-sm-1">
                             <label for="emailBeneficiario">Sexo</label>
@@ -363,15 +337,8 @@
                 var paciente_id 		= $('#inputPacienteId').val();
 
                 var item_id 			= $('#pr_item_id').val();
-                var atendimento_id 		= $('#pr_atendimento_id').val();
-                var profissional_id 	= $('#pr_profissional_id').val();
                 var paciente_id 		= $('#pr_paciente_id').val();
-                var clinica_id 			= $('#pr_clinica_id').val();
-                var filial_id 			= $('#pr_filial_id').val();
-                var vl_com_atendimento 	= $('#pr_vl_com_atendimento').val();
                 var current_url 		= $('#pr_current_url').val();
-                var data_atendimento 	= $('#pr_data_atendimento').val();
-                var hora_atendimento 	= $('#pr_hora_atendimento').val();
 
             	jQuery.ajax({
         			type: 'POST',
@@ -390,7 +357,6 @@
         				'_token': laravel_token
         			},
                     success: function (result) {
-                        
         	            if(result.status) {
             	            
         	            	var dependente = JSON.parse(result.dependente);
@@ -419,16 +385,8 @@
                                         <input type="text" id="nomeBeneficiario" class="form-control" name="nomeBeneficiario" value="'+dependente.nm_primario+' '+dependente.nm_secundario+'" placeholder="Nome completo" readonly="readonly"> \
                                         <input type="hidden" name="_token" value="'+laravel_token+'"> \
                                         <input type="hidden" id="dep_item_id" name="item_id" value="'+item_id+'"> \
-                                		<input type="hidden" id="dep_atendimento_id" name="atendimento_id" value="'+atendimento_id+'"> \
-                                    	<input type="hidden" id="dep_profissional_id" name="profissional_id" value="'+profissional_id+'"> \
                                     	<input type="hidden" id="dep_paciente_id" name="paciente_id" value="'+dependente.id+'"> \
-                                    	<input type="hidden" id="dep_clinica_id" name="clinica_id" value="'+clinica_id+'"> \
-                                    	<input type="hidden" id="dep_filial_id" name="filial_id" value="'+filial_id+'"> \
-                                    	<input type="hidden" id="dep_vl_com_atendimento" name="vl_com_atendimento" value="'+vl_com_atendimento+'"> \
                                     	<input type="hidden" id="dep_current_url" name="current_url" value="'+current_url+'"> \
-                                    	\
-                                    	<input type="hidden" id="dep_data_atendimento" name="data_atendimento" value="'+data_atendimento+'" > \
-                                    	<input type="hidden" id="dep_hora_atendimento" name="hora_atendimento" value="'+hora_atendimento+'" > \
                                     </div> \
                                     <div class="form-group col-sm-1"> \
                                         <label for="emailBeneficiario">Sexo</label> \
@@ -478,19 +436,11 @@
         });
 
         function validaAddBeneficiario() {
-
             var item_id 			= $('#pr_item_id').val();
-            var atendimento_id 		= $('#pr_atendimento_id').val();
-            var profissional_id 	= $('#pr_profissional_id').val();
             var paciente_id 		= $('#pr_paciente_id').val();
-            var clinica_id 			= $('#pr_clinica_id').val();
-            var filial_id 			= $('#pr_filial_id').val();
-            var vl_com_atendimento 	= $('#pr_vl_com_atendimento').val();
             var current_url 		= $('#pr_current_url').val();
-            var data_atendimento 	= $('#pr_data_atendimento').val();
-            var hora_atendimento 	= $('#pr_hora_atendimento').val();
 
-            if(item_id.length == 0 | atendimento_id.length == 0 | profissional_id.length == 0 | paciente_id.length == 0 | clinica_id.length == 0 | filial_id.length == 0 | vl_com_atendimento.length == 0 | current_url.length == 0 | data_atendimento.length == 0 | hora_atendimento.length == 0) {
+            if(item_id.length == 0 | paciente_id.length == 0 | current_url.length == 0) {
             	swal(
             	        {
             	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
@@ -502,18 +452,10 @@
             }
 
             $('#item_id').val(item_id);
-            $('#atendimento_id').val(atendimento_id);
-            $('#profissional_id').val(profissional_id);
             $('#paciente_id').val(paciente_id);
-            $('#clinica_id').val(clinica_id);
-            $('#filial_id').val(filial_id);
-            $('#vl_com_atendimento').val(vl_com_atendimento);
             $('#current_url').val(current_url);
-            $('#data_atendimento').val(data_atendimento);
-            $('#hora_atendimento').val(hora_atendimento);
 
             return true;
-            
         }
 	</script>	
     

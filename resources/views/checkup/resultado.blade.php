@@ -23,7 +23,7 @@
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                     <option value="" disabled selected hidden>Tipo de atendimento</option>
-                                    <o<button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento2348')">Prosseguir para pagamento</button>ption value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'   ) selected='selected' @endif >Consulta Médica</option>
+                                    <option><button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento2348')">Prosseguir para pagamento</button>ption value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'   ) selected='selected' @endif >Consulta Médica</option>
                                     <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto'  ) selected='selected' @endif >Consulta Odontológica</option>
                                     <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'   ) selected='selected' @endif >Exames</option>
                                     <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup' ) selected='selected' @endif >Check-up</option>
@@ -60,6 +60,7 @@
       	  				
       	  					<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="checkup">
       	  					<input type="hidden" id="checkup_id" name="checkup_id" value="{{ $checkup['id'] }}">
+                            <input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
       	  					{!! csrf_field() !!}
                               <div class="card">
                                   <div class="card-header" id="headingTres">
@@ -72,7 +73,7 @@
                                                       <ul class="quantidade">
                                                       	@foreach( $checkup['total_camadas'] as $camada => $total )
                                                           <li><span>{{$total}}</span> {{$camada}}</li>
-                                                          @endforeach
+                                                        @endforeach
                                                       </ul>
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
                                                           ver lista de procedimentos
@@ -120,7 +121,6 @@
                                                                </div>
                                                       </div>
                                                       @foreach($procedimento as $codigo => $descricao)
-                                                      
                                                           <div class="procedimento">
                                                               <div class="row">
                                                                   <div class="col-xl-8">

@@ -7,13 +7,13 @@ $(document).ready(function () {
 		if( $(this).val() == 'saude' || $(this).val() == 'odonto' || $(this).val() == 'exame' ){
 			$('label[for="especialidade"]').text("Especialidade ou exame");
 			$('label[for="local"]').text("Local de Atendimento");
-			$('.form-busca-home').attr('action', '/resultado');
-			$('.form-busca-home').attr('onsubmit', 'return validaBuscaAtendimento()');
+			$('.form-busca').attr('action', '/resultado');
+			$('.form-busca').attr('onsubmit', 'return validaBuscaAtendimento()');
 		}else if( $(this).val() == 'checkup' ){
 			$('label[for="especialidade"]').text("Check-up");
 			$('label[for="local"]').text("Tipo de Check-up");
-			$('.form-busca-home').attr('action', '/resultado-checkup');
-			$('.form-busca-home').attr('onsubmit', 'return validaBuscaCheckup()');
+			$('.form-busca').attr('action', '/resultado-checkup');
+			$('.form-busca').attr('onsubmit', 'return validaBuscaCheckup()');
 		}
 		$('#local_atendimento').empty();
 		
@@ -439,6 +439,10 @@ function pagarCartaoCredito() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
 		
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
@@ -446,13 +450,17 @@ function pagarCartaoCredito() {
 		
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
 		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
 		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -646,20 +654,28 @@ function pagarCartaoDebito() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
-		
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
+
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
 		}
-		
+
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
+
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -801,20 +817,28 @@ function pagarCartaoCadastrado() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
-		
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
+
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
 		}
-		
+
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	

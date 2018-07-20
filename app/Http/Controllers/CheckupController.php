@@ -53,7 +53,7 @@ class CheckupController extends Controller
     {
         $consulta = $this->_consultaCheckup( CVXRequest::all() );
         $checkup  = $this->getTituloCheckupAtivo();
-        
+
         return view('checkup.resultado', compact('checkup', 'consulta'));
     }
     
@@ -127,7 +127,7 @@ class CheckupController extends Controller
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
                     ->get();
-        
+
         //dd($this->_trataVetorConsultaCheckup($resumo));
         //dd($resumo);
         return $this->_trataVetorConsultaCheckup($resumo);
@@ -149,7 +149,7 @@ class CheckupController extends Controller
         $totalVlComAtendimento = 0;
         $qtTotalProcedimentos  = 0;
         $dsCheckupAnterior     = '';
-        
+
         foreach($resumo as $p){
             if ( $dsCheckupAnterior != $p->titulo.'-'.$p->tipo ){
                 @$arQtCamadas[$p->titulo.'-'.$p->tipo] = [];
