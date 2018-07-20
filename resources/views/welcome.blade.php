@@ -72,7 +72,6 @@
                                                     às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}h
                                                         @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
 															e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min. @endif</span></p>
-                                                            e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min @endif</span></p>
                                             </div>
                                             <div class="resumo">
                                                 <div class="nome-status">
