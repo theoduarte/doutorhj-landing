@@ -421,7 +421,9 @@
 																<span>Pessoa que utilizará o serviço:</span>
 															</div>
 															<div class="dados-resumo dados-resumo-paciente">
-																<p>Paulo Kenobi</p>
+																<p class=" @if($item['paciente']->id != null) text-primary @else text-danger @endif">
+																@if($item['paciente']->id != null) {{ $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario }} @else -- PACIENTE AINDA NÃO INDICADO-- @endif
+																</p>
 															</div>
 
 															<input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">

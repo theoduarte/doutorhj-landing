@@ -1,7 +1,9 @@
 @extends('layouts.base')
+
 @section('title', 'DoctorHj: Meus Agendamentos')
 
 @push('scripts')
+
 @endpush
 
 @section('content')
@@ -38,13 +40,13 @@
                             </select>
                             <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
                             <input type="hidden" id="endereco_id" name="endereco_id">
-                        </div>@if($agendamento->atendimento->consulta_id != null)
+                        </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
                         </div>
-                    </div>@if($agendamento->atendimento->consulta_id != null)
+                    </div>
                 </form>
-            </div>meus-agendamentos.blade.php
+            </div>
             <div class="box-meus-agendamentos">
                 <div class="titulo-box">
                     Meus Agendamentos
@@ -66,14 +68,12 @@
                         <div class="tab-pane fade show active" id="consultas" role="tabpanel" aria-labelledby="home-tab">
                             @foreach($agendamentos_home as $agendamento)
                                 <div class="agendamentos">
+                                	@if($agendamento->atendimento_id != null)
                                     <div class="row">
                                         <div class="col col-lg-2 area-data">
-                                            <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else
-                                                    -- @endif</p>
-                                            <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else
-                                                    --- @endif</p>
-                                            <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else
-                                                    ---- @endif</p>
+                                            <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else -- @endif</p>
+                                            <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else --- @endif</p>
+                                            <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else ---- @endif</p>
                                         </div>
                                         <div class="col col-lg-5 area-informacoes">
                                             <div class="nome-status">
@@ -115,8 +115,7 @@
                                             <p class="tit-token">Token</p>
                                             <p class="txt-token">Apresente este código no momento da consulta</p>
                                             <div class="area-token">
-                                                <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else
-                                                        ●●●●●● @endif</p>
+                                                <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
                                                 <p>
                                                     <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >
                                                         Copiar
@@ -146,6 +145,8 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @elseif($agendamento->checkup_id != null)
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -179,7 +180,7 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu ddm-opcoes"  >
-                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '@if($agendamento->profissional_id != null){{ $agendamento->profissional->id }}@else 0 @endif', '{{ $agendamento->id }}')">Remarcar</a></p>
+                                        <p><a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '@if($agendamento->profissional_id != null){{ $agendamento->profissional->id }} @else 0 @endif', '{{ $agendamento->id }}')">Remarcar</a></p>
                                         <p><a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a></p>
 
 
@@ -521,8 +522,7 @@
                                         <p class="tit-token">Token</p>
                                         <p class="txt-token">Apresente este código no momento da consulta</p>
                                         <div class="area-token">
-                                            <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else
-                                                    ●●●●●● @endif</p>
+                                            <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
                                             <p>
                                                 <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >
                                                     Copiar
@@ -556,6 +556,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

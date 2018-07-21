@@ -142,11 +142,11 @@
                                                                   	  @if($descricao['tp_prestador'] == 'CLI')
                                                                       <div class="escolher-data">
                                                                           <label for="selecionaData_{{ $descricao['idatendimento'] }}"><i class="fa fa-calendar"></i></label>
-                                                                          <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data">
+                                                                          <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData mascaraDataAgendamento" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data">
                                                                       </div>
                                                                       <div class="escolher-hora">
                                                                       	  <label for="selecionaHora_{{ $descricao['idatendimento'] }}"><i class="fa fa-clock-o"></i></label>
-                                                                          <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário">
+                                                                          <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora mascaraHoraAgendamento" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário">
                                                                       </div>
                                                                       @endif
                                                                   </div>
