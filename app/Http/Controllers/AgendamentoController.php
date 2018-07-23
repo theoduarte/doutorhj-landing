@@ -555,7 +555,7 @@ class AgendamentoController extends Controller
             //DB::enableQueryLog();
             $agendamentos_home = Agendamento::with([
 					'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
-					'datahoracheckups.itemcheckup.atendimento.profissional'
+					'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
 				])
 	            ->join('pacientes', function($join1) use ($paciente_id) {
 					$join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(function($query) use ($paciente_id) {
