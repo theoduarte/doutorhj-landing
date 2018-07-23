@@ -250,16 +250,17 @@ class PaymentController extends Controller
 				$atendimento_id_temp = $item_agendamento->atendimento_id;
 				$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
 				$item_atendimento->load('clinica');
+				$item_agendamento->dt_atendimento = \DateTime::createFromFormat('Y-m-d H:i', $item_agendamento->dt_atendimento);
 
 				if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento . ":00")))->get();
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
 
 					if (sizeof($agendamento) > 0) {
 						$agendamento_disponivel = false;
 					}
 
 				} elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
-					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento . ":00")))->get();
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
 
 					if (sizeof($agendamento) > 0) {
 						$agendamento_disponivel = false;
@@ -270,6 +271,7 @@ class PaymentController extends Controller
 					$agendamento_atendimento = false;
 				}
 
+				$item_agendamento->dt_atendimento = !empty($item_agendamento->dt_atendimento) ? $item_agendamento->dt_atendimento->format('d/m/Y H:i') : null;
 				$agendamentoItens[] = $item_agendamento;
 			} elseif(!empty($item_agendamento->checkup_id)) {
 				$idCarrinho = $listCarrinho['checkups'][$item_agendamento->checkup_id];
@@ -459,7 +461,7 @@ class PaymentController extends Controller
         			//$agendamentos = CVXRequest::post('agendamentos');
 
 					foreach($agendamentoItens as $i=>$item_agendamento) {
-        				//dd($item_agendamento);
+//        				dd($item_agendamento);
 
 						$agendamento 						= new Agendamento();
 						$agendamento->te_ticket				= UtilController::getAccessToken();
@@ -469,7 +471,7 @@ class PaymentController extends Controller
 						$agendamento->paciente_id       	= $item_agendamento->paciente_id;
 
 						if(!empty($item_agendamento->atendimento_id)) {
-							$agendamento->dt_atendimento    = isset($item_agendamento->dt_agendamento) && !empty($item_agendamento->dt_agendamento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_agendamento)->format('Y-m-d H:i:s') : null;
+							$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
 							$agendamento->clinica_id        = $item_agendamento->clinica_id;
 							$agendamento->filial_id			= $item_agendamento->filial_id;
 							$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
@@ -731,8 +733,10 @@ class PaymentController extends Controller
 				$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
 				$item_atendimento->load('clinica');
 
+				$item_agendamento->dt_atendimento = \DateTime::createFromFormat('Y-m-d H:i', $item_agendamento->dt_atendimento);
+
 				if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento . ":00")))->get();
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
 
 					if (sizeof($agendamento) > 0) {
 						$agendamento_disponivel = false;
@@ -740,7 +744,7 @@ class PaymentController extends Controller
 
 				} elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
 
-					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento . ":00")))->get();
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
 
 					if (sizeof($agendamento) > 0) {
 						$agendamento_disponivel = false;
@@ -751,6 +755,7 @@ class PaymentController extends Controller
 					$agendamento_atendimento = false;
 				}
 
+				$item_agendamento->dt_atendimento = !empty($item_agendamento->dt_atendimento) ? $item_agendamento->dt_atendimento->format('d/m/Y H:i') : null;
 				$agendamentoItens[] = $item_agendamento;
 			} elseif(!empty($item_agendamento->checkup_id)) {
 				$idCarrinho = $listCarrinho['checkups'][$item_agendamento->checkup_id];
@@ -931,7 +936,7 @@ class PaymentController extends Controller
 						$agendamento->paciente_id = $item_agendamento->paciente_id;
 
 						if (!empty($item_agendamento->atendimento_id)) {
-							$agendamento->dt_atendimento = isset($item_agendamento->dt_agendamento) && !empty($item_agendamento->dt_agendamento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_agendamento)->format('Y-m-d H:i:s') : null;
+							$agendamento->dt_atendimento = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
 							$agendamento->clinica_id = $item_agendamento->clinica_id;
 							$agendamento->filial_id = $item_agendamento->filial_id;
 							$agendamento->atendimento_id = $item_agendamento->atendimento_id;

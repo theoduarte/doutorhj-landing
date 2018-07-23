@@ -95,8 +95,10 @@ class Agendamento extends Model
     }
     
     public function getDtAtendimentoAttribute($data) {
-        $obData = new Carbon($data);
-        return $obData->format('d/m/Y H:i');
+		if(!empty($data)) {
+			$obData = new Carbon($data);
+			return $obData->format('d/m/Y H:i');
+		}
     }
     
     public function getRawDtAtendimentoAttribute() {

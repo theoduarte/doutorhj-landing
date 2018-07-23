@@ -15,7 +15,7 @@ class ItemCheckup extends Model
     const ATIVO = 'A';
     const INATIVO = 'I';
     
-    public function itemcheckup(){
+    public function checkup() {
         return $this->belongsTo('App\Checkup');
     }
     
