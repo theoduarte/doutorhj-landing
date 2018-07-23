@@ -704,7 +704,10 @@
 								text: 'Sua Solicitação falhou. Por favor, tente novamente.'
 							}
 					);
-				  			    		  	        </	pt>
+				}
+			});
+		}
+	</script>
     @endpush
 
 @endsection
