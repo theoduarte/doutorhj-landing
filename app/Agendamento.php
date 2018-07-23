@@ -102,7 +102,8 @@ class Agendamento extends Model
     }
     
     public function getRawDtAtendimentoAttribute() {
-		return $this->attributes['dt_atendimento'];
+		if(!empty($this->attributes['dt_atendimento']))
+			return $this->attributes['dt_atendimento'];
     }
     
     public function getRawCsStatusAttribute() {
