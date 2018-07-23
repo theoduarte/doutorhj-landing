@@ -572,12 +572,8 @@ class PaymentController extends Controller
         					 
         					//--enviar mensagem informando o pre agendamento da solicitacao----------------
         					try {
-								//if(!is_null($agendamento->atendimento_id))
-
-								$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
-
-								DB::rollback();
-								die;
+								if(!is_null($agendamento->atendimento_id))
+									$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
         					} catch (Exception $e) {}
         				}
         				 
