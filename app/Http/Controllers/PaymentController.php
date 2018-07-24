@@ -448,11 +448,17 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //dd($output);
+        
+        $cielo_result = json_decode($output);
+
+        \Log::debug("CIELO CHECKOUT");
+        \Log::debug(" -- Sended data --");
+        \Log::debug( print_r(array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey), true) );
+        
+        \Log::debug(" -- Result data --");
+        \Log::debug( print_r($cielo_result,true) );
+
         if ($httpcode == 201) {
-            
-        	$cielo_result = json_decode($output);
-        	//dd($cielo_result);
         	try {
         		$cielo_status = $cielo_result->Payment->Status;
         		if ($cielo_status == 1 | $cielo_status == 2) {
@@ -598,9 +604,11 @@ class PaymentController extends Controller
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "13". O Pagamento foi Cancelado por falha no Processamento. Por favor, tente novamente.']);
         			} elseif ($cielo_status == 20) {
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "20". O Pagamento foi registrado como Recorrência, devido a uma falha e será cancelado. Por favor, tente novamente.']);
-        			}/*  elseif ($cielo_status == 1) {
-        			    return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
-        			} */
+        			}
+                    else {
+                        $returnMessage = $cielo_result->Payment->ReturnMessage;
+                        return response()->json(['status' => false, 'mensagem' => 'Cód: "'. $cielo_status . '". ' . $returnMessage]);   
+                    }
         			
         			return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
         		}
