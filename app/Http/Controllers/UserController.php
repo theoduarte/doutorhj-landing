@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Request as CVXRequest;
 use App\Mail\PacienteSender;
 use App\Documento;
 use App\Contato;
+use App\TermosCondicoes;
+use App\TermosCondicoesUsuarios;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsuariosRequest;
 use Illuminate\Support\Carbon;
@@ -145,6 +147,15 @@ class UserController extends Controller
     	$contato_ids = [$contato1->id];
     	
     	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
+
+        # vinculação com o termo e condição
+        $termosCondicoes = new TermosCondicoes();
+        $termosCondicoesActual = $termosCondicoes->getActual();
+
+        $termosCondicoesUsuarios = new TermosCondicoesUsuarios();
+        $termosCondicoesUsuarios->user_id = $usuario->id;
+        $termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
+        $termosCondicoesUsuarios->save();
     	
     	# envia o e-mail de ativação
     	//Mail::to($usuario->email)->send(new PacienteSender($paciente));
@@ -499,11 +510,11 @@ HEREDOC;
      */
     public function sendToken(Request $request)
     {   
-        //DB::enableQueryLog();
+        // DB::enableQueryLog();
         $ds_contato = UtilController::retiraMascara(CVXRequest::post('ds_contato'));
         $contato1 = Contato::where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', $ds_contato)->get();
-        //$query = DB::getQueryLog();
-        //print_r($query);
+        // $query = DB::getQueryLog();
+        // print_r($query);
         $contato = $contato1->first();
         $contato_id = $contato->id;
         
