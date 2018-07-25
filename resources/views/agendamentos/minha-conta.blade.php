@@ -388,13 +388,16 @@
                                 <div>
                                     <div class="area-tipo-plano">
                                         <div class="row">
-                                            <div class="col-md-6 atp1">
-                                                <p class="nome-plano">Plano Premium</p>
-                                                <p class="valor-anuidade">Anuidade Doctor Hoje R$ 9.99</p>
-                                            </div>
-                                            <div class="col-md-6 atp2">
-                                                <p class="valor-plano">1 ano grátis</p>
-                                                <a class="link-indique-amigo" href="#">Indique um Amigo</a>
+
+                                            <div class="col-md-12 col-lg-5">
+                                                <span class="label-titulo">ANUIDADE</span>
+                                                    <p>DATA DA ADESÃO: 25.07.18<br>
+                                                    VALOR DA ANUIDADE: 48,80<br>
+                                                    DESCONTO: 50%<br>
+                                                    VALOR COM DESCONTO 24,40<br>
+                                                    GRATUIDADE: 180 DIAS<br>
+                                                    VALOR A PAGAR EM 25.03.2018: 24,40
+                                                    </p>
                                             </div>
                                         </div>
                                     </div>
