@@ -389,15 +389,11 @@
                                     <div class="area-tipo-plano">
                                         <div class="row">
 
-                                            <div class="col-md-12 col-lg-5">
+                                            <div class="col-md-12">
                                                 <span class="label-titulo">ANUIDADE</span>
-                                                    <p>DATA DA ADESÃO: 25.07.18<br>
-                                                    VALOR DA ANUIDADE: 48,80<br>
-                                                    DESCONTO: 50%<br>
-                                                    VALOR COM DESCONTO 24,40<br>
-                                                    GRATUIDADE: 180 DIAS<br>
-                                                    VALOR A PAGAR EM 25.03.2018: 24,40
-                                                    </p>
+                                                <p>Valor da anuidade 48,80.</p>
+                                                <p>50% de desconto e 6 meses gratuitos para as pessoas que realizarem o cadastro na plataforma até 30.09.2018.</p>
+                                                <p>No sétimo haverá a cobrança de 24,40.</p>
                                             </div>
                                         </div>
                                     </div>
