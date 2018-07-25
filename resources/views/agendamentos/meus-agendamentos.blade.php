@@ -22,7 +22,7 @@
                                 <option value="saude">Consulta Médica</option>
                                 <option value="odonto">Consulta Odontológica</option>
                                 <option value="exame">Exames</option>
-                                <option value="checkup">Check-up</option>
+                                <!-- <option value="checkup">Check-up</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -54,9 +54,9 @@
 						<li class="nav-item">
 							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#consultas" role="tab" aria-controls="home" aria-selected="true">Consultas e Exames</a>
 						</li>
-						<li class="nav-item">
+						<!-- <li class="nav-item">
 							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#checkup" role="tab" aria-controls="profile" aria-selected="false">Checkup</a>
-						</li>
+						</li> -->
 					</ul>
 					<div class="tab-content" id="contentAgendamentos">
 
