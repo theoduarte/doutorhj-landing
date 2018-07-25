@@ -61,26 +61,25 @@ function($) {
 
     //simple notificaiton
     Notification.prototype.notify = function(style,position, title, text) {
-        var icon = 'fa fa-adjust';
+        var icon = '<i class="fa fa-adjust"></i>';
         if(style == "error"){
-            icon = "fa fa-exclamation";
+            icon = '<i class="fa fa-exclamation"></i>';
         }else if(style == "warning"){
-            icon = "fa fa-warning";
+            icon = '<i class="fa fa-warning"></i>';
         }else if(style == "success"){
-            icon = "fa fa-check";
+            icon = '<i class="fa fa-check"></i>';
         }else if(style == "custom"){
-            icon = "mdi mdi-album";
+            icon = '<i class="mdi mdi-album"></i>';
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = '<i class="fa fa-question"></i>';
         }else if(style == "cart"){
-            icon = "fa   fa-cart-plus";
-        }else{
-            icon = "fa fa-adjust";
+            icon = '<img src="/img/pedidos-icon.png" alt="Pedidos">';
         }
+
         $.notify({
             title: title,
             text: text,
-            image: "<i class='"+icon+"'></i>"
+            image: icon
         }, {
             style: 'metro',
             className: style,
@@ -95,26 +94,25 @@ function($) {
 
     //auto hide notification
     Notification.prototype.autoHideNotify = function (style,position, title, text) {
-        var icon = "fa fa-adjust";
+        var icon = '<i class="fa fa-adjust"></i>';
         if(style == "error"){
-            icon = "fa fa-exclamation";
+            icon = '<i class="fa fa-exclamation"></i>';
         }else if(style == "warning"){
-            icon = "fa fa-warning";
+            icon = '<i class="fa fa-warning"></i>';
         }else if(style == "success"){
-            icon = "fa fa-check";
+            icon = '<i class="fa fa-check"></i>';
         }else if(style == "custom"){
-            icon = "mdi mdi-album";
+            icon = '<i class="mdi mdi-album"></i>';
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = '<i class="fa fa-question"></i>';
         }else if(style == "cart"){
-            icon = "fa   fa-cart-plus";
-        }else{
-            icon = "fa fa-adjust";
+            icon = '<img src="/img/pedidos-icon.png" alt="Pedidos">';
         }
+        
         $.notify({
             title: title,
             text: text,
-            image: "<i class='"+icon+"'></i>"
+            image: icon
         }, {
             style: 'metro',
             className: style,
@@ -129,26 +127,24 @@ function($) {
     },
     //confirmation notification
     Notification.prototype.confirm = function(style,position, title) {
-        var icon = "fa fa-adjust";
+        var icon = '<i class="fa fa-adjust"></i>';
         if(style == "error"){
-            icon = "fa fa-exclamation";
+            icon = '<i class="fa fa-exclamation"></i>';
         }else if(style == "warning"){
-            icon = "fa fa-warning";
+            icon = '<i class="fa fa-warning"></i>';
         }else if(style == "success"){
-            icon = "fa fa-check";
+            icon = '<i class="fa fa-check"></i>';
         }else if(style == "custom"){
-            icon = "mdi mdi-album";
+            icon = '<i class="mdi mdi-album"></i>';
         }else if(style == "info"){
-            icon = "fa fa-question";
+            icon = '<i class="fa fa-question"></i>';
         }else if(style == "cart"){
-            icon = "fa   fa-cart-plus";
-        }else{
-            icon = "fa fa-adjust";
+            icon = '<img src="/img/pedidos-icon.png" alt="Pedidos">';
         }
         $.notify({
             title: title,
             text: 'Are you sure you want to do nothing?<div class="clearfix"></div><br><a class="btn btn-sm btn-white yes">Yes</a> <a class="btn btn-sm btn-danger no">No</a>',
-            image: "<i class='"+icon+"'></i>"
+            image: icon
         }, {
             style: 'metro',
             className: style,

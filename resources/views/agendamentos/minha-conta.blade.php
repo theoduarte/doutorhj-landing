@@ -9,42 +9,7 @@
 @section('content')
     <section class="area-busca-interna minha-conta">
         <div class="container">
-            {{--<div class="busca-home">
-                <div class="titulo">
-                    <span>Quero agendar</span>
-                </div>
-                <form action="/resultado" class="form-busca-home" method="get">
-                    <div class="row">
-                        <div class="form-group col-md-12 col-lg-3">
-                            <label for="tipo">Tipo de atendimento</label>
-                            <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                <option value="" disabled selected hidden>Ex.: Consulta</option>
-                                <option value="saude">Consulta Médica</option>
-                                <!-- <option value="odonto">Consulta Odontológica</option> -->
-                                <option value="exame">Exames</option>
-                                <!-- <option value="procedimento">Procedimento</option> -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3">
-                            <label for="especialidade">Especialidade ou exame</label>
-                            <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3">
-                            <label for="local">Local de atendimento</label>
-                            <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                                <option value="" disabled selected hidden>Ex.: Asa Sul</option>
-                            </select>
-                            <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
-                            <input type="hidden" id="endereco_id" name="endereco_id">
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>--}}
+            
             <div class="box-minha-conta">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-3 menu">
@@ -55,12 +20,12 @@
                                 Pagamento</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Anuidade</a>
-                            {{--<a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Mensagens</a>--}}
-                            <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Notificações</a>
-                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Deixe sua Sugestão</a>
+                            <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Mensagens</a> -->
+                            <!-- <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Notificações</a> -->
+                            <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Deixe sua Sugestão</a> -->
                             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Sair</a>
                         </div>
@@ -942,7 +907,7 @@
              *
              *********************************/
 
-            var elem = document.querySelector('.email-lembrete');
+            /*var elem = document.querySelector('.email-lembrete');
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
             });
@@ -966,7 +931,7 @@
             var elem = document.querySelector('.mobile-cancelamento');
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
-            });
+            });*/
         </script>
 
     @endpush

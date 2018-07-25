@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Carrinho de Compras - DoctorHj')
+@section('title', 'Meus Pedidos - DoctorHj')
 
 @push('scripts')
 
@@ -11,7 +11,7 @@
 		<div class="container">
 			<div class="area-container">
 				<div class="titulo">
-					<strong>Carrinho de compras</strong>
+					<strong>Meus Pedidos</strong>
 				</div>
 				<div class="produtos-carrinho">
 
@@ -24,7 +24,7 @@
 									<div class="card-header" id="heading_empty_cart }}">
 										<div class="row">
 											<div class="nome-produto col-10 col-sm-7" data-toggle="collapse" data-target="#collapse_empty_cart" aria-expanded="false" aria-controls="collapse_empty_cart">
-												<span>SEU CARRINHO ESTÁ VAZIO</span>
+												<span>SUA LISTA DE PEDIDOS ESTÁ VAZIA</span>
 											</div>
 											<div class="detalhes-produto col-12 col-sm-2" data-toggle="collapse" data-target="#collapse_empty_cart" aria-expanded="false" aria-controls="collapse_empty_cart">
 												<span></span>

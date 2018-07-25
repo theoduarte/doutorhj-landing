@@ -101,11 +101,11 @@ class AgendamentoController extends Controller
             if($item['attributes']['tipo_atendimento'] == 'simples') {
                 $paciente_tmp_id = $item['attributes']['paciente_id'];
 
-                $paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+                $paciente = !empty($paciente_tmp_id) ? Paciente::findOrFail($paciente_tmp_id) : [];
                 $url = $item['attributes']['current_url'];
                 
                 $titular = false;
-                if(sizeof($paciente) > 0) {
+                if( $paciente ) {
                     if($user_session->paciente->id == $paciente->id) {
                         $titular = true;
                         $tem_titular = true;
@@ -125,7 +125,7 @@ class AgendamentoController extends Controller
                     $item_titular = $item_carrinho;
                 }
                 
-                if(sizeof($paciente) <= 0) {
+                if( $paciente ) {
                     $proximo_item = $item_carrinho;
                 }
             } elseif($item['attributes']['tipo_atendimento'] == 'checkup') {
@@ -135,7 +135,7 @@ class AgendamentoController extends Controller
 				$url = $item['attributes']['current_url'];
 
                 $titular = false;
-                if(sizeof($paciente) > 0) {
+                if(  !empty($paciente) ) {
                     if($user_session->paciente->id == $paciente->id) {
                         $titular = true;
                         $tem_titular = true;
@@ -156,7 +156,7 @@ class AgendamentoController extends Controller
                     $item_titular = $item_carrinho;
                 }
                 
-                if(sizeof($paciente) <= 0) {
+                if( empty($paciente) ) {
                     $proximo_item = $item_carrinho;
                 }
             }
@@ -333,18 +333,12 @@ class AgendamentoController extends Controller
 	{
 		$user_session = Auth::user();
 		$url = Request::root();
-
-//		CVXCart::clear();
-//		CVXCart::session($user_session->id)->clear();
     	
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
     	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
-
-//		echo '<pre>';
-//		print_r($itens);die;
 
     	$carrinho = [];
 
@@ -359,7 +353,7 @@ class AgendamentoController extends Controller
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
 				$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
-				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
+				$profissional = !empty($profissional_tmp_id) ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);
 
@@ -367,15 +361,9 @@ class AgendamentoController extends Controller
 
 				if ($atendimento->procedimento_id != null) {
 					$atendimento->load('procedimento');
-					//$atendimento->load('profissional');
-					//$atendimento->profissional->load('especialidades');
 
 					$nome_especialidade = $atendimento->procedimento->ds_procedimento;
 					$ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
-
-					/*foreach ($atendimento->profissional->especialidades as $especialidade) {
-						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-					}*/
 
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
@@ -397,8 +385,6 @@ class AgendamentoController extends Controller
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
 				}
-
-				//dd($atendimento);
 
 				if (isset($clinica)) {
 					$clinica->load('enderecos');
@@ -459,10 +445,8 @@ class AgendamentoController extends Controller
 					'checkup'				=> $checkup,
 					'itens_checkup'			=> $item_checkups,
 				];
-//				dd($item_carrinho);
 			}
 
-    		//dd($paciente);
     		if (!empty($paciente)) {
     			array_push($carrinho, $item_carrinho);
     		} else {
@@ -511,11 +495,7 @@ class AgendamentoController extends Controller
      */
     public function getProfissional($profissional){
         $arJson = array();
-        $profissional = Profissional::where(function($query){
-//                         dd(Request::all());
-                # $query->where(DB::raw('to_str(CONCAT(nm_primario, nm_secundario))'),'like', '%'.UtilController::toStr($profissional).'%');
-            
-            
+        $profissional = Profissional::where(function($query){            
                                                 })->get();
         $profissional->load('documentos');
         
@@ -565,24 +545,19 @@ class AgendamentoController extends Controller
 	            ->select('agendamentos.*')
 	            ->distinct()
 	            ->orderBy('dt_atendimento', 'asc')->get();
-	        
-	       //$query_temp = DB::getQueryLog();
-	       //dd($query_temp);
 
 			foreach($agendamentos_home as $agendamento) {
 				if(!is_null($agendamento->atendimento_id)) {
 					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
 				}
-				$agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
-				$agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
-			}
 
-//			echo '<pre>';
-//			print_r($agendamentos_home->toArray());
-//			die;
+                if(!empty($agendamento->itempedidos->first())) {
+                    $agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
+                    $agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';    
+                }
+			}
         }
-        
-        //dd($agendamentos_home);
+
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }
@@ -764,12 +739,9 @@ class AgendamentoController extends Controller
         
         $data = $data_agendamento;
         $hora = $hora_agendamento.":00";
-        
-        
-        //DB::enableQueryLog();
+ 
         $agendamentos = Agendamento::where('clinica_id', '=', $clinica_id)->where('profissional_id', $profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($data.' '.$hora)))->get();
-        //$query = DB::getQueryLog();
-        //dd($query);
+
         
         $agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
         
@@ -827,10 +799,6 @@ class AgendamentoController extends Controller
         $mensagem_drhj->conteudo     	= "<h4>Cancelamento Solicitado pelo Cliente:</h4><br><ul><li>Nome: $nome</li><li>E-mail: $email</li><li>Telefone: $telefone</li></ul>";
         
         $mensagem_drhj->save();
-        
-        /* if(!$mensagem->save()) {
-         return redirect()->route('landing-page')->with('error', 'A Sua mensagem nÃ£o foi enviada. Por favor, tente novamente');
-         } */
         
         $destinatario                      = new MensagemDestinatario();
         $destinatario->tipo_destinatario   = 'DH';
@@ -1196,11 +1164,7 @@ class AgendamentoController extends Controller
 HEREDOC;
         
         $html_message = str_replace(array("\r", "\n"), '', $html_message);
-        
         $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
-        
-        //     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
-        //     	return redirect()->route('provisorio')->with('success', 'A Sua mensagem foi enviada com sucesso!');
         
         return $send_message;
     }

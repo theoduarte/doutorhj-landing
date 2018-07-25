@@ -1091,11 +1091,14 @@ header .navbar-collapse {
 *
 *********************************/
 
+.navbar-nav {
+    margin-right: 40px;
+}
+
 .menu-area-logada {
     background-color: rgb(230, 230, 230);
     padding: 78px 15px 22px 15px;
     margin-top: -55px;
-    margin-left: 15px;
 }
 
 .menu-area-logada ul {
