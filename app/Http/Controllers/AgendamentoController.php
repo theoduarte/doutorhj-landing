@@ -53,7 +53,7 @@ class AgendamentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function informaBeneficiario()
-	{
+    {
         /*$user_id = 17;
         
         \Cart::session($user_id)->add(455, 'Sample Item', 100.99, 2, array());
@@ -76,16 +76,14 @@ class AgendamentoController extends Controller
         'color' => 'blue'
         )
         ));*/
-
-//         $atendimento_id		= $request->input('atendimento_id');
-//         $profissional_id	= $request->input('profissional_id');
-//         $paciente_id		= $request->input('paciente_id');
-//         $clinica_id			= $request->input('clinica_id');
-//         $data_atendimento	= $request->input('data_atendimento');
-//         $hora_atendimento	= $request->input('hora_atendimento');
+//         $atendimento_id      = $request->input('atendimento_id');
+//         $profissional_id = $request->input('profissional_id');
+//         $paciente_id     = $request->input('paciente_id');
+//         $clinica_id          = $request->input('clinica_id');
+//         $data_atendimento    = $request->input('data_atendimento');
+//         $hora_atendimento    = $request->input('hora_atendimento');
 //         $vl_com_atendimento = $request->input('vl_com_atendimento');
 //         $url                = $request->input('current_url');
-
         $cartCollection = CVXCart::getContent();
         $itens = $cartCollection->toArray();
         //dd($itens);die;
@@ -96,16 +94,14 @@ class AgendamentoController extends Controller
         $tem_pacientes = false;
         $item_titular = [];
         $proximo_item = [];
-
         foreach ($itens as $item) {
             if($item['attributes']['tipo_atendimento'] == 'simples') {
                 $paciente_tmp_id = $item['attributes']['paciente_id'];
-
-                $paciente = !empty($paciente_tmp_id) ? Paciente::findOrFail($paciente_tmp_id) : [];
+                $paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
                 $url = $item['attributes']['current_url'];
                 
                 $titular = false;
-                if( $paciente ) {
+                if(sizeof($paciente) > 0) {
                     if($user_session->paciente->id == $paciente->id) {
                         $titular = true;
                         $tem_titular = true;
@@ -113,29 +109,26 @@ class AgendamentoController extends Controller
                     
                     $tem_pacientes = true;
                 }
-
                 $item_carrinho = array(
-                    'item_id' 				=> $item['id'],
+                    'item_id'               => $item['id'],
                     'titular'               => $titular,
-                    'paciente'				=> $paciente,
-                    'current_url' 			=> $url
+                    'paciente'              => $paciente,
+                    'current_url'           => $url
                 );
                 
                 if ($titular) {
                     $item_titular = $item_carrinho;
                 }
                 
-                if( $paciente ) {
+                if(sizeof($paciente) <= 0) {
                     $proximo_item = $item_carrinho;
                 }
             } elseif($item['attributes']['tipo_atendimento'] == 'checkup') {
                 $paciente_tmp_id = '';
-
                 $paciente = [];
-				$url = $item['attributes']['current_url'];
-
+                $url = $item['attributes']['current_url'];
                 $titular = false;
-                if(  !empty($paciente) ) {
+                if(sizeof($paciente) > 0) {
                     if($user_session->paciente->id == $paciente->id) {
                         $titular = true;
                         $tem_titular = true;
@@ -145,18 +138,18 @@ class AgendamentoController extends Controller
                 }
                 
                 $item_carrinho = array(
-                    'item_id' 				=> $item['id'],
+                    'item_id'               => $item['id'],
                     'titular'               => $titular,
-                    'paciente'				=> $paciente,
+                    'paciente'              => $paciente,
                     'items_checkup'         => $item['attributes']['items_checkup'],
-                    'current_url' 			=> $url
+                    'current_url'           => $url
                 );
                 
                 if ($titular) {
                     $item_titular = $item_carrinho;
                 }
                 
-                if( empty($paciente) ) {
+                if(sizeof($paciente) <= 0) {
                     $proximo_item = $item_carrinho;
                 }
             }
@@ -167,7 +160,7 @@ class AgendamentoController extends Controller
         //dd($proximo_item['clinica']);
         
         $valor_total = CVXCart::getTotal();
-		$valor_total = number_format($valor_total, 2, ',', '.');
+        $valor_total = number_format($valor_total, 2, ',', '.');
         
         $responsavel_id = $user_session->paciente->id;
         
