@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Checkup;
+use App\ItemCheckup;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PrestadoresRequest;
@@ -643,83 +645,126 @@ class ClinicaController extends Controller
     	$user_session->load('documentos');
 
     	foreach ($itens as $item) {
-    		$atendimento_tmp_id = $item['attributes']['atendimento_id'];
-    		$profissional_tmp_id = $item['attributes']['profissional_id'];
-    		$clinica_tmp_id = $item['attributes']['clinica_id'];
-    		$filial_tmp_id = $item['attributes']['filial_id'];
-    		$paciente_tmp_id = $item['attributes']['paciente_id'];
+			$paciente_tmp_id = $item['attributes']['paciente_id'];
+			$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
 
-    		$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
-    		$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
-    		$clinica = Clinica::findOrFail($clinica_tmp_id);
-    		$filial = Filial::findOrFail($filial_tmp_id);
-    		$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
-    		
-    		$url = $item['attributes']['current_url'];
+			if($item['attributes']['tipo_atendimento'] == 'simples') {
+				$atendimento_tmp_id = $item['attributes']['atendimento_id'];
+				$profissional_tmp_id = $item['attributes']['profissional_id'];
+				$clinica_tmp_id = $item['attributes']['clinica_id'];
+				$filial_tmp_id = $item['attributes']['filial_id'];
 
-    		if ($atendimento->procedimento_id != null) {
-    			$atendimento->load('procedimento');
-    			//$atendimento->load('profissional');
-    			//$atendimento->profissional->load('especialidades');
+				$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
+				$clinica = Clinica::findOrFail($clinica_tmp_id);
+				$filial = Filial::findOrFail($filial_tmp_id);
 
-    			$nome_especialidade = $atendimento->procedimento->ds_procedimento;
-    			$ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
 
-    			/* foreach ($atendimento->profissional->especialidades as $especialidade) {
-    			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-    			} */
+				$url = $item['attributes']['current_url'];
 
-    			$atendimento->nome_especialidade = $nome_especialidade;
-    			$atendimento->ds_atendimento = $ds_atendimento;
+				if ($atendimento->procedimento_id != null) {
+					$atendimento->load('procedimento');
+					//$atendimento->load('profissional');
+					//$atendimento->profissional->load('especialidades');
 
-    			$titulo_pedido = "Exame: ".$user_session->nm_primario." ".$user_session->nm_secundario;
-    		}
+					$nome_especialidade = $atendimento->procedimento->ds_procedimento;
+					$ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
 
-    		if ($atendimento->consulta_id != null) {
-    			$atendimento->load('consulta');
-    			$atendimento->load('profissional');
-    			$atendimento->profissional->load('especialidades');
+					/* foreach ($atendimento->profissional->especialidades as $especialidade) {
+						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
+					} */
 
-    			$nome_especialidade = "";
+					$atendimento->nome_especialidade = $nome_especialidade;
+					$atendimento->ds_atendimento = $ds_atendimento;
 
-    			foreach ($atendimento->profissional->especialidades as $especialidade) {
-    			    $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-    			}
-    			
-    			$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
+					$titulo_pedido = "Exame: " . $user_session->nm_primario . " " . $user_session->nm_secundario;
+				}
 
-    			$atendimento->nome_especialidade = $nome_especialidade;
-    			$atendimento->ds_atendimento = $ds_atendimento;
-    			
+				if ($atendimento->consulta_id != null) {
+					$atendimento->load('consulta');
+					$atendimento->load('profissional');
+					$atendimento->profissional->load('especialidades');
 
-    			$titulo_pedido = "Consulta: ".$user_session->nm_primario." ".$user_session->nm_secundario;
-    		}
+					$nome_especialidade = "";
 
-    		//dd($atendimento);
+					foreach ($atendimento->profissional->especialidades as $especialidade) {
+						$nome_especialidade = $nome_especialidade . ' | ' . $especialidade->ds_especialidade;
+					}
 
-    		if (isset($clinica)) {
-    			$clinica->load('enderecos');
-    		}
-    		
-    		if (isset($filial)) {
-    		    $filial->load('endereco');
-    		}
-    		
-    		$data_atendimento = $item['attributes']['data_atendimento'];
-    		$hora_atendimento = $item['attributes']['hora_atendimento'];
+					$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
 
-    		$item_carrinho = array(
-    				'item_id' 				=> $item['id'],
-    				'valor' 				=> $item['price'],
-    				'atendimento' 			=> $atendimento,
-    				'profissional' 			=> $profissional,
-    				'clinica' 				=> $clinica,
-    		        'filial' 				=> $filial,
-    		        'paciente'				=> $paciente,
-    		        'data_agendamento' 		=> isset($data_atendimento) ? $data_atendimento : null,
-    		        'hora_agendamento' 		=> isset($hora_atendimento) ? $hora_atendimento : null,
-    				'current_url' 			=> $url
-    		);
+					$atendimento->nome_especialidade = $nome_especialidade;
+					$atendimento->ds_atendimento = $ds_atendimento;
+
+
+					$titulo_pedido = "Consulta: " . $user_session->nm_primario . " " . $user_session->nm_secundario;
+				}
+
+				//dd($atendimento);
+
+				if (isset($clinica)) {
+					$clinica->load('enderecos');
+				}
+
+				if (isset($filial)) {
+					$filial->load('endereco');
+				}
+
+				$data_atendimento = $item['attributes']['data_atendimento'];
+				$hora_atendimento = $item['attributes']['hora_atendimento'];
+
+				$item_carrinho = array(
+					'item_id' => $item['id'],
+					'valor' => $item['price'],
+					'atendimento' => $atendimento,
+					'profissional' => $profissional,
+					'clinica' => $clinica,
+					'filial' => $filial,
+					'paciente' => $paciente,
+					'data_agendamento' => isset($data_atendimento) ? $data_atendimento : null,
+					'hora_agendamento' => isset($hora_atendimento) ? $hora_atendimento : null,
+					'current_url' => $url
+				);
+			} elseif($item['attributes']['tipo_atendimento'] == 'checkup') {
+				$checkup_tmp_id = $item['attributes']['checkup_id'];
+
+				$carrinhoItensCheckup = $item['attributes']['items_checkup'];
+
+				$checkup = Checkup::findOrFail($checkup_tmp_id);
+
+				$titulo_pedido = "Checkup: " . $user_session->nm_primario . " " . $user_session->nm_secundario;
+
+				$item_checkups = ItemCheckup::query()->where('checkup_id', $checkup_tmp_id)
+					->with(['atendimento.consulta', 'atendimento.procedimento', 'atendimento.clinica.enderecos'])
+					->select('item_checkups.*')
+					->join('atendimentos', 'atendimentos.id', '=', 'item_checkups.atendimento_id')
+					->orderByRaw('coalesce(atendimentos.consulta_id, atendimentos.procedimento_id)')
+					->get();
+
+				foreach($item_checkups as $itemCheckup) {
+					$key = array_search($itemCheckup->id, array_column($carrinhoItensCheckup, 'id'));
+					if(!empty($carrinhoItensCheckup[$key]['data_agendamento']) || !empty($carrinhoItensCheckup[$key]['hora_agendamento'])) {
+						$dataHoraAgendamento = $carrinhoItensCheckup[$key]['data_agendamento'] . ' ' . $carrinhoItensCheckup[$key]['hora_agendamento'];
+						$itemCheckup->dataHoraAgendamento = \DateTime::createFromFormat('d.m.Y H:i', $dataHoraAgendamento)->format('d/m/Y H:i');
+					}
+				}
+
+				$item_carrinho = [
+					'item_id' 				=> $item['id'],
+					'valor' 				=> $item['price'],
+					'atendimento' 			=> null,
+					'profissional' 			=> null,
+					'clinica' 				=> null,
+					'filial' 				=> null,
+					'paciente'				=> $paciente,
+					'data_agendamento' 		=> null,
+					'hora_agendamento' 		=> null,
+					'current_url' 			=> $url,
+					'checkup'				=> $checkup,
+					'itens_checkup'			=> $item_checkups,
+				];
+//				dd($item_carrinho);
+			}
 
     		array_push($carrinho, $item_carrinho);
     	}
@@ -728,7 +773,7 @@ class ClinicaController extends Controller
     	$valor_desconto = 0;
 
     	$cpf_titular = $user_session->documentos->first()->te_documento;
-    	
+
     	$valor_parcelamento = $valor_total-$valor_desconto;
     	$parcelamentos = [];
     	$parcelamentos = array(
@@ -756,7 +801,12 @@ class ClinicaController extends Controller
 
     	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
-    
+
+    /*colocar essa rota no local correto*/
+    public function contatoHomePublica(){
+        return view('mensagems.contato');
+    }
+
     public function confirmaAgendamento(){
         return view('confirmacao');
     }

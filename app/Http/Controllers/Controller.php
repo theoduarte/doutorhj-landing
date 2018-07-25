@@ -6,15 +6,19 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Agendamento;
-use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
-    
+    // public function __construct() {
+
+    //     $termosCondicoes = new TermosCondicoes();
+    //     View::share( 'termosCondicoesAtual', $termosCondicoes->getActual() );
+    // }
     /**
      * Consulta Cep através de sistema externo
      *
@@ -55,30 +59,35 @@ class Controller extends BaseController
         $agendamentos_home = [];
         
         if (Auth::check()) {
-            
-            $paciente_id = Auth::user()->paciente->id;
-            
-//             DB::enableQueryLog();
-            		
-           $agendamentos_home = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')
-            		->join('pacientes', function($join1) use ($paciente_id) { $join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(
-            		function($query) use ($paciente_id) { $query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));});})
-            		->select('agendamentos.*')
-            		->whereNotNull('agendamentos.atendimento_id')
-            		->distinct()
-            		->orderBy('dt_atendimento', 'desc')->get();
-//            	$query_temp = DB::getQueryLog();
-//             dd($query_temp);
-            
-            for ($i = 0; $i < sizeof($agendamentos_home); $i++) {
-                $agendamentos_home[$i]->clinica->load('enderecos');
-                $agendamentos_home[$i]->clinica->enderecos->first()->load('cidade');
-                $agendamentos_home[$i]->endereco_completo = $agendamentos_home[$i]->clinica->enderecos->first()->te_endereco.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->te_bairro.' - '.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->nm_cidade.'/'.$agendamentos_home[$i]->clinica->enderecos->first()->cidade->estado->sg_estado;
-                $agendamentos_home[$i]->itempedidos->first()->load('pedido');
-                $agendamentos_home[$i]->itempedidos->first()->pedido->load('pagamentos');
-                $agendamentos_home[$i]->valor_total = sizeof($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamentos_home[$i]->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
-            }
-            
+			$paciente_id = Auth::user()->paciente->id;
+
+			//DB::enableQueryLog();
+			$agendamentos_home = Agendamento::with([
+				'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
+				'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
+			])
+				->join('pacientes', function($join1) use ($paciente_id) {
+					$join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(function($query) use ($paciente_id) {
+						$query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));
+					});
+				})
+				->select('agendamentos.*')
+				->distinct()
+				->orderBy('dt_atendimento', 'asc')->get();
+
+			//$query_temp = DB::getQueryLog();
+			//dd($query_temp);
+
+			foreach($agendamentos_home as $agendamento) {
+				if(!is_null($agendamento->atendimento_id)) {
+					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
+				}
+
+                if ( !empty($agendamento->itempedidos->first()) ) {
+                    $agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
+                    $agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
+                }
+			}
         }
         
         return view('welcome', compact('agendamentos_home', 'cvx_num_itens_carrinho'));

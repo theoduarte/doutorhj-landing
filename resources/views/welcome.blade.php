@@ -13,7 +13,7 @@
                     <div class="titulo">
                         <span>Quero agendar</span>
                     </div>
-                    <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
+                    <form action="/resultado" class="form-busca-home form-busca" method="get" onsubmit="return validaBuscaAtendimento()">
                         <div class="row">
                             <div class="form-group col-md-12 col-lg-3">
                                 <label for="tipo">Tipo de atendimento</label>
@@ -22,7 +22,7 @@
                                     <option value="saude">Consulta Médica</option>
                                     <option value="odonto">Consulta Odontológica</option>
                                     <option value="exame">Exames</option>
-                                    <!-- <option value="procedimento">Procedimento</option> -->
+                                    <option value="checkup">Check-ups</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
@@ -31,9 +31,8 @@
                                     <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-12 col-lg-3">
+                            <div class="form-group col-md-12 col-lg-3" id="dvLocalAtendimento">
                                 <label for="local">Local de antedimento</label>
-                                <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                 <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                     <option value="" disabled selected hidden>Ex.: Asa Sul</option>
                                 </select>
@@ -63,58 +62,83 @@
                             <p class="tit-box-pc">Resumo dos próximos agendamentos</p>
                             <div class="row">
                                 @foreach($agendamentos_home as $agendamento)
-                                    <div class="proxima-consulta col-sm-12 col-md-6">
-                                        <div class="area-pc">
-                                            <div class="tit-pc">
-                                                {{--<p>Sua próxima consulta é</p>--}}
-                                                <p class="data-consulta">
-                                                    Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
-                                                    de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                    às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}h
-                                                        @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
-                                                            e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min @endif</span></p>
-
-                                            </div>
-                                            <div class="resumo">
-                                                <div class="nome-status">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            @if($agendamento->getRawCsStatusAttribute() == 10)
-                                                                <span class="status pre-agendado">Pré-Agendado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                                                <span class="status confirmado">Confirmado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                                                <span class="status nao-confirmado">Não Confirmado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                                                <span class="status finalizado">Finalizado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                                                <span class="status ausente">Não compareceu</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                                                <span class="status cancelado">Cancelado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                                                <span class="status agendado">Agendado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                                                <span class="status retorno">Retorno de Consulta</span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="tipo">
-                                                    <span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
-                                                    <br>
-                                                    <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
-                                                </p>
-                                                {{--<p class="profissional">
-                                                    Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
-                                                <p class="endereco">
-                                                    <strong>Endereço:</strong> {{ $agendamento->endereco_completo }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+									@if(!is_null($agendamento->atendimento_id))
+										<div class="proxima-consulta col-sm-12 col-md-6">
+											<div class="area-pc">
+												<div class="tit-pc">
+													{{--<p>Sua próxima consulta é</p>--}}
+													<p class="data-consulta">
+														Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+														de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+														às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}h
+															@if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
+																e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}min. @endif</span></p>
+												</div>
+												<div class="resumo">
+													<div class="nome-status">
+														<div class="row">
+															<div class="col-6">
+																<p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+															</div>
+															<div class="col-6">
+																@if($agendamento->getRawCsStatusAttribute() == 10)
+																	<span class="status pre-agendado">Pré-Agendado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 20)
+																	<span class="status confirmado">Confirmado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 30)
+																	<span class="status nao-confirmado">Não Confirmado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 40)
+																	<span class="status finalizado">Finalizado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 50)
+																	<span class="status ausente">Não compareceu</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 60)
+																	<span class="status cancelado">Cancelado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 70)
+																	<span class="status agendado">Agendado</span>
+																@elseif($agendamento->getRawCsStatusAttribute() == 80)
+																	<span class="status retorno">Retorno de Consulta</span>
+																@endif
+															</div>
+														</div>
+													</div>
+													<p class="tipo">
+														<span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
+														<br>
+														<span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
+													</p>
+													{{--<p class="profissional">
+														Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+													<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+													<p class="endereco">
+														<strong>Endereço:</strong> {{ $agendamento->endereco_completo }}</p>
+												</div>
+											</div>
+										</div>
+									@elseif(!is_null($agendamento->checkup_id))
+										<div class="proxima-consulta col-sm-12 col-md-6">
+											<div class="area-pc">
+												<div class="tit-pc">
+													<p class="data-consulta">Checkup</p>
+												</div>
+												<div class="resumo">
+													<div class="nome-status">
+														<div class="row">
+															<div class="col-12">
+																<p class="beneficiario">{{$agendamento->paciente->nm_primario}}</p>
+															</div>
+														</div>
+													</div>
+													<p class="tipo">
+														<span>Checkup {{$agendamento->checkup->titulo}} - {{ucfirst($agendamento->checkup->tipo)}}</span>
+													</p>
+													{{--<p class="profissional">
+														Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+													<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+													<a href="{{url('meus-agendamentos#checkup')}}" class="link-detalhes-checkup">Clique aqui para ver todos os detalhes do Checkup</a>
+												</div>
+											</div>
+										</div>
+									@endif
                                 @endforeach
                             </div>
                         </div>
@@ -173,6 +197,45 @@
                     </div>
                 </div>
             </div>
+            <div class="area-parceiros">
+                <div class="container">
+                    <div class="titulo-home">
+                        <h3>Alguns de nossos parceiros</h3>
+                    </div>
+                    <div class="owl-carousel owl-theme">
+                        <div class="item"><img src="/libs/home-template/img/parceiros/alianca.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/bela-vista.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biocardios.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biovida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cardio-fitness.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/centro-clinico-lorena-de-fatima.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cimed.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cinthia-rojas.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-fisio-evidence.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-vila-rica.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cliped.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/crb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/digidoc.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/exame.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fenelon.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fisiolabor.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/equilibrio.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/hospital-pacini.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ibramer.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ila.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/implante-vida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/infinita.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/instituto-mulher.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/icb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/dermaline.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/sabin.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/micra.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/policlinica-mais.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/santa-paula.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/visao.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
         </section>
     @else
         <section class="banner-slider-home">
@@ -225,7 +288,7 @@
                             <div class="titulo">
                                 <span>Quero agendar</span>
                             </div>
-                            <form action="/resultado" class="form-busca-home" method="get" onsubmit="return validaBuscaAtendimento()">
+                            <form action="/resultado" class="form-busca-home form-busca" method="get" onsubmit="return validaBuscaAtendimento()">
                                 <div class="row">
                                     <div class="form-group col-md-12 col-lg-3">
                                         <label for="tipo">Tipo de atendimento</label>
@@ -234,7 +297,7 @@
                                             <option value="saude">Consulta Médica</option>
                                             <option value="odonto">Consulta Odontológica</option>
                                             <option value="exame">Exames</option>
-                                            <!-- <option value="procedimento">Procedimento</option> -->
+                                            <option value="checkup">Check-up</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12 col-lg-3">
@@ -243,9 +306,8 @@
                                             <option value="">Ex.: Clínica Médica</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-12 col-lg-3">
+                                    <div class="form-group col-md-12 col-lg-3" id="localAtendimento">
                                         <label for="local">Local de atendimento</label>
-                                        <!-- <input type="text" id="local_atendimento" class="form-control cvx-local-atendimento" name="local_atendimento" placeholder="Ex.: Asa Sul"> -->
                                         <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                             <option value="">Ex.: Asa Sul</option>
                                         </select>
@@ -543,16 +605,53 @@
                                 <h3>Aplicativo Doctor Hoje</h3>
                             </div>
                             <p>Com o aplicativo Doctor Hoje, você poderá ter acesso a todas as funcionalidades na palma
-                                da
-                                sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
-                                das
-                                novidades. </p>
+                                da sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
+                                das novidades. </p>
                             <p><strong>Em breve disponível:</strong></p>
                             <ul class="link-aplicativos">
                                 <li><a>Google Play</a></li>
                                 <li><a>App Store</a></li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="area-parceiros">
+                <div class="container">
+                    <div class="titulo-home">
+                        <h3>Alguns de nossos parceiros</h3>
+                    </div>
+                    <div class="owl-carousel owl-theme">
+                        <div class="item"><img src="/libs/home-template/img/parceiros/alianca.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/bela-vista.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biocardios.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/biovida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cardio-fitness.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/centro-clinico-lorena-de-fatima.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cimed.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cinthia-rojas.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-fisio-evidence.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/clinica-vila-rica.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/cliped.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/crb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/digidoc.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/exame.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fenelon.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/fisiolabor.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/equilibrio.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/hospital-pacini.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ibramer.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/ila.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/implante-vida.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/infinita.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/instituto-mulher.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/icb.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/dermaline.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/sabin.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/micra.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/policlinica-mais.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/santa-paula.png" alt=""></div>
+                        <div class="item"><img src="/libs/home-template/img/parceiros/visao.png" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -564,8 +663,8 @@
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
 
-                $('#tipo_especialidade option:first').prop("selected", true);
-                $('#local_atendimento option:first').prop("selected", true);
+                $('#tipo_especialidade option:first').prop("selected", false);
+                $('#local_atendimento option:first').prop("selected", false);
             });
 
             /*********************************
@@ -576,6 +675,31 @@
 
             $('.carousel').carousel({
                 interval: 7000
+            });
+
+            /*********************************
+             *
+             * CARROSSEL PARCEIROS
+             *
+             *********************************/
+
+            $(document).ready(function(){
+                $('.owl-carousel').owlCarousel({
+                    loop:true,
+                    margin:10,
+                    nav:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:4
+                        },
+                        1000:{
+                            items:8
+                        }
+                    }
+                })
             });
 
             /*********************************

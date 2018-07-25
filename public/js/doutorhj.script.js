@@ -1,79 +1,122 @@
 $(document).ready(function () {
-	
 	$('#tipo_atendimento').change(function(){
 		var tipo_atendimento = $(this).val();
-		
 		if(tipo_atendimento == '') { return false; }
+		
+		
+		if( $(this).val() == 'saude' || $(this).val() == 'odonto' || $(this).val() == 'exame' ){
+			$('label[for="especialidade"]').text("Especialidade ou exame");
+			$('label[for="local"]').text("Local de Atendimento");
+			$('.form-busca').attr('action', '/resultado');
+			$('.form-busca').attr('onsubmit', 'return validaBuscaAtendimento()');
+		}else if( $(this).val() == 'checkup' ){
+			$('label[for="especialidade"]').text("Check-up");
+			$('label[for="local"]').text("Tipo de Check-up");
+			$('.form-busca').attr('action', '/resultado-checkup');
+			$('.form-busca').attr('onsubmit', 'return validaBuscaCheckup()');
+		}
+		$('#local_atendimento').empty();
+		
 		
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
-				'tipo_atendimento': $(this).val(),
-				'_token': laravel_token
+				'tipo_atendimento': tipo_atendimento,
+				'_token'		  : laravel_token
 			},
 			success: function (result) {
-
 				if( result != null) {
 					var json = JSON.parse(result.atendimento);
-					
-					$('#tipo_especialidade').empty();
-					for(var i=0; i < json.length; i++) {
-						var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-						$('#tipo_especialidade').append($(option));
-					}
-					
-					var atendimento_id = $('#tipo_especialidade option:first').val();
-					
-					if(atendimento_id == '') { return false; }
-					
-					jQuery.ajax({
-			    		type: 'POST',
-			    	  	url: '/consulta-todos-locais-atendimento',
-			    	  	data: {
-							'tipo_atendimento': tipo_atendimento,
-			    	  		'atendimento_id': atendimento_id,
-							'_token': laravel_token
-						},
-						success: function (result) {
 
-							if( result != null) {
-								var json = result.endereco;
-								
-								$('#local_atendimento').empty();
-								var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
-								$('#local_atendimento').append($(option));
-								
-								for(var i=0; i < json.length; i++) {
-									option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+					$('#tipo_especialidade').empty();
+
+					if( $('#tipo_atendimento').val() != 'checkup' ){
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
+						var atendimento_id = $('#tipo_especialidade option:first').val();
+						if(atendimento_id == '') { return false; }
+
+						jQuery.ajax({
+				    		type: 'POST',
+				    	  	url: '/consulta-todos-locais-atendimento',
+				    	  	data: {
+								'tipo_atendimento': tipo_atendimento,
+				    	  		'atendimento_id': atendimento_id,
+								'_token': laravel_token
+							},
+							success: function (result) {
+								if( result != null) {
+									var json = result.endereco;
+									$('#local_atendimento').empty();
+									var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
 									$('#local_atendimento').append($(option));
+									
+									for(var i=0; i < json.length; i++) {
+										option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+										$('#local_atendimento').append($(option));
+									}
+									
+									if(json.length > 0) {
+										$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
+										$('#endereco_id').val(json[0].id);
+									}
 								}
-								
-								if(json.length > 0) {
-									$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-									$('#endereco_id').val(json[0].id);
+				            },
+				            error: function (result) {
+				            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				            }
+				    	});
+					}else{
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].descricao+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
+						jQuery.ajax({
+							type: 'POST',
+							url: '/consulta-tipos-checkup',
+							data: {
+								'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
+								'_token': laravel_token
+							},
+							success: function (result) {
+								if( result != null) {
+									var json = result;
+									
+									$('#local_atendimento').empty();
+									var option = '<option value="TODOS">TODOS</option>';
+									$('#local_atendimento').append($(option));
+									
+									for(var i=0; i < json.length; i++) {
+										option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
+										$('#local_atendimento').append($(option));
+									}
+									
+									if(json.length > 0) {
+										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+									}									
 								}
-								
+							},
+							error: function (result) {
+								$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 							}
-			            },
-			            error: function (result) {
-			            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-			            }
-			    	});
-					
+						});
+					}
 				}
             },
             error: function (result) {
             	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
             }
     	});
-		
 	});
 	
 	try {
 		var $cardinput = $('.cvx-checkout_card_number');
 		$('.cvx-checkout_card_number').validateCreditCard(function(result) {		
-			//console.log(result);
 			if (result.card_type != null)
 			{
 				$('.inputCodigoCredito').attr('maxlength', 3);
@@ -92,7 +135,7 @@ $(document).ready(function () {
 						$('.inputBandeiraCartaoCredito').val('Visa');
 						$('.inputBandeiraCartaoDebito').val('Visa');
 						break;
-
+						$checkup
 					case "mastercard":
 						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
@@ -109,8 +152,7 @@ $(document).ready(function () {
 						$cardinput.css('background-position', '5px -206px');
 						$cardinput.addClass('card_discover');
 						$('.inputBandeiraCartaoCredito').val('Diners');
-						break;
-
+						break;	
 					case "amex":
 						$cardinput.css('background-position', '5px -290px');
 						$cardinput.addClass('card_amex');
@@ -126,13 +168,13 @@ $(document).ready(function () {
 					
 					case "elo":
 						$cardinput.css('background-position', '5px -332px');
-						$cardinput.addClass('card_maestro');
+						$cardinput.addClass('card_maestro');$checkup
 						$('.inputBandeiraCartaoCredito').val('Elo');
 						break;
 						
 					default:
 						$cardinput.css('background-position', '5px 4px');
-						break;					
+						break;
 				}
 			} else {
 				$cardinput.css('background-position', '5px 4px');
@@ -153,7 +195,6 @@ $(document).ready(function () {
 	} catch (e) {}
 	
 	$('#btn-finalizar-pedido').click(function(){
-		
 		var tipo_pagamento = $('#selectFormaPagamento').val();
 		var cartao_cadastrado = $('#selectCartaoCredito').val();
 		
@@ -164,125 +205,85 @@ $(document).ready(function () {
 		} else if(cartao_cadastrado != '') {
 			pagarCartaoCadastrado();
 		}
-		
-		
 	});
 	
 	$(".select2").select2({
 		language: 'pt-BR'
 	});
 	
-	/*$( "#local_atendimento" ).keyup(function() {
-		
-		var search_term = $(this).val();
-		
-		if(search_term.length < 3){ return false; }
-		
-		var tipo_atendimento = $('#tipo_atendimento').val();
-		var procedimento_id = $('#tipo_especialidade').val();
-		var tipo_especialidade = $('#tipo_atendimento').val() == 'saude' | $('#tipo_atendimento').val() == 'odonto' ? 'consulta' : 'procedimento';
-		
-		$( "#local_atendimento" ).autocomplete({
-			source: function( request, response ) {
-				$.ajax( {
-					type: 'POST',
-					url      : "/consulta-local-atendimento",
-					dataType : "json",
-					data: {
-						'search_term': search_term,
-						'tipo_atendimento': tipo_atendimento,
-						'procedimento_id': procedimento_id,
-						'tipo_especialidade': tipo_especialidade,
-						'_token': laravel_token
-					},
-					success  : function( data ) {
-						response( data );
-					}
-				});
-			},
-			minLength : 3,
-			select: function(event, ui) {
-				arProcedimento = ui.item.id.split(' | ');
-				
-				$('input[name="procedimento_id"]').val(arProcedimento[0]);
-				$('input[name="cd_procedimento"]').val(arProcedimento[1]);
-				$('input[name="descricao_procedimento"]').val(arProcedimento[2]);
-			}
-		});
-	});*/
-	
-	/*$( '#local_atendimento' ).keyup(function() {
-		$(this).parent().find('.cvx-no-loading').addClass('cvx-input-loading');
-	});
-	
-	$( '#local_atendimento' ).autocomplete({
-		type:'post',
-		dataType: 'json',
-		params: {
-			'search_term': function() { return $('#local_atendimento').val(); },
-			'tipo_atendimento': function() { return $('#tipo_atendimento').val(); },
-			'atendimento_id': function() { return $('#tipo_especialidade').val(); },
-			'tipo_especialidade': function() { return $('#tipo_atendimento').val() == 'saude' | $('#tipo_atendimento').val() == 'odonto' ? 'consulta' : 'procedimento'; },
-			'_token': laravel_token
-		},
-		minChars: 3,
-		serviceUrl: "/consulta-local-atendimento",
-	    onSelect: function (result) {
-	    	$( '#local_atendimento' ).parent().find('.cvx-no-loading').removeClass('cvx-input-loading');
-	    	$('#endereco_id').val(result.id);			
-	    },
-	    onSearchComplete: function (ui) {
-	    	$( '#local_atendimento' ).parent().find('.cvx-no-loading').removeClass('cvx-input-loading');
-	    	var tipo_atendimento = $('#tipo_atendimento').val();
-	    	var atendimento_id = $('#tipo_especialidade').val();
-	    	
-    	    if($(this).val().length > 3 & tipo_atendimento.length > 0 & atendimento_id.length > 0) {
-        	    buscarEndereco($(this), tipo_atendimento, atendimento_id);
-    	    }
-	    }
-	});*/
-	
 	$('#tipo_especialidade').change(function(){
-		
-		var atendimento_id = $(this).val();
-		var tipo_atendimento = $('#tipo_atendimento').val();
-		
-		if(atendimento_id == '') { return false; }
-		
-		jQuery.ajax({
-    		type: 'POST',
-    	  	url: '/consulta-todos-locais-atendimento',
-    	  	data: {
-				'tipo_atendimento': tipo_atendimento,
-    	  		'atendimento_id': atendimento_id,
-				'_token': laravel_token
-			},
-			success: function (result) {
-
-				if( result != null) {
-					var json = result.endereco;
-					
-					$('#local_atendimento').empty();
-					var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
-					$('#local_atendimento').append($(option));
-					
-					for(var i=0; i < json.length; i++) {
-						option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+		if( $('#tipo_atendimento').val() != 'checkup' ){
+			var atendimento_id = $(this).val();
+			var tipo_atendimento = $('#tipo_atendimento').val();
+			
+			if(atendimento_id == '') { return false; }
+			
+			
+			jQuery.ajax({
+	    		type: 'POST',
+	    	  	url: '/consulta-todos-locais-atendimento',
+	    	  	data: {
+					'tipo_atendimento': tipo_atendimento,
+	    	  		'atendimento_id': atendimento_id,
+					'_token': laravel_token
+				},
+				success: function (result) {
+	
+					if( result != null) {
+						var json = result.endereco;
+						
+						$('#local_atendimento').empty();
+						var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
 						$('#local_atendimento').append($(option));
+						
+						for(var i=0; i < json.length; i++) {
+							option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+							$('#local_atendimento').append($(option));
+						}
+						
+						if(json.length > 0) {
+							$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
+							$('#endereco_id').val(json[0].id);
+						}
+						
 					}
-					
-					if(json.length > 0) {
-						$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-						$('#endereco_id').val(json[0].id);
+	            },
+	            error: function (result) {
+	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+	            }
+	    	});
+		}else{
+			jQuery.ajax({
+				type: 'POST',
+				url: '/consulta-tipos-checkup',
+				data: {
+					'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
+					'_token': laravel_token
+				},
+				success: function (result) {
+					if( result != null) {
+						var json = result;
+						
+						$('#local_atendimento').empty();
+						var option = '<option value="TODOS">TODOS</option>';
+						$('#local_atendimento').append($(option));
+						
+						for(var i=0; i < json.length; i++) {
+							option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
+							$('#local_atendimento').append($(option));
+						}
+						
+						if(json.length > 0) {
+							$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+							$('#endereco_id').val(json[0].tipo);
+						}									
 					}
-					
+				},
+				error: function (result) {
+					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 				}
-            },
-            error: function (result) {
-            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-            }
-    	});
-		
+			});
+		}
 	});
 	
 	$('#local_atendimento').change(function(){
@@ -334,7 +335,6 @@ $(document).ready(function () {
 });
 
 function pagarCartaoCredito() {
-	
 	var result = true;
 	var numero_cartao 	= $('#inputNumeroCartaoCredito');
 	var nome_impresso 	= $('#inputNomeCartaoCredito');
@@ -439,6 +439,10 @@ function pagarCartaoCredito() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
 		
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
@@ -446,13 +450,17 @@ function pagarCartaoCredito() {
 		
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
 		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
 		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -646,20 +654,28 @@ function pagarCartaoDebito() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
-		
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
+
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
 		}
-		
+
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+profissional_id_temp+'}';
+
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -801,20 +817,28 @@ function pagarCartaoCadastrado() {
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
 		var profissional_id_temp = $('#profissional_id_'+i).val();
-		
+		var atendimento_id_temp = $('#atendimento_id_'+i).val();
+		var checkup_id_temp = $('#checkup_id_'+i).val();
+		var clinica_id_temp = $('#clinica_id_'+i).val();
+		var filial_id_temp = $('#filial_id_'+i).val();
+
 		if(typeof profissional_id_temp === 'undefined') {
 			profissional_id_temp = 'null';
 		}
-		
+
 		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-		
-		if(typeof dt_atendimento_temp === 'undefined') {
-			dt_atendimento = 'null';
-		}
-		
+
+		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
 		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-		
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+ $('#clinica_id_'+i).val()+',"filial_id":'+ $('#filial_id_'+i).val()+',"atendimento_id":'+ $('#atendimento_id_'+i).val()+',"profissional_id":'+$('#profissional_id_'+i).val()+'}';
+
+		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
 		agendamentos.push(item);
 	}
 	
@@ -953,7 +977,6 @@ function pad(n){
 }
 
 function validaBuscaAtendimento() {
-	
 	var tipo_atendimento = $('#tipo_atendimento');
 	var tipo_especialidade = $('#tipo_especialidade');
 	var local_atendimento = $('#local_atendimento');
@@ -996,7 +1019,8 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	if( local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
+
+	if( $('#tipo_atendimento').val() != 'checkup' && local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
 		endereco_id.parent().addClass('cvx-has-error');
 		endereco_id.focus();
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
@@ -1014,18 +1038,16 @@ function validaBuscaAtendimento() {
 		return false;
 	}
 	
-	
 	return true;
 }
+
 
 function onlyNumbers(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
-
     var keychar = String.fromCharCode(key);
-    //alert(keychar);
     var keycheck = /^[0-9_\b]+$/;
-
+	
     if (!(key == 8 || key == 9 || key == 17 || key == 27 || key == 44 || key == 46 || key == 37 || key == 39)) {
         if (!keycheck.test(keychar)) {
             theEvent.returnValue = false;//for IE

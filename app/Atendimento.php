@@ -13,6 +13,9 @@ class Atendimento extends Model
 	public $fillable  = ['id', 'vl_com_atendimento', 'vl_net_atendimento', 'ds_preco'];
 	public $sortable  = ['id', 'vl_com_atendimento', 'vl_net_atendimento', 'ds_preco'];
 
+	const ATIVO = 'A';
+	const INATIVO = 'I';
+	
 	public function clinica(){
 	    return $this->belongsTo('App\Clinica');
 	}

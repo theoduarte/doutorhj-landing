@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Checkup;
+use App\Datahoracheckup;
+use App\Especialidade;
+use App\ItemCheckup;
 use App\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as CVXRequest;
@@ -19,6 +23,7 @@ use App\Atendimento;
 use App\Mensagem;
 use App\MensagemDestinatario;
 use App\Contato;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
@@ -182,7 +187,12 @@ class PaymentController extends Controller
     	date_default_timezone_set('America/Sao_Paulo');
     	
         $result_agendamentos = $request->session()->get('result_agendamentos');
-        
+
+//		echo '<pre>';
+//		print_r($result_agendamentos);
+//		die;
+//		dd($result_agendamentos);
+
         if ($result_agendamentos == null) {
             return redirect()->route('landing-page');
         }
@@ -217,45 +227,98 @@ class PaymentController extends Controller
         if($cod_cupom_desconto != '') {
             $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
         }
-        
+
+		$carrinho = CVXCart::getContent()->toArray();
+
+//		echo '<pre>';
+//		print_r($carrinho);
+//		print_r(CVXRequest::all());die;
+
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
         $agendamentos = CVXRequest::post('agendamentos');
         
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
-        
+
         //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
         //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
-            
-            $item_agendamento = json_decode($agendamentos[$i]);
-            
-            $atendimento_id_temp = $item_agendamento->atendimento_id;
-            $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-            $item_atendimento->load('clinica');
-            
-            if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-                $agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-                
-                if (sizeof($agendamento) > 0) {
-                    $agendamento_disponivel = false;
-                }
-                
-            } elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
-            	
-            	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-            	
-            	if (sizeof($agendamento) > 0) {
-            		$agendamento_disponivel = false;
-            	}
-            }
-            
-            if ($item_atendimento == null) {
-            	$agendamento_atendimento = false;
-            }
+			$item_agendamento = json_decode($agendamentos[$i]);
+			$listCarrinho = $this->listCarrinhoItens();
+
+			if(!empty($item_agendamento->atendimento_id)) {
+				$atendimento_id_temp = $item_agendamento->atendimento_id;
+				$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+				$item_atendimento->load('clinica');
+				$item_agendamento->dt_atendimento = \DateTime::createFromFormat('Y-m-d H:i', $item_agendamento->dt_atendimento);
+
+				if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
+
+					if (sizeof($agendamento) > 0) {
+						$agendamento_disponivel = false;
+					}
+
+				} elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
+
+					if (sizeof($agendamento) > 0) {
+						$agendamento_disponivel = false;
+					}
+				}
+
+				if ($item_atendimento == null) {
+					$agendamento_atendimento = false;
+				}
+
+				$item_agendamento->dt_atendimento = !empty($item_agendamento->dt_atendimento) ? $item_agendamento->dt_atendimento->format('d/m/Y H:i') : null;
+				$agendamentoItens[] = $item_agendamento;
+			} elseif(!empty($item_agendamento->checkup_id)) {
+				$idCarrinho = $listCarrinho['checkups'][$item_agendamento->checkup_id];
+				$item_agendamento->itens = $carrinho[$idCarrinho]['attributes']['items_checkup'];
+
+				if(!Checkup::where(['id' => $item_agendamento->checkup_id])->exists()) {
+					return response()->json([
+						'mensagem' => 'O seu Agendamento não foi realizado, pois um dos checkups informados não existe. Por favor, tente novamente.'
+					], 403);
+				}
+
+				if(count($item_agendamento->itens) != ItemCheckup::where(['checkup_id' => $item_agendamento->checkup_id])->get()->count()) {
+					return response()->json([
+						'mensagem' => 'Quantidade de itens fornecidos no checkup invalida. Por favor, tente novamente.'
+					], 400);
+				}
+
+				foreach ($item_agendamento->itens as $key=>$item) {
+					if(!empty($item['data_agendamento']) || !empty($item['hora_agendamento'])) {
+						$dataHoraAgendamento = $item['data_agendamento'] . ' ' . $item['hora_agendamento'];
+						$item['dt_atendimento'] = \DateTime::createFromFormat('d.m.Y H:i', $dataHoraAgendamento)->format('d/m/Y H:i');
+
+						$atendimento = Atendimento::join('item_checkups', 'item_checkups.atendimento_id', '=', 'atendimentos.id')
+							->where(['item_checkups.id' => $item['id'], 'item_checkups.checkup_id' => $item_agendamento->checkup_id])
+							->first();
+
+						if(!Agendamento::validaHorarioDisponivel($atendimento->clinica_id, $atendimento->profissional_id, $item['dt_atendimento'])) {
+							return response()->json([
+								'checkup_id' => $item_agendamento->checkup_id,
+								'profissional_id' => $item->profissional_id,
+								'clinica_id' => $item->clinica_id,
+								'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.'
+							], 403);
+						}
+
+						$item_agendamento->itens[$key]['dt_atendimento'] = $item['dt_atendimento'];
+					} else {
+						$item_agendamento->itens[$key]['dt_atendimento'] = null;
+					}
+				}
+
+				$checkups_id[] = $item_agendamento->checkup_id;
+				$agendamentoItens[] = $item_agendamento;
+			}
         }
-         
+
         if (!$agendamento_disponivel) {
         	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.']);
         }
@@ -386,35 +449,44 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //dd($output);
+        
+        $cielo_result = json_decode($output);
+
+        \Log::debug("CIELO CHECKOUT");
+        \Log::debug(" -- Sended data --");
+        \Log::debug( print_r(array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey), true) );
+        
+        \Log::debug(" -- Result data --");
+        \Log::debug( print_r($cielo_result,true) );
+
         if ($httpcode == 201) {
-            
-        	$cielo_result = json_decode($output);
-        	//dd($cielo_result);
         	try {
         		$cielo_status = $cielo_result->Payment->Status;
         		if ($cielo_status == 1 | $cielo_status == 2) {
         		    
         			$result_agendamentos = [];
-        			$agendamentos = CVXRequest::post('agendamentos');
-        			 
-        			for ($i = 0; $i < sizeof($agendamentos); $i++) {
-        				 
-        				$item_agendamento = json_decode($agendamentos[$i]);
-        				//dd($item_agendamento);
-        				$agendamento = new Agendamento();
-        				 
-        				$agendamento->te_ticket         = UtilController::getAccessToken();
-        				$agendamento->cs_status         = 10;
-        				$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento && $item_agendamento->dt_atendimento != 'null' ? $item_agendamento->dt_atendimento.":00" : null;
-        				$agendamento->bo_remarcacao     = 'N';
-        				$agendamento->bo_retorno        = 'N';
-        				$agendamento->paciente_id       = $item_agendamento->paciente_id;
-        				$agendamento->clinica_id        = $item_agendamento->clinica_id;
-        				$agendamento->filial_id         = $item_agendamento->filial_id;
-        				$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
-        				$agendamento->profissional_id   = $item_agendamento->profissional_id;
-        				 
+        			//$agendamentos = CVXRequest::post('agendamentos');
+
+					foreach($agendamentoItens as $i=>$item_agendamento) {
+//        				dd($item_agendamento);
+
+						$agendamento 						= new Agendamento();
+						$agendamento->te_ticket				= UtilController::getAccessToken();
+						$agendamento->cs_status         	= 10;
+						$agendamento->bo_remarcacao     	= 'N';
+						$agendamento->bo_retorno        	= 'N';
+						$agendamento->paciente_id       	= $item_agendamento->paciente_id;
+
+						if(!empty($item_agendamento->atendimento_id)) {
+							$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
+							$agendamento->clinica_id        = $item_agendamento->clinica_id;
+							$agendamento->filial_id			= $item_agendamento->filial_id;
+							$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
+							$agendamento->profissional_id   = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+						} elseif(!empty($item_agendamento->checkup_id)) {
+							$agendamento->checkup_id = $item_agendamento->checkup_id;
+						}
+
         				//--busca o cupom de desconto------------
         				$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
         				 
@@ -431,47 +503,57 @@ class PaymentController extends Controller
         					$agendamento->load('paciente');
         					 
         					$item_pedido = new Itempedido();
-        					 
-        					$item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento*(1-$percentual_desconto);
-        					$item_pedido->pedido_id = $MerchantOrderId;
-        					$item_pedido->agendamento_id = $agendamento_id;
-        					 
+							$item_pedido->pedido_id = $MerchantOrderId;
+							$item_pedido->agendamento_id = $agendamento_id;
+
+							if(!empty($item_agendamento->atendimento_id)) {
+								$item_pedido->valor = $agendamento->atendimento->vl_com_atendimento * (1 - $percentual_desconto);
+							} else {
+								foreach ($item_agendamento->itens as $item) {
+									$dataHoraCheckup = new Datahoracheckup();
+									$dataHoraCheckup->agendamento_id = $agendamento->id;
+									$dataHoraCheckup->itemcheckup_id = $item['id'];
+                                    
+                                    if ( !empty($item['dt_atendimento']) ) {                                        
+                                        $dtAtendimento = Carbon::createFromFormat('d/m/Y H:i', $item['dt_atendimento'])->toDateTimeString();
+                                        $dataHoraCheckup->dt_atendimento = $dtAtendimento;    
+                                    }
+
+									if (!$dataHoraCheckup->save()) {
+										DB::rollback();
+										return response()->json([
+											'mensagem' => 'Erro ao salvar a dataHoraCheckup!'
+										], 500);
+									}
+								}
+								$item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
+							}
+
         					if(!$item_pedido->save()) {
         						echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
         					}
-        					 
+
         					//--busca pelas especialidades do atendimento--------------------------------------
         					$nome_especialidade = "";
         					$ds_atendimento = "";
-        					
-        					if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-        					    $agendamento->profissional->load('especialidades');
-        					    
-        					    foreach ($agendamento->profissional->especialidades as $especialidade) {
-        					        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-        					    }
-        					    
-        					} else {
-        					    $agendamento->atendimento->load('procedimento');
-        					    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
-        					    $ds_atendimento = $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag;
-        					}
-        					
-        					if($agendamento->atendimento->consulta_id != null) {
-        						$agendamento->atendimento->load('consulta');
-        						$ds_atendimento = $agendamento->atendimento->consulta->tag_populars->first()->cs_tag;
-        					}
-        					 
-        					$agendamento->ds_atendimento = $ds_atendimento;
-        					$agendamento->nome_especialidade = $nome_especialidade;
-        					 
+
+							$especialidade_obj = new Especialidade();
+							$especialidade = $especialidade_obj->getNomeEspecialidade($agendamento->id);
+
+        					$agendamento->ds_atendimento = $especialidade['ds_atendimento'];
+        					$agendamento->nome_especialidade = $especialidade['nome_especialidades'];
+
         					//--busca os itens de pedido relacionados------------------------------------------
         					$agendamento->load('itempedidos');
-        					 
+
+							if(!is_null($agendamento->checkup_id)) {
+								$agendamento->load('checkup');
+								$agendamento->load('datahoracheckups');
+							}
+
         					array_push($result_agendamentos, $agendamento);
-        					 
+
         					if ($payment_save_card == 'true' & $tp_pagamento == 'credito') {
-        			
         						$cartoes_paciente = CartaoPaciente::where('bandeira', '=', $cielo_result->Payment->CreditCard->Brand)
         						->where('nome_impresso', '=', $cielo_result->Payment->CreditCard->Holder)
         						->where('numero', '=', substr($cielo_result->Payment->CreditCard->CardNumber, -4))
@@ -501,7 +583,8 @@ class PaymentController extends Controller
         					 
         					//--enviar mensagem informando o pre agendamento da solicitacao----------------
         					try {
-        						$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
+								if(!is_null($agendamento->atendimento_id))
+									$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
         					} catch (Exception $e) {}
         				}
         				 
@@ -526,11 +609,13 @@ class PaymentController extends Controller
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "13". O Pagamento foi Cancelado por falha no Processamento. Por favor, tente novamente.']);
         			} elseif ($cielo_status == 20) {
         				return response()->json(['status' => false, 'mensagem' => 'Cód: "20". O Pagamento foi registrado como Recorrência, devido a uma falha e será cancelado. Por favor, tente novamente.']);
-        			}/*  elseif ($cielo_status == 1) {
-        			    return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
-        			} */
+        			}
+                    else {
+                        $returnMessage = $cielo_result->Payment->ReturnMessage;
+                        return response()->json(['status' => false, 'mensagem' => 'Cód: "'. $cielo_status . '". ' . $returnMessage]);   
+                    }
         			
-        			return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
+        			// return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
         		}
             
             } catch (\Exception $e) {
@@ -538,7 +623,12 @@ class PaymentController extends Controller
             	DB::rollback();
             	#############################################
             	//dd($e->getMessage());
-            	return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha. Por favor, tente novamente.']);
+            	return response()->json([
+					'status' => false,
+					'mensagem' => 'O Pedido não foi salvo, devido a uma falha. Por favor, tente novamente.',
+					'erro' => $e->getMessage(),
+					'line' => $e->getLine(),
+				]);
             }
             $pagamento = new Payment();
             
@@ -642,37 +732,87 @@ class PaymentController extends Controller
     	
     	//--verifica se todos os agendamentos possuem um atendimento relacionado------
     	$agendamento_atendimento = true;
-    	
+
+		$carrinho = CVXCart::getContent()->toArray();
+
     	//--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
     	//--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
     	for ($i = 0; $i < sizeof($agendamentos); $i++) {
-    	
     	    $item_agendamento = json_decode($agendamentos[$i]);
-    	    
-    	    $atendimento_id_temp = $item_agendamento->atendimento_id;
-    	    $item_atendimento = Atendimento::findorfail($atendimento_id_temp);
-    	    $item_atendimento->load('clinica');
-    	    
-    	    if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-        		 
-        		$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-        		 
-        		if (sizeof($agendamento) > 0) {
-        			$agendamento_disponivel = false;
-        		}
-        		
-    	    } elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
-            	
-            	$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', date('Y-m-d H:i:s', strtotime($item_agendamento->dt_atendimento.":00")))->get();
-            	
-            	if (sizeof($agendamento) > 0) {
-            		$agendamento_disponivel = false;
-            	}
-            }
-    	    
-    	    if ($item_atendimento == null) {
-    	    	$agendamento_atendimento = false;
-    	    }
+			$listCarrinho = $this->listCarrinhoItens();
+
+			if(!empty($item_agendamento->atendimento_id)) {
+				$atendimento_id_temp = $item_agendamento->atendimento_id;
+				$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
+				$item_atendimento->load('clinica');
+
+				$item_agendamento->dt_atendimento = \DateTime::createFromFormat('Y-m-d H:i', $item_agendamento->dt_atendimento);
+
+				if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('profissional_id', $item_agendamento->profissional_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
+
+					if (sizeof($agendamento) > 0) {
+						$agendamento_disponivel = false;
+					}
+
+				} elseif ($item_atendimento->consulta_id != null | $item_atendimento->clinica->tp_prestador == 'CLI') {
+
+					$agendamento = Agendamento::where('clinica_id', '=', $item_agendamento->clinica_id)->where('dt_atendimento', '=', $item_agendamento->dt_atendimento->format('Y-m-d H:i:s'))->get();
+
+					if (sizeof($agendamento) > 0) {
+						$agendamento_disponivel = false;
+					}
+				}
+
+				if ($item_atendimento == null) {
+					$agendamento_atendimento = false;
+				}
+
+				$item_agendamento->dt_atendimento = !empty($item_agendamento->dt_atendimento) ? $item_agendamento->dt_atendimento->format('d/m/Y H:i') : null;
+				$agendamentoItens[] = $item_agendamento;
+			} elseif(!empty($item_agendamento->checkup_id)) {
+				$idCarrinho = $listCarrinho['checkups'][$item_agendamento->checkup_id];
+				$item_agendamento->itens = $carrinho[$idCarrinho]['attributes']['items_checkup'];
+
+				if (!Checkup::where(['id' => $item_agendamento->checkup_id])->exists()) {
+					return response()->json([
+						'mensagem' => 'O seu Agendamento não foi realizado, pois um dos checkups informados não existe. Por favor, tente novamente.'
+					], 403);
+				}
+
+				if (count($item_agendamento->itens) != ItemCheckup::where(['checkup_id' => $item_agendamento->checkup_id])->get()->count()) {
+					return response()->json([
+						'mensagem' => 'Quantidade de itens fornecidos no checkup invalida. Por favor, tente novamente.'
+					], 400);
+				}
+
+				foreach ($item_agendamento->itens as $key => $item) {
+					if (!empty($item['data_agendamento']) || !empty($item['hora_agendamento'])) {
+						$dataHoraAgendamento = $item['data_agendamento'] . ' ' . $item['hora_agendamento'];
+						$item['dt_atendimento'] = \DateTime::createFromFormat('d.m.Y H:i', $dataHoraAgendamento)->format('d/m/Y H:i');
+
+						$atendimento = Atendimento::join('item_checkups', 'item_checkups.atendimento_id', '=', 'atendimentos.id')
+							->where(['item_checkups.id' => $item['id'], 'item_checkups.checkup_id' => $item_agendamento->checkup_id])
+							->first();
+
+						if (!Agendamento::validaHorarioDisponivel($atendimento->clinica_id, $atendimento->profissional_id, $item['dt_atendimento'])) {
+							return response()->json([
+								'checkup_id' => $item_agendamento->checkup_id,
+								'profissional_id' => $item->profissional_id,
+								'clinica_id' => $item->clinica_id,
+								'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estão disponíveis. Por favor, tente novamente.'
+							], 403);
+						}
+
+						$item_agendamento->itens[$key]['dt_atendimento'] = $item['dt_atendimento'];
+					} else {
+						$item_agendamento->itens[$key]['dt_atendimento'] = null;
+					}
+				}
+
+				$checkups_id[] = $item_agendamento->checkup_id;
+				$agendamentoItens[] = $item_agendamento;
+			}
     	}
     	 
     	if (!$agendamento_disponivel) {
@@ -725,7 +865,10 @@ class PaymentController extends Controller
     	        }
     	    }
     	}
-    	
+
+		//--cartao cadastrado do paciente-----------------------------
+		$cartao_cadastrado = CartaoPaciente::findorfail($cartao_paciente);
+
     	$pedido = new Pedido();
     	$titulo_pedido = CVXRequest::post('titulo_pedido');
     	$descricao = '';
@@ -738,6 +881,7 @@ class PaymentController extends Controller
     	$pedido->dt_pagamento   = $dt_pagamento;
     	$pedido->tp_pagamento   = 'cadastrado';
     	$pedido->paciente_id    = $paciente_id;
+		$pedido->cartao_id		= $cartao_cadastrado->id;
     
     	if (!$pedido->save()) {
     		########### FINISHIING TRANSACTION ##########
@@ -748,10 +892,7 @@ class PaymentController extends Controller
     
     	//-- pedido id do DoctorHoje----------------------------------
     	$MerchantOrderId = $pedido->id;
-    	
-    	//--cartao cadastrado do paciente-----------------------------
-    	$cartao_cadastrado = CartaoPaciente::findorfail($cartao_paciente);
-    
+
     	//-- dados do comprador---------------------------------------
     	$customer = Paciente::findorfail($paciente_id);
     	$customer->load('user');
@@ -787,100 +928,119 @@ class PaymentController extends Controller
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     	$output = curl_exec($ch);
     	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    	//dd($output);
+    	
+
+        $cielo_result = json_decode($output);
+
+        \Log::debug("CIELO CHECKOUT");
+        \Log::debug(" -- Sended data --");
+        \Log::debug( print_r(array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey), true) );
+        
+        \Log::debug(" -- Result data --");
+        \Log::debug( print_r($cielo_result,true) );
+
     	if ($httpcode == 201) {
-    
-    		$cielo_result = json_decode($output);
-    		//dd($cielo_result);
     		try {
     			$cielo_status = $cielo_result->Payment->Status;
     			if ($cielo_status == 1 | $cielo_status == 2) {
     				
     				$result_agendamentos = [];
-    				$agendamentos = CVXRequest::post('agendamentos');
-    				
-    				for ($i = 0; $i < sizeof($agendamentos); $i++) {
-    				
-    					$item_agendamento = json_decode($agendamentos[$i]);
-    					//dd($item_agendamento);
-    					$agendamento = new Agendamento();
-    				
-    					$agendamento->te_ticket         = UtilController::getAccessToken();
-    					$agendamento->cs_status         = 10;
-    					$agendamento->dt_atendimento    = $item_agendamento->dt_atendimento && $item_agendamento->dt_atendimento != 'null' ? $item_agendamento->dt_atendimento.":00" : null;
-    					$agendamento->bo_remarcacao     = 'N';
-    					$agendamento->bo_retorno        = 'N';
-    					$agendamento->paciente_id       = $item_agendamento->paciente_id;
-    					$agendamento->clinica_id        = $item_agendamento->clinica_id;
-    					$agendamento->filial_id         = $item_agendamento->filial_id;
-    					$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
-    					$agendamento->profissional_id   = $item_agendamento->profissional_id;
-    					 
-    					//--busca o cupom de desconto------------
-    					$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
-    					 
-    					if (sizeof($cupom_desconto) > 0) {
-    						$agendamento->cupom_id = $cupom_desconto->first()->id;
-    					}
-    				
-    					if ($agendamento->save()) {
-    						$agendamento_id = $agendamento->id;
-    						$agendamento->load('atendimento');
-    						$agendamento->load('clinica');
-    						$agendamento->load('filial');
-    						$agendamento->load('profissional');
-    						$agendamento->load('paciente');
-    				
-    						$item_pedido = new Itempedido();
-    				
-    						$item_pedido->valor     = $agendamento->atendimento->vl_com_atendimento*(1-$percentual_desconto);
-    						$item_pedido->pedido_id = $MerchantOrderId;
-    						$item_pedido->agendamento_id = $agendamento_id;
-    				
-    						if(!$item_pedido->save()) {
-    							echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
-    						}
-    				
-    						//--busca pelas especialidades do atendimento--------------------------------------
-    						$nome_especialidade = "";
-    						$ds_atendimento = "";
-    				
-    						if ($item_agendamento->profissional_id && $item_agendamento->profissional_id != 'null') {
-    						    $agendamento->profissional->load('especialidades');
-    						    
-    						    foreach ($agendamento->profissional->especialidades as $especialidade) {
-    						        $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-    						    }
-    						} else {
-    						    $agendamento->atendimento->load('procedimento');
-    						    $nome_especialidade = $agendamento->atendimento->procedimento->ds_procedimento;
-    						    $ds_atendimento = $agendamento->atendimento->procedimento->tag_populars->first()->cs_tag;
-    						}
-    						
-    						if($agendamento->atendimento->consulta_id != null) {
-    							$agendamento->atendimento->load('consulta');
-    							$ds_atendimento = $agendamento->atendimento->consulta->tag_populars->first()->cs_tag;
-    						}
-    						
-    						$agendamento->ds_atendimento = $ds_atendimento;
-    						$agendamento->nome_especialidade = $nome_especialidade;
-    				
-    						$agendamento->load('itempedidos');
-    				
-    						array_push($result_agendamentos, $agendamento);
-    				
-    						//--relaciona o cartao do cliente ao pedido----------------
-    						$pedido->cartao_id = $cartao_cadastrado->id;
-    						$pedido->save();
-    				
-    						//--enviar mensagem informando o pre agendamento da solicitacao----------------
-    						try {
-    							$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
-    						} catch (Exception $e) {}
-    					}
-    				
-    				}
-    				
+//    				$agendamentos = CVXRequest::post('agendamentos');
+
+					foreach($agendamentoItens as $i=>$item_agendamento) {
+						$agendamento = new Agendamento();
+						$agendamento->te_ticket = UtilController::getAccessToken();
+						$agendamento->cs_status = 10;
+						$agendamento->bo_remarcacao = 'N';
+						$agendamento->bo_retorno = 'N';
+						$agendamento->paciente_id = $item_agendamento->paciente_id;
+
+						if (!empty($item_agendamento->atendimento_id)) {
+							$agendamento->dt_atendimento = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
+							$agendamento->clinica_id = $item_agendamento->clinica_id;
+							$agendamento->filial_id = $item_agendamento->filial_id;
+							$agendamento->atendimento_id = $item_agendamento->atendimento_id;
+							$agendamento->profissional_id = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+						} elseif (!empty($item_agendamento->checkup_id)) {
+							$agendamento->checkup_id = $item_agendamento->checkup_id;
+						}
+
+						//--busca o cupom de desconto------------
+						$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
+
+						if (sizeof($cupom_desconto) > 0) {
+							$agendamento->cupom_id = $cupom_desconto->first()->id;
+						}
+
+						if ($agendamento->save()) {
+							$agendamento_id = $agendamento->id;
+							$agendamento->load('atendimento');
+							$agendamento->load('clinica');
+							$agendamento->load('filial');
+							$agendamento->load('profissional');
+							$agendamento->load('paciente');
+
+							$item_pedido = new Itempedido();
+							$item_pedido->pedido_id = $MerchantOrderId;
+							$item_pedido->agendamento_id = $agendamento_id;
+
+							if (!empty($item_agendamento->atendimento_id)) {
+								$item_pedido->valor = $agendamento->atendimento->vl_com_atendimento * (1 - $percentual_desconto);
+							} else {
+								foreach ($item_agendamento->itens as $item) {
+									$dataHoraCheckup = new Datahoracheckup();
+									$dataHoraCheckup->agendamento_id = $agendamento->id;
+									$dataHoraCheckup->itemcheckup_id = $item['id'];
+
+                                    if ( !empty($item['dt_atendimento']) ) {                                        
+                                        $dtAtendimento = Carbon::createFromFormat('d/m/Y H:i', $item['dt_atendimento'])->toDateTimeString();
+                                        $dataHoraCheckup->dt_atendimento = $dtAtendimento;    
+                                    }
+
+									if (!$dataHoraCheckup->save()) {
+										DB::rollback();
+										return response()->json([
+											'mensagem' => 'Erro ao salvar a dataHoraCheckup!'
+										], 500);
+									}
+								}
+								$item_pedido->valor = ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
+							}
+
+							if (!$item_pedido->save()) {
+								echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+							}
+
+							//--busca pelas especialidades do atendimento--------------------------------------
+							$nome_especialidade = "";
+							$ds_atendimento = "";
+
+							$especialidade_obj = new Especialidade();
+							$especialidade = $especialidade_obj->getNomeEspecialidade($agendamento->id);
+
+							$agendamento->ds_atendimento = $especialidade['ds_atendimento'];
+							$agendamento->nome_especialidade = $especialidade['nome_especialidades'];
+
+							//--busca os itens de pedido relacionados------------------------------------------
+							$agendamento->load('itempedidos');
+
+							if(!is_null($agendamento->checkup_id)) {
+								$agendamento->load('checkup');
+								$agendamento->load('datahoracheckups');
+							}
+
+							if (!is_null($agendamento->checkup_id))
+								$agendamento->load('datahoracheckups');
+
+							array_push($result_agendamentos, $agendamento);
+
+							//--enviar mensagem informando o pre agendamento da solicitacao----------------
+							try {
+								if (!is_null($agendamento->atendimento_id))
+									$this->enviarEmailPreAgendamento($customer, $pedido, $agendamento);
+							} catch (Exception $e) {}
+						}
+					}
     			} else {
     				
     				########### FINISHIING TRANSACTION ##########
@@ -901,15 +1061,20 @@ class PaymentController extends Controller
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "13". O Pagamento foi Cancelado por falha no Processamento. Por favor, tente novamente.']);
     				} elseif ($cielo_status == 20) {
     					return response()->json(['status' => false, 'mensagem' => 'Cód: "20". O Pagamento foi registrado como Recorrência, devido a uma falha e será cancelado. Por favor, tente novamente.']);
-    				}/*  elseif ($cielo_status == 1) {
-    				    return response()->json(['status' => false, 'mensagem' => 'Cód: "1". O Pagamento foi Autorizado, mas não confirmado e portanto, o Pedido não foi realizado. Por favor, tente novamente.']);
-    				} */
+    				} else {
+                        $returnMessage = $cielo_result->Payment->ReturnMessage;
+                        return response()->json(['status' => false, 'mensagem' => 'Cód: "'. $cielo_status . '". ' . $returnMessage]);   
+                    }
     				 
-    				return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
+    				// return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo, devido a uma falha inesperada. Por favor, tente novamente.']);
     				
     			}
     		} catch (\Exception $e) {
-    			
+
+                \Log::debug(" -- Checkout Exception --");
+                \Log::debug( $e->getMessage() );
+                \Log::debug( $e->getTraceAsString() );
+
     			########### FINISHIING TRANSACTION ##########
     			DB::rollback();
     			#############################################
@@ -1111,7 +1276,7 @@ class PaymentController extends Controller
     	if ($agendamento->profissional_id) {
     	    $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
     	}
-    	
+
     	if($agendamento->consulta_id != null | $agendamento->clinica->tp_prestador == 'CLI') {
     		$data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
     		$hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
@@ -1457,4 +1622,20 @@ HEREDOC;
 
     	return $send_message;
     }
+
+	private function listCarrinhoItens()
+	{
+		$itensCarrinho = CVXCart::getContent()->toArray();
+
+		foreach($itensCarrinho as $item) {
+			if(!empty($item['attributes']['atendimento_id'])) {
+				$atendimento_id = $item['attributes']['atendimento_id'];
+				$list['atendimentos'][$atendimento_id] = $item['id'];
+			} elseif(!empty($item['attributes']['checkup_id'])) {
+				$checkup_id = $item['attributes']['checkup_id'];
+				$list['checkups'][$checkup_id] = $item['id'];
+			}
+		}
+		return $list;
+	}
 }

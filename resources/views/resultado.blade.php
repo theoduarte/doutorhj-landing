@@ -1,9 +1,7 @@
 @extends('layouts.base')
-
 @section('title', 'DoctorHoje: Resultado')
 
 @push('scripts')
-
 @endpush
 
 @section('content')
@@ -23,15 +21,15 @@
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
             </div>
             <div class="collapseFormulario collapse show" id="collapseFormulario">
-                <form action="/resultado" class="form-busca-resultado" method="get" onsubmit="return validaBuscaAtendimento()" >
+                <form action="/resultado" class="form-busca-resultado form-busca" method="get" onsubmit="return validaBuscaAtendimento()" >
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Tipo de atendimento</option>
-                                <option value="saude" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude' ) selected='selected' @endif >Consulta Médica</option>
-                                <option value="odonto" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif >Consulta Odontológica</option>
-                                <option value="exame" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame' ) selected='selected' @endif >Exames</option>
-                                <!-- <option value="procedimento">Procedimento</option> -->
+                                <option value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'  ) selected='selected' @endif>Consulta Médica</option>
+                                <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif>Consulta Odontológica</option>
+                                <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'  ) selected='selected' @endif>Exames</option>
+                                <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup') selected='selected' @endif>Check-up</option>
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -81,7 +79,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
-                                        <input id="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" type="radio" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}">
+                                        <input type="radio" id="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}">
                                         <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}">
                                         Agendar com este profissional
                                         </label>
@@ -90,6 +88,7 @@
                                 </div>
                                 <div id="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_result->id }}" data-parent="#accordion">
                                 	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
+                                		<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="simples">
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
                                     	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->consulta_id != null && $atendimento->profissional->cs_status != 'I') {{ $atendimento->profissional->id }} @endif">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
@@ -304,7 +303,7 @@
             					        {
             					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
             					            text: result.mensagem
-            					        }
+            					        }        
             					    );
                 				}
                             },
@@ -396,6 +395,7 @@
             	  		'hora_agendamento': ct_hora,
         				'_token': laravel_token
         			},
+        			
         			success: function (result) {
 
         				if( !result.status) {
@@ -434,7 +434,6 @@
             *********************************/
 
             function initMap() {
-
                 var clinicaUm = {
                     info: '<strong>Check Up Centro Médico</strong><br>\
                                 SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
@@ -503,17 +502,12 @@
                     google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                         return function () {
                             infowindow.setContent(locations[i][0]);
-                            infowindow.open(map, marker);
+                            infowin
+                            dow.open(map, marker);
                         }
                     })(marker, i));
-
-                    /* google.maps.event.addListener(marker, 'mouseout', (function (marker, i) {
-                         return function () {
-                             infowindow.close(map, marker);
-                         }
-                   	})(marker, i)); */
                 }
-            }        
+            }      
 	</script>
 	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI&callback=initMap" type="text/javascript"></script>

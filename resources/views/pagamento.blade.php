@@ -48,8 +48,13 @@
                                     <!-- client data order -->
                                     <input type="hidden" id="titulo_pedido" name="titulo_pedido" value="{{ $titulo_pedido }}" >
                                     <input type="hidden" id="paciente_id" name="paciente_id" value="{{ $user_session->id }}" >
+
                                     @foreach($carrinho as $index => $item)
-                                    <input type="hidden" name="atendimento_id[{{ $index }}]" value="{{ $item['atendimento']->id }}" >
+										@if(!is_null($item['atendimento']))
+										<input type="hidden" name="atendimento_id[{{ $index }}]" value="{{ $item['atendimento']->id }}" >
+										@elseif(!is_null($item['checkup']))
+										<input type="hidden" name="checkup_id[{{$index}}]" value="{{$item['checkup']->id}}" >
+										@endif
                                     @endforeach
                                     <!-- Formulário cartão de Crédito -->
                                     <div class="form-group row">
@@ -266,122 +271,222 @@
                             <div class="card-body">
                                 <div id="accordion">
                                 	@foreach($carrinho as $index => $item)
-                                    <div class="card card-resumo-compra">
-                                        <div class="card-header" id="heading_{{ $item['item_id'] }}">
-                                            <div class="row">
-                                                <div class="nome-produto col-12 col-sm-9" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="collapse_{{ $item['item_id'] }}">
-                                                    <span>{{ $item['atendimento']->ds_atendimento }}</span>
-                                                </div>
-                                                <!--<div class="excluir-produto col-2 col-sm-1">
-                                                    <a class="close-div" href="#"><i class="fa fa-trash"></i></a>
-                                                </div>-->
-                                                <div class="valor-produto col-12 col-sm-3">
-                                                    <span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="valor-produto col-12 col-sm-12">
-                                                    <select id="selectPacienteAgendamento_{{ $item['item_id'] }}" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
-                                                    	<option>Selecione o Paciente deste Atendimento</option>
-                                                    	@foreach($pacientes as $paciente)
-                                                    	<option value="{{ $paciente->id }}" @if($item['paciente']->id == $paciente->id) selected="selected" @endif>@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
-                                                    	@endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="collapse_{{ $item['item_id'] }}" class="collapse" aria-labelledby="heading_{{ $item['item_id'] }}" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Pessoa que utilizará o serviço:</span>
-                                                    </div>
-                                                    <div class="dados-resumo dados-resumo-paciente">
-                                                        <p class=" @if($item['paciente']->id != null) text-primary @else text-danger @endif">
-                                                        @if($item['paciente']->id != null) {{ $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario }} @else -- PACIENTE AINDA NÃO INDICADO-- @endif
-                                                        </p>
-                                                        <input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
-                                                    </div>
-                                                </div>
-                                                @if($item['profissional'] != null && $item['profissional'] != 'null' & $item['atendimento']->consulta_id != null)
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Médico:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>Dr. {{ $item['profissional']->nm_primario.' '.$item['profissional']->nm_secundario }}</p>
-                                                        <input type="hidden" id="profissional_id_{{ $index }}" name="profissional_id_[{{ $index }}]" value="{{ isset($item['profissional']) ? $item['profissional']->id : 0 }}">
-                                                    </div>
-                                                </div>
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Especialidade:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{  $item['atendimento']->nome_especialidade }}</p>
-                                                    </div>
-                                                </div>
-                                                @else
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Descrição do Atendimento:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ $item['atendimento']->ds_atendimento }} <br><em>({{  $item['atendimento']->nome_especialidade }})</em></p>
-                                                    </div>
-                                                </div>
-                                                @endif
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Prestador:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->nm_fantasia }}  - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
-                                                        <input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($item['clinica']) ? $item['clinica']->id : 0 }}">
-                                                        <input type="hidden" id="filial_id_{{ $index }}" name="filial_id_[{{ $index }}]" value="{{ isset($item['filial']) ? $item['filial']->id : 0 }}">
-                                                    </div>
-                                                </div>
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Endereço:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
-                                                        <input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
-                                                    </div>
-                                                </div>
-                                                @if($item['data_agendamento'] != null && $item['data_agendamento'] != 'null')
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Data pré-agendada:</span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
-                                                        <input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
-                                                        <input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
-                                                    </div>
-                                                </div>
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Horário pré-agendado: </span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ date('H', strtotime($item['hora_agendamento'])).'h'.date('i', strtotime($item['hora_agendamento'])).'min' }}</p>
-                                                    </div>
-                                                </div>
-                                                 @else
-                                                <div class="linha-resumo">
-                                                    <div class="titulo-resumo">
-                                                        <span>Observação do Atendimento: </span>
-                                                    </div>
-                                                    <div class="dados-resumo">
-                                                        <p>{{ $item['clinica']->obs_procedimento }}</p>
-                                                    </div>
-                                                </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
+										@if(!is_null($item['atendimento']))
+											<div class="card card-resumo-compra">
+												<div class="card-header" id="heading_{{ $item['item_id'] }}">
+													<div class="row">
+														<div class="nome-produto col-12 col-sm-9" data-toggle="collapse" data-target="#collapse_{{ $item['item_id'] }}" aria-expanded="false" aria-controls="collapse_{{ $item['item_id'] }}">
+															<span>{{ $item['atendimento']->ds_atendimento }}</span>
+														</div>
+														<!--<div class="excluir-produto col-2 col-sm-1">
+															<a class="close-div" href="#"><i class="fa fa-trash"></i></a>
+														</div>-->
+														<div class="valor-produto col-12 col-sm-3">
+															<span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="valor-produto col-12 col-sm-12">
+															<select id="selectPacienteAgendamento_{{ $item['item_id'] }}" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
+																<option>Selecione o Paciente deste Atendimento</option>
+																@foreach($pacientes as $paciente)
+																<option value="{{ $paciente->id }}" @if($item['paciente']->id == $paciente->id) selected="selected" @endif>@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												<div id="collapse_{{ $item['item_id'] }}" class="collapse" aria-labelledby="heading_{{ $item['item_id'] }}" data-parent="#accordion">
+													<div class="card-body">
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Pessoa que utilizará o serviço:</span>
+															</div>
+															<div class="dados-resumo dados-resumo-paciente">
+																<p class=" @if($item['paciente']->id != null) text-primary @else text-danger @endif">
+																@if($item['paciente']->id != null) {{ $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario }} @else -- PACIENTE AINDA NÃO INDICADO-- @endif
+																</p>
+																<input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
+															</div>
+														</div>
+														@if($item['profissional'] != null && $item['profissional'] != 'null' & $item['atendimento']->consulta_id != null)
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Médico:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>Dr. {{ $item['profissional']->nm_primario.' '.$item['profissional']->nm_secundario }}</p>
+																<input type="hidden" id="profissional_id_{{ $index }}" name="profissional_id_[{{ $index }}]" value="{{ isset($item['profissional']) ? $item['profissional']->id : 0 }}">
+															</div>
+														</div>
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Especialidade:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{  $item['atendimento']->nome_especialidade }}</p>
+															</div>
+														</div>
+														@else
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Descrição do Atendimento:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ $item['atendimento']->ds_atendimento }} <br><em>({{  $item['atendimento']->nome_especialidade }})</em></p>
+															</div>
+														</div>
+														@endif
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Prestador:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ $item['clinica']->nm_fantasia }}  - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
+																<input type="hidden" id="clinica_id_{{ $index }}" name="clinica_id_[{{ $index }}]" value="{{ isset($item['clinica']) ? $item['clinica']->id : 0 }}">
+																<input type="hidden" id="filial_id_{{ $index }}" name="filial_id_[{{ $index }}]" value="{{ isset($item['filial']) ? $item['filial']->id : 0 }}">
+															</div>
+														</div>
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Endereço:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ $item['filial']->endereco->te_endereco.', '.$item['filial']->endereco->nr_logradouro.', '.$item['filial']->endereco->te_bairro }}</p>
+																<input type="hidden" id="atendimento_id_{{ $index }}" name="atendimento_id_[{{ $index }}]" value="{{ isset($item['atendimento']) ? $item['atendimento']->id : 0 }}">
+															</div>
+														</div>
+														@if($item['data_agendamento'] != null && $item['data_agendamento'] != 'null')
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Data pré-agendada:</span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ date('d/m/Y', strtotime($item['data_agendamento'])) }} - {{ strftime('%A', strtotime($item['data_agendamento'])) }}</p>
+																<input type="hidden" id="dt_atendimento_{{ $index }}" name="dt_atendimento_[{{ $index }}]" value="{{ date('Y-m-d', strtotime($item['data_agendamento'])) }}">
+																<input type="hidden" id="hr_atendimento_{{ $index }}" name="hr_atendimento_[{{ $index }}]" value="{{ $item['hora_agendamento'] }}">
+															</div>
+														</div>
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Horário pré-agendado: </span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ date('H', strtotime($item['hora_agendamento'])).'h'.date('i', strtotime($item['hora_agendamento'])).'min' }}</p>
+															</div>
+														</div>
+														 @else
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Observação do Atendimento: </span>
+															</div>
+															<div class="dados-resumo">
+																<p>{{ $item['clinica']->obs_procedimento }}</p>
+															</div>
+														</div>
+														@endif
+													</div>
+												</div>
+											</div>
+										@elseif(!is_null($item['checkup']))
+											<div class="card card-resumo-compra">
+												<div class="card-header" id="heading_{{$item['item_id']}}">
+													<input type="hidden" id="checkup_id_{{ $index }}" name="checkup_id_[{{ $index }}]" value="{{ isset($item['checkup']) ? $item['checkup']->id : '' }}">
+													<div class="row">
+														<div class="nome-produto col-12 col-sm-9" data-toggle="collapse" data-target="#collapse_{{$item['item_id']}}" aria-expanded="false" aria-controls="collapse_">
+															<span>Checkup {{$item['checkup']->titulo}} - {{ucfirst($item['checkup']->tipo)}}</span>
+														</div>
+														<!--<div class="excluir-produto col-2 col-sm-1">
+															<a class="close-div" href="#"><i class="fa fa-trash"></i></a>
+														</div>-->
+														<div class="valor-produto col-12 col-sm-3">
+															<span>R$ {{number_format($item['valor'], 2, ',', '.')}}</span>
+														</div>
+													</div>
+													<div class="row">
+														<div class="valor-produto col-12 col-sm-12">
+															<select id="selectPacienteAgendamento_{{ $item['item_id'] }}" class="form-control select-paciente-agendamento" name="selectCartaoCredito">
+																<option>Selecione o Paciente deste Atendimento</option>
+																@foreach($pacientes as $paciente)
+																	<option value="{{ $paciente->id }}" @if($item['paciente']->id == $paciente->id) selected="selected" @endif>@if($paciente->responsavel_id == null) (T) @else <span>(D)</span> @endif {{ $paciente->nm_primario.' '.$paciente->nm_secundario }}</option>
+																@endforeach
+															</select>
+														</div>
+													</div>
+												</div>
+												<div id="collapse_{{$item['item_id']}}" class="collapse" aria-labelledby="heading_{{$item['item_id']}}" data-parent="#accordion">
+													<div class="card-body">
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Pessoa que utilizará o serviço:</span>
+															</div>
+															<div class="dados-resumo dados-resumo-paciente">
+																<p class=" @if($item['paciente']->id != null) text-primary @else text-danger @endif">
+																@if($item['paciente']->id != null) {{ $item['paciente']->nm_primario.' '.$item['paciente']->nm_secundario }} @else -- PACIENTE AINDA NÃO INDICADO-- @endif
+																</p>
+															</div>
+
+															<input type="hidden" id="paciente_id_{{ $index }}" class="paciente_agendamento_id" name="paciente_id_[{{ $index }}]" value="@if($item['paciente']->id != null) {{ $item['paciente']->id }} @else 0 @endif">
+														</div>
+
+														<div class="linha-resumo">
+															<div class="titulo-resumo">
+																<span>Incluso nesse pacote</span>
+															</div>
+															<div class="dados-resumo">
+
+																{{--CONSULTAS--}}
+																<div class="procedimentos consultas">
+																	<p>Consultas</p>
+																	<ul>
+																		@foreach($item['itens_checkup'] as $itemCheckup)
+																			@if(!is_null($itemCheckup->atendimento->consulta_id))
+																				<?php //dd($item)?>
+																				<li>
+																					<div class="clinica">
+																						Consulta {{$itemCheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$itemCheckup->dataHoraAgendamento}}</span><br>
+																						<span>Profissional: </span>{{$itemCheckup->atendimento->profissional->nm_primario.' '.$itemCheckup->atendimento->profissional->nm_secundario}}
+																					</div>
+																					<div class="endereco">
+																						<span>Clinica: </span> {{$itemCheckup->atendimento->clinica->nm_fantasia}}<br>
+																						<span>Local: </span>{{$itemCheckup->atendimento->clinica->enderecos[0]->te_endereco.', '.$itemCheckup->atendimento->clinica->enderecos[0]->nr_logradouro.', '.$itemCheckup->atendimento->clinica->enderecos[0]->te_bairro}}
+																					</div>
+																				</li>
+																			@endif
+																		@endforeach
+																	</ul>
+																</div>
+
+																{{--EXAMES--}}
+																<div class="procedimentos exames">
+																	<p>Exames</p>
+																	<ul>
+																		@foreach($item['itens_checkup'] as $itemCheckup)
+																			@if(!is_null($itemCheckup->atendimento->procedimento_id))
+																				<?php //dd($itemCheckup->atendimento->clinica)?>
+																				<li>
+																					<div class="clinica">
+																						{{$itemCheckup->atendimento->procedimento->ds_procedimento}}
+																						@if(!is_null($itemCheckup->dataHoraAgendamento))
+																							, no dia <span>{{ $itemCheckup->dataHoraAgendamento}}</span>
+																						@endif
+																						<br>
+																					</div>
+																					<div class="endereco">
+																						<span>Clinica: </span> {{$itemCheckup->atendimento->clinica->nm_fantasia}}<br>
+																						<span>Local: </span>{{$itemCheckup->atendimento->clinica->enderecos[0]->te_endereco.', '.$itemCheckup->atendimento->clinica->enderecos[0]->nr_logradouro.', '.$itemCheckup->atendimento->clinica->enderecos[0]->te_bairro}}
+																					</div>
+																				</li>
+																			@endif
+																		@endforeach
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										@endif
                                     @endforeach
                                     
                                     <div class="resumo-compra">

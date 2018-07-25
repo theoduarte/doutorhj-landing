@@ -77,6 +77,15 @@ class Agendamento extends Model
     {
     	return $this->hasMany('App\Itempedido');
     }
+
+	public function checkup()
+	{
+		return $this->belongsTo('App\Checkup');
+	}
+
+	public function datahoracheckups(){
+		return $this->hasMany("App\Datahoracheckup");
+	}
     
     /*
      * Getters and Setters
@@ -86,15 +95,34 @@ class Agendamento extends Model
     }
     
     public function getDtAtendimentoAttribute($data) {
-        $obData = new Carbon($data);
-        return $obData->format('d/m/Y H:i');
+		if(!empty($data)) {
+			$obData = new Carbon($data);
+			return $obData->format('d/m/Y H:i');
+		}
     }
     
     public function getRawDtAtendimentoAttribute() {
-        return $this->attributes['dt_atendimento'];
+		if(!empty($this->attributes['dt_atendimento']))
+			return $this->attributes['dt_atendimento'];
     }
     
     public function getRawCsStatusAttribute() {
         return $this->attributes['cs_status'];
     }
+
+	/**
+	 * @param $clinica_id
+	 * @param $profissional_id
+	 * @param $dataHoraAgendamento
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	static public function validaHorarioDisponivel($clinica_id, $profissional_id, $dataHoraAgendamento)
+	{
+		return !Agendamento::where('clinica_id', '=', $clinica_id)
+			->when($profissional_id, function ($query, $profissional_id) {
+				return $query->where('profissional_id', $profissional_id);
+			})
+			->where('dt_atendimento', '=', \DateTime::createFromFormat('d/m/Y H:i', $dataHoraAgendamento)->format('Y-m-d H:i:s'))
+			->exists();
+	}
 }

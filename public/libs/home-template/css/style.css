@@ -705,6 +705,19 @@ header .navbar-collapse {
     background-image: url(../img/app-apple.png);
 }
 
+.area-parceiros {
+    padding: 30px 0;
+    background-color: #f1f1f1;
+}
+
+.area-parceiros .titulo-home h3 {
+    font-size: 34px;
+    margin: 10px 0 20px 0;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    text-align: center;
+}
+
 /*********************************
 *
 *  5 RESULTADO DA BUSCA
@@ -902,7 +915,7 @@ header .navbar-collapse {
     cursor: pointer;
 }
 
-.form-check-input {
+.area-seleciona-profissional .form-check-input {
     display: none;
 }
 
@@ -968,7 +981,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  6 LOGIN/CADASTRO
-* 
+*
 *********************************/
 
 .login .area-container {
@@ -1070,17 +1083,22 @@ header .navbar-collapse {
     font-size: 17px;
 }
 
+.lbl-enviar-token i.fa-spinner
+
 /*********************************
 *
 *  7 MENU ÁREA LOGADA
-* 
+*
 *********************************/
+
+.navbar-nav {
+    margin-right: 40px;
+}
 
 .menu-area-logada {
     background-color: rgb(230, 230, 230);
     padding: 78px 15px 22px 15px;
     margin-top: -55px;
-    margin-left: 15px;
 }
 
 .menu-area-logada ul {
@@ -1252,7 +1270,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  8 INFORMA BENEFICIÁRIO
-* 
+*
 *********************************/
 
 .confirma-beneficiario .btn {
@@ -1316,7 +1334,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  9 PAGAMENTO
-* 
+*
 *********************************/
 
 .pagamento .area-container .titulo {
@@ -1485,10 +1503,37 @@ header .nav-item-mobile {
     text-align: right;
 }
 
+.card-resumo-compra .procedimentos p {
+    text-transform: uppercase;
+    color: #000;
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+.card-resumo-compra .procedimentos p span {
+    font-weight: 700;
+}
+.card-resumo-compra .procedimentos ul li {
+    font-weight: 300;
+}
+
+.card-resumo-compra .procedimentos ul li .clinica {
+    margin-bottom: 2px;
+}
+
+.card-resumo-compra .procedimentos ul li .endereco {
+    margin-bottom: 10px;
+}
+
+.card-resumo-compra .procedimentos ul li .clinica span,
+.card-resumo-compra .procedimentos ul li .endereco span {
+    font-weight: 600;
+}
+
 /*********************************
 *
 *  10 CONFIRMAÇÃO AGENDAMENTO
-* 
+*
 *********************************/
 
 .dados-confirmacao {
@@ -1527,7 +1572,7 @@ header .nav-item-mobile {
 /*********************************
 *
 *  11 HOME PRESTADOR
-* 
+*
 *********************************/
 
 .home-prestador .area-banner {
@@ -2214,6 +2259,8 @@ header .nav-item-mobile {
     margin-bottom: 15px;
     -webkit-box-shadow: 0 10px 20px 3px rgba(0, 0, 0, 0.1);
     box-shadow: 0 10px 20px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    border-top: 0;
 }
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-data {
@@ -2250,7 +2297,8 @@ header .nav-item-mobile {
     text-transform: uppercase;
 }
 
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .status {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .status,
+.procedimentos .status {
     font-size: 11px;
     color: rgb(10, 10, 10);
     text-align: center;
@@ -2263,32 +2311,44 @@ header .nav-item-mobile {
 }
 
 /* PRÉ AGENDADO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .pre-agendado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .pre-agendado,
+.procedimentos .pre-agendado {
     border-left: 4px solid rgb(255, 149, 0);
 }
 /* PRÉ AGENDADO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado,
+.procedimentos .agendado {
     border-left: 4px solid rgb(0, 122, 255);
 }
 /* NÃO CONFIRMADO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-confirmado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-confirmado,
+.procedimentos .nao-confirmado {
     border-left: 4px solid rgb(179, 0, 134);
 }
 /* NÃO COMPARECEU */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-compareceu {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-compareceu,
+.procedimentos .nao-compareceu {
     border-left: 4px solid rgb(88, 86, 214);
 }
 /* CONFIRMADO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado,
+.procedimentos .confirmado {
     border-left: 4px solid rgb(76, 217, 100);
 }
 /* CANCELADO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado,
+.procedimentos .cancelado {
     border-left: 4px solid rgb(255, 58, 48);
 }
 /* RETORNO */
-.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado {
+.box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .retorno,
+.procedimentos .retorno {
     border-left: 4px solid rgb(74, 74, 74);
+}
+
+.linha-resumo-minha-conta ul li {
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 5px;
 }
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos .tipo,
@@ -2384,6 +2444,36 @@ header .nav-item-mobile {
     color: rgb(10, 10, 10);
 }
 
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo .procedimentos p {
+    text-transform: uppercase;
+    color: #000;
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo p span {
+    font-weight: 700;
+}
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .clinica,
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .endereco {
+    font-weight: 300;
+    font-size: 13px;
+    color: rgb(98, 98, 98);
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .clinica {
+    margin-bottom: 2px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .endereco {
+    margin-bottom: 10px;
+}
+
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .clinica span,
+.box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .endereco span {
+    font-weight: 600;
+}
+
 /*********************************
 *
 *  14 HOME LOGADO
@@ -2453,6 +2543,10 @@ header .nav-item-mobile {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.box-resumo-home .proxima-consulta .link-detalhes-checkup {
+    font-size: 14px;
 }
 
 .box-resumo-home .proxima-consulta .nome-status p {
@@ -2919,6 +3013,269 @@ header .nav-item-mobile {
 
 /*********************************
 *
+*  X RESULTADO CHECKUP
+*
+*********************************/
+
+/* TÍTULO PÁGINA*/
+
+.resultado-checkup .titulo {
+    margin: 15px 0 15px 0;
+}
+
+/* TABS RESULTADO*/
+
+.resultado-checkup .lista .card {
+    border-radius: 0;
+    margin-bottom: 30px;
+}
+
+.resultado-checkup .lista .card-active .card-header,
+.resultado-checkup .lista .card:hover .card-header {
+    background-color: #f1f1f1;
+    transition: all .15s ease;
+}
+
+.resultado-checkup .lista .card-header {
+    background-color: #fff;
+    padding: 0;
+    border-radius: 0;
+    border-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote {
+    padding: 20px 20px 40px 20px;
+    position: relative;
+    height: 100%;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote h4 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote span.incluso {
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade {
+    padding: 0;
+    list-style-type: none;
+}
+
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade li {
+    color: #555;
+    font-size: 14px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade li span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote .btn {
+    padding: 0;
+    font-size: 14px;
+    color: #a32431;
+    position: absolute;
+    left: 20px;
+    bottom: 14px;
+}
+
+.resultado-checkup .lista .card-header .resumo .resumo-pacote .btn:hover {
+    color: #a32431;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores {
+    text-align: center;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado,
+.resultado-checkup .lista .card-header .resumo .valores .drhj {
+    background-color: #f1f1f1;
+    padding: 8px 10px 6px 10px;
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado p,
+.resultado-checkup .lista .card-header .resumo .valores .drhj p {
+    color: #999999;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .mercado span,
+.resultado-checkup .lista .card-header .resumo .valores .drhj span {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup {
+    color: #4675b8;
+    background-color: #fff;
+    padding: 8px 10px 10px 10px;
+    border-left: 1px solid rgba(0,0,0,.125);
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup span {
+    font-size: 30px;
+    font-weight: 700;
+    display: inline-block;
+    width: 100%;
+}
+
+.resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
+    margin-top: 6px;
+    height: 40px;
+    padding: 10px 10px;
+}
+
+/* LISTA DE PROCEDIMENTOS */
+
+.resultado-checkup .lista .card-body {
+    border-top: 1px solid rgba(0,0,0,.125);
+    background-color: #f9f9f9;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .titulo {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 15px 15px;
+    background-color: #4675b8;
+    margin: 0;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento {
+    padding: 15px 15px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento:last-child {
+    margin-bottom: 30px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .multi-exames .informativo {
+    font-size: 14px;
+    color: #dc5260;
+    font-weight: 600;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome .btn-tooltip {
+    padding: 0;
+    background-color: transparent;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .nome .btn-tooltip i {
+    color: #4675b8;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .clinicas {
+    color: #555555;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos .procedimento .clinicas .form-check-input {
+    margin-top: 4px;
+}
+
+.resultado-checkup .lista .pacote-procedimentos button.prosseguir {
+    margin-top: 20px;
+}
+
+/*********************************
+*
+*  X CONTATO
+*
+*********************************/
+
+.chatWhatsapp {
+    text-decoration: none;
+    padding: 1em;
+    margin-top: 1em;
+    background: #1ebea5;
+    color: #fff;
+    border-radius: 2em;
+    text-align: center;
+    font-size: 14px;
+}
+
+.chatWhatsapp:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.contato-prestador {
+    background-color: rgb(249, 249, 249);
+}
+
+.contato-prestador .area-contato
+{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.contato-prestador .area-contato form .row {
+    margin-bottom: 20px;
+}
+
+.contato-prestador .area-contato form input {
+    height: 50px;
+}
+
+.contato-prestador .area-contato .area-form {
+    margin-bottom: 60px;
+}
+
+.contato-prestador .area-contato .area-form .form {
+    padding: 30px;
+    border: 1px solid rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
+}
+
+.contato-prestador .area-contato .area-form h2 {
+    font-size: 24px;
+}
+
+.contato-prestador .area-contato .contact-box {
+    margin-bottom: 30px;
+}
+
+.contato-prestador .area-contato .contact-box h4 {
+    font-size: 18px;
+}
+
+.contato-prestador .area-contato .contact-box h4 i {
+    color: rgb(163, 36, 49);
+    margin-right: 6px;
+}
+
+.contato-prestador .area-contato .contact-box p {
+    font-size: 16px;
+}
+
+/*********************************
+*
 *  X FOOTER
 *
 *********************************/
@@ -3022,7 +3379,7 @@ footer ul li a:hover {
 /*********************************
 *
 *  X MEDIA QUERIES
-* 
+*
 *********************************/
 
 @media only screen and (min-width: 1200px) {
@@ -3346,6 +3703,14 @@ footer ul li a:hover {
     .box-resumo-home .link-agendamentos {
         padding: 0 0 60px 0;
     }
+
+    .resultado-checkup .lista .card-header .resumo .resumo-pacote h4 {
+        font-size: 20px;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .resumo-pacote ul {
+        margin-bottom: 10px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -3499,6 +3864,33 @@ footer ul li a:hover {
     .home-prestador .area-beneficios .lb1,
     .home-prestador .area-beneficios .lb2 {
         text-align: center;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .mercado,
+    .resultado-checkup .lista .card-header .resumo .valores .drhj {
+        background-color: #f1f1f1;
+        padding: 8px 10px 6px 10px;
+        border-top: 1px solid rgba(0,0,0,.125);
+        border-left: none;
+        border-bottom: none;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .mercado p,
+    .resultado-checkup .lista .card-header .resumo .valores .drhj p {
+        display: inline-block;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup {
+        border-top: 1px solid rgba(0,0,0,.125);
+        border-left: none;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup p {
+        display: inline-block;
+    }
+
+    .resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
+        margin-top: 0;
     }
 }
 

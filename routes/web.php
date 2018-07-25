@@ -1,19 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Controller@home')->name('landing-page');
 
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
-Route::get('resultado-checkup', 'CheckupController@consultaCheckup');
+Route::get('resultado-checkup', 'CheckupController@resultadoCheckup');
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::get('informa-beneficiario', 'AgendamentoController@informaBeneficiario')->middleware('auth')->name('informa-beneficiario');
 Route::post('atualiza-carrinho', 'AgendamentoController@atualizaCarrinho')->name('atualiza-carrinho');
 Route::get('carrinho', 'AgendamentoController@carrinhoDeCompras')->name('carrinho');
+Route::get('carrinho-checkup', 'CheckupController@carrinhoCheckup');
 Route::get('pagamento', 'ClinicaController@paginaPagamento')->middleware('auth')->name('pagamento');
+Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
+Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
+Route::post('consulta-tipos-checkup','CheckupController@getTipoCheckupAtivo');
+
+/*colocar essa rota no local correto*/
+Route::get('contato', 'ClinicaController@contatoHomePublica');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
@@ -27,18 +33,10 @@ Route::get('home-logado', 'ClinicaController@homeLogado');
 
 Route::post('participe', 'MensagemController@participe');
 
-//Route::resource('clinicas','ClinicaController')->middleware('auth');
-//Route::resource('profissionals','ProfissionalController')->middleware('auth');
-//Route::resource('clientes', 'ClienteController')->middleware('auth');
-//Route::resource('cargos','CargoController')->middleware('auth');
-//Route::resource('menus','MenuController')->middleware('auth');
-//Route::resource('itemmenus','ItemmenuController')->middleware('auth');
-//Route::resource('perfilusers','PerfiluserController')->middleware('auth');
-//Route::resource('permissaos','PermissaoController')->middleware('auth');
-//Route::resource('agendamentos','AgendamentoController')->middleware('auth');
-
 # rotas autocomplete
-Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
+Route::get('consulta-cep/cep/{cep}', 'Controller@cuse Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+onsultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
@@ -85,7 +83,7 @@ Route::get('notificacoes','MensagemController@getListaNotificacoes')->middleware
 Route::get('notificacoes/visualizado/{id}','MensagemController@setStatusVisualizado')->middleware('auth');
 Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middleware('auth');
 
+
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
