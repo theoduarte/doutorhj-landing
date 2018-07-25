@@ -116,10 +116,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <a class="nav-link" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("meus-agendamentos") }}">Meus Agendamentos</a>
+                                <a class="nav-link" href="{{ route('meus-agendamentos') }}">Meus Agendamentos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("minha-conta") }}">Minha Conta</a>
+                                <a class="nav-link" href="{{ route('minha-conta') }}">Minha Conta</a>
                             </li>
                         </ul>
                         <div class="menu-area-logada">
@@ -129,12 +129,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 </li>
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
-                                        <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span>Notificações </span><i class="fa fa-bell"></i>
                                             <div class="numero-notificacoes">
                                                 <span>{{ $num_total_notificacoes }}</span>
                                             </div>
-                                        </button>
+                                        </button> -->
                                         <div class="dropdown-menu dropdownNotificacoes" aria-labelledby="dropdownNotificacoes">
                                             <ul>
                                                 <li class="dropdown-item desativado">
@@ -180,7 +180,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                         <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
-                                            <a href="/carrinho" class="btn-carrinho"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="/carrinho" class="btn-carrinho"><img src="{{ asset('img/pedidos-icon.png') }}" alt="Pedidos"> </a>
                                             <div class="numero-notificacoes">
                                                 <span>{{ $cvx_num_itens_carrinho }}</span>
                                             </div>

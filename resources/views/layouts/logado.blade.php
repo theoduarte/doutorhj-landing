@@ -104,7 +104,7 @@
                             <li>
                                 <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                     <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span>Carrinho </span><i class="fa fa-cart-plus"></i>
+                                        <span>Pedidos </span><img src="{{ asset('img/pedidos-icon.png') }}" alt="Doctor Hoje">
                                         <!--<div class="numero-notificacoes">
                                             <span>2</span>
                                         </div>-->
