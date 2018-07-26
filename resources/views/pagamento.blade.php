@@ -184,6 +184,19 @@
                                                     </div>
                                                 </div>   
                                             </div>
+
+                                            <div class="form-group row row-card-token">
+                                                <div class="col col-12 col-sm-6">
+                                                    <label for="selectParcelamentoCredito2">Parcelamento</label>
+                                                    <div class="button dropdown">
+                                                        <select id="selectParcelamentoCredito2" class="form-control" name="parcelamento-cartao-credito">
+                                                            @for($i = 1; $i <= sizeof($parcelamentos); $i++)
+                                                            <option value="{{ $i }}">{{ $parcelamentos[$i] }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         
                                         <!-- Formulário cartão de Débito -->
@@ -609,7 +622,7 @@
                         	$('#resumo_compra_tipo_cartao').html('Cartão de crédito')
                         }
                         $('.formas-pagamento').hide();
-                        $('#' + $(this).val()).show();
+                        $('#' + $(this).val()).fadeIn(500);
                     });
 
                     
@@ -665,20 +678,21 @@
                 		   success: function (result) {
                 			   
                     		   if(result.status) {
+                        		    var desconto = valor_total*result.percentual;
+                        		    var valor_com_desconto = valor_total-desconto;
+                        		    var parcelamentos = result.parcelamentos;
                         		   
-                        		   var desconto = valor_total*result.percentual;
-                        		   var valor_com_desconto = valor_total-desconto;
-                        		   var parcelamentos = result.parcelamentos;
-                        		   
-                        		   //localStorage.setItem('activeCupom', 'f');
-                        		   $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
-                        		   $('#valor_desconto').parent().find('p').html('- R$ '+numberToReal(desconto));
-                        		   $('.valor-total-produtos').find('p').html('R$ '+numberToReal(valor_com_desconto));
+                        		    //localStorage.setItem('activeCupom', 'f');
+                        		    $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
+                        		    $('#valor_desconto').parent().find('p').html('- R$ '+numberToReal(desconto));
+                        		    $('.valor-total-produtos').find('p').html('R$ '+numberToReal(valor_com_desconto));
 
-                        		   $('#selectParcelamentoCredito').empty();
-               						for(var i=0; i < parcelamentos.length; i++) {
+                                    $('#selectParcelamentoCredito').empty();
+                                    $('#selectParcelamentoCredito2').empty();
+                                    for(var i=0; i < parcelamentos.length; i++) {
                							var option = '<option value="'+(i+1)+'">'+parcelamentos[i]+'</option>';
                							$('#selectParcelamentoCredito').append($(option));
+                                        $('#selectParcelamentoCredito2').append($(option));
                						}
 
                						$('#resumo_parcelamento p').html(result.resumo_parcelamento);

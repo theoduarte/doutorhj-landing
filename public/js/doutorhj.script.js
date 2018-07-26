@@ -319,7 +319,15 @@ $(document).ready(function () {
 						$('#inputSaveCardId').val(json.id);
 						
 						$('.row-payment-card').css('display', 'none');
+						$('.row-payment.repayment').css('display', 'flex');
 						$('.row-card-token').css('display', 'flex');
+
+
+						$('#resumo_compra_final_cartao').html( $('#inputNumFinalSaveCard').val() );
+					}
+					else {
+						$('.row-payment.repayment').css('display', 'none');
+						$('#resumo_compra_final_cartao').html( 'XXXX' );	
 					}
 	            },
 	            error: function (result) {
@@ -329,6 +337,8 @@ $(document).ready(function () {
 		} else {
 			$('.row-payment-card').css('display', 'flex');
 			$('.row-card-token').css('display', 'none');
+			$('.row-payment.repayment').css('display', 'flex');
+			$('#resumo_compra_final_cartao').html( 'XXXX' );	
 		}
 	});
 	
@@ -480,7 +490,9 @@ function pagarCartaoCredito() {
 	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
 	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
 	var cod_cupom_desconto = $('#inputCupom').val();
-	var num_parcela_selecionado = $('#selectParcelamentoCredito').val();
+	var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
+
+	console.log(num_parcela_selecionado);
 	
 	if(!result) {
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
@@ -856,7 +868,9 @@ function pagarCartaoCadastrado() {
 	var validade_cartao_credito = dt_validade.val();
 	var cod_seg_cartao_credito = cod_seg.val();
 	var cod_cupom_desconto = $('#inputCupom').val();
-	var num_parcela_selecionado = $('#selectParcelamentoCredito').val();
+	var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
+
+	console.log(num_parcela_selecionado);
 	
 	if(!result) {
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
