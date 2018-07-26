@@ -664,15 +664,9 @@ class ClinicaController extends Controller
 
 				if ($atendimento->procedimento_id != null) {
 					$atendimento->load('procedimento');
-					//$atendimento->load('profissional');
-					//$atendimento->profissional->load('especialidades');
 
 					$nome_especialidade = $atendimento->procedimento->ds_procedimento;
 					$ds_atendimento = $atendimento->procedimento->tag_populars->first()->cs_tag;
-
-					/* foreach ($atendimento->profissional->especialidades as $especialidade) {
-						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-					} */
 
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
@@ -699,8 +693,6 @@ class ClinicaController extends Controller
 
 					$titulo_pedido = "Consulta: " . $user_session->nm_primario . " " . $user_session->nm_secundario;
 				}
-
-				//dd($atendimento);
 
 				if (isset($clinica)) {
 					$clinica->load('enderecos');
@@ -792,7 +784,6 @@ class ClinicaController extends Controller
     	        }
     	    }
     	}
-    	//dd($parcelamentos);
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
     	

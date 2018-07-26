@@ -29,7 +29,7 @@
                                 <option value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'  ) selected='selected' @endif>Consulta Médica</option>
                                 <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif>Consulta Odontológica</option>
                                 <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'  ) selected='selected' @endif>Exames</option>
-                                <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup') selected='selected' @endif>Check-up</option>
+                                <!-- <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup') selected='selected' @endif>Check-up</option> -->
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
