@@ -160,7 +160,7 @@
         </div>
         
         <div class="endereco-site">
-            <a href="www.doctorhoje.com.br">www.doctorhoje.com.br</a>
+            <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
         </div>
     </footer>
 </div>

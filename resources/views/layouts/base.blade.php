@@ -204,17 +204,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#area-sobre">O que é o Doctor Hoje</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doctor Hoje</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#como-funciona">Como funciona</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#vantagens">Vantagens</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#vantagens">Vantagens</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="/contato">Contato</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item btn-profissional">
                                 <a class="nav-link" href="https://prestador.doctorhoje.com.br">Seja um parceiro</a>
                             </li>
@@ -253,21 +253,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="#area-sobre">O que é o Doctor Hoje?</a></li>
-                            <li><a href="#como-funciona">Como Funciona</a></li>
-                            <li><a href="#vantagens">Vantagens</a></li>
+                            <li><a href="{{ route('landing-page') }}#area-sobre">O que é o Doctor Hoje?</a></li>
+                            <li><a href="{{ route('landing-page') }}#como-funciona">Como Funciona</a></li>
+                            <li><a href="{{ route('landing-page') }}#vantagens">Vantagens</a></li>
                             <li><a href="">Política de Privacidade</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#modalTermos">Termo de Uso</a></li>
+                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso</a></li>
                             {{--<li><a href="">Trabalhe Conosco</a></li>--}}
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <h5>Clientes</h5>
                         <ul>
-                            <li><a href="https://doctorhoje.com.br/login">Seja Cliente</a></li>
-                            <li><a href="https://doctorhoje.com.br/login">Área restrita</a></li>
-                            <li><a href="#busca-home">Agende Consulta</a></li>
-                            <li><a href="#busca-home">Agende Exame</a></li>
+                            <li><a href="{{ route('login') }}">Seja Cliente</a></li>
+                            <li><a href="{{ route('login') }}">Área restrita</a></li>
+                            <li><a href="{{ route('landing-page') }}#busca-home">Agende Consulta</a></li>
+                            <li><a href="{{ route('landing-page') }}#busca-home">Agende Exame</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-3">
@@ -283,7 +283,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             <div class="endereco-site">
                 <div class="container">
-                    <a href="/">www.doctorhoje.com.br</a>
+                    <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
                     <div class="redes-sociais">
                         <a href="https://www.instagram.com/doctor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
@@ -321,7 +321,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="endereco-site">
                 <div class="container">
-                    <a href="/">www.doctorhoje.com.br</a>
+                    <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
                     <div class="redes-sociais">
                         <a href="https://www.instagram.com/doctor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>

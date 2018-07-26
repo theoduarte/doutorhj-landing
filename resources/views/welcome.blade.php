@@ -622,9 +622,7 @@
                         <h3>Alguns de nossos parceiros</h3>
                     </div>
                     <div class="owl-carousel owl-theme">
-                        <div class="item"><img src="/libs/home-template/img/parceiros/alianca.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/bela-vista.png" alt=""></div>
-                        <div class="item"><img src="/libs/home-template/img/parceiros/biocardios.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/biovida.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/cardio-fitness.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/centro-clinico-lorena-de-fatima.png" alt=""></div>
@@ -635,7 +633,6 @@
                         <div class="item"><img src="/libs/home-template/img/parceiros/cliped.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/crb.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/digidoc.png" alt=""></div>
-                        <div class="item"><img src="/libs/home-template/img/parceiros/exame.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/fenelon.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/fisiolabor.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/equilibrio.png" alt=""></div>
@@ -647,7 +644,6 @@
                         <div class="item"><img src="/libs/home-template/img/parceiros/instituto-mulher.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/icb.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/dermaline.png" alt=""></div>
-                        <div class="item"><img src="/libs/home-template/img/parceiros/sabin.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/micra.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/policlinica-mais.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/santa-paula.png" alt=""></div>
@@ -690,7 +686,7 @@
                     nav:true,
                     responsive:{
                         0:{
-                            items:1
+                            items:3
                         },
                         600:{
                             items:4

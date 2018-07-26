@@ -108,64 +108,59 @@ class CupomDescontoController extends Controller
      */
     public function validarCupomDesconto(Request $request)
     {
-        $cod_cupom_desconto = CVXRequest::post('codigo');
-        $cupom_desconto = [];
+        $codCupomDesconto = CVXRequest::post('codigo');
+        $cupomDesconto = [];
         
-        if ($cod_cupom_desconto == '') {
-            return false;
+        if ( empty( trim($codCupomDesconto) ) ) {
+            return response()->json(['status' => false, 'mensagem' => 'Informe o CUPOM DE DESCONTO.']);
         }
         
         $ct_date = date('Y-m-d H:i:s');
         
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
-        
-        if(sizeof($cupom_desconto) <= 0) {
+        $cupomDesconto = CupomDesconto::where('codigo', '=', $codCupomDesconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
+
+        if( empty($cupomDesconto) ) {
             return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
         }
         
         $user_session = Auth::user();
         $paciente_id = $user_session->paciente->id;
-        $cupom_id = $cupom_desconto->first()->id;
+        $cupom_id = $cupomDesconto->first()->id;
         
-        $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
+        $agendamentoCupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->first();
         
-        if(sizeof($agendamento_cupom) > 0) {
+        if( !empty($agendamentoCupom) ) {
             return response()->json(['status' => false, 'mensagem' => 'O CUPOM DE DESCONTO informado, já foi utilizado por você em um outro Agendamento e não está mais disponível.']);
         }
         
-        $percentual = $cupom_desconto->first()->percentual/100;
+        $percentual = $cupomDesconto->percentual/100;
         
         //--realiza o desconto nos parcelamentos--------
         
-        $valor_total            = CVXCart::getTotal();
-        $valor_parcelamento     = CVXRequest::post('valor_parcelamento') != null && CVXRequest::post('valor_parcelamento') != '' ? floatval(CVXRequest::post('valor_parcelamento'))*(1 - $percentual) : CVXRequest::post('valor_parcelamento');
+        $valorTotal            = CVXCart::getTotal();
+        $valorParcelamento     = CVXRequest::post('valor_parcelamento') != null && CVXRequest::post('valor_parcelamento') != '' ? floatval(CVXRequest::post('valor_parcelamento'))*(1 - $percentual) : CVXRequest::post('valor_parcelamento');
         
+
         $parcelamentos = [];
-        $parcelamentos = array(
-            0 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.').' sem juros'
-        );
         
-        if ($valor_total > 200) {
-            
-            for ($i = 1; $i < 5; $i++) {
-                $item_valor =  $valor_parcelamento/$i;
-                
+        if ($valorTotal > 200) {
+            for ($i = 1; $i <= 5; $i++) {
+                $item_valor =  $valorParcelamento/$i;
+
                 if ($i <= 3) {
-                    $index_parcelamento = $i+1;
-                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
+                    $parcelamentos[] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
                 } elseif ($i > 3) {
-                    $index_parcelamento = $i+1;
-                    $parcelamentos[$i] = "$index_parcelamento"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (5% a.m.)';
+                    $parcelamentos[] = "$i"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (5% a.m.)';
                 }
             }
         }
-        
-//         $parcelamentos[1] = "2"."x R$ ".number_format( $valor_parcelamento,  2, ',', '.').' sem juros';
-//         $parcelamentos[2] = "3"."x R$ ".number_format( $valor_parcelamento,  2, ',', '.').' sem juros';
+        else {
+            $parcelamentos[] = '1x R$ '.number_format( $valorParcelamento,  2, ',', '.').' sem juros';
+        }
 
+        // dd($parcelamentos);
         
-        $resumo_parcelamento = $parcelamentos[sizeof($parcelamentos)-1];
-        //dd($parcelamentos);
+        $resumo_parcelamento = $parcelamentos[ count($parcelamentos)-1 ];        
                 
         return response()->json(['status' => true, 'mensagem' => 'O Cupom foi encontrado com sucesso!', 'percentual' => $percentual, 'resumo_parcelamento' => $resumo_parcelamento, 'parcelamentos' => $parcelamentos]);
     }
