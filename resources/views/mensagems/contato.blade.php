@@ -27,24 +27,24 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="text" id="nome" class="form-control" name="nome"
-                                           placeholder="Digite seu nome" maxlength="150" required="required">
+                                           placeholder="Seu nome" maxlength="150" required="required">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="email" id="email" class="form-control" name="email"
-                                           placeholder="Digite seu E-mail" maxlength="150" required="required">
+                                           placeholder="E-mail" maxlength="150" required="required">
                                 </div>
                                 <div class="col-md-6">
                                     <input type="text" id="telefone" class="form-control mascaraTelefone"
-                                           name="telefone" placeholder="Digite seu Celular" maxlength="20"
+                                           name="telefone" placeholder="Celular" maxlength="20"
                                            required="required">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <textarea id="mensagem" class="form-control" name="message"
-                                              placeholder="Digite sua mensagem..."></textarea>
+                                              placeholder="Mensagem..."></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -68,7 +68,7 @@
                     </div>
                     <div class="contact-box">
                         <h4><i class="fa fa-envelope-o"></i> Envie-nos um E-mail</h4>
-                        <p>prestador@doctorhoje.com.br<br><br></p>
+                        <p>cliente@doctorhoje.com.br<br><br></p>
                     </div>
                     <div class="contact-box">
                         <a href="https://web.whatsapp.com/send?phone=5561986792680&text=" class="chatWhatsapp" target="_blank">
