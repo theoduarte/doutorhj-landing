@@ -393,7 +393,7 @@
                                                 <span class="label-titulo">ANUIDADE</span>
                                                 <p>Valor da anuidade 48,80.</p>
                                                 <p>50% de desconto e 6 meses gratuitos para as pessoas que realizarem o cadastro na plataforma até 30.09.2018.</p>
-                                                <p>No sétimo haverá a cobrança de 24,40.</p>
+                                                <p>No sétimo mês será cobrado o valor de 24,40.</p>
                                             </div>
                                         </div>
                                     </div>
