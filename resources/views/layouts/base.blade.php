@@ -204,13 +204,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#area-sobre">O que é o Doctor Hoje</a>
+                                <a class="nav-link" href="https://doctorhoje.com.br/#area-sobre">O que é o Doctor Hoje</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#como-funciona">Como funciona</a>
+                                <a class="nav-link" href="https://doctorhoje.com.br/#como-funciona">Como funciona</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#vantagens">Vantagens</a>
+                                <a class="nav-link" href="https://doctorhoje.com.br/#vantagens">Vantagens</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/contato">Contato</a>
@@ -253,11 +253,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="#area-sobre">O que é o Doctor Hoje?</a></li>
-                            <li><a href="#como-funciona">Como Funciona</a></li>
-                            <li><a href="#vantagens">Vantagens</a></li>
+                            <li><a href="https://doctorhoje.com.br/#area-sobre">O que é o Doctor Hoje?</a></li>
+                            <li><a href="https://doctorhoje.com.br/#como-funciona">Como Funciona</a></li>
+                            <li><a href="https://doctorhoje.com.br/#vantagens">Vantagens</a></li>
                             <li><a href="">Política de Privacidade</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#modalTermos">Termo de Uso</a></li>
+                            <li><a href="https://doctorhoje.com.br/#" data-toggle="modal" data-target="#modalTermos">Termo de Uso</a></li>
                             {{--<li><a href="">Trabalhe Conosco</a></li>--}}
                         </ul>
                     </div>

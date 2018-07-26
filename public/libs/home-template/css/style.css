@@ -3225,6 +3225,10 @@ header .nav-item-mobile {
     text-decoration: none;
 }
 
+.chatWhatsapp i {
+    font-size: 24px;
+}
+
 .contato-prestador {
     background-color: rgb(249, 249, 249);
 }
@@ -3891,6 +3895,9 @@ footer ul li a:hover {
 
     .resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
         margin-top: 0;
+    }
+    .contato-prestador .area-contato .area-form .form #email {
+        margin-bottom: 20px;
     }
 }
 
