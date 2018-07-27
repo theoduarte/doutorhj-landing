@@ -308,7 +308,7 @@ class UserController extends Controller
                     Em caso de qualquer dúvida, fique à vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
-                    <a href='mailto:meajuda@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>meajuda@doctorhoje.com.br</a>
+                    <a href='mailto:cliente@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doctorhoje.com.br</a>
                     <br><br>
                     Ou ligue para (61) 3221-5350, o atendimento é de<br>
                     segunda à sexta-feira
@@ -472,7 +472,7 @@ HEREDOC;
                     Em caso de qualquer dúvida, fique à vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
-                    <a href='mailto:meajuda@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>meajuda@doctorhoje.com.br</a>
+                    <a href='mailto:cliente@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doctorhoje.com.br</a>
                     <br><br>
                     Ou ligue para (61) 3221-5350, o atendimento é de<br>
                     segunda à sexta-feira
