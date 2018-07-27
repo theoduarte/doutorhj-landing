@@ -89,17 +89,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div class="tudo">
-    <!-- <div class="page-loader page-loader-variant-1">
-        <div><img class='img-responsive' style='margin-top: -20px;margin-left: -18px;' width='330' height='67' src='/libs/home-template/img/logos/logo-doutor-hoje-vertical.svg' alt='' />
-            <div class="offset-top-41 text-center">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </div>  -->
-    <div class="mensagem-cupom">
-        <p>Agende <span>agora</span> sua <span>1ª consulta</span> e GANHE 10% de <span>desconto</span>. Aproveite, por
-            tempo limitado! Use o cupom de desconto: <span>DOCTOR10</span></p>
-    </div>
     <header>
         @if (Auth::check())
             <nav class="navbar navbar-expand-xl">
