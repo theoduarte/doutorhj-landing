@@ -9,42 +9,9 @@
 @section('content')
 	<section class="area-busca-interna minha-conta">
 		<div class="container">
-			<div class="busca-home">
-				<div class="titulo">
-					<span>Quero agendar</span>
-				</div>
-				<form action="/resultado" class="form-busca-home form-busca" method="get" onsubmit="return validaBuscaAtendimento()">
-                    <div class="row">
-                        <div class="form-group col-md-12 col-lg-3">
-                            <label for="tipo">Tipo de atendimento</label>
-                            <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
-                                <option value="" disabled selected hidden>Ex.: Consulta</option>
-                                <option value="saude">Consulta Médica</option>
-                                <option value="odonto">Consulta Odontológica</option>
-                                <option value="exame">Exames</option>
-                                <!-- <option value="checkup">Check-up</option> -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3">
-                            <label for="especialidade">Especialidade ou exame</label>
-                            <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
-                                <option value="">Ex.: Clínica Médica</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3" id="localAtendimento">
-                            <label for="local">Local de atendimento</label>
-                            <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                                <option value="">Ex.: Asa Sul</option>
-                            </select>
-                            <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
-                            <input type="hidden" id="endereco_id" name="endereco_id">
-                        </div>
-                        <div class="form-group col-md-12 col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
-                        </div>
-                    </div>
-                </form>
-			</div>
+			
+			@include('includes/main-search', ['class' => 'busca-home'] );
+
 			<div class="box-meus-agendamentos">
 				<div class="titulo-box">
 					Meus Agendamentos

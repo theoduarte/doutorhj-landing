@@ -13,6 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->composer('layouts.base', 'App\Http\ViewComposer\TermosCondicoesComposer');
+        view()->composer('includes.main-search', 'App\Http\ViewComposer\TipoAtendimentosComposer');
+        view()->composer('resultado', 'App\Http\ViewComposer\TipoAtendimentosComposer');
     }
 
     /**
