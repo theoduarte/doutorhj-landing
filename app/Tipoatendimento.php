@@ -22,4 +22,8 @@ class Tipoatendimento extends Model
     {
         return $this->hasMany('App\Procedimento');
     }
+
+    public function getStatusString() {
+        return $this->attributes['cs_status'] == 'A' ? 'Ativo': 'Inativo';
+    }
 }
