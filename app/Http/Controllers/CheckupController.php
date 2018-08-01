@@ -41,10 +41,8 @@ class CheckupController extends Controller
         $checkup = new Checkup;
         $checkups = $checkup->getActive();
 
-        // dd($checkups);
-
         $consulta = $this->_consultaCheckup( CVXRequest::all() );
-        
+
         return view('checkup.resultado', compact('checkups', 'consulta'));
     }
     
@@ -137,7 +135,14 @@ class CheckupController extends Controller
         $qtTotalProcedimentos  = 0;
         $dsCheckupAnterior     = '';
 
+        $checkup = new Checkup;
+        
         foreach($resumo as $p){
+            
+            $summary = $checkup->getSummary( $p->id );
+
+            $dados[$p->titulo.'-'.$p->tipo]['summary'] = $summary;
+
             if ( $dsCheckupAnterior != $p->titulo.'-'.$p->tipo ){
                 @$arQtCamadas[$p->titulo.'-'.$p->tipo] = [];
                 $totalComCheckup = 0;

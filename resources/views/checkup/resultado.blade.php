@@ -14,8 +14,7 @@
         <div class="container">
             <div class="area-container">
                 <div class="area-alt-busca">
-                    <a class="btn btn-primary btn-alt-busc$consultaa" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar
-                        Busca <i class="fa fa-edit"></i></a>
+                    <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
                 </div>
                 <div class="collapseFormulario collapse show" id="collapseFormulario">
                     <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaCheckup()">
@@ -60,6 +59,8 @@
 				<div class="lista">
                   <div class="accordion" id="accordionResultado">
       	  			  @foreach( $consulta as $checkup )
+                  @php $qty = 0; @endphp
+
       	  				<form action="/agendar-atendimento" method="post" >
       	  				
       	  					<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="checkup">
@@ -72,12 +73,21 @@
                                           <div class="row">
                                               <div class="col-md-6 col-lg-8 col-xl-9">
                                                   <div class="resumo-pacote">
-                                                      <h4>Checkup {{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
+                                                      <h4>{{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
                                                       <span class="incluso">Incluso nesse pacote:</span>
+
                                                       <ul class="quantidade">
-                                                      	@foreach( $checkup['total_camadas'] as $camada => $total )
-                                                          <li><span>{{$total}}</span> {{$camada}}</li>
+                                                        @foreach( $checkup['summary'] as $summary )
+                                                          <li><span>{{$summary->qty}} {{$summary->ds_atendimento}}</span> {{$summary->especialidade}}</li>
+
+                                                          @php $qty += $summary->qty; @endphp
                                                         @endforeach
+                                                      </ul>
+
+                                                      <ul class="quantidade">
+                                                      	
+                                                          <li><span>Total: {{ $qty }}</span></li>
+                                                        
                                                       </ul>
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
                                                           ver lista de procedimentos
