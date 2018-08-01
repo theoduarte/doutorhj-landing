@@ -23,4 +23,8 @@ class Checkup extends Model
     public function agendamentos(){
     	return $this->hasMany('App\Agendamento');
     }
+
+    public function getActive() {
+        return $this->where('cs_status', 'A')->get();
+    }
 }
