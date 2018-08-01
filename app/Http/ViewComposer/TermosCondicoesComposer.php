@@ -9,7 +9,7 @@ class TermosCondicoesComposer
 {
 	public function compose(View $view)
 	{
-	    $termosCondicoes = new TermosCondicoes();
+        $termosCondicoes = new TermosCondicoes();
 	    $userSession = Auth::user();
 	        
 	    if (isset($userSession)) {

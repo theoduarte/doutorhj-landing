@@ -15,7 +15,6 @@ class MenuComposerServiceProvider extends ServiceProvider
     {
         view()->composer('layouts.master', 'App\Http\ViewComposer\MenuComposer');
         view()->composer('layouts.base', 'App\Http\ViewComposer\MenuComposer');
-        view()->composer('layouts.base', 'App\Http\ViewComposer\TermosCondicoesComposer');
     }
 
     /**

@@ -26,10 +26,14 @@
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Tipo de atendimento</option>
-                                <option value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'  ) selected='selected' @endif>Consulta Médica</option>
-                                <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto' ) selected='selected' @endif>Consulta Odontológica</option>
-                                <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'  ) selected='selected' @endif>Exames</option>
-                                <!-- <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup') selected='selected' @endif>Check-up</option> -->
+
+                                @foreach($tipoAtendimentos as $tipoAtendimento)
+                                    <option value="{{ $tipoAtendimento->tag_value }}" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == $tipoAtendimento->tag_value  ) selected='selected' @endif>{{ $tipoAtendimento->ds_atendimento }}</option>
+                                @endforeach
+
+                                @if( $hasActiveCheckup )
+                                    <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup' ) selected='selected' @endif>Checkups</option>
+                                @endif
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
