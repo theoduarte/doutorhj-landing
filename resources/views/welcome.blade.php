@@ -465,7 +465,7 @@
                                     </div>
                                 </div>
                                 <div class="area-btn">
-                                    <button onclick="window.location.href='/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade=1&local_atendimento=TODOS&endereco_id='  type="button" class="btn btn-agendar-plano-1">Agendar</button>
+                                    <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade=1&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-1">Agendar</button></a>
                                 </div>
                             </div>
                         </div>
@@ -508,7 +508,7 @@
                                     </div>
                                 </div>
                                 <div class="area-btn">
-                                    <button onclick="window.location.href='/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade=2&local_atendimento=TODOS&endereco_id=' type="button" class="btn btn-agendar-plano-2">Agendar</button>
+                                    <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade=2&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-2">Agendar</button></a>
                                 </div>
                             </div>
                         </div>
