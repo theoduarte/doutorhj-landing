@@ -4,7 +4,7 @@
 @push('scripts')
 	<script>
         $(document).ready(function () {
-        	$('#tipo_atendimento').change();
+        	$('#tipo_especialidade').change();
         });
 	</script>
 @endpush
@@ -14,8 +14,7 @@
         <div class="container">
             <div class="area-container">
                 <div class="area-alt-busca">
-                    <a class="btn btn-primary btn-alt-busc$consultaa" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar
-                        Busca <i class="fa fa-edit"></i></a>
+                    <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
                 </div>
                 <div class="collapseFormulario collapse show" id="collapseFormulario">
                     <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaCheckup()">
@@ -23,17 +22,21 @@
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
                                     <option value="" disabled selected hidden>Tipo de atendimento</option>
-                                    <option><button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento2348')">Prosseguir para pagamento</button>ption value="saude"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'saude'   ) selected='selected' @endif >Consulta Médica</option>
-                                    <option value="odonto"  @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'odonto'  ) selected='selected' @endif >Consulta Odontológica</option>
-                                    <option value="exame"   @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'exame'   ) selected='selected' @endif >Exames</option>
-                                    <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup' ) selected='selected' @endif >Check-up</option>
+
+                                    @foreach($tipoAtendimentos as $tipoAtendimento)
+                                        <option value="{{ $tipoAtendimento->tag_value }}" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == $tipoAtendimento->tag_value  ) selected='selected' @endif>{{ $tipoAtendimento->ds_atendimento }}</option>
+                                    @endforeach
+
+                                    @if( $hasActiveCheckup )
+                                        <option value="checkup" @if( isset($_GET['tipo_atendimento']) && $_GET['tipo_atendimento'] == 'checkup' ) selected='selected' @endif>Checkups</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
                                 <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
                                     <option value="" disabled selected hidden>Especialidade</option>
-                                    @foreach($checkup as $obj)
-                                    	<option value="{{$obj->titulo}}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $obj->titulo ) selected='selected' @endif>{{$obj->titulo}}</option>
+                                    @foreach($checkups as $obj)
+                                    	<option value="{{$obj->id}}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $obj->id ) selected='selected' @endif>{{ strtoupper($obj->titulo) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -56,11 +59,13 @@
 				<div class="lista">
                   <div class="accordion" id="accordionResultado">
       	  			  @foreach( $consulta as $checkup )
-      	  				<form id="form-agendamento-checkup{{$checkup['id']}}" action="/agendar-atendimento" method="post" >
+                  @php $qty = 0; @endphp
+
+      	  				<form action="/agendar-atendimento" method="post" >
       	  				
       	  					<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="checkup">
       	  					<input type="hidden" id="checkup_id" name="checkup_id" value="{{ $checkup['id'] }}">
-                            <input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
+                    <input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
       	  					{!! csrf_field() !!}
                               <div class="card">
                                   <div class="card-header" id="headingTres">
@@ -68,12 +73,21 @@
                                           <div class="row">
                                               <div class="col-md-6 col-lg-8 col-xl-9">
                                                   <div class="resumo-pacote">
-                                                      <h4>Checkup {{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
+                                                      <h4>{{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
                                                       <span class="incluso">Incluso nesse pacote:</span>
+
                                                       <ul class="quantidade">
-                                                      	@foreach( $checkup['total_camadas'] as $camada => $total )
-                                                          <li><span>{{$total}}</span> {{$camada}}</li>
+                                                        @foreach( $checkup['summary'] as $summary )
+                                                          <li><span>{{$summary->qty}} {{$summary->ds_atendimento}}</span> {{$summary->especialidade}}</li>
+
+                                                          @php $qty += $summary->qty; @endphp
                                                         @endforeach
+                                                      </ul>
+
+                                                      <ul class="quantidade">
+                                                      	
+                                                          <li><span>Total: {{ $qty }}</span></li>
+                                                        
                                                       </ul>
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
                                                           ver lista de procedimentos
@@ -142,11 +156,11 @@
                                                                   	  @if($descricao['tp_prestador'] == 'CLI')
                                                                       <div class="escolher-data">
                                                                           <label for="selecionaData_{{ $descricao['idatendimento'] }}"><i class="fa fa-calendar"></i></label>
-                                                                          <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData mascaraDataAgendamento" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data">
+                                                                          <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData mascaraDataAgendamento" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data" required>
                                                                       </div>
                                                                       <div class="escolher-hora">
                                                                       	  <label for="selecionaHora_{{ $descricao['idatendimento'] }}"><i class="fa fa-clock-o"></i></label>
-                                                                          <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora mascaraHoraAgendamento" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário">
+                                                                          <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora mascaraHoraAgendamento" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário" required>
                                                                       </div>
                                                                       @endif
                                                                   </div>
@@ -155,7 +169,7 @@
               	  								@endforeach
                                                   </div>																			
               	  						@endforeach
-        							    <button type="submit" class="btn btn-primary btn-vermelho" >Prosseguir para pagamento</button>
+        							                   <button type="submit" class="btn btn-primary btn-vermelho">Prosseguir para pagamento</button>
                                       </div>
                                   </div>
                               </div>
@@ -214,9 +228,10 @@
 
             /* DATA */
             var today_date = new Date();
+            var today_date_temp = new Date();
             var today_date_range = new Date();
-            var min_date = today_date.setDate(today_date.getDate() + 2);
-            var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);
+            var min_date = today_date_temp.setDate(today_date.getDate() + 2);
+            var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);            
                 
             jQuery('.selecionaData').datetimepicker({                
                 timepicker:false,
@@ -375,58 +390,6 @@
             		}
             	}
             });
-
-           /*  */
-           function validaAgendarCheckup(form_id) {
-            	var checkup_id 		= jQuery('#'+form_id).find('#clinica_id').val();
-
-            	var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
-        		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
-        		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
-            	
-        		if(checkup_id == '') { return false; }
-        		if(dt_agendamento == '') { return false; }
-        		if(ct_hora == '') { return false; }
-        		
-        		jQuery.ajax({
-            		type: 'POST',
-            	  	url: '/adiciona-checkup-carrinho',
-            	  	data: {
-            	  		'checkup_id': checkup_id,
-            	  		'data_agendamento': dt_agendamento,
-            	  		'hora_agendamento': ct_hora,
-        				'_token': laravel_token
-        			},
-        			
-        			success: function (result) {
-
-        				if( !result.status) {
-        					swal(
-    					        {
-    					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
-    					            text: result.mensagem
-    					        }
-    					    );
-
-    					    return false;
-        				} else {
-        					jQuery('#'+form_id).submit();
-            				return true;
-        				}
-                    },
-                    error: function (result) {
-                    	swal(
-                	        {
-                	            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                	            text: 'Falha na operação!'
-                	        }
-                	    );
-                    	return false;
-                    }
-            	});
-				
-        		return false;
-            }
         </script>
     @endpush
 @endsection

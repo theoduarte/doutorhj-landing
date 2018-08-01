@@ -70,9 +70,9 @@ $(document).ready(function () {
 				            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 				            }
 				    	});
-					}else{
+					} else {
 						for(var i=0; i < json.length; i++) {
-							var option = '<option value="'+json[i].descricao+'">'+json[i].descricao+'</option>';
+							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
 							$('#tipo_especialidade').append($(option));
 						}
 
