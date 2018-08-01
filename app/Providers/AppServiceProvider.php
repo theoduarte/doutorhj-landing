@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('includes.main-search', 'App\Http\ViewComposer\TipoAtendimentosComposer');
         view()->composer('resultado', 'App\Http\ViewComposer\TipoAtendimentosComposer');
         view()->composer('checkup.resultado', 'App\Http\ViewComposer\TipoAtendimentosComposer');
+        view()->composer('includes.checkup-section-landing', 'App\Http\ViewComposer\CheckupSectionLandingComposer');
     }
 
     /**
