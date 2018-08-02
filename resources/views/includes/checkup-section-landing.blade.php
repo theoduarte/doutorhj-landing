@@ -3,17 +3,17 @@
         <div class="selo">
             <img src="/libs/home-template/img/ckp-selo.png" alt="">
         </div>
-        <div class="row">
+        <div class="row row-eq-height">
             <div class="col-md-12 col-lg-6">
                 <div class="pacote-checkup">
                     <div class="resumo">
                         <div class="textos">
                             <h3>{{ $checkupMasculino->titulo }}</h3>
-                            <p class="qtde-procedimentos">{{ $checkupMasculino->itemCheckups->count('id') }} Procedimentos</p>
+                            <p class="qtde-procedimentos">{{ $checkupMasculino->itemCheckups->count('id') }} Ítens</p>
                             <ul>
                                 @foreach( $checkupMasculinoSummary as $summary )
                                 <li>
-                                    <p><strong>{{ $summary->qty }} {{ $summary->ds_atendimento }} ({{ $summary->especialidade }}):</strong> {{ $summary->tag }}</p>
+                                    <p><strong>{{ $summary->qty }} {{ $summary->tipo }}:</strong> {{ $summary->tag }}.</p>
                                 </li>
 
                                 @endforeach
@@ -21,15 +21,13 @@
                         </div>
                         <div class="valor">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <p class="vlr-mercado"><strike>R$ {{ number_format( $checkupMasculino->itemCheckups->sum('vl_mercado'),  2, ',', '.')  }}</strike></p>
-                                    <p>valor de mercado</p>
+                                    <p>valor médio de mercado</p>
                                 </div>
-                                <div class="col-md-3">
-                                    <p class="txt-auxiliar">a partir de</p>
-                                </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <p class="vlr-drhj">R$ {{ number_format( $checkupMasculino->itemCheckups->sum('vl_com_checkup'),  2, ',', '.')  }}</p>
+                                    <p>Valor DoctorHJ</p>
                                 </div>
                             </div>
                         </div>
@@ -44,11 +42,11 @@
                     <div class="resumo">
                         <div class="textos">
                             <h3>{{ $checkupFeminino->titulo }}</h3>
-                            <p class="qtde-procedimentos">{{ $checkupFeminino->itemCheckups->count('id') }} Procedimentos</p>
+                            <p class="qtde-procedimentos">{{ $checkupFeminino->itemCheckups->count('id') }} Ítens</p>
                             <ul>
                                 @foreach( $checkupFemininoSummary as $summary )
                                 <li>
-                                    <p><strong>{{ $summary->qty }} {{ $summary->ds_atendimento }}:</strong> {{ $summary->especialidade }}</p>
+                                    <p><strong>{{ $summary->qty }} {{ $summary->tipo }}:</strong> {{ $summary->tag }}.</p>
                                 </li>
 
                                 @endforeach
@@ -56,15 +54,13 @@
                         </div>
                         <div class="valor">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <p class="vlr-mercado"><strike>R$ {{ number_format( $checkupFeminino->itemCheckups->sum('vl_mercado'),  2, ',', '.')  }}</strike></p>
-                                    <p>valor de mercado</p>
+                                    <p>valor médio de mercado</p>
                                 </div>
-                                <div class="col-md-3">
-                                    <p class="txt-auxiliar">a partir de</p>
-                                </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <p class="vlr-drhj">R$ {{ number_format( $checkupFeminino->itemCheckups->sum('vl_com_checkup'),  2, ',', '.')  }}</p>
+                                    <p>Valor DoctorHJ</p>
                                 </div>
                             </div>
                         </div>

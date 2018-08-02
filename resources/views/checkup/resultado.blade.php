@@ -74,7 +74,7 @@
                                               <div class="col-md-6 col-lg-8 col-xl-9">
                                                   <div class="resumo-pacote">
                                                       <h4>{{ $checkup['titulo'] }}</h4>
-                                                      <span class="incluso">Incluso nesse pacote:</span>
+                                                      <span class="incluso">Incluso nesse pacote: {{ $checkupObj->itemcheckups->count() }} ítens</span>
 
                                                       <ul class="quantidade">
                                                         @foreach( $checkup['summary'] as $summary )
@@ -84,11 +84,6 @@
                                                         @endforeach
                                                       </ul>
 
-                                                      <ul class="quantidade">
-                                                      	
-                                                          <li><span>Total: {{ $qty }}</span></li>
-                                                        
-                                                      </ul>
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
                                                           ver detalhes
                                                       </button>
