@@ -13,7 +13,7 @@
                             <ul>
                                 @foreach( $checkupMasculinoSummary as $summary )
                                 <li>
-                                    <p><strong>{{ $summary->qty }} {{ $summary->ds_atendimento }}:</strong> {{ $summary->especialidade }}</p>
+                                    <p><strong>{{ $summary->qty }} {{ $summary->ds_atendimento }} ({{ $summary->especialidade }}):</strong> {{ $summary->tag }}</p>
                                 </li>
 
                                 @endforeach

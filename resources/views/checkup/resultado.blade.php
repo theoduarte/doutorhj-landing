@@ -53,7 +53,7 @@
                     </form>
                 </div>
                 <div class="titulo">
-                    <strong>{{count($consulta)}} resultados para Checkup</strong>
+                    <strong>{{count($consulta)}} resultado(s) para Checkup</strong>
                     <p>Escolha abaixo um dos pacotes de exames para seu checkup</p>
                 </div>
 				<div class="lista">
@@ -73,7 +73,7 @@
                                           <div class="row">
                                               <div class="col-md-6 col-lg-8 col-xl-9">
                                                   <div class="resumo-pacote">
-                                                      <h4>{{$checkup['titulo']}} {{$checkup['tipo']}} com {{$checkup['total_procedimentos']}} procedimentos</h4>
+                                                      <h4>{{ $checkup['titulo'] }}</h4>
                                                       <span class="incluso">Incluso nesse pacote:</span>
 
                                                       <ul class="quantidade">
@@ -90,7 +90,7 @@
                                                         
                                                       </ul>
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
-                                                          ver lista de procedimentos
+                                                          ver detalhes
                                                       </button>
                                                   </div>
                                               </div>
