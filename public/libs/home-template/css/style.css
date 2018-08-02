@@ -644,6 +644,12 @@ header .navbar-collapse {
     font-size: 24px;
 }
 
+.area-checkup .pacote-checkup .valorPorcentagem {
+    color: #1474BB;
+    font-weight: 500;
+    font-size: 20px;
+}
+
 .area-checkup .pacote-checkup .btn {
     width: 100%;
     border-radius: 0 0 6px 6px;
