@@ -21,13 +21,17 @@
                         </div>
                         <div class="valor">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <p class="vlr-mercado"><strike>R$ {{ number_format( $checkupMasculino->itemCheckups->sum('vl_mercado'),  2, ',', '.')  }}</strike></p>
                                     <p>valor médio de mercado</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <p class="vlr-drhj">R$ {{ number_format( $checkupMasculino->itemCheckups->sum('vl_com_checkup'),  2, ',', '.')  }}</p>
                                     <p>Valor DoctorHJ</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="txtPorcentagem">Economize</p>
+                                    <p class="valorPorcentagem">43%</p>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +58,17 @@
                         </div>
                         <div class="valor">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <p class="vlr-mercado"><strike>R$ {{ number_format( $checkupFeminino->itemCheckups->sum('vl_mercado'),  2, ',', '.')  }}</strike></p>
                                     <p>valor médio de mercado</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <p class="vlr-drhj">R$ {{ number_format( $checkupFeminino->itemCheckups->sum('vl_com_checkup'),  2, ',', '.')  }}</p>
                                     <p>Valor DoctorHJ</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="txtPorcentagem">Economize</p>
+                                    <p class="valorPorcentagem">43%</p>
                                 </div>
                             </div>
                         </div>
