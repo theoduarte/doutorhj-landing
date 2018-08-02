@@ -31,7 +31,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">43%</p>
+                                    <p class="valorPorcentagem">
+                                        {{ number_format( ($checkupMasculino->itemCheckups->sum('vl_com_checkup')/ ( $checkupMasculino->itemCheckups->sum('vl_mercado') > 0 ? $checkupMasculino->itemCheckups->sum('vl_mercado') : $checkupMasculino->itemCheckups->sum('vl_com_checkup') )) * 100,  2, ',', '.') }}%</p>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">43%</p>
+                                    <p class="valorPorcentagem">
+                                        {{ number_format( ($checkupFeminino->itemCheckups->sum('vl_com_checkup')/ ( $checkupFeminino->itemCheckups->sum('vl_mercado') > 0 ? $checkupFeminino->itemCheckups->sum('vl_mercado') : $checkupFeminino->itemCheckups->sum('vl_com_checkup') )) * 100,  2, ',', '.') }}%</p>
                                 </div>
                             </div>
                         </div>
