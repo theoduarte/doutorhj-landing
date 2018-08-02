@@ -40,10 +40,11 @@ class CheckupController extends Controller
 
         $checkup = new Checkup;
         $checkups = $checkup->getActive();
+        $checkupObj = Checkup::find(CVXRequest::get('tipo_especialidade'));
 
         $consulta = $this->_consultaCheckup( CVXRequest::all() );
 
-        return view('checkup.resultado', compact('checkups', 'consulta'));
+        return view('checkup.resultado', compact('checkups', 'consulta', 'checkupObj'));
     }
     
     /**
@@ -85,7 +86,7 @@ class CheckupController extends Controller
         $tipoEspecialidade = $dados['tipo_especialidade'];
         
         $resumo = DB::table('atendimentos')
-                    ->select(['checkups.id', 'clinicas.nm_razao_social', 'clinicas.id AS idclinica', 'atendimentos.id AS idatendimento', 'enderecos.te_endereco', 'enderecos.te_bairro',
+                    ->select(['checkups.id', 'clinicas.nm_razao_social', 'clinicas.id AS idclinica', 'clinicas.obs_procedimento', 'atendimentos.id AS idatendimento', 'enderecos.te_endereco', 'enderecos.te_bairro',
                               'cidades.nm_cidade', 'estados.sg_estado', 'procedimentos.cd_procedimento', 
                               'procedimentos.ds_procedimento', 'item_checkups.vl_com_checkup', 'item_checkups.vl_net_checkup', 
                               'item_checkups.vl_mercado', 'consultas.cd_consulta', 'consultas.ds_consulta', 
