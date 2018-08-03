@@ -6,6 +6,8 @@ use App\Agendamento;
 use App\Cidade;
 use App\Endereco;
 use App\Atendimento;
+use App\Procedimento;
+use App\Consulta;
 use App\Checkup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
@@ -28,64 +30,13 @@ class EspecialidadeController extends Controller
         $result = [];
         
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
-            
-            $tipo_atendimento_id = 1;
-
-            $atendimentos = DB::table('atendimentos')
-            	->join('consultas', 		     function($join1) use ($tipo_atendimento_id) {$join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('consultas.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
-            	->join('clinicas', 			     function($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
-            	->join('filials',                function($join3) { $join3->on('clinicas.id', '=', 'filials.clinica_id');})
-            	->join('profissionals', 		 function($join4) { $join4->on('profissionals.id', '=', 'atendimentos.profissional_id')->on('profissionals.clinica_id', '=', 'clinicas.id');})
-            	->join('filial_profissional',    function($join5) { $join5->on('profissionals.id', '=', 'filial_profissional.profissional_id')->on('filial_profissional.filial_id', '=', 'filials.id');})
-            	->join('enderecos',              function($join6) { $join6->on('filials.endereco_id', '=', 'enderecos.id');})
-            	->join('tag_populars', 		     function($join7) { $join7->on('tag_populars.consulta_id', '=', 'consultas.id');})
-            	->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
-            	->orderBy('tag_populars.id', 'asc')
-            	->select(DB::raw('on (tag_populars.id) tag_populars.id'), 'atendimentos.id as idatendimento', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'tag_populars.cs_tag as ds_preco', 'atendimentos.cs_status', 'atendimentos.created_at', 'atendimentos.updated_at', 'atendimentos.clinica_id', 'atendimentos.consulta_id', 'atendimentos.procedimento_id', 'atendimentos.profissional_id')
-                ->distinct()
-                ->get(['consultas.cd_consulta']);
-            
-            foreach ($atendimentos as $atend) {
-                
-                if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->consulta_id)) {
-                    
-                    $item = [
-                        'id' => $atend->idatendimento,
-                        'tipo' => 'consulta',
-                        'descricao' => $atend->ds_preco,
-                        'codigo' => $atend->consulta_id
-                    ];
-                    
-                    array_push($result, $item);
-                }
-            }
+            $consulta = new Consulta();
+            $result = $consulta->getActive();
+            $result = $result->toArray();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
-            $tipo_atendimento_id = $tipo_atendimento == 'exame' ? 3 : 2;
-
-            $atendimentos = DB::table('atendimentos')
-            	->join('procedimentos',        function($join1) use ($tipo_atendimento_id) {$join1->on('procedimentos.id', '=', 'atendimentos.procedimento_id')->where('procedimentos.tipoatendimento_id', '=', DB::raw($tipo_atendimento_id));})
-            	->join('clinicas',             function($join2) { $join2->on('clinicas.id', '=', 'atendimentos.clinica_id');})
-            	->join('filials',              function($join4) { $join4->on('clinicas.id', '=', 'filials.clinica_id');})
-            	->join('tag_populars',         function($join3) { $join3->on('tag_populars.procedimento_id', '=', 'procedimentos.id');})
-            	->join('atendimento_filial',   function($join5) { $join5->on('atendimento_filial.filial_id', '=', 'filials.id')->on('atendimento_filial.atendimento_id', '=', 'atendimentos.id');})
-            	->where('atendimentos.cs_status', '=', 'A')->where('clinicas.cs_status', '=', 'A')
-                ->orderBy('tag_populars.id', 'asc')
-                ->select(DB::raw('on (tag_populars.id) tag_populars.id'), 'atendimentos.id as idatendimento', 'atendimentos.vl_com_atendimento', 'atendimentos.vl_net_atendimento', 'tag_populars.cs_tag as ds_preco', 'atendimentos.cs_status', 'atendimentos.created_at', 'atendimentos.updated_at', 'atendimentos.clinica_id', 'atendimentos.consulta_id', 'atendimentos.procedimento_id', 'atendimentos.profissional_id')
-                ->distinct()
-                ->get(['procedimentos.cd_procedimento']);
- 
-            foreach ($atendimentos as $atend) {
-                if (! EspecialidadeController::checkIfAtendimentoExists($result, $atend->procedimento_id)) {
-                    $item = [
-                        'id' => $atend->idatendimento,
-                        'tipo' => 'exame',
-                        'descricao' => $atend->ds_preco,
-                        'codigo' => $atend->procedimento_id
-                    ];
-                    
-                    array_push($result, $item);
-                }
-            }
+            $procedimento = new Procedimento();
+            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
+            $result = $result->toArray();
         } elseif ($tipo_atendimento == 'checkup') {
             $checkup = new Checkup;
             $checkups = $checkup->getActive();

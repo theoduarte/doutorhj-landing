@@ -24,7 +24,7 @@
                 <form action="/resultado" class="form-busca-resultado form-busca" method="get" onsubmit="return validaBuscaAtendimento()" >
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
-                            <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
+                            <select id="tipo_atendimento" class="form-control select2" name="tipo_atendimento">
                                 <option value="" disabled selected hidden>Tipo de atendimento</option>
 
                                 @foreach($tipoAtendimentos as $tipoAtendimento)
@@ -37,15 +37,15 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
-                                <option value="" disabled selected hidden>Especialidade</option>
+                            <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
+                                <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                                 @foreach($list_atendimentos as $atendimento)
                                 <option value="{{ $atendimento['id'] }}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento['id'] ) selected="selected" @endif>{{ $atendimento['descricao'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <select id="local_atendimento" class="form-control" name="local_atendimento">
+                            <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                 <option value="" disabled selected hidden>Local</option>
                                 <option value="TODOS" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == 'TODOS' ) selected="selected" @endif>TODOS OS LOCAIS</option>
                                 @foreach($list_enderecos as $endereco)
@@ -77,7 +77,13 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }} - Und: ( {{ $atendimento->filial_result->nm_nome_fantasia }} )</h5>
                                     <h6 class="card-subtitle">@if($atendimento->consulta_id != null) Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }} @endif</h6>
-                                    <p class="card-text">@if( $tipo_atendimento == 'saude' ) {{ $atendimento->consulta->tag_populars->first()->cs_tag }} @else {{ $atendimento->procedimento->tag_populars->first()->cs_tag }} @endif </p>
+                                    <p class="card-text">
+                                        @if( $tipo_atendimento == 'saude' ) {{ 
+                                            ( !empty($atendimento->consulta->tag_populars->first()) ? $atendimento->consulta->tag_populars->first()->cs_tag : $atendimento->ds_preco ) }} 
+                                        @else {{ 
+                                            ( !empty($atendimento->procedimento->tag_populars->first()) ? $atendimento->procedimento->tag_populars->first()->cs_tag : $atendimento->ds_preco ) }} 
+                                        }} 
+                                        @endif </p>
                                     <p class="card-text">{{ $atendimento->filial_result->endereco->te_endereco.' ('.$atendimento->filial_result->endereco->te_bairro.') '.$atendimento->filial_result->endereco->cidade->nm_cidade.'-'.$atendimento->filial_result->endereco->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>

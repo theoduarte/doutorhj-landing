@@ -30,7 +30,7 @@ class Checkup extends Model
     }
 
     public function getSummary( $checkupId ) {
-        return DB::select(" SELECT 1 ORDEM, CASE WHEN COUNT(1) > 1 THEN 'Consultas ' ELSE 'Consulta ' END TIPO, CK.ID, CK.TITULO, TP.DS_ATENDIMENTO, E.DS_ESPECIALIDADE ESPECIALIDADE, 
+        return DB::select(" SELECT 1 ORDEM, CASE WHEN COUNT(1) > 1 THEN 'Consultas ' ELSE 'Consulta ' END TIPO, CK.ID, CK.TITULO, E.DS_ESPECIALIDADE ESPECIALIDADE, 
                                    COUNT(1) QTY, STRING_AGG( COALESCE(TAGS.CS_TAG,AT.DS_PRECO,C.DS_CONSULTA), '; ') TAG
                                 FROM CHECKUPS CK
                                 JOIN ITEM_CHECKUPS ICK ON (CK.ID = ICK.CHECKUP_ID)
@@ -42,9 +42,9 @@ class Checkup extends Model
                                    FROM TAG_POPULARS TP
                                   GROUP BY CONSULTA_ID, CS_TAG) TAGS ON (TAGS.CONSULTA_ID = C.ID)
                                WHERE CK.ID = ?
-                               GROUP BY CK.ID, TP.DS_ATENDIMENTO, E.DS_ESPECIALIDADE
+                               GROUP BY CK.ID, E.DS_ESPECIALIDADE
                               UNION
-                              SELECT 2 ORDEM, CONCAT(CASE WHEN COUNT(1) > 1 THEN 'Exames ' ELSE 'Exame ' END, GP.DS_GRUPO) TIPO, CK.ID, CK.TITULO, TP.DS_ATENDIMENTO, GP.DS_GRUPO ESPECIALIDADE, 
+                              SELECT 2 ORDEM, CONCAT(CASE WHEN COUNT(1) > 1 THEN 'Exames - ' ELSE 'Exame - ' END, GP.DS_GRUPO) TIPO, CK.ID, CK.TITULO, GP.DS_GRUPO ESPECIALIDADE, 
                                    COUNT(1) QTY, STRING_AGG( COALESCE(TAGS.CS_TAG,AT.DS_PRECO,P.DS_PROCEDIMENTO), '; ') TAG
                                 FROM CHECKUPS CK
                                 JOIN ITEM_CHECKUPS ICK ON (CK.ID = ICK.CHECKUP_ID)
@@ -56,7 +56,7 @@ class Checkup extends Model
                                    FROM TAG_POPULARS TP
                                   GROUP BY PROCEDIMENTO_ID, CS_TAG) TAGS ON (TAGS.PROCEDIMENTO_ID = P.ID)
                                WHERE CK.ID = ?
-                               GROUP BY CK.ID, TP.DS_ATENDIMENTO, GP.DS_GRUPO
-                               ORDER BY ORDEM, DS_ATENDIMENTO, QTY", [$checkupId,$checkupId] );
+                               GROUP BY CK.ID, GP.DS_GRUPO
+                               ORDER BY ORDEM, QTY", [$checkupId,$checkupId] );
     }
 }
