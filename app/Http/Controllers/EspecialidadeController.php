@@ -6,6 +6,7 @@ use App\Agendamento;
 use App\Cidade;
 use App\Endereco;
 use App\Atendimento;
+use App\Checkup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 
@@ -86,10 +87,13 @@ class EspecialidadeController extends Controller
                 }
             }
         } elseif ($tipo_atendimento == 'checkup') {
-            foreach($this->checkupController->getTituloCheckupAtivo() as $dado){
+            $checkup = new Checkup;
+            $checkups = $checkup->getActive();
+            foreach($checkups as $checkup){
                 $item = [
+                    'id'        => $checkup->id,
                     'tipo'      => 'checkup',
-                    'descricao' => strtoupper($dado->titulo)
+                    'descricao' => strtoupper($checkup->titulo)
                 ];         
                 array_push($result, $item);
             }
