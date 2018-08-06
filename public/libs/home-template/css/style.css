@@ -262,7 +262,7 @@ header .navbar-collapse {
 }
 
 .banner-slider-home .carousel-caption .area-cupom {
-    width: 1110px;
+    width: 340px;
     margin: 0 auto;
     position: relative;
 }
@@ -270,8 +270,8 @@ header .navbar-collapse {
 .banner-slider-home .carousel-caption .area-cupom img {
     position: absolute;
     top: -190px;
-    left: -410px;
-    width: 800px;
+    left: -387px;
+    width: 340px;
 }
 
 .banner-slider-home .carousel-caption .area-texto {
@@ -3562,16 +3562,16 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-cupom {
-        width: 900px;
+        width: 338px;
         margin: 0 auto;
         position: relative;
     }
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -118px;
-        left: -318px;
-        width: 648px;
+        top: -194px;
+        left: -300px;
+        width: 338px;
     }
 
     .banner-slider-home .carousel-caption .area-texto .texto {
@@ -3693,16 +3693,16 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-cupom {
-        width: 600px;
+        width: 300px;
         margin: 0 auto;
         position: relative;
     }
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -118px;
-        left: -318px;
-        width: 486px;
+        top: -48px;
+        left: -150px;
+        width: 255px;
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom {
@@ -3710,7 +3710,7 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
-        width: 430px;
+        width: 328px;
         left: 50%;
         margin-left: -270px;
         margin-right: auto;
@@ -3868,6 +3868,7 @@ footer ul li a:hover {
         width: 400px;
         margin: 0 auto;
         position: relative;
+        display: none;
     }
 
     .banner-slider-home .carousel-caption .area-cupom img {
@@ -3882,7 +3883,7 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom {
-        width: 330px;
+        width: 400px;
         left: 50%;
         margin-left: -270px;
         margin-right: auto;
