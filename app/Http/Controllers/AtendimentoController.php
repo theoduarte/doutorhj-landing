@@ -22,24 +22,24 @@ class AtendimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function consultaAtendimentos()
-    {         
+    {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
     	$tipo_atendimento = CVXRequest::get('tipo_atendimento');
         $enderecoIds = CVXRequest::get('endereco_id');
         $especialidade = CVXRequest::get('tipo_especialidade');
-        $sort_item = CVXRequest::get('sort') != '' ? CVXRequest::get('sort') : 'asc';
+        $sortItem = !empty(CVXRequest::get('sort')) ? CVXRequest::get('sort') : 'asc';
 
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds );
+            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem );
             $list_enderecos = $consulta->getActiveAddress( $especialidade );
             $list_atendimentos = $consulta->getActive();
         }
         elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds );
+            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem );
             $list_enderecos = $procedimento->getActiveAddress( $especialidade );
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }

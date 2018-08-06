@@ -76,7 +76,7 @@ class Consulta extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $consultaId, $enderecoIds ) {
+    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem ) {
         // DB::enableQueryLog();
         $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
                              c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
@@ -101,6 +101,9 @@ class Consulta extends Model
         if ( !empty($enderecoIds) ) {
             $queryStr .= " and f.endereco_id in ($enderecoIds)";
         }
+
+        $queryStr .= " order by at.vl_com_atendimento $sortItem";
+        $queryStr .= ", f.eh_matriz desc, c.nm_fantasia, pf.nm_primario";
 
         $query = DB::select($queryStr, [ 'consultaId' => $consultaId, 'status' => 'A' ]);
 

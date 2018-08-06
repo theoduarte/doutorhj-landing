@@ -114,7 +114,7 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $procedimentoId, $enderecoId ) {
+    public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem ) {
         // DB::enableQueryLog();
         $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
                                      c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
@@ -135,8 +135,11 @@ class Procedimento extends Model
                                  and at.procedimento_id = :procedimentoId";
         
         if( !empty($enderecoId) ) {
-            $queryStr .= " and f.endereco_id in($enderecoId)";
+            $queryStr .= " and f.endereco_id in ($enderecoIds)";
         }
+
+        $queryStr .= " order by at.vl_com_atendimento $sortItem";
+        $queryStr .= ", f.eh_matriz desc, c.nm_fantasia";
         
         $query = DB::select( $queryStr, [ 'procedimentoId' => $procedimentoId, 'status' => 'A' ]);
 
