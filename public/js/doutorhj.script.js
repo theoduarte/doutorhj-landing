@@ -60,11 +60,6 @@ $(document).ready(function () {
 										option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
 										$('#local_atendimento').append($(option));
 									}
-									
-									if(json.length > 0) {
-										$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-										$('#endereco_id').val(json[0].id);
-									}
 								}
 				            },
 				            error: function (result) {
@@ -96,10 +91,6 @@ $(document).ready(function () {
 										option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
 										$('#local_atendimento').append($(option));
 									}
-									
-									if(json.length > 0) {
-										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-									}									
 								}
 							},
 							error: function (result) {
@@ -240,13 +231,7 @@ $(document).ready(function () {
 						for(var i=0; i < json.length; i++) {
 							option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
 							$('#local_atendimento').append($(option));
-						}
-						
-						if(json.length > 0) {
-							$('#local_atendimento option[value="'+json[0].id+'"]').prop("selected", true);
-							$('#endereco_id').val(json[0].id);
-						}
-						
+						}						
 					}
 	            },
 	            error: function (result) {
@@ -273,11 +258,6 @@ $(document).ready(function () {
 							option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
 							$('#local_atendimento').append($(option));
 						}
-						
-						if(json.length > 0) {
-							$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-							$('#endereco_id').val(json[0].tipo);
-						}									
 					}
 				},
 				error: function (result) {
