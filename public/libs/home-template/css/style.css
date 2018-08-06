@@ -4128,6 +4128,10 @@ footer ul li a:hover {
     .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
         line-height: 20px;
     }
+
+    .area-checkup .pacote-checkup .valor .row div {
+        margin-bottom: 20px;
+    }
 }
 
 @media only screen and (max-width: 480px) {

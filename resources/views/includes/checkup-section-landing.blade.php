@@ -76,7 +76,6 @@
         </div>
     </div>
 </div>
-
 {{--
 <div id="checkup" class="area-checkup">
     <div class="container">
@@ -162,4 +161,5 @@
             </div>
         </div>
     </div>
-</div>--}}
+</div>
+--}}
