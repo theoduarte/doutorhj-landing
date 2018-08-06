@@ -3676,9 +3676,6 @@ footer ul li a:hover {
         height: 900px;
         padding: 60px 0 60px 0;
     }
-    .banner-slider-home .item-sincor {
-        height: 1250px;
-    }
 
     .banner-slider-home .carousel-caption {
         bottom: 560px;
@@ -3875,7 +3872,7 @@ footer ul li a:hover {
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -478px;
+        top: -483px;
         left: -4px;
         width: 415px;
     }
@@ -4065,9 +4062,9 @@ footer ul li a:hover {
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -414px;
-        left: 14px;
-        width: 344px;
+        top: -396px;
+        left: 40px;
+        width: 320px;
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom {
@@ -4086,7 +4083,7 @@ footer ul li a:hover {
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom p {
-        margin-bottom: 60px;
+        margin-bottom: 30px;
     }
 
     .pagamento .form-group {
