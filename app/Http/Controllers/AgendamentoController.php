@@ -14,7 +14,6 @@ use App\Estado;
 use App\Atendimento;
 use App\Http\Requests\AgendamentoRequest;
 use App\Itempedido;
-//use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Paciente;
 use App\CartaoPaciente;
@@ -186,8 +185,8 @@ class AgendamentoController extends Controller
     	date_default_timezone_set('America/Sao_Paulo');
     	
     	$tipo_atendimento	= $request->input('tipo_atendimento');
-    	
-//    	\Cart::clear();
+
+   	    // \Cart::clear();
 
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
@@ -218,8 +217,8 @@ class AgendamentoController extends Controller
     		$url 				= $request->input('current_url');
 
 			$vl_com_atendimento = number_format($vl_com_atendimento, 2, '.', '');
-    		
-    		CVXCart::add(array(
+
+            CVXCart::add(array(
 				'id' => $cart_id,
 				'name' => 'Agendamento Item '.strval($num_itens + 1),
 				'price' => $vl_com_atendimento,

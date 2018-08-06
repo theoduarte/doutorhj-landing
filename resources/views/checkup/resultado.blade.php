@@ -17,10 +17,10 @@
                     <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
                 </div>
                 <div class="collapseFormulario collapse show" id="collapseFormulario">
-                    <form action="/resultado-checkup" class="form-busca-resultado" method="get" onsubmit="return validaBuscaCheckup()">
+                    <form action="/resultado-checkup" class="form-busca-resultado" method="get">
                         <div class="row">
                             <div class="form-group col-md-12 col-lg-3">
-                                <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
+                                <select id="tipo_atendimento" class="form-control select2" name="tipo_atendimento">
                                     <option value="" disabled selected hidden>Tipo de atendimento</option>
 
                                     @foreach($tipoAtendimentos as $tipoAtendimento)
@@ -33,15 +33,15 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
-                                <select id="tipo_especialidade" class="form-control" name="tipo_especialidade">
-                                    <option value="" disabled selected hidden>Especialidade</option>
+                                <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
+                                    <option value="" disabled selected hidden>Tipo de checkup</option>
                                     @foreach($checkups as $obj)
                                     	<option value="{{$obj->id}}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $obj->id ) selected='selected' @endif>{{ strtoupper($obj->titulo) }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
-                                <select id="local_atendimento" class="form-control" name="local_atendimento">
+                                <select id="local_atendimento" class="form-control select2" name="local_atendimento">
                                 </select>
                             </div>
                             <div class="form-group col-md-12 col-lg-3">
@@ -53,7 +53,7 @@
                     </form>
                 </div>
                 <div class="titulo">
-                    <strong>{{count($consulta)}} resultado(s) para Checkup</strong>
+                    <strong>{{ count($consulta) > 1 ? count($consulta) . " resultados para checkup" : count($consulta) . " resultado para checkup"}}</strong>
                     <p>Escolha abaixo um dos pacotes de exames para seu checkup</p>
                 </div>
 				<div class="lista">
@@ -78,21 +78,21 @@
 
                                                       <ul class="quantidade">
                                                         @foreach( $checkup['summary'] as $summary )
-                                                          <li><span>{{$summary->qty}} {{$summary->ds_atendimento}}</span> {{$summary->especialidade}}</li>
+                                                          <li><span>{{$summary->qty}} {{$summary->tipo}}</span> </li>
 
                                                           @php $qty += $summary->qty; @endphp
                                                         @endforeach
                                                       </ul>
 
                                                       <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{$checkup['titulo']}}{{$checkup['tipo']}}" aria-expanded="true" aria-controls="collapseOne">
-                                                          ver detalhes
+                                                          Ver detalhes
                                                       </button>
                                                   </div>
                                               </div>
                                               <div class="col-md-6 col-lg-4 col-xl-3">
                                                   <div class="valores">
                                                       <div class="mercado">
-                                                          <p>Valor de mercado</p>
+                                                          <p>Valor médio de mercado</p>
                                                           <span>R$ {{$checkup['total_vl_mercado']}}</span>
                                                       </div>
                                                       <div class="drhj">
@@ -100,7 +100,7 @@
                                                           <span>R$ {{$checkup['total_vl_individual']}}</span>
                                                       </div>
                                                       <div class="checkup">
-                                                          <p>Valor do Checkup</p>
+                                                          <p>Valor do Checkup DoctorHJ</p>
                                                           <span>R$ {{$checkup['total_com_checkup']}}</span>
                                                           
                                                           <input type="hidden" id="vl_total_checkup" name="vl_total_checkup" value="{{ $checkup['total_com_checkup'] }}">
@@ -134,10 +134,12 @@
                                                               <div class="row">
                                                                   <div class="col-xl-8">
                                                                       <div class="nome">
-                                                                          <button type="button" class="btn btn-tooltip text-left" data-toggle="tooltip" data-html="true" title="{{@$descricao['descricao']}}">
-                                                                              <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                                                              <span class="text-primary" style="white-space: normal;">{{@$descricao['descricao']}} @if($descricao['nm_profissional'] != null)- Dr. {{ @$descricao['nm_profissional'] }} @endif</span>
-                                                                          </button>
+                                                                          @if ( !empty($descricao['obs_procedimento']) ) 
+                                                                            <button type="button" class="btn btn-tooltip text-left" data-toggle="tooltip" data-html="true" title="{{ $descricao['obs_procedimento'] }}">
+                                                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                                            </button>
+                                                                          @endif
+                                                                          <span class="text-primary" style="white-space: normal;">{{@$descricao['descricao']}} @if($descricao['nm_profissional'] != null)- Dr. {{ @$descricao['nm_profissional'] }} @endif</span>
                                                                       </div>
                                                                       <div class="clinicas">
                                                                           <div class="form-check">
@@ -148,7 +150,7 @@
                                                                       </div>
                                                                   </div>
                                                                   <div class="col-xl-4">
-                                                                  	  @if($descricao['tp_prestador'] == 'CLI')
+                                                                      @if($descricao['tp_prestador'] == 'CLI')
                                                                       <div class="escolher-data">
                                                                           <label for="selecionaData_{{ $descricao['idatendimento'] }}"><i class="fa fa-calendar"></i></label>
                                                                           <input type="text" id="selecionaData_{{ $descricao['idatendimento'] }}" class="selecionaData mascaraDataAgendamento" name="selecionaData_{{ $descricao['idatendimento'] }}" placeholder="Data" required>
@@ -157,6 +159,12 @@
                                                                       	  <label for="selecionaHora_{{ $descricao['idatendimento'] }}"><i class="fa fa-clock-o"></i></label>
                                                                           <input type="text" id="selecionaHora_{{ $descricao['idatendimento'] }}" class="selecionaHora mascaraHoraAgendamento" name="selecionaHora_{{ $descricao['idatendimento'] }}" placeholder="Horário" required>
                                                                       </div>
+                                                                      @endif
+
+                                                                      @if ( !empty($descricao['ds_item']) )
+                                                                        <div class="checkup-warning">
+                                                                          <span>{{  $descricao['ds_item'] }}</span>
+                                                                        </div>
                                                                       @endif
                                                                   </div>
                                                               </div>

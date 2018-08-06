@@ -40,7 +40,6 @@ onsultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
-Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
 
 Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');

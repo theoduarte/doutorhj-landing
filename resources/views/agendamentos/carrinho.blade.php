@@ -102,7 +102,7 @@
 														<span>Prestador:</span>
 													</div>
 													<div class="dados-resumo">
-														<p>{{ $item['clinica']->nm_fantasia }} - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
+														<p>{{ $item['clinica']->nm_fantasia }} - {{ ($item['filial']->eh_matriz == 'S') ? 'Matriz: ' : 'Filial: ' }} {{ $item['filial']->nm_nome_fantasia }}</p>
 													</div>
 												</div>
 												<div class="linha-resumo">
