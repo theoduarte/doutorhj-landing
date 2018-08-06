@@ -91,6 +91,10 @@ $(document).ready(function () {
 										option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
 										$('#local_atendimento').append($(option));
 									}
+
+									if(json.length > 0) {
+										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+									}
 								}
 							},
 							error: function (result) {
@@ -231,7 +235,7 @@ $(document).ready(function () {
 						for(var i=0; i < json.length; i++) {
 							option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
 							$('#local_atendimento').append($(option));
-						}						
+						}
 					}
 	            },
 	            error: function (result) {
@@ -258,6 +262,10 @@ $(document).ready(function () {
 							option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
 							$('#local_atendimento').append($(option));
 						}
+
+						if(json.length > 0) {
+							$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+						}
 					}
 				},
 				error: function (result) {
@@ -265,10 +273,6 @@ $(document).ready(function () {
 				}
 			});
 		}
-	});
-	
-	$('#local_atendimento').change(function(){	
-		$('#endereco_id').val( $(this).val() );
 	});
 	
 	$('#selectCartaoCredito').change(function(){
@@ -914,43 +918,6 @@ function pagarCartaoCadastrado() {
 	return result;
 }
 
-function buscarEndereco(input, tipo_atendimento, atendimento_id) {
-
-	//alert('cnpj: '+cnpj);
-	var search_term = $(input).val();
-	
-	$.ajax({
-		type:'post',
-		   dataType:'json',
-		   url: '/consulta-endereco-local-atendimento',
-		   data: {
-			   'search_term': search_term,
-			   'tipo_atendimento': tipo_atendimento,
-			   'atendimento_id': atendimento_id,
-			   '_token': laravel_token
-		   },
-		   timeout: 15000,
-		   success: function (result) {
-
-			  if(result.status) {
-
-				  //$(input).val(result.endereco.nm_cidade);
-				  $('#endereco_id').val(result.endereco.id);
-
-			  }
-		  },
-		  error: function (result) {
-//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-			  swal(
-					  {
-						  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-						  text: 'Falha na operação!'
-					  }
-		       	);
-          }
-	});
-}
-
 function numberToReal(numero) {
 	
 	var c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = numero < 0 ? "-" : "", i = parseInt(numero = Math.abs(+numero || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
@@ -969,8 +936,6 @@ function pad(n){
 function validaBuscaAtendimento() {
 	var tipo_atendimento 	= $('#tipo_atendimento');
 	var tipo_especialidade 	= $('#tipo_especialidade');
-	var local_atendimento 	= $('#local_atendimento');
-	var endereco_id 		= $('#endereco_id');
 	
 	if( tipo_atendimento.val().length == 0 ) {
 		tipo_atendimento.parent().addClass('cvx-has-error');

@@ -21,15 +21,15 @@ class AtendimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function consultaAtendimentos()
+    public function consultaAtendimentos(Request $request)
     {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-    	$tipo_atendimento = CVXRequest::get('tipo_atendimento');
-        $enderecoIds = CVXRequest::get('endereco_id');
-        $especialidade = CVXRequest::get('tipo_especialidade');
-        $sortItem = !empty(CVXRequest::get('sort')) ? CVXRequest::get('sort') : 'asc';
+    	$tipo_atendimento = $request->get('tipo_atendimento');
+        $enderecoIds = $request->get('local_atendimento');
+        $especialidade = $request->get('tipo_especialidade');
+        $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();

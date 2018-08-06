@@ -46,13 +46,11 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                                <option value="" selected hidden>TODOS OS LOCAIS</option>
+                                <option selected hidden value="">TODOS OS LOCAIS</option>
                                 @foreach($list_enderecos as $endereco)
-                                <option value="{{ $endereco->id }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco->id ) selected="selected" @endif>{{ $endereco->te_bairro }} : {{ $endereco->nm_cidade }}</option>
+                                <option value="{{ $endereco->id }}" @if( !empty($_GET['local_atendimento']) && $_GET['local_atendimento'] == $endereco->id ) selected="selected" @endif>{{ $endereco->te_bairro }} : {{ $endereco->nm_cidade }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}">
-                            <input type="hidden" id="endereco_id" name="endereco_id" value="@if( isset($_GET['endereco_id']) ) {{ $_GET['endereco_id'] }} @endif">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="submit" class="btn btn-primary btn-vermelho"><i class="fa fa-search"></i> Alterar Busca</button>
@@ -65,7 +63,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
                         <div class="ordenar-por div-filtro">
-                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento={{$_GET['tipo_atendimento']}}&local_atendimento={{$_GET['local_atendimento']}}&tipo_especialidade={{$_GET['tipo_especialidade']}}&endereco_id={{$_GET['endereco_id']}}&sort='+$(this).val() }">
+                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento={{$_GET['tipo_atendimento']}}&local_atendimento={{$_GET['local_atendimento']}}&tipo_especialidade={{$_GET['tipo_especialidade']}}&sort='+$(this).val() }">
                                 <option value="">Ordenar por...</option>
                                 <option value="desc" @if( isset($_GET['sort']) && $_GET['sort'] == 'desc' ) selected="selected" @endif>Maior preço</option>
                                 <option value="asc" @if( isset($_GET['sort']) && $_GET['sort'] == 'asc' ) selected="selected" @endif>Menor preço</option>

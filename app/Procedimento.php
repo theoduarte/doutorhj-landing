@@ -116,7 +116,7 @@ class Procedimento extends Model
 
     public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem ) {
         // DB::enableQueryLog();
-        /*$query = DB::table('atendimentos as at')
+        $query = DB::table('atendimentos as at')
         ->distinct()
         ->select( DB::raw("at.id, at.vl_com_atendimento, at.ds_preco, 
                            c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
@@ -145,10 +145,10 @@ class Procedimento extends Model
   
         // dd( DB::getQueryLog() );
         return $query->get();
-        */
+        
 
         
-        $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
+        /*$queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
                                      c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
                                      case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro, 
                                      e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
@@ -166,15 +166,17 @@ class Procedimento extends Model
                          and f.cs_status = :status
                          and at.procedimento_id = :procedimentoId";
         
-        if( !empty($enderecoId) ) {
+        if( !empty($enderecoIds) ) {
             $queryStr .= " and f.endereco_id in ($enderecoIds)";
         }
 
         $queryStr .= " order by at.vl_com_atendimento $sortItem";
         $queryStr .= ", f.eh_matriz desc, c.nm_fantasia";
+
+        // dd($queryStr);
         
         $query = DB::select( $queryStr, [ 'procedimentoId' => $procedimentoId, 'status' => 'A' ]);
-        return $query;
+        return $query;*/
     }
     
 }

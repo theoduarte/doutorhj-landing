@@ -79,7 +79,7 @@ class Consulta extends Model
     public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem ) {
         // DB::enableQueryLog();
 
-        /*$query = DB::table('atendimentos as at')
+        $query = DB::table('atendimentos as at')
         ->distinct()
         ->select( DB::raw("at.id, at.vl_com_atendimento, at.ds_preco, 
                              c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
@@ -111,11 +111,11 @@ class Consulta extends Model
         ->orderBy('pf.nm_primario', 'asc');
 
         return $query->get();
-        */
+        
 
 
         /* ----- */
-        $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
+        /*$queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
                              c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
                              case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro, 
                              e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
@@ -145,6 +145,6 @@ class Consulta extends Model
         $query = DB::select($queryStr, [ 'consultaId' => $consultaId, 'status' => 'A' ]);
 
         // dd( $query->toSql() );
-        return $query;
+        return $query;*/
     }
 }
