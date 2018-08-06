@@ -225,10 +225,10 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                        <div class="carousel-item item-tabela active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-cupom">
-                                    <img class="tabela-preco" src="/libs/home-template/img/tabela-preco.png" alt="">
+                                    <img class="tabela-preco" src="/libs/home-template/img/nova-tabela.png" alt="">
                                 </div>
                                 <div class="area-texto area-texto-cupom">
                                     <div class="texto texto-cupom">
@@ -622,7 +622,7 @@
              *********************************/
 
             $('.carousel').carousel({
-                interval: 70000
+                interval: 7000
             });
 
             /*********************************
