@@ -3676,6 +3676,9 @@ footer ul li a:hover {
         height: 900px;
         padding: 60px 0 60px 0;
     }
+    .banner-slider-home .item-sincor {
+        height: 1250px;
+    }
 
     .banner-slider-home .carousel-caption {
         bottom: 560px;
@@ -3868,14 +3871,13 @@ footer ul li a:hover {
         width: 400px;
         margin: 0 auto;
         position: relative;
-        display: none;
     }
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -166px;
-        left: -198px;
-        width: 472px;
+        top: -478px;
+        left: -4px;
+        width: 415px;
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom {
@@ -4063,9 +4065,9 @@ footer ul li a:hover {
 
     .banner-slider-home .carousel-caption .area-cupom img {
         position: absolute;
-        top: -166px;
-        left: -198px;
-        width: 472px;
+        top: -414px;
+        left: 14px;
+        width: 344px;
     }
 
     .banner-slider-home .carousel-caption .area-texto-cupom {
@@ -4081,6 +4083,10 @@ footer ul li a:hover {
 
     .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom h3 {
         font-size: 26px;
+    }
+
+    .banner-slider-home .carousel-caption .area-texto-cupom .texto-cupom p {
+        margin-bottom: 60px;
     }
 
     .pagamento .form-group {
