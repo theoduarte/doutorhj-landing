@@ -167,8 +167,9 @@
             jQuery.datetimepicker.setLocale('pt-BR');
 
             var today_date = new Date();
+            var today_date_temp = new Date();
             var today_date_range = new Date();
-            var min_date = today_date.setDate(today_date.getDate() + 2);
+            var min_date = today_date_temp.setDate(today_date.getDate() + 2);
             var max_date = today_date_range.setMonth(today_date_range.getMonth() + 2);
                 
             jQuery('.selecionaData').datetimepicker({                
@@ -198,7 +199,7 @@
 
                 	if(ct_date <= today_date) {
                 		$(this).val('');
-                    	//alert('A Data informada não está disponível para a Agendamento');
+                        console.log('change');
                 		swal(
 					        {
 					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
@@ -218,7 +219,8 @@
             			ct_date.setDate(today_date.getDate());
             			var ct_mes = pad((ct_date.getMonth()+1));
             			$(this).val('');
-            			swal(
+            			console.log('blur');
+                        swal(
 					        {
 					            title: '<div class="tit-sweet tit-warning"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Atenção!</div>',
 					            text: 'A Data informada não está disponível para a Agendamento'
