@@ -221,26 +221,10 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="carousel-item item-sincor active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-cupom">
-                                    <img src="/libs/home-template/img/tabela-preco.png" alt="">
-                                </div>
-                                <div class="area-texto area-texto-cupom">
-                                    <div class="texto texto-cupom">
-                                        <h3>CONSULTAS E EXAMES PARA
-                                            ASSOCIADOS AO SINCOR DF</h3>
-                                            <p>Preços acessíveis e agora ao seu alcance</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -441,85 +425,7 @@
                 </div>
             </div>
 
-
-            <div id="checkup" class="area-checkup">
-                <div class="container">
-                    <div class="selo">
-                        <img src="/libs/home-template/img/ckp-selo.png" alt="">
-                    </div>
-                    <div class="row row-eq-height">
-                        <div class="col-md-12 col-lg-6">
-                            <div class="pacote-checkup">
-                                <div class="resumo">
-                                    <div class="textos">
-                                        <h3>CheckUp Masculino</h3>
-                                        <p class="qtde-procedimentos">9 Procedimentos</p>
-                                        <ul>
-                                            <li><p><strong>1 Consulta:</strong> Consulta Urológica</p></li>
-                                            <li><p><strong>7 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma Completo; TGO; TGP; Urina I</p></li>
-                                            <li><p><strong>1 Imagem:</strong> Ultrassom da Próstata</p></li>
-                                        </ul>
-                                    </div>
-                                    <div class="valor">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p class="vlr-mercado"><strike>R$ 610,00</strike></p>
-                                                <p>valor médio de mercado</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="vlr-drhj">R$ 350,00</p>
-                                                <p>Valor DoctorHJ</p>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p class="txtPorcentagem">Economize</p>
-                                                <p class="valorPorcentagem">43%</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="area-btn">
-                                    <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupMasculino->id }}&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-1">Agendar</button></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                            <div class="pacote-checkup">
-                                <div class="resumo">
-                                    <div class="textos">
-                                        <h3>CheckUp Feminino</h3>
-                                        <p class="qtde-procedimentos">12 Procedimentos</p>
-                                        <ul>
-                                            <li><p><strong>1 Consulta:</strong> Consulta Ginecológica</p></li>
-                                            <li><p><strong>8 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma Completo; TGO; TGP; TSH; Urina I</p></li>
-                                            <li><p><strong>2 Imagens:</strong> Ultrassom das Mamas; Ultrasom Transvaginal</p></li>
-                                            <li><p><strong>Exame Clínico Laboratorial:</strong> Papanicolau</p></li>
-                                        </ul>
-                                    </div>
-                                    <div class="valor">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <p class="vlr-mercado"><strike>R$ 625,00</strike></p>
-                                                <p>valor médio de mercado</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="vlr-drhj">R$ 438,00</p>
-                                                <p>Valor DoctorHJ</p>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p class="txtPorcentagem">Economize</p>
-                                                <p class="valorPorcentagem">30%</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="area-btn">
-                                    <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupFeminino->id }}&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-2">Agendar</button></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing');
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">
@@ -699,7 +605,7 @@
              *********************************/
 
             $('.carousel').carousel({
-                interval: 70000
+                interval: 7000
             });
 
             /*********************************
