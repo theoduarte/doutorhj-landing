@@ -53,8 +53,6 @@ class CheckupController extends Controller
      */
     public function carrinhoCheckup()
     {
-        
-        
         return view('checkup.carrinho');
     }
     

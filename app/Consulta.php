@@ -34,17 +34,16 @@ class Consulta extends Model
     }
 
     public function getActive(){
-        // DB::enableQueryLog();
+        DB::enableQueryLog();
         $query = DB::table('consultas')
-            ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 
-                atendimentos.id id, 'exame' tipo, consultas.id codigo") )
+            ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
             ->distinct()
             ->join('atendimentos', function ($join) {
                 $join->on('consultas.id', '=', 'atendimentos.consulta_id')
                 ->where('atendimentos.cs_status', '=', 'A');
             })
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
-            ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.procedimento_id', '=', 'consultas.id');})
+            ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
             ->whereExists(function ($query) {
                 $query->select(DB::raw(1))
                       ->from('filials')
@@ -56,4 +55,56 @@ class Consulta extends Model
         // dd( DB::getQueryLog() );
         return $query;
     } 
+
+
+    public function getActiveAddress( $consultaId ){
+        $query = DB::select("   select string_agg( CAST(id AS varchar), ',' ) id, string_agg( CAST(filial_id AS varchar), ',' ) filial_id, 
+                                       te_bairro, nm_cidade
+                                  from (
+                                select distinct e.id, e.te_bairro, cd.nm_cidade, f.id filial_id
+                                  from filials f
+                                  join enderecos e on (f.endereco_id = e.id)
+                                  join cidades cd on (e.cidade_id = cd.id)
+                                  join clinicas c on (f.clinica_id = c.id)
+                                  join atendimentos at on (c.id = at.clinica_id)
+                                 where at.cs_status = :status
+                                   and c.cs_status = :status
+                                   and at.consulta_id = :consultaId) general
+                                 group by te_bairro, nm_cidade
+                                 order by te_bairro",  [ 'consultaId' => $consultaId, 'status' => 'A' ] );
+
+        return $query;
+    }
+
+    public function getActiveAtendimentos( $consultaId, $enderecoIds ) {
+        // DB::enableQueryLog();
+        $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
+                             c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
+                             case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro, 
+                             e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
+                             e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_consulta,
+                             c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id,
+                             pf.id profissional_id, pf.nm_primario, pf.nm_secundario
+                        from atendimentos at 
+                        join consultas p on (at.consulta_id = p.id)
+                        left join tag_populars tp on (p.id = tp.consulta_id)
+                        join clinicas c on (at.clinica_id = c.id) 
+                        left join filials f on (c.id = f.clinica_id) 
+                        left join enderecos e on (f.endereco_id = e.id) 
+                        join cidades cd on (e.cidade_id = cd.id)
+                        join profissionals pf on (at.profissional_id = pf.id and pf.cs_status = :status)
+                       where at.cs_status = :status
+                         and c.cs_status = :status
+                         and f.cs_status = :status
+                         and at.consulta_id = :consultaId";
+
+        if ( !empty($enderecoIds) ) {
+            $queryStr .= " and f.endereco_id in ($enderecoIds)";
+        }
+
+        $query = DB::select($queryStr, [ 'consultaId' => $consultaId, 'status' => 'A' ]);
+
+        // dd( DB::getQueryLog() );
+        return $query;
+    }
 }

@@ -40,19 +40,18 @@
                             <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
                                 <option value="" disabled selected hidden>Ex.: Clínica Médica</option>
                                 @foreach($list_atendimentos as $atendimento)
-                                <option value="{{ $atendimento['id'] }}" @if( isset($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento['id'] ) selected="selected" @endif>{{ $atendimento['descricao'] }}</option>
+                                    <option value="{{ $atendimento->id }}" @if( !empty($_GET['tipo_especialidade']) && $_GET['tipo_especialidade'] == $atendimento->id ) selected="selected" @endif>{{ $atendimento->descricao }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <select id="local_atendimento" class="form-control select2" name="local_atendimento">
-                                <option value="" disabled selected hidden>Local</option>
-                                <option value="TODOS" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == 'TODOS' ) selected="selected" @endif>TODOS OS LOCAIS</option>
+                                <option value="" selected hidden>TODOS OS LOCAIS</option>
                                 @foreach($list_enderecos as $endereco)
-                                <option value="{{ $endereco['id'] }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco['id'] ) selected="selected" @endif>{{ $endereco['value'] }}</option>
+                                <option value="{{ $endereco->id }}" @if( isset($_GET['endereco_id']) && $_GET['endereco_id'] == $endereco->id ) selected="selected" @endif>{{ $endereco->te_bairro }} : {{ $endereco->nm_cidade }}</option>
                                 @endforeach
                             </select>
-                            <!-- <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}"> -->
+                            <input type="hidden" name="local_atendimento" value="{{ isset($_GET['local_atendimento']) ? $_GET['local_atendimento'] : '' }}">
                             <input type="hidden" id="endereco_id" name="endereco_id" value="@if( isset($_GET['endereco_id']) ) {{ $_GET['endereco_id'] }} @endif">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
@@ -60,7 +59,8 @@
                         </div>
                     </div>
                 </form> 
-            </div>                        
+            </div>
+
             <div class="lista-resultado">
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
@@ -75,43 +75,42 @@
                         	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $atendimento->clinica->nm_fantasia }} - Und: ( {{ $atendimento->filial_result->nm_nome_fantasia }} )</h5>
-                                    <h6 class="card-subtitle">@if($atendimento->consulta_id != null) Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }} @endif</h6>
-                                    <p class="card-text">
-                                        @if( $tipo_atendimento == 'saude' ) {{ 
-                                            ( !empty($atendimento->consulta->tag_populars->first()) ? $atendimento->consulta->tag_populars->first()->cs_tag : $atendimento->ds_preco ) }} 
-                                        @else {{ 
-                                            ( !empty($atendimento->procedimento->tag_populars->first()) ? $atendimento->procedimento->tag_populars->first()->cs_tag : $atendimento->ds_preco ) }} 
-                                        }} 
-                                        @endif </p>
-                                    <p class="card-text">{{ $atendimento->filial_result->endereco->te_endereco.' ('.$atendimento->filial_result->endereco->te_bairro.') '.$atendimento->filial_result->endereco->cidade->nm_cidade.'-'.$atendimento->filial_result->endereco->cidade->estado->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
+                                    <h5 class="card-title">{{ $atendimento->nm_fantasia }} - {{ $atendimento->tipo }}: {{ $atendimento->te_bairro }}</h5>
+
+                                    <h6 class="card-subtitle">@if( !empty($atendimento->consulta_id) ) Dr. {{ $atendimento->nm_primario.' '.$atendimento->nm_secundario }} @endif</h6>
+                                    
+                                    <p class="card-text">{{ $atendimento->tag }}</p>
+                                    
+                                    <p class="card-text">{{ $atendimento->te_endereco.' ('.$atendimento->te_bairro.') '.$atendimento->nm_cidade.'-'.$atendimento->sg_estado }} <a class="link-mapa-mobile" href="https://goo.gl/maps/MPNHA8CLr812">Ver no mapa</a></p>
                                     
                                 </div>
+                                
                                 <div class="card-footer">
                                     <div class="form-check area-seleciona-profissional">
-                                        <input type="radio" id="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}">
-                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->filial_result->id }}">
+                                        <input type="radio" id="inputProfissional_{{ $atendimento->id.$atendimento->filial_id }}" class="form-check-input" name="radioProfissional_{{ $atendimento->id.$atendimento->filial_id }}" data-toggle="collapse" data-target="#collapse_{{ $atendimento->id.$atendimento->filial_id }}" aria-expanded="false" aria-controls="collapse_{{ $atendimento->id.$atendimento->filial_id }}">
+                                        <label class="form-check-label" for="inputProfissional_{{ $atendimento->id.$atendimento->filial_id }}">
                                         Agendar com este profissional
                                         </label>
                                     </div>
-                                    <strong>R$ {{ $atendimento->getVlComercialAtendimento() }}</strong>
+                                    <strong>R$ {{ number_format($atendimento->vl_com_atendimento, 2, ',', '.') }}</strong>
                                 </div>
-                                <div id="collapse_{{ $atendimento->id.$atendimento->filial_result->id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_result->id }}" data-parent="#accordion">
-                                	<form id="form-agendamento{{ $atendimento->id }}" action="/agendar-atendimento" method="post" >
+
+                                <div id="collapse_{{ $atendimento->id.$atendimento->filial_id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_id }}" data-parent="#accordion">
+                                	<form id="form-agendamento{{ $atendimento->id.$atendimento->filial_id }}" action="/agendar-atendimento" method="post">
+
                                 		<input type="hidden" id="tipo_atendimento" name="tipo_atendimento" value="simples">
                                 		<input type="hidden" id="atendimento_id" name="atendimento_id" value="{{ $atendimento->id }}">
-                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="@if($atendimento->consulta_id != null && $atendimento->profissional->cs_status != 'I') {{ $atendimento->profissional->id }} @endif">
+                                    	<input type="hidden" id="profissional_id" name="profissional_id" value="@if( !empty($atendimento->consulta_id) ) {{ $atendimento->profissional_id }} @endif">
                                     	<input type="hidden" id="paciente_id" name="paciente_id" value="">
-                                    	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica->id }}">
-                                    	<input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">
+                                    	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica_id }}">
+                                        <input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">
+                                        
                                     	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_com_atendimento }}">
-                                    	
-                                    	<!-- <input type="hidden" name="current_url" value="{{ Request::root().'/'.Request::path().'/'.str_replace(Request::url(), '',Request::fullUrl()) }}"> -->
                                     	<input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
                                     	{!! csrf_field() !!}
                                 	
 	                                    <div class="area-escolher-data">
-	                                    	@if($atendimento->consulta_id != null | $atendimento->clinica->tp_prestador == 'CLI')
+	                                    	@if( !empty($atendimento->consulta_id) || $atendimento->tp_prestador == 'CLI')
 	                                        <div class="titulo-escolhe-data">
 	                                            Escolha data e horário
 	                                        </div>
@@ -124,20 +123,19 @@
 	                                            <label for="selecionaHora{{ $atendimento->id }}"><i class="fa fa-clock-o"></i></label>
 	                                        </div>
 	                                        <div class="confirma-data">
-	                                            <!-- <span>{{ date('d/m/Y') }} - {{ strftime('%A', strtotime('today')) }} - {{ date('H').'h'.date('i').'min' }}</span> -->
 	                                            <strong><span class="span-data"> -- NENHUMA DATA SELECIONADA -- </span><span class="span-hora"></span></strong>
 	                                        </div>
 	                                        <div class="mensagem-confirma-data">
 	                                            <span>Data e horário sujeito a confirmação</span>
 	                                        </div>
 	                                        @else
-	                                        <span><strong>{{ $atendimento->clinica->obs_procedimento }}</strong></span>
+	                                        <span><strong>{{ $atendimento->ds_procedimento }}</strong></span>
 	                                        <hr>
 	                                        @endif
 	                                        <div class="valor-total">
-	                                            <span><strong>Total a pagar:</strong> R$ {{ $atendimento->getVlComercialAtendimento() }}</span>
+	                                            <span><strong>Total a pagar:</strong> R$ {{ number_format( $atendimento->vl_com_atendimento, 2, ',', '.') }}</span>
 	                                        </div>
-	                                        <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento{{ $atendimento->id }}')">Prosseguir para pagamento</button>
+	                                        <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento{{ $atendimento->id.$atendimento->filial_id }}')">Prosseguir para pagamento</button>
 	                                    </div>
                                     </form>
                                 </div>
@@ -382,6 +380,7 @@
             });
 
             function validaAgendarAtendimento(form_id) {
+                console.log(form_id);
             	
             	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
         		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
@@ -444,45 +443,15 @@
             *********************************/
 
             function initMap() {
-                var clinicaUm = {
-                    info: '<strong>Check Up Centro Médico</strong><br>\
-                                SDS Bloco O Ed. Venâncio VI 221 a 227<br> Brasília, DF, 70393-905<br>\
-                                <a href="https://goo.gl/Y9UUWt">Obter direção</a>',
-                    lat: -15.7987496,
-                    long: -47.8949315
-                };
-
-                var clinicaDois = {
-                    info: '<strong>Actual Clínica Médica e Psicologia</strong><br>\
-                                SCS Quadra 6 Bloco A Lote 150/170 - Edifício<br> Carioca 5 andar Sala 514/15,<br> Q. 6 - Asa Sul, Brasília - DF, 70325-900<br>\
-                                <a href="https://goo.gl/JWt3Tp">Obter direção</a>',
-                    lat: -15.7960663,
-                    long: -47.8927361
-                };
-
-                var clinicaTres = {
-                    info: '<strong>Clínica Devas</strong><br>\r\
-                                SDN CNB Etapa III - S 4104, Setor de<br> Diversões Norte - Brasília, DF, 70077-000<br>\
-                                <a href="https://goo.gl/2JdPbn">Obter direção</a>',
-                    lat: -15.7920841,
-                    long: -47.8859702
-                };
-
-               /*  var locations = [
-                [clinicaUm.info, clinicaUm.lat, clinicaUm.long, 0],
-                [clinicaDois.info, clinicaDois.lat, clinicaDois.long, 1],
-                [clinicaTres.info, clinicaTres.lat, clinicaTres.long, 2],
-                ]; */
-
                 var locations = [];
-                var locais_google_maps = {!! json_encode($locais_google_maps) !!};
-                var latitude_init = -15.7987496;
-                var longitude_init = -47.8949315;
+                var locais_google_maps = {!! json_encode($atendimentos) !!};
+                var latitude_init = locais_google_maps[0].nr_latitude_gps;
+                var longitude_init = locais_google_maps[0].nr_longitute_gps;
 
                 for(var i = 0; i < locais_google_maps.length; i++) {
-                	latitude_init = locais_google_maps[0].lat;
-                	longitude_init = locais_google_maps[0].long;
-                    var item = [locais_google_maps[i].info, locais_google_maps[i].lat, locais_google_maps[i].long, i];
+                    locais_google_maps[i].info = "<strong>" + locais_google_maps[i].nm_fantasia + " - " + locais_google_maps[i].tipo + ": " + locais_google_maps[i].nm_nome_fantasia + "</strong><br> " + locais_google_maps[i].te_endereco + "<br> " + locais_google_maps[i].te_bairro + " - " + locais_google_maps[i].nm_cidade + ", " + locais_google_maps[i].sg_estado + ", " + formatCep(locais_google_maps[i].nr_cep) + "<br>";
+
+                    var item = [locais_google_maps[i].info, locais_google_maps[i].nr_latitude_gps, locais_google_maps[i].nr_longitute_gps, i];
                     locations.push(item);
                 }
 
@@ -512,12 +481,17 @@
                     google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                         return function () {
                             infowindow.setContent(locations[i][0]);
-                            infowin
-                            dow.open(map, marker);
+                            infowindow.open(map, marker);
                         }
                     })(marker, i));
                 }
-            }      
+            }
+
+            function formatCep(v){
+                v=v.replace(/D/g,"")
+                v=v.replace(/^(\d{5})(\d)/,"$1-$2")
+                return v
+            }
 	</script>
 	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI&callback=initMap" type="text/javascript"></script>

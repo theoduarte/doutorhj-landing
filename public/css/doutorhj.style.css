@@ -565,27 +565,32 @@ select[readonly], input[readonly] {
 /*
 * CHECKUPS
 */
-.resultado.resultado-checkup .checkup-warning {
+.resultado .checkup-warning {
     position: absolute;
     float: left;
     color: red;
     bottom: 0;
 }
 
-.resultado.resultado-checkup .btn {
-  height: 52px;
+.resultado .btn {
+  height: 52px !important;
 }
 
-.resultado.resultado-checkup .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single {
+.resultado .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single {
     padding-top: 14px;
     height: 52px;
     font-size: 15px;
 }
 
-.resultado.resultado-checkup .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__rendered {
+.resultado .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__rendered {
     color: rgb(124, 124, 124);
 }
 
-.resultado.resultado-checkup .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__arrow {
+.resultado .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__arrow {
     margin-top: 12px;
 }
+
+/*
+* SEARCH RESULTS
+*/
+

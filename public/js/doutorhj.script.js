@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	$('#tipo_atendimento').change(function(){
+
 		var tipo_atendimento = $(this).val();
 		if(tipo_atendimento == '') { return false; }
 		
@@ -37,26 +38,26 @@ $(document).ready(function () {
 							$('#tipo_especialidade').append($(option));
 						}
 
-						var atendimento_id = $('#tipo_especialidade option:first').val();
-						if(atendimento_id == '') { return false; }
+						
+						if( !$('#tipo_especialidade').val()  ) { return false; }
 
 						jQuery.ajax({
 				    		type: 'POST',
 				    	  	url: '/consulta-todos-locais-atendimento',
 				    	  	data: {
 								'tipo_atendimento': tipo_atendimento,
-				    	  		'atendimento_id': atendimento_id,
+				    	  		'especialidade': $('#tipo_especialidade').val(),
 								'_token': laravel_token
 							},
 							success: function (result) {
 								if( result != null) {
 									var json = result.endereco;
 									$('#local_atendimento').empty();
-									var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
+									var option = '<option value="">TODOS OS LOCAIS</option>';
 									$('#local_atendimento').append($(option));
 									
 									for(var i=0; i < json.length; i++) {
-										option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+										option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
 										$('#local_atendimento').append($(option));
 									}
 									
@@ -88,7 +89,7 @@ $(document).ready(function () {
 									var json = result;
 									
 									$('#local_atendimento').empty();
-									var option = '<option value="TODOS">TODOS</option>';
+									var option = '<option value="">TODOS</option>';
 									$('#local_atendimento').append($(option));
 									
 									for(var i=0; i < json.length; i++) {
@@ -224,7 +225,7 @@ $(document).ready(function () {
 	    	  	url: '/consulta-todos-locais-atendimento',
 	    	  	data: {
 					'tipo_atendimento': tipo_atendimento,
-	    	  		'atendimento_id': atendimento_id,
+	    	  		'especialidade': $(this).val(),
 					'_token': laravel_token
 				},
 				success: function (result) {
@@ -233,11 +234,11 @@ $(document).ready(function () {
 						var json = result.endereco;
 						
 						$('#local_atendimento').empty();
-						var option = '<option value="TODOS">TODOS OS LOCAIS</option>';
+						var option = '<option value="">TODOS OS LOCAIS</option>';
 						$('#local_atendimento').append($(option));
 						
 						for(var i=0; i < json.length; i++) {
-							option = '<option value="'+json[i].id+'">'+json[i].value+'</option>';
+							option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
 							$('#local_atendimento').append($(option));
 						}
 						
@@ -265,7 +266,7 @@ $(document).ready(function () {
 						var json = result;
 						
 						$('#local_atendimento').empty();
-						var option = '<option value="TODOS">TODOS</option>';
+						var option = '<option value="">TODOS</option>';
 						$('#local_atendimento').append($(option));
 						
 						for(var i=0; i < json.length; i++) {
@@ -286,13 +287,8 @@ $(document).ready(function () {
 		}
 	});
 	
-	$('#local_atendimento').change(function(){
-		
-		var endereco_id = $(this).val();
-		
-		if(endereco_id == '') { return false; }
-		
-		$('#endereco_id').val(endereco_id);
+	$('#local_atendimento').change(function(){	
+		$('#endereco_id').val( $(this).val() );
 	});
 	
 	$('#selectCartaoCredito').change(function(){
@@ -991,16 +987,14 @@ function pad(n){
 }
 
 function validaBuscaAtendimento() {
-	var tipo_atendimento = $('#tipo_atendimento');
-	var tipo_especialidade = $('#tipo_especialidade');
-	var local_atendimento = $('#local_atendimento');
-	var endereco_id = $('#endereco_id');
+	var tipo_atendimento 	= $('#tipo_atendimento');
+	var tipo_especialidade 	= $('#tipo_especialidade');
+	var local_atendimento 	= $('#local_atendimento');
+	var endereco_id 		= $('#endereco_id');
 	
 	if( tipo_atendimento.val().length == 0 ) {
-		
 		tipo_atendimento.parent().addClass('cvx-has-error');
 		tipo_atendimento.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione o Tipo de Atentimento');
 		swal(
 				  {
 					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
@@ -1018,7 +1012,6 @@ function validaBuscaAtendimento() {
 	if( tipo_especialidade.val().length == 0 ) {
 		tipo_especialidade.parent().addClass('cvx-has-error');
 		tipo_especialidade.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Selecione a Especialidade ou Exame');
 		swal(
 				  {
 					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
@@ -1032,26 +1025,7 @@ function validaBuscaAtendimento() {
 		
 		return false;
 	}
-	
-
-	if( $('#tipo_atendimento').val() != 'checkup' && local_atendimento.val().length == 0 | endereco_id.val().length == 0 ) {
-		endereco_id.parent().addClass('cvx-has-error');
-		endereco_id.focus();
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Endereço não localizado. Por favor, tente novamente.');
-		swal(
-				  {
-					  title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i>DrHoje: Solicitação Falhou!</div>',
-					  text: 'Endereço não localizado. Por favor, tente novamente.'
-				  }
-	       	);
 		
-		$('.cvx-has-error .form-control').keyup(function(){
-			$(this).parent().removeClass('cvx-has-error');
-		});
-		
-		return false;
-	}
-	
 	return true;
 }
 
