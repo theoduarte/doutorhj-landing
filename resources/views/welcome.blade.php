@@ -9,7 +9,7 @@
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
             <div class="container">
-                @include('includes/main-search', ['class' => 'busca-home'] );
+                @include('includes/main-search', ['class' => 'busca-home'] )
             </div>
             <div class="box-resumo-home">
                 <div class="container">
@@ -425,7 +425,7 @@
                 </div>
             </div>
 
-            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing');
+            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">

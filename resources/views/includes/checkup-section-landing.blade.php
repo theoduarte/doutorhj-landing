@@ -76,8 +76,8 @@
         </div>
     </div>
 </div>
-{{--
-<div id="checkup" class="area-checkup">
+
+<!-- <div id="checkup" class="area-checkup">
     <div class="container">
         <div class="selo">
             <img src="/libs/home-template/img/ckp-selo.png" alt="">
@@ -161,5 +161,4 @@
             </div>
         </div>
     </div>
-</div>
---}}
+</div> -->
