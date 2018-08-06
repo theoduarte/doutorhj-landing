@@ -116,7 +116,7 @@ class Procedimento extends Model
 
     public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem ) {
         // DB::enableQueryLog();
-        $query = DB::table('atendimentos as at')
+        /*$query = DB::table('atendimentos as at')
         ->distinct()
         ->select( DB::raw("at.id, at.vl_com_atendimento, at.ds_preco, 
                            c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
@@ -135,16 +135,18 @@ class Procedimento extends Model
         ->where('f.cs_status', 'A')
         ->where('at.procedimento_id', $procedimentoId);
 
-        if( !empty($enderecoId) ) {
-            $query->whereIn('f.endereco_id', (array)('['.$enderecoIds.']') );
+        if( !empty($enderecoIds) ) {
+            $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );
         }
 
         $query->orderBy('at.vl_com_atendimento', $sortItem)
         ->orderBy('f.eh_matriz', 'desc')
         ->orderBy('c.nm_fantasia', 'asc');
+  
+        // dd( DB::getQueryLog() );
+        return $query->get();
+        */
 
-        /*$queryStr .= " order by at.vl_com_atendimento $sortItem";
-        $queryStr .= ", f.eh_matriz desc, c.nm_fantasia";
         
         $queryStr = " select distinct at.id, at.vl_com_atendimento, at.ds_preco, 
                                      c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
@@ -152,18 +154,17 @@ class Procedimento extends Model
                                      e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
                                      e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_procedimento,
                                      c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id
-                                from atendimentos at 
-
-                                join procedimentos p on (at.procedimento_id = p.id)
-                                left join tag_populars tp on (p.id = tp.procedimento_id)
-                                join clinicas c on (at.clinica_id = c.id) 
-                                left join filials f on (c.id = f.clinica_id) 
-                                left join enderecos e on (f.endereco_id = e.id) 
-                                join cidades cd on (e.cidade_id = cd.id)
-                               where at.cs_status = :status
-                                 and c.cs_status = :status
-                                 and f.cs_status = :status
-                                 and at.procedimento_id = :procedimentoId";
+                        from atendimentos at 
+                        join procedimentos p on (at.procedimento_id = p.id)
+                        left join tag_populars tp on (p.id = tp.procedimento_id)
+                        join clinicas c on (at.clinica_id = c.id) 
+                        left join filials f on (c.id = f.clinica_id) 
+                        left join enderecos e on (f.endereco_id = e.id) 
+                        join cidades cd on (e.cidade_id = cd.id)
+                       where at.cs_status = :status
+                         and c.cs_status = :status
+                         and f.cs_status = :status
+                         and at.procedimento_id = :procedimentoId";
         
         if( !empty($enderecoId) ) {
             $queryStr .= " and f.endereco_id in ($enderecoIds)";
@@ -172,10 +173,8 @@ class Procedimento extends Model
         $queryStr .= " order by at.vl_com_atendimento $sortItem";
         $queryStr .= ", f.eh_matriz desc, c.nm_fantasia";
         
-        $query = DB::select( $queryStr, [ 'procedimentoId' => $procedimentoId, 'status' => 'A' ]);*/
-
-        // dd( DB::getQueryLog() );
-        return $query->get();
+        $query = DB::select( $queryStr, [ 'procedimentoId' => $procedimentoId, 'status' => 'A' ]);
+        return $query;
     }
     
 }
