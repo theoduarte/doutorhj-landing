@@ -81,14 +81,10 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-</div>{{--
-<div id="checkup" class="area-checkup">
-=======
+
 </div>
 
 <!-- <div id="checkup" class="area-checkup">
->>>>>>> b8b8b5d28c0f8cddd42945fc467eee627e15d28d
     <div class="container">
         <div class="selo">
             <img src="/libs/home-template/img/ckp-selo.png" alt="">
