@@ -19,7 +19,7 @@
                         <div class="valor">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <p class="vlr-mercado"><strike>R$ 610,00</strike></p>
+                                    <p class="vlr-mercado"><strike>R$ 638,00</strike></p>
                                     <p>valor médio de mercado</p>
                                 </div>
                                 <div class="col-md-4">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">43%</p>
+                                    <p class="valorPorcentagem">45,14%</p>
                                 </div>
                             </div>
                         </div>
@@ -47,14 +47,14 @@
                             <ul>
                                 <li><p><strong>1 Consulta:</strong> Consulta Ginecológica</p></li>
                                 <li><p><strong>8 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma Completo; TGO; TGP; TSH; Urina I</p></li>
-                                <li><p><strong>2 Imagens:</strong> Ultrassom das Mamas; Ultrasom Transvaginal</p></li>
+                                <li><p><strong>2 Imagens:</strong> Ultrassom das Mamas; Ultrassom Transvaginal</p></li>
                                 <li><p><strong>Exame Clínico Laboratorial:</strong> Papanicolau</p></li>
                             </ul>
                         </div>
                         <div class="valor">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <p class="vlr-mercado"><strike>R$ 625,00</strike></p>
+                                    <p class="vlr-mercado"><strike>R$ 610,00</strike></p>
                                     <p>valor médio de mercado</p>
                                 </div>
                                 <div class="col-md-4">
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">30%</p>
+                                    <p class="valorPorcentagem">28,20%</p>
                                 </div>
                             </div>
                         </div>
