@@ -221,10 +221,26 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                        <div class="carousel-item item-tabela active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-cupom">
+                                    <img class="tabela-preco" src="/libs/home-template/img/nova-tabela.png" alt="">
+                                </div>
+                                <div class="area-texto area-texto-cupom">
+                                    <div class="texto texto-cupom">
+                                        <h3>CONSULTAS E EXAMES PARA
+                                            ASSOCIADOS AO SINCOR DF</h3>
+                                            <p>Preços acessíveis e agora ao seu alcance</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
