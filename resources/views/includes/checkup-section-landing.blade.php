@@ -58,7 +58,7 @@
                         <div class="valor">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <p class="vlr-mercado"><strike>R$ 610,00</strike></p>
+                                    <p class="vlr-mercado"><strike>R$ 789,00</strike></p>
                                     <p>valor médio de mercado</p>
                                 </div>
                                 <div class="col-md-4">
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">R$ 172,00</p>
+                                    <p class="valorPorcentagem">R$ 351,00</p>
                                 </div>
                             </div>
                         </div>
