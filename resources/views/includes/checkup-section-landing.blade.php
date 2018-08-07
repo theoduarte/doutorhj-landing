@@ -12,7 +12,8 @@
                             <p class="qtde-procedimentos">9 Procedimentos</p>
                             <ul>
                                 <li><p><strong>1 Consulta:</strong> Consulta Urológica</p></li>
-                                <li><p><strong>7 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma Completo; TGO; TGP; Urina I</p></li>
+                                <li><p><strong>7 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma
+                                        Completo; TGO; TGP; Urina I</p></li>
                                 <li><p><strong>1 Imagem:</strong> Ultrassom da Próstata</p></li>
                             </ul>
                         </div>
@@ -34,7 +35,9 @@
                         </div>
                     </div>
                     <div class="area-btn">
-                        <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupMasculino->id }}&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-1">Agendar</button></a>
+                        <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupMasculino->id }}&local_atendimento=TODOS&endereco_id=">
+                            <button type="button" class="btn btn-agendar-plano-1">Agendar</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -46,7 +49,8 @@
                             <p class="qtde-procedimentos">12 Procedimentos</p>
                             <ul>
                                 <li><p><strong>1 Consulta:</strong> Consulta Ginecológica</p></li>
-                                <li><p><strong>8 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma Completo; TGO; TGP; TSH; Urina I</p></li>
+                                <li><p><strong>8 Exames:</strong> Creatina; Lipidograma; Glicemia de Jejum; Hemograma
+                                        Completo; TGO; TGP; TSH; Urina I</p></li>
                                 <li><p><strong>2 Imagens:</strong> Ultrassom das Mamas; Ultrassom Transvaginal</p></li>
                                 <li><p><strong>Exame Clínico Laboratorial:</strong> Papanicolau</p></li>
                             </ul>
@@ -69,14 +73,15 @@
                         </div>
                     </div>
                     <div class="area-btn">
-                        <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupFeminino->id }}&local_atendimento=TODOS&endereco_id="><button type="button" class="btn btn-agendar-plano-2">Agendar</button></a>
+                        <a href="/resultado-checkup?tipo_atendimento=checkup&tipo_especialidade={{ $checkupFeminino->id }}&local_atendimento=TODOS&endereco_id=">
+                            <button type="button" class="btn btn-agendar-plano-2">Agendar</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{{--
+</div>{{--
 <div id="checkup" class="area-checkup">
     <div class="container">
         <div class="selo">
