@@ -186,7 +186,7 @@
 																		<?php //dd($item)?>
 																		<li>
 																			<div class="clinica">
-																				Consulta {{$itemCheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$itemCheckup->dataHoraAgendamento}}</span><br>
+																				{{$itemCheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$itemCheckup->dataHoraAgendamento}}</span><br>
 																				<span>Profissional: </span>{{$itemCheckup->atendimento->profissional->nm_primario.' '.$itemCheckup->atendimento->profissional->nm_secundario}}
 																			</div>
 																			<div class="endereco">

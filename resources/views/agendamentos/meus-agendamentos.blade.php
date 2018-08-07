@@ -162,7 +162,7 @@
 																			<div class="row">
 																				<div class="col-md-9">
 																					<div class="clinica">
-																						Consulta {{$datahoracheckup->itemcheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$datahoracheckup->dt_atendimento}}</span><br>
+																						Consulta {{$datahoracheckup->itemcheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $datahoracheckup->dt_atendimento)->format('d/m/Y H:i') }}</span><br>
 																						<span>Profissional: </span>{{$datahoracheckup->itemcheckup->atendimento->profissional->nm_primario.' '.$datahoracheckup->itemcheckup->atendimento->profissional->nm_secundario}}
 																					</div>
 																					<div class="endereco">
@@ -199,6 +199,13 @@
 														{{--EXAMES--}}
 														<div class="procedimentos exames">
 															<p>Exames</p>
+															
+															@if( $agendamento->info )
+																<div class="alert alert-warning" role="alert">
+																  {{ $agendamento->info }}
+																</div>
+															@endif
+															
 															<ul>
 																@foreach($agendamento->datahoracheckups as $datahoracheckup)
 																	@if(!is_null($datahoracheckup->itemcheckup->atendimento->procedimento_id))
@@ -208,7 +215,7 @@
 																					<div class="clinica">
 																						{{$datahoracheckup->itemcheckup->atendimento->procedimento->ds_procedimento}}
 																						@if(!is_null($datahoracheckup->dt_atendimento))
-																							, no dia <span>{{ $datahoracheckup->dt_atendimento}}</span>
+																							, no dia <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $datahoracheckup->dt_atendimento)->format('d/m/Y H:i') }}</span>
 																						@endif
 																					</div>
 																					<div class="endereco">
@@ -246,7 +253,7 @@
 											</div>
 											<div class="col col-lg-3">
 												<p class="tit-token">Token</p>
-												<p class="txt-token">Apresente este código no momento da consulta</p>
+												<p class="txt-token">Para todas as consultas e exames que compoem o check-up, deverá ser utilizado o código autorizado baixo. Apresente-o para a secretária da clínica.</p>
 												<div class="area-token">
 													<p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
 													<p>
@@ -612,7 +619,7 @@
 				confirmButtonClass: 'btn btn-confirm mt-2',
 				cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
 				confirmButtonText: 'Solicitar',
-				cancelButtonText: 'Cancelar',
+				cancelButtonText: 'Fechar Janela',
 				showLoaderOnConfirm: true,
 				allowOutsideClick: false,
 				preConfirm: function (input) {

@@ -551,8 +551,15 @@ class AgendamentoController extends Controller
                     $agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';    
                 }
 			}
-        }
 
+            foreach ( $agendamentos_home as $agendamento) {
+                foreach($agendamento->datahoracheckups as $datahoracheckup) {
+                    if( !empty( $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento ) ) {
+                        $agendamento->info = $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento;
+                    }
+                }
+            }
+        }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }

@@ -190,13 +190,15 @@
 																			<p>Consultas</p>
 																			<ul>
 																				@foreach($agendamento->datahoracheckups as $datahoracheckup)
-																					<?php //dd($datahoracheckup->itemcheckup->atendimento->clinica)?>
 																					@if(!is_null($datahoracheckup->itemcheckup->atendimento->consulta_id))
-																						<?php //dd($item)?>
 																						<li>
 																							<div class="clinica">
-																								Consulta {{$datahoracheckup->itemcheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$datahoracheckup->dt_atendimento}}</span><br>
-																								<span>Profissional: </span>{{$datahoracheckup->itemcheckup->atendimento->profissional->nm_primario.' '.$datahoracheckup->itemcheckup->atendimento->profissional->nm_secundario}}
+																								{{$datahoracheckup->itemcheckup->atendimento->consulta->ds_consulta}}, no dia
+                                                                                                <span>
+                                                                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $datahoracheckup->dt_atendimento)->format('d/m/Y H:i') }} </span>
+                                                                                                <br>
+																								
+                                                                                                <span>Profissional: </span>{{$datahoracheckup->itemcheckup->atendimento->profissional->nm_primario.' '.$datahoracheckup->itemcheckup->atendimento->profissional->nm_secundario}}
 																							</div>
 																							<div class="endereco">
 																								<span>Clinica: </span> {{$datahoracheckup->itemcheckup->atendimento->clinica->nm_fantasia}}<br>
@@ -220,7 +222,7 @@
 																							<div class="clinica">
 																								{{$datahoracheckup->itemcheckup->atendimento->procedimento->ds_procedimento}}
 																								@if(!is_null($datahoracheckup->dt_atendimento))
-																									, no dia <span>{{ $datahoracheckup->dt_atendimento}}</span>
+																									, no dia <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $datahoracheckup->dt_atendimento)->format('d/m/Y H:i') }}</span>
 																								@endif
 																								<br>
 																							</div>
@@ -245,7 +247,7 @@
 																	</div>
 																	<div class="dados-resumo text-right">
 																		<h3>
-																			<strong>R$ {{number_format(\App\ItemCheckup::query()->where('checkup_id', $agendamento->checkup_id)->sum('vl_com_checkup'), 2, '.', ',')}}</strong>
+																			<strong>R$ {{number_format(\App\ItemCheckup::query()->where('checkup_id', $agendamento->checkup_id)->sum('vl_com_checkup'), 2, ',', '.')}}</strong>
 																		</h3>
 																	</div>
 																</div>
