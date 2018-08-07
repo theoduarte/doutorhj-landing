@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">45,14%</p>
+                                    <p class="valorPorcentagem">R$ 288,00</p>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="txtPorcentagem">Economize</p>
-                                    <p class="valorPorcentagem">28,20%</p>
+                                    <p class="valorPorcentagem">R$ 172,00</p>
                                 </div>
                             </div>
                         </div>
