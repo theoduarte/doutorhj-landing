@@ -9,7 +9,7 @@
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
             <div class="container">
-                @include('includes/main-search', ['class' => 'busca-home'] );
+                @include('includes/main-search', ['class' => 'busca-home'] )
             </div>
             <div class="box-resumo-home">
                 <div class="container">
@@ -225,10 +225,12 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="carousel-item item-sincor active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
+                        <!-- <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')"> -->
+
+                        <div class="carousel-item item-tabela active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-cupom">
-                                    <img src="/libs/home-template/img/tabela-preco.png" alt="">
+                                    <img class="tabela-preco" src="/libs/home-template/img/nova-tabela.png" alt="">
                                 </div>
                                 <div class="area-texto area-texto-cupom">
                                     <div class="texto texto-cupom">
@@ -440,9 +442,8 @@
                     </div>
                 </div>
             </div>
-            
 
-            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing');
+            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">
@@ -622,7 +623,7 @@
              *********************************/
 
             $('.carousel').carousel({
-                interval: 70000
+                interval: 7000
             });
 
             /*********************************
