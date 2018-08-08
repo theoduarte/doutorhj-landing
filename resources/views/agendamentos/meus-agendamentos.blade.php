@@ -168,6 +168,10 @@
 																					<div class="endereco">
 																						<span>Clinica: </span> {{$datahoracheckup->itemcheckup->atendimento->clinica->nm_fantasia}}<br>
 																						<span>Local: </span>{{$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->te_endereco.', '.$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->nr_logradouro.', '.$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->te_bairro}}
+
+																						@if ( !empty($datahoracheckup->itemcheckup->ds_item) )
+																							<span>Obs.: </span>{{$datahoracheckup->itemcheckup->ds_item }}
+																						@endif
 																					</div>
 																				</div>
 																				<div class="col-md-3">
@@ -221,6 +225,10 @@
 																					<div class="endereco">
 																						<span>Clinica: </span> {{$datahoracheckup->itemcheckup->atendimento->clinica->nm_fantasia}}<br>
 																						<span>Local: </span>{{$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->te_endereco.', '.$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->nr_logradouro.', '.$datahoracheckup->itemcheckup->atendimento->clinica->enderecos[0]->te_bairro}}
+
+																						@if ( !empty($datahoracheckup->itemcheckup->ds_item) )
+																							<span>Obs.: {{$datahoracheckup->itemcheckup->ds_item }}</span>
+																						@endif
 																					</div>
 																				</div>
 																				<div class="col-md-3">
