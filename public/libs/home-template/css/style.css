@@ -2415,7 +2415,7 @@ header .nav-item-mobile {
 
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .status,
 .procedimentos .status {
-    font-size: 11px;
+    font-size: 10px;
     color: rgb(10, 10, 10);
     text-align: center;
     text-transform: uppercase;
@@ -2588,6 +2588,67 @@ header .nav-item-mobile {
 .box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .clinica span,
 .box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .endereco span {
     font-weight: 600;
+}
+
+#checkup .content-ckp {
+    padding: 15px;
+    border: 1px solid #fbfbfb;
+    margin-bottom: 30px;
+}
+#checkup .nome-ckp p {
+    font-size: 22px;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+    margin: 20px 0 20px 0;
+}
+
+#checkup .linha-resumo{
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#checkup .titulo-resumo {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(69, 112, 172);
+}
+
+#checkup .dados-resumo {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgb(98, 98, 98);
+}
+
+#checkup .dados-resumo .beneficiario {
+    font-size: 16px;
+    margin-top: 4px;
+    color: rgb(0, 0, 0);
+}
+
+#checkup .procedimentos {
+    padding:15px;
+    background: #fbfbfb;
+    border-radius: 6px;
+    margin:15px 0;
+}
+
+#checkup .procedimentos p {
+    text-transform: uppercase;
+    color: #000;
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+#checkup .procedimentos ul li {
+    font-weight: 300;
+}
+
+#checkup .procedimentos ul li span {
+    font-weight: 600;
+}
+
+#checkup .procedimentos .col-md-9 {
+    margin-bottom: 10px;
 }
 
 /*********************************
