@@ -61,6 +61,7 @@ Route::get('teste-envio-email', 'PaymentController@testeEnviarEmail');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
+Route::get('pacientes/activate-redirect', 'PacienteController@ativarContaRedirect')->name('activate-redirect');
 Route::post('remover-item_carrinho', 'ClinicaController@RemoverItemCarrinho');
 Route::post('validar-cupom-desconto', 'CupomDescontoController@validarCupomDesconto')->name('validar_cupom_desconto');
 

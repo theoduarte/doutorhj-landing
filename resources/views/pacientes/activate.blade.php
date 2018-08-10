@@ -12,6 +12,7 @@
         <div class="area-container">
             <div class="titulo text-center">
                 <strong>Sua Conta foi ativada com Sucesso!</strong>
+                <br><br>
                 <p><a href="/login" class="btn btn-primary">Clique aqui e faça seu Login</a></p>
             </div>
         </div>
