@@ -138,7 +138,7 @@
                                         <div class="row">
                                             <div class="col col-lg-8 area-informacoes">
                                                     <div class="nome-ckp">
-                                                        <p>Check-Up Masculino - Completo</p>
+                                                        <p>{{ $agendamento->checkup->titulo }}</p>
                                                     </div>
                                                     <div class="linha-resumo">
                                                         <div class="titulo-resumo">
