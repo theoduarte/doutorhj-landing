@@ -82,7 +82,8 @@ class CheckupController extends Controller
     private function _consultaCheckup(array $dados)
     {
         $tipoEspecialidade = $dados['tipo_especialidade'];
-        
+      
+        // DB::enableQueryLog();   
         $resumo = DB::table('atendimentos')
                     ->select(['checkups.id', 'clinicas.nm_razao_social', 'clinicas.id AS idclinica', 'clinicas.obs_procedimento', 'atendimentos.id AS idatendimento', 'enderecos.te_endereco', 'enderecos.te_bairro',
                               'cidades.nm_cidade', 'estados.sg_estado', 'procedimentos.cd_procedimento', 
@@ -113,7 +114,8 @@ class CheckupController extends Controller
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
                     ->get();
-
+        // dd( DB::getQueryLog() );
+        
         return $this->_trataVetorConsultaCheckup($resumo);
     }
     
@@ -193,7 +195,7 @@ class CheckupController extends Controller
             $dados[$p->titulo.'-'.$p->tipo]['total_camadas'] = $arQtCamadas[$p->titulo.'-'.$p->tipo];
         }
       
-        dd($dados);
+        // dd($dados);
         return $dados;
     }
 }
