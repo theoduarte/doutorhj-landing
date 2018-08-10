@@ -61,9 +61,18 @@ class PacienteController extends Controller
         $user_activate->cs_status = 'A';
         $user_activate->save();
         
+        return redirect()->route( 'activate-redirect' );
+    }
+
+    /**
+     * ativarConta redirect
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ativarContaRedirect()
+    {
         return view('pacientes.activate');
     }
-    
      
     /**
      * 
