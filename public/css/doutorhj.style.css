@@ -573,7 +573,8 @@ select[readonly], input[readonly] {
 }
 
 .resultado .btn {
-  height: 52px !important;
+    height: 52px !important;
+    padding-top: 14px;
 }
 
 .resultado .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single {
