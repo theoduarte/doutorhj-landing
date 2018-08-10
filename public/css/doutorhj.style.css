@@ -560,3 +560,38 @@ select[readonly], input[readonly] {
 .swal2-buttonswrapper .btn-cancel:focus {
     box-shadow: none !important;
 }
+
+
+/*
+* CHECKUPS
+*/
+.resultado .checkup-warning {
+    position: absolute;
+    float: left;
+    color: red;
+    bottom: 0;
+}
+
+.resultado .btn {
+    height: 52px !important;
+    padding-top: 14px;
+}
+
+.resultado .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single {
+    padding-top: 14px;
+    height: 52px;
+    font-size: 15px;
+}
+
+.resultado .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__rendered {
+    color: rgb(124, 124, 124);
+}
+
+.resultado .form-group .select2-container--default span[aria-labelledby='select2-tipo_atendimento-container'].select2-selection--single .select2-selection__arrow {
+    margin-top: 12px;
+}
+
+/*
+* SEARCH RESULTS
+*/
+

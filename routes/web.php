@@ -17,6 +17,7 @@ Route::get('pagamento-checkup', 'CheckupController@pagamentoCheckup');
 Route::get('confirmacao', 'ClinicaController@confirmaAgendamento');
 Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
 Route::post('consulta-tipos-checkup','CheckupController@getTipoCheckupAtivo');
+Route::get('terms-and-conditions','HomeController@terms')->middleware('web');
 
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
@@ -40,7 +41,6 @@ onsultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
-Route::post('consulta-local-atendimento', 'EspecialidadeController@consultaLocalAtendimento');
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
 
 Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');
@@ -61,6 +61,7 @@ Route::get('teste-envio-email', 'PaymentController@testeEnviarEmail');
 Route::post('users/register', 'UserController@register')->name('registrar');
 Route::post('enviar-token', 'UserController@sendToken')->name('enviar_token');
 Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')->name('ativar_conta');
+Route::get('pacientes/activate-redirect', 'PacienteController@ativarContaRedirect')->name('activate-redirect');
 Route::post('remover-item_carrinho', 'ClinicaController@RemoverItemCarrinho');
 Route::post('validar-cupom-desconto', 'CupomDescontoController@validarCupomDesconto')->name('validar_cupom_desconto');
 

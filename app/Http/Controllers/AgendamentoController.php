@@ -14,7 +14,6 @@ use App\Estado;
 use App\Atendimento;
 use App\Http\Requests\AgendamentoRequest;
 use App\Itempedido;
-//use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Paciente;
 use App\CartaoPaciente;
@@ -186,8 +185,8 @@ class AgendamentoController extends Controller
     	date_default_timezone_set('America/Sao_Paulo');
     	
     	$tipo_atendimento	= $request->input('tipo_atendimento');
-    	
-//    	\Cart::clear();
+
+   	    // \Cart::clear();
 
     	$item_pedido = Itempedido::all()->last();
     	$cart_id = 0;
@@ -218,8 +217,8 @@ class AgendamentoController extends Controller
     		$url 				= $request->input('current_url');
 
 			$vl_com_atendimento = number_format($vl_com_atendimento, 2, '.', '');
-    		
-    		CVXCart::add(array(
+
+            CVXCart::add(array(
 				'id' => $cart_id,
 				'name' => 'Agendamento Item '.strval($num_itens + 1),
 				'price' => $vl_com_atendimento,
@@ -552,8 +551,15 @@ class AgendamentoController extends Controller
                     $agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';    
                 }
 			}
-        }
 
+            foreach ( $agendamentos_home as $agendamento) {
+                foreach($agendamento->datahoracheckups as $datahoracheckup) {
+                    if( !empty( $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento ) ) {
+                        $agendamento->info = $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento;
+                    }
+                }
+            }
+        }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
     }

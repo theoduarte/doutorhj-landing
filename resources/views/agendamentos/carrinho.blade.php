@@ -102,7 +102,7 @@
 														<span>Prestador:</span>
 													</div>
 													<div class="dados-resumo">
-														<p>{{ $item['clinica']->nm_fantasia }} - Und: ( {{ $item['filial']->nm_nome_fantasia }} )</p>
+														<p>{{ $item['clinica']->nm_fantasia }} - {{ ($item['filial']->eh_matriz == 'S') ? 'Matriz: ' : 'Filial: ' }} {{ $item['filial']->nm_nome_fantasia }}</p>
 													</div>
 												</div>
 												<div class="linha-resumo">
@@ -186,7 +186,7 @@
 																		<?php //dd($item)?>
 																		<li>
 																			<div class="clinica">
-																				Consulta {{$itemCheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$itemCheckup->dataHoraAgendamento}}</span><br>
+																				{{$itemCheckup->atendimento->consulta->ds_consulta}}, no dia <span>{{$itemCheckup->dataHoraAgendamento}}</span><br>
 																				<span>Profissional: </span>{{$itemCheckup->atendimento->profissional->nm_primario.' '.$itemCheckup->atendimento->profissional->nm_secundario}}
 																			</div>
 																			<div class="endereco">

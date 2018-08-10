@@ -28,7 +28,6 @@
                     <option value="" disabled selected hidden>Ex.: Asa Sul</option>
                 </select>
                 <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
-                <input type="hidden" id="endereco_id" name="endereco_id">
             </div>
             <div class="form-group col-md-12 col-lg-3">
                 <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>

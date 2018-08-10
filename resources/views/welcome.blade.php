@@ -9,7 +9,7 @@
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
             <div class="container">
-                @include('includes/main-search', ['class' => 'busca-home'] );
+                @include('includes/main-search', ['class' => 'busca-home'] )
             </div>
             <div class="box-resumo-home">
                 <div class="container">
@@ -224,6 +224,8 @@
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
+
+                        <!-- <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')"> -->
 
                         <div class="carousel-item item-tabela active" style="background-image: url('/libs/home-template/img/banner_home_cupom.jpg')">
                             <div class="carousel-caption">
@@ -440,9 +442,8 @@
                     </div>
                 </div>
             </div>
-            
 
-            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing');
+            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">

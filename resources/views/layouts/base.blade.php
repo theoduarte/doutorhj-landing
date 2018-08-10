@@ -245,8 +245,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <li><a href="{{ route('landing-page') }}#area-sobre">O que é o Doctor Hoje?</a></li>
                             <li><a href="{{ route('landing-page') }}#como-funciona">Como Funciona</a></li>
                             <li><a href="{{ route('landing-page') }}#vantagens">Vantagens</a></li>
-                            <li><a href="">Política de Privacidade</a></li>
-                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso</a></li>
+                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso & Política de Privacidade</a></li>
                             {{--<li><a href="">Trabalhe Conosco</a></li>--}}
                         </ul>
                     </div>
@@ -301,8 +300,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="">Política de Privacidade</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#modalTermosUsers">Termo de Uso</a></li>
+                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermosUsers">Termo de Uso & Política de Privacidade</a></li>
                         </ul>
                     </div>
                 </div>
