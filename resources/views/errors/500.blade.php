@@ -171,8 +171,7 @@
                             <li><a href="#area-sobre">O que é o Doutor Hoje?</a></li>
                             <li><a href="#como-funciona">Como Funciona</a></li>
                             <li><a href="#vantagens">Vantagens</a></li>
-                            <li><a href="">Política de Privacidade</a></li>
-                            <li><a href="">Termos de Uso</a></li>
+                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso & Política de Privacidade</a></li>
                             <li><a href="">Trabalhe Conosco</a></li>
                         </ul>
                     </div>

@@ -82,7 +82,8 @@ class CheckupController extends Controller
     private function _consultaCheckup(array $dados)
     {
         $tipoEspecialidade = $dados['tipo_especialidade'];
-        
+      
+        // DB::enableQueryLog();   
         $resumo = DB::table('atendimentos')
                     ->select(['checkups.id', 'clinicas.nm_razao_social', 'clinicas.id AS idclinica', 'clinicas.obs_procedimento', 'atendimentos.id AS idatendimento', 'enderecos.te_endereco', 'enderecos.te_bairro',
                               'cidades.nm_cidade', 'estados.sg_estado', 'procedimentos.cd_procedimento', 
@@ -104,8 +105,8 @@ class CheckupController extends Controller
                     ->join('estados', 'estados.id', '=', 'cidades.estado_id')
                     ->whereNotNull('item_checkups.vl_com_checkup')
                     ->whereNotNull('item_checkups.vl_net_checkup')
-                    ->where('clinicas.cs_status', \App\Clinica::ATIVO)
-                    ->where('atendimentos.cs_status', \App\Clinica::ATIVO)
+                    // ->where('clinicas.cs_status', \App\Clinica::ATIVO)
+                    // ->where('atendimentos.cs_status', \App\Clinica::ATIVO)
                     ->where( function($query) use ($tipoEspecialidade) {
                         if ( !empty($tipoEspecialidade) ) { $query->where('checkups.id', $tipoEspecialidade); }
                     } )
@@ -113,7 +114,8 @@ class CheckupController extends Controller
                     ->orderBy('id', 'asc')
                     ->orderBy('ds_categoria', 'asc')
                     ->get();
-
+        // dd( DB::getQueryLog() );
+        
         return $this->_trataVetorConsultaCheckup($resumo);
     }
     
@@ -192,7 +194,8 @@ class CheckupController extends Controller
             $dados[$p->titulo.'-'.$p->tipo]['total_procedimentos'] = ++$qtTotalProcedimentos;
             $dados[$p->titulo.'-'.$p->tipo]['total_camadas'] = $arQtCamadas[$p->titulo.'-'.$p->tipo];
         }
-        
+      
+        // dd($dados);
         return $dados;
     }
 }
