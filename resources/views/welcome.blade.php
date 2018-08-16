@@ -31,15 +31,16 @@
                                         <div class="proxima-consulta col-sm-12 col-md-6">
                                             <div class="area-pc">
                                                 <div class="tit-pc">
-                                                    {{--<p>Sua próxima consulta é</p>--}}
                                                     <p class="data-consulta">
-                                                        Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
-                                                        de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                        às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                            h
-                                                            @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
-                                                                e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                                min. @endif</span></p>
+                                                        @if( !empty($agendamento->dt_atendimento) )
+                                                            Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+                                                            de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                            às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                                h
+                                                                @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
+                                                                    e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+                                                                    min. @endif</span></p>
+                                                        @endif
                                                 </div>
                                                 <div class="resumo">
                                                     <div class="nome-status">
