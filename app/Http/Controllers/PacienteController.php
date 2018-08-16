@@ -176,7 +176,6 @@ class PacienteController extends Controller
         
         # salva os dados do dependente
         $dependente                 = new Paciente();
-        $dependente 				= $this->setDependenteRelations($dependente, $documento_ids);
         
         $dependente->nm_primario    = $nm_primario_dep;
         $dependente->nm_secundario  = $nm_secundario_dep;
@@ -189,6 +188,7 @@ class PacienteController extends Controller
             return response()->json(['status' => false, 'mensagem' => 'O Dependente não foi salvo. Por favor, tente novamente.']);
         }
         
+        $dependente  = $this->setDependenteRelations($dependente, $documento_ids);
         $dependente->load('documentos');
         
         return response()->json(['status' => true, 'mensagem' => 'O Dependente foi salvo com sucesso!', 'dependente' => $dependente->toJson()]);
