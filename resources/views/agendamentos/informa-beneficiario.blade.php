@@ -95,8 +95,6 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                        </div>
-                        <div class="form-row">
                             <label for="inputNomeDependente">Nome</label>
                             <input type="text" class="form-control" id="inputNomeDependente" placeholder="Nome *" maxlength="50">
                             <input type="hidden" id="inputPacienteId" value="{{ $paciente_titular->id }}">
