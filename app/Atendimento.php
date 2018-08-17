@@ -31,11 +31,16 @@ class Atendimento extends Model
 	public function profissional(){
 	    return $this->belongsTo('App\Profissional');
 	}
-	
+
 	public function agendamentos()
+    {
+        return $this->belongsToMany('App\Agendamento');
+    }
+	
+	/*public function agendamentos()
 	{
 	    return $this->hasMany('App\Agendamento');
-	}
+	}*/
 	
 	public function getVlAtendimentoAttribute($valor){
 	    return number_format( $valor,  2, ',', '.'); 

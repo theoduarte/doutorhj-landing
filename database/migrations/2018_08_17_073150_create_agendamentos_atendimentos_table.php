@@ -13,7 +13,7 @@ class CreateAgendamentosAtendimentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('agendamentos_atendimentos', function (Blueprint $table) {
+        Schema::create('agendamento_atendimento', function (Blueprint $table) {
             $table->integer('agendamento_id')->unsigned();
             $table->foreign('agendamento_id')->references('id')->on('agendamentos');
 
@@ -34,6 +34,6 @@ class CreateAgendamentosAtendimentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agendamentos_atendimentos');
+        Schema::dropIfExists('agendamento_atendimento');
     }
 }

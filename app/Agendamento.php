@@ -48,6 +48,11 @@ class Agendamento extends Model
         return $this->belongsTo('App\Atendimento');
     }
     
+    public function atendimentos()
+    {
+        return $this->belongsToMany('App\Atendimento');
+    }
+    
     public function paciente()
     {
         return $this->belongsTo('App\Paciente');
