@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'DoctorHj: Notificações')
+@section('title', 'DoutorHJ: Notificações')
 
 @push('scripts')
 
@@ -54,7 +54,7 @@
             <h4 class="font-18 m-t-40">Marcadores</h4>
 
             <div class="list-group b-0 mail-list">
-                <a href="#" class="list-group-item b-0"><span class="fa fa-circle text-info m-r-10"></span>Contato DoctorHoje</a>
+                <a href="#" class="list-group-item b-0"><span class="fa fa-circle text-info m-r-10"></span>Contato Doutor Hoje</a>
                 <a href="#" class="list-group-item b-0"><span class="fa fa-circle text-warning m-r-10"></span>Atendimento Confirmado</a>
                 <a href="#" class="list-group-item b-0"><span class="fa fa-circle text-purple m-r-10"></span>Atendimento Cancelado</a>
                 <a href="#" class="list-group-item b-0"><span class="fa fa-circle text-pink m-r-10"></span>Promoções/Descontos</a>

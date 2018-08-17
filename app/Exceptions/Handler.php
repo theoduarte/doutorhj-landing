@@ -97,9 +97,9 @@ class Handler extends ExceptionHandler
     }
     
     public function sendException($text_exception) {
-    	$from = 'contato@doctorhoje.com.br';
+    	$from = 'contato@doutorhoje.com.br';
     	$to = 'teocomp@gmail.com';
-    	$subject = 'Exceção Sistema DoctorHoje';
+    	$subject = 'Exceção Sistema DoutorHoje';
     	
     	$text_exception = str_replace('\\', '|', "<pre>model: App\Endereco | message: No query results for model [App\Endereco]  | code:0 | file:/var/www/html/cvxdoutorhj-landing/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php | line:333</pre>");
     	
@@ -108,7 +108,7 @@ class Handler extends ExceptionHandler
 <html>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>Log Sistema DoctorHoje</title>
+        <title>Log Sistema DoutorHoje</title>
     </head>
     <body style='margin: 0;'>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -119,19 +119,19 @@ class Handler extends ExceptionHandler
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Log Sistema DoctorHoje</span></td>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Log Sistema DoutorHoje</span></td>
                 <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
             </tr>
         </table>
         <br>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td><img src='https://doctorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
+                <td><img src='https://doutorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
             </tr>
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px;'><strong>Log Sistema DoctorHoje</strong></td>
+                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px;'><strong>Log Sistema DoutorHoje</strong></td>
             </tr>
         </table>
         <br>
@@ -154,9 +154,9 @@ class Handler extends ExceptionHandler
         <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
             <tr style='background-color: #f9f9f9;'>
                 <td width='209'></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
                 <td width='210'></td>
             </tr>
         </table>
@@ -171,7 +171,7 @@ class Handler extends ExceptionHandler
             <tr style='background-color: #f9f9f9;'>
                 <td width='30'></td>
                 <td width='540' style='line-height:16px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#434342; text-align: center;'>
-                    <strong>Doctor Hoje</strong> 2018
+                    <strong>Doutor Hoje</strong> 2018
                 </td>
                 <td width='30'></td>
             </tr>

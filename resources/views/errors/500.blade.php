@@ -10,7 +10,7 @@
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
   
-    <title>@yield('title', 'Doutor HJ')</title>
+    <title>@yield('title', 'DoutorHJ')</title>
 
     @push('style')
     
@@ -100,7 +100,7 @@
                                 <a class="nav-link" href="#vantagens">Vantagens</a>
                             </li>
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="https://prestador.doctorhoje.com.br">Sou profissional de saúde</a>
+                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Sou profissional de saúde</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>

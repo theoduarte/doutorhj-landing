@@ -415,7 +415,7 @@
                                                     <p class="texto">Você possui um cupom que garante <strong>10% de
                                                             desconto</strong> no seu primeiro agendamento feito pelo
                                                         site Doutor Hoje. Aproveite, é por tempo limitado. Na tela de
-                                                        finalização de compra insira o código: <strong>DOuTOR10</strong>
+                                                        finalização de compra insira o código: <strong>DOUTOR10</strong>
                                                     </p>
                                                     <button type="button" class="close-div btn btn-secondary" title="Apagar mensagem">
                                                         <i class="fa fa-trash" aria-hidden="true"></i></button>
