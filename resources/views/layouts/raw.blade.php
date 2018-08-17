@@ -15,10 +15,10 @@
 
         <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
         <meta name="description" content="Comvex">
-        <meta name="keywords" content="doctorhj saúde consulta médico sus plano de saúde">
+        <meta name="keywords" content="doutorhoje saúde consulta médico sus plano de saúde">
         <meta name="author" content="Theogenes Ferreira Duarte">
 
-        <title>@yield('title', 'Doctor HJ')</title>
+        <title>@yield('title', 'DoutorHJ')</title>
 
         @push('style')
         <!-- Google fonts -->

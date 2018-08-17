@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Confirma Beneficiário - DoctorHj')
+@section('title', 'Confirma Beneficiário - DoutorHJ')
 
 @push('scripts')
 
