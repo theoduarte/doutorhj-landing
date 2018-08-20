@@ -112,7 +112,7 @@ $(document).ready(function () {
 	
 	try {
 		var $cardinput = $('.cvx-checkout_card_number');
-		$('.cvx-checkout_card_number').validateCreditCard(function(result) {		
+		$('.cvx-checkout_card_number').validateCreditCard(function(result) {
 			if (result.card_type != null)
 			{
 				$('.inputCodigoCredito').attr('maxlength', 3);
@@ -136,6 +136,7 @@ $(document).ready(function () {
 						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
 						$('.inputBandeiraCartaoCredito').val('Master');
+						$('.inputBandeiraCartaoDebito').val('Maestro');
 						break;
 
 					case "maestro":
@@ -502,7 +503,7 @@ function pagarCartaoCredito() {
 			   'ano_cartao': ano_cartao_credito,
 			   'cod_seg_cartao': cod_seg_cartao_credito,
 			   'gravar_cartao': gravar_cartao_credito,
-			   'bandeira_cartao': bandeira_cartao_credito,
+			   'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
 			   'cod_cupom_desconto': cod_cupom_desconto,
 			   'num_parcela_selecionado': num_parcela_selecionado,
 			   'agendamentos': agendamentos,
