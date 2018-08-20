@@ -26,6 +26,8 @@ class Agendamento extends Model
     const CANCELADO      = 60;
     const AGENDADO       = 70;
     const RETORNO        = 80;
+    const FATURADO       = 90;
+    const PAGO           = 100;
     
     protected static $cs_status = array(
         self::PRE_AGENDADO   => 'Pré-Agendado',
@@ -35,10 +37,10 @@ class Agendamento extends Model
         self::AUSENTE        => 'Ausente',
         self::CANCELADO      => 'Cancelado',
         self::AGENDADO       => 'Agendado',
-        self::RETORNO        => 'Retorno'
+        self::RETORNO        => 'Retorno',
+        self::FATURADO       => 'Faturado',
+        self::PAGO           => 'Pago'
     );
-    
-    
     
     /*
      * Relationship
