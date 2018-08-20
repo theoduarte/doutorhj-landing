@@ -51,7 +51,7 @@ class PacienteController extends Controller
         $paciente = Paciente::findOrFail($paciente_id);
         
         if($paciente === null) {
-        	return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não foi ativada. Por favor, tente novamente!');
+        	return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não foi ativada. Por favor, tente novamente!');
         }
         
         $paciente->load('user');

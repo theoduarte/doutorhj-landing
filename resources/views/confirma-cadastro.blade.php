@@ -1,6 +1,6 @@
 @extends('layouts.logado')
 
-@section('title', 'Confirma Agendamento - DoctorHj')
+@section('title', 'Confirma Agendamento - DoutorHJ')
 
 @push('scripts')
 
@@ -15,7 +15,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 texto-confirmacao">
-                    <p>Seja bem-vindo(a) e obrigado(a) por escolher o Doctor Hoje.</p>
+                    <p>Seja bem-vindo(a) e obrigado(a) por escolher o Doutor Hoje.</p>
                     <p>Acesse seu email e clique no link para ativar seu cadastro.</span></p>
                     <p>Lembre-se de verificar também sua caixa de spam e lixeira.</p>
                 </div>

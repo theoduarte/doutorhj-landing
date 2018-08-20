@@ -31,7 +31,7 @@ $(document).ready(function () {
 <script type="text/javascript">
 $(document).ready(function () {
 
-	$.Notification.notify('info', 'top right', 'DoctorHJ Informa!', '{{ $message }}');
+	$.Notification.notify('info', 'top right', 'DoutorHJ Informa!', '{{ $message }}');
 });
 </script>
 @endif

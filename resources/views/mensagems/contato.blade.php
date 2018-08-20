@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'DoctorHoje')
+@section('title', 'DoutorHJ')
 
 @push('scripts')
 
@@ -68,7 +68,7 @@
                     </div>
                     <div class="contact-box">
                         <h4><i class="fa fa-envelope-o"></i> Envie-nos um E-mail</h4>
-                        <p>cliente@doctorhoje.com.br<br><br></p>
+                        <p>cliente@doutorhoje.com.br<br><br></p>
                     </div>
                     <div class="contact-box">
                         <a href="https://web.whatsapp.com/send?phone=5561986792680&text=" class="chatWhatsapp" target="_blank">

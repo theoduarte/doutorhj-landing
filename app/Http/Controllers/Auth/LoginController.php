@@ -76,7 +76,7 @@ class LoginController extends Controller
     	//dd($user_login);
     	
     	if($active == 'I') {
-    		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoctorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
+    		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
     	}
     	
     	if($user_login === null) {

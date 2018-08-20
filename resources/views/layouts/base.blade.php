@@ -15,10 +15,10 @@
 
     <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <meta name="description" content="Comvex">
-    <meta name="keywords" content="doctorhj saúde consulta médico sus plano de saúde">
+    <meta name="keywords" content="doutorhoje saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
-    <title>@yield('title', 'Doctor HJ')</title>
+    <title>@yield('title', 'DoutorHJ')</title>
 
 @push('style')
 
@@ -94,7 +94,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
-                        <h1>Doctor Hoje</h1>
+                        <h1>Doutor Hoje</h1>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
@@ -185,7 +185,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
-                        <h1>Doctor Hoje</h1>
+                        <h1>Doutor Hoje</h1>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMobile" aria-controls="navbarMobile" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
@@ -193,7 +193,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doctor Hoje</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
@@ -205,7 +205,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <a class="nav-link" href="/contato">Contato</a>
                             </li> -->
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="https://prestador.doctorhoje.com.br">Seja um parceiro</a>
+                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um parceiro</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
@@ -226,12 +226,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="floating-wpp"></div>
             <div class="container">
                 <div class="area-logo-rodape">
-                    <img src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
+                    <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                 </div>
                 <!-- teste smartgit -->
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
-                        <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
+                        <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
                             <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
@@ -242,7 +242,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="{{ route('landing-page') }}#area-sobre">O que é o Doctor Hoje?</a></li>
+                            <li><a href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje?</a></li>
                             <li><a href="{{ route('landing-page') }}#como-funciona">Como Funciona</a></li>
                             <li><a href="{{ route('landing-page') }}#vantagens">Vantagens</a></li>
                             <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso & Política de Privacidade</a></li>
@@ -261,9 +261,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>PROFISSIONAIS DE SAÚDE </h5>
                         <ul>
-                            <li><a href="https://prestador.doctorhoje.com.br/">Seja um parceiro</a></li>
+                            <li><a href="https://prestador.doutorhoje.com.br/">Seja um parceiro</a></li>
                             <li><a href="#vantagens">Vantagens</a></li>
-                            <li><a href="https://prestador.doctorhoje.com.br/login/">Área restrita</a></li>
+                            <li><a href="https://prestador.doutorhoje.com.br/login/">Área restrita</a></li>
                         </ul>
                     </div>
                 </div>
@@ -271,10 +271,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             <div class="endereco-site">
                 <div class="container">
-                    <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
+                    <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
                     <div class="redes-sociais">
-                        <a href="https://www.instagram.com/doctor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/DoutorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -284,12 +284,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <footer class="footer-logado">
             <div class="container">
                 <div class="area-logo-rodape">
-                    <img src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
+                    <img src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                 </div>
                 <!-- teste smartgit -->
                 <div class="row">
                     <div class="col-sm-6 col-md-9">
-                        <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doctor Hoje">
+                        <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
                             <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
@@ -308,10 +308,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="endereco-site">
                 <div class="container">
-                    <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
+                    <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
                     <div class="redes-sociais">
-                        <a href="https://www.instagram.com/doctor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/DoutorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -385,7 +385,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 //autoOpenTimer: 4000,
                 message: '',
                 //headerColor: 'orange', // enable to change msg box color
-                headerTitle: 'Whatsapp do Doctor Hoje',
+                headerTitle: 'Whatsapp do Doutor Hoje',
             });
         });
     </script>

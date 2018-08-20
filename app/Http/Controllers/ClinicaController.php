@@ -835,16 +835,16 @@ class ClinicaController extends Controller
     public function homeLogado(){
 
     	/* $verify_hash = "teste";
-    	$from = 'contato@doctorhoje.com.br';
+    	$from = 'contato@doutorhoje.com.br';
     	$to = 'teocomp@msn.com';
-    	$subject = 'Contato DoctorHoje';
+    	$subject = 'Contato DoutorHoje';
     	$url = route('ativar_conta', $verify_hash);
     	$html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
-    <head><title>DoctorHoje Ativação</title></head>
+    <head><title>DoutorHoje Ativação</title></head>
     <body>
-        <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2>
+        <h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2>
     </body>
 </html>
 HEREDOC;
@@ -865,16 +865,16 @@ HEREDOC;
     public function testeEnviarEmail(){
 
         $verify_hash = "teste";
-         $from = 'contato@doctorhoje.com.br';
+         $from = 'contato@doutorhoje.com.br';
          $to = 'teocomp@msn.com';
-         $subject = 'Contato DoctorHoje';
+         $subject = 'Contato DoutorHoje';
          $url = route('ativar_conta', $verify_hash);
          $html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>DoctorHoje</title>
+        <title>DoutorHoje</title>
     </head>
     <body style='margin: 0;'>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -885,7 +885,7 @@ HEREDOC;
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoctorHoje - Confirmação de cadastro</span></td>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Confirmação de cadastro</span></td>
                 <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
             </tr>
         </table>
@@ -917,7 +917,7 @@ HEREDOC;
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    <strong>Seja bem-vindo(a)</strong> e obrigado(a) por escolher o Doctor Hoje. Estamos muito felizes em saber que agora você faz parte da melhor plataforma de consultas e exames do Distrito Federal. Nosso objetivo é facilitar sua vida e buscar os melhores serviços de saúde à preços acessíveis. Você pode consultar seus dados cadastrais no nosso site e em breve pelo seu celular no aplicativo Doctor Hoje.
+                    <strong>Seja bem-vindo(a)</strong> e obrigado(a) por escolher o Doutor Hoje. Estamos muito felizes em saber que agora você faz parte da melhor plataforma de consultas e exames do Distrito Federal. Nosso objetivo é facilitar sua vida e buscar os melhores serviços de saúde à preços acessíveis. Você pode consultar seus dados cadastrais no nosso site e em breve pelo seu celular no aplicativo Doutor Hoje.
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -968,7 +968,7 @@ HEREDOC;
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
                     Abraços,<br>
-                    Equipe Doctor Hoje                    
+                    Equipe Doutor Hoje                    
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -1006,12 +1006,12 @@ HEREDOC;
                     Em caso de qualquer dúvida, fique à vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
-                    <a href='mailto:cliente@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doctorhoje.com.br</a>
+                    <a href='mailto:cliente@doutorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doutorhoje.com.br</a>
                     <br><br>
                     Ou ligue para (61) 3221-5350, o atendimento é de<br>
                     segunda à sexta-feira
                     das 8h00 às 18h00. <br><br>
-                    <strong>Doctor Hoje</strong> 2018 
+                    <strong>Doutor Hoje</strong> 2018 
                 </td>
                 <td width='30'></td>
             </tr>

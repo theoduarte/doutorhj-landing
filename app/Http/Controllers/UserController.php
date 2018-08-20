@@ -159,24 +159,24 @@ class UserController extends Controller
     	
     	# envia o e-mail de ativação
     	//Mail::to($usuario->email)->send(new PacienteSender($paciente));
-    	//$this->from('administrador@comvex.com.br', 'DoctorHoje')->subject('Contato DoctorHoje')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)])
+    	//$this->from('administrador@comvex.com.br', 'DoutorHoje')->subject('Contato DoutorHoje')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)])
     	$verify_hash = Crypt::encryptString($paciente->id);
-    	$from = 'contato@doctorhoje.com.br';
+    	$from = 'contato@doutorhoje.com.br';
     	$to = $usuario->email;
-    	$subject = 'Contato DoctorHoje';
+    	$subject = 'Contato DoutorHoje';
     	
     	$paciente_nm_primario = $paciente->nm_primario;
     	$paciente_email = $usuario->email;
     	
     	$url = route('ativar_conta', $verify_hash);
-    	//$html_message = "<!DOCTYPE html><html><head><title>DoctorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoctorHoje</a></h2></body></html>";
+    	//$html_message = "<!DOCTYPE html><html><head><title>DoutorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2></body></html>";
     	
     	$html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>DoctorHoje</title>
+        <title>DoutorHoje</title>
     </head>
     <body style='margin: 0;'>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -187,14 +187,14 @@ class UserController extends Controller
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoctorHoje - Confirmação de cadastro</span></td>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Confirmação de cadastro</span></td>
                 <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
             </tr>
         </table>
         <br>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td><img src='https://doctorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
+                <td><img src='https://doutorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
             </tr>
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -219,7 +219,7 @@ class UserController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: justify;'>
-                    <strong>Seja bem-vindo(a)</strong> e obrigado(a) por escolher o Doctor Hoje. Estamos muito felizes em saber que agora você faz parte da melhor plataforma de consultas e exames do Distrito Federal. Nosso objetivo é facilitar sua vida e buscar os melhores serviços de saúde à preços acessíveis. Você pode consultar seus dados cadastrais no nosso site e em breve pelo seu celular no aplicativo Doctor Hoje.
+                    <strong>Seja bem-vindo(a)</strong> e obrigado(a) por escolher o Doutor Hoje. Estamos muito felizes em saber que agora você faz parte da melhor plataforma de consultas e exames do Distrito Federal. Nosso objetivo é facilitar sua vida e buscar os melhores serviços de saúde à preços acessíveis. Você pode consultar seus dados cadastrais no nosso site e em breve pelo seu celular no aplicativo Doutor Hoje.
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -230,7 +230,7 @@ class UserController extends Controller
             <tr>
                 <td width='220' style='background-color: #fff;'>&nbsp;</td>
                 <td width='159' style='text-align: center;'>
-                    <img src='https://doctorhoje.com.br/libs/home-template/img/email/devices.png' width='155' height='74' alt=''/>
+                    <img src='https://doutorhoje.com.br/libs/home-template/img/email/devices.png' width='155' height='74' alt=''/>
                 </td>
                 <td width='221' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -270,7 +270,7 @@ class UserController extends Controller
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
                     Abraços,<br>
-                    Equipe Doctor Hoje                    
+                    Equipe Doutor Hoje                    
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -288,9 +288,9 @@ class UserController extends Controller
         <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
             <tr style='background-color: #f9f9f9;'>
                 <td width='209'></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
                 <td width='210'></td>
             </tr>
         </table>
@@ -308,12 +308,12 @@ class UserController extends Controller
                     Em caso de qualquer dúvida, fique à vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
-                    <a href='mailto:cliente@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doctorhoje.com.br</a>
+                    <a href='mailto:cliente@doutorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doutorhoje.com.br</a>
                     <br><br>
                     Ou ligue para (61) 3221-5350, o atendimento é de<br>
                     segunda à sexta-feira
                     das 8h00 às 18h00. <br><br>
-                    <strong>Doctor Hoje</strong> 2018 
+                    <strong>Doutor Hoje</strong> 2018 
                 </td>
                 <td width='30'></td>
             </tr>
@@ -346,16 +346,16 @@ HEREDOC;
     public function sendTokenEmail($access_token, $email_destinatario, $paciente_nm_primario, $data_solicitacao)
     {
         
-        $from = 'contato@doctorhoje.com.br';
+        $from = 'contato@doutorhoje.com.br';
         $to = $email_destinatario;
-        $subject = 'NOVO TOKEN DoctorHoje';
+        $subject = 'NOVO TOKEN DoutorHoje';
         
         $html_message = <<<HEREDOC
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>DoctorHoje</title>
+        <title>DoutorHoje</title>
     </head>
     <body style='margin: 0;'>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -366,14 +366,14 @@ HEREDOC;
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoctorHoje - Novo Token de acesso</span></td>
+                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Novo Token de acesso</span></td>
                 <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
             </tr>
         </table>
         <br>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td><img src='https://doctorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
+                <td><img src='https://doutorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt=''/></td>
             </tr>
         </table>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
@@ -409,7 +409,7 @@ HEREDOC;
             <tr>
                 <td width='220' style='background-color: #fff;'>&nbsp;</td>
                 <td width='159' style='text-align: center;'>
-                    <img src='https://doctorhoje.com.br/libs/home-template/img/email/devices.png' width='155' height='74' alt=''/>
+                    <img src='https://doutorhoje.com.br/libs/home-template/img/email/devices.png' width='155' height='74' alt=''/>
                 </td>
                 <td width='221' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -434,7 +434,7 @@ HEREDOC;
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
                     Abraços,<br>
-                    Equipe Doctor Hoje
+                    Equipe Doutor Hoje
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
@@ -452,9 +452,9 @@ HEREDOC;
         <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
             <tr style='background-color: #f9f9f9;'>
                 <td width='209'></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doctorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
+                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
                 <td width='210'></td>
             </tr>
         </table>
@@ -472,12 +472,12 @@ HEREDOC;
                     Em caso de qualquer dúvida, fique à vontade <br>
                     para responder esse e-mail ou
                     nos contatar no <br><br>
-                    <a href='mailto:cliente@doctorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doctorhoje.com.br</a>
+                    <a href='mailto:cliente@doutorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doutorhoje.com.br</a>
                     <br><br>
                     Ou ligue para (61) 3221-5350, o atendimento é de<br>
                     segunda à sexta-feira
                     das 8h00 às 18h00. <br><br>
-                    <strong>Doctor Hoje</strong> 2018
+                    <strong>Doutor Hoje</strong> 2018
                 </td>
                 <td width='30'></td>
             </tr>
@@ -546,8 +546,8 @@ HEREDOC;
         $user_send_token->save();
         
         $number = UtilController::retiraMascara($contato->ds_contato);
-        $remetente = 'DoctorHoje';
-        $message = "Seu Novo Token de acesso ao DoctorHoje: $access_token";
+        $remetente = 'DoutorHoje';
+        $message = "Seu Novo Token de acesso ao DoutorHoje: $access_token";
 
         $send_sms_token = UtilController::sendSms($number, $remetente, $message);
         
