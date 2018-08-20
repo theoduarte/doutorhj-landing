@@ -8,7 +8,7 @@
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
-    <title>@yield('title', 'Doutor HJ')</title>
+    <title>@yield('title', 'DoutorHJ')</title>
     @push('style')
     <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
@@ -104,7 +104,7 @@
                             <li>
                                 <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                     <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Meus exames" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span>Pedidos </span><img src="{{ asset('img/pedidos-icon.png') }}" alt="Doctor Hoje">
+                                        <span>Pedidos </span><img src="{{ asset('img/pedidos-icon.png') }}" alt="Doutor Hoje">
                                         <!--<div class="numero-notificacoes">
                                             <span>2</span>
                                         </div>-->
@@ -160,7 +160,7 @@
         </div>
         
         <div class="endereco-site">
-            <a href="{{ route('landing-page') }}">doctorhoje.com.br</a>
+            <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
         </div>
     </footer>
 </div>
