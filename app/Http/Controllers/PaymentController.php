@@ -421,7 +421,7 @@ class PaymentController extends Controller
         $payment_installments           = intval($num_parcela_selecionado); //sizeof($parcelamentos);
         $payment_interest               = "ByMerchant";
         $payment_capture                = 'true';
-        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'false'; //-- usado no pagamento por debito tambem
+        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'true'; //-- usado no pagamento por debito tambem
         $payment_softdescriptor         = 'doctorhoje';
         $payment_credicard_number       = CVXRequest::post('num_cartao'); //-- usado no pagamento por debito tambem
         $payment_holder                 = CVXRequest::post('nome_impresso_cartao'); //-- usado no pagamento por debito tambem
@@ -434,8 +434,7 @@ class PaymentController extends Controller
         if ($tp_pagamento == 'credito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
         }
-        
-        if ($tp_pagamento == 'debito') {
+        else if ($tp_pagamento == 'debito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":' .$payment_authenticate .',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
         	//$payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267143","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
         }
