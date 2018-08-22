@@ -491,7 +491,7 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Moderno</h4>
-                                <p>A agendamento online oferece a comodidade do agendamento da consulta e exame no seu
+                                <p>O agendamento online oferece a comodidade do agendamento da consulta e exame no seu
                                     computador ou celular.</p>
                             </div>
                         </div>
