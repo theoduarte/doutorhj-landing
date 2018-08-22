@@ -461,10 +461,10 @@ class PaymentController extends Controller
         if ($httpcode == 201) {
         	try {
 
-                if( $tp_pagamento == 'debito' ) {
+                /*if( $tp_pagamento == 'debito' ) {
                     header('Location: ' . $cielo_result->Payment->AuthenticationUrl);
                     exit;
-                }
+                }*/
 
         		$cielo_status = $cielo_result->Payment->Status;
 
