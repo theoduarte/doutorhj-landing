@@ -414,7 +414,7 @@ class PaymentController extends Controller
         
         $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
         $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
-        $payment_return_url             = 'https://doutorhoje.com.br/'; //-- usado no pagamento por debito apenas
+        $payment_return_url             = 'https://doutorhj-landing.test/'; //-- usado no pagamento por debito apenas
         $payment_currency               = 'BRL';
         $payment_country                = 'BRA';
         $payment_serv_taxa              = 0;
@@ -436,7 +436,7 @@ class PaymentController extends Controller
         }
         else if ($tp_pagamento == 'debito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":' .$payment_authenticate .',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
-        	//$payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267143","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
+        	// $payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267144","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
         }
         
         // dd($payload);
@@ -460,7 +460,14 @@ class PaymentController extends Controller
 
         if ($httpcode == 201) {
         	try {
+
+                if( $tp_pagamento == 'debito' ) {
+                    header('Location: ' . $cielo_result->Payment->AuthenticationUrl);
+                    exit;
+                }
+
         		$cielo_status = $cielo_result->Payment->Status;
+
         		if ($cielo_status == 1 | $cielo_status == 2) {
         		    
         			$result_agendamentos = [];

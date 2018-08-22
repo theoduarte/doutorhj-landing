@@ -136,7 +136,7 @@ $(document).ready(function () {
 						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
 						$('.inputBandeiraCartaoCredito').val('Master');
-						$('.inputBandeiraCartaoDebito').val('Maestro');
+						$('.inputBandeiraCartaoDebito').val('Master');
 						break;
 
 					case "maestro":
