@@ -26,3 +26,5 @@ yarn-error.log
 resources/views/.DS_Store
 app/Http/.DS_Store
 resources/.DS_Store
+
+public/libs/home-template/\.DS_Store
