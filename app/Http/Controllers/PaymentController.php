@@ -414,14 +414,14 @@ class PaymentController extends Controller
         
         $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
         $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
-        $payment_return_url             = 'https://doutorhoje.com.br/'; //-- usado no pagamento por debito apenas
+        $payment_return_url             = config('app.url'); //-- usado no pagamento por debito apenas
         $payment_currency               = 'BRL';
         $payment_country                = 'BRA';
         $payment_serv_taxa              = 0;
         $payment_installments           = intval($num_parcela_selecionado); //sizeof($parcelamentos);
         $payment_interest               = "ByMerchant";
         $payment_capture                = 'true';
-        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'false'; //-- usado no pagamento por debito tambem
+        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'true'; //-- usado no pagamento por debito tambem
         $payment_softdescriptor         = 'doctorhoje';
         $payment_credicard_number       = CVXRequest::post('num_cartao'); //-- usado no pagamento por debito tambem
         $payment_holder                 = CVXRequest::post('nome_impresso_cartao'); //-- usado no pagamento por debito tambem
@@ -434,10 +434,9 @@ class PaymentController extends Controller
         if ($tp_pagamento == 'credito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
         }
-        
-        if ($tp_pagamento == 'debito') {
+        else if ($tp_pagamento == 'debito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":' .$payment_authenticate .',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
-        	//$payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267143","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
+        	// $payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267144","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
         }
         
         // dd($payload);
@@ -461,7 +460,14 @@ class PaymentController extends Controller
 
         if ($httpcode == 201) {
         	try {
+
+                /*if( $tp_pagamento == 'debito' ) {
+                    header('Location: ' . $cielo_result->Payment->AuthenticationUrl);
+                    exit;
+                }*/
+
         		$cielo_status = $cielo_result->Payment->Status;
+
         		if ($cielo_status == 1 | $cielo_status == 2) {
         		    
         			$result_agendamentos = [];
