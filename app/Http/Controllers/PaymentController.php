@@ -414,7 +414,7 @@ class PaymentController extends Controller
         
         $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
         $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
-        $payment_return_url             = 'https://doutorhj-landing.test/'; //-- usado no pagamento por debito apenas
+        $payment_return_url             = config('app.url'); //-- usado no pagamento por debito apenas
         $payment_currency               = 'BRL';
         $payment_country                = 'BRA';
         $payment_serv_taxa              = 0;
