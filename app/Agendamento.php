@@ -10,7 +10,7 @@ class Agendamento extends Model
 {
     use Sortable;
         
-    public $fillable  = ['id', 'te_ticket', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status'];
+    public $fillable  = ['id', 'te_ticket', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status','filial_id'];
     public $sortable  = ['id', 'te_ticket', 'dt_atendimento', 'cs_status'];
     public $dates 	  = ['dt_atendimento'];
     
@@ -26,6 +26,8 @@ class Agendamento extends Model
     const CANCELADO      = 60;
     const AGENDADO       = 70;
     const RETORNO        = 80;
+    const FATURADO       = 90;
+    const PAGO           = 100;
     
     protected static $cs_status = array(
         self::PRE_AGENDADO   => 'Pré-Agendado',
@@ -35,10 +37,10 @@ class Agendamento extends Model
         self::AUSENTE        => 'Ausente',
         self::CANCELADO      => 'Cancelado',
         self::AGENDADO       => 'Agendado',
-        self::RETORNO        => 'Retorno'
+        self::RETORNO        => 'Retorno',
+        self::FATURADO       => 'Faturado',
+        self::PAGO           => 'Pago'
     );
-    
-    
     
     /*
      * Relationship
@@ -46,6 +48,11 @@ class Agendamento extends Model
     public function atendimento()
     {
         return $this->belongsTo('App\Atendimento');
+    }
+    
+    public function atendimentos()
+    {
+        return $this->belongsToMany('App\Atendimento');
     }
     
     public function paciente()
