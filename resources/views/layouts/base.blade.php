@@ -236,7 +236,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <p>Central de Atendimento</p>
                             <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
                             <p><strong><i class="fa fa-whatsapp" aria-hidden="true"></i> (61) 98679-2680</strong></p>
-                            <p>Horário de atendimento das 9h às 18h, de segunda à sexta-feira, excetos feriados.</p>
+                            <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
@@ -294,7 +294,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <p>Central de Atendimento</p>
                             <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
                             <p><strong><i class="fa fa-whatsapp" aria-hidden="true"></i> (61) 98679-2680</strong></p>
-                            <p>Horário de atendimento das 9h às 18h, de segunda à sexta-feira, excetos feriados.</p>
+                            <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
