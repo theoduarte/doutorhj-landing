@@ -10,7 +10,7 @@ class Agendamento extends Model
 {
     use Sortable;
         
-    public $fillable  = ['id', 'te_ticket', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status'];
+    public $fillable  = ['id', 'te_ticket', 'profissional_id', 'paciente_id', 'clinica_id', 'dt_atendimento', 'cs_status','filial_id'];
     public $sortable  = ['id', 'te_ticket', 'dt_atendimento', 'cs_status'];
     public $dates 	  = ['dt_atendimento'];
     

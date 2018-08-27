@@ -32,7 +32,7 @@
 
                         <div class="tab-pane fade show active" id="consultas" role="tabpanel" aria-labelledby="home-tab">
                             @foreach($agendamentos_home as $agendamento)
-                                @foreach( $agendamento->atendimentos as $atendimento )
+                                @foreach( $agendamento->atendimentos()->whereNull('deleted_at')->get() as $atendimento )
                                     @if(!empty($atendimento->id))
                                         <div class="agendamentos">
                                             <div class="row">
@@ -79,7 +79,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) ) }}<br>
+                                                    <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
                                                         <strong>{{ $atendimento->clinica->nm_fantasia }}</strong></p>
                                                     
                                                     @if( !empty($atendimento->consulta_id) )
@@ -90,7 +90,7 @@
                                                     <p class="valor">R$ <span>{{ number_format( $agendamento->itempedidos->first()->valor,  2, ',', '.') }}</span>
                                                         <span class="dt-pagamento">pago em {{ date_format($agendamento->itempedidos->first()->created_at, 'd/m/Y') }}</span>
                                                     </p>
-                                                    <p class="endereco">{{ $atendimento->clinica->enderecos->first()->te_endereco . ' - ' . $atendimento->clinica->enderecos->first()->te_bairro . ' - ' . $atendimento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $atendimento->clinica->enderecos->first()->cidade->estado->sg_estado }}</p>
+                                                    <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
                                                 </div>
                                                 <div class="col col-lg-4">
                                                     <p class="tit-token">Token</p>

@@ -79,7 +79,7 @@
                                                                             <span>Observação do Atendimento: </span>
                                                                         </div>
                                                                         <div class="dados-resumo">
-                                                                            <p>{{ $agendamento->clinica->obs_procedimento }}</p>
+                                                                            <p>{{ $atendimento->clinica->obs_procedimento }}</p>
                                                                         </div>
                                                                     </div>
                                                                     @endif
