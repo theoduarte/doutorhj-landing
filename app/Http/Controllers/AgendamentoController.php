@@ -526,39 +526,7 @@ class AgendamentoController extends Controller
         
         if (Auth::check()) {
             $paciente_id = Auth::user()->paciente->id;
-            
-            //DB::enableQueryLog();
-            $agendamentos_home = Agendamento::with([
-					'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
-					'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
-				])
-	            ->join('pacientes', function($join1) use ($paciente_id) {
-					$join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(function($query) use ($paciente_id) {
-						$query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));
-					});
-				})
-	            ->select('agendamentos.*')
-	            ->distinct()
-	            ->orderBy('dt_atendimento', 'asc')->get();
-
-			foreach($agendamentos_home as $agendamento) {
-				if(!is_null($agendamento->atendimento_id)) {
-					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
-				}
-
-                if(!empty($agendamento->itempedidos->first())) {
-                    $agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
-                    $agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';    
-                }
-			}
-
-            foreach ( $agendamentos_home as $agendamento) {
-                foreach($agendamento->datahoracheckups as $datahoracheckup) {
-                    if( !empty( $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento ) ) {
-                        $agendamento->info = $datahoracheckup->itemcheckup->atendimento->clinica->obs_procedimento;
-                    }
-                }
-            }
+            $agendamentos_home = Agendamento::where('paciente_id', $paciente_id)->get();
         }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));

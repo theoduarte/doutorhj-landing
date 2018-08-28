@@ -32,100 +32,106 @@
 
                         <div class="tab-pane fade show active" id="consultas" role="tabpanel" aria-labelledby="home-tab">
                             @foreach($agendamentos_home as $agendamento)
-                                @if(!is_null($agendamento->atendimento_id))
-                                    <div class="agendamentos">
-                                        <div class="row">
-                                            <div class="col col-lg-2 area-data">
-                                                @if(!empty($agendamento->dt_atendimento))
-                                                    <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else
-                                                            -- @endif</p>
-                                                    <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else
-                                                            --- @endif</p>
-                                                    <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else
-                                                            ---- @endif</p>
-                                                @else
-                                                    <p id="dia_{{ $agendamento->id }}" class="dia"> -- </p>
-                                                    <p id="mes_{{ $agendamento->id }}" class="mes text-center"> --- </p>
-                                                    <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">
-                                                        ---- </p>
-                                                @endif
-                                            </div>
-                                            <div class="col col-lg-5 area-informacoes">
-                                                <div class="nome-status">
-                                                    <div class="row">
-                                                        <div class="col-lg-7">
-                                                            <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
-                                                        </div>
-                                                        <div class="col-lg-5">
-                                                            @if($agendamento->getRawCsStatusAttribute() == 10)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
-                                                            @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                                                <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
-                                                            @endif
+                                @foreach( $agendamento->atendimentos()->whereNull('deleted_at')->get() as $atendimento )
+                                    @if(!empty($atendimento->id))
+                                        <div class="agendamentos">
+                                            <div class="row">
+                                                <div class="col col-lg-2 area-data">
+                                                    @if(!empty($agendamento->dt_atendimento))
+                                                        <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else
+                                                                -- @endif</p>
+                                                        <p id="mes_{{ $agendamento->id }}" class="mes text-center">@if($agendamento->getRawCsStatusAttribute() != 60) {{ substr(strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())), 0, 3) }} @else
+                                                                --- @endif</p>
+                                                        <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }} @else
+                                                                ---- @endif</p>
+                                                    @else
+                                                        <p id="dia_{{ $agendamento->id }}" class="dia"> -- </p>
+                                                        <p id="mes_{{ $agendamento->id }}" class="mes text-center"> --- </p>
+                                                        <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">
+                                                            ---- </p>
+                                                    @endif
+                                                </div>
+                                                <div class="col col-lg-5 area-informacoes">
+                                                    <div class="nome-status">
+                                                        <div class="row">
+                                                            <div class="col-lg-7">
+                                                                <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+                                                            </div>
+                                                            <div class="col-lg-5">
+                                                                @if($agendamento->getRawCsStatusAttribute() == 10)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status pre-agendado">Pré-Agendado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 20)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 30)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 50)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 60)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status cancelado">Cancelado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 70)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status agendado">Agendado</span>
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 80)
+                                                                    <span id="status_agendamento_{{ $agendamento->id }}" class="status retorno">Retorno de Consulta</span>
+                                                                @endif
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <p class="tipo">{{ $agendamento->atendimento->ds_preco }}
-                                                    <strong>{{ $agendamento->clinica->nm_fantasia }}</strong></p>
-                                                @if(!is_null($agendamento->profissional_id))
-                                                    <p class="profissional">
-                                                        Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                                @endif
-                                                <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span>
-                                                    <span class="dt-pagamento">pago em {{ $agendamento->data_pagamento }}</span>
-                                                </p>
-                                                <p class="endereco">{{ $agendamento->endereco_completo }}</p>
-                                            </div>
-                                            <div class="col col-lg-4">
-                                                <p class="tit-token">Token</p>
-                                                <p class="txt-token">Apresente este código no momento da consulta</p>
-                                                <div class="area-token">
-                                                    <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else
-                                                            ●●●●●● @endif</p>
-                                                    <p>
-                                                        <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >
-                                                            Copiar
-                                                        </button>
-                                                        <br>
-                                                        <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
 
+                                                    <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
+                                                        <strong>{{ $atendimento->clinica->nm_fantasia }}</strong></p>
+                                                    
+                                                    @if( !empty($atendimento->consulta_id) )
+                                                        <p class="profissional">
+                                                            Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}
+                                                    @endif
+
+                                                    <p class="valor">R$ <span>{{ number_format( $agendamento->itempedidos->first()->valor,  2, ',', '.') }}</span>
+                                                        <span class="dt-pagamento">pago em {{ date_format($agendamento->itempedidos->first()->created_at, 'd/m/Y') }}</span>
                                                     </p>
+                                                    <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-1">
-                                                @if($agendamento->getRawCsStatusAttribute() != 60)
-                                                    <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
-                                                        <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu ddm-opcoes">
-                                                            @if(!is_null($agendamento->profissional_id))
-                                                                <p>
-                                                                    <a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a>
-                                                                </p>
-                                                            @endif
-                                                            <p>
-                                                                <a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a>
-                                                            </p>
-                                                        </div>
+                                                <div class="col col-lg-4">
+                                                    <p class="tit-token">Token</p>
+                                                    <p class="txt-token">Apresente este código no momento da consulta</p>
+                                                    <div class="area-token">
+                                                        <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else
+                                                                ●●●●●● @endif</p>
+                                                        <p>
+                                                            <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >
+                                                                Copiar
+                                                            </button>
+                                                            <br>
+                                                            <span id="successMsg_{{ $agendamento->id }}" class="successMsg" style="display:none;">Copiado!</span>
+
+                                                        </p>
                                                     </div>
-                                                @endif
+                                                </div>
+
+                                                <div class="col-lg-1">
+                                                    @if($agendamento->getRawCsStatusAttribute() != 60)
+                                                        <div id="btn_remarcar_agendamento_{{ $agendamento->id }}" class="btn-group dropleft">
+                                                            <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu ddm-opcoes">
+                                                                @if(!is_null($agendamento->profissional_id))
+                                                                    <p>
+                                                                        <a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a>
+                                                                    </p>
+                                                                @endif
+                                                                <p>
+                                                                    <a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                @endforeach
                             @endforeach
                         </div>
 

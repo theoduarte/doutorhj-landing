@@ -181,7 +181,7 @@ class PaymentController extends Controller
     	return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
     }
     
-    public function fullTransactionDoctorhj(Request $request)
+    public function fullTransactionFinish(Request $request)
     {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
@@ -230,9 +230,9 @@ class PaymentController extends Controller
 
 		$carrinho = CVXCart::getContent()->toArray();
 
-//		echo '<pre>';
-//		print_r($carrinho);
-//		print_r(CVXRequest::all());die;
+		// echo '<pre>';
+		// print_r($carrinho);
+		// print_r(CVXRequest::all());die;
 
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
@@ -485,10 +485,10 @@ class PaymentController extends Controller
 
 						if(!empty($item_agendamento->atendimento_id)) {
 							$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
-							$agendamento->clinica_id        = $item_agendamento->clinica_id;
+							// $agendamento->clinica_id        = $item_agendamento->clinica_id;
 							$agendamento->filial_id			= $item_agendamento->filial_id;
-							$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
-							$agendamento->profissional_id   = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+							// $agendamento->atendimento_id    = $item_agendamento->atendimento_id;
+							// $agendamento->profissional_id   = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
 						} elseif(!empty($item_agendamento->checkup_id)) {
 							$agendamento->checkup_id = $item_agendamento->checkup_id;
 						}
@@ -501,6 +501,8 @@ class PaymentController extends Controller
         				}
         				 
         				if ($agendamento->save()) {
+
+                            $agendamento->atendimentos()->attach( $item_agendamento->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s') ] );
         					$agendamento_id = $agendamento->id;
         					$agendamento->load('atendimento');
         					$agendamento->load('clinica');
@@ -513,7 +515,7 @@ class PaymentController extends Controller
 							$item_pedido->agendamento_id = $agendamento_id;
 
 							if(!empty($item_agendamento->atendimento_id)) {
-								$item_pedido->valor = $agendamento->atendimento->vl_com_atendimento * (1 - $percentual_desconto);
+								$item_pedido->valor = $agendamento->atendimentos()->first()->vl_com_atendimento * (1 - $percentual_desconto);
 							} else {
 								foreach ($item_agendamento->itens as $item) {
 									$dataHoraCheckup = new Datahoracheckup();
@@ -963,10 +965,10 @@ class PaymentController extends Controller
 
 						if (!empty($item_agendamento->atendimento_id)) {
 							$agendamento->dt_atendimento = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
-							$agendamento->clinica_id = $item_agendamento->clinica_id;
 							$agendamento->filial_id = $item_agendamento->filial_id;
-							$agendamento->atendimento_id = $item_agendamento->atendimento_id;
-							$agendamento->profissional_id = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+                            // $agendamento->clinica_id = $item_agendamento->clinica_id;
+							// $agendamento->atendimento_id = $item_agendamento->atendimento_id;
+							// $agendamento->profissional_id = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
 						} elseif (!empty($item_agendamento->checkup_id)) {
 							$agendamento->checkup_id = $item_agendamento->checkup_id;
 						}
@@ -979,6 +981,8 @@ class PaymentController extends Controller
 						}
 
 						if ($agendamento->save()) {
+                            $agendamento->atendimentos()->attach( $item_agendamento->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s') ] );
+                            
 							$agendamento_id = $agendamento->id;
 							$agendamento->load('atendimento');
 							$agendamento->load('clinica');
@@ -991,7 +995,7 @@ class PaymentController extends Controller
 							$item_pedido->agendamento_id = $agendamento_id;
 
 							if (!empty($item_agendamento->atendimento_id)) {
-								$item_pedido->valor = $agendamento->atendimento->vl_com_atendimento * (1 - $percentual_desconto);
+								$item_pedido->valor = $agendamento->atendimentos()->first()->vl_com_atendimento * (1 - $percentual_desconto);
 							} else {
 								foreach ($item_agendamento->itens as $item) {
 									$dataHoraCheckup = new Datahoracheckup();
