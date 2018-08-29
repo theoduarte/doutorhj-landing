@@ -555,10 +555,14 @@
                             <p>Com o aplicativo Doutor Hoje, você poderá ter acesso a todas as funcionalidades na palma
                                 da sua mão. Agende, pague, veja suas marcações, altere horários e ainda fique por dentro
                                 das novidades. </p>
-                            <p><strong>Em breve disponível:</strong></p>
+                            <p><strong>Já disponível para Android</strong></p>
                             <ul class="link-aplicativos">
-                                <li><a>Google Play</a></li>
-                                <li><a>App Store</a></li>
+                                <li><a class="android" target="_blank" href="https://play.google.com/store/apps/details?id=br.com.comveex.doctor">Google Play</a></li>
+                            </ul>
+                            <br><br>
+                            <p class="desc-app"><strong>Em breve disponível para iOS:</strong></p>
+                            <ul class="link-aplicativos">
+                                <li><a class="ios">App Store</a></li>
                             </ul>
                         </div>
                     </div>
