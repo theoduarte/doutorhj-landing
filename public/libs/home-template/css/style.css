@@ -813,11 +813,11 @@ header .navbar-collapse {
     text-indent: -9999px;
 }
 
-.link-aplicativos li:first-child a {
+.link-aplicativos .android {
     background-image: url(../img/app-google.png);
 }
 
-.link-aplicativos li:last-child a {
+.link-aplicativos .ios {
     background-image: url(../img/app-apple.png);
 }
 
