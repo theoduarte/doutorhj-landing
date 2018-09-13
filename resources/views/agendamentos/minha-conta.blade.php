@@ -18,8 +18,8 @@
                                 Cadastro</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Pagamento</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Anuidade</a>
+                            {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Anuidade</a>--}}
                             <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Mensagens</a> -->
                             <!-- <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
@@ -384,7 +384,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="v-pills-anuidade" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            {{--<div class="tab-pane fade" id="v-pills-anuidade" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="area-tipo-plano">
                                         <div class="row">
@@ -398,7 +398,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="tab-pane fade" id="v-pills-notificacoes" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
                                 <div class="lista-notificacoes">
                                     <div class="accordion" id="accordionNotificacoes">
