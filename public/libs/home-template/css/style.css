@@ -230,6 +230,58 @@ header .navbar-collapse {
     background: rgb(255, 255, 255);
 }
 
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+
+.menu-usuario .dropdown-menu {
+    margin-top: -4px;
+}
+
+.menu-usuario .dropdown-menu .opcoes {
+    width: 100%;
+    padding: .25rem 1.5rem;
+}
+
+.menu-usuario .dropdown-menu .opcoes p {
+    margin-bottom: 0;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.titulo {
+    color: #999999;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.plano {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.premium {
+    color: #ffffff;
+    background: #17a2b8;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.blue {
+    color: #ffffff;
+    background: #007bff;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.black {
+    color: #ffffff;
+    background: #343a40;
+}
+
+.menu-usuario .dropdown-menu .opcoes p.saldo {
+    color: #64A610;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+
 /*********************************
 *
 *  3 BANNER
@@ -3564,7 +3616,7 @@ footer ul li a:hover {
 *********************************/
 
 @media only screen and (min-width: 1200px) {
-    header .nav-link:before,
+    /*header .nav-link:before,
     header .nav-link:after {
         content: '';
         position: absolute;
@@ -3594,7 +3646,7 @@ footer ul li a:hover {
         background: transparent;
         width: 100%;
         transition: 0s;
-    }
+    }*/
 }
 
 @media only screen and (max-width: 1200px) {
