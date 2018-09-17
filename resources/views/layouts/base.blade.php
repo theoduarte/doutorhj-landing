@@ -134,9 +134,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="menu-area-logada">
                             <ul>
                                 <li>
-                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
-                                </li>
-                                <li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                         <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span>Notificações </span><i class="fa fa-bell"></i>

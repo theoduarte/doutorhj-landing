@@ -2258,10 +2258,14 @@ header .nav-item-mobile {
 .box-minha-conta .row .conteudo .box-pagamento {
     background-color: rgb(237, 237, 237);
     border: 1px solid rgb(220, 220, 220);
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     border-radius: 4px;
     max-height: 370px;
     overflow: auto;
+}
+
+.box-minha-conta .row .conteudo .lista-cartoes {
+    margin-bottom: 30px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao {
@@ -2375,6 +2379,91 @@ header .nav-item-mobile {
     font-weight: 700;
     color: rgb(126, 211, 33);
     margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .historico {
+    background: #ffffff;
+    padding-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes {
+    overflow: hidden;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes:hover {
+    background: #fafafa;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto {
+    padding: 20px 20px 20px 0;
+
+}
+
+.box-minha-conta .row .conteudo .historico ul {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .historico ul li:first-child .linha1 {
+    background: transparent;
+}
+
+.box-minha-conta .row .conteudo .historico ul li:last-child .linha2 {
+    background: transparent;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline {
+    position: relative;
+    height: 100%;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline .linha1,
+.box-minha-conta .row .conteudo .historico .timeline .linha2 {
+    width: 1px;
+    height: 50%;
+    background: #dddddd;
+    display: block;
+    margin: 0 auto;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline .circulo {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #94C42D;
+    border-radius: 50%;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .tipo-data .tipo {
+    font-size: 12px;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .tipo-data .data {
+    font-size: 12px;
+    text-transform: uppercase;
+    float: right;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .procedimento p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .valor span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .valor .forma-pagamento {
+    font-size: 12px;
+    font-weight: 400;
+    color: #999999;
 }
 
 /*********************************
