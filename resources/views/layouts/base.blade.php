@@ -124,7 +124,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                     <div class="dropdown-divider"></div>
                                     <div class="opcoes">
                                         <p class="titulo">Saldo</p>
-                                        <p class="saldo">R$ 300</p>
+                                        <p class="saldo">R$ 197,83</p>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#v-pill-sair">Sair</a>

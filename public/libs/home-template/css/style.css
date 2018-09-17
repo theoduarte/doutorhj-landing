@@ -2381,6 +2381,26 @@ header .nav-item-mobile {
     margin-bottom: 0;
 }
 
+.box-minha-conta .row .conteudo .saldo-limite {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .intro {
+    font-size: 12px;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .p1 {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .p2 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
 .box-minha-conta .row .conteudo .historico {
     background: #ffffff;
     padding-bottom: 10px;

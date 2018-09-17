@@ -241,6 +241,26 @@
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="row">
+                                        <div class="col-md-12 col-lg-7">
+                                            <span class="label-titulo">Saldo / Limite</span>
+                                            <div class="box-pagamento saldo-limite">
+                                                <p class="intro">Você faz parte de um plano Empresarial, confira abaixo o limite disponibilizado pela empresa e o saldo atual.</p>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <p class="p1">Limite</p>
+                                                        <p class="p2">R$ 300,00</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="p1">Saldo</p>
+                                                        <p class="p2">R$ 197,83</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="p1">Plano</p>
+                                                        <p class="p2">Premium</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
                                             <div class="box-pagamento lista-cartoes">
