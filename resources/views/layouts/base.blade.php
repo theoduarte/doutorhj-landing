@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-	<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-5GQV33K');</script>
-	<!-- End Google Tag Manager -->
-	
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5GQV33K');</script>
+    <!-- End Google Tag Manager -->
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -84,8 +92,9 @@
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5GQV33K"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5GQV33K" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div class="tudo">
@@ -110,15 +119,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('minha-conta') }}">Minha Conta</a>
                             </li>
+                            <li class="nav-item dropdown menu-usuario">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <div class="opcoes">
+                                        <p class="titulo">Plano</p>
+                                        <p class="plano premium">Premium</p>
+                                        {{--<p class="plano blue">Blue</p>
+                                        <p class="plano black">Black</p>--}}
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="opcoes">
+                                        <p class="titulo">Saldo</p>
+                                        <p class="saldo">R$ 197,83</p>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#v-pill-sair">Sair</a>
+                                </div>
+                            </li>
                         </ul>
                         <div class="menu-area-logada">
                             <ul>
                                 <li>
-                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
-                                </li>
-                                <li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
-                                        <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span>Notificações </span><i class="fa fa-bell"></i>
                                             <div class="numero-notificacoes">
                                                 <span>{{ $num_total_notificacoes }}</span>
@@ -169,7 +195,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                         <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
-                                            <a href="/carrinho" class="btn-carrinho"><img src="{{ asset('img/pedidos-icon.png') }}" alt="Pedidos"> </a>
+                                            <a href="/carrinho" class="btn-carrinho"><img src="{{ asset('img/pedidos-icon.png') }}" alt="Pedidos">
+                                            </a>
                                             <div class="numero-notificacoes">
                                                 <span>{{ $cvx_num_itens_carrinho }}</span>
                                             </div>
@@ -193,7 +220,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor
+                                    Hoje</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
@@ -220,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @include('flash-message')
     @yield('content')
 
-	@if (!Auth::check())
+    @if (!Auth::check())
         @include('includes/termos-condicoes')
         <footer class="footer-default">
             <div class="floating-wpp"></div>
@@ -245,7 +273,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <li><a href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje?</a></li>
                             <li><a href="{{ route('landing-page') }}#como-funciona">Como Funciona</a></li>
                             <li><a href="{{ route('landing-page') }}#vantagens">Vantagens</a></li>
-                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo de Uso & Política de Privacidade</a></li>
+                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermos">Termo
+                                    de Uso & Política de Privacidade</a></li>
                             {{--<li><a href="">Trabalhe Conosco</a></li>--}}
                         </ul>
                     </div>
@@ -268,15 +297,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </div>
             </div>
-            
+
             <div class="endereco-site">
                 <div class="container">
                     <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
                     <div class="redes-sociais">
                         <a href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a href="https://www.facebook.com/DoutorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                     </div>
                 </div>
+            </div>
+            <div class="container">
+                <p class="texto-legal-footer">Copyright © 2018 www.doutorhoje.com.br, TODOS OS DIREITOS RESERVADOS. Todo o conteúdo do site,
+                    todas as fotos, imagens, logotipos, marcas, dizeres, som, software, conjunto imagem, layout,
+                    aqui veiculados são de propriedade exclusiva do DOUTOR HOJE TECNOLOGIA LTDA. É vedada qualquer
+                    reprodução, total ou parcial, de qualquer elemento de identidade, sem expressa autorização.
+                    A violação de qualquer direito mencionado implicará na responsabilização cível e criminal nos
+                    termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55 SCS Quadra 03 Bloco A
+                    Edifício Antônia Alves - CEP 70.303-907 - Brasília DF</p>
             </div>
         </footer>
     @else
@@ -300,7 +338,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="col-sm-6 col-md-3">
                         <h5>Sobre Nós</h5>
                         <ul>
-                            <li><a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermosUsers">Termo de Uso & Política de Privacidade</a></li>
+                            <li>
+                                <a href="{{ route('landing-page') }}#" data-toggle="modal" data-target="#modalTermosUsers">Termo
+                                    de Uso & Política de Privacidade</a></li>
                         </ul>
                     </div>
                 </div>
@@ -311,13 +351,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
                     <div class="redes-sociais">
                         <a href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a href="https://www.facebook.com/DoutorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                        <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
+            <div class="container">
+                    <p class="texto-legal-footer">Copyright © 2018 www.doutorhoje.com.br, TODOS OS DIREITOS RESERVADOS. Todo o conteúdo do site,
+                        todas as fotos, imagens, logotipos, marcas, dizeres, som, software, conjunto imagem, layout,
+                        aqui veiculados são de propriedade exclusiva do DOUTOR HOJE TECNOLOGIA LTDA. É vedada qualquer
+                        reprodução, total ou parcial, de qualquer elemento de identidade, sem expressa autorização.
+                        A violação de qualquer direito mencionado implicará na responsabilização cível e criminal nos
+                        termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55 SCS Quadra 03 Bloco A
+                        Edifício Antônia Alves - CEP 70.303-907 - Brasília DF</p>
+            </div>
         </footer>
     @endif
-    
+
 </div>
 @push('scripts')
     <script>

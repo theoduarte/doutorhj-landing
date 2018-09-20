@@ -230,6 +230,48 @@ header .navbar-collapse {
     background: rgb(255, 255, 255);
 }
 
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+.menu-usuario .dropdown-menu {
+    margin-top: -4px;
+}
+.menu-usuario .dropdown-menu .opcoes {
+    width: 100%;
+    padding: .25rem 1.5rem;
+}
+.menu-usuario .dropdown-menu .opcoes p {
+    margin-bottom: 0;
+}
+.menu-usuario .dropdown-menu .opcoes p.titulo {
+    color: #999999;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.menu-usuario .dropdown-menu .opcoes p.plano {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+.menu-usuario .dropdown-menu .opcoes p.premium {
+    color: #ffffff;
+    background: #17a2b8;
+}
+.menu-usuario .dropdown-menu .opcoes p.blue {
+    color: #ffffff;
+    background: #007bff;
+}
+.menu-usuario .dropdown-menu .opcoes p.black {
+    color: #ffffff;
+    background: #343a40;
+}
+.menu-usuario .dropdown-menu .opcoes p.saldo {
+    color: #64A610;
+    font-weight: 600;
+    font-size: 16px;
+}
+
 /*********************************
 *
 *  3 BANNER
@@ -1112,7 +1154,7 @@ header .navbar-collapse {
     color: rgb(255, 255, 255)!important;
     background-color: rgb(70, 117, 184);
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -2216,10 +2258,14 @@ header .nav-item-mobile {
 .box-minha-conta .row .conteudo .box-pagamento {
     background-color: rgb(237, 237, 237);
     border: 1px solid rgb(220, 220, 220);
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     border-radius: 4px;
     max-height: 370px;
     overflow: auto;
+}
+
+.box-minha-conta .row .conteudo .lista-cartoes {
+    margin-bottom: 30px;
 }
 
 .box-minha-conta .row .conteudo .box-pagamento .cartao {
@@ -2333,6 +2379,111 @@ header .nav-item-mobile {
     font-weight: 700;
     color: rgb(126, 211, 33);
     margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .intro {
+    font-size: 12px;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .p1 {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .saldo-limite .p2 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .historico {
+    background: #ffffff;
+    padding-bottom: 10px;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes {
+    overflow: hidden;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes:hover {
+    background: #fafafa;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto {
+    padding: 20px 20px 20px 0;
+
+}
+
+.box-minha-conta .row .conteudo .historico ul {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .historico ul li:first-child .linha1 {
+    background: transparent;
+}
+
+.box-minha-conta .row .conteudo .historico ul li:last-child .linha2 {
+    background: transparent;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline {
+    position: relative;
+    height: 100%;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline .linha1,
+.box-minha-conta .row .conteudo .historico .timeline .linha2 {
+    width: 1px;
+    height: 50%;
+    background: #dddddd;
+    display: block;
+    margin: 0 auto;
+}
+
+.box-minha-conta .row .conteudo .historico .timeline .circulo {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #94C42D;
+    border-radius: 50%;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .tipo-data .tipo {
+    font-size: 12px;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .tipo-data .data {
+    font-size: 12px;
+    text-transform: uppercase;
+    float: right;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .procedimento p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .valor span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.box-minha-conta .row .conteudo .historico .detalhes .texto .valor .forma-pagamento {
+    font-size: 12px;
+    font-weight: 400;
+    color: #999999;
 }
 
 /*********************************
@@ -3537,6 +3688,13 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
+.texto-legal-footer {
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    margin: 20px 0 0 0;
+}
+
 .endereco-site {
     background-color: rgb(163, 36, 49);
     padding: 10px 0;
@@ -3564,7 +3722,7 @@ footer ul li a:hover {
 *********************************/
 
 @media only screen and (min-width: 1200px) {
-    header .nav-link:before,
+    /*header .nav-link:before,
     header .nav-link:after {
         content: '';
         position: absolute;
@@ -3594,7 +3752,7 @@ footer ul li a:hover {
         background: transparent;
         width: 100%;
         transition: 0s;
-    }
+    }*/
 }
 
 @media only screen and (max-width: 1200px) {
