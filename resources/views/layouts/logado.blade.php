@@ -162,6 +162,15 @@
         <div class="endereco-site">
             <a href="{{ route('landing-page') }}">doutorhoje.com.br</a>
         </div>
+        <div class="container">
+            <p class="texto-legal-footer">Copyright © 2018 www.doutorhoje.com.br, TODOS OS DIREITOS RESERVADOS. Todo o conteúdo do site,
+                todas as fotos, imagens, logotipos, marcas, dizeres, som, software, conjunto imagem, layout,
+                aqui veiculados são de propriedade exclusiva do DOUTOR HOJE TECNOLOGIA LTDA. É vedada qualquer
+                reprodução, total ou parcial, de qualquer elemento de identidade, sem expressa autorização.
+                A violação de qualquer direito mencionado implicará na responsabilização cível e criminal nos
+                termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55 SCS Quadra 03 Bloco A
+                Edifício Antônia Alves - CEP 70.303-907 - Brasília DF</p>
+        </div>
     </footer>
 </div>
 @push('scripts')
