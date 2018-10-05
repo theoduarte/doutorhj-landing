@@ -190,6 +190,11 @@ $(document).ready(function () {
 			}
 		});
 	} catch (e) {}
+
+	
+	
+
+
 	
 	$('#btn-finalizar-pedido').click(function(){
 		var tipo_pagamento = $('#selectFormaPagamento').val();
@@ -322,11 +327,251 @@ $(document).ready(function () {
 			$('#resumo_compra_final_cartao').html( 'XXXX' );	
 		}
 	});
+
+
+	
+	$('.anoCartao').hide();
+	$('.mesCartao').hide();
+	
+$('.cartaoCadastrado ').change(function(){
+		
+	if($(this).val() != '') {
+		
+		var cartao_id = $(this).val();
+		
+		jQuery.ajax({
+			type: 'POST',
+			  url: '/consulta-cartao-paciente',
+			  data: {
+				'cartao_id': cartao_id,
+				'_token': laravel_token
+			},
+			success: function (result) {
+
+				if(result) {
+					var json = result.cartao;
+					
+					$('.inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
+					$('.inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
+					$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
+					
+
+					let val = json.dt_validade.split("/");
+					
+					$('.inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
+					$('.inputSaveCardId').val(json.id).prop("disabled", true);
+					
+					
+					$('.mesCartao').val(val[0]).prop('disabled', true).show();
+					$('.selectValidadeMesCredito').hide();
+					$('.selectValidadeAnoCredito').hide();										
+					$('.anoCartao').val(val[1]).prop('disabled', true).show();
+					
+					
+					$('.row-payment-card').css('display', 'none');
+					$('.row-payment.repayment').css('display', 'flex');
+					$('.row-card-token').css('display', 'flex');
+
+
+					$('#resumo_compra_final_cartao').html( $('#inputNumFinalSaveCard').val() );
+				}
+				else {
+					$('.row-payment.repayment').css('display', 'none');
+					$('#resumo_compra_final_cartao').html( 'XXXX' );	
+				}
+			},
+			error: function (result) {
+				$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			}
+		});
+	} else {
+		$('.anoCartao').hide();
+		$('.mesCartao').hide();
+		$('.selectValidadeMesCredito').show();
+		$('.selectValidadeAnoCredito').show();
+		$('.inputNomeCartaoCredito').val('').prop("disabled",  false);
+		$('.inputNumeroCartaoCredito').val('').prop("disabled", false);
+		$('.row-payment-card').css('display', 'flex');
+		$('.row-card-token').css('display', 'none');
+		$('.row-payment.repayment').css('display', 'flex');
+		$('#resumo_compra_final_cartao').html( 'XXXX' );	
+	}
+});
+
+
+
+
 	
 });
 
+
+
+
+$(function(){
+	$('#btn-finalizar-pedido-landing').click(function(){
+		efetuarPagamento();
+	})
+
+
+	
+$('.escolherMetodoPagamento').change(function() {
+	
+	switch($(this).val()) {
+		case "0":
+		
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').hide();	
+		break;
+		case "1":
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').slideDown();
+			break;
+		case "2":
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').slideDown();
+		$('.cartaoEmpresarial').hide();
+			break;
+		case "3":
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').slideDown();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').hide();
+			break;
+
+		case "4":
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').slideDown();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').hide();
+			break;
+		case "5":
+		$('.transferenciaBancaria').slideDown();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').hide();
+			break;	
+		default:
+		$('.transferenciaBancaria').hide();
+		$('.boletoBancario').hide();
+		$('.cartaocredito').hide();
+		$('.cartaoEmpresarial_Credito').hide();
+		$('.cartaoEmpresarial').hide();	
+	}
+})
+
+
+
+	
+})
+
+function efetuarPagamento() {
+	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
+	let dados="";
+
+	switch(metodoPagamento){
+		case "1":
+		console.log('empresarial')
+		break;
+		case "2":
+		break;
+		case "3":
+		
+		dados =	cartaoCredito();
+		break;
+		case "4":
+		break;
+		case "5":
+		break;
+		default:
+		break;
+	}
+
+
+
+	$.ajax({
+		type:'post',
+		   dataType:'json',
+		   url: '/finalizar_pedido',
+		   data: {
+			dados,
+			metodo: metodoPagamento,
+			'_token': laravel_token
+		},
+		   timeout: 15000,
+		   success: function (result) {
+
+				console.log(result);
+
+
+			
+			},
+			error: function (result) {
+				swal(
+						  {
+							  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+							  text: 'Falha na operação!'
+						  }
+					  );
+				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				$('#btn-finalizar-pedido').removeAttr('disabled');
+			}
+	  }); 
+}
+
+function cartaoCredito(){
+	objeto = {}
+	let metodo = $('.escolherMetodoPagamento option:selected').val()
+	let cartaoid = $('.cartaoCadastradoCredito option:selected').val()
+	let numero = $('.inputNumeroCartaoCredito ').val()
+	let nome = $('.inputNomeCartaoCredito ').val()
+	let mes = $('.selectValidadeMesCredito ').val()
+	let ano = $('.selectValidadeAnoCredito').val()
+	let cvv = $('.inputCodigoCreditoCartao  ').val()
+	let titularcpf = $('.inputCPFCredito ').val()
+	let parcelas = $('.selectParcelamentoCredito ').val()
+	let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
+		
+	
+	if(cartaoid != ""){		
+		objeto = {salvar, parcelas, cartaoid, cvv}
+	}else{
+		
+		objeto = {
+			metodo,
+			cartaoid,
+			numero,
+			nome,
+			mes,
+			ano,
+			cvv,
+			titularcpf,
+			parcelas,
+			salvar
+		}
+	}
+
+	return objeto;
+	
+}
+
+
 function pagarCartaoCredito() {
+
+
+
 	var result = true;
+	let cartaoEmpresarial = $('#selecionaCreditoEmpresarial option:selected').val();
 	var numero_cartao 	= $('#inputNumeroCartaoCredito');
 	var nome_impresso 	= $('#inputNomeCartaoCredito');
 	var mes_credito 	= $('#selectValidadeMesCredito');
@@ -473,7 +718,7 @@ function pagarCartaoCredito() {
 	var cod_cupom_desconto = $('#inputCupom').val();
 	var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
 
-	console.log(num_parcela_selecionado);
+	
 	
 	if(!result) {
 //		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
@@ -488,7 +733,45 @@ function pagarCartaoCredito() {
 		
 		return false;
 	}
+
+	if($('#cartaoCadastrado option:selected').val() != ''){
+	const	data=  {
+			'tipo_pagamento': tipo_pagamento,
+			'titulo_pedido': titulo_pedido,
+			'paciente_id': paciente_id,
+			'num_cartao': num_cartao_credito,
+			'nome_impresso_cartao': nome_impresso_cartao_credito,
+			'mes_cartao': mes_cartao_credito,
+			'ano_cartao': ano_cartao_credito,
+			'cod_seg_cartao': cod_seg_cartao_credito,
+			'gravar_cartao': gravar_cartao_credito,
+			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+			'cod_cupom_desconto': cod_cupom_desconto,
+			'num_parcela_selecionado': num_parcela_selecionado,
+			'agendamentos': agendamentos,
+			'_token': laravel_token
+		}
+	}else {
+		const	data=  {
+			'tipo_pagamento': tipo_pagamento,
+			'titulo_pedido': titulo_pedido,
+			'paciente_id': paciente_id,
+			'num_cartao': num_cartao_credito,
+			'nome_impresso_cartao': nome_impresso_cartao_credito,
+			'mes_cartao': mes_cartao_credito,
+			'ano_cartao': ano_cartao_credito,
+			'cod_seg_cartao': cod_seg_cartao_credito,
+			'gravar_cartao': gravar_cartao_credito,
+			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+			'cod_cupom_desconto': cod_cupom_desconto,
+			'num_parcela_selecionado': num_parcela_selecionado,
+			'agendamentos': agendamentos,
+			'_token': laravel_token
+		}
+	}
 	
+	console.log(data)
+	/*
 	$.ajax({
 		type:'post',
 		   dataType:'json',
@@ -512,7 +795,10 @@ function pagarCartaoCredito() {
 		   timeout: 15000,
 		   success: function (result) {
 
-			  if(result.status) {
+				console.log(result);
+
+
+				  if(result.status) {
 				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 				  window.location.href='/concluir_pedido';
 			  } else {
@@ -525,22 +811,67 @@ function pagarCartaoCredito() {
 			            );
 				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
 				  $('#btn-finalizar-pedido').removeAttr('disabled');
-			  }
-		  },
-		  error: function (result) {
-			  swal(
-						{
-		                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-		                    text: 'Falha na operação!'
-		                }
-		            );
-          	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-          	$('#btn-finalizar-pedido').removeAttr('disabled');
-          }
-	});
+			  } 
+			},
+			error: function (result) {
+				swal(
+						  {
+							  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+							  text: 'Falha na operação!'
+						  }
+					  );
+				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				$('#btn-finalizar-pedido').removeAttr('disabled');
+			}
+	  }); */
 		
-	return result;
+	return result; 
 }
+
+function montarCartao(val) {
+	if(val !=""){
+		data=  {
+			'tipo_pagamento': tipo_pagamento,
+			'titulo_pedido': titulo_pedido,
+			'paciente_id': paciente_id,
+			'num_cartao': num_cartao_credito,
+			'nome_impresso_cartao': nome_impresso_cartao_credito,
+			'mes_cartao': mes_cartao_credito,
+			'ano_cartao': ano_cartao_credito,
+			'cod_seg_cartao': cod_seg_cartao_credito,
+			'gravar_cartao': gravar_cartao_credito,
+			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+			'cod_cupom_desconto': cod_cupom_desconto,
+			'num_parcela_selecionado': num_parcela_selecionado,
+			'agendamentos': agendamentos,
+			'_token': laravel_token
+		}
+	}else {
+		data=  {
+			'tipo_pagamento': tipo_pagamento,
+			'titulo_pedido': titulo_pedido,
+			'paciente_id': paciente_id,
+			'num_cartao': num_cartao_credito,
+			'nome_impresso_cartao': nome_impresso_cartao_credito,
+			'mes_cartao': mes_cartao_credito,
+			'ano_cartao': ano_cartao_credito,
+			'cod_seg_cartao': cod_seg_cartao_credito,
+			'gravar_cartao': gravar_cartao_credito,
+			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+			'cod_cupom_desconto': cod_cupom_desconto,
+			'num_parcela_selecionado': num_parcela_selecionado,
+			'agendamentos': agendamentos,
+			'_token': laravel_token
+		}
+	}
+
+	return data;
+}
+
+function verificarCreditoEmpresarial() {
+
+}
+
 
 function pagarCartaoDebito() {
 	

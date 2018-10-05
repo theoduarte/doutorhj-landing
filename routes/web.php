@@ -50,9 +50,16 @@ Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAg
 #rota de notificacao CIELO
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
+
+
+
 Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
+
 Route::post('finalizar_pedido_cartao_cadastrado', 'PaymentController@fullTransactionSaveCard')->name('finalizar-pedido-cartao-cadastrado')->middleware('auth');
 Route::get('concluir_pedido', 'PaymentController@fullTransactionFinish');
+
+
+
 
 #rotas de teste
 Route::get('teste_concluir_pedido', 'PaymentController@fullTransactionTeste');

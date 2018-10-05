@@ -25,7 +25,9 @@ use App\MensagemDestinatario;
 use App\Contato;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Input;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
 class PaymentController extends Controller
 {
     /**
@@ -56,7 +58,14 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		//
+		
+
+		//$input = Input::only('paciente_id');  
+		$input =CVXRequest::post('paciente_id');
+		echo $input;
+		//var_dump(request('valor_servicos'));
+		die;
     }
 
     /**
@@ -125,9 +134,15 @@ class PaymentController extends Controller
     	
     	return response()->json('HTTP Status Code 200 OK', 200);
     }
-    
+	
+	
+
+	
     public function fullTransactionTeste(Request $request)
     {
+	
+		
+		
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	 
@@ -135,7 +150,7 @@ class PaymentController extends Controller
     	
     	$contato1 = Contato::where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', '(61) 93545-8712')->get();
     	$contato = $contato1->first();
-    	
+	
     	DB::beginTransaction();
     	
     	$paciente_teste = new Paciente();
@@ -143,9 +158,11 @@ class PaymentController extends Controller
     	$paciente_teste->nm_secundario = 'sobrenome';
     	$paciente_teste->cs_sexo = 'A';
     	$paciente_teste->dt_nascimento = date('Y-m-d');
-    	$paciente_teste->access_token = 'token';
+		$paciente_teste->access_token = 'token';
+		
+		
     	$result = $paciente_teste->save();
-    	
+	
     	try {
     		$contato_id = $contato->id;
     		
@@ -214,8 +231,32 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function fullTransaction(Request $request)
+
+
+	 /**
+	 * Pagamentos
+	 * 1 para crédito empresarial
+	 * 2 para credito empresarial mais cartao de crédito
+	 * 3 para cartao de crédito
+	 * 4 para boleto bancario
+	 * 5 para transferencia bancaria
+	 * 
+	 */
+	
+	 public function fullTransaction(Request $request)
     {
+
+
+		
+		echo json_encode(CVXRequest::getContent()->toArray());
+		die;
+		$basicAuthUserName = env('MUNDIPAGG_KEY');
+		$basicAuthPassword = "";
+		
+		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
+
+
+		
         $merchantKey    = env('CIELO_MERCHANT_KEY');
         $merchantId     = env('CIELO_MERCHANT_ID');
         $url            = env('CIELO_URL').'/1/sales';
@@ -223,21 +264,27 @@ class PaymentController extends Controller
         $tp_pagamento = CVXRequest::post('tipo_pagamento');
         $cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
         $percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----
-        
+		
+
         if($cod_cupom_desconto != '') {
             $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
         }
 
 		$carrinho = CVXCart::getContent()->toArray();
-
+		//print_r($carrinho); die;
 		// echo '<pre>';
 		// print_r($carrinho);
-		// print_r(CVXRequest::all());die;
+		// var_dump(CVXRequest::all());die;
 
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
         $agendamentos = CVXRequest::post('agendamentos');
-        
+		
+		$listCarrinho = $this->listCarrinhoItens();
+		
+		//print_r($listCarrinho); die;
+
+		
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
 
@@ -245,7 +292,7 @@ class PaymentController extends Controller
         //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
         for ($i = 0; $i < sizeof($agendamentos); $i++) {
 			$item_agendamento = json_decode($agendamentos[$i]);
-			$listCarrinho = $this->listCarrinhoItens();
+		
 
 			if(!empty($item_agendamento->atendimento_id)) {
 				$atendimento_id_temp = $item_agendamento->atendimento_id;
@@ -328,7 +375,7 @@ class PaymentController extends Controller
         }
         
         ########### STARTING TRANSACTION ############
-        DB::beginTransaction();
+     //   DB::beginTransaction();
         #############################################
         
         $save_card = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
