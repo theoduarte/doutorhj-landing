@@ -119,29 +119,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('minha-conta') }}">Minha Conta</a>
                             </li>
-                            <li class="nav-item dropdown menu-usuario">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div class="opcoes">
-                                        <p class="titulo">Plano</p>
-                                        <p class="plano premium">Premium</p>
-                                        {{--<p class="plano blue">Blue</p>
-                                        <p class="plano black">Black</p>--}}
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <div class="opcoes">
-                                        <p class="titulo">Saldo</p>
-                                        <p class="saldo">R$ 197,83</p>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#v-pill-sair">Sair</a>
-                                </div>
-                            </li>
                         </ul>
                         <div class="menu-area-logada">
                             <ul>
+                                <li>
+                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
+                                </li>
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                     <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -204,6 +187,25 @@
                                     </div>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="info-empresarial">
+                        <div class="opcoes ie-logo">
+                            <div class="logo-empresa">
+                                <img src="/libs/home-template/img/empresas/caixa.png" alt="">
+                            </div>
+                        </div>
+                        <div class="opcoes ie-plano">
+                            <p class="titulo">Plano</p>
+                            <p class="plano premium">Premium</p>
+                            {{---------------------------------
+                            <p class="plano blue">Blue</p>
+                            <p class="plano black">Black</p>
+                            ----------------------------------}}
+                        </div>
+                        <div class="opcoes ie-saldo">
+                            <p class="titulo">Saldo</p>
+                            <p class="saldo">R$ 197,83</p>
                         </div>
                     </div>
                 </div>
