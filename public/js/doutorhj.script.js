@@ -329,74 +329,6 @@ $(document).ready(function () {
 	});
 
 
-	
-	$('.anoCartao').hide();
-	$('.mesCartao').hide();
-	
-$('.cartaoCadastrado ').change(function(){
-		
-	if($(this).val() != '') {
-		
-		var cartao_id = $(this).val();
-		
-		jQuery.ajax({
-			type: 'POST',
-			  url: '/consulta-cartao-paciente',
-			  data: {
-				'cartao_id': cartao_id,
-				'_token': laravel_token
-			},
-			success: function (result) {
-
-				if(result) {
-					var json = result.cartao;
-					
-					$('.inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
-					$('.inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
-					$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
-					
-
-					let val = json.dt_validade.split("/");
-					
-					$('.inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
-					$('.inputSaveCardId').val(json.id).prop("disabled", true);
-					
-					
-					$('.mesCartao').val(val[0]).prop('disabled', true).show();
-					$('.selectValidadeMesCredito').hide();
-					$('.selectValidadeAnoCredito').hide();										
-					$('.anoCartao').val(val[1]).prop('disabled', true).show();
-					
-					
-					$('.row-payment-card').css('display', 'none');
-					$('.row-payment.repayment').css('display', 'flex');
-					$('.row-card-token').css('display', 'flex');
-
-
-					$('#resumo_compra_final_cartao').html( $('#inputNumFinalSaveCard').val() );
-				}
-				else {
-					$('.row-payment.repayment').css('display', 'none');
-					$('#resumo_compra_final_cartao').html( 'XXXX' );	
-				}
-			},
-			error: function (result) {
-				$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-			}
-		});
-	} else {
-		$('.anoCartao').hide();
-		$('.mesCartao').hide();
-		$('.selectValidadeMesCredito').show();
-		$('.selectValidadeAnoCredito').show();
-		$('.inputNomeCartaoCredito').val('').prop("disabled",  false);
-		$('.inputNumeroCartaoCredito').val('').prop("disabled", false);
-		$('.row-payment-card').css('display', 'flex');
-		$('.row-card-token').css('display', 'none');
-		$('.row-payment.repayment').css('display', 'flex');
-		$('#resumo_compra_final_cartao').html( 'XXXX' );	
-	}
-});
 
 
 
@@ -405,17 +337,107 @@ $('.cartaoCadastrado ').change(function(){
 });
 
 
+	/*  ------------------------------------------------------------------------------------------INICIO------------------------------------------------------------------------------------------------------ */	
 
 
 $(function(){
+
+	$('.anoCartao').hide();
+	$('.mesCartao').hide();
+	
+	$('.cartaoCadastrado ').change(function(){
+			
+			removerError('#numeroCartaoCredito')
+			removerError('#nomeImpressoCartaoCredito')
+			removerError('#mesCartaoCredito')
+			removerError('#anoCartaoCredito')
+			removerError('#codigoCartaoCredito')
+			removerError('#cpfTitularCartaoCredito')
+
+		if($(this).val() != '') {
+			
+			var cartao_id = $(this).val();
+			
+			jQuery.ajax({
+				type: 'POST',
+				url: '/consulta-cartao-paciente',
+				data: {
+					'cartao_id': cartao_id,
+					'_token': laravel_token
+				},
+				success: function (result) {
+
+					if(result) {
+						var json = result.cartao;
+						
+						$('.inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
+						$('.inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
+						$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
+						
+
+						let val = json.dt_validade.split("/");
+						
+						$('.inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
+						$('.inputSaveCardId').val(json.id).prop("disabled", true);
+						
+						
+						$('.mesCartao').val(val[0]).prop('disabled', true).show();
+						$('.selectValidadeMesCredito').hide();
+						$('.selectValidadeAnoCredito').hide();										
+						$('.anoCartao').val(val[1]).prop('disabled', true).show();
+						
+						
+						$('.row-payment-card').css('display', 'none');
+						$('.row-payment.repayment').css('display', 'flex');
+						$('.row-card-token').css('display', 'flex');
+
+
+						$('#resumo_compra_final_cartao').html( $('#inputNumFinalSaveCard').val() );
+					}
+					else {
+						$('.row-payment.repayment').css('display', 'none');
+						$('#resumo_compra_final_cartao').html( 'XXXX' );	
+					}
+				},
+				error: function (result) {
+					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				}
+			});
+		} else {
+			$('.anoCartao').hide();
+			$('.mesCartao').hide();
+			$('.selectValidadeMesCredito').show();
+			$('.selectValidadeAnoCredito').show();
+			$('.inputNomeCartaoCredito').val('').prop("disabled",  false);
+			$('.inputNumeroCartaoCredito').val('').prop("disabled", false);
+			$('.row-payment-card').css('display', 'flex');
+			$('.row-card-token').css('display', 'none');
+			$('.row-payment.repayment').css('display', 'flex');
+			$('#resumo_compra_final_cartao').html( 'XXXX' );	
+		}
+	});
+
+
+
 	$('#btn-finalizar-pedido-landing').click(function(){
+		removerError('#numeroCartaoCredito')
+		removerError('#nomeImpressoCartaoCredito')
+		removerError('#mesCartaoCredito')
+		removerError('#anoCartaoCredito')
+		removerError('#codigoCartaoCredito')
+		removerError('#cpfTitularCartaoCredito')
 		efetuarPagamento();
 	})
 
 
 	
 $('.escolherMetodoPagamento').change(function() {
-	
+		removerError('#numeroCartaoCredito')
+		removerError('#nomeImpressoCartaoCredito')
+		removerError('#mesCartaoCredito')
+		removerError('#anoCartaoCredito')
+		removerError('#codigoCartaoCredito')
+		removerError('#cpfTitularCartaoCredito')
 	switch($(this).val()) {
 		case "0":
 		
@@ -471,14 +493,30 @@ $('.escolherMetodoPagamento').change(function() {
 })
 
 
+$('#anoCartaoCredito').change(function(){
+	$(this).parent().removeClass('cvx-has-error');
+	$(this).parent().find('span.help-block').remove();
+});
+$('#mesCartaoCredito').change(function(){
+	$(this).parent().removeClass('cvx-has-error');
+	$(this).parent().find('span.help-block').remove();
+});
 
+
+$('#numeroCartaoCredito').change(function(){
+	$(this).parent().removeClass('cvx-has-error');
+	$(this).parent().find('span.help-block').remove();
+});
 	
 })
+
+
+
 
 function efetuarPagamento() {
 	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
 	let dados="";
-
+	let executar = true;
 	switch(metodoPagamento){
 		case "1":
 		console.log('empresarial')
@@ -488,6 +526,8 @@ function efetuarPagamento() {
 		case "3":
 		
 		dados =	cartaoCredito();
+
+
 		break;
 		case "4":
 		break;
@@ -497,166 +537,14 @@ function efetuarPagamento() {
 		break;
 	}
 
-
-
-	$.ajax({
-		type:'post',
-		   dataType:'json',
-		   url: '/finalizar_pedido',
-		   data: {
-			dados,
-			metodo: metodoPagamento,
-			'_token': laravel_token
-		},
-		   timeout: 15000,
-		   success: function (result) {
-
-				console.log(result);
-
-
-			
-			},
-			error: function (result) {
-				swal(
-						  {
-							  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-							  text: 'Falha na operação!'
-						  }
-					  );
-				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-				$('#btn-finalizar-pedido').removeAttr('disabled');
-			}
-	  }); 
-}
-
-function cartaoCredito(){
-	objeto = {}
-	let metodo = $('.escolherMetodoPagamento option:selected').val()
-	let cartaoid = $('.cartaoCadastradoCredito option:selected').val()
-	let numero = $('.inputNumeroCartaoCredito ').val()
-	let nome = $('.inputNomeCartaoCredito ').val()
-	let mes = $('.selectValidadeMesCredito ').val()
-	let ano = $('.selectValidadeAnoCredito').val()
-	let cvv = $('.inputCodigoCreditoCartao  ').val()
-	let titularcpf = $('.inputCPFCredito ').val()
-	let parcelas = $('.selectParcelamentoCredito ').val()
-	let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
-		
 	
-	if(cartaoid != ""){		
-		objeto = {salvar, parcelas, cartaoid, cvv}
-	}else{
-		
-		objeto = {
-			metodo,
-			cartaoid,
-			numero,
-			nome,
-			mes,
-			ano,
-			cvv,
-			titularcpf,
-			parcelas,
-			salvar
-		}
-	}
-
-	return objeto;
-	
-}
-
-
-function pagarCartaoCredito() {
-
-
-
-	var result = true;
-	let cartaoEmpresarial = $('#selecionaCreditoEmpresarial option:selected').val();
-	var numero_cartao 	= $('#inputNumeroCartaoCredito');
-	var nome_impresso 	= $('#inputNomeCartaoCredito');
-	var mes_credito 	= $('#selectValidadeMesCredito');
-	var ano_credito 	= $('#selectValidadeAnoCredito');
-	var cod_seg 		= $('#inputCodigoCredito');
-	var cpf_titular 	= $('#inputCPFCredito');
-	var parcelamento 	= $('#selectParcelamentoCredito');
 	var cupom_desconto 	= $('#inputCupom');
 	var pacientes		= $('.paciente_agendamento_id');
-	
-	if(numero_cartao.val().length < 16) {
-		numero_cartao.parent().addClass('cvx-has-error');
-		numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
-		
-		$('#inputNumeroCartaoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(nome_impresso.val().length == 0) {
-		nome_impresso.parent().addClass('cvx-has-error');
-		nome_impresso.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputNomeCartaoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(mes_credito.val().length == 0) {
-		mes_credito.parent().addClass('cvx-has-error');
-		mes_credito.parent().append('<span class="help-block text-danger"><strong>Mês Cartão</strong></span>');
-		
-		$('#selectValidadeMesCredito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(ano_credito.val().length == 0) {
-		ano_credito.parent().addClass('cvx-has-error');
-		ano_credito.parent().append('<span class="help-block text-danger"><strong>Ano Cartão</strong></span>');
-		
-		$('#selectValidadeAnoCredito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(cod_seg.val().length == 0) {
-		cod_seg.parent().addClass('cvx-has-error');
-		cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCodigoCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(cpf_titular.val().length == 0) {
-		cpf_titular.parent().addClass('cvx-has-error');
-		cpf_titular.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCPFCredito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
+
 	
 	pacientes.each(function(){
 		
-		if($(this).val() == '0') {
+		if($(this).val() === 'Selecione o Paciente deste Atendimento') {
 			
 			swal(
 		        {
@@ -665,12 +553,14 @@ function pagarCartaoCredito() {
 		        }
 		    );
 			
-			result = false;
+			executar = false;
 		}
 	});
-	
+
+
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
+	
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
@@ -703,552 +593,858 @@ function pagarCartaoCredito() {
 	$('#btn-finalizar-pedido').attr('disabled', 'disabled');
     $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
     setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
-	
-	var tipo_pagamento = $('#selectFormaPagamento').val();
-	var titulo_pedido = $('#titulo_pedido').val();
-	var paciente_id = $('#paciente_id').val();
-	
-	var num_cartao_credito = numero_cartao.val();
-	var nome_impresso_cartao_credito = nome_impresso.val();
-	var mes_cartao_credito = mes_credito.val();
-	var ano_cartao_credito = ano_credito.val();
-	var cod_seg_cartao_credito = cod_seg.val();
-	var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
-	var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
-	var cod_cupom_desconto = $('#inputCupom').val();
-	var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
 
-	
-	
-	if(!result) {
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-		swal(
-				{
-                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                    text: 'Por favor, verifique os campos e tente novamente.'
-                }
-            );
-		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-      	$('#btn-finalizar-pedido').removeAttr('disabled');
-		
-		return false;
-	}
-
-	if($('#cartaoCadastrado option:selected').val() != ''){
-	const	data=  {
-			'tipo_pagamento': tipo_pagamento,
-			'titulo_pedido': titulo_pedido,
-			'paciente_id': paciente_id,
-			'num_cartao': num_cartao_credito,
-			'nome_impresso_cartao': nome_impresso_cartao_credito,
-			'mes_cartao': mes_cartao_credito,
-			'ano_cartao': ano_cartao_credito,
-			'cod_seg_cartao': cod_seg_cartao_credito,
-			'gravar_cartao': gravar_cartao_credito,
-			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
-			'cod_cupom_desconto': cod_cupom_desconto,
-			'num_parcela_selecionado': num_parcela_selecionado,
-			'agendamentos': agendamentos,
-			'_token': laravel_token
-		}
-	}else {
-		const	data=  {
-			'tipo_pagamento': tipo_pagamento,
-			'titulo_pedido': titulo_pedido,
-			'paciente_id': paciente_id,
-			'num_cartao': num_cartao_credito,
-			'nome_impresso_cartao': nome_impresso_cartao_credito,
-			'mes_cartao': mes_cartao_credito,
-			'ano_cartao': ano_cartao_credito,
-			'cod_seg_cartao': cod_seg_cartao_credito,
-			'gravar_cartao': gravar_cartao_credito,
-			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
-			'cod_cupom_desconto': cod_cupom_desconto,
-			'num_parcela_selecionado': num_parcela_selecionado,
-			'agendamentos': agendamentos,
-			'_token': laravel_token
-		}
-	}
-	
-	console.log(data)
-	/*
-	$.ajax({
-		type:'post',
-		   dataType:'json',
-		   url: '/finalizar_pedido',
-		   data: {
-			   'tipo_pagamento': tipo_pagamento,
-			   'titulo_pedido': titulo_pedido,
-			   'paciente_id': paciente_id,
-			   'num_cartao': num_cartao_credito,
-			   'nome_impresso_cartao': nome_impresso_cartao_credito,
-			   'mes_cartao': mes_cartao_credito,
-			   'ano_cartao': ano_cartao_credito,
-			   'cod_seg_cartao': cod_seg_cartao_credito,
-			   'gravar_cartao': gravar_cartao_credito,
-			   'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
-			   'cod_cupom_desconto': cod_cupom_desconto,
-			   'num_parcela_selecionado': num_parcela_selecionado,
-			   'agendamentos': agendamentos,
-			   '_token': laravel_token
-		   },
-		   timeout: 15000,
-		   success: function (result) {
-
-				console.log(result);
-
-
-				  if(result.status) {
-				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
-				  window.location.href='/concluir_pedido';
-			  } else {
-//				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
-				  swal(
-							{
-			                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
-			                    text: result.mensagem
-			                }
-			            );
-				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-				  $('#btn-finalizar-pedido').removeAttr('disabled');
-			  } 
+	if(executar==true && dados  != null){
+		$.ajax({
+			type:'post',
+			   dataType:'json',
+			   url: '/finalizar_pedido',
+			   data: {
+				dados,
+				metodo: metodoPagamento,
+				'agendamentos': agendamentos,
+				'_token': laravel_token 
 			},
-			error: function (result) {
-				swal(
-						  {
-							  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-							  text: 'Falha na operação!'
-						  }
-					  );
+			   timeout: 15000,
+			   success: function (result) {
+	
+					console.log(result);
+	
+	
+				
+				},
+				error: function (result) {
+					swal(
+							  {
+								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+								  text: 'Falha na operação!'
+							  }
+						  );
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+		  }); 
+	}
+	
+
+	
+}
+
+
+	function cartaoCredito(){
+			let objeto=null;
+			let resp =[];	
+			let permission = true;
+			let metodo = $('.escolherMetodoPagamento option:selected').val()
+			let cartaoid = $('.cartaoCadastradoCredito option:selected').val()
+			let numero = $('.inputNumeroCartaoCredito ').val()
+			let nome = $('.inputNomeCartaoCredito ').val()
+			let mes = $('.selectValidadeMesCredito ').val()
+			let ano = $('.selectValidadeAnoCredito').val()
+			let cvv = $('.inputCodigoCreditoCartao  ').val()
+			let titularcpf = $('.inputCPFCredito ').val()
+			let parcelas = $('.selectParcelamentoCredito ').val()
+			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
+				
+			
+			if(cartaoid != ""){	
+				
+				resp = validarCampos($('.inputCodigoCreditoCartao  ').val(), '#codigoCartaoCredito', "Mes cartão");
+				
+				if(resp){
+					objeto = {salvar, parcelas, cartaoid, cvv}				
+				
+				}else{
+						//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+						swal(
+							{
+								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+								text: 'Por favor, verifique os campos e tente novamente.'
+							}
+						);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+					 objeto=null
+				}
+				
+			}else{	
+					
+				resp.push( validarCampos($('.inputBandeiraCartaoCredito  ').val(), '#numeroCartaoCredito', "Número cartão obrigatório"));
+				resp.push(  validarCampos($('.inputNomeCartaoCredito  ').val(), '#nomeImpressoCartaoCredito', "Nome impresso é obrigatório"));
+				resp.push( validarCampos($('.selectValidadeMesCredito  ').val(), '#mesCartaoCredito', "Mês cartão é obrigatório"));
+				resp.push( validarCampos($('.selectValidadeAnoCredito  ').val(), '#anoCartaoCredito', "Ano do cartão é obrigatório"));
+				resp.push( validarCampos($('.inputCodigoCreditoCartao  ').val(), '#codigoCartaoCredito', "Código do cartão é obrigatório"));
+				resp.push( validarCampos($('.inputCPFCredito  ').val(), '#cpfTitularCartaoCredito', "CPF titular é obrigatório"));
+				
+
+				resp.forEach(function(entry) {
+					if(!entry){
+						permission=false;
+					}
+					
+				});
+
+				if(permission){
+					objeto = {
+						metodo,
+						cartaoid,
+						numero,
+						nome,
+						mes,
+						ano,
+						cvv,
+						titularcpf,
+						parcelas,
+						salvar
+					}
+				}else{
+					swal(
+						{
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+							text: 'Por favor, verifique os campos e tente novamente.'
+						}
+					);
 				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
 				$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+
+				
 			}
-	  }); */
-		
-	return result; 
-}
 
-function montarCartao(val) {
-	if(val !=""){
-		data=  {
-			'tipo_pagamento': tipo_pagamento,
-			'titulo_pedido': titulo_pedido,
-			'paciente_id': paciente_id,
-			'num_cartao': num_cartao_credito,
-			'nome_impresso_cartao': nome_impresso_cartao_credito,
-			'mes_cartao': mes_cartao_credito,
-			'ano_cartao': ano_cartao_credito,
-			'cod_seg_cartao': cod_seg_cartao_credito,
-			'gravar_cartao': gravar_cartao_credito,
-			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
-			'cod_cupom_desconto': cod_cupom_desconto,
-			'num_parcela_selecionado': num_parcela_selecionado,
-			'agendamentos': agendamentos,
-			'_token': laravel_token
-		}
-	}else {
-		data=  {
-			'tipo_pagamento': tipo_pagamento,
-			'titulo_pedido': titulo_pedido,
-			'paciente_id': paciente_id,
-			'num_cartao': num_cartao_credito,
-			'nome_impresso_cartao': nome_impresso_cartao_credito,
-			'mes_cartao': mes_cartao_credito,
-			'ano_cartao': ano_cartao_credito,
-			'cod_seg_cartao': cod_seg_cartao_credito,
-			'gravar_cartao': gravar_cartao_credito,
-			'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
-			'cod_cupom_desconto': cod_cupom_desconto,
-			'num_parcela_selecionado': num_parcela_selecionado,
-			'agendamentos': agendamentos,
-			'_token': laravel_token
-		}
-	}
-
-	return data;
-}
-
-function verificarCreditoEmpresarial() {
-
-}
-
-
-function pagarCartaoDebito() {
-	
-	var result = true;
-	var numero_cartao 	= $('#inputNumeroCartaoDebito');
-	var nome_impresso 	= $('#inputNomeCartaoDebito');
-	var mes_debito 		= $('#selectValidadeMesDebito');
-	var ano_debito 		= $('#selectValidadeAnoDebito');
-	var cod_seg 		= $('#inputCodigoDebito');
-	var cpf_titular 	= $('#inputCPFDebito');
-	var cupom_desconto 	= $('#inputCupom');
-	var pacientes		= $('.paciente_agendamento_id');
-	
-	if(numero_cartao.val().length < 16) {
-		numero_cartao.parent().addClass('cvx-has-error');
-		numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
-		
-		$('#inputNumeroCartaoDebito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(nome_impresso.val().length == 0) {
-		nome_impresso.parent().addClass('cvx-has-error');
-		nome_impresso.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputNomeCartaoDebito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(mes_debito.val().length == 0) {
-		mes_debito.parent().addClass('cvx-has-error');
-		mes_debito.parent().append('<span class="help-block text-danger"><strong>Mês Cartão</strong></span>');
-		
-		$('#selectValidadeMesDebito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(ano_debito.val().length == 0) {
-		ano_debito.parent().addClass('cvx-has-error');
-		ano_debito.parent().append('<span class="help-block text-danger"><strong>Ano Cartão</strong></span>');
-		
-		$('#selectValidadeAnoDebito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(cod_seg.val().length == 0) {
-		cod_seg.parent().addClass('cvx-has-error');
-		cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCodigoDebito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	if(cpf_titular.val().length == 0) {
-		cpf_titular.parent().addClass('cvx-has-error');
-		cpf_titular.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCPFDebito').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	pacientes.each(function(){
-		
-		if($(this).val() == '0') {
+			return objeto
 			
-			swal(
-		        {
-		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
-		            text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
-		        }
-		    );
+			
+	}
+
+	removerError = (attrb) => {
+		$(attrb).parent().removeClass('cvx-has-error');
+		$(attrb).parent().find('span.help-block').remove();
+	}
+
+	validarCampos = (field, attrb, mensagem) => {
+		
+			if(field.length == 0) {
+				
+				$(attrb).parent().addClass('cvx-has-error');
+				$(attrb).parent().append('<span class="help-block text-danger"><strong>'+mensagem+'</strong></span>');
+				
+				$(attrb).keypress(function(){
+					$(this).parent().removeClass('cvx-has-error');
+					$(this).parent().find('span.help-block').remove();
+				});
+								
+				return false;
+			}else{
+				return true;
+			}
+			
+	}
+
+
+
+
+
+/*  ------------------------------------------------------------------------------------------FIM------------------------------------------------------------------------------------------------------ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	function pagarCartaoCredito() {
+
+
+
+		var result = true;
+		let cartaoEmpresarial = $('#selecionaCreditoEmpresarial option:selected').val();
+		var numero_cartao 	= $('#inputNumeroCartaoCredito');
+		var nome_impresso 	= $('#inputNomeCartaoCredito');
+		var mes_credito 	= $('#selectValidadeMesCredito');
+		var ano_credito 	= $('#selectValidadeAnoCredito');
+		var cod_seg 		= $('#inputCodigoCredito');
+		var cpf_titular 	= $('#inputCPFCredito');
+		var parcelamento 	= $('#selectParcelamentoCredito');
+		var cupom_desconto 	= $('#inputCupom');
+		var pacientes		= $('.paciente_agendamento_id');
+		
+		if(numero_cartao.val().length < 16) {
+			numero_cartao.parent().addClass('cvx-has-error');
+			numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
+			
+			$('#inputNumeroCartaoCredito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
 			
 			result = false;
 		}
-	});	
-	
-	var num_itens = $('.card-resumo-compra').length;
-	var agendamentos = [];
-	
-	for(var i = 0; i < num_itens; i++) {
-		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
-		var profissional_id_temp = $('#profissional_id_'+i).val();
-		var atendimento_id_temp = $('#atendimento_id_'+i).val();
-		var checkup_id_temp = $('#checkup_id_'+i).val();
-		var clinica_id_temp = $('#clinica_id_'+i).val();
-		var filial_id_temp = $('#filial_id_'+i).val();
+		
+		if(nome_impresso.val().length == 0) {
+			nome_impresso.parent().addClass('cvx-has-error');
+			nome_impresso.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputNomeCartaoCredito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(mes_credito.val().length == 0) {
+			mes_credito.parent().addClass('cvx-has-error');
+			mes_credito.parent().append('<span class="help-block text-danger"><strong>Mês Cartão</strong></span>');
+			
+			$('#selectValidadeMesCredito').change(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(ano_credito.val().length == 0) {
+			ano_credito.parent().addClass('cvx-has-error');
+			ano_credito.parent().append('<span class="help-block text-danger"><strong>Ano Cartão</strong></span>');
+			
+			$('#selectValidadeAnoCredito').change(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(cod_seg.val().length == 0) {
+			cod_seg.parent().addClass('cvx-has-error');
+			cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputCodigoCredito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(cpf_titular.val().length == 0) {
+			cpf_titular.parent().addClass('cvx-has-error');
+			cpf_titular.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputCPFCredito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		pacientes.each(function(){
+			
+			if($(this).val() == '0') {
+				
+				swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+						text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+					}
+				);
+				
+				result = false;
+			}
+		});
+		
+		var num_itens = $('.card-resumo-compra').length;
+		var agendamentos = [];
+		
+		for(var i = 0; i < num_itens; i++) {
+			var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
+			var profissional_id_temp = $('#profissional_id_'+i).val();
+			var atendimento_id_temp = $('#atendimento_id_'+i).val();
+			var checkup_id_temp = $('#checkup_id_'+i).val();
+			var clinica_id_temp = $('#clinica_id_'+i).val();
+			var filial_id_temp = $('#filial_id_'+i).val();
+			
+			if(typeof profissional_id_temp === 'undefined') {
+				profissional_id_temp = 'null';
+			}
+			
+			var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
+			
+			if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+			if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+			if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+			if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+			if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
 
-		if(typeof profissional_id_temp === 'undefined') {
-			profissional_id_temp = 'null';
+			var paciente_agendamento_id = $('#paciente_id_'+i).val();
+			
+			var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+				clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+				profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
+			agendamentos.push(item);
+		}
+		
+		$('#btn-finalizar-pedido').attr('disabled', 'disabled');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+		setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
+		
+		var tipo_pagamento = $('#selectFormaPagamento').val();
+		var titulo_pedido = $('#titulo_pedido').val();
+		var paciente_id = $('#paciente_id').val();
+		
+		var num_cartao_credito = numero_cartao.val();
+		var nome_impresso_cartao_credito = nome_impresso.val();
+		var mes_cartao_credito = mes_credito.val();
+		var ano_cartao_credito = ano_credito.val();
+		var cod_seg_cartao_credito = cod_seg.val();
+		var gravar_cartao_credito = $('#checkGravarCartaoCredito').is(':checked') ? 'on' : 'off';
+		var bandeira_cartao_credito = $('#inputBandeiraCartaoCredito').val();
+		var cod_cupom_desconto = $('#inputCupom').val();
+		var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
+
+		
+		
+		if(!result) {
+	//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+			swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+						text: 'Por favor, verifique os campos e tente novamente.'
+					}
+				);
+			$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+			$('#btn-finalizar-pedido').removeAttr('disabled');
+			
+			return false;
 		}
 
-		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-
-		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
-		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
-		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
-		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
-		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
-
-		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
-			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
-			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
-		agendamentos.push(item);
-	}
-	
-	$('#btn-finalizar-pedido').attr('disabled', 'disabled');
-    $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
-    setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
-	
-	var tipo_pagamento = $('#selectFormaPagamento').val();
-	var titulo_pedido = $('#titulo_pedido').val();
-	var paciente_id = $('#paciente_id').val();
-	
-	var num_cartao_debito = numero_cartao.val();
-	var nome_impresso_cartao_debito = nome_impresso.val();
-	var mes_cartao_debito = mes_debito.val();
-	var ano_cartao_debito = ano_debito.val();
-	var cod_seg_cartao_debito = cod_seg.val();
-	var bandeira_cartao_debito = $('#inputBandeiraCartaoDebito').val();
-	var cod_cupom_desconto = $('#inputCupom').val();
-	
-	if(!result) {
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-		swal(
-				{
-                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                    text: 'Por favor, verifique os campos e tente novamente.'
-                }
-            );
-		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-      	$('#btn-finalizar-pedido').removeAttr('disabled');
+		if($('#cartaoCadastrado option:selected').val() != ''){
+		const	data=  {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_credito,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'mes_cartao': mes_cartao_credito,
+				'ano_cartao': ano_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'gravar_cartao': gravar_cartao_credito,
+				'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			}
+		}else {
+			const	data=  {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_credito,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'mes_cartao': mes_cartao_credito,
+				'ano_cartao': ano_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'gravar_cartao': gravar_cartao_credito,
+				'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			}
+		}
 		
-		return false;
-	}
-	
-	$.ajax({
-		type:'post',
-		   dataType:'json',
-		   url: '/finalizar_pedido',
-		   data: {
-			   'tipo_pagamento': tipo_pagamento,
-			   'titulo_pedido': titulo_pedido,
-			   'paciente_id': paciente_id,
-			   'num_cartao': num_cartao_debito,
-			   'nome_impresso_cartao': nome_impresso_cartao_debito,
-			   'mes_cartao': mes_cartao_debito,
-			   'ano_cartao': ano_cartao_debito,
-			   'cod_seg_cartao': cod_seg_cartao_debito,
-			   'bandeira_cartao': bandeira_cartao_debito,
-			   'cod_cupom_desconto': cod_cupom_desconto,
-			   'agendamentos': agendamentos,
-			   '_token': laravel_token
-		   },
-		   timeout: 15000,
-		   success: function (result) {
+		console.log(data)
+		/*
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url: '/finalizar_pedido',
+			data: {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_credito,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'mes_cartao': mes_cartao_credito,
+				'ano_cartao': ano_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'gravar_cartao': gravar_cartao_credito,
+				'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			},
+			timeout: 15000,
+			success: function (result) {
 
-			  if(result.status) {
-				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
-				  window.location.href='/concluir_pedido';
-			  } else {
-				  swal(
+					console.log(result);
+
+
+					if(result.status) {
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+					window.location.href='/concluir_pedido';
+				} else {
+	//				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+					swal(
+								{
+									title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
+									text: result.mensagem
+								}
+							);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				} 
+				},
+				error: function (result) {
+					swal(
 							{
-			                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
-			                    text: result.mensagem
-			                }
-			            );
-				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-				  $('#btn-finalizar-pedido').removeAttr('disabled');
-			  }
-		  },
-		  error: function (result) {
-//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+								text: 'Falha na operação!'
+							}
+						);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+		}); */
+			
+		return result; 
+	}
+
+	function montarCartao(val) {
+		if(val !=""){
+			data=  {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_credito,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'mes_cartao': mes_cartao_credito,
+				'ano_cartao': ano_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'gravar_cartao': gravar_cartao_credito,
+				'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			}
+		}else {
+			data=  {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_credito,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'mes_cartao': mes_cartao_credito,
+				'ano_cartao': ano_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'gravar_cartao': gravar_cartao_credito,
+				'bandeira_cartao': ( tipo_pagamento == 'debito' ) ? bandeira_cartao_debito : bandeira_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			}
+		}
+
+		return data;
+	}
+
+	function verificarCreditoEmpresarial() {
+
+	}
+
+
+	function pagarCartaoDebito() {
+		
+		var result = true;
+		var numero_cartao 	= $('#inputNumeroCartaoDebito');
+		var nome_impresso 	= $('#inputNomeCartaoDebito');
+		var mes_debito 		= $('#selectValidadeMesDebito');
+		var ano_debito 		= $('#selectValidadeAnoDebito');
+		var cod_seg 		= $('#inputCodigoDebito');
+		var cpf_titular 	= $('#inputCPFDebito');
+		var cupom_desconto 	= $('#inputCupom');
+		var pacientes		= $('.paciente_agendamento_id');
+		
+		if(numero_cartao.val().length < 16) {
+			numero_cartao.parent().addClass('cvx-has-error');
+			numero_cartao.parent().append('<span class="help-block text-danger"><strong>Este Cartão não é válido</strong></span>');
+			
+			$('#inputNumeroCartaoDebito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(nome_impresso.val().length == 0) {
+			nome_impresso.parent().addClass('cvx-has-error');
+			nome_impresso.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputNomeCartaoDebito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(mes_debito.val().length == 0) {
+			mes_debito.parent().addClass('cvx-has-error');
+			mes_debito.parent().append('<span class="help-block text-danger"><strong>Mês Cartão</strong></span>');
+			
+			$('#selectValidadeMesDebito').change(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(ano_debito.val().length == 0) {
+			ano_debito.parent().addClass('cvx-has-error');
+			ano_debito.parent().append('<span class="help-block text-danger"><strong>Ano Cartão</strong></span>');
+			
+			$('#selectValidadeAnoDebito').change(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(cod_seg.val().length == 0) {
+			cod_seg.parent().addClass('cvx-has-error');
+			cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputCodigoDebito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(cpf_titular.val().length == 0) {
+			cpf_titular.parent().addClass('cvx-has-error');
+			cpf_titular.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputCPFDebito').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		pacientes.each(function(){
+			
+			if($(this).val() == '0') {
+				
+				swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+						text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+					}
+				);
+				
+				result = false;
+			}
+		});	
+		
+		var num_itens = $('.card-resumo-compra').length;
+		var agendamentos = [];
+		
+		for(var i = 0; i < num_itens; i++) {
+			var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
+			var profissional_id_temp = $('#profissional_id_'+i).val();
+			var atendimento_id_temp = $('#atendimento_id_'+i).val();
+			var checkup_id_temp = $('#checkup_id_'+i).val();
+			var clinica_id_temp = $('#clinica_id_'+i).val();
+			var filial_id_temp = $('#filial_id_'+i).val();
+
+			if(typeof profissional_id_temp === 'undefined') {
+				profissional_id_temp = 'null';
+			}
+
+			var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
+
+			if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+			if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+			if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+			if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+			if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
+			var paciente_agendamento_id = $('#paciente_id_'+i).val();
+
+			var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+				clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+				profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
+			agendamentos.push(item);
+		}
+		
+		$('#btn-finalizar-pedido').attr('disabled', 'disabled');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+		setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
+		
+		var tipo_pagamento = $('#selectFormaPagamento').val();
+		var titulo_pedido = $('#titulo_pedido').val();
+		var paciente_id = $('#paciente_id').val();
+		
+		var num_cartao_debito = numero_cartao.val();
+		var nome_impresso_cartao_debito = nome_impresso.val();
+		var mes_cartao_debito = mes_debito.val();
+		var ano_cartao_debito = ano_debito.val();
+		var cod_seg_cartao_debito = cod_seg.val();
+		var bandeira_cartao_debito = $('#inputBandeiraCartaoDebito').val();
+		var cod_cupom_desconto = $('#inputCupom').val();
+		
+		if(!result) {
+	//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+			swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+						text: 'Por favor, verifique os campos e tente novamente.'
+					}
+				);
+			$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+			$('#btn-finalizar-pedido').removeAttr('disabled');
+			
+			return false;
+		}
+		
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url: '/finalizar_pedido',
+			data: {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'num_cartao': num_cartao_debito,
+				'nome_impresso_cartao': nome_impresso_cartao_debito,
+				'mes_cartao': mes_cartao_debito,
+				'ano_cartao': ano_cartao_debito,
+				'cod_seg_cartao': cod_seg_cartao_debito,
+				'bandeira_cartao': bandeira_cartao_debito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'agendamentos': agendamentos,
+				'_token': laravel_token
+			},
+			timeout: 15000,
+			success: function (result) {
+
+				if(result.status) {
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+					window.location.href='/concluir_pedido';
+				} else {
+					swal(
+								{
+									title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
+									text: result.mensagem
+								}
+							);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+			},
+			error: function (result) {
+	//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				swal(
+							{
+								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+								text: 'Falha na operação!'
+							}
+						);
+				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				$('#btn-finalizar-pedido').removeAttr('disabled');
+			}
+		});
+		
+		return result;
+	}
+
+	function pagarCartaoCadastrado() {
+		
+		var result = true;
+		var cartao_id 		= $('#selectCartaoCredito');
+		var nome_impresso 	= $('#inputNomeSaveCard');
+		var final_cartao 	= $('#inputNumFinalSaveCard');
+		var dt_validade 	= $('#inputExpirationDateSaveCard');
+		var cod_seg 		= $('#inputCodigoSegSaveCard');
+		var parcelamento 	= $('#selectParcelamentoCredito');
+		var cupom_desconto 	= $('#inputCupom');
+		var pacientes		= $('.paciente_agendamento_id');
+		
+		if(cartao_id.val().length == 0) {
+			cartao_id.parent().addClass('cvx-has-error');
+			cartao_id.parent().append('<span class="help-block text-danger"><strong>Nenhum Cartão foi selecionado</strong></span>');
+			
+			$('#selectCartaoCredito').change(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		if(cod_seg.val().length == 0) {
+			cod_seg.parent().addClass('cvx-has-error');
+			cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
+			
+			$('#inputCodigoSegSaveCard').keypress(function(){
+				$(this).parent().removeClass('cvx-has-error');
+				$(this).parent().find('span.help-block').remove();
+			});
+			
+			result = false;
+		}
+		
+		pacientes.each(function(){
+			
+			if($(this).val() == '0') {
+				
+				swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+						text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
+					}
+				);
+				
+				result = false;
+			}
+		});
+		
+		var num_itens = $('.card-resumo-compra').length;
+		var agendamentos = [];
+		
+		for(var i = 0; i < num_itens; i++) {
+			var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
+			var profissional_id_temp = $('#profissional_id_'+i).val();
+			var atendimento_id_temp = $('#atendimento_id_'+i).val();
+			var checkup_id_temp = $('#checkup_id_'+i).val();
+			var clinica_id_temp = $('#clinica_id_'+i).val();
+			var filial_id_temp = $('#filial_id_'+i).val();
+
+			if(typeof profissional_id_temp === 'undefined') {
+				profissional_id_temp = 'null';
+			}
+
+			var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
+
+			if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
+			if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
+			if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
+			if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
+			if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
+
+			var paciente_agendamento_id = $('#paciente_id_'+i).val();
+
+			var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
+				clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
+				profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
+			agendamentos.push(item);
+		}
+		
+		$('#btn-finalizar-pedido').attr('disabled', 'disabled');
+		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+		setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
+		
+		var tipo_pagamento = 'cadastrado';
+		var titulo_pedido = $('#titulo_pedido').val();
+		var paciente_id = $('#paciente_id').val();
+		
+		var cartao_paciente = cartao_id.val();
+		var nome_impresso_cartao_credito = nome_impresso.val();
+		var final_cartao_credito = final_cartao.val();
+		var validade_cartao_credito = dt_validade.val();
+		var cod_seg_cartao_credito = cod_seg.val();
+		var cod_cupom_desconto = $('#inputCupom').val();
+		var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
+
+		console.log(num_parcela_selecionado);
+		
+		if(!result) {
+	//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
+			swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+						text: 'Por favor, verifique os campos e tente novamente.'
+					}
+				);
+			$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+			$('#btn-finalizar-pedido').removeAttr('disabled');
+			
+			return false;
+		}
+		
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url: '/finalizar_pedido_cartao_cadastrado',
+			data: {
+				'tipo_pagamento': tipo_pagamento,
+				'titulo_pedido': titulo_pedido,
+				'paciente_id': paciente_id,
+				'cartao_paciente': cartao_paciente,
+				'nome_impresso_cartao': nome_impresso_cartao_credito,
+				'final_cartao_credito': final_cartao_credito,
+				'validade_cartao_credito': validade_cartao_credito,
+				'cod_seg_cartao': cod_seg_cartao_credito,
+				'cod_cupom_desconto': cod_cupom_desconto,
+				'agendamentos': agendamentos,
+				'num_parcela_selecionado': num_parcela_selecionado,
+				'_token': laravel_token
+			},
+			timeout: 15000,
+			success: function (result) {
+
+				if(result.status) {
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+					window.location.href='/concluir_pedido';
+				} else {
+	//				  $.Notification.notify('info','top right', 'DrHoje', result.mensagem);
+					swal(
+								{
+									title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
+									text: result.mensagem
+								}
+							);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+			},
+			error: function (result) {
+	//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 			swal(
 						{
-		                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-		                    text: 'Falha na operação!'
-		                }
-		            );
-          	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-          	$('#btn-finalizar-pedido').removeAttr('disabled');
-          }
-	});
-	
-	return result;
-}
-
-function pagarCartaoCadastrado() {
-	
-	var result = true;
-	var cartao_id 		= $('#selectCartaoCredito');
-	var nome_impresso 	= $('#inputNomeSaveCard');
-	var final_cartao 	= $('#inputNumFinalSaveCard');
-	var dt_validade 	= $('#inputExpirationDateSaveCard');
-	var cod_seg 		= $('#inputCodigoSegSaveCard');
-	var parcelamento 	= $('#selectParcelamentoCredito');
-	var cupom_desconto 	= $('#inputCupom');
-	var pacientes		= $('.paciente_agendamento_id');
-	
-	if(cartao_id.val().length == 0) {
-		cartao_id.parent().addClass('cvx-has-error');
-		cartao_id.parent().append('<span class="help-block text-danger"><strong>Nenhum Cartão foi selecionado</strong></span>');
-		
-		$('#selectCartaoCredito').change(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+							text: 'Falha na operação!'
+						}
+					);
+				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				$('#btn-finalizar-pedido').removeAttr('disabled');
+			}
 		});
 		
-		result = false;
+		return result;
 	}
-	
-	if(cod_seg.val().length == 0) {
-		cod_seg.parent().addClass('cvx-has-error');
-		cod_seg.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-		
-		$('#inputCodigoSegSaveCard').keypress(function(){
-			$(this).parent().removeClass('cvx-has-error');
-			$(this).parent().find('span.help-block').remove();
-		});
-		
-		result = false;
-	}
-	
-	pacientes.each(function(){
-		
-		if($(this).val() == '0') {
-			
-			swal(
-		        {
-		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
-		            text: 'É necessário Definir o Paciente em cada Atendimento para poder Finalizar o Pedido!'
-		        }
-		    );
-			
-			result = false;
-		}
-	});
-	
-	var num_itens = $('.card-resumo-compra').length;
-	var agendamentos = [];
-	
-	for(var i = 0; i < num_itens; i++) {
-		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
-		var profissional_id_temp = $('#profissional_id_'+i).val();
-		var atendimento_id_temp = $('#atendimento_id_'+i).val();
-		var checkup_id_temp = $('#checkup_id_'+i).val();
-		var clinica_id_temp = $('#clinica_id_'+i).val();
-		var filial_id_temp = $('#filial_id_'+i).val();
-
-		if(typeof profissional_id_temp === 'undefined') {
-			profissional_id_temp = 'null';
-		}
-
-		var dt_atendimento_temp = $('#dt_atendimento_'+i).val();
-
-		if(typeof dt_atendimento_temp === 'undefined') dt_atendimento = 'null';
-		if(typeof atendimento_id_temp === 'undefined') atendimento_id_temp = 'null';
-		if(typeof checkup_id_temp === 'undefined') checkup_id_temp = 'null';
-		if(typeof clinica_id_temp === 'undefined') clinica_id_temp = 'null';
-		if(typeof filial_id_temp === 'undefined') filial_id_temp = 'null';
-
-		var paciente_agendamento_id = $('#paciente_id_'+i).val();
-
-		var item = '{"dt_atendimento":"'+dt_atendimento+'","paciente_id":'+paciente_agendamento_id+',"clinica_id":'+
-			clinica_id_temp+',"filial_id":'+ filial_id_temp+',"atendimento_id":'+ atendimento_id_temp+',"profissional_id":'+
-			profissional_id_temp+',"checkup_id":'+ checkup_id_temp+'}';
-		agendamentos.push(item);
-	}
-	
-	$('#btn-finalizar-pedido').attr('disabled', 'disabled');
-    $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
-    setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
-	
-	var tipo_pagamento = 'cadastrado';
-	var titulo_pedido = $('#titulo_pedido').val();
-	var paciente_id = $('#paciente_id').val();
-	
-	var cartao_paciente = cartao_id.val();
-	var nome_impresso_cartao_credito = nome_impresso.val();
-	var final_cartao_credito = final_cartao.val();
-	var validade_cartao_credito = dt_validade.val();
-	var cod_seg_cartao_credito = cod_seg.val();
-	var cod_cupom_desconto = $('#inputCupom').val();
-	var num_parcela_selecionado = $('#selectParcelamentoCredito2').is(':visible') ? $('#selectParcelamentoCredito2').val() : $('#selectParcelamentoCredito').val();
-
-	console.log(num_parcela_selecionado);
-	
-	if(!result) {
-//		$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
-		swal(
-				{
-                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                    text: 'Por favor, verifique os campos e tente novamente.'
-                }
-            );
-		$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-      	$('#btn-finalizar-pedido').removeAttr('disabled');
-		
-		return false;
-	}
-	
-	$.ajax({
-		type:'post',
-		   dataType:'json',
-		   url: '/finalizar_pedido_cartao_cadastrado',
-		   data: {
-			   'tipo_pagamento': tipo_pagamento,
-			   'titulo_pedido': titulo_pedido,
-			   'paciente_id': paciente_id,
-			   'cartao_paciente': cartao_paciente,
-			   'nome_impresso_cartao': nome_impresso_cartao_credito,
-			   'final_cartao_credito': final_cartao_credito,
-			   'validade_cartao_credito': validade_cartao_credito,
-			   'cod_seg_cartao': cod_seg_cartao_credito,
-			   'cod_cupom_desconto': cod_cupom_desconto,
-			   'agendamentos': agendamentos,
-			   'num_parcela_selecionado': num_parcela_selecionado,
-			   '_token': laravel_token
-		   },
-		   timeout: 15000,
-		   success: function (result) {
-
-			  if(result.status) {
-				  $.Notification.notify('success','top right', 'DrHoje', result.mensagem);
-				  window.location.href='/concluir_pedido';
-			  } else {
-//				  $.Notification.notify('info','top right', 'DrHoje', result.mensagem);
-				  swal(
-		                    {
-		                        title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
-		                        text: result.mensagem
-		                    }
-		                );
-				  $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-		          $('#btn-finalizar-pedido').removeAttr('disabled');
-			  }
-		  },
-		  error: function (result) {
-//          	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-		  swal(
-					{
-	                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-	                    text: 'Falha na operação!'
-	                }
-	            );
-          	$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-          	$('#btn-finalizar-pedido').removeAttr('disabled');
-          }
-	});
-	
-	return result;
-}
 
 function numberToReal(numero) {
 	

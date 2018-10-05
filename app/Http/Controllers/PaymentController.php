@@ -250,10 +250,12 @@ class PaymentController extends Controller
 		
 		echo json_encode(CVXRequest::all());
 		die;
-		$basicAuthUserName = env('MUNDIPAGG_KEY');
-		$basicAuthPassword = "";
+	
+	
+		//$basicAuthUserName = env('MUNDIPAGG_KEY');
+		//$basicAuthPassword = "";
 		
-		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
+		//$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
 
 
 		

@@ -226,12 +226,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                <input type="text" id="inputNumeroCartaoCredito" class="inputNumeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number"  name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
                                                 <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
-                                                <input type="text" id="inputNomeCartaoCredito"  class="inputNomeCartaoCredito form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
+                                                <input type="text" id="nomeImpressoCartaoCredito"  class="inputNomeCartaoCredito form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
                                             </div>
                                             <div class="form-group">
                                                 <label for="selectValidadeMesCredito">Validade</label>
@@ -239,8 +239,8 @@
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <input type="text" id="mesCartao"  name="mesCartao" class=" mesCartao form-control "/>
-                                                            <select id="selectValidadeMesCredito" class="selectValidadeMesCredito form-control select-validade-mes" name="mes_cartao_credito" >
-                                                                <option>Mês</option>
+                                                            <select id="mesCartaoCredito" class="selectValidadeMesCredito form-control select-validade-mes" name="mes_cartao_credito" >
+                                                                <option value="">Mês</option>
                                                                 @for($i = 1; $i <= 12; $i++)
                                                                     <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
                                                                 @endfor
@@ -248,8 +248,8 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <input type="text" id="anoCartao"  name="anoCartao" class="anoCartao form-control "/>
-                                                            <select  id="selectValidadeAnoCredito" class="selectValidadeAnoCredito form-control" name="ano_cartao_credito">
-                                                                <option>Ano</option>
+                                                            <select  id="anoCartaoCredito" class="selectValidadeAnoCredito form-control" name="ano_cartao_credito">
+                                                                <option value="">Ano</option>
                                                                 @for($i = date('Y'); $i <= (date('Y')+10); $i++)
                                                                     <option value="{{ $i }}">{{ $i }}</option>
                                                                 @endfor
@@ -261,13 +261,13 @@
                                             <div class="form-group codigo-seguranca">
                                                 <label for="inputCodigoCredito" class="label-codigo-seguranca">Código de segurança</label>
                                                 <div class="area-codigo-seguranca">
-                                                    <input type="text" id="inputCodigoCredito" class="inputCodigoCredito inputCodigoCreditoCartao form-control inputCodigoCredito" name="cod_seg_cartao_credito" placeholder="0000" onkeypress="onlyNumbers(event)" maxlength="3">
+                                                    <input type="text" id="codigoCartaoCredito" class="inputCodigoCredito inputCodigoCreditoCartao form-control inputCodigoCredito" name="cod_seg_cartao_credito" placeholder="0000" onkeypress="onlyNumbers(event)" maxlength="3">
                                                     <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputCPFCredito">CPF do titular do cartão</label>
-                                                <input type="text" id="inputCPFCredito" class="inputCPFCredito form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
+                                                <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
                                             </div>
                                             <div class="form-group">
                                                 <label for="selectParcelamentoCredito">Parcelamento</label>
