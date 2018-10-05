@@ -119,37 +119,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('minha-conta') }}">Minha Conta</a>
                             </li>
-                            <li class="nav-item dropdown menu-usuario">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                                @php
-                                    $verificarUser = false
-                                    @endphp
-
-
-                                @if($verificarUser)
-                                <div class="opcoes">
-                                        <p class="titulo">Plano</p>
-                                        <p class="plano premium">Premium</p>
-                                        {{--<p class="plano blue">Blue</p>
-                                        <p class="plano black">Black</p>--}}
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <div class="opcoes">
-                                        <p class="titulo">Saldo</p>
-                                        <p class="saldo">R$ 197,83</p>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#v-pill-sair">Sair</a>
-                                @else
-                                <a class="dropdown-item" href="#v-pill-sair">Sair</a>
-                                @endif
-                                   
-                                </div>
-                            </li>
+                         
                         </ul>
                         <div class="menu-area-logada">
                             <ul>
