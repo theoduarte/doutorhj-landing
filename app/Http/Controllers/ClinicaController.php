@@ -786,7 +786,8 @@ class ClinicaController extends Controller
     	}
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
-    	
+        
+        
     	$responsavel_id = $user_session->id;
     	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
 

@@ -124,7 +124,14 @@
                                     <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <div class="opcoes">
+
+                                @php
+                                    $verificarUser = false
+                                    @endphp
+
+
+                                @if($verificarUser)
+                                <div class="opcoes">
                                         <p class="titulo">Plano</p>
                                         <p class="plano premium">Premium</p>
                                         {{--<p class="plano blue">Blue</p>
@@ -137,6 +144,10 @@
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#v-pill-sair">Sair</a>
+                                @else
+                                <a class="dropdown-item" href="#v-pill-sair">Sair</a>
+                                @endif
+                                   
                                 </div>
                             </li>
                         </ul>
