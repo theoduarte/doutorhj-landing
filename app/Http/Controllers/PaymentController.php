@@ -248,7 +248,7 @@ class PaymentController extends Controller
 
 
 		
-		echo json_encode(CVXRequest::getContent()->toArray());
+		echo json_encode(CVXRequest::all());
 		die;
 		$basicAuthUserName = env('MUNDIPAGG_KEY');
 		$basicAuthPassword = "";

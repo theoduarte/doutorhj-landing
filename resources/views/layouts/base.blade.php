@@ -189,6 +189,11 @@
                             </ul>
                         </div>
                     </div>
+                   @php 
+                        $verificaruser= true
+                   @endphp
+
+                    @if($verificaruser)
                     <div class="info-empresarial">
                         <div class="opcoes ie-logo">
                             <div class="logo-empresa">
@@ -208,6 +213,10 @@
                             <p class="saldo">R$ 197,83</p>
                         </div>
                     </div>
+                    @else
+
+                    @endif
+
                 </div>
             </nav>
         @else
