@@ -1154,7 +1154,7 @@ header .navbar-collapse {
     color: rgb(255, 255, 255)!important;
     background-color: rgb(70, 117, 184);
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -3686,6 +3686,13 @@ footer ul li a {
 footer ul li a:hover {
     color: rgb(255, 255, 255);
     text-decoration: underline;
+}
+
+.texto-legal-footer {
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    margin: 20px 0 0 0;
 }
 
 .endereco-site {
