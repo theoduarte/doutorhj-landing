@@ -57,4 +57,21 @@ class Paciente extends Model
 	    $date = new Carbon($this->attributes['dt_nascimento']);
 	    return $date->format('d/m/Y');
 	}
+
+	public function getPlanoAtivo($paciente_id)
+	{
+		if(is_null($paciente_id)) {
+			return Plano::OPEN;
+		}
+
+		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
+			->where('data_inicio', '<=', date('Y-m-d'))
+			->where('data_fim', '>=', date('Y-m-d'))->first();
+
+		if(is_null($vigenciaPac)) {
+			return Plano::OPEN;
+		} else {
+			return $vigenciaPac->plano_id;
+		}
+	}
 }

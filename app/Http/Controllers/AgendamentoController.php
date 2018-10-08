@@ -119,10 +119,10 @@ class AgendamentoController extends Controller
                 if ($titular) {
                     $item_titular = $item_carrinho;
                 }
-                
-                if( empty($paciente) ) {
+
+//                if( empty($paciente) ) {
                     $proximo_item = $item_carrinho;
-                }
+//                }
             } elseif($item['attributes']['tipo_atendimento'] == 'checkup') {
                 $paciente_tmp_id = '';
                 $paciente = [];
@@ -148,15 +148,15 @@ class AgendamentoController extends Controller
                 if ($titular) {
                     $item_titular = $item_carrinho;
                 }
-                
-                if( empty($paciente) ) {
+
+//                if( empty($paciente) ) {
                     $proximo_item = $item_carrinho;
-                }
+//                }
             }
             
             array_push($carrinho, $item_carrinho);
         }
-        
+
         //dd($proximo_item['clinica']);
         
         $valor_total = CVXCart::getTotal();
@@ -204,11 +204,10 @@ class AgendamentoController extends Controller
     	} else {
     		$cart_id = $num_itens + 1;
     	}
-    	
+
     	if ($tipo_atendimento == 'simples') {
     		$atendimento_id		= $request->input('atendimento_id');
     		$profissional_id	= $request->input('profissional_id');
-    		$paciente_id		= $request->input('paciente_id');
     		$clinica_id			= $request->input('clinica_id');
     		$filial_id			= $request->input('filial_id');
     		$data_atendimento	= $request->input('data_atendimento');
@@ -216,7 +215,21 @@ class AgendamentoController extends Controller
     		$vl_com_atendimento = $request->input('vl_com_atendimento');
     		$url 				= $request->input('current_url');
 
-			$vl_com_atendimento = number_format($vl_com_atendimento, 2, '.', '');
+			$paciente_id = $request->input('paciente_id') ?? Auth::user()->paciente->id ?? null;
+			if(!is_null($paciente_id)) {
+				$paciente = Paciente::findOrFail($paciente_id);
+			} else {
+				$paciente = new Paciente();
+			}
+
+			$plano_id = $paciente->getPlanoAtivo($paciente->id);
+
+			$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_id])
+				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+					$query->where('precos.plano_id', '=', $plano_id);
+				})->first();
+
+			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
 
             CVXCart::add(array(
 				'id' => $cart_id,
@@ -312,17 +325,46 @@ class AgendamentoController extends Controller
         $url                = $request->input('current_url');
 
 		$cartCollection = CVXCart::getContent();
-		$attributes = $cartCollection->toArray()[$item_id]['attributes'];
+		$card = $cartCollection->toArray()[$item_id];
 
-		$attributes['paciente_id'] = $paciente_id;
-		$attributes['current_url'] = $url;
+		if($card['attributes']['paciente_id'] != $paciente_id) {
+			$paciente = Paciente::findOrFail($paciente_id);
+			$plano_id = $paciente->getPlanoAtivo($paciente->id);
 
-        CVXCart::update($item_id, [
-            'attributes' => $attributes
-        ]);
+			$atendimento = Atendimento::where(['atendimentos.id' => $card['attributes']['atendimento_id']])
+				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+					$query->where('precos.plano_id', '=', $plano_id);
+				})->first();
+			$vl_comercial = $atendimento->precoAtivo->vl_comercial;
+
+			$source = array('.', ',');
+			$replace = array('', '.');
+			$vl_comercial = str_replace($source, $replace, $vl_comercial);
+
+			$card['attributes']['paciente_id'] = $paciente_id;
+			$card['price'] = $vl_comercial;
+		}
+
+		$card['attributes']['current_url'] = $url;
+
+        CVXCart::update($item_id, $card);
+
+//		self::atualizaValorTotalCarrinho();
 
         return redirect()->route('carrinho')->with('cart', 'O Item foi adicionado com sucesso');
     }
+
+	protected function atualizaValorTotalCarrinho()
+	{
+		$cartCollection = CVXCart::getContent()->toArray();
+
+		foreach($cartCollection as $item) {
+
+		}
+
+		dd($cartCollection,CVXCart::getTotal());
+
+	}
     
     public function carrinhoDeCompras()
 	{
@@ -347,7 +389,13 @@ class AgendamentoController extends Controller
 				$clinica_tmp_id = $item['attributes']['clinica_id'];
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
-				$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+				$paciente = new Paciente();
+				$plano_id = $paciente->getPlanoAtivo($paciente->id);
+				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
+					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+						$query->where('precos.plano_id', '=', $plano_id);
+					})->first();
+
 				$profissional = !empty($profissional_tmp_id) ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);
