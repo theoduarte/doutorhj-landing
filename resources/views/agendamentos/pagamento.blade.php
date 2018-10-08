@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <span class="card-span">Digite aqui o número do seu cupom</span>                            
                             <form>
-                                <div class="form-group row">
+                                <div class="cform-group row">
                                     <div class="col col-lg-7 col-xl-8">
                                         <input type="text" class="form-control" id="inputCupom" placeholder="Cupom de desconto">
                                     </div>

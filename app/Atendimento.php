@@ -5,6 +5,26 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * @property int $id
+ * @property int $clinica_id
+ * @property int $consulta_id
+ * @property int $procedimento_id
+ * @property int $profissional_id
+ * @property string $ds_preco
+ * @property string $cs_status
+ * @property string $created_at
+ * @property string $updated_at
+ * @property Clinica $clinica
+ * @property Consulta $consulta
+ * @property Procedimento $procedimento
+ * @property Profissional $profissional
+ * @property Preco[] $precos
+ * @property AgendamentoAtendimento[] $agendamentoAtendimentos
+ * @property Filial[] $filials
+ * @property ItemCheckup[] $itemCheckups
+ * @property Agendamento[] $agendamentos
+ */
 
 class Atendimento extends Model
 {
@@ -36,7 +56,26 @@ class Atendimento extends Model
     {
         return $this->belongsToMany('App\Agendamento');
     }
-	
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function precos()
+	{
+		return $this->hasMany('App\Preco')
+			->where('cs_status', '=', 'A')
+			->where('data_inicio', '<=', date('Y-m-d H:i:s'))
+			->where('data_fim', '>=', date('Y-m-d H:i:s'));
+	}
+
+	public function precoAtivo()
+	{
+		return $this->hasOne('App\Preco')
+			->where('cs_status', '=', 'A')
+			->where('data_inicio', '<=', date('Y-m-d H:i:s'))
+			->where('data_fim', '>=', date('Y-m-d H:i:s'));
+	}
+
 	/*public function agendamentos()
 	{
 	    return $this->hasMany('App\Agendamento');
@@ -48,11 +87,11 @@ class Atendimento extends Model
 	
 	public function getVlComercialAtendimento()
 	{
-		return number_format( $this->attributes['vl_com_atendimento'],  2, ',', '.');
+		return number_format( $this->attributes['vl_comercial'],  2, ',', '.');
 	}
 	
 	public function getVlNetAtendimento()
 	{
-		return number_format( $this->attributes['vl_net_atendimento'],  2, ',', '.');
+		return number_format( $this->attributes['vl_net'],  2, ',', '.');
 	}
 }

@@ -76,39 +76,46 @@ class Consulta extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem ) {
+    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId ) {
         // DB::enableQueryLog();
 
         $query = DB::table('atendimentos as at')
-        ->distinct()
-        ->select( DB::raw("at.id, at.vl_com_atendimento, at.ds_preco, 
-                             c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
-                             case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro, 
-                             e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
-                             e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_consulta,
-                             c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id,
-                             pf.id profissional_id, pf.nm_primario, pf.nm_secundario") )
-        ->join('consultas as p', 'at.consulta_id', '=', 'p.id')
-        ->leftJoin('tag_populars as tp', 'p.id', '=', 'tp.consulta_id')
-        ->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
-        ->leftJoin('filials as f', 'c.id', '=', 'f.clinica_id')
-        ->leftJoin('enderecos as e', 'f.endereco_id', '=', 'e.id')
-        ->leftJoin('cidades as cd', 'e.cidade_id', '=', 'cd.id')
-        ->join('profissionals as pf', 'at.profissional_id', '=', 'pf.id')
-        ->where('at.cs_status', 'A')
-        ->where('c.cs_status', 'A')
-        ->where('f.cs_status', 'A')
-        ->where('pf.cs_status', 'A')
-        ->where('at.consulta_id', $consultaId);
+			->distinct()
+			->select( DB::raw("at.id, pr.vl_comercial, at.ds_preco,
+								 c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,
+								 case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro,
+								 e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
+								 e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_consulta,
+								 c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id,
+								 pf.id profissional_id, pf.nm_primario, pf.nm_secundario") )
+			->join('consultas as p', 'at.consulta_id', '=', 'p.id')
+			->leftJoin('tag_populars as tp', 'p.id', '=', 'tp.consulta_id')
+			->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
+			->leftJoin('filials as f', 'c.id', '=', 'f.clinica_id')
+			->leftJoin('enderecos as e', 'f.endereco_id', '=', 'e.id')
+			->leftJoin('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			->join('profissionals as pf', 'at.profissional_id', '=', 'pf.id')
+			->join('precos as pr', 				function($join8) use ($planoId) {
+				$join8->on('pr.atendimento_id', '=', 'at.id')
+					->where('pr.plano_id', '=', $planoId)
+					->where('pr.cs_status', '=', 'A')
+					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'));
+			})
+			->where('at.cs_status', 'A')
+			->where('c.cs_status', 'A')
+			->where('f.cs_status', 'A')
+			->where('pf.cs_status', 'A')
+			->where('at.consulta_id', $consultaId);
 
         if( !empty($enderecoIds) ) {
             $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );
         }
 
-        $query->orderBy('at.vl_com_atendimento', $sortItem)
-        ->orderBy('f.eh_matriz', 'desc')
-        ->orderBy('c.nm_fantasia', 'asc')
-        ->orderBy('pf.nm_primario', 'asc');
+        $query->orderBy('pr.vl_comercial', $sortItem)
+			->orderBy('f.eh_matriz', 'desc')
+			->orderBy('c.nm_fantasia', 'asc')
+			->orderBy('pf.nm_primario', 'asc');
 
         return $query->get();
         

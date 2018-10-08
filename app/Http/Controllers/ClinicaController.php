@@ -630,7 +630,7 @@ class ClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paginaPagamento(){
+    public function paginaPagamento() {
 
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
@@ -646,7 +646,9 @@ class ClinicaController extends Controller
 
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
-			$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+			$paciente = Paciente::findOrFail($paciente_tmp_id);
+
+			$plano_id = $paciente->getPlanoAtivo($paciente->id);
 
 			if($item['attributes']['tipo_atendimento'] == 'simples') {
 				$atendimento_tmp_id = $item['attributes']['atendimento_id'];
@@ -654,7 +656,11 @@ class ClinicaController extends Controller
 				$clinica_tmp_id = $item['attributes']['clinica_id'];
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
-				$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
+					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+						$query->where('precos.plano_id', '=', $plano_id);
+					})->first();
+
 				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);

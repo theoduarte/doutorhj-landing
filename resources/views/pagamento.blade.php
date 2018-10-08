@@ -564,7 +564,7 @@
 															<a class="close-div" href="#"><i class="fa fa-trash"></i></a>
 														</div>-->
 														<div class="valor-produto col-12 col-sm-3">
-															<span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
+															<span>R$ {{ $item['atendimento']->precoAtivo->vl_comercial }}</span>
 														</div>
 													</div>
 													<div class="row">

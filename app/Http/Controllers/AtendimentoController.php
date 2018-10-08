@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Paciente;
+use App\Plano;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Http\Request;
@@ -31,15 +34,21 @@ class AtendimentoController extends Controller
         $especialidade = $request->get('tipo_especialidade');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
+		if(isset(Auth::user()->paciente->id)) {
+			$paciente = Paciente::findOrFail(Auth::user()->paciente->id);
+			$planoId = $paciente->getPlanoAtivo($paciente->id);
+		} else {
+			$planoId = Plano::OPEN;
+		}
+
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem );
+            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
             $list_enderecos = $consulta->getActiveAddress( $especialidade );
             $list_atendimentos = $consulta->getActive();
-        }
-        elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
+        } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem );
+            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
             $list_enderecos = $procedimento->getActiveAddress( $especialidade );
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }
