@@ -427,6 +427,7 @@ $(function(){
 		removerError('#codigoCartaoCredito')
 		removerError('#cpfTitularCartaoCredito')
 		efetuarPagamento();
+	
 	})
 
 
@@ -538,7 +539,7 @@ function efetuarPagamento() {
 	}
 
 	
-	var cupom_desconto 	= $('#inputCupom');
+	var cupom_desconto 	=  $('#inputCupom').val() != "" ? $('#inputCupom').val() :  '';
 	var pacientes		= $('.paciente_agendamento_id');
 
 	
@@ -560,7 +561,7 @@ function efetuarPagamento() {
 
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
-	
+	var paciente_id = $('#paciente_id').val();
 	
 	for(var i = 0; i < num_itens; i++) {
 		var dt_atendimento = $('#dt_atendimento_'+i).val()+' '+ $('#hr_atendimento_'+i).val();
@@ -593,6 +594,7 @@ function efetuarPagamento() {
 	$('#btn-finalizar-pedido').attr('disabled', 'disabled');
     $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
     setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
+ 
 
 	if(executar==true && dados  != null){
 		$.ajax({
@@ -602,10 +604,13 @@ function efetuarPagamento() {
 			   data: {
 				dados,
 				metodo: metodoPagamento,
-				'agendamentos': agendamentos,
+				cupom_desconto,
+				'agendamentos':agendamentos,
+				paciente_id,
+				titulo_pedido,
 				'_token': laravel_token 
 			},
-			   timeout: 15000,
+			   //timeout: 15000,
 			   success: function (result) {
 	
 					console.log(result);
@@ -625,7 +630,6 @@ function efetuarPagamento() {
 				}
 		  }); 
 	}
-	
 
 	
 }

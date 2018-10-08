@@ -684,9 +684,9 @@ class ClinicaController extends Controller
 					foreach ($atendimento->profissional->especialidades as $especialidade) {
 						$nome_especialidade = $nome_especialidade . ' | ' . $especialidade->ds_especialidade;
 					}
-
-					$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
-
+                    //dd($atendimento->consulta->tag_populars->first()->cs_tag); die;
+					$ds_atendimento = $atendimento->consulta->tag_populars->first()->ds_tag;
+                    
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
 

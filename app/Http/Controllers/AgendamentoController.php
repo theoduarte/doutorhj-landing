@@ -22,6 +22,7 @@ use App\Mensagem;
 use App\MensagemDestinatario;
 use App\Filial;
 use App\Checkup;
+use App\TagPopular;
 
 class AgendamentoController extends Controller
 {
@@ -374,8 +375,9 @@ class AgendamentoController extends Controller
 					foreach ($atendimento->profissional->especialidades as $especialidade) {
 						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
 					}
-
-					$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
+                //    print_r( TagPopular::select('*')->where('consulta_id',$atendimento->consulta->id)->first() ); die;
+                    
+					$ds_atendimento =   $atendimento->consulta->tag_populars->first()->cs_tag;
 
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;

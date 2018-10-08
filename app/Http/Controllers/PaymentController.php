@@ -247,32 +247,28 @@ class PaymentController extends Controller
     {
 
 
+		$basicAuthUserName = env('MUNDIPAGG_KEY');
+		$basicAuthPassword = "";
 		
-		echo json_encode(CVXRequest::all());
-		die;
-	
-	
-		//$basicAuthUserName = env('MUNDIPAGG_KEY');
-		//$basicAuthPassword = "";
-		
-		//$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
-
+		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
 
 		
-        $merchantKey    = env('CIELO_MERCHANT_KEY');
-        $merchantId     = env('CIELO_MERCHANT_ID');
-        $url            = env('CIELO_URL').'/1/sales';
-        
-        $tp_pagamento = CVXRequest::post('tipo_pagamento');
-        $cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
-        $percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----
-		
+		//echo json_encode(CVXRequest::All());
 
-        if($cod_cupom_desconto != '') {
+		// metodo de pagamento
+		$metodoPagamento  = CVXRequest::post('metodo');
+		$dados  = (object) CVXRequest::post('dados');
+		$cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
+		$percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----		  
+		if($cod_cupom_desconto != '') {
             $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
         }
 
+        
+             
 		$carrinho = CVXCart::getContent()->toArray();
+
+		
 		//print_r($carrinho); die;
 		// echo '<pre>';
 		// print_r($carrinho);
@@ -280,22 +276,30 @@ class PaymentController extends Controller
 
         //--verifica se as condicoes de agendamento estao disponiveis------
         $agendamento_disponivel = true;
-        $agendamentos = CVXRequest::post('agendamentos');
-		
+        $agendamentos = (array) CVXRequest::post('agendamentos');
+		//$agendamentos = (($agenda[0]));
 		$listCarrinho = $this->listCarrinhoItens();
 		
-		//print_r($listCarrinho); die;
-
+		$paciente_id = CVXRequest::post('paciente_id');
+		
+		$titulo_pedido = CVXRequest::post('titulo_pedido');
+		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
+		$paciente =(object) Paciente::select("*")->where('id', $paciente_id)->first();
+		
+	
 		
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
 
-        //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
-        //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
-        for ($i = 0; $i < sizeof($agendamentos); $i++) {
-			$item_agendamento = json_decode($agendamentos[$i]);
 		
 
+        //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
+        //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
+        for ($i = 0; $i < count($agendamentos); $i++) {
+			$item_agendamento = json_decode($agendamentos[$i]);
+			
+			
+			
 			if(!empty($item_agendamento->atendimento_id)) {
 				$atendimento_id_temp = $item_agendamento->atendimento_id;
 				$item_atendimento = Atendimento::findorfail($atendimento_id_temp);
@@ -375,15 +379,19 @@ class PaymentController extends Controller
         if (!$agendamento_atendimento) {
         	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
         }
-        
+		
+
+		
+	
+
         ########### STARTING TRANSACTION ############
      //   DB::beginTransaction();
         #############################################
         
-        $save_card = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
-        //dd($save_card);
         
-        $valor_total = CVXCart::getTotal();
+		$valor_total = CVXCart::getTotal();
+				
+		
         $valor_desconto = $valor_total*$percentual_desconto;
         
         //-- determina o numero de parcelas -------
@@ -392,9 +400,168 @@ class PaymentController extends Controller
         
         $parcelamentos = array(
             1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
-        );
+		);
+		
+		//valida a bandeira do cartao
+			if(!empty($dados->numero)  && empty($pagamento[0]->cartao->cartao_id)){
+				if(empty($dados->cvv)){
+					return response()->json([
+						'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+					], 422);
+				}
+
+				$bandeira = UtilController::validaCartao($dados->numero, $dados->cvv);
+								
+				if(!$bandeira[1]) {
+					return response()->json([
+						'message' => 'Número do cartão inválido!',
+					], 400);
+				} elseif(!$bandeira[2]) {
+					return response()->json([
+						'message' => 'Número do código de segurança inválido!',
+					], 400);
+				} else { 
+					$bandeira = $bandeira[0];
+				}			
+			}
+
+			$pedido = new Pedido();
         
-        if ($tp_pagamento == 'credito') {
+			$descricao = '';
+			$dt_pagamento = date('Y-m-d H:i:s');                        
+			$pedido->titulo         = $titulo_pedido;
+			$pedido->descricao      = $descricao;
+			$pedido->dt_pagamento   = $dt_pagamento;
+			$pedido->tp_pagamento   = $metodoPagamento ==1? 'empresarial' : $metodoPagamento==2 ? 'empre+credito' : $metodoPagamento==3 ? 'credito' : $metodoPagamento==4? 'boleto' : $metodoPagamento==5 ?'transferencia':'';
+			$pedido->paciente_id    = $paciente_id;
+			
+			if (!$pedido->save()) {
+				########### FINISHIING TRANSACTION ##########
+				DB::rollback();
+				#############################################
+				return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+			}
+
+
+
+			// credito empresarial
+			if($metodoPagamento == 1){
+
+			}else 
+			// credito empresarial + cartao de credito
+			 if($metodoPagamento ==2){
+	
+			}else 
+			// cartao de credito
+			if($metodoPagamento ==3){
+				if(!empty($dados->cartaoid)){
+					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+						if(!$cartao->exists()) {
+							DB::rollback();
+							return response()->json([
+								'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+							], 404);
+						}
+						if(empty($dados->cvv)){
+							return response()->json([
+								'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+							], 422);
+						}
+
+						// card_id quando o cartao está salvo no sistema
+						$cartao =$cartao->first()->card_token;
+						$metodoCartao=1;
+				}else{
+					if($dados->salvar ==0){
+						
+						try{									
+							// cria token cartao						
+							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+							$metodoCartao=2;
+							$cartao = $cartaoToken->id;
+						}catch(\Exception $e){
+							DB::rollBack();
+							return response()->json([
+								'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'errors' => $e->getMessage(),
+							], 500);
+						}
+
+					}else {
+								$cartaoPaciente = CartaoPaciente::where([
+										'numero' => substr($dados->numero, -4),
+										'dt_validade' => $dados->mes.'/'.$dados->ano,
+										'bandeira' => $bandeira
+									])->exists();
+									
+									if(!$cartaoPaciente) { 																				
+										
+										try {
+											$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+												$dados->numero, 
+												$dados->nome, 				
+												$dados->mes, 
+												$dados->ano,
+												$dados->cvv, 
+												$bandeira
+												)); 
+												
+											$cartao_paciente = new CartaoPaciente();
+											$cartao_paciente->bandeira 		= $bandeira;
+											$cartao_paciente->nome_impresso = $dados->nome;
+											$cartao_paciente->numero 		= substr($dados->numero, -4);
+											$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+											$cartao_paciente->card_token 	= $saveCartao->id;
+											$cartao_paciente->paciente_id 	= $paciente->id;
+
+											if($cartao_paciente->save()) {
+												
+												// card_id cartao salvo
+												$metodoCartao=1;
+												$cartao = $saveCartao->id;
+												
+											}
+										} catch(\Exception $e) {
+											DB::rollBack();
+											return response()->json([
+												'message' => 'Erro ao salvar o cartao!',
+												'errors' => $e->getMessage(),
+											], 500);
+										}
+									}else{
+										DB::rollback();
+										return response()->json([
+											'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
+										], 404);	
+									}															
+
+					}
+				}					
+			}else
+			//boleto bancario
+			if($metodoPagamento ==4){
+	
+			}else
+			//transferencia bancario
+			if($metodoPagamento ==5){
+	
+			}else{
+				echo json_encode('metodo errado');
+				die;
+			}
+			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+			print_r($valor);
+			die;
+		
+			
+			
+
+
+
+
+
+        /*if ($tp_pagamento == 'credito') {
         	if ($valor_total > 200) {
         		$parcelamentos = [];
         	
@@ -409,37 +576,19 @@ class PaymentController extends Controller
         		}
         	}
         }
+         */
         
-        $pedido = new Pedido();
-        $titulo_pedido = CVXRequest::post('titulo_pedido');
-        $descricao = '';
-        $dt_pagamento = date('Y-m-d H:i:s');
-        $paciente_id = CVXRequest::post('paciente_id');
-        $num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
-        
-        $pedido->titulo         = $titulo_pedido;
-        $pedido->descricao      = $descricao;
-        $pedido->dt_pagamento   = $dt_pagamento;
-        $pedido->tp_pagamento   = $tp_pagamento;
-        $pedido->paciente_id    = $paciente_id;
-        
-        if (!$pedido->save()) {
-        	########### FINISHIING TRANSACTION ##########
-        	DB::rollback();
-        	#############################################
-            return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-        }
         
         //-- pedido id do DoutorHoje----------------------------------
-        $MerchantOrderId = $pedido->id;
+        //$MerchantOrderId = $pedido->id;
         
         //-- dados do comprador---------------------------------------
-        $customer = Paciente::findorfail($paciente_id);
-        $customer->load('user');
-        $customer->load('documentos');
-        $customer->load('contatos');
+      //  $customer = Paciente::findorfail($paciente_id);
+       // $customer->load('user');
+        //$customer->load('documentos');
+        //$customer->load('contatos');
         
-        $customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
+    /*    $customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
         $customer_identity              = $customer->documentos->first()->te_documento;
         $customer_Identity_type         = $customer->documentos->first()->tp_documento;
         $customer_email                 = $customer->user->email;
@@ -459,9 +608,9 @@ class PaymentController extends Controller
         $customer_delivery_zipcode      = "";
         $customer_delivery_city         = "";
         $customer_delivery_state        = "";
-        $customer_delivery_country      = "";
+        $customer_delivery_country      = ""; */
         
-        $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
+       /* $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
         $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
         $payment_return_url             = config('app.url'); //-- usado no pagamento por debito apenas
         $payment_currency               = 'BRL';
@@ -477,9 +626,9 @@ class PaymentController extends Controller
         $payment_expiration_date        = CVXRequest::post('mes_cartao').'/'.CVXRequest::post('ano_cartao'); //-- usado no pagamento por debito tambem
         $payment_security_code          = CVXRequest::post('cod_seg_cartao'); //-- usado no pagamento por debito tambem
         $payment_save_card              = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
-        $payment_brand                  = CVXRequest::post('bandeira_cartao'); //-- usado no pagamento por debito tambem
-        
-        //--payload para CARTAO DE CREDITO
+		$payment_brand                  = CVXRequest::post('bandeira_cartao'); //-- usado no pagamento por debito tambem
+		   
+		//--payload para CARTAO DE CREDITO
         if ($tp_pagamento == 'credito') {
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
         }
@@ -487,6 +636,10 @@ class PaymentController extends Controller
         	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":' .$payment_authenticate .',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
         	// $payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267144","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
         }
+		
+		*/
+        
+    
         
         // dd($payload);
         
@@ -523,7 +676,7 @@ class PaymentController extends Controller
         			//$agendamentos = CVXRequest::post('agendamentos');
 
 					foreach($agendamentoItens as $i=>$item_agendamento) {
-//        				dd($item_agendamento);
+	//        				dd($item_agendamento);
 
 						$agendamento 						= new Agendamento();
 						$agendamento->te_ticket				= UtilController::getAccessToken();
@@ -770,7 +923,34 @@ class PaymentController extends Controller
             return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
         }
     }
-    
+	
+	
+
+	/**
+	 * Converte os valores recebidos em reais para centavos	 	
+	 */
+	private function convertRealEmCentavos($valor){
+		// regra de 3
+		/**
+		 * 1 real------- 100ctv
+		 * 5 reais------ x
+		 * 1*x=100*5
+		 * z=500 centavos
+		 */
+		
+		$dado = str_replace(".", "", $valor);
+
+		$dado = str_replace(",", ".", $dado);
+		
+		$resultado = $dado*100;		
+		//echo $resultado; die;
+		return (int) $resultado;
+	}
+
+
+
+
+
     /**
      * realiza o pagamento na Cielo por cartao de credito cadastrado no padrao completo.
      *
