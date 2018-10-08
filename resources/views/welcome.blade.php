@@ -72,7 +72,9 @@
                                                     <p class="tipo">
                                                         <span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
                                                         <br>
-                                                        <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
+                                                       @if(!empty($agendamento->clinica->nm_fantasia))
+                                                       <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
+                                                       @endif
                                                     </p>
                                                     {{--<p class="profissional">
                                                         Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>

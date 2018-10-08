@@ -73,6 +73,7 @@
                         	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
+                                    
                                     <h5 class="card-title">{{ $atendimento->nm_fantasia }} - {{ $atendimento->tipo }}: {{ $atendimento->te_bairro }}</h5>
 
                                     <h6 class="card-subtitle">@if( !empty($atendimento->consulta_id) ) Dr. {{ $atendimento->nm_primario.' '.$atendimento->nm_secundario }} @endif</h6>
@@ -90,7 +91,7 @@
                                         Agendar com este profissional
                                         </label>
                                     </div>
-                                    <strong>R$ {{ number_format($atendimento->vl_comercial, 2, ',', '.') }}</strong>
+                                    <strong>R$ {{ number_format($atendimento->vl_com_atendimento, 2, ',', '.') }}</strong>
                                 </div>
 
                                 <div id="collapse_{{ $atendimento->id.$atendimento->filial_id }}" class="collapse" aria-labelledby="heading_{{ $atendimento->id.$atendimento->filial_id }}" data-parent="#accordion">
@@ -103,7 +104,7 @@
                                     	<input type="hidden" id="clinica_id" name="clinica_id" value="{{ $atendimento->clinica_id }}">
                                         <input type="hidden" id="filial_id" name="filial_id" value="{{ $atendimento->filial_id }}">
                                         
-                                    	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_comercial }}">
+                                    	<input type="hidden" id="vl_com_atendimento" name="vl_com_atendimento" value="{{ $atendimento->vl_com_atendimento }}">
                                     	<input type="hidden" name="current_url" value="{{ Request::fullUrl() }}">
                                     	{!! csrf_field() !!}
                                 	
@@ -131,7 +132,7 @@
 	                                        <hr>
 	                                        @endif
 	                                        <div class="valor-total">
-	                                            <span><strong>Total a pagar:</strong> R$ {{ number_format( $atendimento->vl_comercial, 2, ',', '.') }}</span>
+	                                            <span><strong>Total a pagar:</strong> R$ {{ number_format( $atendimento->vl_com_atendimento, 2, ',', '.') }}</span>
 	                                        </div>
 	                                        <button type="button" class="btn btn-primary btn-vermelho" onclick="validaAgendarAtendimento('form-agendamento{{ $atendimento->id.$atendimento->filial_id }}')">Prosseguir para pagamento</button>
 	                                    </div>

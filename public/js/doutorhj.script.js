@@ -557,7 +557,7 @@ function efetuarPagamento() {
 			executar = false;
 		}
 	});
-
+	var titulo_pedido = $('#titulo_pedido').val();
 
 	var num_itens = $('.card-resumo-compra').length;
 	var agendamentos = [];
@@ -595,7 +595,7 @@ function efetuarPagamento() {
     $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
     setTimeout(function(){ $('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); $('#btn-finalizar-pedido').removeAttr('disabled'); }, 30000);
  
-
+	
 	if(executar==true && dados  != null){
 		$.ajax({
 			type:'post',
@@ -613,9 +613,20 @@ function efetuarPagamento() {
 			   //timeout: 15000,
 			   success: function (result) {
 	
-					console.log(result);
-	
-	
+				if(result.status) {
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+					window.location.href='/concluir_pedido';
+				} else {
+  //				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
+					swal(
+							  {
+								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
+								  text: result.mensagem
+							  }
+						  );
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
 				
 				},
 				error: function (result) {
