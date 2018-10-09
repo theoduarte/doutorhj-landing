@@ -203,12 +203,8 @@ class PaymentController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
     	
-        $result_agendamentos = $request->session()->get('result_agendamentos');
+        $result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
 
-//		echo '<pre>';
-//		print_r($result_agendamentos);
-//		die;
-//		dd($result_agendamentos);
 
         if ($result_agendamentos == null) {
             return redirect()->route('landing-page');
@@ -713,6 +709,7 @@ class PaymentController extends Controller
 										$agendamento->load('filial');
 										$agendamento->load('profissional');
 										$agendamento->load('paciente');
+										
 										 
 										$item_pedido = new Itempedido();
 										$item_pedido->pedido_id = $MerchantOrderId;
@@ -764,8 +761,8 @@ class PaymentController extends Controller
 										}
 										
 										//echo $agendamento; die;
-										$dados = json_decode(json_encode($agendamento), true);
-										array_push($result_agendamentos,  $dados);
+										//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
+										array_push($result_agendamentos,  $agendamento);
 										
 									
 
@@ -806,11 +803,11 @@ class PaymentController extends Controller
 							 ########### FINISHIING TRANSACTION ##########
 							// DB::commit();
 							 #############################################
-						//	 CVXCart::clear();
+							 CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
-							 $agendamentos = json_encode($result_agendamentos);
-							 $request->session()->put('agendamentos', $result_agendamentos);
+							 
+							 $request->session()->put('result_agendamentos', $result_agendamentos);
 							 $request->session()->put('pedido', $pedido);
 							 $request->session()->put('valor_total_pedido', $valor_total_pedido);
 							 

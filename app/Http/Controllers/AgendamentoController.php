@@ -425,6 +425,8 @@ class AgendamentoController extends Controller
 					}
                 //    print_r( TagPopular::select('*')->where('consulta_id',$atendimento->consulta->id)->first() ); die;
                     
+                    echo  $atendimento ;
+                    die;
 					$ds_atendimento =   $atendimento->consulta->tag_populars->first()->cs_tag;
 
 					$atendimento->nome_especialidade = $nome_especialidade;
