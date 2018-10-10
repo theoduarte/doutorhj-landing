@@ -311,6 +311,39 @@ header .navbar-collapse {
     width: 540px;
 }
 
+.banner-slider-home .banner-clinica {
+    background-position: center top;
+}
+
+.banner-slider-home .banner-clinica .texto {
+    float: right;
+    text-align: left;
+    width: 540px;
+}
+.banner-slider-home .banner-clinica .texto .logo-clinica {
+    display: block;
+    width: 300px;
+    margin-bottom: 30px;
+}
+
+.banner-slider-home .banner-clinica .texto p {
+    color: #4167a8;
+    font-size: 26px;
+    line-height: 32px;
+    margin-bottom: 30px;
+}
+
+.banner-slider-home .banner-clinica .texto p span {
+    color: #9c272a;
+}
+
+.banner-slider-home .banner-clinica .texto h3 {
+    color: #4167a8;
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
 .banner-slider-home .banner-conheca .texto h3,
 .banner-slider-home .banner-precos-justos .texto h3 {
     font-size: 44px;
@@ -3855,6 +3888,28 @@ footer ul li a:hover {
         width: 600px;
     }
 
+    .banner-slider-home .banner-clinica {
+        background-position: center center;
+    }
+
+    .banner-slider-home .banner-clinica .texto {
+        width: 550px;
+    }
+    .banner-slider-home .banner-clinica .texto .logo-clinica {
+        width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .banner-slider-home .banner-clinica .texto p {
+        font-size: 20px;
+        line-height: 28px;
+        margin-bottom: 20px;
+    }
+
+    .banner-slider-home .banner-clinica .texto h3 {
+        font-size: 24px;
+    }
+
     .busca-welcome {
         width: 600px;
         bottom: 86px;
@@ -3994,6 +4049,28 @@ footer ul li a:hover {
     .banner-slider-home .banner-conheca .texto h3,
     .banner-slider-home .banner-precos-justos .texto h3 {
         font-size: 32px;
+    }
+
+    .banner-slider-home .banner-clinica {
+        background-position: center center;
+    }
+
+    .banner-slider-home .banner-clinica .texto {
+        width: 400px;
+    }
+    .banner-slider-home .banner-clinica .texto .logo-clinica {
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    .banner-slider-home .banner-clinica .texto p {
+        font-size: 18px;
+        line-height: 24px;
+        margin-bottom: 18px;
+    }
+
+    .banner-slider-home .banner-clinica .texto h3 {
+        font-size: 22px;
     }
 
     .busca-welcome {
@@ -4148,6 +4225,28 @@ footer ul li a:hover {
     .banner-slider-home .banner-conheca .texto p,
     .banner-slider-home .banner-precos-justos .texto p {
         font-size: 20px;
+    }
+
+    .banner-slider-home .banner-clinica {
+        background-position: center center;
+    }
+
+    .banner-slider-home .banner-clinica .texto {
+        width: 320px;
+    }
+    .banner-slider-home .banner-clinica .texto .logo-clinica {
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    .banner-slider-home .banner-clinica .texto p {
+        font-size: 18px;
+        line-height: 24px;
+        margin-bottom: 18px;
+    }
+
+    .banner-slider-home .banner-clinica .texto h3 {
+        font-size: 22px;
     }
 
     .busca-welcome {

@@ -211,6 +211,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#vantagens">Vantagens</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://www.clinicasdoutorhoje.com.br/" target="_blank">Clínica</a>
+                            </li>
                             <!-- <li class="nav-item">
                                 <a class="nav-link" href="/contato">Contato</a>
                             </li> -->
