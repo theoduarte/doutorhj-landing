@@ -37,6 +37,7 @@
                                         <div class="agendamentos">
                                             <div class="row">
                                                 <div class="col col-lg-2 area-data">
+                                                	
                                                     @if(!empty($agendamento->dt_atendimento))
                                                         <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else
                                                                 -- @endif</p>
@@ -64,7 +65,7 @@
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
                                                                 @elseif($agendamento->getRawCsStatusAttribute() == 30)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40 | $agendamento->getRawCsStatusAttribute() == 100  | $agendamento->getRawCsStatusAttribute() == 90)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
                                                                 @elseif($agendamento->getRawCsStatusAttribute() == 50)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
@@ -87,10 +88,10 @@
                                                             Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}
                                                     @endif
 
-                                                    <p class="valor">R$ <span>{{ number_format( $agendamento->itempedidos->first()->valor,  2, ',', '.') }}</span>
-                                                        <span class="dt-pagamento">pago em {{ date_format($agendamento->itempedidos->first()->created_at, 'd/m/Y') }}</span>
+                                                    <p class="valor">R$ <span>@if(sizeof($agendamento->itempedidos) > 0 ) {{ number_format( $agendamento->itempedidos->first()->valor,  2, ',', '.') }} @endif</span>
+                                                        <span class="dt-pagamento">pago em @if(sizeof($agendamento->itempedidos) > 0 )  {{ date_format($agendamento->itempedidos->first()->created_at, 'd/m/Y') }} @endif</span>
                                                     </p>
-                                                    <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
+                                                    <p class="endereco"><?php /*{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} */ ?> @if($agendamento->filial != null) <strong>{{ $agendamento->filial->nm_nome_fantasia }}</strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }} @endif</p>
                                                 </div>
                                                 <div class="col col-lg-4">
                                                     <p class="tit-token">Token</p>
