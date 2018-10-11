@@ -10,6 +10,54 @@
 
     <section class="pagamento">
     
+  
+    <style>
+.slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    border-radius:10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: rgb(70, 117, 184);
+    border-radius:10px;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+</style>
+
+
+
+</style>
+
+
+
+
+
     {{ csrf_field() }}
         <div class="container">
             <div class="area-container">
@@ -68,28 +116,31 @@
                                 </div>
 
 
-
+                             
+ 
                                 <div class="row cartaoEmpresarial_Credito" style="display:none">
-
-
+                                    
                                     
                                     {{--CRÉDITO EMPRESARIAL--}}
-
+                                 
                                     <div class="col-sm-12 col-md-6">
                                         <h3>Crédito Empresarial</h3>
                                         <div class="separador"></div>
                                         <p class="te">Valor disponível:</p>
-                                        <span class="vlr-ce">R$ 197,83</span>
+                                        <span class="vlr-ce">R$ 00,00</span>
                                         <div class="separador"></div>
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
+                                        <input type="hidden" value="197,83" id="valor_disponivel">
+                                        <input type="hidden" value="680,70" id="total_pagar">
+                                        <input type="hidden" value="197,83" id="complemento">
                                             <h4 class="alert-heading">Pagamento complementar</h4>
                                             <hr>
                                             <p>Total da compra:</p>
-                                            <span><strong>R$ 680,70</strong></span>
-                                            <p>Crédito Empresarial disponível:</p>
-                                            <span><strong>R$ 197,83</strong></span>
+                                            <span><strong class="total_a_pagar" >R$ 00,00</strong></span>
+                                            <p>Crédito Empresarial a ser usado:</p>
+                                            <span><strong class="creditoAserDebitado" id="creditoAserDebitado">R$ 00,00</strong></span>
                                             <p>Valor complementar necessário:</p>
-                                            <span><strong>R$ 482,87</strong></span>
+                                            <span><strong class="valor_complementar" >R$ 00,00</strong></span>
                                         </div>
                                         <script>
                                             $(function() {
@@ -99,6 +150,16 @@
                                                 });
                                             });
                                         </script>
+                                        <div  style="text-align:center" >
+                                        <hr>
+                                         <h3>definir crédito empresarial</h3>
+                                        
+
+                                        <div class="slidecontainer">
+                                            <input type="range" min="1" max="100" value="100" class="slider" id="myRange">
+                                            <p> <span id="porcentagem_credito_empresarial"></span> % </p>
+                                        </div>
+                                        </div>
                                     </div>
 
                                     {{--CARTÃO DE CRÉDITO--}}
@@ -116,21 +177,25 @@
                                     						@endforeach
                                                 </select>
                                             </div>
+                                            <section class="loadCartao " >
+                                         
+  
                                             <div class="form-group">
                                                 <label for="inputNumeroCartaoCredito">Número do cartão</label>
                                                 <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
-                                                <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
+                                                <input type="hidden" id="cartaoCredito+Empr" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
                                                 <input type="text" id="inputNomeCartaoCredito"  class="form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label for="selectValidadeMesCredito">Validade</label>
                                                 <div class="button dropdown">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <input type="text" id="mesCartao"  name="mesCartao" class="form-control "/>
+                                                            <input type="text" id="mesCartao"  name="mesCartao" class=" mesCartao form-control "/>
                                                             <select id="selectValidadeMesCredito" class="form-control select-validade-mes" name="mes_cartao_credito" >
                                                                 <option>Mês</option>
                                                                 @for($i = 1; $i <= 12; $i++)
@@ -139,7 +204,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <input type="text" id="anoCartao"  name="anoCartao" class="form-control "/>
+                                                            <input type="text" id="anoCartao"  name="anoCartao" class=" anoCartao form-control "/>
                                                             <select  id="selectValidadeAnoCredito" class="form-control" name="ano_cartao_credito">
                                                                 <option>Ano</option>
                                                                 @for($i = date('Y'); $i <= (date('Y')+10); $i++)
@@ -175,6 +240,7 @@
                                                 <input type="checkbox" id="checkGravarCartaoCredito" class="form-check-input" name="gravar_cartao_credito">
                                                 <label class="form-check-label" for="checkGravarCartaoCredito">Gravar dados para futuras compras</label>
                                             </div>
+                                            </section>
                                         </form>
                                     </div>
                                 </div>
@@ -288,12 +354,12 @@
                                 </div>
 
 
-                                <div class="row boletoBancario" style="display:none">
-                                    <p>boleto bancario</p>
+                                <div class="row boletoBancario" style="display:none;padding-left:25%; padding-top:5% ">
+                                <img src="/img/boleto.png" style="align-self:center" alt="" class="boleto-banc" height="100" width="200" >
                                 </div>
 
-                                <div class="row transferenciaBancaria" style="display:none">
-                                    <p>transferencia bancaria</p>
+                                <div  class="row transferenciaBancaria" style="display:none;  padding-left:25%; padding-top:5%   ">
+                                    <img src="/img/transferencia.png" style="align-self:center" alt="" class="transferencia-banc" height="100" width="200" >
                                 </div>
                             </div>
                         </div>
