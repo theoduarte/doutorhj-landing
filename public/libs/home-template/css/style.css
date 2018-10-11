@@ -330,7 +330,13 @@ header .navbar-collapse {
     color: #4167a8;
     font-size: 26px;
     line-height: 32px;
+    margin-bottom: 10px;
+}
+
+.banner-slider-home .banner-clinica .texto p.endereco-clinica {
+    font-size: 16px;
     margin-bottom: 30px;
+    font-weight: 600;
 }
 
 .banner-slider-home .banner-clinica .texto p span {
@@ -3903,11 +3909,17 @@ footer ul li a:hover {
     .banner-slider-home .banner-clinica .texto p {
         font-size: 20px;
         line-height: 28px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
+    .banner-slider-home .banner-clinica .texto p.endereco-clinica {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+
     .banner-slider-home .banner-clinica .texto h3 {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .busca-welcome {
@@ -4066,8 +4078,14 @@ footer ul li a:hover {
     .banner-slider-home .banner-clinica .texto p {
         font-size: 18px;
         line-height: 24px;
+        margin-bottom: 10px;
+    }
+
+    .banner-slider-home .banner-clinica .texto p.endereco-clinica {
+        font-size: 16px;
         margin-bottom: 18px;
     }
+
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;
@@ -4241,9 +4259,15 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto p {
         font-size: 18px;
-        line-height: 24px;
-        margin-bottom: 18px;
+        line-height: 20px;
+        margin-bottom: 10px;
     }
+
+    .banner-slider-home .banner-clinica .texto p.endereco-clinica {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;

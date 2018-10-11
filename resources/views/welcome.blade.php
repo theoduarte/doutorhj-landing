@@ -238,6 +238,7 @@
                                             primeira clínica Doutor Hoje do DF
                                             para um <span>atendimento personalizado</span>,
                                             <span>ágil</span> e de <span>qualidade.</span></p>
+                                        <p class="endereco-clinica"><i class="fa fa-map-marker" aria-hidden="true"></i> SCS QD. 03 BL. A LT. 107 - Asa Sul - Brasília/DF</p>
                                         <h3>Agende sua consulta ou exame
                                             aqui abaixo:</h3>
                                     </div>
