@@ -34,13 +34,15 @@ class AtendimentoController extends Controller
         $especialidade = $request->get('tipo_especialidade');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
+
+        
 		if(isset(Auth::user()->paciente->id)) {
 			$paciente = Paciente::findOrFail(Auth::user()->paciente->id);
 			$planoId = $paciente->getPlanoAtivo($paciente->id);
 		} else {
 			$planoId = Plano::OPEN;
 		}
-
+        
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
             $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
@@ -54,7 +56,7 @@ class AtendimentoController extends Controller
         }
 
 
-       // var_dump($atendimentos); die;
+ 
         return view('resultado', compact('atendimentos', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }

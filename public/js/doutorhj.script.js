@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+	
+
+
 	$('#tipo_atendimento').change(function(){
 
 		var tipo_atendimento = $(this).val();
@@ -342,9 +346,101 @@ $(document).ready(function () {
 
 $(function(){
 
+	
+
+	$('.vlr-ce').text('R$ '+$('#valor_disponivel').val());
+	$('.total_a_pagar').text('R$ '+$('#total_pagar').val());
+
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("porcentagem_credito_empresarial");
+	
+	output.innerHTML = slider.value;
+ 
+	slider.oninput = function() {
+		output.innerHTML = this.value;
+		let valor="";
+		let valor_formatado=""
+		let resp="";
+		let resultado="";
+		let final ="";
+		let complemento="";
+		let respCOmplemento="";
+		let resCOmplemento="";
+		let subtrair="";
+		let finalCOmplemento="";
+	
+		valor = this.value ;                                        
+		valor_formatado = ( $('#valor_disponivel').val());
+		resp = (valor_formatado.replace(',','.'))                                                                        																	  		
+		resultado =parseFloat( (valor * resp )/100 );
+		final = resultado.formatMoney(2, ',', '.');
+
+		complemento =  ($('#total_pagar').val());
+		 respCOmplemento = (complemento.replace(',','.'))      
+		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
+		 subtrair = (resCOmplemento - resultado )
+		 finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
+		
+		$('.valor_complementar').text('R$ '+finalCOmplemento)
+		$('.creditoAserDebitado').text('R$ '+final)    
+
+
+		$('.creditoAserDebitado').text('R$ '+final)
+		
+
+	}
+ 
+	 
+	setTimeout(function(){ 
+		let valor="";
+		let valor_formatado=""
+		let resp="";
+		let resultado="";
+		let final ="";
+		let complemento="";
+		let respCOmplemento="";
+		let resCOmplemento="";
+		let subtrair="";
+		let finalCOmplemento="";
+
+		 valor = slider.value;                                        
+		 valor_formatado = ( $('#valor_disponivel').val());
+		 resp = (valor_formatado.replace(',','.'))                                                                                                                                                                              
+		
+		 resultado =parseFloat( (valor * resp )/100 );
+		
+		 final = resultado.formatMoney(2, ',', '.');
+
+
+		 complemento =  ($('#total_pagar').val());
+		 respCOmplemento = (complemento.replace(',','.'))      
+		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
+		 subtrair = (resCOmplemento - resultado )
+		 finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
+		
+		$('.valor_complementar').text('R$ '+finalCOmplemento)
+		$('.creditoAserDebitado').text('R$ '+final)                                                                                
+		}, 
+		100);
+		
+		Number.prototype.formatMoney = function (c, d, t) {
+				var n = this,
+					c = isNaN(c = Math.abs(c)) ? 2 : c,
+					d = d == undefined ? "." : d,
+					t = t == undefined ? "," : t,
+					s = n < 0 ? "-" : "",
+					i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+					j = (j = i.length) > 3 ? j % 3 : 0;
+				return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+			};
+
+
+
+
 	$('.anoCartao').hide();
 	$('.mesCartao').hide();
-	
+	$('#anoCartao').hide();
+	$('#mesCartao').hide();
 	$('.cartaoCadastrado ').change(function(){
 			
 			removerError('#numeroCartaoCredito')
@@ -418,6 +514,76 @@ $(function(){
 	});
 
 
+	$('#cartaoCadastrado').change(function(){
+		removerError('#numeroCartaoCredito')
+		removerError('#nomeImpressoCartaoCredito')
+		removerError('#mesCartaoCredito')
+		removerError('#anoCartaoCredito')
+		removerError('#codigoCartaoCredito')
+		removerError('#cpfTitularCartaoCredito')
+
+	if($(this).val() != '') {
+		
+		var cartao_id = $(this).val();
+		
+		jQuery.ajax({
+			type: 'POST',
+			url: '/consulta-cartao-paciente',
+			data: {
+				'cartao_id': cartao_id,
+				'_token': laravel_token
+			},
+			success: function (result) {
+
+				if(result) {
+					var json = result.cartao;
+					
+					$('#inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
+					$('#inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
+					$('#inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
+					
+
+					let val = json.dt_validade.split("/");
+					
+					$('#inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
+					$('#inputSaveCardId').val(json.id).prop("disabled", true);
+					
+					$('#selectValidadeMesCredito').hide();
+					$('#selectValidadeAnoCredito').hide();	
+					$('#mesCartao').val(val[0]).prop('disabled', true).slideDown();
+													
+					$('#anoCartao').val(val[1]).prop('disabled', true).slideDown();
+					
+					
+					$('.row-payment-card').css('display', 'none');
+					$('.row-payment.repayment').css('display', 'flex');
+					$('.row-card-token').css('display', 'flex');
+
+
+					$('#resumo_compra_final_cartao').html( $('#inputNumFinalSaveCard').val() );
+				}
+				else {
+					$('.row-payment.repayment').css('display', 'none');
+					$('#resumo_compra_final_cartao').html( 'XXXX' );	
+				}
+			},
+			error: function (result) {
+				$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+			}
+		});
+	} else {
+		$('#anoCartao').hide();
+		$('#mesCartao').hide();
+		$('#selectValidadeMesCredito').show();
+		$('#selectValidadeAnoCredito').show();
+		$('#inputNomeCartaoCredito').val('').prop("disabled",  false);
+		$('#inputNumeroCartaoCredito').val('').prop("disabled", false);
+		$('.row-payment-card').css('display', 'flex');
+		$('.row-card-token').css('display', 'none');
+		$('.row-payment.repayment').css('display', 'flex');
+		$('#resumo_compra_final_cartao').html( 'XXXX' );	
+	}
+	})
 
 	$('#btn-finalizar-pedido-landing').click(function(){
 		removerError('#numeroCartaoCredito')
@@ -426,11 +592,22 @@ $(function(){
 		removerError('#anoCartaoCredito')
 		removerError('#codigoCartaoCredito')
 		removerError('#cpfTitularCartaoCredito')
+
+
+		removerError('#inputNumeroCartaoCredito')
+		removerError('#inputNomeCartaoCredito')
+		removerError('#selectValidadeMesCredito')
+		removerError('#selectValidadeAnoCredito')
+		removerError('#inputCodigoCredito')
+		removerError('#inputCPFCredito')
+
+		
+	//	apenasLetras($('#inputNomeCartaoCredito').val())
 		efetuarPagamento();
 	
 	})
 
-
+	
 	
 $('.escolherMetodoPagamento').change(function() {
 		removerError('#numeroCartaoCredito')
@@ -512,17 +689,28 @@ $('#numeroCartaoCredito').change(function(){
 })
 
 
-
+function apenasLetras(string) 
+	{
+		
+		var numsStr = string.replace(/[^0-9,.;:=-"']/g,'');
+		console.log(numsStr)
+		return (numsStr);
+	}
 
 function efetuarPagamento() {
 	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
-	let dados="";
+	let dados=null;
 	let executar = true;
 	switch(metodoPagamento){
 		case "1":
 		console.log('empresarial')
 		break;
 		case "2":
+			// valida se existe credito especial
+			if(parseInt($('#valor_disponivel').val()) >2){
+
+			}
+			dados = cartaoCreditoEmpresarial();
 		break;
 		case "3":
 		
@@ -640,11 +828,101 @@ function efetuarPagamento() {
 					$('#btn-finalizar-pedido').removeAttr('disabled');
 				}
 		  }); 
+	}else{
+		swal(
+			{
+				title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Atenção.</div>',
+				text: 'Verifique o metodo de pagamento selecionado'
+			}
+		);
 	}
 
 	
 }
 
+
+	function cartaoEmpresarial(){
+		
+	}
+
+
+	function cartaoCreditoEmpresarial(){
+			let objeto=null;
+			let resp =[];		
+			let metodo = $('.escolherMetodoPagamento option:selected').val()
+			let cartaoid = $('#cartaoCadastrado option:selected').val()
+			let numero = $('#numeroCartaoCredito ').val()
+			let nome = $('#nomeImpressoCartaoCredito ').val()
+			let mes = $('#mesCartaoCredito ').val()
+			let ano = $('#anoCartaoCredito').val()
+			let cvv = $('#inputCodigoCredito  ').val()
+			let titularcpf = $('#inputCPFCredito').val()
+			let parcelas = $('#selectParcelamentoCredito').val()
+			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
+			let porcentagemCreditoEspecial = parseInt($('#porcentagem_credito_empresarial').text());
+	
+			if(cartaoid != ""){
+				resp = validarCampos($('#inputCodigoCredito ').val(), '#inputCodigoCredito', "Mes cartão");
+				
+				if(resp){
+					objeto = {salvar, parcelas, cartaoid, cvv,porcentagem:porcentagemCreditoEspecial}				
+				
+				}else{
+						
+						swal(
+							{
+								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+								text: 'Por favor, verifique os campos e tente novamente.'
+							}
+						);
+					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+					$('#btn-finalizar-pedido').removeAttr('disabled');
+					 objeto=null
+				}
+			}else{
+				
+				resp.push( validarCampos($('#inputNumeroCartaoCredito  ').val(), '#inputNumeroCartaoCredito', "Número cartão obrigatório"));
+				resp.push(  validarCampos($('#inputNomeCartaoCredito  ').val(), '#inputNomeCartaoCredito', "Nome impresso é obrigatório"));
+				resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
+				resp.push( validarCampos($('#selectValidadeAnoCredito  ').val(), '#selectValidadeAnoCredito', "Ano do cartão é obrigatório"));
+				resp.push( validarCampos($('#inputCodigoCredito  ').val(), '#inputCodigoCredito', "Código do cartão é obrigatório"));
+				resp.push( validarCampos($('#inputCPFCredito  ').val(), '#inputCPFCredito', "CPF titular é obrigatório"));
+				
+
+				resp.forEach(function(entry) {
+					if(!entry){
+						permission=false;
+					}
+					
+				});
+
+				if(permission){
+					objeto = {
+						metodo,
+						cartaoid,
+						numero,
+						nome,
+						mes,
+						ano,
+						cvv,
+						titularcpf,
+						parcelas,
+						salvar,
+						porcentagem:porcentagemCreditoEspecial
+					}
+				}else{
+					swal(
+						{
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+							text: 'Por favor, verifique os campos e tente novamente.'
+						}
+					);
+				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+				$('#btn-finalizar-pedido').removeAttr('disabled');
+				}
+			}
+			return objeto;
+	}
 
 	function cartaoCredito(){
 			let objeto=null;
@@ -738,7 +1016,7 @@ function efetuarPagamento() {
 
 	validarCampos = (field, attrb, mensagem) => {
 		
-			if(field.length == 0) {
+			if(field.length == 0 || field =="Mês" || field =="Ano") {
 				
 				$(attrb).parent().addClass('cvx-has-error');
 				$(attrb).parent().append('<span class="help-block text-danger"><strong>'+mensagem+'</strong></span>');
