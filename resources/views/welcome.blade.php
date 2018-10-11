@@ -224,12 +224,31 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <!-- <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')"> -->
+                        <!-- sempre colocar classe "active" no primeiro banner -->
 
-                        <div class="carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                        <div class="banner-clinica carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt="">
+                                        <p>Nossa plataforma, oferece para você
+                                            além de uma <span>ampla rede</span> de parceiros a
+                                            primeira clínica Doutor Hoje do DF
+                                            para um <span>atendimento personalizado</span>,
+                                            <span>ágil</span> e de <span>qualidade.</span></p>
+                                        <p class="endereco-clinica"><i class="fa fa-map-marker" aria-hidden="true"></i> SCS QD. 03 BL. A LT. 107 - Asa Sul - Brasília/DF</p>
+                                        <h3>Agende sua consulta ou exame
+                                            aqui abaixo:</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -240,7 +259,7 @@
                             </div>
                         </div>
 
-                        <div class="carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
+                        <div class="banner-precos-justos carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -264,17 +283,6 @@
                 </div>
             </header>
 
-
-            {{--<div class="area-banner">
-                <div class="container">
-                    <div class="frase">
-                        <p>Conheça o novo jeito de cuidar da sua saúde</p>
-                        <p>Agende consultas e exames.<br>
-                            É simples, é rápido, é online! </p>
-                    </div>
-
-                </div>
-            </div>--}}
             <div id="area-sobre" class="area-sobre">
                 <div class="container">
                     <div class="row">

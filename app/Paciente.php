@@ -13,7 +13,10 @@ class Paciente extends Model
 	public $fillable      = ['id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'parentesto', 'user_id', 'cargo_id', 'responsavel_id'];
 	public $sortable      = ['id', 'nm_primario', 'nm_secundario', 'parentesto' ];
 	public $dates 	      = ['dt_nascimento'];
-    
+
+	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
+	protected $appends = ['plano_ativo'];
+
 	public function cargo(){
 	    return $this->belongsTo('App\Cargo');
 	}
@@ -73,5 +76,10 @@ class Paciente extends Model
 		} else {
 			return $vigenciaPac->plano_id;
 		}
+	}
+
+	public function getPlanoAtivoAttribute()
+	{
+		return Plano::findOrFail($this->getPlanoAtivo($this->attributes['id'])); //some logic to return numbers
 	}
 }

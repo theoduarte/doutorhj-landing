@@ -37,6 +37,7 @@
                                         <div class="agendamentos">
                                             <div class="row">
                                                 <div class="col col-lg-2 area-data">
+                                                	
                                                     @if(!empty($agendamento->dt_atendimento))
                                                         <p id="dia_{{ $agendamento->id }}" class="dia">@if($agendamento->getRawCsStatusAttribute() != 60) {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}} @else
                                                                 -- @endif</p>
@@ -64,7 +65,7 @@
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status confirmado">Confirmado</span>
                                                                 @elseif($agendamento->getRawCsStatusAttribute() == 30)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status nao-confirmado">Não Confirmado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40)
+                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40 | $agendamento->getRawCsStatusAttribute() == 100  | $agendamento->getRawCsStatusAttribute() == 90)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status finalizado">Finalizado</span>
                                                                 @elseif($agendamento->getRawCsStatusAttribute() == 50)
                                                                     <span id="status_agendamento_{{ $agendamento->id }}" class="status ausente">Não compareceu</span>
@@ -78,8 +79,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
+        <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
                                                         <strong>{{ $atendimento->clinica->nm_fantasia }}</strong></p>
                                                     
                                                     @if( !empty($atendimento->consulta_id) )

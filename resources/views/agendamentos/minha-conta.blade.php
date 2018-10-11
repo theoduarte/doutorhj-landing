@@ -9,7 +9,7 @@
 @section('content')
     <section class="area-busca-interna minha-conta">
         <div class="container">
-            
+
             <div class="box-minha-conta">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-3 menu">
@@ -18,9 +18,9 @@
                                 Cadastro</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Pagamento</a>
-                            {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Anuidade</a>--}}
-                            <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                        {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                            Anuidade</a>--}}
+                        <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Mensagens</a> -->
                             <!-- <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Notificações</a> -->
@@ -241,40 +241,20 @@
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="row">
-                                        <div class="col-md-12 col-lg-7">
-                                            <span class="label-titulo">Saldo / Limite</span>
-                                            <div class="box-pagamento saldo-limite">
-                                                <p class="intro">Você faz parte de um plano Empresarial, confira abaixo o limite disponibilizado pela empresa e o saldo atual.</p>
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <p class="p1">Limite</p>
-                                                        <p class="p2">R$ 300,00</p>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <p class="p1">Saldo</p>
-                                                        <p class="p2">R$ 197,83</p>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <p class="p1">Plano</p>
-                                                        <p class="p2">Premium</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
                                             <div class="box-pagamento lista-cartoes">
                                                 @foreach($cartoes_paciente as $cartao)
                                                     <div class="cartao">
                                                         <div class="row">
-                                                            <div class="col-10">
+                                                            <div class="col-md-10">
                                                                 <div class="bandeira {{ strtolower($cartao->bandeira) }}"></div>
                                                                 <p>
                                                                     <span class="numero-oculto">●●●● ●●●● ●●●● </span>
                                                                     <span class="final">{{ $cartao->numero }}</span>
                                                                 </p>
                                                             </div>
-                                                            <div class="col-2">
+                                                            <div class="col-md-2">
                                                                 <a class="exclui-cartao"><i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </div>
@@ -349,9 +329,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--<div class="col-md-12 col-lg-7">
+                                        <div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Últimas Transações</span>
                                             <div class="box-pagamento lista-transacoes">
+
                                                 @foreach($agendamentos as $agendamento)
                                                     <div class="transacoes">
                                                         <div class="row">
@@ -399,175 +380,6 @@
                                                 @endif
 
                                             </div>
-                                        </div>--}}
-                                        <div class="col-12">
-                                            <span class="label-titulo">Histórico</span>
-                                            <div class="box-pagamento historico">
-                                                <ul>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">consulta</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Consulta Cirurgia Oncologica (em consultorio)</p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 84,90</span> - <span class="forma-pagamento">débito</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">consulta</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Consulta Cirurgia de Cabeça e Pescoço (em consultorio)</p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 104,90</span> - <span class="forma-pagamento">cédito</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">exame</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Teste do Pezinho Ampliado (Tsh Neonatal + 17 Oh Progesterona + Fenilalanina + Tripsina Imuno-Reativa + Eletroforese de Hb Para Triagem de Hemopatias): Laboratorio</p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 120,29</span> - <span class="forma-pagamento">boleto</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">exame</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Raio X – Coluna Dorsal – 2 Incidências </p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 46,77</span> - <span class="forma-pagamento">débito</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">exame</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Creatinina: Laboratório</p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 6,16</span> - <span class="forma-pagamento">débito</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="detalhes">
-                                                            <div class="row">
-                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                                                    <div class="timeline">
-                                                                        <div class="linha1"></div>
-                                                                        <div class="circulo"></div>
-                                                                        <div class="linha2"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                                                    <div class="texto">
-                                                                        <div class="tipo-data">
-                                                                            <span class="tipo">consulta</span>
-                                                                            <span class="data">14/08/2018</span>
-                                                                        </div>
-                                                                        <div class="procedimento">
-                                                                            <p>Nutrição</p>
-                                                                        </div>
-                                                                        <div class="valor">
-                                                                            <span>R$ 64,90</span> - <span class="forma-pagamento">crédito</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -576,7 +388,6 @@
                                 <div>
                                     <div class="area-tipo-plano">
                                         <div class="row">
-
                                             <div class="col-md-12">
                                                 <span class="label-titulo">ANUIDADE</span>
                                                 <p>Valor da anuidade 48,80.</p>
@@ -808,143 +619,103 @@
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
-
                 $('#btn-add-dependente').click(function () {
-
                     var result = true;
                     var nm_primario_dependente = $('#inputNomeDependente');
-
                     if (nm_primario_dependente.val().length == 0) {
                         nm_primario_dependente.parent().addClass('cvx-has-error');
                         nm_primario_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#inputNomeDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var nm_secundario_dependente = $('#inputNmSecundarioDependente');
-
                     if (nm_secundario_dependente.val().length == 0) {
                         nm_secundario_dependente.parent().addClass('cvx-has-error');
                         nm_secundario_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#inputNmSecundarioDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var tp_documento = $('#tp_documento_dependente');
-
                     if (tp_documento.val() == '') {
                         tp_documento.parent().addClass('cvx-has-error');
                         tp_documento.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#tp_documento_dependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var nr_documento = $('#te_documento_dependente');
-
                     if (nr_documento.val().length == 0) {
                         nr_documento.parent().addClass('cvx-has-error');
                         nr_documento.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#te_documento_dependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var sexo_dependente = $('#selectGeneroDependente');
-
                     if (sexo_dependente.selectedIndex == 0) {
                         sexo_dependente.parent().addClass('cvx-has-error');
                         sexo_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#selectGeneroDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var dt_nasc_dia_dependente = $('#selectDiaDependente');
-
                     if (dt_nasc_dia_dependente.val() == '') {
                         dt_nasc_dia_dependente.parent().addClass('cvx-has-error');
                         dt_nasc_dia_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#selectDiaDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var dt_nasc_mes_dependente = $('#selectMesDependente');
-
                     if (dt_nasc_mes_dependente.val() == '') {
                         dt_nasc_mes_dependente.parent().addClass('cvx-has-error');
                         dt_nasc_mes_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#selectMesDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var dt_nasc_ano_dependente = $('#selectAnoDependente');
-
                     if (dt_nasc_ano_dependente.val() == '') {
                         dt_nasc_ano_dependente.parent().addClass('cvx-has-error');
                         dt_nasc_ano_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#selectAnoDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     var parentesco_dependente = $('#selectParentescoDependente');
-
                     if (parentesco_dependente.val() == '') {
                         parentesco_dependente.parent().addClass('cvx-has-error');
                         parentesco_dependente.parent().append('<span class="help-block text-danger"><strong>Campo Obrigatório</strong></span>');
-
                         $('#selectParentescoDependente').keypress(function () {
                             $(this).parent().removeClass('cvx-has-error');
                             $(this).parent().find('span.help-block').remove();
                         });
-
                         result = false;
                     }
-
                     if (!result) {
                         return false;
                     }
-
                     $('#btn-add-dependente').attr('disabled', 'disabled')
                     $('#lbl-add-dependente').html('Enviando <i class="fa fa-spin fa-spinner" style="display: inline-block; float: right; font-size: 16px;"></i>');
-
                     var nome_dep = nm_primario_dependente.val();
                     var sobrenome_dep = nm_secundario_dependente.val();
                     var tp_documento_dep = tp_documento.val();
@@ -955,7 +726,6 @@
                     var mes_nasc_dep = dt_nasc_mes_dependente.val();
                     var ano_nasc_dep = dt_nasc_ano_dependente.val();
                     var paciente_id = $('#inputPacienteId').val();
-
                     jQuery.ajax({
                         type: 'POST',
                         url: '/add-dependente',
@@ -973,13 +743,10 @@
                             '_token': laravel_token
                         },
                         success: function (result) {
-
                             if (result.status) {
-
                                 var dependente = JSON.parse(result.dependente);
                                 $('#lbl-no-dependents').empty();
                                 var index = ($('#lista-dependentes').find('div.dependente').length) + 1;
-
                                 var content = '<div class="dependente"> \
                                   <div class="row"> \
 	                                  <div class="col-md-10"> \
@@ -991,16 +758,12 @@
 	                                  </div> \
 	                              </div> \
 	                          	</div>';
-
                                 $('#modalAdicionaDependente').find('input.form-control').val('');
                                 $('#modalAdicionaDependente').find('select.form-control').prop('selectedIndex', 0);
-
                                 $('#modalAdicionaDependente').modal('toggle');
                                 $('#lista-dependentes').append(content);
-
                                 $.Notification.notify('success', 'top right', 'DrHoje', result.mensagem);
                             }
-
                             $('#btn-add-dependente').removeAttr('disabled')
                             $('#lbl-add-dependente').html('Adicionar <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                         },
@@ -1010,10 +773,8 @@
                             $.Notification.notify('error', 'top right', 'DrHoje', 'Falha na operação!');
                         }
                     });
-
                 });
             });
-
             /*********************************
              *
              * REMOVE PRODUTO DEPENDENTE E CARTÃO
@@ -1023,9 +784,7 @@
                 event.preventDefault();
                 var element = $(this);
                 if (confirm("Tem certeza que deseja excluir esse dependente?")) {
-
                     var paciente_id = $(element).parent().parent().find('.dependente_id').val();
-
                     jQuery.ajax({
                         type: 'POST',
                         url: '/delete-dependente',
@@ -1034,14 +793,10 @@
                             '_token': laravel_token
                         },
                         success: function (result) {
-
                             var dependente = JSON.parse(result.dependente);
                             var num_dependentes = result.num_dependentes;
-
                             if (result.status) {
-
                                 $(element).parent().parent().parent().remove();
-
                                 for (var i = 0; i < num_dependentes; i++) {
                                     var index = i + 1;
                                     $('#lista-dependentes').find('div.dependente:eq(' + i + ')').find('span.nm-dependente').find('strong').html('Dep0' + index);
@@ -1057,43 +812,36 @@
                     });
                 }
             });
-
             $(".exclui-cartao").on("click", function (event) {
                 event.preventDefault();
                 if (confirm("Tem certeza que deseja excluir esse cartão?")) {
                     $(this).parent().parent().parent().remove();
                 }
             });
-
             /*********************************
              *
              * ATIVA TOOLTIP
              *
              *********************************/
-
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
-
             /*********************************
              *
              * APAGA MENSAGEM
              *
              *********************************/
-
             $(".close-div").on("click", function (event) {
                 event.preventDefault();
                 if (confirm("Tem certeza que deseja apagar essa mensagem?")) {
                     $(this).parent().parent().parent().remove();
                 }
             });
-
             /*********************************
              *
              * SWITCHERY
              *
              *********************************/
-
             /*var elem = document.querySelector('.email-lembrete');
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
@@ -1106,7 +854,6 @@
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
             });
-
             var elem = document.querySelector('.mobile-lembrete');
             var init = new Switchery(elem, {
                 size: 'small', // small, default, large
