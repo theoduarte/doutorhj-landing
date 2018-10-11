@@ -202,23 +202,28 @@ class PaymentController extends Controller
     {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
-    	
-        $result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
+		
 
+        $result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
+	
 
         if ($result_agendamentos == null) {
-            return redirect()->route('landing-page');
+     //       return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
         
-        $valor_total_pedido = $request->session()->get('valor_total_pedido');
+		$valor_total_pedido = $request->session()->get('valor_total_pedido');
+				
+		$boleto_bancario = $request->session()->get('descricao_boleto');
+		
+		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-        $request->session()->forget('result_agendamentos');
-        $request->session()->forget('pedido');
-        $request->session()->forget('valor_total_pedido');
+      //  $request->session()->forget('result_agendamentos');
+      //  $request->session()->forget('pedido');
+      //  $request->session()->forget('valor_total_pedido');
         
-        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria'));
     }
     
     /**
@@ -431,13 +436,7 @@ class PaymentController extends Controller
 			$pedido->tp_pagamento   = $metodoPagamento ==1? 'empresarial' : $metodoPagamento==2 ? 'empre+credito' : $metodoPagamento==3 ? 'credito' : $metodoPagamento==4? 'boleto' : $metodoPagamento==5 ?'transferencia':'';
 			$pedido->paciente_id    = $paciente_id;
 			
-			if (!$pedido->save()) {
-				########### FINISHIING TRANSACTION ##########
-				DB::rollback();
-				#############################################
-				return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-			}
-
+			
 
 
 			// credito empresarial
@@ -448,7 +447,7 @@ class PaymentController extends Controller
 			 if($metodoPagamento ==2){
 	
 			}else 
-			// cartao de credito
+			// faz validação para efetuar compra com o  cartao de credito
 			if($metodoPagamento ==3){
 				if(!empty($dados->cartaoid)){
 					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
@@ -537,7 +536,10 @@ class PaymentController extends Controller
 			}else
 			//boleto bancario
 			if($metodoPagamento ==4){
-	
+				
+			
+				
+
 			}else
 			//transferencia bancario
 			if($metodoPagamento ==5){
@@ -565,9 +567,34 @@ class PaymentController extends Controller
 															
 			}
 			
-		
+			if($metodoPagamento ==4){
+				try{
+					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->mundipagg_token, 123456, "Pagar até o vencimento boleto")) ;
+					//echo json_encode($criarPagamento); die;
+				}catch(\Exception $e){
+					DB::rollBack();
+					return response()->json([
+						'message' => 'Não foi possivel gerar o boleto de pagamento!',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
+			}
 
+			if($metodoPagamento ==5){
+				try{
+					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarTranferencia($valor,"Doutor hoje",$paciente->mundipagg_token));    
+				//var_dump($criarPagamento); die;
+				}catch(\Exception $e){
+					DB::rollBack();
+					return response()->json([
+						'message' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado!',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
+			}
 
+			
+		//	var_dump($criarPagamento); die;
 
         /*if ($tp_pagamento == 'credito') {
         	if ($valor_total > 200) {
@@ -601,74 +628,14 @@ class PaymentController extends Controller
         $customer_Identity_type         = $customer->documentos->first()->tp_documento;
         $customer_email                 = $customer->user->email;
         $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
-    /*    
-        
-        $customer_address_street        = "";
-        $customer_address_number        = "";
-        $customer_address_complement    = "";
-        $customer_address_zipcode       = "";
-        $customer_address_city          = "";
-        $customer_address_state         = "";
-        $customer_address_country       = "";
-        
-        $customer_delivery_street       = "";
-        $customer_delivery_number       = "";
-        $customer_delivery_complement   = "";
-        $customer_delivery_zipcode      = "";
-        $customer_delivery_city         = "";
-        $customer_delivery_state        = "";
-        $customer_delivery_country      = ""; */
-        
-       /* $payment_type                   = $tp_pagamento == 'credito' ? 'CreditCard' : 'DebitCard'; //-- usado no pagamento por debito tambem
-        $payment_amount                 = ($valor_total-$valor_desconto)*100; //-- usado no pagamento por debito tambem
-        $payment_return_url             = config('app.url'); //-- usado no pagamento por debito apenas
-        $payment_currency               = 'BRL';
-        $payment_country                = 'BRA';
-        $payment_serv_taxa              = 0;
-        $payment_installments           = intval($num_parcela_selecionado); //sizeof($parcelamentos);
-        $payment_interest               = "ByMerchant";
-        $payment_capture                = 'true';
-        $payment_authenticate           = $tp_pagamento == 'credito' ? 'false' : 'true'; //-- usado no pagamento por debito tambem
-        $payment_softdescriptor         = 'doctorhoje';
-        $payment_credicard_number       = CVXRequest::post('num_cartao'); //-- usado no pagamento por debito tambem
-        $payment_holder                 = CVXRequest::post('nome_impresso_cartao'); //-- usado no pagamento por debito tambem
-        $payment_expiration_date        = CVXRequest::post('mes_cartao').'/'.CVXRequest::post('ano_cartao'); //-- usado no pagamento por debito tambem
-        $payment_security_code          = CVXRequest::post('cod_seg_cartao'); //-- usado no pagamento por debito tambem
-        $payment_save_card              = CVXRequest::post('gravar_cartao') == 'on' ? 'true' : 'false';
-		$payment_brand                  = CVXRequest::post('bandeira_cartao'); //-- usado no pagamento por debito tambem
-		   
-		//--payload para CARTAO DE CREDITO
-        if ($tp_pagamento == 'credito') {
-        	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'","Identity":"'.$customer_identity.'","IdentityType":"'.$customer_Identity_type.'","Email":"'.$customer_email.'","Birthdate":"'.$customer_birthdate.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"ServiceTaxAmount":'.$payment_serv_taxa.', "Installments":'.$payment_installments.',"Interest":"'.$payment_interest.'","Capture":'.$payment_capture.',"Authenticate":'.$payment_authenticate.',"SoftDescriptor":"'.$payment_softdescriptor.'","CreditCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","SaveCard":'.$payment_save_card.',"Brand":"'.$payment_brand.'"}}}';
-        }
-        else if ($tp_pagamento == 'debito') {
-        	$payload = '{"MerchantOrderId":"'.$MerchantOrderId.'", "Customer":{"Name":"'.$customer_name.'"},"Payment":{"Type":"'.$payment_type.'","Amount":'.$payment_amount.',"Authenticate":' .$payment_authenticate .',"ReturnUrl":"'.$payment_return_url.'","DebitCard":{"CardNumber":"'.$payment_credicard_number.'","Holder":"'.$payment_holder.'","ExpirationDate":"'.$payment_expiration_date.'","SecurityCode":"'.$payment_security_code.'","Brand":"'.$payment_brand.'"}}}';
-        	// $payload = '{"MerchantOrderId":"2014121201","Customer":{"Name":"Theogenes Ferreira Duarte"},"Payment":{"Type":"DebitCard","Amount":100,"Authenticate": true,"ReturnUrl":"https://doutorhoje.com.br/","DebitCard":{"CardNumber":"4001786172267144","Holder":"THEOGENES F DUARTE","ExpirationDate":"12/2021","SecurityCode":"879","Brand":"Visa"}}}';
-        }
-		
+   
+		if (!$pedido->save()) {
+			########### FINISHIING TRANSACTION ##########
+			DB::rollback();
+			#############################################
+			return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+		}
 
-		 $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
-        $cielo_result = json_decode($output);
-
-        \Log::debug("CIELO CHECKOUT");
-        \Log::debug(" -- Sended data --");
-        \Log::debug( print_r(array('Content-Type: application/json', 'MerchantId: '.$merchantId, 'MerchantKey: '.$merchantKey), true) );
-        
-        \Log::debug(" -- Result data --");
-        \Log::debug( print_r($cielo_result,true) );
-
-
-
-		*/
-        
-    
 		
 		if(!empty($criarPagamento)){
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
@@ -798,19 +765,50 @@ class PaymentController extends Controller
 									 
 							}
 
+							$dados = json_decode(json_encode($criarPagamento), true);		
+
+							$boleto=null;
+							if($metodoPagamento==4){
+
+								$boleto = [
+									"instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
+									"url" => 	$dados['charges'][0]['last_transaction']['url'],
+									"qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
+									"pdf_url" => $dados['charges'][0]['last_transaction']['pdf']	
+								];
+								
+							//	$this->enviarEmailPagamentoRealizado($paciente, $pedido, $dados['charges'][0]['last_transaction']['url']);																														
+							}
+
+
+							$transferencia=null;
+							if($metodoPagamento==5){
+								$transferencia = [
+									"metodo" => $dados['charges'][0]['payment_method'],
+									"url" => 	$dados['charges'][0]['last_transaction']['url']									
+								];
+									
+																																	
+							}
+
+						
+
 							//print_r($result_agendamentos); die;
 
 							 ########### FINISHIING TRANSACTION ##########
-							// DB::commit();
+						//	 DB::commit();
 							 #############################################
-							 CVXCart::clear();
+						//	 CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
 							 
+ 
+
 							 $request->session()->put('result_agendamentos', $result_agendamentos);
 							 $request->session()->put('pedido', $pedido);
 							 $request->session()->put('valor_total_pedido', $valor_total_pedido);
-							 
+							 $request->session()->put('descricao_boleto', $boleto);
+							 $request->session()->put('trans_bancario', $transferencia)	;
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
@@ -821,7 +819,7 @@ class PaymentController extends Controller
 						}else{
 							DB::rollback();
 								return response()->json([
-									'message' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: '.$pagamento[0]->tp_pagamento,                    
+									'message' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: ',                    
 								], 422);
 						}
 

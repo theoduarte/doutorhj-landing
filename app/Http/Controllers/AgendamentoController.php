@@ -320,14 +320,16 @@ class AgendamentoController extends Controller
     {
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-        
+      
         $item_id		    = $request->input('item_id');
         $paciente_id		= $request->input('paciente_id');
         $url                = $request->input('current_url');
-
+        
 		$cartCollection = CVXCart::getContent();
-		$card = $cartCollection->toArray()[$item_id];
-
+        $card = $cartCollection->toArray()[$item_id];
+        
+       
+      //  CVXCart::clear();
 		if($card['attributes']['paciente_id'] != $paciente_id) {
 			$paciente = Paciente::findOrFail($paciente_id);
 			$plano_id = $paciente->getPlanoAtivo($paciente->id);
@@ -345,12 +347,12 @@ class AgendamentoController extends Controller
 			$card['attributes']['paciente_id'] = $paciente_id;
 			$card['price'] = $vl_comercial;
 		}
-
+      
 		$card['attributes']['current_url'] = $url;
-
+        
         CVXCart::update($item_id, $card);
-
-//		self::atualizaValorTotalCarrinho();
+       
+		//self::atualizaValorTotalCarrinho();
 
         return redirect()->route('carrinho')->with('cart', 'O Item foi adicionado com sucesso');
     }
@@ -377,7 +379,7 @@ class AgendamentoController extends Controller
     	
     	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
-
+        
     	$carrinho = [];
 
     	foreach ($itens as $item) {
@@ -414,7 +416,7 @@ class AgendamentoController extends Controller
 				}
 
 				if ($atendimento->consulta_id != null) {
-					$atendimento->load('consulta');
+					$atendimento->load('consulta'); 
 					$atendimento->load('profissional');
 					$atendimento->profissional->load('especialidades');
 
@@ -423,14 +425,14 @@ class AgendamentoController extends Controller
 					foreach ($atendimento->profissional->especialidades as $especialidade) {
 						$nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
 					}
-                //    print_r( TagPopular::select('*')->where('consulta_id',$atendimento->consulta->id)->first() ); die;
+                
+                    $resultado =  TagPopular::where('consulta_id',$atendimento->consulta_id )->first() ;
                     
-                    echo  $atendimento ;
-                    die;
-					$ds_atendimento =   $atendimento->consulta->tag_populars->first()->cs_tag;
-
+                    !empty($resultado) ? $ds_atendimento= $resultado->cs_tag : $ds_atendimento= '';
+                    					
 					$atendimento->nome_especialidade = $nome_especialidade;
-					$atendimento->ds_atendimento = $ds_atendimento;
+                    
+                    $atendimento->ds_atendimento = $ds_atendimento;
 				}
 
 				if (isset($clinica)) {

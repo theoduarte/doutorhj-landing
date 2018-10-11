@@ -67,7 +67,7 @@ class Paciente extends Model
 			return Plano::OPEN;
 		}
 
-		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura' => true])
+		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
 			->where('data_inicio', '<=', date('Y-m-d'))
 			->where('data_fim', '>=', date('Y-m-d'))->first();
 

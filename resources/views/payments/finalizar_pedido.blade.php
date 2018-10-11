@@ -15,12 +15,45 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <div class="card card-formulario card-concluir">
+                            @if(!empty($boleto_bancario))
+                             <div class="card-header">
+                               BOLETO GERADO COM SUCESSO !
+                            </div>
+                             <div style="height:200px; widh:100%; text-align:center;   ">
+                                    
+                                    <img src="/img/boleto.png" alt="profile Pic" class="boleto-banc" height="100" width="200">
+                                    <hr>
+                                    <a  class="btn btn-vermelho" style="padding-top:15px;" target="_blank" rel="noopener noreferrer" href="{{$boleto_bancario['pdf_url']}}">Visualizar boleto</a>
+                                    <a  class="btn btn-vermelho" style="padding-top:15px;" target="_blank" rel="noopener noreferrer" href="{{$boleto_bancario['url']}}">Imprimir boleto</a>
+                                    </div>                                    
+
+
+                            @endif
+
+
+                            @if(!empty($transferencia_bancaria))
+                             <div class="card-header">
+                             
+                             PAGAMENTO COM TRANSFERENCIA BANCARIA !
+                            </div>
+                             <div style="height:200px; widh:100%; text-align:center;   ">
+                                    
+                                    <img src="/img/transferencia.png" alt="profile Pic" class="transferencia-banc" height="100" width="200">
+                                    <hr>
+                                    <a  class="btn btn-vermelho" style="padding-top:15px;" target="_blank" rel="noopener noreferrer" href="{{$transferencia_bancaria['url']}} ">Efetuar transferencia</a>
+                                    
+                                    </div>                                    
+
+
+                            @endif
+
+                            
                             <div class="card-header">
                                 NÚMERO DO PEDIDO: {{ sprintf("%08d", $pedido->id) }}
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
-                                    
+                                   
                                     
                                 @foreach($result_agendamentos as $index => $agendamento)
                                         @foreach( $agendamento->atendimentos as $atendimento )
