@@ -327,7 +327,7 @@ class AgendamentoController extends Controller
         
 		$cartCollection = CVXCart::getContent();
         $card = $cartCollection->toArray()[$item_id];
-        
+		$card['quantity'] = 0;
        
       //  CVXCart::clear();
 		if($card['attributes']['paciente_id'] != $paciente_id) {
@@ -351,7 +351,7 @@ class AgendamentoController extends Controller
 		$card['attributes']['current_url'] = $url;
         
         CVXCart::update($item_id, $card);
-       
+
 		//self::atualizaValorTotalCarrinho();
 
         return redirect()->route('carrinho')->with('cart', 'O Item foi adicionado com sucesso');
