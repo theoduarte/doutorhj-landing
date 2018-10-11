@@ -285,4 +285,106 @@ class UtilController extends Controller
 	    
 	    return $output;
 	}
+
+	
+	/**
+	 * @author Felipe Braz
+	 * @website https://www.braz.pro.br/blog
+	 * @param int $cartao
+	 * @param int $cvc
+	 * @return array
+	 */
+	static function validaCartao($cartao, $cvc=false){
+		$cartao = preg_replace("/[^0-9]/", "", $cartao);
+		if($cvc) $cvc = preg_replace("/[^0-9]/", "", $cvc);
+
+		$cartoes = array(
+			'Visa' => array('len' => array(13,16),    'cvc' => 3),
+			'MasterCard' => array('len' => array(16),       'cvc' => 3),
+			'Diners' => array('len' => array(14,16),    'cvc' => 3),
+			'Elo' => array('len' => array(16),       'cvc' => 3),
+			'Amex' => array('len' => array(15),       'cvc' => 4),
+			'Discover' => array('len' => array(16),       'cvc' => 4),
+			'Aura' => array('len' => array(16),       'cvc' => 3),
+			'JCB' => array('len' => array(16),       'cvc' => 3),
+			'Hipercard'  => array('len' => array(13,16,19), 'cvc' => 3),
+		);
+
+		switch($cartao){
+			case (bool) preg_match('/^(636368|438935|504175|451416|636297)/', $cartao) :
+				$bandeira = 'Elo';
+				break;
+
+			case (bool) preg_match('/^(606282)/', $cartao) :
+				$bandeira = 'Hipercard';
+				break;
+
+			case (bool) preg_match('/^(5067|4576|4011)/', $cartao) :
+				$bandeira = 'Elo';
+				break;
+
+			case (bool) preg_match('/^(3841)/', $cartao) :
+				$bandeira = 'Hipercard';
+				break;
+
+			case (bool) preg_match('/^(6011)/', $cartao) :
+				$bandeira = 'Discover';
+				break;
+
+			case (bool) preg_match('/^(622)/', $cartao) :
+				$bandeira = 'Discover';
+				break;
+
+			case (bool) preg_match('/^(301|305)/', $cartao) :
+				$bandeira = 'Diners';
+				break;
+
+			case (bool) preg_match('/^(34|37)/', $cartao) :
+				$bandeira = 'Amex';
+				break;
+
+			case (bool) preg_match('/^(36,38)/', $cartao) :
+				$bandeira = 'Diners';
+				break;
+
+			case (bool) preg_match('/^(64,65)/', $cartao) :
+				$bandeira = 'Discover';
+				break;
+
+			case (bool) preg_match('/^(50)/', $cartao) :
+				$bandeira = 'Aura';
+				break;
+
+			case (bool) preg_match('/^(35)/', $cartao) :
+				$bandeira = 'JCB';
+				break;
+
+			case (bool) preg_match('/^(60)/', $cartao) :
+				$bandeira = 'Hipercard';
+				break;
+
+			case (bool) preg_match('/^(4)/', $cartao) :
+				$bandeira = 'Visa';
+				break;
+
+			case (bool) preg_match('/^(5)/', $cartao) :
+				$bandeira = 'MasterCard';
+				break;
+
+			default:
+				return array('', false, false);
+		}
+
+
+
+		$dados_cartao = $cartoes[$bandeira];
+		if(!is_array($dados_cartao)) return array(false, false, false);
+
+		$valid     = true;
+		$valid_cvc = false;
+
+		if(!in_array(strlen($cartao), $dados_cartao['len'])) $valid = false;
+		if($cvc AND strlen($cvc) <= $dados_cartao['cvc'] AND strlen($cvc) !=0) $valid_cvc = true;
+		return array($bandeira, $valid, $valid_cvc);
+	}
 }

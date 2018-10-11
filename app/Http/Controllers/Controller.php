@@ -76,11 +76,14 @@ class Controller extends BaseController
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();
-			//dd($query_temp);
+			
 
 			foreach($agendamentos_home as $agendamento) {
-				if(!is_null($agendamento->atendimento_id)) {
-					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
+                
+				if(!empty($agendamento->clinica)) {
+					
+                        $agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
+                    
 				}
 
                 if ( !empty($agendamento->itempedidos->first()) ) {

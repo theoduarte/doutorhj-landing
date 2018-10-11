@@ -165,13 +165,9 @@ p {
     font-weight: 700;
 }
 
-header {
-    padding: 40px 0 0 0;
-}
-
 header .container {
-    height: 82px;
-    padding-top: 15px;
+    padding-top: 72px;
+    position: relative;
 }
 
 header .navbar-brand {
@@ -184,7 +180,7 @@ header .navbar-brand {
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin-top: -30px;
+    margin-top: -64px;
 }
 
 header .nav-link {
@@ -236,40 +232,65 @@ header .navbar-collapse {
 .menu-usuario .dropdown-menu {
     margin-top: -4px;
 }
-.menu-usuario .dropdown-menu .opcoes {
-    width: 100%;
-    padding: .25rem 1.5rem;
+.info-empresarial {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    padding: 8px 16px 8px 0;
+    background: #eaeaea;
+    margin-top: -8px;
 }
-.menu-usuario .dropdown-menu .opcoes p {
+
+.info-empresarial .opcoes {
+    float: left;
+    margin-left: 16px;
+}
+
+.info-empresarial .opcoes .logo-empresa {
+    display: block;
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 80px;
+    height: 49px;
+    background: #fff;
+}
+
+.info-empresarial .opcoes .logo-empresa img {
+    width: 100%;
+}
+
+.info-empresarial .opcoes p {
     margin-bottom: 0;
 }
-.menu-usuario .dropdown-menu .opcoes p.titulo {
+.info-empresarial .opcoes p.titulo {
     color: #999999;
-    font-size: 12px;
-    margin-bottom: 5px;
+    font-size: 11px;
+    margin-top: 4px;
+    margin-bottom: 0;
 }
-.menu-usuario .dropdown-menu .opcoes p.plano {
+.info-empresarial .opcoes p.plano {
     display: inline-block;
     padding: 2px 10px;
-    font-size: 12px;
+    font-size: 11px;
     border-radius: 4px;
 }
-.menu-usuario .dropdown-menu .opcoes p.premium {
+.info-empresarial .opcoes p.premium {
     color: #ffffff;
     background: #17a2b8;
 }
-.menu-usuario .dropdown-menu .opcoes p.blue {
+.info-empresarial .opcoes p.blue {
     color: #ffffff;
     background: #007bff;
 }
-.menu-usuario .dropdown-menu .opcoes p.black {
+.info-empresarial .opcoes p.black {
     color: #ffffff;
     background: #343a40;
 }
-.menu-usuario .dropdown-menu .opcoes p.saldo {
+.info-empresarial .opcoes p.saldo {
     color: #64A610;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 26px;
 }
 
 /*********************************
@@ -1255,9 +1276,8 @@ header .navbar-collapse {
 }
 
 .menu-area-logada {
-    background-color: rgb(230, 230, 230);
-    padding: 78px 15px 22px 15px;
-    margin-top: -55px;
+    /*padding: 78px 15px 22px 15px;
+    margin-top: -55px;*/
 }
 
 .menu-area-logada ul {
@@ -1266,13 +1286,12 @@ header .navbar-collapse {
     padding: 0;
     margin: 0;
 }
-
 .menu-area-logada ul li {
     float: left;
 }
 
 .menu-area-logada ul li .al-nome-usuario {
-    line-height: 37px;
+    line-height: 38px;
     cursor: default;
 }
 
@@ -1687,6 +1706,50 @@ header .nav-item-mobile {
 .card-resumo-compra .procedimentos ul li .clinica span,
 .card-resumo-compra .procedimentos ul li .endereco span {
     font-weight: 600;
+}
+
+#pagamentoEmpresarial h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+#pagamentoEmpresarial .separador {
+    width: 100%;
+    height: 1px;
+    display: block;
+    background: #dddddd;
+    margin-bottom: 20px;
+}
+
+#pagamentoEmpresarial .te {
+    margin-bottom: 2px;
+    font-size: 13px;
+}
+
+#pagamentoEmpresarial .vlr-ce {
+     color: #64A610;
+     font-weight: 600;
+     font-size: 16px;
+ }
+
+#pagamentoEmpresarial .escolhe-ce {
+    margin-top: 6px;
+}
+
+#pagamentoEmpresarial .complementar p {
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+#pagamentoEmpresarial .complementar .alert-heading {
+    font-size: 16px;
+}
+
+#pagamentoEmpresarial .complementar span {
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: inline-block;
 }
 
 /*********************************

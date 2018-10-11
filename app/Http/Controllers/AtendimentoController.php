@@ -53,6 +53,8 @@ class AtendimentoController extends Controller
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }
 
+
+       // var_dump($atendimentos); die;
         return view('resultado', compact('atendimentos', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }

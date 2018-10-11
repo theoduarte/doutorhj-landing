@@ -73,6 +73,7 @@
                         	@foreach($atendimentos as $atendimento)
                             <div class="card card-resultado">
                                 <div class="card-body">
+                                    
                                     <h5 class="card-title">{{ $atendimento->nm_fantasia }} - {{ $atendimento->tipo }}: {{ $atendimento->te_bairro }}</h5>
 
                                     <h6 class="card-subtitle">@if( !empty($atendimento->consulta_id) ) Dr. {{ $atendimento->nm_primario.' '.$atendimento->nm_secundario }} @endif</h6>

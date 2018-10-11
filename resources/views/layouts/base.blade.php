@@ -188,6 +188,34 @@
                             </ul>
                         </div>
                     </div>
+                   @php 
+                        $verificaruser= true
+                   @endphp
+
+                    @if($verificaruser)
+                    <div class="info-empresarial">
+                        <div class="opcoes ie-logo">
+                            <div class="logo-empresa">
+                                <img src="/libs/home-template/img/empresas/caixa.png" alt="">
+                            </div>
+                        </div>
+                        <div class="opcoes ie-plano">
+                            <p class="titulo">Plano</p>
+                            <p class="plano premium">Premium</p>
+                            {{---------------------------------
+                            <p class="plano blue">Blue</p>
+                            <p class="plano black">Black</p>
+                            ----------------------------------}}
+                        </div>
+                        <div class="opcoes ie-saldo">
+                            <p class="titulo">Saldo</p>
+                            <p class="saldo">R$ 197,83</p>
+                        </div>
+                    </div>
+                    @else
+
+                    @endif
+
                 </div>
             </nav>
         @else

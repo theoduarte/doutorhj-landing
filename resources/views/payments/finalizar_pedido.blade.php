@@ -20,7 +20,9 @@
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
-                                    @foreach($result_agendamentos as $index => $agendamento)
+                                    
+                                    
+                                @foreach($result_agendamentos as $index => $agendamento)
                                         @foreach( $agendamento->atendimentos as $atendimento )
                                             @if(!empty($atendimento->id))
                                                 <div class="card card-resumo-compra">
@@ -264,7 +266,8 @@
                                         @endforeach
 
                                     @endforeach
-										
+                               
+
                                     <div class="concluir-total">
                                         <div class="row">
                                             <div class="col-md-10">
