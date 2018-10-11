@@ -578,7 +578,21 @@ class AgendamentoController extends Controller
         
         if (Auth::check()) {
             $paciente_id = Auth::user()->paciente->id;
-            $agendamentos_home = Agendamento::where('paciente_id', $paciente_id)->get();
+            
+            
+            $list_dependentes = Paciente::where('responsavel_id', $paciente_id)->orderBy('id', 'asc')->pluck('id');
+            
+            //DB::enableQueryLog();
+            $agendamentos_home = Agendamento::with('itempedidos')->with('filial')->whereIn('paciente_id', $list_dependentes )->orWhere('paciente_id', $paciente_id)->orderBy( 'agendamentos.dt_atendimento', 'desc')->get();
+            /* $agendamentos_home = Agendamento::with('paciente')->with('filial')
+            	->join('pacientes', function($join) use ($paciente_id) {$join->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('agendamentos.paciente_id', '=', DB::raw($paciente_id));})
+            	->select('agendamentos.id', 'agendamentos.te_ticket', 'agendamentos.dt_atendimento', 'agendamentos.cs_status', 'agendamentos.bo_remarcacao', 'agendamentos.created_at', 'agendamentos.clinica_id', 'agendamentos.paciente_id', 'agendamentos.atendimento_id', 'agendamentos.profissional_id', 'agendamentos.filial_id', 'agendamentos.bo_retorno', 'agendamentos.cupom_id', 'agendamentos.checkup_id')
+            	->distinct()
+            	->orderBy( 'agendamentos.dt_atendimento', 'desc')
+            	->get(); */
+            //dd($agendamentos_home);
+            //$query_log = DB::getQueryLog();
+            //print_r($query_log);
         }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
@@ -618,20 +632,20 @@ class AgendamentoController extends Controller
     	$agendamento_disponivel = sizeof($agendamentos) <= 0 ? true : false;
     	
     	if (!$agendamento_disponivel) {
-    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento nÃ£o foi realizado, pois um dos horÃ¡rios escolhidos nÃ£o estÃ£o disponÃ­veis. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos horários escolhidos não estÃ£o disponíveis. Por favor, tente novamente.']);
     	}
     	
     	$agendamento = Agendamento::findorfail($agendamento_id);
     	
     	if (!isset($agendamento)) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi encontrado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
     	}
     	
     	$agendamento->cs_status = 10;
     	$agendamento->dt_atendimento    = $data.' '.$hora;
     
     	if (!$agendamento->save()) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi remarcado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi remarcado. Por favor, tente novamente.']);
     	}
     	
     	$agendamento->dia_agendamento 	= $data_temp[0];
@@ -657,14 +671,14 @@ class AgendamentoController extends Controller
     	$agendamento = Agendamento::findorfail($agendamento_id);
     	 
     	if (!isset($agendamento)) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi encontrado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi encontrado. Por favor, tente novamente.']);
     	}
     	 
     	//$agendamento->cs_status = 60;
     	//$agendamento->dt_atendimento    = date('Y-m-d H:i:s');
     
     	if (!$agendamento->save()) {
-    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento nÃ£o foi Cancelado. Por favor, tente novamente.']);
+    		return response()->json(['status' => false, 'mensagem' => 'O Agendamento não foi Cancelado. Por favor, tente novamente.']);
     	}
     	 
     	$agendamento->dia_agendamento 	= '--';
@@ -704,7 +718,7 @@ class AgendamentoController extends Controller
     	    $this->enviarEmailCancelarAgendamento($paciente, $pedido, $agendamento);
     	} catch (Exception $e) {}
     
-    	return response()->json(['status' => true, 'mensagem' => 'A SolicitaÃ§Ã£o de Cancelamento foi realizada com sucesso!', 'agendamento' => $agendamento->toJson()]);
+    	return response()->json(['status' => true, 'mensagem' => 'A Solicitação de Cancelamento foi realizada com sucesso!', 'agendamento' => $agendamento->toJson()]);
     }
     
     /**
@@ -840,7 +854,7 @@ class AgendamentoController extends Controller
         $mensagem_cliente->rma_nome     	= 'Contato DoutorHoje';
         $mensagem_cliente->rma_email       	= 'contato@doutorhoje.com.br';
         $mensagem_cliente->assunto     		= 'PrÃ©-Agendamento Solicitado';
-        $mensagem_cliente->conteudo     	= "<h4>Sua solicitaÃ§Ã£o de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise:</h4><br><ul><li>NÂº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>HorÃ¡rio: $hora_agendamento (por ordem de chegada)</li><li>EndereÃ§o: $endereco_agendamento</li></ul>";
+        $mensagem_cliente->conteudo     	= "<h4>Sua solicitação de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>Especialidade/exame: $nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>HorÃ¡rio: $hora_agendamento (por ordem de chegada)</li><li>EndereÃ§o: $endereco_agendamento</li></ul>";
         $mensagem_cliente->save();
         
         $destinatario                      = new MensagemDestinatario();
@@ -901,8 +915,8 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Sua solicitaÃ§Ã£o de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise. Aguarde
-                    contato telefÃ´nico do Doutor Hoje para confirmaÃ§Ã£o do
+                    Sua solicitação de <strong>cancelamento</strong> estÃ¡ em anÃ¡lise. Aguarde
+                    contato telefÃ´nico do Doutor Hoje para confirmação do
                     cancelamento. 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
@@ -1050,7 +1064,7 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    AtenÃ§Ã£o as regras de cancelamento descritas abaixo. Conforme
+                    Atenção as regras de cancelamento descritas abaixo. Conforme
                     Termo de Uso, <strong>Art.nÂº XX</strong>. 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
@@ -1114,7 +1128,7 @@ class AgendamentoController extends Controller
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Sabemos que imprevisto acontecem, mas nÃ£o deixe de cuidar da
+                    Sabemos que imprevisto acontecem, mas não deixe de cuidar da
                     sua saÃºde! 
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>

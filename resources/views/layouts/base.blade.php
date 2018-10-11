@@ -178,8 +178,7 @@
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                         <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
-                                            <a href="/carrinho" class="btn-carrinho"><img src="{{ asset('img/pedidos-icon.png') }}" alt="Pedidos">
-                                            </a>
+                                            <a href="/carrinho" class="btn-carrinho"><img src="{{ asset('img/pedidos-icon.png') }}" alt="Pedidos"> </a>
                                             <div class="numero-notificacoes">
                                                 <span>{{ $cvx_num_itens_carrinho }}</span>
                                             </div>
