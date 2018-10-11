@@ -131,8 +131,8 @@
                                         <div class="separador"></div>
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
                                         <input type="hidden" value="197,83" id="valor_disponivel">
-                                        <input type="hidden" value="680,70" id="total_pagar">
-                                        <input type="hidden" value="197,83" id="complemento">
+                                        <input type="hidden" value="{{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}" id="total_pagar">
+                                        <input type="hidden" value="00,00" id="complemento">
                                             <h4 class="alert-heading">Pagamento complementar</h4>
                                             <hr>
                                             <p>Total da compra:</p>
