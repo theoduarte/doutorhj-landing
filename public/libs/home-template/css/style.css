@@ -3758,7 +3758,7 @@ footer ul li a:hover {
 
 @media only screen and (max-width: 1200px) {
     header {
-        padding: 40px 0 38px 0;
+        padding: 24px 0 0 0;
     }
 
     header .navbar .container {
@@ -3770,7 +3770,7 @@ footer ul li a:hover {
     }
 
     .btn-profissional a {
-        margin: 0;
+        margin: 0!important;
         text-align: center;
         width: 234px;
     }
