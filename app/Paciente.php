@@ -61,7 +61,7 @@ class Paciente extends Model
 	    return $date->format('d/m/Y');
 	}
 
-	public function getPlanoAtivo($paciente_id)
+	public static function getPlanoAtivo($paciente_id)
 	{
 		if(is_null($paciente_id)) {
 			return Plano::OPEN;

@@ -14,7 +14,7 @@ use App\Endereco;
 use App\Cidade;
 use App\Agendamento;
 use App\Filial;
-
+use App\VigenciaPaciente;
 class AtendimentoController extends Controller
 {
     
@@ -34,15 +34,21 @@ class AtendimentoController extends Controller
         $especialidade = $request->get('tipo_especialidade');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
-
+        
         
 		if(isset(Auth::user()->paciente->id)) {
 			$paciente = Paciente::findOrFail(Auth::user()->paciente->id);
 			$planoId = $paciente->getPlanoAtivo($paciente->id);
+
+             if($planoId != Plano::OPEN) {
+                $dados = VigenciaPaciente::where('paciente_id',Auth::user()->paciente->id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
 		} else {
 			$planoId = Plano::OPEN;
 		}
-        
+        $plano =$planoId;
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
             $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
@@ -55,8 +61,9 @@ class AtendimentoController extends Controller
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }
 
+        
 
  
-        return view('resultado', compact('atendimentos', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
+        return view('resultado', compact('atendimentos','plano','vigencia', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }

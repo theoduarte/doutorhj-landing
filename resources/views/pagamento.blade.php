@@ -101,12 +101,14 @@
 
                                 <div class="row">
                                     <section class="col-md-12 col-lg-12">
-                                    <h3>Método de pagamento</h3>
+                                    <h3>Método de pagamento </h3>
                                             <div class="separador"></div>
                                         <select class="form-control escolherMetodoPagamento">
                                             <option value="" selected>Escolher metodo de pagamento</option>
+                                            @if($plano_paciente !=1)
                                             <option value="1" >Crédito empresarial</option>
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>
+                                            @endif
                                             <option value="3" >Cartão de crédito</option>
                                             <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>                                                                                        

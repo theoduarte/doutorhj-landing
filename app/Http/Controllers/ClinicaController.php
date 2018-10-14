@@ -31,7 +31,7 @@ use App\Consulta;
 use App\CartaoPaciente;
 use App\Paciente;
 use App\Filial;
-
+use App\Plano;
 class ClinicaController extends Controller
 {
     /**
@@ -793,11 +793,26 @@ class ClinicaController extends Controller
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
         
+
+        $plano_paciente = $resultado = Paciente::getPlanoAtivo($user_session->id);
         
     	$responsavel_id = $user_session->id;
     	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
+      
+        $plano = Plano::OPEN;
+        if (Auth::check()) {
+      
+            $plano = Paciente::getPlanoAtivo( $paciente_id);
 
-    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+            if($plano != Plano::OPEN) {
+                $dados = VigenciaPaciente::where('paciente_id', $paciente_id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
+        }
+
+        
+    	return view('pagamento', compact('url','plano','vigencia', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/

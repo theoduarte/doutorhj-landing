@@ -188,11 +188,9 @@
                             </ul>
                         </div>
                     </div>
-                   @php 
-                        $verificaruser= true
-                   @endphp
+                  
 
-                    @if($verificaruser)
+                    @if($plano != 1)
                     <div class="info-empresarial">
                         <div class="opcoes ie-logo">
                             <div class="logo-empresa">
@@ -201,20 +199,17 @@
                         </div>
                         <div class="opcoes ie-plano">
                             <p class="titulo">Plano</p>
-                            <p class="plano premium">Premium</p>
-                            {{---------------------------------
-                            <p class="plano blue">Blue</p>
-                            <p class="plano black">Black</p>
-                            ----------------------------------}}
+                            @if($plano ==2) <p class="plano premium">Premium</p>  @endif
+                             @if($plano ==3) <p class="plano blue">Blue</p> @endif
+                              @if($plano ==4)<p class="plano black">Black</p>  @endif                              
                         </div>
                         <div class="opcoes ie-saldo">
                             <p class="titulo">Saldo</p>
-                            <p class="saldo">R$ 197,83</p>
+                            <p class="saldo">R$ {{$vigencia[0]['vl_max_consumo']}}</p>
                         </div>
                     </div>
-                    @else
-
                     @endif
+ 
 
                 </div>
             </nav>

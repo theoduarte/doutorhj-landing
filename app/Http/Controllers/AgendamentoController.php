@@ -23,7 +23,8 @@ use App\MensagemDestinatario;
 use App\Filial;
 use App\Checkup;
 use App\TagPopular;
-
+use App\VigenciaPaciente;
+use App\Plano;
 class AgendamentoController extends Controller
 {
     /**
@@ -496,17 +497,30 @@ class AgendamentoController extends Controller
 				];
 			}
 
+             
+            
     		if (!empty($paciente)) {
     			array_push($carrinho, $item_carrinho);
     		} else {
     			CVXCart::remove($item_carrinho['item_id']);
     		}
     	}
+        $plano =Plano::OPEN;
+        if(Auth::check()){
+            //$query_temp = DB::getQueryLog();
+			$plano = Paciente::getPlanoAtivo(Auth::user()->paciente->id);
+
+            if($plano != 1) {
+                $dados = VigenciaPaciente::where('paciente_id',Auth::user()->paciente->id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
+        }
 
     	$valor_total = CVXCart::getTotal();
 		$valor_total = number_format($valor_total, 2, ',', '.');
 
-    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
+    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total', 'plano', 'vigencia'));
     }
     
     /**
@@ -575,7 +589,7 @@ class AgendamentoController extends Controller
         
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-        
+         $plano =Plano::OPEN;
         $agendamentos_home = [];
         
         if (Auth::check()) {
@@ -595,9 +609,19 @@ class AgendamentoController extends Controller
             //dd($agendamentos_home);
             //$query_log = DB::getQueryLog();
             //print_r($query_log);
+
+            
+         //$query_temp = DB::getQueryLog();
+			$plano = Paciente::getPlanoAtivo( $paciente_id);
+
+            if($plano != 1) {
+                $dados = VigenciaPaciente::where('paciente_id', $paciente_id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
         }
         
-        return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
+        return view('agendamentos.meus-agendamentos', compact('agendamentos_home','plano','vigencia'));
     }
     
     /**
@@ -749,13 +773,25 @@ class AgendamentoController extends Controller
         //--busca os agendamentos do paciente----------
         $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();
         
+         $plano =Plano::OPEN;
+        if(Auth::check()){
+            //$query_temp = DB::getQueryLog();
+			$plano = Paciente::getPlanoAtivo($user_paciente->paciente->id);
+
+            if($plano != 1) {
+                $dados = VigenciaPaciente::where('paciente_id',$user_paciente->paciente->id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
+        }
+
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');
         	$agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
         	$agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
         }
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'plano', 'vigencia'));
     }
     
     /**

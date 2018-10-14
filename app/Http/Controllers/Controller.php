@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Agendamento;
-
+use App\Paciente;
+use App\VigenciaPaciente;
+use App\Plano;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -57,7 +59,7 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
-        
+        $plano =Plano::OPEN;
         if (Auth::check()) {
 			$paciente_id = Auth::user()->paciente->id;
 
@@ -76,8 +78,14 @@ class Controller extends BaseController
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();
-			
+			$plano = Paciente::getPlanoAtivo($paciente_id);
 
+            if($plano != Plano::OPEN) {
+                $dados = VigenciaPaciente::where('paciente_id',$paciente_id )->get() ;
+            }
+
+            $vigencia = json_decode(json_encode($dados ), true);
+                                
 			foreach($agendamentos_home as $agendamento) {
                 
 				if(!empty($agendamento->clinica)) {
@@ -93,7 +101,7 @@ class Controller extends BaseController
 			}
         }
         
-        return view('welcome', compact('agendamentos_home', 'cvx_num_itens_carrinho'));
+        return view('welcome', compact('plano','vigencia','agendamentos_home', 'cvx_num_itens_carrinho'));
     }
     
     /**
