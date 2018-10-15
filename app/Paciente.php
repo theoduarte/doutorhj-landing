@@ -37,10 +37,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Paciente extends Model
 {
+	use Sortable;
     /**
      * @var array
      */
     protected $fillable = ['user_id', 'cargo_id', 'responsavel_id', 'empresa_id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'access_token', 'time_to_live', 'created_at', 'updated_at', 'parentesco', 'cs_status', 'mundipagg_token'];
+
 	public $sortable      = ['id', 'nm_primario', 'nm_secundario', 'parentesto' ];
 	public $dates 	      = ['dt_nascimento'];
 
@@ -180,7 +182,7 @@ class Paciente extends Model
 		return $this->getVlConsumido($this->attributes['id']);
 	}
 
-	public function getPlanoAtivo($paciente_id)
+	public static function getPlanoAtivo($paciente_id)
 	{
 		if(is_null($paciente_id)) {
 			return Plano::OPEN;
@@ -226,14 +228,11 @@ class Paciente extends Model
 		$lastDay = date('Y-m-t');
 
 		dd(
-		$paciente->agendamentos()
-			->whereHas('itempedidos.pedido', function() {
+			$paciente->agendamentos()
+				->whereHas('itempedidos.pedido', function() {
 
-			})
-			->with(['itempedidos', 'itempedidos.pedido'])
-	);
-
-
-
+				})
+				->with(['itempedidos', 'itempedidos.pedido'])
+		);
 	}
 }

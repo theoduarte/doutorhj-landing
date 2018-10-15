@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Paciente;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -10,7 +9,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Agendamento;
-
+use App\Paciente;
+use App\VigenciaPaciente;
+use App\Plano;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -20,6 +21,7 @@ class Controller extends BaseController
     //     $termosCondicoes = new TermosCondicoes();
     //     View::share( 'termosCondicoesAtual', $termosCondicoes->getActual() );
     // }
+
     /**
      * Consulta Cep através de sistema externo
      *
@@ -58,12 +60,13 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
+        $plano = Plano::OPEN;
 
         if (Auth::check()) {
 			$paciente = Auth::user()->paciente;
 			$paciente_id = $paciente->id;
 
-//dd($paciente->vl_consumido, $paciente->vl_max_consumo);
+			//dd($paciente->vl_consumido, $paciente->vl_max_consumo);
 
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
@@ -81,6 +84,13 @@ class Controller extends BaseController
 
 			//$query_temp = DB::getQueryLog();
 
+			$plano = Paciente::getPlanoAtivo($paciente_id);
+            
+            if($plano != Plano::OPEN) {
+                $vigencia_valor = Paciente::getValorLimite($paciente_id) ;
+                                
+            }
+                                
 			foreach($agendamentos_home as $agendamento) {
 				if(!empty($agendamento->clinica)) {
 					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
@@ -93,7 +103,7 @@ class Controller extends BaseController
 			}
         }
         
-        return view('welcome', compact('agendamentos_home', 'cvx_num_itens_carrinho'));
+        return view('welcome', compact('plano','vigencia_valor','agendamentos_home', 'cvx_num_itens_carrinho'));
     }
     
     /**
