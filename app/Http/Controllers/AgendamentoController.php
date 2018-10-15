@@ -346,7 +346,6 @@ class AgendamentoController extends Controller
     
     public function carrinhoDeCompras()
 	{
-		$user_session = Auth::user();
 		$url = Request::root();
     	
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -357,6 +356,9 @@ class AgendamentoController extends Controller
         
     	$carrinho = [];
 
+		$paciente_logado = Auth::user()->paciente;
+		$plano_id = $paciente_logado->plano_ativo->id;
+
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
 			$paciente = $paciente_tmp_id != null && $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
@@ -366,9 +368,6 @@ class AgendamentoController extends Controller
 				$profissional_tmp_id = $item['attributes']['profissional_id'];
 				$clinica_tmp_id = $item['attributes']['clinica_id'];
 				$filial_tmp_id = $item['attributes']['filial_id'];
-
-				$paciente = Auth::user()->paciente;
-				$plano_id = $paciente->plano_ativo->id;
 
 				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
 					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
@@ -472,23 +471,13 @@ class AgendamentoController extends Controller
 				];
 			}
 
-             
-            
     		if (!empty($paciente)) {
     			array_push($carrinho, $item_carrinho);
     		} else {
     			CVXCart::remove($item_carrinho['item_id']);
     		}
     	}
-        
-        
-			$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
 
-            if($plano != Plano::OPEN) {
-                $vigencia_valor =  Paciente::getVlMaxConsumo($user_session->paciente->id);               
-            }
-
-      
     	$valor_total = CVXCart::getTotal();
 		$valor_total = number_format($valor_total, 2, ',', '.');
 
