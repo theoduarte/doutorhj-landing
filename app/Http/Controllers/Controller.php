@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Paciente;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -57,9 +58,12 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
-        
+
         if (Auth::check()) {
-			$paciente_id = Auth::user()->paciente->id;
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+
+//dd($paciente->vl_consumido, $paciente->vl_max_consumo);
 
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
@@ -76,14 +80,10 @@ class Controller extends BaseController
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();
-			
 
 			foreach($agendamentos_home as $agendamento) {
-                
 				if(!empty($agendamento->clinica)) {
-					
-                        $agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
-                    
+					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
 				}
 
                 if ( !empty($agendamento->itempedidos->first()) ) {
