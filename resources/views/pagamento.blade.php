@@ -10,8 +10,7 @@
 
     <section class="pagamento">
     
-  
-    <style>
+		<style>
 .slidecontainer {
     width: 100%;
 }

@@ -21,6 +21,7 @@ class Controller extends BaseController
     //     $termosCondicoes = new TermosCondicoes();
     //     View::share( 'termosCondicoesAtual', $termosCondicoes->getActual() );
     // }
+
     /**
      * Consulta Cep através de sistema externo
      *
@@ -59,15 +60,18 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
-       
+
+        $plano = Plano::OPEN;
+
         if (Auth::check()) {
-			$paciente_id = Auth::user()->paciente->id;
-            
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
-				'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
-				'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
-			])
+					'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
+					'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
+				])
 				->join('pacientes', function($join1) use ($paciente_id) {
 					$join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(function($query) use ($paciente_id) {
 						$query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));
@@ -78,21 +82,10 @@ class Controller extends BaseController
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();
-			$plano = Paciente::getPlanoAtivo($paciente_id);
-            
-            if($plano != Plano::OPEN) {
-                $vigencia_valor = Paciente::getValorLimite($paciente_id) ;
-                                
-            }
-
-           
                                 
 			foreach($agendamentos_home as $agendamento) {
-                
 				if(!empty($agendamento->clinica)) {
-					
-                        $agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
-                    
+					$agendamento->endereco_completo = $agendamento->clinica->enderecos->first()->te_endereco . ' - ' . $agendamento->clinica->enderecos->first()->te_bairro . ' - ' . $agendamento->clinica->enderecos->first()->cidade->nm_cidade . '/' . $agendamento->clinica->enderecos->first()->cidade->estado->sg_estado;
 				}
 
                 if ( !empty($agendamento->itempedidos->first()) ) {
@@ -102,7 +95,7 @@ class Controller extends BaseController
 			}
         }
         
-        return view('welcome', compact('plano','vigencia_valor','agendamentos_home', 'cvx_num_itens_carrinho'));
+        return view('welcome', compact('agendamentos_home', 'paciente'));
     }
     
     /**

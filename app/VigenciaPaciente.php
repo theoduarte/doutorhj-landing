@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\UtilController;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $paciente_id
  * @property string $data_inicio
  * @property string $data_fim
- * @property boolean $cobertura
+ * @property boolean $cobertura_ativa
+ * @property float $vl_max_consumo
  * @property string $created_at
  * @property string $updated_at
  * @property Plano $plano
@@ -21,7 +23,7 @@ class VigenciaPaciente extends Model
     /**
      * @var array
      */
-    protected $fillable = ['plano_id', 'paciente_id', 'data_inicio', 'data_fim','vl_max_consumo', 'cobertura_ativa', 'created_at', 'updated_at'];
+    protected $fillable = ['plano_id', 'paciente_id', 'data_inicio', 'data_fim', 'vl_max_consumo', 'cobertura_ativa', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -39,6 +41,13 @@ class VigenciaPaciente extends Model
         return $this->belongsTo('App\Paciente');
     }
 
-    
- 
+	public function setVlMaxConsumoAttribute($value)
+	{
+		$this->attributes['vl_max_consumo'] = UtilController::removeMaskMoney($value);
+	}
+
+	public function getVlMaxConsumoAttribute()
+	{
+		return number_format( $this->attributes['vl_max_consumo'],  2, ',', '.');
+	}
 }

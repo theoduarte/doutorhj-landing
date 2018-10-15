@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.base', compact('paciente'))
 
 @section('title', 'DoutorHJ: Home')
 
