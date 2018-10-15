@@ -55,36 +55,11 @@ class AgendamentoController extends Controller
      */
     public function informaBeneficiario()
     {
-        /*$user_id = 17;
-        
-        \Cart::session($user_id)->add(455, 'Sample Item', 100.99, 2, array());
-        \Cart::clear();
-        \Cart::add(array(
-        'id' => 456,
-        'name' => 'Sample Item 1',
-        'price' => 67.99,
-        'quantity' => 4,
-        'attributes' => array()
-        ));
-        
-        \Cart::add(array(
-        'id' => 568,
-        'name' => 'Sample Item 2',
-        'price' => 69.25,
-        'quantity' => 4,
-        'attributes' => array(
-        'size' => 'L',
-        'color' => 'blue'
-        )
-        ));*/
-//         $atendimento_id      = $request->input('atendimento_id');
-//         $profissional_id = $request->input('profissional_id');
-//         $paciente_id     = $request->input('paciente_id');
-//         $clinica_id          = $request->input('clinica_id');
-//         $data_atendimento    = $request->input('data_atendimento');
-//         $hora_atendimento    = $request->input('hora_atendimento');
-//         $vl_com_atendimento = $request->input('vl_com_atendimento');
-//         $url                = $request->input('current_url');
+		if (Auth::check()) {
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+		}
+
         $cartCollection = CVXCart::getContent();
         $itens = $cartCollection->toArray();
         // dd($itens);die;
@@ -165,23 +140,13 @@ class AgendamentoController extends Controller
         $valor_total = number_format($valor_total, 2, ',', '.');
             
         // dd($user_session);
-
         $responsavel_id = $user_session->paciente->id;
 
-      
-            //$query_temp = DB::getQueryLog();
-		$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
-        
-        if($plano != Plano::OPEN) {
-
-            $vigencia_valor = Paciente::getVlMaxConsumo($user_session->paciente->id);                
-        }
-                          
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $paciente_titular = $user_session->paciente;
         
-        return view('agendamentos.informa-beneficiario', compact('url','plano','vigencia_valor', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
+        return view('agendamentos.informa-beneficiario', compact('url', 'paciente', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
     }
     
     /**
@@ -402,8 +367,9 @@ class AgendamentoController extends Controller
 				$clinica_tmp_id = $item['attributes']['clinica_id'];
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
-				$paciente = new Paciente();
-				$plano_id = $paciente->getPlanoAtivo($paciente->id);
+				$paciente = Auth::user()->paciente;
+				$plano_id = $paciente->plano_ativo->id;
+
 				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
 					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
 						$query->where('precos.plano_id', '=', $plano_id);
@@ -526,7 +492,7 @@ class AgendamentoController extends Controller
     	$valor_total = CVXCart::getTotal();
 		$valor_total = number_format($valor_total, 2, ',', '.');
 
-    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total', 'plano', 'vigencia_valor'));
+    	return view('agendamentos.carrinho', compact('url', 'paciente', 'carrinho', 'valor_total'));
     }
     
     /**

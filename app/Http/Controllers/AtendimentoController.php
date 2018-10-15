@@ -34,34 +34,23 @@ class AtendimentoController extends Controller
         $especialidade = $request->get('tipo_especialidade');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
-        
-        
-		
-			$plano = Paciente::getPlanoAtivo(Auth::user()->paciente->id);
+		if (Auth::check()) {
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+		}
 
-             if($plano != Plano::OPEN) {
-                
-                $vigencia_valor = Paciente::getVlMaxConsumo(Auth::user()->paciente->id);
-                
-            }
-
-        
-        
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano );
+            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $paciente->plano_ativo->id );
             $list_enderecos = $consulta->getActiveAddress( $especialidade );
             $list_atendimentos = $consulta->getActive();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano );
+            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $paciente->plano_ativo->id );
             $list_enderecos = $procedimento->getActiveAddress( $especialidade );
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }
 
-        
-
- 
-        return view('resultado', compact('atendimentos','plano','vigencia_valor', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
+        return view('resultado', compact('atendimentos', 'paciente', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }

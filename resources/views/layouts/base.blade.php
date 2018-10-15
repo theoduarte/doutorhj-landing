@@ -189,7 +189,7 @@
                         </div>
                     </div>
 
-                    @if($paciente->plano_ativo->id != App\Plano::OPEN)
+                    @if(isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
