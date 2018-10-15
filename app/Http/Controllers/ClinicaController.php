@@ -807,8 +807,8 @@ class ClinicaController extends Controller
         if($plano_paciente != Plano::OPEN) {
 
             $plano =$plano_paciente;
-            $vigencia_valor = Paciente::getValorLimite($responsavel_id) ;
-            
+            $vigencia_valor = Paciente::getVlMaxConsumo($responsavel_id) ;
+
         }
 
         

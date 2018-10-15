@@ -201,7 +201,7 @@ class Paciente extends Model
 		}
 	}
 
-	public function getVlMaxConsumo($paciente_id)
+	public static function getVlMaxConsumo($paciente_id)
 	{
 		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
 			->where('data_inicio', '<=', date('Y-m-d'))

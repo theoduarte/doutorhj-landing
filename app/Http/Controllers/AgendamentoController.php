@@ -174,7 +174,7 @@ class AgendamentoController extends Controller
         
         if($plano != Plano::OPEN) {
 
-            $vigencia_valor = Paciente::getValorLimite($user_session->paciente->id);                
+            $vigencia_valor = Paciente::getVlMaxConsumo($user_session->paciente->id);                
         }
                           
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
@@ -519,7 +519,7 @@ class AgendamentoController extends Controller
 			$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
 
             if($plano != Plano::OPEN) {
-                $vigencia_valor =  Paciente::getValorLimite($user_session->paciente->id);               
+                $vigencia_valor =  Paciente::getVlMaxConsumo($user_session->paciente->id);               
             }
 
       
@@ -622,7 +622,7 @@ class AgendamentoController extends Controller
 
             if($plano != 1) {
 
-                $vigencia_valor =   Paciente::getValorLimite($paciente_id);                
+                $vigencia_valor =   Paciente::getVlMaxConsumo($paciente_id);                
 
             }
 
@@ -787,7 +787,7 @@ class AgendamentoController extends Controller
 			$plano = Paciente::getPlanoAtivo($user_paciente->paciente->id);
 
             if($plano !=Plano::OPEN) {
-               $vigencia_valor = Paciente::getValorLimite($user_paciente->paciente->id);
+               $vigencia_valor = Paciente::getVlMaxConsumo($user_paciente->paciente->id);
                 
             }
 

@@ -41,7 +41,7 @@ class AtendimentoController extends Controller
 
              if($plano != Plano::OPEN) {
                 
-                $vigencia_valor = Paciente::getValorLimite(Auth::user()->paciente->id);
+                $vigencia_valor = Paciente::getVlMaxConsumo(Auth::user()->paciente->id);
                 
             }
 

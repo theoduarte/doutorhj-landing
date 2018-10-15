@@ -689,8 +689,10 @@ class PaymentController extends Controller
 				// valor para ser cobrado no cartao de credito
 				$cartaoCredito =  $valorFinal - $empresarial ;
 
-				echo number_format( $empresarial, 2, ',', '.') ;
-			//	($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $valor_total-$valor_desconto * (1 + 0.05) ** $pag->qt_parcela, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $valorCartaoCredito , 2, ',', '.') ) ;
+			
+				($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) ** $pag->qt_parcela, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
+				$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
+			
 				//$dados['cvv']
 				//$dados['parcelas']
 				//$dados['porcentagem']
