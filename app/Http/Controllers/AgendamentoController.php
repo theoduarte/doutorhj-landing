@@ -206,6 +206,9 @@ class AgendamentoController extends Controller
 				})->first();
                 
 			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
+			$source = array('.', ',');
+			$replace = array('', '.');
+			$vl_com_atendimento = str_replace($source, $replace, $vl_com_atendimento);
 
             CVXCart::add(array(
 				'id' => $cart_id,
@@ -303,7 +306,7 @@ class AgendamentoController extends Controller
 		$cartCollection = CVXCart::getContent();
         $card = $cartCollection->toArray()[$item_id];
 		$card['quantity'] = 0;
-       
+
       //  CVXCart::clear();
 		if($card['attributes']['paciente_id'] != $paciente_id) {
 			$paciente = Paciente::findOrFail($paciente_id);
@@ -318,7 +321,7 @@ class AgendamentoController extends Controller
 			$source = array('.', ',');
 			$replace = array('', '.');
 			$vl_comercial = str_replace($source, $replace, $vl_comercial);
-
+			
 			$card['attributes']['paciente_id'] = $paciente_id;
 			$card['price'] = $vl_comercial;
 		}
