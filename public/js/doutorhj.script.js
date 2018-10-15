@@ -372,9 +372,23 @@ $(function(){
 		valor = this.value ;                                        
 		valor_formatado = ( $('#valor_disponivel').val());
 		resp = (valor_formatado.replace(',','.'))                                                                        																	  		
-		resultado =parseFloat( (valor * resp )/100 );
-		final = resultado.formatMoney(2, ',', '.');
+		let valorVerificar = parseFloat($('#total_pagar').val());
+	 
+		if(parseFloat($('#total_pagar').val()) <25){
+			resultado =parseFloat( (valor * resp )/10000  );
+		}else{
+			resultado =parseFloat( (valor * resp )/100  );
+		}
 
+
+		final = resultado.formatMoney(2, ',', '.');
+		
+			if(final === valorVerificar.formatMoney(2, ',', '.')){
+				
+				console.log(slider.getValue())
+			}
+			
+	
 		complemento =  ($('#total_pagar').val());
 		 respCOmplemento = (complemento.replace(',','.'))      
 		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
@@ -407,7 +421,7 @@ $(function(){
 		 valor_formatado = ( $('#valor_disponivel').val());
 		 resp = (valor_formatado.replace(',','.'))                                                                                                                                                                              
 		
-		 resultado =parseFloat( (valor * resp )/100 );
+		 resultado =parseFloat( (valor * resp )/10000 );
 		
 		 final = resultado.formatMoney(2, ',', '.');
 
@@ -711,6 +725,8 @@ function efetuarPagamento() {
 
 			}
 			dados = cartaoCreditoEmpresarial();
+			
+			
 		break;
 		case "3":
 		
@@ -851,16 +867,17 @@ function efetuarPagamento() {
 			let resp =[];		
 			let metodo = $('.escolherMetodoPagamento option:selected').val()
 			let cartaoid = $('#cartaoCadastrado option:selected').val()
-			let numero = $('#numeroCartaoCredito ').val()
-			let nome = $('#nomeImpressoCartaoCredito ').val()
-			let mes = $('#mesCartaoCredito ').val()
-			let ano = $('#anoCartaoCredito').val()
+			let numero = $('#inputNumeroCartaoCredito ').val()
+			let nome = $('#inputNomeCartaoCredito ').val()
+			let mes = $('#selectValidadeMesCredito ').val()
+			let ano = $('#selectValidadeAnoCredito').val()
 			let cvv = $('#inputCodigoCredito  ').val()
 			let titularcpf = $('#inputCPFCredito').val()
 			let parcelas = $('#selectParcelamentoCredito').val()
 			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
 			let porcentagemCreditoEspecial = parseInt($('#porcentagem_credito_empresarial').text());
-	
+
+		
 			if(cartaoid != ""){
 				resp = validarCampos($('#inputCodigoCredito ').val(), '#inputCodigoCredito', "Mes cartão");
 				
@@ -880,7 +897,7 @@ function efetuarPagamento() {
 					 objeto=null
 				}
 			}else{
-				
+				let permission=true;
 				resp.push( validarCampos($('#inputNumeroCartaoCredito  ').val(), '#inputNumeroCartaoCredito', "Número cartão obrigatório"));
 				resp.push(  validarCampos($('#inputNomeCartaoCredito  ').val(), '#inputNomeCartaoCredito', "Nome impresso é obrigatório"));
 				resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
@@ -909,7 +926,7 @@ function efetuarPagamento() {
 						parcelas,
 						salvar,
 						porcentagem:porcentagemCreditoEspecial
-					}
+					}				
 				}else{
 					swal(
 						{

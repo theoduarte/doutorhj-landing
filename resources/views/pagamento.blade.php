@@ -101,12 +101,14 @@
 
                                 <div class="row">
                                     <section class="col-md-12 col-lg-12">
-                                    <h3>Método de pagamento</h3>
+                                    <h3>Método de pagamento </h3>
                                             <div class="separador"></div>
                                         <select class="form-control escolherMetodoPagamento">
                                             <option value="" selected>Escolher metodo de pagamento</option>
+                                            @if($plano_paciente !=1)
                                             <option value="1" >Crédito empresarial</option>
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>
+                                            @endif
                                             <option value="3" >Cartão de crédito</option>
                                             <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>                                                                                        
@@ -130,9 +132,14 @@
                                         <span class="vlr-ce">R$ 00,00</span>
                                         <div class="separador"></div>
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
-                                        <input type="hidden" value="197,83" id="valor_disponivel">
-                                        <input type="hidden" value="680,70" id="total_pagar">
-                                        <input type="hidden" value="197,83" id="complemento">
+                                       
+                                        @if($plano != 1)
+                                        <input type="hidden" value="{{ $vigencia_valor}}" id="valor_disponivel">
+                                        @endif
+                                        
+                                      
+                                        <input type="hidden" value="{{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}" id="total_pagar">
+                                        <input type="hidden" value="00,00" id="complemento">
                                             <h4 class="alert-heading">Pagamento complementar</h4>
                                             <hr>
                                             <p>Total da compra:</p>
@@ -156,7 +163,7 @@
                                         
 
                                         <div class="slidecontainer">
-                                            <input type="range" min="1" max="100" value="100" class="slider" id="myRange">
+                                            <input type="range" min="0" max="100" value="0"  class="slider" id="myRange">
                                             <p> <span id="porcentagem_credito_empresarial"></span> % </p>
                                         </div>
                                         </div>

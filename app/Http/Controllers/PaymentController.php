@@ -444,8 +444,110 @@ class PaymentController extends Controller
 
 			}else 
 			// credito empresarial + cartao de credito
-			 if($metodoPagamento ==2){
+			if($metodoPagamento ==2){
+
+				// validar se o cartao do funcionario existe limite
+				// obtem o valor de limite restande do usuario
+				$limiteCartaoFuncionario =200;
+				if($limiteCartaoFuncionario ==0){
+					return response()->json([
+						'mensagem' => 'Não existe limite no cartao empresarial.'
+					], 422);
+				}else{
+					$valorLimiteRestante = 199;
+				}
+
+				if(!empty($dados->cartaoid)) {
+					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+					if(!$cartao->exists()) {
+						DB::rollback();
+						return response()->json([
+							'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+						], 404);
+					}
+					if(empty($dados->cvv)){
+						return response()->json([
+							'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+						], 422);
+					}
+
+					// card_id quando o cartao está salvo no sistema
+					$cartao =$cartao->first()->card_token;
+					$metodoCartao=1;
+
+				} else {
+
+					if( $dados->salvar == 0){
 	
+						try{									
+							// cria token cartao						
+							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+							$metodoCartao=2;
+							$cartao = $cartaoToken->id;
+						}catch(\Exception $e){
+							DB::rollBack();
+							return response()->json([
+								'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'errors' => $e->getMessage(),
+							], 500);
+						}
+
+					}else{
+						$cartaoPaciente = CartaoPaciente::where([
+							'numero' => substr($dados->numero, -4),
+							'dt_validade' => $dados->mes.'/'.$dados->ano,
+							'bandeira' => $bandeira
+						])->exists();
+						
+						if(!$cartaoPaciente) { 																				
+							
+							try {
+								$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+									$dados->numero, 
+									$dados->nome, 				
+									$dados->mes, 
+									$dados->ano,
+									$dados->cvv, 
+									$bandeira
+									)); 
+									
+								$cartao_paciente = new CartaoPaciente();
+								$cartao_paciente->bandeira 		= $bandeira;
+								$cartao_paciente->nome_impresso = $dados->nome;
+								$cartao_paciente->numero 		= substr($dados->numero, -4);
+								$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+								$cartao_paciente->card_token 	= $saveCartao->id;
+								$cartao_paciente->paciente_id 	= $paciente->id;
+
+								if($cartao_paciente->save()) {
+									
+									// card_id cartao salvo
+									$metodoCartao=1;
+									$cartao = $saveCartao->id;
+									
+								}
+							} catch(\Exception $e) {
+								DB::rollBack();
+								return response()->json([
+									'message' => 'Erro ao salvar o cartao!',
+									'errors' => $e->getMessage(),
+								], 500);
+							}
+						}else{
+							DB::rollback();
+							return response()->json([
+								'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
+							], 404);	
+						}	
+					}
+				}
+				
+				//$dados['cvv']
+				//$dados['parcelas']
+				//$dados['porcentagem']
+				
+
 			}else 
 			// faz validação para efetuar compra com o  cartao de credito
 			if($metodoPagamento ==3){
@@ -550,9 +652,64 @@ class PaymentController extends Controller
 			}
 
 
-			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+
+
+			if($metodoPagamento==1){
+
+			}else 
+			if($metodoPagamento ==2 ){
+				
+				if($metodoPagamento ==2 && empty($dados->porcentagem)){
+					return response()->json([
+						'message' => 'Campo porcentagem nulo '.$dados->porcentagem
+						
+					], 500);
+				}
+				if($dados->porcentagem <0 || $dados->porcentagem >100){
+					return response()->json([
+						'message' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
+						
+					], 500);
+				}
+
+				//valor para fim de calculo
+				$valorFinal = $valor_total-$valor_desconto;
+
+				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
+				$totalDescontoEmpresarial = ( ($valorLimiteRestante * $dados->porcentagem ) /100 );
+
+				$totalPagarEmpresarial = ($valorFinal - $totalDescontoEmpresarial);
+				$totalValorCredito = ($valorFinal - $totalPagarEmpresarial);
+				//$valorCartaoCredito = ($valorLimiteRestante - $valorFinal );
+				//$valorEmpresarial = 
+
+				echo $totalPagarEmpresarial.' - '. $totalValorCredito;
+			//	($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $valor_total-$valor_desconto * (1 + 0.05) ** $pag->qt_parcela, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $valorCartaoCredito , 2, ',', '.') ) ;
+				//$dados['cvv']
+				//$dados['parcelas']
+				//$dados['porcentagem']
+			
+			}else{
+				$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+			}
+			
 		
+
+			die;
 		
+
+				// pagamento com cartão de credito e empresarial
+			if ($metodoPagamento ==2) {					
+				
+			
+				
+			//	$valorFinal = $valor_total-$valor_desconto;
+				//$dados->porcentagem  *	$valorFinal
+			//	$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;							
+			}
+
+			die;
+
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{

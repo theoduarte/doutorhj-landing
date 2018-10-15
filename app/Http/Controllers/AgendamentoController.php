@@ -23,7 +23,8 @@ use App\MensagemDestinatario;
 use App\Filial;
 use App\Checkup;
 use App\TagPopular;
-
+use App\VigenciaPaciente;
+use App\Plano;
 class AgendamentoController extends Controller
 {
     /**
@@ -166,12 +167,21 @@ class AgendamentoController extends Controller
         // dd($user_session);
 
         $responsavel_id = $user_session->paciente->id;
+
+      
+            //$query_temp = DB::getQueryLog();
+		$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
         
+        if($plano != Plao::OPEN) {
+
+            $vigencia_valor = Paciente::getValorLimite($user_session->paciente->id);                
+        }
+                          
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $paciente_titular = $user_session->paciente;
         
-        return view('agendamentos.informa-beneficiario', compact('url', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
+        return view('agendamentos.informa-beneficiario', compact('url','plano','vigencia', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
     }
     
     /**
@@ -229,7 +239,7 @@ class AgendamentoController extends Controller
 				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
 					$query->where('precos.plano_id', '=', $plano_id);
 				})->first();
-
+                
 			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
 
             CVXCart::add(array(
@@ -496,17 +506,27 @@ class AgendamentoController extends Controller
 				];
 			}
 
+             
+            
     		if (!empty($paciente)) {
     			array_push($carrinho, $item_carrinho);
     		} else {
     			CVXCart::remove($item_carrinho['item_id']);
     		}
     	}
+        
+        
+			$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
 
+            if($plano != Plano::OPEN) {
+                $vigencia_valor =  Paciente::getValorLimite($user_session->paciente->id);               
+            }
+
+      
     	$valor_total = CVXCart::getTotal();
 		$valor_total = number_format($valor_total, 2, ',', '.');
 
-    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total'));
+    	return view('agendamentos.carrinho', compact('url', 'carrinho', 'valor_total', 'plano', 'vigencia_valor'));
     }
     
     /**
@@ -575,7 +595,7 @@ class AgendamentoController extends Controller
         
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
-        
+         $plano =Plano::OPEN;
         $agendamentos_home = [];
         
         if (Auth::check()) {
@@ -595,9 +615,21 @@ class AgendamentoController extends Controller
             //dd($agendamentos_home);
             //$query_log = DB::getQueryLog();
             //print_r($query_log);
+
+            
+         //$query_temp = DB::getQueryLog();
+			$plano = Paciente::getPlanoAtivo( $paciente_id);
+
+            if($plano != 1) {
+
+                $vigencia_valor =   Paciente::getValorLimite($paciente_id);                
+
+            }
+
+            
         }
         
-        return view('agendamentos.meus-agendamentos', compact('agendamentos_home'));
+        return view('agendamentos.meus-agendamentos', compact('agendamentos_home','plano','vigencia_valor'));
     }
     
     /**
@@ -749,13 +781,26 @@ class AgendamentoController extends Controller
         //--busca os agendamentos do paciente----------
         $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();
         
+        
+        
+            //$query_temp = DB::getQueryLog();
+			$plano = Paciente::getPlanoAtivo($user_paciente->paciente->id);
+
+            if($plano !=Plano::OPEN) {
+               $vigencia_valor = Paciente::getValorLimite($user_paciente->paciente->id);
+                
+            }
+
+            
+        
+
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');
         	$agendamento->valor_total = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? number_format( ($agendamento->itempedidos->first()->pedido->pagamentos->first()->amount)/100,  2, ',', '.') : number_format( 0,  2, ',', '.');
         	$agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
         }
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos'));
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'plano', 'vigencia_valor'));
     }
     
     /**

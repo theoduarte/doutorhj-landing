@@ -21,7 +21,7 @@ class VigenciaPaciente extends Model
     /**
      * @var array
      */
-    protected $fillable = ['plano_id', 'paciente_id', 'data_inicio', 'data_fim', 'cobertura_ativa', 'created_at', 'updated_at'];
+    protected $fillable = ['plano_id', 'paciente_id', 'data_inicio', 'data_fim','vl_max_consumo', 'cobertura_ativa', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -38,4 +38,7 @@ class VigenciaPaciente extends Model
     {
         return $this->belongsTo('App\Paciente');
     }
+
+    
+ 
 }
