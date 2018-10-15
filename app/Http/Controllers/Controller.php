@@ -59,10 +59,10 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
-        $plano =Plano::OPEN;
+       
         if (Auth::check()) {
 			$paciente_id = Auth::user()->paciente->id;
-
+            
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
 				'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',

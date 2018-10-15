@@ -363,45 +363,51 @@ $(function(){
 		let resp="";
 		let resultado="";
 		let final ="";
-		let complemento="";
-		let respCOmplemento="";
+		let totalPagar="";
+		let totalPagarFormatado="";
 		let resCOmplemento="";
 		let subtrair="";
 		let finalCOmplemento="";
 	
-		valor = this.value ;                                        
+		valor = this.value ; 
+		
+		// valor disponivel credito empresarial
 		valor_formatado = ( $('#valor_disponivel').val());
-		resp = (valor_formatado.replace(',','.'))                                                                        																	  		
-		let valorVerificar = parseFloat($('#total_pagar').val());
-	 
-		if(parseFloat($('#total_pagar').val()) <25){
-			resultado =parseFloat( (valor * resp )/10000  );
-		}else{
-			resultado =parseFloat( (valor * resp )/100  );
-		}
-
-
-		final = resultado.formatMoney(2, ',', '.');
 		
-			if(final === valorVerificar.formatMoney(2, ',', '.')){
-				slider.max = valor;
-				
-				
-				console.log( slider.max)
-			}
+		// valor credito especial formatado 
+		resp = (valor_formatado.replace(',','.'))    
+
+		// valor a ser pago pelas consultas		
+		totalPagar =  ($('#total_pagar').val());
+		totalPagarFormatado = (totalPagar.replace(',','.')) //respCOmplemento 
+
+		 if(parseFloat(totalPagarFormatado) > parseFloat(resp)){
+			// valor a ser debitado do credito especial		
 			
+			resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
+			
+		 
+		 }else{
+			 // valor a ser debitado do credito especial	
+				
+			resultado =parseFloat( ((valor * resp )  )/100   );
+			
+		 }
+		 
+		 
 	
-		complemento =  ($('#total_pagar').val());
-		 respCOmplemento = (complemento.replace(',','.'))      
-		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
-		 subtrair = (resCOmplemento - resultado )
-		 finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
-		
+		// fomata o valor
+		final = resultado.formatMoney(2, ',', '.');
+	
+
+		resCOmplemento = parseFloat( (100 * totalPagarFormatado )/100 );
+		 
+		subtrair = (resCOmplemento - resultado )
+		finalCOmplemento = subtrair.formatMoney(2, ',', '.');  
 		$('.valor_complementar').text('R$ '+finalCOmplemento)
-		$('.creditoAserDebitado').text('R$ '+final)    
-
-
-		$('.creditoAserDebitado').text('R$ '+final)
+		$('.creditoAserDebitado').text('R$ '+final)   
+		 
+	
 		
 
 	}
@@ -423,19 +429,41 @@ $(function(){
 		 valor_formatado = ( $('#valor_disponivel').val());
 		 resp = (valor_formatado.replace(',','.'))                                                                                                                                                                              
 		
-		 resultado =parseFloat( (valor * resp )/10000 );
+		 resultado =parseFloat( (valor * resp )/100 );
 		
 		 final = resultado.formatMoney(2, ',', '.');
-
-
-		 complemento =  ($('#total_pagar').val());
-		 respCOmplemento = (complemento.replace(',','.'))      
-		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
-		 subtrair = (resCOmplemento - resultado )
-		 finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
+			
 		
-		$('.valor_complementar').text('R$ '+finalCOmplemento)
-		$('.creditoAserDebitado').text('R$ '+final)                                                                                
+		
+		complemento =  ($('#total_pagar').val());
+		respCOmplemento = (complemento.replace(',','.'))      
+		resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
+		subtrair = (resCOmplemento - resultado )
+		finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
+		
+		if(parseFloat(respCOmplemento) > parseFloat(resp)){
+			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+						 
+			$('.valor_complementar').text('R$ '+valorComplemento.formatMoney(2, ',', '.'))
+			$('.creditoAserDebitado').text('R$ '+totalEmpresarial.formatMoney(2, ',', '.')) 
+			slider.max =parseFloat(porcentagem) - 0.1
+			slider.value = parseFloat(porcentagem) - 0.1;
+			
+			output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+		 
+		}else{
+		
+			let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp) * 100
+			output.innerHTML =porcentagem.formatMoney(2, ',', '.')
+			slider.max = parseFloat(porcentagem) - 0.1;
+			slider.value =parseFloat(porcentagem) - 0.1;
+			output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+			$('.valor_complementar').text('R$ '+finalCOmplemento)
+			$('.creditoAserDebitado').text('R$ '+final) 
+		}
+                                                                               
 		}, 
 		100);
 		
@@ -877,7 +905,7 @@ function efetuarPagamento() {
 			let titularcpf = $('#inputCPFCredito').val()
 			let parcelas = $('#selectParcelamentoCredito').val()
 			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
-			let porcentagemCreditoEspecial = parseInt($('#porcentagem_credito_empresarial').text());
+			let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text());
 
 		
 			if(cartaoid != ""){
