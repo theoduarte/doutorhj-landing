@@ -66,13 +66,13 @@ class Controller extends BaseController
 			$paciente = Auth::user()->paciente;
 			$paciente_id = $paciente->id;
 
-			//dd($paciente->vl_consumido, $paciente->vl_max_consumo);
+			dd($paciente->vl_consumido, $paciente->vl_max_consumo);
 
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
-				'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
-				'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
-			])
+					'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
+					'datahoracheckups.itemcheckup.atendimento.profissional', 'checkup'
+				])
 				->join('pacientes', function($join1) use ($paciente_id) {
 					$join1->on('pacientes.id', '=', 'agendamentos.paciente_id')->where(function($query) use ($paciente_id) {
 						$query->on('pacientes.responsavel_id', '=', DB::raw($paciente_id))->orOn('pacientes.id', '=', DB::raw($paciente_id));
@@ -83,13 +83,6 @@ class Controller extends BaseController
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();
-
-			$plano = Paciente::getPlanoAtivo($paciente_id);
-            
-            if($plano != Plano::OPEN) {
-                $vigencia_valor = Paciente::getValorLimite($paciente_id) ;
-                                
-            }
                                 
 			foreach($agendamentos_home as $agendamento) {
 				if(!empty($agendamento->clinica)) {
@@ -103,7 +96,7 @@ class Controller extends BaseController
 			}
         }
         
-        return view('welcome', compact('plano','vigencia_valor','agendamentos_home', 'cvx_num_itens_carrinho'));
+        return view('welcome', compact('agendamentos_home', 'paciente'));
     }
     
     /**

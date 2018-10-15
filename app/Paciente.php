@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 
 /**
@@ -222,18 +223,28 @@ class Paciente extends Model
 		$paciente = Paciente::findOrFail($paciente_id);
 
 		if($paciente->agendamentos()->get()->count() == 0) {
-			//return 0;
+			return 0;
 		}
 
 		$firstDay = date('Y-m-01');
 		$lastDay = date('Y-m-t');
 
-		dd(
-			$paciente->agendamentos()
-				->whereHas('itempedidos.pedido', function() {
+		$pedido = Pedido::where('paciente_id', $paciente->id)
+			->whereHas('cartao_paciente', function($query) {
+				$query->where('tp_cartao_id', TipoCartao::EMPRESARIAL);
+			})
+			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
+			->with(['cartao_paciente', 'itempedidos'])
+			->get();
 
-				})
-				->with(['itempedidos', 'itempedidos.pedido'])
-		);
+		$vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
+			->select(DB::raw('SUM(valor) as vl_consumido'))
+			->first();
+
+		if(is_null($vlConsumido)) {
+			return 0;
+		} else {
+			return $vlConsumido->vl_consumido;
+		}
 	}
 }

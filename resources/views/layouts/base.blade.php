@@ -188,26 +188,23 @@
                             </ul>
                         </div>
                     </div>
-                  
 
-                    @if($plano != 1)
-                    <div class="info-empresarial">
-                        <div class="opcoes ie-logo">
-                            <div class="logo-empresa">
-                                <img src="/libs/home-template/img/empresas/caixa.png" alt="">
-                            </div>
-                        </div>
-                        <div class="opcoes ie-plano">
-                            <p class="titulo">Plano</p>
-                            @if($plano ==2) <p class="plano premium">Premium</p>  @endif
-                             @if($plano ==3) <p class="plano blue">Blue</p> @endif
-                              @if($plano ==4)<p class="plano black">Black</p>  @endif                              
-                        </div>
-                        <div class="opcoes ie-saldo">
-                            <p class="titulo">Saldo</p>
-                            <p class="saldo">R$ {{$vigencia_valor}}</p>
-                        </div>
-                    </div>
+                    @if($paciente->plano_ativo->id != App\Plano::OPEN)
+						<div class="info-empresarial">
+							<div class="opcoes ie-logo">
+								<div class="logo-empresa">
+									<img src="/libs/home-template/img/empresas/caixa.png" alt="">
+								</div>
+							</div>
+							<div class="opcoes ie-plano">
+								<p class="titulo">Plano</p>
+								<p class="plano premium">{{$paciente->plano_ativo->ds_plano}}</p>
+							</div>
+							<div class="opcoes ie-saldo">
+								<p class="titulo">Saldo</p>
+								<p class="saldo">R$ {{$paciente->vl_max_consumo}}</p>
+							</div>
+						</div>
                     @endif
  
 
