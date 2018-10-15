@@ -454,7 +454,7 @@ class PaymentController extends Controller
 						'mensagem' => 'Não existe limite no cartao empresarial.'
 					], 422);
 				}else{
-					$valorLimiteRestante = 199;
+					$valorLimiteRestante = 2.00;
 				}
 
 				if(!empty($dados->cartaoid)) {
@@ -674,7 +674,7 @@ class PaymentController extends Controller
 
 				//valor para fim de calculo
 				$valorFinal = $valor_total-$valor_desconto;
-
+				
 				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
 				$totalDescontoEmpresarial = ( ($valorLimiteRestante * $dados->porcentagem ) /100 );
 
@@ -683,7 +683,13 @@ class PaymentController extends Controller
 				//$valorCartaoCredito = ($valorLimiteRestante - $valorFinal );
 				//$valorEmpresarial = 
 
-				echo $totalPagarEmpresarial.' - '. $totalValorCredito;
+				// valor para ser cobrado no cartao empresarial 
+				$empresarial =  $dados->porcentagem  * $valorFinal / 100;
+
+				// valor para ser cobrado no cartao de credito
+				$cartaoCredito =  $valorFinal - $empresarial ;
+
+				echo number_format( $empresarial, 2, ',', '.') ;
 			//	($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $valor_total-$valor_desconto * (1 + 0.05) ** $pag->qt_parcela, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $valorCartaoCredito , 2, ',', '.') ) ;
 				//$dados['cvv']
 				//$dados['parcelas']

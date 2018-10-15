@@ -172,7 +172,7 @@ class AgendamentoController extends Controller
             //$query_temp = DB::getQueryLog();
 		$plano = Paciente::getPlanoAtivo($user_session->paciente->id);
         
-        if($plano != Plao::OPEN) {
+        if($plano != Plano::OPEN) {
 
             $vigencia_valor = Paciente::getValorLimite($user_session->paciente->id);                
         }
@@ -181,7 +181,7 @@ class AgendamentoController extends Controller
         
         $paciente_titular = $user_session->paciente;
         
-        return view('agendamentos.informa-beneficiario', compact('url','plano','vigencia', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
+        return view('agendamentos.informa-beneficiario', compact('url','plano','vigencia_valor', 'item_titular', 'tem_titular', 'tem_pacientes', 'carrinho', 'dependentes', 'paciente_titular', 'proximo_item', 'valor_total'));
     }
     
     /**

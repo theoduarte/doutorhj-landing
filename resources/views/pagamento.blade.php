@@ -133,7 +133,7 @@
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
                                        
                                         @if($plano != 1)
-                                        <input type="hidden" value="{{ $vigencia_valor}}" id="valor_disponivel">
+                                        <input type="hidden" value="2,00" id="valor_disponivel">
                                         @endif
                                         
                                       
@@ -162,7 +162,7 @@
                                         
 
                                         <div class="slidecontainer">
-                                            <input type="range" min="0" max="100" value="0"  class="slider" id="myRange">
+                                            <input type="range" min="1" max="100"   step=0.01     class="slider" id="myRange">
                                             <p> <span id="porcentagem_credito_empresarial"></span> % </p>
                                         </div>
                                         </div>

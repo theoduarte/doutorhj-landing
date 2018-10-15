@@ -60,13 +60,12 @@ class Controller extends BaseController
         date_default_timezone_set('America/Sao_Paulo');
         
         $agendamentos_home = [];
+
         $plano = Plano::OPEN;
 
         if (Auth::check()) {
 			$paciente = Auth::user()->paciente;
 			$paciente_id = $paciente->id;
-
-			dd($paciente->vl_consumido, $paciente->vl_max_consumo);
 
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
