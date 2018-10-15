@@ -321,7 +321,7 @@ class AgendamentoController extends Controller
 			$source = array('.', ',');
 			$replace = array('', '.');
 			$vl_comercial = str_replace($source, $replace, $vl_comercial);
-			
+
 			$card['attributes']['paciente_id'] = $paciente_id;
 			$card['price'] = $vl_comercial;
 		}
