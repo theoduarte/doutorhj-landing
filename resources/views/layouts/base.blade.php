@@ -205,7 +205,7 @@
                         </div>
                         <div class="opcoes ie-saldo">
                             <p class="titulo">Saldo</p>
-                            <p class="saldo">R$ {{$vigencia[0]['vl_max_consumo']}}</p>
+                            <p class="saldo">R$ {{$vigencia_valor}}</p>
                         </div>
                     </div>
                     @endif

@@ -10,7 +10,7 @@ class Paciente extends Model
 {
 	use Sortable;
 	
-	public $fillable      = ['id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'parentesto', 'user_id', 'cargo_id', 'responsavel_id'];
+	public $fillable      = ['id', 'nm_primario', 'nm_secundario', 'cs_sexo', 'dt_nascimento', 'parentesto', 'user_id', 'cargo_id', 'responsavel_id'] ;
 	public $sortable      = ['id', 'nm_primario', 'nm_secundario', 'parentesto' ];
 	public $dates 	      = ['dt_nascimento'];
 
@@ -76,6 +76,25 @@ class Paciente extends Model
 		} else {
 			return $vigenciaPac->plano_id;
 		}
+	}
+
+	public static function getValorLimite($paciente_id){
+		$value = 0;
+		$dados = VigenciaPaciente::where('paciente_id', $paciente_id )->get() ;
+		
+		$vigencia = json_decode(json_encode($dados ), true);
+		
+		
+		if($vigencia[0]['vl_max_consumo'] !=0) {
+			$value =  $vigencia[0]['vl_max_consumo'];
+		} else {
+			$paciente = 	Paciente::where('id', $paciente_id)->first();
+			$value = Empresa::where('id',$paciente->empresa_id)->vl_max_funcionario;
+
+			 
+		}
+
+		return $value;
 	}
 
 	public function getPlanoAtivoAttribute()

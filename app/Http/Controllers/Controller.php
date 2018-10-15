@@ -79,12 +79,13 @@ class Controller extends BaseController
 
 			//$query_temp = DB::getQueryLog();
 			$plano = Paciente::getPlanoAtivo($paciente_id);
-
+            
             if($plano != Plano::OPEN) {
-                $dados = VigenciaPaciente::where('paciente_id',$paciente_id )->get() ;
+                $vigencia_valor = Paciente::getValorLimite($paciente_id) ;
+                                
             }
 
-            $vigencia = json_decode(json_encode($dados ), true);
+           
                                 
 			foreach($agendamentos_home as $agendamento) {
                 
@@ -101,7 +102,7 @@ class Controller extends BaseController
 			}
         }
         
-        return view('welcome', compact('plano','vigencia','agendamentos_home', 'cvx_num_itens_carrinho'));
+        return view('welcome', compact('plano','vigencia_valor','agendamentos_home', 'cvx_num_itens_carrinho'));
     }
     
     /**

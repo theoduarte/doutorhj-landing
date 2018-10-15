@@ -38,5 +38,7 @@ class VigenciaPaciente extends Model
     {
         return $this->belongsTo('App\Paciente');
     }
+
+    
  
 }

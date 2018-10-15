@@ -32,6 +32,7 @@ use App\CartaoPaciente;
 use App\Paciente;
 use App\Filial;
 use App\Plano;
+use App\VigenciaPaciente;
 class ClinicaController extends Controller
 {
     /**
@@ -767,9 +768,9 @@ class ClinicaController extends Controller
     		array_push($carrinho, $item_carrinho);
     	}
 
-    	$valor_total = CVXCart::getTotal();
+    	$valor_total = ( CVXCart::getTotal());
     	$valor_desconto = 0;
-
+        
     	$cpf_titular = $user_session->documentos->first()->te_documento;
 
     	$valor_parcelamento = $valor_total-$valor_desconto;
@@ -799,20 +800,18 @@ class ClinicaController extends Controller
     	$responsavel_id = $user_session->id;
     	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
       
+
+        
         $plano = Plano::OPEN;
-        if (Auth::check()) {
-      
-            $plano = Paciente::getPlanoAtivo( $paciente_id);
-
-            if($plano != Plano::OPEN) {
-                $dados = VigenciaPaciente::where('paciente_id', $paciente_id )->get() ;
-            }
-
-            $vigencia = json_decode(json_encode($dados ), true);
+                                      
+        if($plano_paciente != Plano::OPEN) {
+            $plano =$plano_paciente;
+            $vigencia_valor = Paciente::getValorLimite($responsavel_id) ;
         }
 
         
-    	return view('pagamento', compact('url','plano','vigencia', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+        
+    	return view('pagamento', compact('url','plano','vigencia_valor', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/

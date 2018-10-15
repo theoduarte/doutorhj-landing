@@ -36,27 +36,25 @@ class AtendimentoController extends Controller
 
         
         
-		if(isset(Auth::user()->paciente->id)) {
-			$paciente = Paciente::findOrFail(Auth::user()->paciente->id);
-			$planoId = $paciente->getPlanoAtivo($paciente->id);
+		
+			$plano = $paciente->getPlanoAtivo(Auth::user()->paciente->id);
 
-             if($planoId != Plano::OPEN) {
-                $dados = VigenciaPaciente::where('paciente_id',Auth::user()->paciente->id )->get() ;
+             if($plano != Plano::OPEN) {
+                
+                $vigencia_valor = Paciente::getValorLimite(Auth::user()->paciente->id);
+                
             }
 
-            $vigencia = json_decode(json_encode($dados ), true);
-		} else {
-			$planoId = Plano::OPEN;
-		}
-        $plano =$planoId;
+        
+        
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
+            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano );
             $list_enderecos = $consulta->getActiveAddress( $especialidade );
             $list_atendimentos = $consulta->getActive();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $planoId );
+            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano );
             $list_enderecos = $procedimento->getActiveAddress( $especialidade );
             $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
         }

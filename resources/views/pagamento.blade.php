@@ -132,7 +132,12 @@
                                         <span class="vlr-ce">R$ 00,00</span>
                                         <div class="separador"></div>
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
-                                        <input type="hidden" value="197,83" id="valor_disponivel">
+                                       
+                                        @if($plano != 1)
+                                        <input type="hidden" value="{{ $vigencia_valor}}" id="valor_disponivel">
+                                        @endif
+                                        
+                                      
                                         <input type="hidden" value="{{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}" id="total_pagar">
                                         <input type="hidden" value="00,00" id="complemento">
                                             <h4 class="alert-heading">Pagamento complementar</h4>
@@ -158,7 +163,7 @@
                                         
 
                                         <div class="slidecontainer">
-                                            <input type="range" min="1" max="100" value="100" class="slider" id="myRange">
+                                            <input type="range" min="0" max="100" value="0"  class="slider" id="myRange">
                                             <p> <span id="porcentagem_credito_empresarial"></span> % </p>
                                         </div>
                                         </div>

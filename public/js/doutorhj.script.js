@@ -372,9 +372,23 @@ $(function(){
 		valor = this.value ;                                        
 		valor_formatado = ( $('#valor_disponivel').val());
 		resp = (valor_formatado.replace(',','.'))                                                                        																	  		
-		resultado =parseFloat( (valor * resp )/100 );
-		final = resultado.formatMoney(2, ',', '.');
+		let valorVerificar = parseFloat($('#total_pagar').val());
+	 
+		if(parseFloat($('#total_pagar').val()) <25){
+			resultado =parseFloat( (valor * resp )/10000  );
+		}else{
+			resultado =parseFloat( (valor * resp )/100  );
+		}
 
+
+		final = resultado.formatMoney(2, ',', '.');
+		
+			if(final === valorVerificar.formatMoney(2, ',', '.')){
+				
+				console.log(slider.getValue())
+			}
+			
+	
 		complemento =  ($('#total_pagar').val());
 		 respCOmplemento = (complemento.replace(',','.'))      
 		 resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
@@ -407,7 +421,7 @@ $(function(){
 		 valor_formatado = ( $('#valor_disponivel').val());
 		 resp = (valor_formatado.replace(',','.'))                                                                                                                                                                              
 		
-		 resultado =parseFloat( (valor * resp )/100 );
+		 resultado =parseFloat( (valor * resp )/10000 );
 		
 		 final = resultado.formatMoney(2, ',', '.');
 

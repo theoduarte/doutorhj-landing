@@ -9,7 +9,7 @@
 @section('content')
     <section class="area-busca-interna minha-conta">
         <div class="container">
-
+            
             <div class="box-minha-conta">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-3 menu">
@@ -18,9 +18,9 @@
                                 Cadastro</a>
                             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Pagamento</a>
-                        {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                            Anuidade</a>--}}
-                        <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                            {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Anuidade</a>--}}
+                            <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Mensagens</a> -->
                             <!-- <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Notificações</a> -->
@@ -241,20 +241,40 @@
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="row">
+                                        <div class="col-md-12 col-lg-7">
+                                            <span class="label-titulo">Saldo / Limite</span>
+                                            <div class="box-pagamento saldo-limite">
+                                                <p class="intro">Você faz parte de um plano Empresarial, confira abaixo o limite disponibilizado pela empresa e o saldo atual.</p>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <p class="p1">Limite</p>
+                                                        <p class="p2">R$ 300,00</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="p1">Saldo</p>
+                                                        <p class="p2">R$ 197,83</p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="p1">Plano</p>
+                                                        <p class="p2">Premium</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
                                             <div class="box-pagamento lista-cartoes">
                                                 @foreach($cartoes_paciente as $cartao)
                                                     <div class="cartao">
                                                         <div class="row">
-                                                            <div class="col-md-10">
+                                                            <div class="col-10">
                                                                 <div class="bandeira {{ strtolower($cartao->bandeira) }}"></div>
                                                                 <p>
                                                                     <span class="numero-oculto">●●●● ●●●● ●●●● </span>
                                                                     <span class="final">{{ $cartao->numero }}</span>
                                                                 </p>
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-2">
                                                                 <a class="exclui-cartao"><i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </div>
@@ -329,10 +349,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 col-lg-7">
+                                        {{--<div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Últimas Transações</span>
                                             <div class="box-pagamento lista-transacoes">
-
                                                 @foreach($agendamentos as $agendamento)
                                                     <div class="transacoes">
                                                         <div class="row">
@@ -378,7 +397,175 @@
                                                 @if(sizeof($agendamentos) == 0)
                                                     <span id="lbl-pedido-paciente">NENHUM PEDIDO ENCONTRADO!</span>
                                                 @endif
-
+                                            </div>
+                                        </div>--}}
+                                        <div class="col-12">
+                                            <span class="label-titulo">Histórico</span>
+                                            <div class="box-pagamento historico">
+                                                <ul>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">consulta</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Consulta Cirurgia Oncologica (em consultorio)</p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 84,90</span> - <span class="forma-pagamento">débito</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">consulta</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Consulta Cirurgia de Cabeça e Pescoço (em consultorio)</p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 104,90</span> - <span class="forma-pagamento">cédito</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">exame</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Teste do Pezinho Ampliado (Tsh Neonatal + 17 Oh Progesterona + Fenilalanina + Tripsina Imuno-Reativa + Eletroforese de Hb Para Triagem de Hemopatias): Laboratorio</p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 120,29</span> - <span class="forma-pagamento">boleto</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">exame</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Raio X – Coluna Dorsal – 2 Incidências </p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 46,77</span> - <span class="forma-pagamento">débito</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">exame</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Creatinina: Laboratório</p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 6,16</span> - <span class="forma-pagamento">débito</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="detalhes">
+                                                            <div class="row">
+                                                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                                                    <div class="timeline">
+                                                                        <div class="linha1"></div>
+                                                                        <div class="circulo"></div>
+                                                                        <div class="linha2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                                                    <div class="texto">
+                                                                        <div class="tipo-data">
+                                                                            <span class="tipo">consulta</span>
+                                                                            <span class="data">14/08/2018</span>
+                                                                        </div>
+                                                                        <div class="procedimento">
+                                                                            <p>Nutrição</p>
+                                                                        </div>
+                                                                        <div class="valor">
+                                                                            <span>R$ 64,90</span> - <span class="forma-pagamento">crédito</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
