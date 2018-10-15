@@ -37,7 +37,7 @@ class AtendimentoController extends Controller
         
         
 		
-			$plano = $paciente->getPlanoAtivo(Auth::user()->paciente->id);
+			$plano = Paciente::getPlanoAtivo(Auth::user()->paciente->id);
 
              if($plano != Plano::OPEN) {
                 
@@ -62,6 +62,6 @@ class AtendimentoController extends Controller
         
 
  
-        return view('resultado', compact('atendimentos','plano','vigencia', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
+        return view('resultado', compact('atendimentos','plano','vigencia_valor', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
     }
 }

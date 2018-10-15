@@ -384,8 +384,10 @@ $(function(){
 		final = resultado.formatMoney(2, ',', '.');
 		
 			if(final === valorVerificar.formatMoney(2, ',', '.')){
+				slider.max = valor;
 				
-				console.log(slider.getValue())
+				
+				console.log( slider.max)
 			}
 			
 	
