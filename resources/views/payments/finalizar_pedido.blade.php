@@ -180,6 +180,7 @@
                                                                         </div>
                                                                         <div class="dados-resumo text-right">
                                                                             <h3>
+                                                                          
                                                                                 <strong>R$ {{ $agendamento->itempedidos->first()->getVlItempedido() }}</strong>
                                                                             </h3>
                                                                         </div>

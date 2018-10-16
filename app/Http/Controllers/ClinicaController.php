@@ -774,7 +774,8 @@ class ClinicaController extends Controller
     	$cpf_titular = $user_session->documentos->first()->te_documento;
 
     	$valor_parcelamento = $valor_total-$valor_desconto;
-    	$parcelamentos = [];
+        $parcelamentos = [];
+        
     	$parcelamentos = array(
     	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.').' sem juros'
     	);
@@ -799,21 +800,15 @@ class ClinicaController extends Controller
         
     	$responsavel_id = $user_session->id;
     	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
-      
+                     
 
-        
-        $plano = Plano::OPEN;
-                                      
-        if($plano_paciente != Plano::OPEN) {
-
-            $plano =$plano_paciente;
-            $vigencia_valor = Paciente::getVlMaxConsumo($responsavel_id) ;
-
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
         }
-
-        
-        
-    	return view('pagamento', compact('url','plano','vigencia_valor', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+      
+      
+            
+    	return view('pagamento', compact('url', 'paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/
