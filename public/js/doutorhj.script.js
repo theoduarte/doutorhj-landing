@@ -905,7 +905,7 @@ function efetuarPagamento() {
 			let titularcpf = $('#inputCPFCredito').val()
 			let parcelas = $('#selectParcelamentoCredito').val()
 			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
-			let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text());
+			let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text()).replace(',', '.');
 
 		
 			if(cartaoid != ""){

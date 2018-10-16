@@ -208,7 +208,7 @@ class PaymentController extends Controller
 	
 
         if ($result_agendamentos == null) {
-     //       return redirect()->route('landing-page');
+            return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
@@ -219,9 +219,9 @@ class PaymentController extends Controller
 		
 		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-      //  $request->session()->forget('result_agendamentos');
-      //  $request->session()->forget('pedido');
-      //  $request->session()->forget('valor_total_pedido');
+       $request->session()->forget('result_agendamentos');
+        $request->session()->forget('pedido');
+        $request->session()->forget('valor_total_pedido');
         
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria'));
     }
@@ -479,9 +479,11 @@ class PaymentController extends Controller
 
 					if( $dados->salvar == 0){
 	
-						try{									
+						try{	
+							
 							// cria token cartao						
 							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+							
 							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
 							$metodoCartao=2;
 							$cartao = $cartaoToken->id;
@@ -672,6 +674,7 @@ class PaymentController extends Controller
 					], 500);
 				}
 
+				
 				//valor para fim de calculo
 				$valorFinal = $valor_total-$valor_desconto;
 				
@@ -703,21 +706,47 @@ class PaymentController extends Controller
 			
 		
 
-			die;
+		 
 		
 
 				// pagamento com cartão de credito e empresarial
 			if ($metodoPagamento ==2) {					
+				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
-			
-				
+				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+								 
+				$dados = FuncoesPagamento::pagamentoMultiMeio(
+					'cus_r0WVwzMt8Cvl2mXN',  // custom token empresa buscar
+					$valorCartaoCredito+$valorCartaoEmpresarial,
+					$titulo_pedido,
+					$valorCartaoCredito,
+					$valorCartaoEmpresarial,
+					$dados->parcelas,
+					1,    
+					'Doutor Hoje', 
+					'Doutor Hoje',
+					$cartao,
+					$cartaoPaciente->card_token,
+					$metodoCartao,
+					1);
+
+				 
+					try{
+						$criarPagamento = $client->getOrders()->createOrder($dados);
+					}catch(\Exception $e){
+						DB::rollBack();
+						return response()->json([
+							'message' => 'Erro ao efetuar o pagamento com o cartão de crédito!',
+							'errors' => $e->getMessage(),
+						], 500);
+					}
 			//	$valorFinal = $valor_total-$valor_desconto;
 				//$dados->porcentagem  *	$valorFinal
-			//	$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;							
+			//	$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;		
+
 			}
-
-			die;
-
+		 
+			
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{
@@ -928,7 +957,7 @@ class PaymentController extends Controller
 
 
 									 
-							}
+			}
 
 							$dados = json_decode(json_encode($criarPagamento), true);		
 
@@ -961,14 +990,13 @@ class PaymentController extends Controller
 							//print_r($result_agendamentos); die;
 
 							 ########### FINISHIING TRANSACTION ##########
-						//	 DB::commit();
+							 DB::commit();
 							 #############################################
-						//	 CVXCart::clear();
+							 CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
 							 
- 
-
+					 
 							 $request->session()->put('result_agendamentos', $result_agendamentos);
 							 $request->session()->put('pedido', $pedido);
 							 $request->session()->put('valor_total_pedido', $valor_total_pedido);
@@ -977,7 +1005,7 @@ class PaymentController extends Controller
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-							 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+						 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 
 
 			
