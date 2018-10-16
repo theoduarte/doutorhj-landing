@@ -7,17 +7,32 @@
         <div class="container">
             <div class="area-container">
                 <div class="titulo">
+                @if(!empty($boleto_bancario))
+                <strong>A sua solicitação de pré agendamento esta aguardando a baixa bancaria!</strong>
+            
+                    <p> caso o <b>pagamento</b> do boleto nao seja efetivado na data de vencimento a sua solicitação de pre agendamento será cancelada.
+                    </p>
+                @else
+                    @if(!empty($transferencia_bancaria))
+                    <strong>A sua solicitação de pré agendamento esta aguardando a baixa bancaria!</strong>
+            
+                        <p> caso a <b>transferencia </b>não seja efetivada a sua solicitação de pre agendamento será cancelada dentro de 48 horas.
+                        </p>
+                    @else
                     <strong>Pré-agendamento realizado com sucesso!</strong>
                     <p>Sua <b>solicitação</b> foi realizada com sucesso. Em até 48 horas você receberá a
                         confirmação do agendamento escolhido.
                     </p>
+                    @endif
+                @endif
+                   
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
                         <div class="card card-formulario card-concluir">
                             @if(!empty($boleto_bancario))
                              <div class="card-header">
-                               BOLETO GERADO COM SUCESSO !
+                               BOLETO GERADO COM SUCESSO 
                             </div>
                              <div style="height:200px; widh:100%; text-align:center;   ">
                                     
@@ -34,13 +49,13 @@
                             @if(!empty($transferencia_bancaria))
                              <div class="card-header">
                              
-                             PAGAMENTO COM TRANSFERENCIA BANCARIA !
+                             PAGAMENTO COM TRANSFERENCIA BANCARIA 
                             </div>
                              <div style="height:200px; widh:100%; text-align:center;   ">
                                     
                                     <img src="/img/transferencia.png" alt="profile Pic" class="transferencia-banc" height="100" width="200">
                                     <hr>
-                                    <a  class="btn btn-vermelho" style="padding-top:15px;" target="_blank" rel="noopener noreferrer" href="{{$transferencia_bancaria['url']}} ">Efetuar transferencia</a>
+                                    <a  class="btn btn-vermelho" style="padding-top:15px;"  rel="noopener noreferrer" href="{{$transferencia_bancaria['url']}} ">Efetuar transferencia</a>
                                     
                                     </div>                                    
 
@@ -180,6 +195,7 @@
                                                                         </div>
                                                                         <div class="dados-resumo text-right">
                                                                             <h3>
+                                                                          
                                                                                 <strong>R$ {{ $agendamento->itempedidos->first()->getVlItempedido() }}</strong>
                                                                             </h3>
                                                                         </div>

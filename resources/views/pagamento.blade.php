@@ -104,9 +104,11 @@
                                             <div class="separador"></div>
                                         <select class="form-control escolherMetodoPagamento">
                                             <option value="" selected>Escolher metodo de pagamento</option>
-                                            @if($plano_paciente !=1)
+                                            @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
                                             <option value="1" >Crédito empresarial</option>
-                                            <option value="2" >Crédito empresarial + Cartão de crédito</option>
+                                            @if(number_format( $valor_total-$valor_desconto,  2, ',', '.') > $paciente->vl_max_consumo)
+                                            <option value="2" >Crédito empresarial + Cartão de crédito</option>      
+                                            @endif                                                                               
                                             @endif
                                             <option value="3" >Cartão de crédito</option>
                                             <option value="4" >Boleto Bancario</option>
@@ -132,8 +134,8 @@
                                         <div class="separador"></div>
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
                                        
-                                        @if($plano != 1)
-                                        <input type="hidden" value="2,00" id="valor_disponivel">
+                                        @if($paciente->plano_ativo->id != App\Plano::OPEN)
+                                        <input type="hidden" value="{{$paciente->vl_max_consumo}}" id="valor_disponivel">
                                         @endif
                                         
                                       
@@ -174,15 +176,7 @@
                                         <h3>Cartão de crédito</h3>
                                         <div class="separador"></div>
                                         <form action="">
-                                            <div class="form-group">
-                                                <label for="cartaoCadastrado">Cartão cadastrado</label>
-                                                <select class="form-control cartaoCadastrado" id="cartaoCadastrado" >
-                                                            <option value="">Novo Cartão</option>
-                                                            @foreach($cartoes_gravados as $item)
-                                                            <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
-                                    						@endforeach
-                                                </select>
-                                            </div>
+                                           
                                             <section class="loadCartao " >
                                          
   
@@ -233,19 +227,14 @@
                                                 <input type="text" id="inputCPFCredito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
                                             </div>
                                             <div class="form-group">
-                                                <label for="selectParcelamentoCredito">Parcelamento</label>
+                                                <label for="selectParcelamentoCredito">Parcelamento </label>
                                                 <div class="button dropdown">
                                                     <select id="selectParcelamentoCredito" class="form-control" name="parcelamento-cartao-credito">
-                                                        @for($i = 1; $i <= sizeof($parcelamentos); $i++)
-                                                            <option value="{{ $i }}">{{ $parcelamentos[$i] }}</option>
-                                                        @endfor
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-check fc-checkbox row-payment-card">
-                                                <input type="checkbox" id="checkGravarCartaoCredito" class="form-check-input" name="gravar_cartao_credito">
-                                                <label class="form-check-label" for="checkGravarCartaoCredito">Gravar dados para futuras compras</label>
-                                            </div>
+                                           
                                             </section>
                                         </form>
                                     </div>
@@ -896,16 +885,45 @@
                                         <div id="parcelamento-content" class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">
-                                                    <span>Parcelamento:</span>
+                                                    <span>Parcelamento Cartão de Crédito:</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
-                                                <div id="resumo_parcelamento" class="dados-resumo">
+                                                <div id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
                                                     <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
-                                                    <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                           
+                                                <div class="titulo-resumo">
+                                                    <span>Crédito Empresarial: </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-7">
+                                                <div class="valor_cartao_empresarial">
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="titulo-resumo">
+                                                    <span>Cartão de Crédito: </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-7">
+                                                <div class="valor_cartao_credito">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">

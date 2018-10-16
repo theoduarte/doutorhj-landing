@@ -374,14 +374,22 @@ $(function(){
 		// valor disponivel credito empresarial
 		valor_formatado = ( $('#valor_disponivel').val());
 		
-		// valor credito especial formatado 
-		resp = (valor_formatado.replace(',','.'))    
+		if(valor_formatado.length >6){
+		
+			resp = (valor_formatado.replace('.','')) 
+		 }else{
+				// valor credito especial formatado 
+			resp = (valor_formatado.replace(',','.'))    
+		 }
+			
+		 
+	
 
 		// valor a ser pago pelas consultas		
 		totalPagar =  ($('#total_pagar').val());
 		totalPagarFormatado = (totalPagar.replace(',','.')) //respCOmplemento 
-
-		 if(parseFloat(totalPagarFormatado) > parseFloat(resp)){
+		
+		if(parseFloat(totalPagarFormatado) > parseFloat(resp)){
 			// valor a ser debitado do credito especial		
 			
 			resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
@@ -390,8 +398,8 @@ $(function(){
 		 }else{
 			 // valor a ser debitado do credito especial	
 				
-			resultado =parseFloat( ((valor * resp )  )/100   );
-			
+			resultado =parseFloat((valor * parseFloat(resp)  ) /100  );
+			 
 		 }
 		 
 		 
@@ -404,6 +412,9 @@ $(function(){
 		 
 		subtrair = (resCOmplemento - resultado )
 		finalCOmplemento = subtrair.formatMoney(2, ',', '.');  
+		printParcelamento(finalCOmplemento);
+		$('.valor_cartao_empresarial').empty().html('<p>R$ '+final+'</p>');
+		$('.valor_cartao_credito').empty().html('<p>R$ '+finalCOmplemento +'</p>');
 		$('.valor_complementar').text('R$ '+finalCOmplemento)
 		$('.creditoAserDebitado').text('R$ '+final)   
 		 
@@ -426,46 +437,81 @@ $(function(){
 		let finalCOmplemento="";
 
 		 valor = slider.value;                                        
-		 valor_formatado = ( $('#valor_disponivel').val());
-		 resp = (valor_formatado.replace(',','.'))                                                                                                                                                                              
+		 valor_formatado = (  $('#valor_disponivel').val());
 		
-		 resultado =parseFloat( (valor * resp )/100 );
+		 if(valor_formatado.length >6){
 		
-		 final = resultado.formatMoney(2, ',', '.');
+			resp = (valor_formatado.replace('.','')) 
+		 }else{
+			resp = (valor_formatado.replace(',','.'))  
+		 }
+		                                                                                                                                                                   
+		  
+	
 			
 		
 		
 		complemento =  ($('#total_pagar').val());
 		respCOmplemento = (complemento.replace(',','.'))      
-		resCOmplemento = parseFloat( (100 * respCOmplemento )/100 );
-		subtrair = (resCOmplemento - resultado )
-		finalCOmplemento = subtrair.formatMoney(2, ',', '.');                                        
+		                               
 		
+		 
+
 		if(parseFloat(respCOmplemento) > parseFloat(resp)){
+			
 			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 						 
-			$('.valor_complementar').text('R$ '+valorComplemento.formatMoney(2, ',', '.'))
-			$('.creditoAserDebitado').text('R$ '+totalEmpresarial.formatMoney(2, ',', '.')) 
-			slider.max =parseFloat(porcentagem) - 0.1
-			slider.value = parseFloat(porcentagem) - 0.1;
+			let valorEmpresarial = (((parseFloat(porcentagem) - 0.1) * parseFloat(respCOmplemento)) / 100)
 			
-			output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+			let valorComp = (parseFloat(respCOmplemento) - valorEmpresarial)
+			
+			slider.max =parseFloat(porcentagem) - 0.1
+			
+			slider.value = parseFloat(porcentagem) - 0.1;
+						
+			let empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+			
+			let complemt  = (parseFloat(respCOmplemento) - empresa)
+			 
+			output.innerHTML =	slider.value
+
+			//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 		 
-		}else{
+			$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+			
+			$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+			
+			printParcelamento(complemt.formatMoney(2, ',', '.'));
+			
+			$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+			
+			$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
 		
-			let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp) * 100
-			output.innerHTML =porcentagem.formatMoney(2, ',', '.')
+		}else{
+			
+			let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
+		
+		 
+			let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+			let valorComplemento =  (respCOmplemento) - totalEmpresarial
+			printParcelamento(valorComplemento);
 			slider.max = parseFloat(porcentagem) - 0.1;
 			slider.value =parseFloat(porcentagem) - 0.1;
 			output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
-			$('.valor_complementar').text('R$ '+finalCOmplemento)
-			$('.creditoAserDebitado').text('R$ '+final) 
+			 
+			 
+		 
+			
+		 
+			$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
+			$('.valor_complementar').text('R$ '+valorComplemento)
+			$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
 		}
                                                                                
 		}, 
-		100);
+		10);
 		
 		Number.prototype.formatMoney = function (c, d, t) {
 				var n = this,
@@ -765,8 +811,11 @@ function efetuarPagamento() {
 
 		break;
 		case "4":
+		dados = "boleto"
+		// boleto bancario
 		break;
 		case "5":
+		dados = "transferencia"
 		break;
 		default:
 		break;
@@ -904,73 +953,77 @@ function efetuarPagamento() {
 			let cvv = $('#inputCodigoCredito  ').val()
 			let titularcpf = $('#inputCPFCredito').val()
 			let parcelas = $('#selectParcelamentoCredito').val()
-			let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0 
-			let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text());
+			let salvar =   0 
+			let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text()).replace(',', '.');
 
 		
-			if(cartaoid != ""){
-				resp = validarCampos($('#inputCodigoCredito ').val(), '#inputCodigoCredito', "Mes cartão");
-				
-				if(resp){
-					objeto = {salvar, parcelas, cartaoid, cvv,porcentagem:porcentagemCreditoEspecial}				
-				
-				}else{
-						
-						swal(
-							{
-								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-								text: 'Por favor, verifique os campos e tente novamente.'
-							}
-						);
-					$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-					$('#btn-finalizar-pedido').removeAttr('disabled');
-					 objeto=null
+			let permission=true;
+			resp.push( validarCampos($('#inputNumeroCartaoCredito  ').val(), '#inputNumeroCartaoCredito', "Número cartão obrigatório"));
+			resp.push(  validarCampos($('#inputNomeCartaoCredito  ').val(), '#inputNomeCartaoCredito', "Nome impresso é obrigatório"));
+			resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
+			resp.push( validarCampos($('#selectValidadeAnoCredito  ').val(), '#selectValidadeAnoCredito', "Ano do cartão é obrigatório"));
+			resp.push( validarCampos($('#inputCodigoCredito  ').val(), '#inputCodigoCredito', "Código do cartão é obrigatório"));
+			resp.push( validarCampos($('#inputCPFCredito  ').val(), '#inputCPFCredito', "CPF titular é obrigatório"));
+			
+
+			resp.forEach(function(entry) {
+				if(!entry){
+					permission=false;
 				}
+				
+			});
+
+			if(permission){
+				objeto = {
+					metodo,
+					cartaoid,
+					numero,
+					nome,
+					mes,
+					ano,
+					cvv,
+					titularcpf,
+					parcelas,
+					salvar,
+					porcentagem:porcentagemCreditoEspecial
+				}				
 			}else{
-				let permission=true;
-				resp.push( validarCampos($('#inputNumeroCartaoCredito  ').val(), '#inputNumeroCartaoCredito', "Número cartão obrigatório"));
-				resp.push(  validarCampos($('#inputNomeCartaoCredito  ').val(), '#inputNomeCartaoCredito', "Nome impresso é obrigatório"));
-				resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
-				resp.push( validarCampos($('#selectValidadeAnoCredito  ').val(), '#selectValidadeAnoCredito', "Ano do cartão é obrigatório"));
-				resp.push( validarCampos($('#inputCodigoCredito  ').val(), '#inputCodigoCredito', "Código do cartão é obrigatório"));
-				resp.push( validarCampos($('#inputCPFCredito  ').val(), '#inputCPFCredito', "CPF titular é obrigatório"));
-				
-
-				resp.forEach(function(entry) {
-					if(!entry){
-						permission=false;
+				swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+						text: 'Por favor, verifique os campos e tente novamente.'
 					}
-					
-				});
-
-				if(permission){
-					objeto = {
-						metodo,
-						cartaoid,
-						numero,
-						nome,
-						mes,
-						ano,
-						cvv,
-						titularcpf,
-						parcelas,
-						salvar,
-						porcentagem:porcentagemCreditoEspecial
-					}				
-				}else{
-					swal(
-						{
-							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-							text: 'Por favor, verifique os campos e tente novamente.'
-						}
-					);
-				$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
-				$('#btn-finalizar-pedido').removeAttr('disabled');
-				}
+				);
+			$('#btn-finalizar-pedido').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+			$('#btn-finalizar-pedido').removeAttr('disabled');
 			}
 			return objeto;
 	}
 
+
+	function printParcelamento(valor){
+		let options = ""
+		$('#selectParcelamentoCredito').empty()
+
+		if(parseFloat(valor) >200){
+			$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+valor+' sem juros </option>' )
+			var i=0;
+			for (i = 2; i <=5; i++) { 
+				let vl = parseFloat(valor) / i
+				if(i <=3){
+					$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).toLocaleString('pt-BR')+' sem juros </option>' )
+				}else if(i >3){
+					$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(parseFloat(vl) *1.05).toLocaleString('pt-BR') +' com juros (5% a.m.) </option>' )
+				}
+			}
+			
+		}else{
+			$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros')
+			$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros </option>' )
+		}
+	
+	 
+	}
 	function cartaoCredito(){
 			let objeto=null;
 			let resp =[];	

@@ -578,18 +578,15 @@ class AgendamentoController extends Controller
 
             
          //$query_temp = DB::getQueryLog();
-			$plano = Paciente::getPlanoAtivo( $paciente_id);
-
-            if($plano != 1) {
-
-                $vigencia_valor =   Paciente::getVlMaxConsumo($paciente_id);                
-
+		 
+            
+            if (Auth::check()) {
+                $paciente = Auth::user()->paciente;
             }
-
             
         }
         
-        return view('agendamentos.meus-agendamentos', compact('agendamentos_home','plano','vigencia_valor'));
+        return view('agendamentos.meus-agendamentos', compact('agendamentos_home','paciente'));
     }
     
     /**
@@ -739,20 +736,7 @@ class AgendamentoController extends Controller
         $cartoes_paciente = CartaoPaciente::where('paciente_id', $responsavel_id)->get();
         
         //--busca os agendamentos do paciente----------
-        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();
-        
-        
-        
-            //$query_temp = DB::getQueryLog();
-			$plano = Paciente::getPlanoAtivo($user_paciente->paciente->id);
-
-            if($plano !=Plano::OPEN) {
-               $vigencia_valor = Paciente::getVlMaxConsumo($user_paciente->paciente->id);
-                
-            }
-
-            
-        
+        $agendamentos = Agendamento::with('paciente')->with('clinica')->with('atendimento')->with('profissional')->with('itempedidos')->where('paciente_id', '=', $responsavel_id)->whereNotNull('agendamentos.atendimento_id')->orderBy('dt_atendimento', 'desc')->get();                    
 
         foreach ($agendamentos as $agendamento) {
         	$agendamento->itempedidos->first()->pedido->load('cartao_paciente');
@@ -760,7 +744,11 @@ class AgendamentoController extends Controller
         	$agendamento->data_pagamento = sizeof($agendamento->itempedidos->first()->pedido->pagamentos) > 0 ? date('d/m/Y', strtotime($agendamento->itempedidos->first()->pedido->pagamentos->first()->created_at)) : '----------';
         }
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'plano', 'vigencia_valor'));
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
+        }
+        
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente'));
     }
     
     /**

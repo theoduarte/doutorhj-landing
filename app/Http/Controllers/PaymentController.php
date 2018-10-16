@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
+use App\Preco;
+
+
 class PaymentController extends Controller
 {
     /**
@@ -206,9 +209,9 @@ class PaymentController extends Controller
 
         $result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
 	
-
+		
         if ($result_agendamentos == null) {
-     //       return redirect()->route('landing-page');
+            return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
@@ -219,9 +222,9 @@ class PaymentController extends Controller
 		
 		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-      //  $request->session()->forget('result_agendamentos');
-      //  $request->session()->forget('pedido');
-      //  $request->session()->forget('valor_total_pedido');
+       $request->session()->forget('result_agendamentos');
+        $request->session()->forget('pedido');
+        $request->session()->forget('valor_total_pedido');
         
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria'));
     }
@@ -247,6 +250,8 @@ class PaymentController extends Controller
 	 public function fullTransaction(Request $request)
     {
 
+	
+										 
 
 		$basicAuthUserName = env('MUNDIPAGG_KEY');
 		$basicAuthPassword = "";
@@ -448,15 +453,19 @@ class PaymentController extends Controller
 
 				// validar se o cartao do funcionario existe limite
 				// obtem o valor de limite restande do usuario
-				$limiteCartaoFuncionario =200;
+				if (Auth::check()) {
+					$pacient = Auth::user()->paciente;
+				}
+
+				$limiteCartaoFuncionario =$pacient->vl_max_consumo;
 				if($limiteCartaoFuncionario ==0){
 					return response()->json([
 						'mensagem' => 'Não existe limite no cartao empresarial.'
 					], 422);
 				}else{
-					$valorLimiteRestante = 2.00;
+					$valorLimiteRestante = $limiteCartaoFuncionario ;
 				}
-
+				
 				if(!empty($dados->cartaoid)) {
 					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
 					if(!$cartao->exists()) {
@@ -479,12 +488,16 @@ class PaymentController extends Controller
 
 					if( $dados->salvar == 0){
 	
-						try{									
+						try{	
+							
 							// cria token cartao						
 							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+							
 							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
 							$metodoCartao=2;
 							$cartao = $cartaoToken->id;
+
+							
 						}catch(\Exception $e){
 							DB::rollBack();
 							return response()->json([
@@ -503,6 +516,7 @@ class PaymentController extends Controller
 						if(!$cartaoPaciente) { 																				
 							
 							try {
+							 
 								$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
 									$dados->numero, 
 									$dados->nome, 				
@@ -510,8 +524,8 @@ class PaymentController extends Controller
 									$dados->ano,
 									$dados->cvv, 
 									$bandeira
-									)); 
-									
+								)); 
+									 
 								$cartao_paciente = new CartaoPaciente();
 								$cartao_paciente->bandeira 		= $bandeira;
 								$cartao_paciente->nome_impresso = $dados->nome;
@@ -525,6 +539,7 @@ class PaymentController extends Controller
 									// card_id cartao salvo
 									$metodoCartao=1;
 									$cartao = $saveCartao->id;
+									 
 									
 								}
 							} catch(\Exception $e) {
@@ -542,11 +557,7 @@ class PaymentController extends Controller
 						}	
 					}
 				}
-				
-				//$dados['cvv']
-				//$dados['parcelas']
-				//$dados['porcentagem']
-				
+			 
 
 			}else 
 			// faz validação para efetuar compra com o  cartao de credito
@@ -569,6 +580,7 @@ class PaymentController extends Controller
 						$cartao =$cartao->first()->card_token;
 						$metodoCartao=1;
 				}else{
+					 
 					if($dados->salvar ==0){
 						
 						try{									
@@ -637,10 +649,7 @@ class PaymentController extends Controller
 				}					
 			}else
 			//boleto bancario
-			if($metodoPagamento ==4){
-				
-			
-				
+			if($metodoPagamento ==4){											
 
 			}else
 			//transferencia bancario
@@ -651,12 +660,13 @@ class PaymentController extends Controller
 				die;
 			}
 
-
-
+		 
+		 
 
 			if($metodoPagamento==1){
 
 			}else 
+		
 			if($metodoPagamento ==2 ){
 				
 				if($metodoPagamento ==2 && empty($dados->porcentagem)){
@@ -672,52 +682,73 @@ class PaymentController extends Controller
 					], 500);
 				}
 
+				
 				//valor para fim de calculo
 				$valorFinal = $valor_total-$valor_desconto;
 				
 				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
-				$totalDescontoEmpresarial = ( ($valorLimiteRestante * $dados->porcentagem ) /100 );
+				$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
+				$totalDescontoEmpresarial = ( ($formatLimit * $dados->porcentagem ) /100 );
+			
+				
+				$totalPagarEmpresarial = $totalDescontoEmpresarial ; 
+			 
 
-				$totalPagarEmpresarial = ($valorFinal - $totalDescontoEmpresarial);
-				$totalValorCredito = ($valorFinal - $totalPagarEmpresarial);
-				//$valorCartaoCredito = ($valorLimiteRestante - $valorFinal );
-				//$valorEmpresarial = 
+				$totalValorCredito = ($valorFinal - $totalPagarEmpresarial);							  
 
 				// valor para ser cobrado no cartao empresarial 
-				$empresarial =  $dados->porcentagem  * $valorFinal / 100;
-
+				$empresarial =  $totalPagarEmpresarial;
+			 
 				// valor para ser cobrado no cartao de credito
-				$cartaoCredito =  $valorFinal - $empresarial ;
-
-			
+				$cartaoCredito =  $totalValorCredito;
+				
 				($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) ** $pag->qt_parcela, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
+								
 				$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
 			
-				//$dados['cvv']
-				//$dados['parcelas']
-				//$dados['porcentagem']
+				 
 			
-			}else{
+			}else {
 				$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
 			}
 			
-		
-
-			die;
-		
-
+	 
 				// pagamento com cartão de credito e empresarial
 			if ($metodoPagamento ==2) {					
+				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
+				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+				
+				$dados = FuncoesPagamento::pagamentoMultiMeio(
+					'cus_r0WVwzMt8Cvl2mXN',  // custom token empresa buscar
+					$valorCartaoCredito+$valorCartaoEmpresarial,
+					$titulo_pedido,
+					$valorCartaoCredito,
+					$valorCartaoEmpresarial,
+					$dados->parcelas,
+					1,    
+					'Doutor Hoje', 
+					'Doutor Hoje',
+					$cartao,
+					$cartaoPaciente->card_token,
+					$metodoCartao,
+					1);
+				 
 			
-				
-			//	$valorFinal = $valor_total-$valor_desconto;
-				//$dados->porcentagem  *	$valorFinal
-			//	$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;							
+					try{
+						$criarPagamento = $client->getOrders()->createOrder($dados);
+					}catch(\Exception $e){
+						DB::rollBack();
+						return response()->json([
+							'message' => 'Erro ao efetuar o pagamento com o cartão de crédito!',
+							'errors' => $e->getMessage(),
+						], 500);
+					}
+		 	
+
 			}
-
-			die;
-
+			
+			
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{
@@ -759,24 +790,7 @@ class PaymentController extends Controller
 			}
 
 			
-		//	var_dump($criarPagamento); die;
-
-        /*if ($tp_pagamento == 'credito') {
-        	if ($valor_total > 200) {
-        		$parcelamentos = [];
-        	
-        		for ($i = 1; $i < 5; $i++) {
-        		    $item_valor =  $valor_parcelamento/$i;
-        		    
-        		    if ($i <= 3) {
-        		        $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor,  2, ',', '.').' sem juros';
-        		    } elseif ($i > 3) {
-        		        $parcelamentos[$i] = "$i"."x R$ ".number_format( $item_valor*1.05,  2, ',', '.').' com juros (5% a.m.)';
-        		    }
-        		}
-        	}
-        }
-         */
+	 
         
         
         //-- pedido id do DoutorHoje----------------------------------
@@ -805,7 +819,7 @@ class PaymentController extends Controller
 		if(!empty($criarPagamento)){
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
 			$result_agendamentos=[];
-			foreach($agendamentoItens as $i=>$item_agendamento) {
+						foreach($agendamentoItens as $i=>$item_agendamento) {
 				
 									$MerchantOrderId = $pedido->id;
 									$agendamento 						= new Agendamento();
@@ -848,7 +862,23 @@ class PaymentController extends Controller
 										$item_pedido->agendamento_id = $agendamento_id;
 			
 										if(!empty($item_agendamento->atendimento_id)) {
-											$item_pedido->valor = $agendamento->atendimentos()->first()->vl_com_atendimento * (1 - $percentual_desconto);
+									 
+											$plano=0;
+											$atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
+												 ->with('precoAtivo')->whereHas('precoAtivo', function($query) use ( $plano ) {
+												 $query->where('precos.plano_id', '=',$plano);
+												 })->first();
+									
+												 if(is_null($atendimento)) {
+													 $atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
+														 ->with('precoAtivo')->first() ;
+												 }
+											$resp = json_decode(json_encode($atendimento), true);
+
+											$number = str_replace(',','.',preg_replace('#[^\d\,]#is','',$resp['preco_ativo']['vl_comercial'])); 
+																				
+											$item_pedido->valor = $number   * (1 - $percentual_desconto);
+
 										} else {
 											foreach ($item_agendamento->itens as $item) {
 												$dataHoraCheckup = new Datahoracheckup();
@@ -961,14 +991,13 @@ class PaymentController extends Controller
 							//print_r($result_agendamentos); die;
 
 							 ########### FINISHIING TRANSACTION ##########
-						//	 DB::commit();
+							 DB::commit();
 							 #############################################
-						//	 CVXCart::clear();
+							 CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
 							 
- 
-
+					 
 							 $request->session()->put('result_agendamentos', $result_agendamentos);
 							 $request->session()->put('pedido', $pedido);
 							 $request->session()->put('valor_total_pedido', $valor_total_pedido);
@@ -977,7 +1006,7 @@ class PaymentController extends Controller
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-							 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+						 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 
 
 			
