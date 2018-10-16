@@ -889,9 +889,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
-                                                <div id="resumo_parcelamento" class="dados-resumo">
+                                                <div id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
                                                     <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
-                                                    <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

@@ -462,9 +462,7 @@ $(function(){
 			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-		
-		
-		 
+						 
 			let valorEmpresarial = (((parseFloat(porcentagem) - 0.1) * parseFloat(respCOmplemento)) / 100)
 			
 			let valorComp = (parseFloat(respCOmplemento) - valorEmpresarial)
@@ -472,21 +470,25 @@ $(function(){
 			slider.max =parseFloat(porcentagem) - 0.1
 			
 			slider.value = parseFloat(porcentagem) - 0.1;
-			
-			printParcelamento(valorComplemento);
-
+						
 			let empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+			
 			let complemt  = (parseFloat(respCOmplemento) - empresa)
-		
-	 
+			 
 			output.innerHTML =	slider.value
 
 			//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 		 
 			$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+			
 			$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+			
+			printParcelamento(complemt.formatMoney(2, ',', '.'));
+			
 			$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+			
 			$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
+		
 		}else{
 			
 			let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
@@ -809,8 +811,11 @@ function efetuarPagamento() {
 
 		break;
 		case "4":
+		dados = "boleto"
+		// boleto bancario
 		break;
 		case "5":
+		dados = "transferencia"
 		break;
 		default:
 		break;
@@ -1013,6 +1018,7 @@ function efetuarPagamento() {
 			}
 			
 		}else{
+			$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros')
 			$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros </option>' )
 		}
 	

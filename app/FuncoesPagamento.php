@@ -196,7 +196,7 @@ abstract class FuncoesPagamento
 			"payments"=>[				
 				[
 					"amount"=>$valorEmCentavos,
-					"payment_method"=>"bank_transfer",
+					"payment_method"=>"bank_transfer",					 
 					"bank_transfer"=>[
 						"bank"=> "001"
 					]
