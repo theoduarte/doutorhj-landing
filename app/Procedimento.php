@@ -47,7 +47,7 @@ class Procedimento extends Model
         return $this->belongsToMany('App\CupomDesconto');
     }
 
-    public function getActiveExameProcedimento(){
+    public function getActiveExameProcedimento($planoId) {
         // DB::enableQueryLog();
         $query = DB::table('procedimentos')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, procedimentos.ds_procedimento) descricao, 'exame' tipo, procedimentos.id") )
@@ -58,12 +58,22 @@ class Procedimento extends Model
             })
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
             ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.procedimento_id', '=', 'procedimentos.id');})
+			->join('precos as pr', function($join8) use ($planoId) {
+				$join8->on('pr.atendimento_id', '=', 'atendimentos.id')
+					->where('pr.cs_status', '=', 'A')
+					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'))
+					->where(function($query) use ($planoId) {
+						$query->where('pr.plano_id', '=', $planoId)
+							->orWhere('pr.plano_id', '=', Plano::OPEN);
+					});
+			})
             ->whereExists(function ($query) {
                 $query->select(DB::raw(1))
                       ->from('filials')
                       ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
             })
-            ->where('atendimentos.cs_status', 'A')
+            ->where(['atendimentos.cs_status' => 'A', 'clinicas.cs_status' => 'A'])
             ->whereIn('procedimentos.tipoatendimento_id', self::$_tipoAtendimentoExameProcedimento)
             ->get();
 
@@ -71,7 +81,7 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveOdonto(){
+    public function getActiveOdonto($planoId){
         // DB::enableQueryLog();
         $query = DB::table('procedimentos')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, procedimentos.ds_procedimento) descricao, 'odonto' tipo, procedimentos.id") )
@@ -82,6 +92,16 @@ class Procedimento extends Model
             })
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
             ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.procedimento_id', '=', 'procedimentos.id');})
+			->join('precos as pr', function($join8) use ($planoId) {
+				$join8->on('pr.atendimento_id', '=', 'atendimentos.id')
+					->where('pr.cs_status', '=', 'A')
+					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'))
+					->where(function($query) use ($planoId) {
+						$query->where('pr.plano_id', '=', $planoId)
+							->orWhere('pr.plano_id', '=', Plano::OPEN);
+					});
+			})
             ->whereExists(function ($query) {
                 $query->select(DB::raw(1))
                       ->from('filials')
@@ -114,41 +134,44 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem,$planoId ) {
+    public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem, $planoId ) {
         // DB::enableQueryLog();
         $query = DB::table('atendimentos as at')
-        ->distinct()
-        ->select( DB::raw("at.id, pr.vl_comercial, at.ds_preco, 
-                           c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
-                           case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro, 
-                           e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
-                           e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_procedimento,
-                           c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id") )
-        ->join('procedimentos as p', 'at.procedimento_id', '=', 'p.id')
-        ->leftJoin('tag_populars as tp', 'p.id', '=', 'tp.procedimento_id')
-        ->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
-        ->join('filials as f', 'c.id', '=', 'f.clinica_id')
-        ->join('enderecos as e', 'f.endereco_id', '=', 'e.id')
-        ->join('precos as pr', 				function($join8) use ($planoId) {
-            $join8->on('pr.atendimento_id', '=', 'at.id')
-                ->where('pr.plano_id', '=', $planoId)
-                ->where('pr.cs_status', '=', 'A')
-                ->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
-                ->where('pr.data_fim', '>=', date('Y-m-d H:i:s'));
-        })
-        ->join('cidades as cd', 'e.cidade_id', '=', 'cd.id')
-        ->where('at.cs_status', 'A')
-        ->where('c.cs_status', 'A')
-        ->where('f.cs_status', 'A')
-        ->where('at.procedimento_id', $procedimentoId);
+			->distinct()
+			->select( DB::raw("at.id, pr.vl_comercial, at.ds_preco,
+							   c.id clinica_id, p.id procedimento_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_procedimento) tag,
+							   case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro,
+							   e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,
+							   e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_procedimento,
+							   c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id") )
+			->join('procedimentos as p', 'at.procedimento_id', '=', 'p.id')
+			->leftJoin('tag_populars as tp', 'p.id', '=', 'tp.procedimento_id')
+			->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
+			->join('filials as f', 'c.id', '=', 'f.clinica_id')
+			->join('enderecos as e', 'f.endereco_id', '=', 'e.id')
+			->join('precos as pr', function($join8) use ($planoId) {
+				$join8->on('pr.atendimento_id', '=', 'at.id')
+					->where('pr.cs_status', '=', 'A')
+					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'))
+					->where(function($query) use ($planoId) {
+						$query->where('pr.plano_id', '=', $planoId)
+							->orWhere('pr.plano_id', '=', Plano::OPEN);
+					});
+			})
+			->join('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			->where('at.cs_status', 'A')
+			->where('c.cs_status', 'A')
+			->where('f.cs_status', 'A')
+			->where('at.procedimento_id', $procedimentoId);
 
         if( !empty($enderecoIds) ) {
             $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );
         }
 
         $query->orderBy('pr.vl_comercial', $sortItem)
-        ->orderBy('f.eh_matriz', 'desc')
-        ->orderBy('c.nm_fantasia', 'asc');
+			->orderBy('f.eh_matriz', 'desc')
+			->orderBy('c.nm_fantasia', 'asc');
   
         // dd( DB::getQueryLog() );
         return $query->get();

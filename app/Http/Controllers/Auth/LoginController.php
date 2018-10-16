@@ -10,6 +10,7 @@ use App\Http\Controllers\UtilController;
 use App\Contato;
 use Illuminate\Support\Facades\DB;
 use App\Paciente;
+use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 
 class LoginController extends Controller
 {
@@ -95,6 +96,7 @@ class LoginController extends Controller
     }
     
     public function logout(Request $request) {
+		CVXCart::clear();
     	Auth::logout();
     	return redirect('/');
     }

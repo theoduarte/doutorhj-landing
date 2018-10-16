@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
@@ -184,7 +185,7 @@ class Paciente extends Model
 		return $this->getVlConsumido($this->attributes['id']);
 	}
 
-	public static function getPlanoAtivo($paciente_id)
+	public static function getPlanoAtivo($paciente_id = null)
 	{
 		if(is_null($paciente_id)) {
 			return Plano::OPEN;
