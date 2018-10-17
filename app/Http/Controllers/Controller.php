@@ -67,6 +67,8 @@ class Controller extends BaseController
 			$paciente = Auth::user()->paciente;
 			$paciente_id = $paciente->id;
 
+            
+
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
 					'paciente', 'clinica.enderecos.cidade', 'atendimento', 'profissional', 'itempedidos.pedido.pagamentos',
@@ -94,7 +96,7 @@ class Controller extends BaseController
                 }
 			}
         }
-        
+       
         return view('welcome', compact('agendamentos_home', 'paciente'));
     }
     

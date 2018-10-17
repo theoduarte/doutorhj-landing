@@ -206,7 +206,7 @@ class PaymentController extends Controller
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
 		
-
+	
         $result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
 	
 		
@@ -270,7 +270,8 @@ class PaymentController extends Controller
             $percentual_desconto = $this->validarCupomDesconto($cod_cupom_desconto);
         }
 
-        
+		
+		
              
 		$carrinho = CVXCart::getContent()->toArray();
 
@@ -292,12 +293,39 @@ class PaymentController extends Controller
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
 		$paciente =(object) Paciente::select("*")->where('id', $paciente_id)->first();
 		
-	
-		
+	 		
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
-
+		 
 		
+		$empresarial = 215.55;
+		$emp=0;
+		$credito =  0;
+		$resp =null;		 
+		$valores = [64.91,64.91,50,64.91,61.91,59.60];
+		for($i=0; $i<count($valores); $i++){
+			$sum		+=	$valores[$i];
+			if($empresarial != $emp){
+				
+				$emp +=	   	$valores[$i];
+				
+				if($emp >$empresarial){				
+					$resp = $emp - $empresarial;
+					$emp = $emp -$resp;				  
+					$credito += $resp;					
+				}
+
+			}else{
+				$credito +=	$valores[$i];			 
+			}
+			 
+			 
+		}
+		echo $sum.'<br>';
+		echo ($emp).'<br>'.$credito;
+		
+		die;
+
 
         //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
         //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
@@ -458,6 +486,9 @@ class PaymentController extends Controller
 				}
 
 				$limiteCartaoFuncionario =$pacient->vl_max_consumo;
+				
+				$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
 				if($limiteCartaoFuncionario ==0){
 					return response()->json([
 						'mensagem' => 'Não existe limite no cartao empresarial.'
@@ -664,7 +695,8 @@ class PaymentController extends Controller
 		 
 
 			if($metodoPagamento==1){
-
+				// adicionar o cartao id do cartao empresarial no pedido 
+				// $pedido->cartao_id = 
 			}else 
 		
 			if($metodoPagamento ==2 ){
@@ -808,17 +840,46 @@ class PaymentController extends Controller
         $customer_email                 = $customer->user->email;
         $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
    
-		if (!$pedido->save()) {
-			########### FINISHIING TRANSACTION ##########
-			DB::rollback();
-			#############################################
-			return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+		if($metodoPagamento != 2){
+			if (!$pedido->save()) {
+				########### FINISHIING TRANSACTION ##########
+				DB::rollback();
+				#############################################
+				return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+			}
 		}
 
-		
+		if($metodoPagamento == 2){
+			$pedidoEmpresarial  = new Pedido();        
+			$descricao = '';
+			$dt_pagamento = date('Y-m-d H:i:s');                        
+			$pedidoEmpresarial->titulo         = $titulo_pedido;
+			$pedidoEmpresarial->descricao      = $descricao;
+			$pedidoEmpresarial->dt_pagamento   = $dt_pagamento;
+			$pedidoEmpresarial->tp_pagamento   = 'empre+credito';
+			$pedidoEmpresarial->paciente_id    = $paciente_id;
+			$pedidoEmpresarial->cartao_id = $cartaoEmpresarialDados->id;
+
+			$pedidoCredito = new Pedido();        
+			$descricao = '';
+			$dt_pagamento = date('Y-m-d H:i:s');                        
+			$pedidoCredito->titulo         = $titulo_pedido;
+			$pedidoCredito->descricao      = $descricao;
+			$pedidoCredito->dt_pagamento   = $dt_pagamento;
+			$pedidoCredito->tp_pagamento   = 'empre+credito';
+			$pedidoCredito->cartao_id = "";
+
+			$restoEmpresarial = $empresarial;
+
+			$restoCredito = $cartaoCredito ;
+		}
+
 		if(!empty($criarPagamento)){
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
 			$result_agendamentos=[];
+			$empresarialSalvar=0;
+			$creditoCartaoSalvar =  0;
+			$resp =null;
 						foreach($agendamentoItens as $i=>$item_agendamento) {
 				
 									$MerchantOrderId = $pedido->id;
@@ -857,27 +918,66 @@ class PaymentController extends Controller
 										$agendamento->load('paciente');
 										
 										 
-										$item_pedido = new Itempedido();
-										$item_pedido->pedido_id = $MerchantOrderId;
-										$item_pedido->agendamento_id = $agendamento_id;
+									
 			
 										if(!empty($item_agendamento->atendimento_id)) {
-									 
+									 											
 											$plano=0;
 											$atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
 												 ->with('precoAtivo')->whereHas('precoAtivo', function($query) use ( $plano ) {
 												 $query->where('precos.plano_id', '=',$plano);
 												 })->first();
 									
-												 if(is_null($atendimento)) {
-													 $atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
-														 ->with('precoAtivo')->first() ;
-												 }
+											if(is_null($atendimento)) {
+												 $atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
+													 ->with('precoAtivo')->first() ;
+											}
 											$resp = json_decode(json_encode($atendimento), true);
 
 											$number = str_replace(',','.',preg_replace('#[^\d\,]#is','',$resp['preco_ativo']['vl_comercial'])); 
-																				
-											$item_pedido->valor = $number   * (1 - $percentual_desconto);
+																
+											if($metodoPagamento ==2){
+											
+														$empresarial = $restoEmpresarial;
+									 														
+														if($empresarial != $empresarialSalvar){
+															
+															$empresarialSalvar += $number;
+															
+															if($empresarialSalvar >$empresarial){				
+																$resp = $empresarialSalvar - $empresarial;
+																$empresarialSalvar = $empresarialSalvar -$resp;				  
+																$creditoCartaoSalvar += $resp;					
+															}
+											
+														}else{
+															$creditoCartaoSalvar +=$number;			 
+														}
+													 
+														$item_pedidoEmpresarial = new Itempedido();									
+														$item_pedidoEmpresarial->agendamento_id = $agendamento_id;
+														$item_pedidoEmpresarial->pedido_id = $pedidoEmpresarial->id;
+														$item_pedidoEmpresarial->valor = $empresarialSalvar;
+														$item_pedidoEmpresarial->save();
+
+														$item_pedidoCredito = new Itempedido();									
+														$item_pedidoCredito->agendamento_id = $agendamento_id;
+														$item_pedidoCredito->pedido_id = $pedidoCredito->id;
+														$item_pedidoCredito->valor = $number   * (1 - $percentual_desconto);
+														$item_pedidoCredito->save();
+
+														
+											 
+											}else{
+												$item_pedido = new Itempedido();
+									
+												$item_pedido->agendamento_id = $agendamento_id;
+												$item_pedido->pedido_id = $MerchantOrderId;
+												$item_pedido->valor = $number   * (1 - $percentual_desconto);
+											}
+
+
+											
 
 										} else {
 											foreach ($item_agendamento->itens as $item) {
@@ -903,6 +1003,8 @@ class PaymentController extends Controller
 										if(!$item_pedido->save()) {
 											echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
 										}
+
+										
 			
 										//--busca pelas especialidades do atendimento--------------------------------------
 										$nome_especialidade = "";
@@ -957,9 +1059,9 @@ class PaymentController extends Controller
 									}
 
 
-									 
+									DB::rollback();
 							}
-
+							DB::rollback();
 							$dados = json_decode(json_encode($criarPagamento), true);		
 
 							$boleto=null;
@@ -991,9 +1093,9 @@ class PaymentController extends Controller
 							//print_r($result_agendamentos); die;
 
 							 ########### FINISHIING TRANSACTION ##########
-							 DB::commit();
+						//	 DB::commit();
 							 #############################################
-							 CVXCart::clear();
+						//	 CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
 							 
@@ -1006,7 +1108,7 @@ class PaymentController extends Controller
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-						 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+						// return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 
 
 			

@@ -219,7 +219,7 @@ class Paciente extends Model
 		}
 	}
 
-	public function getVlConsumido($paciente_id)
+	public static function getVlConsumido($paciente_id)
 	{
 		$paciente = Paciente::findOrFail($paciente_id);
 
@@ -237,7 +237,8 @@ class Paciente extends Model
 			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
 			->with(['cartao_paciente', 'itempedidos'])
 			->get();
-
+            
+           
 		$vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))
 			->first();
