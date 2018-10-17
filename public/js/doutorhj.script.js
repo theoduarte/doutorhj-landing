@@ -398,8 +398,7 @@ $(function() {
 		let resCOmplemento="";
 		let subtrair="";
 		let finalCOmplemento="";
-
-		valor = slider.value;
+		
 		valor_formatado = (  $('#valor_disponivel').val());
 		
 		if(valor_formatado.length >6) {
