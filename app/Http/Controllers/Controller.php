@@ -81,6 +81,7 @@ class Controller extends BaseController
 				})
 				->select('agendamentos.*')
 				->distinct()
+				->whereRaw('dt_atendimento >= now()')
 				->orderBy('dt_atendimento', 'asc')->get();
 
 			//$query_temp = DB::getQueryLog();

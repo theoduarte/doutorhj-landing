@@ -37,6 +37,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @property VigenciaPaciente[] $vigenciaPacientes
  * @property Voucher[] $vouchers
  * @property Campanha[] $campanhas
+ *
+ * @property Plano $plano_ativo
+ * @property float $vl_max_consumo
+ * @property float $vl_consumido
+ * @property float $saldo_empresarial
  */
 class Paciente extends Model
 {
@@ -50,7 +55,7 @@ class Paciente extends Model
 	public $dates 	      = ['dt_nascimento'];
 
 	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
-	protected $appends = ['plano_ativo', 'vl_max_consumo', 'vl_consumido'];
+	protected $appends = ['plano_ativo', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -185,6 +190,11 @@ class Paciente extends Model
 		return $this->getVlConsumido($this->attributes['id']);
 	}
 
+	public function getSaldoEmpresarialAttribute()
+	{
+		return $this->getSaldoEmpresarial($this->attributes['id']);
+	}
+
 	public static function getPlanoAtivo($paciente_id = null)
 	{
 		if(is_null($paciente_id)) {
@@ -210,9 +220,9 @@ class Paciente extends Model
 
 		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
 			if(!empty(intval($vigenciaPac->vl_max_consumo))) {
-				return $vigenciaPac->vl_max_consumo;
+				return intval($vigenciaPac->vl_max_consumo);
 			} else {
-				return $vigenciaPac->paciente->empresa->vl_max_funcionario;
+				return intval($vigenciaPac->paciente->empresa->vl_max_funcionario);
 			}
 		} else {
 			return 0;
@@ -246,7 +256,18 @@ class Paciente extends Model
 		if(is_null($vlConsumido)) {
 			return 0;
 		} else {
-			return $vlConsumido->vl_consumido;
+			return intval($vlConsumido->vl_consumido);
+		}
+	}
+
+	public static function getSaldoEmpresarial($paciente_id)
+	{
+		$saldo = self::getVlMaxConsumo($paciente_id) - self::getVlConsumido($paciente_id);
+
+		if($saldo < 0) {
+			return 0;
+		} else {
+			return intval($saldo);
 		}
 	}
 }

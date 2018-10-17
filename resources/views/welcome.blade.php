@@ -26,93 +26,98 @@
                         <div class="col-12">
                             <p class="tit-box-pc">Resumo dos próximos agendamentos</p>
                             <div class="row">
-                                @foreach($agendamentos_home as $agendamento)
-                                    @if(!is_null($agendamento->atendimento_id))
-                                        <div class="proxima-consulta col-sm-12 col-md-6">
-                                            <div class="area-pc">
-                                                <div class="tit-pc">
-                                                    <p class="data-consulta">
-                                                        @if( !empty($agendamento->dt_atendimento) )
-                                                            Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
-                                                            de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                            às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                                h
-                                                                @if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
-                                                                    e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
-                                                                    min. @endif</span></p>
-                                                        @endif
-                                                </div>
-                                                <div class="resumo">
-                                                    <div class="nome-status">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                @if($agendamento->getRawCsStatusAttribute() == 10)
-                                                                    <span class="status pre-agendado">Pré-Agendado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 20)
-                                                                    <span class="status confirmado">Confirmado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 30)
-                                                                    <span class="status nao-confirmado">Não Confirmado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 40)
-                                                                    <span class="status finalizado">Finalizado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 50)
-                                                                    <span class="status ausente">Não compareceu</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 60)
-                                                                    <span class="status cancelado">Cancelado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 70)
-                                                                    <span class="status agendado">Agendado</span>
-                                                                @elseif($agendamento->getRawCsStatusAttribute() == 80)
-                                                                    <span class="status retorno">Retorno de Consulta</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <p class="tipo">
-                                                        <span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
-                                                        <br>
-                                                       @if(!empty($agendamento->clinica->nm_fantasia))
-                                                       <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
-                                                       @endif
-                                                    </p>
-                                                    {{--<p class="profissional">
-                                                        Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                                    <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
-                                                    <p class="endereco">
-                                                        <strong>Endereço:</strong> {{ $agendamento->endereco_completo }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @elseif(!is_null($agendamento->checkup_id))
-                                        <div class="proxima-consulta col-sm-12 col-md-6">
-                                            <div class="area-pc">
-                                                <div class="tit-pc">
-                                                    <p class="data-consulta">Checkup</p>
-                                                </div>
-                                                <div class="resumo">
-                                                    <div class="nome-status">
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <p class="beneficiario">{{$agendamento->paciente->nm_primario}}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <p class="tipo">
-                                                        <span>Checkup {{$agendamento->checkup->titulo}}
-                                                            - {{ucfirst($agendamento->checkup->tipo)}}</span>
-                                                    </p>
-                                                    {{--<p class="profissional">
-                                                        Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
-                                                    <p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
-                                                    <a href="{{url('meus-agendamentos#checkup')}}" class="link-detalhes-checkup">Clique
-                                                        aqui para ver todos os detalhes do Checkup</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
+								@if($agendamentos_home->count() == 0)
+
+								@else
+									@foreach($agendamentos_home as $agendamento)
+										@if(!is_null($agendamento->atendimento_id))
+											<div class="proxima-consulta col-sm-12 col-md-6">
+												<div class="area-pc">
+													<div class="tit-pc">
+														<p class="data-consulta">
+															@if( !empty($agendamento->dt_atendimento) )
+																Dia {{ date('d', strtotime($agendamento->getRawDtAtendimentoAttribute()))}}
+																de {{ strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+																às <span>{{ date('H', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+																	h
+																	@if(date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) != '00')
+																		e {{ date('i', strtotime($agendamento->getRawDtAtendimentoAttribute())) }}
+																		min. @endif</span>
+															@endif
+														</p>
+													</div>
+													<div class="resumo">
+														<div class="nome-status">
+															<div class="row">
+																<div class="col-6">
+																	<p class="beneficiario">{{ $agendamento->paciente->nm_primario }}</p>
+																</div>
+																<div class="col-6">
+																	@if($agendamento->getRawCsStatusAttribute() == 10)
+																		<span class="status pre-agendado">Pré-Agendado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 20)
+																		<span class="status confirmado">Confirmado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 30)
+																		<span class="status nao-confirmado">Não Confirmado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 40)
+																		<span class="status finalizado">Finalizado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 50)
+																		<span class="status ausente">Não compareceu</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 60)
+																		<span class="status cancelado">Cancelado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 70)
+																		<span class="status agendado">Agendado</span>
+																	@elseif($agendamento->getRawCsStatusAttribute() == 80)
+																		<span class="status retorno">Retorno de Consulta</span>
+																	@endif
+																</div>
+															</div>
+														</div>
+														<p class="tipo">
+															<span><strong>Procedimento:</strong> {{ $agendamento->atendimento->ds_preco }}</span>
+															<br>
+														   @if(!empty($agendamento->clinica->nm_fantasia))
+														   <span><strong>Prestador:</strong> {{ $agendamento->clinica->nm_fantasia }}</span>
+														   @endif
+														</p>
+														{{--<p class="profissional">
+															Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+														<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+														<p class="endereco">
+															<strong>Endereço:</strong> {{ $agendamento->endereco_completo }}
+														</p>
+													</div>
+												</div>
+											</div>
+										@elseif(!is_null($agendamento->checkup_id))
+											<div class="proxima-consulta col-sm-12 col-md-6">
+												<div class="area-pc">
+													<div class="tit-pc">
+														<p class="data-consulta">Checkup</p>
+													</div>
+													<div class="resumo">
+														<div class="nome-status">
+															<div class="row">
+																<div class="col-12">
+																	<p class="beneficiario">{{$agendamento->paciente->nm_primario}}</p>
+																</div>
+															</div>
+														</div>
+														<p class="tipo">
+															<span>Checkup {{$agendamento->checkup->titulo}}
+																- {{ucfirst($agendamento->checkup->tipo)}}</span>
+														</p>
+														{{--<p class="profissional">
+															Dr. {{ $agendamento->profissional->nm_primario.' '.$agendamento->profissional->nm_secundario }}</p>
+														<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
+														<a href="{{url('meus-agendamentos#checkup')}}" class="link-detalhes-checkup">Clique
+															aqui para ver todos os detalhes do Checkup</a>
+													</div>
+												</div>
+											</div>
+										@endif
+									@endforeach
+								@endif
                             </div>
                         </div>
                     </div>
