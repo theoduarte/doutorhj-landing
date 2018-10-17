@@ -197,7 +197,7 @@
                                                                         <div class="dados-resumo text-right">
                                                                             <h3>
                                                                           
-                                                                                <strong>R$ {{ $agendamento->itempedidos->first()->getVlItempedido() }}</strong>
+                                                                                <strong>R$ {{ $agendamento  }}</strong>
                                                                             </h3>
                                                                         </div>
                                                                     </div>
