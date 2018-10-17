@@ -297,7 +297,7 @@ class PaymentController extends Controller
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
 		 
-		
+	/*	
 		$empresarial = 215.55;
 		$emp=0;
 		$credito =  0;
@@ -324,7 +324,7 @@ class PaymentController extends Controller
 		echo $sum.'<br>';
 		echo ($emp).'<br>'.$credito;
 		
-		die;
+		die; */
 
 
         //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
@@ -1000,8 +1000,10 @@ class PaymentController extends Controller
 											$item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
 										}
 			
-										if(!$item_pedido->save()) {
-											echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+										if($metodoPagamento !=2){
+											if(!$item_pedido->save()) {
+												echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+											}
 										}
 
 										
@@ -1108,7 +1110,7 @@ class PaymentController extends Controller
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-						// return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+						 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 
 
 			
