@@ -68,9 +68,10 @@
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
-                                   
+                                  
                                     
                                 @foreach($result_agendamentos as $index => $agendamento)
+                                          
                                         @foreach( $agendamento->atendimentos as $atendimento )
                                             @if(!empty($atendimento->id))
                                                 <div class="card card-resumo-compra">
