@@ -7,56 +7,46 @@
 @endpush
 
 @section('content')
+<style>
+	.slidecontainer {
+		width: 100%;
+	}
 
-    <section class="pagamento">
-    
-		<style>
-.slidecontainer {
-    width: 100%;
-}
+	.slider {
+		-webkit-appearance: none;
+		width: 100%;
+		height: 25px;
+		border-radius:10px;
+		background: #d3d3d3;
+		outline: none;
+		opacity: 0.7;
+		-webkit-transition: .2s;
+		transition: opacity .2s;
+	}
 
-.slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    border-radius:10px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
+	.slider:hover {
+		opacity: 1;
+	}
 
-.slider:hover {
-    opacity: 1;
-}
+	.slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 25px;
+		height: 25px;
+		background: rgb(70, 117, 184);
+		border-radius:10px;
+		cursor: pointer;
+	}
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: rgb(70, 117, 184);
-    border-radius:10px;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #4CAF50;
-    cursor: pointer;
-}
+	.slider::-moz-range-thumb {
+		width: 25px;
+		height: 25px;
+		background: #4CAF50;
+		cursor: pointer;
+	}
 </style>
 
-
-
-</style>
-
-
-
-
-
+<section class="pagamento">
     {{ csrf_field() }}
         <div class="container">
             <div class="area-container">
@@ -135,7 +125,9 @@
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
                                        
                                         @if($paciente->plano_ativo->id != App\Plano::OPEN)
-                                        <input type="hidden" value="{{$paciente->vl_max_consumo}}" id="valor_disponivel">
+                                    		<input type="hidden" value="{{$paciente->vl_max_consumo}}" id="valor_disponivel">
+										@else
+											<input type="hidden" value="0" id="valor_disponivel">
                                         @endif
                                         
                                       
