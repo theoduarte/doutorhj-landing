@@ -247,7 +247,10 @@ class Paciente extends Model
 			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
 			->with(['cartao_paciente', 'itempedidos'])
 			->get();
-            
+
+		if($pedido->count() == 0) {
+			return 0;
+		}
            
 		$vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))
