@@ -202,12 +202,10 @@
 							</div>
 							<div class="opcoes ie-saldo">
 								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{$paciente->vl_max_consumo}}</p>
+								<p class="saldo">R$ {{$paciente->saldo_empresarial}}</p>
 							</div>
 						</div>
                     @endif
- 
-
                 </div>
             </nav>
         @else
