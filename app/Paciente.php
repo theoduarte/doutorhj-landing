@@ -247,9 +247,8 @@ class Paciente extends Model
 			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
 			->with(['cartao_paciente', 'itempedidos'])
 			->get();
-            
-           
-		$vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
+         
+            $vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))
 			->first();
 
@@ -258,6 +257,7 @@ class Paciente extends Model
 		} else {
 			return intval($vlConsumido->vl_consumido);
 		}
+		
 	}
 
 	public static function getSaldoEmpresarial($paciente_id)

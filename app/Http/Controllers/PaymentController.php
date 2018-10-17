@@ -963,7 +963,7 @@ class PaymentController extends Controller
 														$item_pedidoCredito = new Itempedido();									
 														$item_pedidoCredito->agendamento_id = $agendamento_id;
 														$item_pedidoCredito->pedido_id = $pedidoCredito->id;
-														$item_pedidoCredito->valor = $number   * (1 - $percentual_desconto);
+														$item_pedidoCredito->valor = $number    ;
 														$item_pedidoCredito->save();
 
 														
