@@ -189,7 +189,7 @@
                         </div>
                     </div>
 
-                    @if(isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
+                    @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
@@ -198,11 +198,11 @@
 							</div>
 							<div class="opcoes ie-plano">
 								<p class="titulo">Plano</p>
-								<p class="plano premium">{{$paciente->plano_ativo->ds_plano}}</p>
+								<p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
 							</div>
 							<div class="opcoes ie-saldo">
 								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{$paciente->saldo_empresarial}}</p>
+								<p class="saldo">R$ {{Auth::user()->paciente->saldo_empresarial}}</p>
 							</div>
 						</div>
                     @endif

@@ -175,6 +175,9 @@ class AgendamentoController extends Controller
     		$cart_id = $num_itens + 1;
     	}
 
+		$user_session = Auth::user();
+		$plano_id = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
+
     	if ($tipo_atendimento == 'simples') {
     		$atendimento_id		= $request->input('atendimento_id');
     		$profissional_id	= $request->input('profissional_id');
@@ -187,13 +190,16 @@ class AgendamentoController extends Controller
 
 			$paciente_id = $request->input('paciente_id') ?? Auth::user()->paciente->id ?? null;
 
-			$plano_id = Paciente::getPlanoAtivo($paciente_id);
-
 			$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_id])
 				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
 					$query->where('precos.plano_id', '=', $plano_id);
 				})->first();
-                
+
+			if(is_null($atendimento)) {
+				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_id])
+					->with('precoAtivo')->first();
+			}
+
 			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
 			$source = array('.', ',');
 			$replace = array('', '.');
@@ -296,11 +302,11 @@ class AgendamentoController extends Controller
         $card = $cartCollection->toArray()[$item_id];
 		$card['quantity'] = 0;
 
+		$user_session = Auth::user();
+		$plano_id = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
+
       //  CVXCart::clear();
 		if($card['attributes']['paciente_id'] != $paciente_id) {
-			$paciente = Paciente::findOrFail($paciente_id);
-			$plano_id = $paciente->getPlanoAtivo($paciente->id);
-
 			$atendimento = Atendimento::where(['atendimentos.id' => $card['attributes']['atendimento_id']])
 				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
 					$query->where('precos.plano_id', '=', $plano_id);
