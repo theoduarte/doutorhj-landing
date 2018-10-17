@@ -424,7 +424,7 @@ $(function() {
 			slider.value = parseFloat(porcentagem) - 0.1;
 						
 			let empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
-			
+		 
 			let complemt  = (parseFloat(respCOmplemento) - empresa)
 			 
 			output.innerHTML =	slider.value
