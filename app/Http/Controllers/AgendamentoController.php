@@ -175,8 +175,10 @@ class AgendamentoController extends Controller
     		$cart_id = $num_itens + 1;
     	}
 
-		$user_session = Auth::user();
-		$plano_id = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
+		if (Auth::check()) $paciente_id_s = Auth::user()->paciente->id;
+		else $paciente_id_s = null;
+
+		$plano_id = Paciente::getPlanoAtivo($paciente_id_s);
 
     	if ($tipo_atendimento == 'simples') {
     		$atendimento_id		= $request->input('atendimento_id');
