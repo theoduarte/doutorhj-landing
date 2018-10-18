@@ -267,7 +267,8 @@ class PaymentController extends Controller
 		
 		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
 
-		
+	 
+
 		//echo json_encode(CVXRequest::All());
 
 		// metodo de pagamento
@@ -1259,6 +1260,7 @@ class PaymentController extends Controller
 								], 422);
 						}
 
+	 
     }
 	
 	
