@@ -94,9 +94,10 @@
                                             <div class="separador"></div>
                                         <select class="form-control escolherMetodoPagamento">
                                             <option value="" selected>Escolher metodo de pagamento</option>
+                                            {{--------------   <option value="1" >Crédito empresarial</option> ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
-                                            <option value="1" >Crédito empresarial</option>
-                                            @if(number_format( $valor_total-$valor_desconto,  2, ',', '.') > $paciente->vl_max_consumo)
+                                         
+                                            @if(floatval($valor_total-$valor_desconto) > floatval($paciente->vl_max_consumo))
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>      
                                             @endif                                                                               
                                             @endif
@@ -131,7 +132,7 @@
                                         @endif
                                         
                                       
-                                        <input type="hidden" value="{{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}" id="total_pagar">
+                                        <input type="hidden" value="{{ $valor_total-$valor_desconto }}" id="total_pagar">
                                         <input type="hidden" value="00,00" id="complemento">
                                             <h4 class="alert-heading">Pagamento complementar</h4>
                                             <hr>

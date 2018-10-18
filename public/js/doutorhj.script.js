@@ -360,10 +360,21 @@ $(function() {
 			// valor a ser pago pelas consultas
 			totalPagar =  ($('#total_pagar').val());
 			totalPagarFormatado = (totalPagar.replace(',','.')) //respCOmplemento
-
+		
 			if(parseFloat(totalPagarFormatado) > parseFloat(resp)) {
 				// valor a ser debitado do credito especial
-				resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
+			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
+		 
+				if(parseFloat(totalPagarFormatado) >700){
+					resultado = (((parseFloat(slider.value) ) * parseFloat(resp)) / 100)
+					
+				}else{
+					
+					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
+				
+				 
+				}
+
 			} else {
 				// valor a ser debitado do credito especial
 
@@ -406,15 +417,16 @@ $(function() {
 		} else {
 			resp = (valor_formatado.replace(',','.'))
 		}
-
+		
 		complemento =  ($('#total_pagar').val());
 		respCOmplemento = (complemento.replace(',','.'))      
-
+		console.log(parseFloat(resp))
 		if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-						 
+			let empresa=0;		 
+			let complemt=0;
 			let valorEmpresarial = (((parseFloat(porcentagem) - 0.1) * parseFloat(respCOmplemento)) / 100)
 			
 			let valorComp = (parseFloat(respCOmplemento) - valorEmpresarial)
@@ -422,10 +434,18 @@ $(function() {
 			slider.max =parseFloat(porcentagem) - 0.1
 			
 			slider.value = parseFloat(porcentagem) - 0.1;
-						
-			let empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
 		 
-			let complemt  = (parseFloat(respCOmplemento) - empresa)
+			
+			if(parseFloat(respCOmplemento) >700){
+				empresa = (((parseFloat(slider.value)   ) * parseFloat(resp)) / 100)
+				complemt  = (parseFloat(respCOmplemento) - empresa)	
+				console.log(resp)
+			}else{
+				
+			  	empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+		 
+				complemt  = (parseFloat(respCOmplemento) - empresa)	
+			}
 			 
 			output.innerHTML =	slider.value
 
@@ -456,7 +476,7 @@ $(function() {
 			$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
 		}
                                                                                
-	}, 10);
+	}, 0);
 		
 	Number.prototype.formatMoney = function (c, d, t) {
 		var n = this,
