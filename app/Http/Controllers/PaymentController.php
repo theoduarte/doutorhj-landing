@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Input;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use App\Preco;
-
+use App\Empresa;
 
 class PaymentController extends Controller
 {
@@ -749,9 +749,23 @@ class PaymentController extends Controller
 				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
 				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
-				
+				if(empty($cartaoPaciente)){
+					DB::rollBack();
+					return response()->json([
+						'message' => 'Paciente não está vinculado a nenhuma empresa.',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
+				$empresa = Empresa::where('id',$paciente->empresa_id)->first();
+				if(empty($empresa)){
+					DB::rollBack();
+					return response()->json([
+						'message' => 'Empresa não encontrada.',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
 				$dados = FuncoesPagamento::pagamentoMultiMeio(
-					'cus_r0WVwzMt8Cvl2mXN',  // custom token empresa buscar
+					$empresa->mundipagg_token,  // custom token empresa buscar
 					$valorCartaoCredito+$valorCartaoEmpresarial,
 					$titulo_pedido,
 					$valorCartaoCredito,
@@ -767,7 +781,7 @@ class PaymentController extends Controller
 				 
 			
 					try{
-						$criarPagamento =[0]; // = $client->getOrders()->createOrder($dados);
+						$criarPagamento =  $client->getOrders()->createOrder($dados);
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
@@ -878,6 +892,8 @@ class PaymentController extends Controller
 		 
 		
 		if(!empty($criarPagamento)){
+			$valorEmpresa=null;
+			$valorCredito=null;
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
 			$result_agendamentos=[];
 			$agendamento_id=[];
@@ -968,7 +984,7 @@ class PaymentController extends Controller
                                                     }
  
                                                 } else {
-                                                    $item_pedido->agendamento_id = $agendamento_id[$i] ;
+                                                    $item_pedido->agendamento_id = $agendamento_id[$i]  ;
                                                     $item_pedido->pedido_id = $MerchantOrderId;
                                                     $item_pedido->valor = $number   * (1 - $percentual_desconto);
                                                 }
@@ -996,6 +1012,7 @@ class PaymentController extends Controller
 									
 			
 										if($metodoPagamento !=2){
+											
 											if(!$item_pedido->save()) {
 												echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
 											}
@@ -1222,6 +1239,7 @@ class PaymentController extends Controller
 							
 					 
 							 $request->session()->put('pedido',$MerchantOrderId);
+							 
 							 $request->session()->put('valor_empresa', $valorEmpresa);
 							 $request->session()->put('varlor_credito', $valorCredito);
 							 $request->session()->put('valor_total_pedido', $valor_total_pedido);

@@ -125,7 +125,7 @@
                                         <div id="credito-sim" class="alert alert-info complementar" role="alert">
                                        
                                         @if($paciente->plano_ativo->id != App\Plano::OPEN)
-                                    		<input type="hidden" value="{{$paciente->vl_max_consumo}}" id="valor_disponivel">
+                                    		<input type="hidden" value="{{Auth::user()->paciente->saldo_empresarial}}" id="valor_disponivel">
 										@else
 											<input type="hidden" value="0" id="valor_disponivel">
                                         @endif
