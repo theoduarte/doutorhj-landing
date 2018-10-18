@@ -64,7 +64,7 @@
 
                             
                             <div class="card-header">
-                                NÚMERO DO PEDIDO: {{ sprintf("%08d", $pedido->id) }}
+                                NÚMERO DO PEDIDO: {{ sprintf("%08d", $pedido ) }}
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
@@ -196,8 +196,13 @@
                                                                         </div>
                                                                         <div class="dados-resumo text-right">
                                                                             <h3>
-                                                                          
-                                                                                <strong>R$ {{ $agendamento  }}</strong>
+                                                                            @if(!empty($agendamento->valores))
+                                                                                <strong>R$ {{ $agendamento->valores  }}</strong>
+                                                                            @else
+                                                                                <strong>R$ {{ $agendamento->itempedidos->first()->getVlItempedido() }}</strong>
+                                                                            @endif
+                                                                           
+                                                                            
                                                                             </h3>
                                                                         </div>
                                                                     </div>
@@ -319,6 +324,31 @@
                                
 
                                     <div class="concluir-total">
+                                    @if(!empty($valor_empresa))
+                                    <div class="row">
+                                            <div class="col-md-10">
+                                                <h4>  EMPRESARIAL</h4>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h3>
+                                                    <strong>R$ {{ number_format( $valor_empresa,  2, ',', '.') }}</strong>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <h4>CARTÃO DE CRÉDITO</h4>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <h3>
+                                                    <strong>R$ {{ number_format( $valor_credito,  2, ',', '.') }}</strong>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                   
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <h4>VALOR TOTAL DO PEDIDO</h4>
