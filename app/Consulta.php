@@ -91,13 +91,12 @@ class Consulta extends Model
 
         $query = DB::table('atendimentos as at')
 			->distinct()
-			->select(['at.id', 'pr.vl_comercial', 'at.ds_preco', DB::raw('c.id clinica_id'), DB::raw('p.id consulta_id'),
-				DB::raw("COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag"),
-				DB::raw("case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo"), DB::raw('e.id endereco_id'), 'e.sg_logradouro',
-				'e.te_endereco', 'e.nr_logradouro', 'e.te_bairro', 'e.nr_cep', 'e.nr_latitude_gps', 'e.nr_longitute_gps',
-				DB::raw('c.id cidade_id'), 'cd.nm_cidade', 'cd.sg_estado', 'p.ds_consulta', 'c.nm_fantasia', 'c.tp_prestador',
-				'f.eh_matriz', 'f.nm_nome_fantasia', DB::raw('f.id filial_id'), DB::raw('pf.id profissional_id'), 'pf.nm_primario', 'pf.nm_secundario'
-			])
+			->selectRaw("at.id, pr.vl_comercial, at.ds_preco, c.id clinica_id, p.id consulta_id, COALESCE(tp.cs_tag, at.ds_preco, p.ds_consulta) tag,".
+				"case when f.eh_matriz = 'S' then 'Matriz' else 'Filial' end tipo, e.id endereco_id, e.sg_logradouro,".
+				"e.te_endereco, e.nr_logradouro, e.te_bairro, e.nr_cep,".
+                "e.nr_latitude_gps, e.nr_longitute_gps, c.id cidade_id, cd.nm_cidade, cd.sg_estado, p.ds_consulta,".
+				"c.nm_fantasia, c.tp_prestador, f.eh_matriz, f.nm_nome_fantasia, f.id filial_id,".
+				"pf.id profissional_id, pf.nm_primario, pf.nm_secundario")
 			->join('consultas as p', 'at.consulta_id', '=', 'p.id')
 			->leftJoin('tag_populars as tp', 'p.id', '=', 'tp.consulta_id')
 			->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
@@ -109,7 +108,7 @@ class Consulta extends Model
 				$join8->where('pr.id', function($query) {
 					$query->select('id')
 						->from('precos')
-						->where(DB::raw('atendimento_id = at.id'))
+						->whereRaw('atendimento_id = at.id')
 						->where('cs_status', '=', 'A')
 						->where('data_inicio', '<=', date('Y-m-d H:i:s'))
 						->where('data_fim', '>=', date('Y-m-d H:i:s'))
@@ -121,6 +120,8 @@ class Consulta extends Model
 			->where('f.cs_status', 'A')
 			->where('pf.cs_status', 'A')
 			->where('at.consulta_id', $consultaId);
+
+//		dd($query->get()->toArray());
 
         if( !empty($enderecoIds) ) {
             $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );

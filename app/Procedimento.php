@@ -150,14 +150,15 @@ class Procedimento extends Model
 			->join('filials as f', 'c.id', '=', 'f.clinica_id')
 			->join('enderecos as e', 'f.endereco_id', '=', 'e.id')
 			->join('precos as pr', function($join8) use ($planoId) {
-				$join8->on('pr.atendimento_id', '=', 'at.id')
-					->where('pr.cs_status', '=', 'A')
-					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
-					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'))
-					->where(function($query) use ($planoId) {
-						$query->where('pr.plano_id', '=', $planoId)
-							->orWhere('pr.plano_id', '=', Plano::OPEN);
-					});
+				$join8->where('pr.id', function($query) {
+					$query->select('id')
+						->from('precos')
+						->whereRaw('atendimento_id = at.id')
+						->where('cs_status', '=', 'A')
+						->where('data_inicio', '<=', date('Y-m-d H:i:s'))
+						->where('data_fim', '>=', date('Y-m-d H:i:s'))
+						->limit(1);
+				});
 			})
 			->join('cidades as cd', 'e.cidade_id', '=', 'cd.id')
 			->where('at.cs_status', 'A')
