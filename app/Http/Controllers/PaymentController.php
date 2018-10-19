@@ -692,17 +692,22 @@ class PaymentController extends Controller
 				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
 				$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 				
-				if(floatval($valorFinal) >700){
-					$empresarial =  (($dados->porcentagem *  $formatLimit)/100);
-				}else{
-					$empresarial = (($dados->porcentagem *  $valorFinal)/100);
-				}
-			 
+				 
 				
-			 			 
+				 $empresarial = (($dados->porcentagem *  $valorFinal)/100);
+				 
+				
+
+				 if(floatval($empresarial) > floatval($formatLimit) ){
+					return response()->json([
+						'message' => 'Calculo somatorio maior que o limite disponivel'
+						
+					], 500);
+				 }
 				
 				$cartaoCredito = floatval($valorFinal) - floatval($empresarial);
-				  
+				 
+
 				($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
 								
 				$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
@@ -762,7 +767,7 @@ class PaymentController extends Controller
 
 			}
 			
-			
+		 
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{
@@ -999,7 +1004,9 @@ class PaymentController extends Controller
 												$valorCredito = $creditoCartaoSalvar ;
 												$contaa=0;
 												$pedido =0;
-												$totalcredito = ($creditoCartaoSalvar / count($agendamento_id));
+												$totalcredito=0;
+												count($agendamento_id) ==1 ?$totalcredito = $creditoCartaoSalvar : $totalcredito = ($creditoCartaoSalvar / count($agendamento_id)-1);
+												
 												for ($o =0; $o<count($agendamento_id) ; $o++) {
 													 
 												 	$contaa = $contaa+1;
@@ -1018,7 +1025,7 @@ class PaymentController extends Controller
 														$item_pedidoCredito->agendamento_id = $agendamento_id[$o];
 														$item_pedidoCredito->pedido_id = $pedidoCredito->id;
 														$pedido=$pedidoCredito->id;
-														$item_pedidoCredito->valor =$totalcredito !=0 ? $totalcredito : 0 ;
+														$item_pedidoCredito->valor =$totalcredito  ;
 														$item_pedidoCredito->save();
 													//	$creditoCartaoSalvar=0;
 														
@@ -1200,9 +1207,9 @@ class PaymentController extends Controller
 						//	echo json_encode($result_agendamentos); die;
 
 							 ########### FINISHIING TRANSACTION ##########
-							 DB::commit();
+						  DB::commit();
 							 #############################################
-							 CVXCart::clear();
+							  CVXCart::clear();
 						
 							 $valor_total_pedido = $valor_total-$valor_desconto;
 							 //dd( $result_agendamentos); die;
@@ -1220,7 +1227,7 @@ class PaymentController extends Controller
 							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
 							 
 							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-						 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+					 	 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 
 
 			

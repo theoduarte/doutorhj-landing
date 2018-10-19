@@ -85,12 +85,10 @@
                                                     @if( !empty($atendimento->consulta_id) )
                                                         <p class="profissional">
                                                             Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}
-                                                    @endif
-
-                                                 
-                                                        {{ $agendamento->itempedidos->first()->valor }}
-                                                      
+                                                    @endif                                                                                                                                                           
                                                     </p>
+
+                                                    <p>  R$  {{ number_format ($agendamento->itempedidos->first()->valor, 2, ',', '.')  }}</p>
                                                     <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
                                                 </div>
                                                 <div class="col col-lg-4">

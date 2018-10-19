@@ -97,7 +97,7 @@
                                             {{--------------   <option value="1" >Crédito empresarial</option> ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
                                          
-                                            @if(floatval($valor_total-$valor_desconto) > floatval($paciente->vl_max_consumo))
+                                            @if(floatval($valor_total-$valor_desconto) > floatval($paciente->vl_max_consumo)  &&  floatval($paciente->vl_max_consumo)  > 2 )
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>      
                                             @endif                                                                               
                                             @endif
@@ -222,7 +222,7 @@
                                             <div class="form-group">
                                                 <label for="selectParcelamentoCredito">Parcelamento </label>
                                                 <div class="button dropdown">
-                                                    <select id="selectParcelamentoCredito" class="form-control" name="parcelamento-cartao-credito">
+                                                    <select id="selectParcelamentoCredito"   class="form-control change-parcelamento" name="parcelamento-cartao-credito">
                                                         
                                                     </select>
                                                 </div>
@@ -832,11 +832,16 @@
                                                     <span>Forma de pagamento:</span>
                                                 </div>
                                                 <div class="dados-resumo">
-                                                    <p><span id="resumo_compra_tipo_cartao"></span> - Final <span id="resumo_compra_final_cartao">XXXX</span></p>
+                                                <div class="metodoPagamento">
+                                                Escolha o metodo de pagamento
+                                                </div>
+                                                
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                       
+                                       <div class="cartao-credito" style="display:none;">
+                                       <div class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">
                                                     <span>Valor do(s) serviço(s):</span>
@@ -917,6 +922,7 @@
                                             </div>
                                         </div>
                                         
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">
