@@ -798,7 +798,7 @@ class PaymentController extends Controller
 			if($metodoPagamento ==5){
 				try{
 					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarTranferencia($valor,"Doutor hoje",$paciente->mundipagg_token));    
-				//var_dump($criarPagamento); die;
+					//var_dump($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([

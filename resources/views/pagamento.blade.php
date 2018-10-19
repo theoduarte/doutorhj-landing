@@ -97,7 +97,7 @@
                                             {{--------------   <option value="1" >Crédito empresarial</option> ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
                                          
-                                            @if(floatval($valor_total-$valor_desconto) > floatval($paciente->vl_max_consumo)  &&  floatval($paciente->vl_max_consumo)  > 2 )
+                                            @if(intval($valor_total-$valor_desconto) > intval($paciente->vl_max_consumo)  &&  intval($paciente->vl_max_consumo)  > 2 )
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>      
                                             @endif                                                                               
                                             @endif
@@ -108,10 +108,7 @@
                                   
                                     </section>                                       
                                 </div>
-
-
                              
- 
                                 <div class="row cartaoEmpresarial_Credito" style="display:none">
                                     
                                     
