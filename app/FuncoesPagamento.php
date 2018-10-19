@@ -15,7 +15,7 @@ abstract class FuncoesPagamento
             "code"=> "DOUTOR_HOJE_001",				
             "type"=> "individual",				
             "metadata"=> [
-                "company"=> "Avengers"
+                "company"=> "Doutor Hoje"
                 ]
             ];
 
