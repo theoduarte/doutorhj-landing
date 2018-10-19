@@ -1017,7 +1017,7 @@ class PaymentController extends Controller
 														$item_pedidoEmpresarial->agendamento_id = $agendamento_id[$o] ;
 														$item_pedidoEmpresarial->pedido_id = $pedidoEmpresarial->id ;
 														$pedido= $pedidoEmpresarial->id ;
-														$item_pedidoEmpresarial->valor = number_format( $empresarialSalvar, 2, ',', '.')   ;
+														$item_pedidoEmpresarial->valor =str_replace(",",".", number_format( $empresarialSalvar, 2, ',', '.'))    ;
 														$item_pedidoEmpresarial->save();
 														$empresarialSalvar=null;
 
@@ -1025,7 +1025,7 @@ class PaymentController extends Controller
 														$item_pedidoCredito->agendamento_id = $agendamento_id[$o];
 														$item_pedidoCredito->pedido_id = $pedidoCredito->id;
 														$pedido=$pedidoCredito->id;
-														$item_pedidoCredito->valor =number_format( $totalcredito, 2, ',', '.')    ;
+														$item_pedidoCredito->valor ==str_replace(",",".", number_format( $totalcredito, 2, ',', '.'))    ;
 														
 														$item_pedidoCredito->save();
 													//	$creditoCartaoSalvar=0;

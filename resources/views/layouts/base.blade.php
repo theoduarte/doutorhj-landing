@@ -193,7 +193,7 @@
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
-									<img src="{{Auth::user()->paciente->empresa->logomarca_path}}" alt="">
+                                <img src="/libs/home-template/img/empresas/caixa.png" alt="">
 								</div>
 							</div>
 							<div class="opcoes ie-plano">
