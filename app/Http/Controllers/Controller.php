@@ -67,7 +67,7 @@ class Controller extends BaseController
 			$paciente = Auth::user()->paciente;
 			$paciente_id = $paciente->id;
 
-            
+
 
 			//DB::enableQueryLog();
 			$agendamentos_home = Agendamento::with([
