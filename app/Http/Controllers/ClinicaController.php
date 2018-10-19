@@ -697,7 +697,7 @@ class ClinicaController extends Controller
 						$nome_especialidade = $nome_especialidade . ' | ' . $especialidade->ds_especialidade;
 					}
                     //dd($atendimento->consulta->tag_populars->first()->cs_tag); die;
-					$ds_atendimento = $atendimento->consulta->tag_populars->first()->ds_tag;
+					$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
                     
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
