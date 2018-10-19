@@ -252,9 +252,10 @@ class Paciente extends Model
 			return 0;
 		}
         //dd($pedido)   ; die;
-		$vlConsumido = Itempedido::where('pedido_id', $pedido->pluck('id')->toArray())
-			->select(DB::raw('SUM(valor) as vl_consumido'))
-			->first();
+		$vlConsumido = Itempedido::whereIn('pedido_id', $pedido->pluck('id')->toArray())
+			->select(DB::raw('SUM(valor) as vl_consumido'))->get();
+
+		dd($vlConsumido);
 
 		if(is_null($vlConsumido)) {
 			return 0;
