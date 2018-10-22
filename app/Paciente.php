@@ -253,16 +253,15 @@ class Paciente extends Model
 		if($pedido->count() == 0) {
 			return 0;
 		}
-        //dd($pedido)   ; die;
+        //dd($pedido); die;
 		$vlConsumido = Itempedido::whereIn('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))->first();
 
-		if(is_null($vlConsumido)) {
+		if(is_null($vlConsumido) && empty($vlConsumido->vl_consumido)) {
 			return 0;
 		} else {
 			return UtilController::moedaBanco($vlConsumido->vl_consumido);
 		}
-		
 	}
 
 	public static function getSaldoEmpresarial($paciente_id)

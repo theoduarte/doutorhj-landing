@@ -70,7 +70,7 @@ class UtilController extends Controller
 		$source = array('.', ',');
 		$replace = array('', '.');
 		$valor = str_replace($source, $replace, $input); //remove os pontos e substitui a virgula pelo ponto
-		return $valor; //retorna o valor formatado para gravar no banco
+		return floatval($valor); //retorna o valor formatado para gravar no banco
 	}
 	
 	/**
