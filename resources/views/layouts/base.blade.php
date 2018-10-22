@@ -202,7 +202,7 @@
 							</div>
 							<div class="opcoes ie-saldo">
 								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{Auth::user()->paciente->saldo_empresarial}}</p>
+								<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
 							</div>
 						</div>
                     @endif

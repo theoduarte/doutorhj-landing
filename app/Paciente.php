@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\UtilController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
+use League\Flysystem\Util;
 
 /**
  * @property int $id
@@ -219,10 +221,10 @@ class Paciente extends Model
 			->where('data_fim', '>=', date('Y-m-d'))->first();
 
 		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
-			if(!empty(intval($vigenciaPac->vl_max_consumo))) {
-				return intval($vigenciaPac->vl_max_consumo);
+			if(!empty(UtilController::moedaBanco($vigenciaPac->vl_max_consumo))) {
+				return UtilController::moedaBanco($vigenciaPac->vl_max_consumo);
 			} else {
-				return intval($vigenciaPac->paciente->empresa->vl_max_funcionario);
+				return UtilController::moedaBanco($vigenciaPac->paciente->empresa->vl_max_funcionario);
 			}
 		} else {
 			return 0;
@@ -258,7 +260,7 @@ class Paciente extends Model
 		if(is_null($vlConsumido)) {
 			return 0;
 		} else {
-			return intval($vlConsumido->vl_consumido);
+			return UtilController::moedaBanco($vlConsumido->vl_consumido);
 		}
 		
 	}
@@ -270,7 +272,7 @@ class Paciente extends Model
 		if($saldo < 0) {
 			return 0;
 		} else {
-			return intval($saldo);
+			return $saldo;
 		}
 	}
 }
