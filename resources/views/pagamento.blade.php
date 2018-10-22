@@ -31,7 +31,7 @@
 	.slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
-		width: 25px;
+		width: 15px;
 		height: 25px;
 		background: rgb(70, 117, 184);
 		border-radius:10px;
@@ -39,7 +39,7 @@
 	}
 
 	.slider::-moz-range-thumb {
-		width: 25px;
+		width: 15px;
 		height: 25px;
 		background: #4CAF50;
 		cursor: pointer;
@@ -94,10 +94,12 @@
                                             <div class="separador"></div>
                                         <select class="form-control escolherMetodoPagamento">
                                             <option value="" selected>Escolher metodo de pagamento</option>
-                                            {{--------------   <option value="1" >Crédito empresarial</option> ----------------}}
+                                            {{--------------    ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
-                                         
-                                            @if(intval($valor_total-$valor_desconto) > intval($paciente->vl_max_consumo)  &&  intval($paciente->vl_max_consumo)  > 2 )
+                                            @if(intval($valor_total-$valor_desconto) < intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
+                                            <option value="1" >Crédito empresarial</option>
+                                            @endif  
+                                            @if(intval($valor_total-$valor_desconto) > intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
                                             <option value="2" >Crédito empresarial + Cartão de crédito</option>      
                                             @endif                                                                               
                                             @endif
@@ -106,7 +108,8 @@
                                             <option value="5" >Transferencia Bancario</option>                                                                                        
                                         </select>
                                   
-                                    </section>                                       
+                                    </section>    
+                                                               
                                 </div>
                              
                                 <div class="row cartaoEmpresarial_Credito" style="display:none">
@@ -154,7 +157,7 @@
                                         
 
                                         <div class="slidecontainer">
-                                            <input type="range" min="1" max="100"   step=0.01     class="slider" id="myRange">
+                                            <input type="range" min="0.1" max="100"    step="0.0001"    class="slider" id="myRange">
                                             <p> <span id="porcentagem_credito_empresarial"></span> % </p>
                                         </div>
                                         </div>
@@ -235,17 +238,17 @@
                                             <h3>Crédito Empresarial</h3>
                                             <div class="separador"></div>
                                             <p class="te">Valor disponível:</p>
-                                            <span class="vlr-ce">R$ 197,83</span>     
+                                            <span class="vlr-ce">R$ 00,00</span>     
                                             <div class="separador"></div>                                      
                                             <div id="credito-sim" class="alert alert-info complementar" role="alert">
-                                                <h4 class="alert-heading">Pagamento complementar</h4>
+                                                <h4 class="alert-heading">Pagamento Crédito empresarial</h4>
                                                 <hr>
                                                 <p>Total da compra:</p>
-                                                <span><strong>R$ 680,70</strong></span>
-                                                <p>Crédito Empresarial disponível:</p>
-                                                <span><strong>R$ 197,83</strong></span>
-                                                <p>Valor complementar necessário:</p>
-                                                <span><strong>R$ 482,87</strong></span>
+                                                <span><strong class="total_a_pagar" >R$ 00,00</strong></span>
+                                            <p>Crédito Empresarial a ser usado:</p>
+                                            <span><strong class="total_a_pagar" id="total_a_pagar">R$ 00,00</strong></span>
+                                               
+                                               
                                             </div>
                                             <script>
                                                 $(function() {
