@@ -337,10 +337,10 @@ $(function() {
 	if(slider != null) {
 		var output = document.getElementById("porcentagem_credito_empresarial");
 
-		output.innerHTML = slider.value;
+		
 
 		slider.oninput = function() {
-			output.innerHTML = this.value;
+			output.innerHTML   =(parseFloat(this.value)).formatMoney(2, '.', '.') 
 			let valor="";
 			let valor_formatado=""
 			let resp="";
@@ -352,7 +352,7 @@ $(function() {
 			let subtrair="";
 			let finalCOmplemento="";
 
-			valor = this.value ;
+			valor = this.value 
 
 			// valor disponivel credito empresarial
 			valor_formatado = ( $('#valor_disponivel').val());
@@ -371,17 +371,11 @@ $(function() {
 			if(parseFloat(totalPagarFormatado) > parseFloat(resp)) {
 				// valor a ser debitado do credito especial
 			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
-				console.log(parseFloat(slider.value))
-				if(parseFloat(totalPagarFormatado) >700){
-					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
-					
-				}else{
+	 
 					
 					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
 				
-				 
-				}
-
+			 
 			} else {
 				// valor a ser debitado do credito especial
 
@@ -434,28 +428,17 @@ $(function() {
 			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 			let empresa=0;		 
 			let complemt=0;
-			let valorEmpresarial = (((parseFloat(porcentagem) - 0.1) * parseFloat(respCOmplemento)) / 100)
+		 	
+			slider.max = (porcentagem) - 0.1
 			
-			let valorComp = (parseFloat(respCOmplemento) - valorEmpresarial)
+			slider.value =  (porcentagem) - 0.1;
 			
-			slider.max =parseFloat(porcentagem) - 0.1
-			
-			slider.value = parseFloat(porcentagem) - 0.1;
 		 
-			
-			if(parseFloat(respCOmplemento) >700){
-			
-				empresa = (((parseFloat(slider.value)   ) * parseFloat(respCOmplemento)) / 100)
-				complemt  = (parseFloat(respCOmplemento) - empresa)	
+			empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
 			 
-			}else{
-				
-			  	empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
-		 
-				complemt  = (parseFloat(respCOmplemento) - empresa)	
-			}
+			complemt  = (parseFloat(respCOmplemento) - empresa)	
 			 
-			output.innerHTML =	slider.value
+			output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
 
 			//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 		 
@@ -778,14 +761,16 @@ function efetuarPagamento() {
 	let executar = true;
 	switch(metodoPagamento) {
 		case "1":
-			console.log('empresarial')
+			dados = "Empresarial"
 			break;
 		case "2":
 			// valida se existe credito especial
-			if(parseInt($('#valor_disponivel').val()) >2){
-
+			if(parseInt($('#valor_disponivel').val()) >0){
+				dados = cartaoCreditoEmpresarial();
+			} else{
+				dados = null;
 			}
-			dados = cartaoCreditoEmpresarial();
+		
 			break;
 		case "3":
 			dados =	cartaoCredito();

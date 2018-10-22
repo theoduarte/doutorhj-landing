@@ -64,6 +64,29 @@ abstract class FuncoesPagamento
 		}
 	}
 
+	public static function criarPagementoEmpresarial($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao ) {
+		$payload = [
+			"items"=> [
+			[
+				"amount"=> $valorEmCentavos,
+				"description"=> $produtoDescricao,
+				"quantity"=> 1
+			]
+			],
+			"customer_id"=> $customerId,
+			"payments"=> [[
+			"payment_method"=> "credit_card",
+			"credit_card"=> [
+				"installments"=> $parcelas,
+				"statement_descriptor"=> $descricaoFatura,
+				"card_id"=>$cartaoid,				 
+			]
+			]]
+		];
+
+  		return $payload; 
+	}
+
 	private static function token($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao, $metodo){
 		$payload = [
 			"items"=> [
