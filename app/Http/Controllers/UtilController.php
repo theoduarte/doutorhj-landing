@@ -10,7 +10,8 @@ class UtilController extends Controller
 	 * @param string $input
 	 * @return string
 	 */
-	public static function toStr($input) {
+	public static function toStr($input)
+	{
 		$unwanted_array = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
 				'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
 				'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
@@ -28,7 +29,8 @@ class UtilController extends Controller
 	 * @param string $input
 	 * @return string
 	 */
-	public static function getBetween($string, $start = "", $end = ""){
+	public static function getBetween($string, $start = "", $end = "")
+	{
 	    if (strpos($string, $start)) { // required if $start not exist in $string
 	        $startCharCount = strpos($string, $start) + strlen($start);
 	        $firstSubStr = substr($string, $startCharCount, strlen($string));
@@ -46,7 +48,8 @@ class UtilController extends Controller
 	 * Retira máscara de CPF, CNPJ, Telefone e outros.
 	 * @param string $input
 	 */
-	public static function retiraMascara($input){
+	public static function retiraMascara($input)
+	{
 // 	   return str_replace(',', '', 
 // 	               str_replace('/', '', 
 // 	                   str_replace('.', '', 
@@ -62,8 +65,12 @@ class UtilController extends Controller
 	 * @param string $input
 	 * @return float
 	 */
-	public static function moedaBanco($input){
-	    return str_replace(',', '.',str_replace('.', '', $input));
+	public static function moedaBanco($input)
+	{
+		$source = array('.', ',');
+		$replace = array('', '.');
+		$valor = str_replace($source, $replace, $input); //remove os pontos e substitui a virgula pelo ponto
+		return floatval($valor); //retorna o valor formatado para gravar no banco
 	}
 	
 	/**
@@ -73,7 +80,8 @@ class UtilController extends Controller
 	 * @param float $input
 	 * @return string
 	 */
-	public static function formataMoeda($input){
+	public static function formataMoeda($input)
+	{
 	    return number_format( $input,  2, ',', '.'); 
 	}
 	
@@ -83,7 +91,8 @@ class UtilController extends Controller
 	 * 
 	 * @param string $nrCpf
 	 */
-	public static function formataCpf($nrCpf){
+	public static function formataCpf($nrCpf)
+	{
 	    $parte_um     = substr($nrCpf, 0, 3);
 	    $parte_dois   = substr($nrCpf, 3, 3);
 	    $parte_tres   = substr($nrCpf, 6, 3);
@@ -98,7 +107,8 @@ class UtilController extends Controller
 	 *
 	 * @param string $nrCpf
 	 */
-	public static function formataCnpj($nrCnpj){
+	public static function formataCnpj($nrCnpj)
+	{
 	    $parte_um     = substr($nrCnpj, 0, 2);
 	    $parte_dois   = substr($nrCnpj, 2, 3);
 	    $parte_tres   = substr($nrCnpj, 5, 3);
@@ -114,7 +124,8 @@ class UtilController extends Controller
 	 *
 	 * @param string $nrcep
 	 */
-	public static function formataCep($nrcep){
+	public static function formataCep($nrcep)
+	{
 	    
 	    return preg_replace('/^(\d{2})(\d{3})(\d{3})$/', '${1}.${2}-${3}', $nrcep);
 	}
