@@ -409,30 +409,29 @@ class PaymentController extends Controller
 		
 		//valida a bandeira do cartao
 		if(!empty($dados->numero)  && empty($pagamento[0]->cartao->cartao_id)){
-				if(empty($dados->cvv)){
-					return response()->json([
-						'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
-					], 422);
-				}
+			if(empty($dados->cvv)){
+				return response()->json([
+					'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+				], 422);
+			}
 
-				$bandeira = UtilController::validaCartao($dados->numero, $dados->cvv);
-								
-				if(!$bandeira[1]) {
-					return response()->json([
-						'message' => 'Número do cartão inválido!',
-					], 400);
-				} elseif(!$bandeira[2]) {
-					return response()->json([
-						'message' => 'Número do código de segurança inválido!',
-					], 400);
-				} else { 
-					$bandeira = $bandeira[0];
-				}			
+			$bandeira = UtilController::validaCartao($dados->numero, $dados->cvv);
+							
+			if(!$bandeira[1]) {
+				return response()->json([
+					'message' => 'Número do cartão inválido!',
+				], 400);
+			} elseif(!$bandeira[2]) {
+				return response()->json([
+					'message' => 'Número do código de segurança inválido!',
+				], 400);
+			} else { 
+				$bandeira = $bandeira[0];
+			}			
 		}
 
 		
-		$pedido = new Pedido();
-        
+		$pedido = new Pedido();        
 		$descricao = '';
 		$dt_pagamento = date('Y-m-d H:i:s');                        
 		$pedido->titulo         = $titulo_pedido;
@@ -440,16 +439,16 @@ class PaymentController extends Controller
 		$pedido->dt_pagamento   = $dt_pagamento;
 		$pedido->tp_pagamento   = $metodoPagamento ==1? 'empresarial' : $metodoPagamento==2 ? 'empre+credito' : $metodoPagamento==3 ? 'credito' : $metodoPagamento==4? 'boleto' : $metodoPagamento==5 ?'transferencia':'';
 		$pedido->paciente_id    = $paciente_id;
-			
-			
-
-
+						
 		// credito empresarial
-		if($metodoPagamento == 1){
+		if($metodoPagamento == 1) {
+			
 			if (Auth::check()) {
 				$pacient = Auth::user()->paciente;
 			}
+			
 			$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+			
 			$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;								
 
 			if($limiteCartaoFuncionario ==0){
@@ -459,66 +458,67 @@ class PaymentController extends Controller
 			}else{
 				$valorLimiteRestante = $limiteCartaoFuncionario ;
 			}
-				
-		}else 
+		
 		// credito empresarial + cartao de credito
-		if($metodoPagamento ==2){
+		}else if($metodoPagamento ==2){
+								
+			if (Auth::check()) {
+				$pacient = Auth::user()->paciente;
+			}
 
-				
-				if (Auth::check()) {
-					$pacient = Auth::user()->paciente;
-				}
-
-				$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;
-						
-				$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
-
-				if($limiteCartaoFuncionario ==0){
-					return response()->json([
-						'mensagem' => 'Não existe limite no cartao empresarial.'
-					], 422);
-				}else{
-					$valorLimiteRestante = $limiteCartaoFuncionario ;
-				}
-						
-				if(!empty($dados->cartaoid)) {
-					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+			$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;
 					
-					if(!$cartao->exists()) {
-						DB::rollback();
-						return response()->json([
-							'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
-						], 404);
-					}
-					if(empty($dados->cvv)){
-						return response()->json([
-							'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
-						], 422);
-					}
+			$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
 
-					// card_id quando o cartao está salvo no sistema
-					$cartao =$cartao->first()->card_token;
-					$metodoCartao=1;
+			if($limiteCartaoFuncionario ==0){
+				return response()->json([
+					'mensagem' => 'Não existe limite no cartao empresarial.'
+				], 422);
+			}else{
+				$valorLimiteRestante = $limiteCartaoFuncionario ;
+			}
+			// caso tenha id do cartão resgatar o id token do mesmo para realizar a transação		
+			if(!empty($dados->cartaoid)) {
+					
+				$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+					
+				if(!$cartao->exists()) {
+					DB::rollback();
+					return response()->json([
+						'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+					], 404);
+				}
+				if(empty($dados->cvv)){
+					return response()->json([
+						'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+					], 422);
+				}
+
+				// card_id quando o cartao está salvo no sistema
+				$cartao =$cartao->first()->card_token;
+				
+				$metodoCartao=1;
 
 				} else {
-
+					// caso o usuario não queira salvar o cartão é criado um token enviando os dados do cartao para mundipagg
 					if( $dados->salvar == 0){
 			
 						try{	
-										
+											
 							// cria token cartao						
 							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
 								
 							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
 							$metodoCartao=2;
+							
 							$cartao = $cartaoToken->id;
-										
+											
 						}catch(\Exception $e){
-								DB::rollBack();
-								return response()->json([
-									'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
-									'errors' => $e->getMessage(),
-								], 500);
+							DB::rollBack();
+							return response()->json([
+								'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'errors' => $e->getMessage(),
+							], 500);
 						}
 
 					}else{
@@ -549,11 +549,13 @@ class PaymentController extends Controller
 								$cartao_paciente->card_token 	= $saveCartao->id;
 								$cartao_paciente->paciente_id 	= $paciente->id;
 
-								if($cartao_paciente->save()) {
-											
+								if($cartao_paciente->save()) {											
+									
 									// card_id cartao salvo
 									$metodoCartao=1;
-									$cartao = $saveCartao->id;									 									
+
+									$cartao = $saveCartao->id;	
+
 								}
 							} catch(\Exception $e) {
 								DB::rollBack();
@@ -571,150 +573,135 @@ class PaymentController extends Controller
 					}
 				}
 			 
+		// faz validação para efetuar compra com o  cartao de credito
+		}else  	if($metodoPagamento ==3){
+				
+			if(!empty($dados->cartaoid)){
+				$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+					if(!$cartao->exists()) {
+						DB::rollback();
+						return response()->json([
+							'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+						], 404);
+					}
+					if(empty($dados->cvv)){
+						return response()->json([
+							'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+						], 422);
+					}
 
-			}else 
-			// faz validação para efetuar compra com o  cartao de credito
-			if($metodoPagamento ==3){
-				if(!empty($dados->cartaoid)){
-					$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
-						if(!$cartao->exists()) {
-							DB::rollback();
-							return response()->json([
-								'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
-							], 404);
-						}
-						if(empty($dados->cvv)){
-							return response()->json([
-								'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
-							], 422);
-						}
-
-						// card_id quando o cartao está salvo no sistema
-						$cartao =$cartao->first()->card_token;
-						$metodoCartao=1;
-				}else{
+					// card_id quando o cartao está salvo no sistema
+					$cartao =$cartao->first()->card_token;
+					$metodoCartao=1;
+			}else{
 					 
-					if($dados->salvar ==0){
+				if($dados->salvar ==0){
 						
-						try{									
-							// cria token cartao						
-							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
-							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
-							$metodoCartao=2;
-							$cartao = $cartaoToken->id;
-						}catch(\Exception $e){
+					try{									
+						// cria token cartao						
+						$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+						$metodoCartao=2;
+						$cartao = $cartaoToken->id;
+					}catch(\Exception $e){
+						DB::rollBack();
+						return response()->json([
+							'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+							'errors' => $e->getMessage(),
+						], 500);
+					}
+
+				}else {
+					$cartaoPaciente = CartaoPaciente::where([
+						'numero' => substr($dados->numero, -4),
+						'dt_validade' => $dados->mes.'/'.$dados->ano,
+						'bandeira' => $bandeira
+						])->exists();
+									
+					if(!$cartaoPaciente) { 																				
+								
+						try {
+							$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+							$dados->numero, 
+							$dados->nome, 				
+							$dados->mes, 
+							$dados->ano,
+							$dados->cvv, 
+							$bandeira
+							)); 
+											
+							$cartao_paciente = new CartaoPaciente();
+							$cartao_paciente->bandeira 		= $bandeira;
+							$cartao_paciente->nome_impresso = $dados->nome;
+							$cartao_paciente->numero 		= substr($dados->numero, -4);
+							$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+							$cartao_paciente->card_token 	= $saveCartao->id;
+							$cartao_paciente->paciente_id 	= $paciente->id;
+
+							if($cartao_paciente->save()) {
+											
+								// card_id cartao salvo
+								$metodoCartao=1;
+								$cartao = $saveCartao->id;
+									
+							}
+
+										 
+						} catch(\Exception $e) {
 							DB::rollBack();
 							return response()->json([
-								'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'message' => 'Erro ao salvar o cartao!',
 								'errors' => $e->getMessage(),
 							], 500);
 						}
 
-					}else {
-								$cartaoPaciente = CartaoPaciente::where([
-										'numero' => substr($dados->numero, -4),
-										'dt_validade' => $dados->mes.'/'.$dados->ano,
-										'bandeira' => $bandeira
-									])->exists();
-									
-									if(!$cartaoPaciente) { 																				
-										
-										try {
-											$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
-												$dados->numero, 
-												$dados->nome, 				
-												$dados->mes, 
-												$dados->ano,
-												$dados->cvv, 
-												$bandeira
-												)); 
-											
-											$cartao_paciente = new CartaoPaciente();
-											$cartao_paciente->bandeira 		= $bandeira;
-											$cartao_paciente->nome_impresso = $dados->nome;
-											$cartao_paciente->numero 		= substr($dados->numero, -4);
-											$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
-											$cartao_paciente->card_token 	= $saveCartao->id;
-											$cartao_paciente->paciente_id 	= $paciente->id;
+					}else{
+						DB::rollback();
+						return response()->json([
+							'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
+							], 404);	
+						}															
 
-											if($cartao_paciente->save()) {
-												
-												// card_id cartao salvo
-												$metodoCartao=1;
-												$cartao = $saveCartao->id;
-												
-											}
-
-										 
-										} catch(\Exception $e) {
-											DB::rollBack();
-											return response()->json([
-												'message' => 'Erro ao salvar o cartao!',
-												'errors' => $e->getMessage(),
-											], 500);
-										}
-									}else{
-										DB::rollback();
-										return response()->json([
-											'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
-										], 404);	
-									}															
-
-					}
-				}					
-			}else
-			//boleto bancario
-			if($metodoPagamento ==4){											
-
-		}else
-				//transferencia bancario
-		if($metodoPagamento ==5){
-		
-		}else{
-					echo json_encode('metodo errado');
-					die;
-		}
+				}
+			}	
+		 			
+		} 
 
 		 
-
-			if($metodoPagamento==1){
-				// adicionar o cartao id do cartao empresarial no pedido 
-				// $pedido->cartao_id = 
-				//valor para fim de calculo
-				$valorPagamentoEmpresarial = $valor_total-$valor_desconto;
+		if($metodoPagamento==1){
+			// adicionar o cartao id do cartao empresarial no pedido 
+			// $pedido->cartao_id = 
+			//valor para fim de calculo
+			$valorPagamentoEmpresarial = $valor_total-$valor_desconto;
 							
-				$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
-				if(intval($valorPagamentoEmpresarial) > intval($formatLimit) ){
-
-				}
-				$valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
-			}else 
-		
-			if($metodoPagamento ==2 ){
-				
-				if($metodoPagamento ==2 && empty($dados->porcentagem)){
-					return response()->json([
-						'message' => 'Campo porcentagem nulo '.$dados->porcentagem
-						
-					], 500);
-				}
-				if($dados->porcentagem <0 || $dados->porcentagem >100){
-					return response()->json([
-						'message' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
-						
-					], 500);
-				}
+			$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
+	 
+			$valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
+		}else  if($metodoPagamento ==2 ){
+								
+			if($metodoPagamento ==2 && empty($dados->porcentagem)){
+				return response()->json([
+					'message' => 'Campo porcentagem nulo '.$dados->porcentagem
+					
+				], 500);
+			}
+			if($dados->porcentagem <0 || $dados->porcentagem >100){
+				return response()->json([
+					'message' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
+					
+				], 500);
+			}
 
 				
-				//valor para fim de calculo
-				$valorFinal = $valor_total-$valor_desconto;
+			//valor para fim de calculo
+			$valorFinal = $valor_total-$valor_desconto;
 				
-				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
-				$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
+			// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
+			$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 				
 				 
 				
-				 $empresarial = (($dados->porcentagem *  $valorFinal)/100);
+			$empresarial = (($dados->porcentagem *  $valorFinal)/100);
 				 
 				
 
@@ -763,6 +750,8 @@ class PaymentController extends Controller
 				try{
 					
 					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarPagementoEmpresarial($empresa->mundipagg_token,$valorCartaoEmpresarialOne, 1, "Doutor hoje cart",$cartaoPaciente->card_token, "Doutor hoje"  ))    ;					
+
+ 					
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([
@@ -886,7 +875,7 @@ class PaymentController extends Controller
 			if($metodoPagamento == 1){
 		 
 				$pedido->cartao_id = $cartaoEmpresarialDados->id;
-				
+
 				if (!$pedido->save()) {
 					########### FINISHIING TRANSACTION ##########
 					DB::rollback();
@@ -936,382 +925,395 @@ class PaymentController extends Controller
 		 
 		
 		if(!empty($criarPagamento)){
-			$valorEmpresa=null;
-			$valorCredito=null;
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
-			$result_agendamentos=[];
-			$agendamento_id=[];
-			$atendimento_id = [];
-			$empresarialSalvar=0;
-			$creditoCartaoSalvar =  0;
-			$resp =null;
-			$conta=0;
-			$valores=[];
-						foreach($agendamentoItens as $i=>$item_agendamento) {
-								
-									$MerchantOrderId = $pedido->id;
-									$agendamento 						= new Agendamento();
-									$agendamento->te_ticket				= UtilController::getAccessToken();
-									$agendamento->cs_status         	= 10;
-									$agendamento->bo_remarcacao     	= 'N';
-									$agendamento->bo_retorno        	= 'N';
-									$agendamento->paciente_id       	= $item_agendamento->paciente_id;
 			
-									if(!empty($item_agendamento->atendimento_id)) {
-										$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
-										$agendamento->clinica_id        = $item_agendamento->clinica_id;
-										$agendamento->filial_id			= $item_agendamento->filial_id;
-										$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
-										$agendamento->profissional_id   = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
-									} else if(!empty($item_agendamento->checkup_id)) {
-										$agendamento->checkup_id = $item_agendamento->checkup_id;
-									}
+			if($dadosPagamentos['charges'][0]['status'] ==="failed"){
+				DB::rollback();
+				return response()->json([
+					'error' => $dadosPagamentos['charges'][0]['last_transaction']['acquirer_message'],
+					'code' => $dadosPagamentos['charges'][0]['last_transaction']['acquirer_return_code'],
+					'message' =>'Não conseguimos realizar a transação ! tente novamente.',                    
+					], 422);
+			 }else{
+				 
+				$valorEmpresa=null;
+				$valorCredito=null;
 			
-									//--busca o cupom de desconto------------
-									$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
-									 
-									if (sizeof($cupom_desconto) > 0) {
-										$agendamento->cupom_id = $cupom_desconto->first()->id;
-									}
-									 
-									if ($agendamento->save()) {
-			
-										$agendamento->atendimentos()->attach( $item_agendamento->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s') ] );
-										$agendamento_id[] = $agendamento->id;
-										$atendimento_id[] =$item_agendamento->atendimento_id;
-										$agendamento->load('atendimento');
-										$agendamento->load('clinica');
-										$agendamento->load('filial');
-										$agendamento->load('profissional');
-										$agendamento->load('paciente');
-										
+				$result_agendamentos=[];
+				$agendamento_id=[];
+				$atendimento_id = [];
+				$empresarialSalvar=0;
+				$creditoCartaoSalvar =  0;
+				$resp =null;
+				$conta=0;
+				$valores=[];
+							foreach($agendamentoItens as $i=>$item_agendamento) {
+									
+										$MerchantOrderId = $pedido->id;
+										$agendamento 						= new Agendamento();
+										$agendamento->te_ticket				= UtilController::getAccessToken();
+										$agendamento->cs_status         	= 10;
+										$agendamento->bo_remarcacao     	= 'N';
+										$agendamento->bo_retorno        	= 'N';
+										$agendamento->paciente_id       	= $item_agendamento->paciente_id;
+				
+										if(!empty($item_agendamento->atendimento_id)) {
+											$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
+											$agendamento->clinica_id        = $item_agendamento->clinica_id;
+											$agendamento->filial_id			= $item_agendamento->filial_id;
+											$agendamento->atendimento_id    = $item_agendamento->atendimento_id;
+											$agendamento->profissional_id   = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+										} else if(!empty($item_agendamento->checkup_id)) {
+											$agendamento->checkup_id = $item_agendamento->checkup_id;
+										}
+				
+										//--busca o cupom de desconto------------
+										$cupom_desconto = $this->buscaCupomDesconto($cod_cupom_desconto);
 										 
-									
-                                        
-                                            $item_pedido = new Itempedido();
-                            
-                            
-                                            if (!empty($item_agendamento->atendimento_id)) {
-                                                $conta = $conta+1;
-                                                $user_session = Auth::user();
-                                                $plano = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
-
-                                                $atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
-                                                 ->with('precoAtivo')->whereHas('precoAtivo', function ($query) use ($plano) {
-                                                     $query->where('precos.plano_id', '=', $plano);
-                                                 })->first();
-                                    
-                                                if (is_null($atendimento)) {
-                                                    $atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
-                                                     ->with('precoAtivo')->first() ;
-                                                }
-                                                $resp = json_decode(json_encode($atendimento), true);
-
-												$number = str_replace(',', '.', preg_replace('#[^\d\,]#is', '', $resp['preco_ativo']['vl_comercial']));
+										if (sizeof($cupom_desconto) > 0) {
+											$agendamento->cupom_id = $cupom_desconto->first()->id;
+										}
+										 
+										if ($agendamento->save()) {
+				
+											$agendamento->atendimentos()->attach( $item_agendamento->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s') ] );
+											$agendamento_id[] = $agendamento->id;
+											$atendimento_id[] =$item_agendamento->atendimento_id;
+											$agendamento->load('atendimento');
+											$agendamento->load('clinica');
+											$agendamento->load('filial');
+											$agendamento->load('profissional');
+											$agendamento->load('paciente');
 											
-												$valores[] = $number ;
-												
-												  
-                                                if ($metodoPagamento ==2) {
-                                                    $empresarial = $restoEmpresarial;
-                                                                                    
-                                                    if ($empresarial != $empresarialSalvar) {
-                                                        $empresarialSalvar += $number;
-                                                            
-                                                        if ($empresarialSalvar >$empresarial) {
-                                                            $resp = $empresarialSalvar - $empresarial;
-                                                            $empresarialSalvar = $empresarialSalvar -$resp;
-                                                            $creditoCartaoSalvar += $resp;
-                                                        }
-                                                    } else {
-                                                        $creditoCartaoSalvar +=$number;
-                                                    }
- 
-                                                } else if($metodoPagamento ==1) {
-                                                    $item_pedido->agendamento_id = $agendamento_id[$i]  ;
-                                                    $item_pedido->pedido_id = $pedido->id;
-                                                    $item_pedido->valor = $number   * (1 - $percentual_desconto);
-                                                }else{
-													$item_pedido->agendamento_id = $agendamento_id[$i]  ;
-                                                    $item_pedido->pedido_id = $MerchantOrderId;
-                                                    $item_pedido->valor = $number   * (1 - $percentual_desconto);	
-												}
-                                            } else {
-                                                foreach ($item_agendamento->itens as $item) {
-                                                    $dataHoraCheckup = new Datahoracheckup();
-                                                    $dataHoraCheckup->agendamento_id = $agendamento->id;
-                                                    $dataHoraCheckup->itemcheckup_id = $item['id'];
-                                                
-                                                    if (!empty($item['dt_atendimento'])) {
-                                                        $dtAtendimento = Carbon::createFromFormat('d/m/Y H:i', $item['dt_atendimento'])->toDateTimeString();
-                                                        $dataHoraCheckup->dt_atendimento = $dtAtendimento;
-                                                    }
-            
-                                                    if (!$dataHoraCheckup->save()) {
-                                                        DB::rollback();
-                                                        return response()->json([
-                                                        'mensagem' => 'Erro ao salvar a dataHoraCheckup!'
-                                                    ], 500);
-                                                    }
-                                                }
-                                                $item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
-                                            }
-                                        
-									
-			
-										if($metodoPagamento !=2){
-											
-											if(!$item_pedido->save()) {
-												echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
-											}
-										}  
-
-										if($metodoPagamento ==2){
-											if (($conta) == count($agendamentoItens)) {
 											 
-													
-												$pedidoEmpresarial->save();
-												$pedidoCredito->save();
-												$pedidoEmpresarial->id;
-												$MerchantOrderId = $pedidoEmpresarial->id;
-												$valorEmpresa = $empresarialSalvar;
-												$valorCredito = $creditoCartaoSalvar ;
-												$contaa=0;
-												$pedido =0;
-												$totalcredito=0;
-												count($agendamento_id) ==1 ?$totalcredito = $creditoCartaoSalvar : $totalcredito = ($creditoCartaoSalvar / count($agendamento_id)-1);
-												
-												for ($o =0; $o<count($agendamento_id) ; $o++) {
-													 
-												 	$contaa = $contaa+1;
-													 $item_pedidoEmpresarial = new Itempedido();
-													 $item_pedidoCredito = new Itempedido();
-
-													if(!empty($empresarialSalvar)){
-														$item_pedidoEmpresarial->agendamento_id = $agendamento_id[$o] ;
-														$item_pedidoEmpresarial->pedido_id = $pedidoEmpresarial->id ;
-														$pedido= $pedidoEmpresarial->id ;
-														$item_pedidoEmpresarial->valor =str_replace(",",".", number_format( $empresarialSalvar, 2, ',', '.'))    ;
-														$item_pedidoEmpresarial->save();
-														$empresarialSalvar=null;
-
-													}else{
-														$item_pedidoCredito->agendamento_id = $agendamento_id[$o];
-														$item_pedidoCredito->pedido_id = $pedidoCredito->id;
-														$pedido=$pedidoCredito->id;
-														$item_pedidoCredito->valor ==str_replace(",",".", number_format( $totalcredito, 2, ',', '.'))    ;
-														
-														$item_pedidoCredito->save();
-													//	$creditoCartaoSalvar=0;
-														
-													}
-							 
-														//--busca pelas especialidades do atendimento--------------------------------------
-													$nome_especialidade = "";
-													$ds_atendimento = "";
-													$especialidade=null;
-													$especialidade_obj=null;
-
-													$especialidade_obj = new Especialidade();
-													$especialidade = $especialidade_obj->getNomeEspecialidade( $agendamento_id[$o]);
-													
-													$agenda = Agendamento::find($agendamento_id[$o]);												
-													$agenda->load('atendimento');
-													$agenda->load('clinica');
-													$agenda->load('filial');
-													$agenda->load('profissional');
-													$agenda->load('paciente');
 										
-													$agenda->ds_atendimento =  $especialidade['ds_atendimento'];
-													$agenda->nome_especialidade = $especialidade['nome_especialidades'];
-
-													//$agenda->save();
-
-												 
-			
-													//--busca os itens de pedido relacionados------------------------------------------
-													$agenda->load('itempedidos');
-			
-													if(!is_null($agendamento->checkup_id)) {
-														$agenda->load('checkup');
-														$agenda->load('datahoracheckups');
-													} 
-													 
-													//echo $agendamento; die;
-													//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
+											
+												$item_pedido = new Itempedido();
+								
+								
+												if (!empty($item_agendamento->atendimento_id)) {
+													$conta = $conta+1;
+													$user_session = Auth::user();
+													$plano = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
+	
+													$atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
+													 ->with('precoAtivo')->whereHas('precoAtivo', function ($query) use ($plano) {
+														 $query->where('precos.plano_id', '=', $plano);
+													 })->first();
+										
+													if (is_null($atendimento)) {
+														$atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
+														 ->with('precoAtivo')->first() ;
+													}
+													$resp = json_decode(json_encode($atendimento), true);
+	
+													$number = str_replace(',', '.', preg_replace('#[^\d\,]#is', '', $resp['preco_ativo']['vl_comercial']));
+												
+													$valores[] = $number ;
 													
-													$agenda->valores = $valores[$o];
-												 
-													array_push($result_agendamentos,  $agenda );   
-
-
-													//--enviar mensagem informando o pre agendamento da solicitacao----------------
-													try {
-														if(!is_null($agendamento->atendimento_id))
-															$this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
-													} catch (Exception $e) {}
-
-														
-													$Payment                                 	= new Payment();				 			 				 
-														$Payment->merchant_order_id             	= $dadosPagamentos['id'];
-														$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-														$Payment->tid 							= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
-														$Payment->payment_type 					= $dadosPagamentos['charges'][0]['payment_method']; 
-														$Payment->amount                        	=$this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
-														$Payment->currency                     	= $dadosPagamentos['charges'][0]['currency']; 
-														$Payment->country                     	= "BRA";
-														$Payment->installments 				     = $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
-														$Payment->pedido_id  						= (int)$pedido;
-														$Payment->cielo_result                 	= json_encode($criarPagamento);
-														
+													  
+													if ($metodoPagamento ==2) {
+														$empresarial = $restoEmpresarial;
+																						
+														if ($empresarial != $empresarialSalvar) {
+															$empresarialSalvar += $number;
+																
+															if ($empresarialSalvar >$empresarial) {
+																$resp = $empresarialSalvar - $empresarial;
+																$empresarialSalvar = $empresarialSalvar -$resp;
+																$creditoCartaoSalvar += $resp;
+															}
+														} else {
+															$creditoCartaoSalvar +=$number;
+														}
+	 
+													} else if($metodoPagamento ==1) {
+														$item_pedido->agendamento_id = $agendamento_id[$i]  ;
+														$item_pedido->pedido_id = $pedido->id;
+														$item_pedido->valor = $number   * (1 - $percentual_desconto);
+													}else{
+														$item_pedido->agendamento_id = $agendamento_id[$i]  ;
+														$item_pedido->pedido_id = $MerchantOrderId;
+														$item_pedido->valor = $number   * (1 - $percentual_desconto);	
+													}
+												} else {
+													foreach ($item_agendamento->itens as $item) {
+														$dataHoraCheckup = new Datahoracheckup();
+														$dataHoraCheckup->agendamento_id = $agendamento->id;
+														$dataHoraCheckup->itemcheckup_id = $item['id'];
 													
-														if(!$Payment->save()) {
+														if (!empty($item['dt_atendimento'])) {
+															$dtAtendimento = Carbon::createFromFormat('d/m/Y H:i', $item['dt_atendimento'])->toDateTimeString();
+															$dataHoraCheckup->dt_atendimento = $dtAtendimento;
+														}
+				
+														if (!$dataHoraCheckup->save()) {
 															DB::rollback();
 															return response()->json([
-																'mensagem' => 'Erro ao salvar o pagamento!'
-															], 500);
+															'mensagem' => 'Erro ao salvar a dataHoraCheckup!'
+														], 500);
 														}
-														
+													}
+													$item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
 												}
-
-												 
+											
+										
+				
+											if($metodoPagamento !=2){
+												
+												if(!$item_pedido->save()) {
+													echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+												}
+											}  
+	
+											if($metodoPagamento ==2){
+												if (($conta) == count($agendamentoItens)) {
 												 
 														
-											} 
-									 
-											
-										
-											 
-										}else{
-											//--busca pelas especialidades do atendimento--------------------------------------
-											$nome_especialidade = "";
-											$ds_atendimento = "";
-				
-											$especialidade_obj = new Especialidade();
-											$especialidade = $especialidade_obj->getNomeEspecialidade($agendamento->id);
-				
-											$agendamento->ds_atendimento = $especialidade['ds_atendimento'];
-											$agendamento->nome_especialidade = $especialidade['nome_especialidades'];
-				
-											//--busca os itens de pedido relacionados------------------------------------------
-											$agendamento->load('itempedidos');
-				
-											if(!is_null($agendamento->checkup_id)) {
-												$agendamento->load('checkup');
-												$agendamento->load('datahoracheckups');
-											}
-											
-											//echo $agendamento; die;
-											//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
-											array_push($result_agendamentos,  $agendamento);
-											
-										
-											//--enviar mensagem informando o pre agendamento da solicitacao----------------
-											try {
-												if(!is_null($agendamento->atendimento_id))
-													$this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
-											} catch (Exception $e) {}
-												
-												$Payment                                 	= new Payment();				 			 				 
-												$Payment->merchant_order_id             	= $dadosPagamentos['id'];
-												$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-												$Payment->tid 								= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
-												$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method']; 
-												$Payment->amount                        	= $this->convertRealEmCentavos( number_format(   $dadosPagamentos['charges'][0]['amount'] , 2, ',', '.') ) ; 
-												$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency']; 
-												$Payment->country                     		= "BRA";
-												$Payment->installments 				     	= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
-												$Payment->pedido_id  						= $pedido->id;
-												$Payment->cielo_result                 		= json_encode($criarPagamento);
-												
-												if(!$Payment->save()) {
-													DB::rollback();
-													return response()->json([
-														'mensagem' => 'Erro ao salvar o pagamento!'
-													], 500);
-												}
-							
-											}
-									
-											 
-								}
-										
-									
-									
-								
-						
-
+													$pedidoEmpresarial->save();
+													$pedidoCredito->save();
+													$pedidoEmpresarial->id;
+													$MerchantOrderId = $pedidoEmpresarial->id;
+													$valorEmpresa = $empresarialSalvar;
+													$valorCredito = $creditoCartaoSalvar ;
+													$contaa=0;
+													$pedido =0;
+													$totalcredito=0;
+													count($agendamento_id) ==1 ?$totalcredito = $creditoCartaoSalvar : $totalcredito = ($creditoCartaoSalvar / count($agendamento_id)-1);
+													
+													for ($o =0; $o<count($agendamento_id) ; $o++) {
+														 
+														 $contaa = $contaa+1;
+														 $item_pedidoEmpresarial = new Itempedido();
+														 $item_pedidoCredito = new Itempedido();
+	
+														if(!empty($empresarialSalvar)){
+															$item_pedidoEmpresarial->agendamento_id = $agendamento_id[$o] ;
+															$item_pedidoEmpresarial->pedido_id = $pedidoEmpresarial->id ;
+															$pedido= $pedidoEmpresarial->id ;
+															$item_pedidoEmpresarial->valor =str_replace(",",".", number_format( $empresarialSalvar, 2, ',', '.'))    ;
+															$item_pedidoEmpresarial->save();
+															$empresarialSalvar=null;
+	
+														}else{
+															$item_pedidoCredito->agendamento_id = $agendamento_id[$o];
+															$item_pedidoCredito->pedido_id = $pedidoCredito->id;
+															$pedido=$pedidoCredito->id;
+															$item_pedidoCredito->valor ==str_replace(",",".", number_format( $totalcredito, 2, ',', '.'))    ;
+															
+															$item_pedidoCredito->save();
+														//	$creditoCartaoSalvar=0;
+															
+														}
 								 
-									 
-							}
-							 
-
-							
-							$dados = json_decode(json_encode($criarPagamento), true);		
-
-							$boleto=null;
-							if($metodoPagamento==4){
-
-								$boleto = [
-									"instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
-									"url" => 	$dados['charges'][0]['last_transaction']['url'],
-									"qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
-									"pdf_url" => $dados['charges'][0]['last_transaction']['pdf']	
-								];
+															//--busca pelas especialidades do atendimento--------------------------------------
+														$nome_especialidade = "";
+														$ds_atendimento = "";
+														$especialidade=null;
+														$especialidade_obj=null;
+	
+														$especialidade_obj = new Especialidade();
+														$especialidade = $especialidade_obj->getNomeEspecialidade( $agendamento_id[$o]);
+														
+														$agenda = Agendamento::find($agendamento_id[$o]);												
+														$agenda->load('atendimento');
+														$agenda->load('clinica');
+														$agenda->load('filial');
+														$agenda->load('profissional');
+														$agenda->load('paciente');
+											
+														$agenda->ds_atendimento =  $especialidade['ds_atendimento'];
+														$agenda->nome_especialidade = $especialidade['nome_especialidades'];
+	
+														//$agenda->save();
+	
+													 
+				
+														//--busca os itens de pedido relacionados------------------------------------------
+														$agenda->load('itempedidos');
+				
+														if(!is_null($agendamento->checkup_id)) {
+															$agenda->load('checkup');
+															$agenda->load('datahoracheckups');
+														} 
+														 
+														//echo $agendamento; die;
+														//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
+														
+														$agenda->valores = $valores[$o];
+													 
+														array_push($result_agendamentos,  $agenda );   
+	
+	
+														//--enviar mensagem informando o pre agendamento da solicitacao----------------
+														try {
+															if(!is_null($agendamento->atendimento_id))
+																$this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
+														} catch (Exception $e) {}
+	
+															
+														$Payment                                 	= new Payment();				 			 				 
+															$Payment->merchant_order_id             	= $dadosPagamentos['id'];
+															$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
+															$Payment->tid 							= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
+															$Payment->payment_type 					= $dadosPagamentos['charges'][0]['payment_method']; 
+															$Payment->amount                        	=$this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
+															$Payment->currency                     	= $dadosPagamentos['charges'][0]['currency']; 
+															$Payment->country                     	= "BRA";
+															$Payment->installments 				     = $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
+															$Payment->pedido_id  						= (int)$pedido;
+															$Payment->cs_status							=  $dadosPagamentos['status'];
+															$Payment->cielo_result                 	= json_encode($criarPagamento);
+															
+														
+															if(!$Payment->save()) {
+																DB::rollback();
+																return response()->json([
+																	'mensagem' => 'Erro ao salvar o pagamento!'
+																], 500);
+															}
+															
+													}
+	
+													 
+													 
+															
+												} 
+										 
+												
+											
+												 
+											}else{
+												//--busca pelas especialidades do atendimento--------------------------------------
+												$nome_especialidade = "";
+												$ds_atendimento = "";
+					
+												$especialidade_obj = new Especialidade();
+												$especialidade = $especialidade_obj->getNomeEspecialidade($agendamento->id);
+					
+												$agendamento->ds_atendimento = $especialidade['ds_atendimento'];
+												$agendamento->nome_especialidade = $especialidade['nome_especialidades'];
+					
+												//--busca os itens de pedido relacionados------------------------------------------
+												$agendamento->load('itempedidos');
+					
+												if(!is_null($agendamento->checkup_id)) {
+													$agendamento->load('checkup');
+													$agendamento->load('datahoracheckups');
+												}
+												
+												//echo $agendamento; die;
+												//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
+												array_push($result_agendamentos,  $agendamento);
+												
+											
+												//--enviar mensagem informando o pre agendamento da solicitacao----------------
+												try {
+													if(!is_null($agendamento->atendimento_id))
+														$this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
+												} catch (Exception $e) {}
+													
+													$Payment                                 	= new Payment();				 			 				 
+													$Payment->merchant_order_id             	= $dadosPagamentos['id'];
+													$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
+													$Payment->tid 								= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
+													$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method']; 
+													$Payment->amount                        	= $this->convertRealEmCentavos( number_format(   $dadosPagamentos['charges'][0]['amount'] , 2, ',', '.') ) ; 
+													$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency']; 
+													$Payment->country                     		= "BRA";
+													$Payment->installments 				     	= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
+													$Payment->pedido_id  						= $pedido->id;
+													$Payment->cs_status							=  $dadosPagamentos['status'];
+													$Payment->cielo_result                 		= json_encode($criarPagamento);
+													
+													if(!$Payment->save()) {
+														DB::rollback();
+														return response()->json([
+															'mensagem' => 'Erro ao salvar o pagamento!'
+														], 500);
+													}
 								
-							//	$this->enviarEmailPagamentoRealizado($paciente, $pedido, $dados['charges'][0]['last_transaction']['url']);																														
-							}
-
-
-							$transferencia=null;
-							if($metodoPagamento==5){
-								$transferencia = [
-									"metodo" => $dados['charges'][0]['payment_method'],
-									"url" => 	$dados['charges'][0]['last_transaction']['url']									
-								];
+												}
+										
+												 
+									}
+											
+										
+										
 									
-																																	
-							}
-
 							
-						 
-
-						 
-							
-						 
-						//	echo json_encode($result_agendamentos); die;
-
-							 ########### FINISHIING TRANSACTION ##########
-						  DB::commit();
-							 #############################################
-							  CVXCart::clear();
-						
-							 $valor_total_pedido = $valor_total-$valor_desconto;
-							 //dd( $result_agendamentos); die;
-							//var_dump($result_agendamentos);die;
-							 $request->session()->put('result_agendamentos', $result_agendamentos);
-							
-					 
-							 $request->session()->put('pedido',$MerchantOrderId);
+	
+									 
+										 
+								}
+								 
+	
+								
+								$dados = json_decode(json_encode($criarPagamento), true);		
+	
+								$boleto=null;
+								if($metodoPagamento==4){
+	
+									$boleto = [
+										"instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
+										"url" => 	$dados['charges'][0]['last_transaction']['url'],
+										"qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
+										"pdf_url" => $dados['charges'][0]['last_transaction']['pdf']	
+									];
+									
+								//	$this->enviarEmailPagamentoRealizado($paciente, $pedido, $dados['charges'][0]['last_transaction']['url']);																														
+								}
+	
+	
+								$transferencia=null;
+								if($metodoPagamento==5){
+									$transferencia = [
+										"metodo" => $dados['charges'][0]['payment_method'],
+										"url" => 	$dados['charges'][0]['last_transaction']['url']									
+									];
+										
+																																		
+								}
+	
+								
 							 
-							 $request->session()->put('valor_empresa', $valorEmpresa);
-							 $request->session()->put('varlor_credito', $valorCredito);
-							 $request->session()->put('valor_total_pedido', $valor_total_pedido);
-							 $request->session()->put('descricao_boleto', $boleto);
-							 $request->session()->put('trans_bancario', $transferencia)	;
-							 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+	
 							 
-							//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
-					 	 return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
-
-
-			
-						}else{
-							DB::rollback();
-								return response()->json([
-									'message' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: ',                    
-								], 422);
-						}
+								
+							 
+							//	echo json_encode($result_agendamentos); die;
+	
+								 ########### FINISHIING TRANSACTION ##########
+							  	DB::commit();
+								 #############################################
+								  CVXCart::clear();
+							
+								 $valor_total_pedido = $valor_total-$valor_desconto;
+								 //dd( $result_agendamentos); die;
+								//var_dump($result_agendamentos);die;
+								 $request->session()->put('result_agendamentos', $result_agendamentos);
+								
+						 
+								 $request->session()->put('pedido',$MerchantOrderId);
+								 
+								 $request->session()->put('valor_empresa', $valorEmpresa);
+								 $request->session()->put('varlor_credito', $valorCredito);
+								 $request->session()->put('valor_total_pedido', $valor_total_pedido);
+								 $request->session()->put('descricao_boleto', $boleto);
+								 $request->session()->put('trans_bancario', $transferencia)	;
+								 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
+								 
+								//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
+							  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+	
+			}
+								
+		}else{
+			DB::rollback();
+			return response()->json([
+					'message' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: ',                    
+					], 422);
+		}
 
 	 
     }

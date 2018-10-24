@@ -320,8 +320,30 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                <label for="inputDocumento">Documento</label>
+                                                <select class="form-control" id="documento">
+                                                    <option value="1">CPF</option>
+                                                    <option value="2">CNPJ</option>
+                                                </select>
+                                                </div>
+                                                <div class="col-md-9">
+                                                <div class="cnpj" style="display:none;">
+                                                <label for="inputCNPJCredito">CNPJ do titular do cartão</label>
+                                                <input type="text" id="cnpjTitularCartaoCredito" class=" inputCNPJCredito  form-control   mascaraCNPJ"  value=" " placeholder="CNPJ do titular do cartão" >
+                                                </div>
+                                                
+                                                <div class="cpf"  >
                                                 <label for="inputCPFCredito">CPF do titular do cartão</label>
-                                                <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
+                                                <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value=" " placeholder="CPF do titular do cartão" >
+                                                </div>
+                                                
+                                              
+                                                </div>
+                                            </div>
+                                               
+                                                  
                                             </div>
                                             <div class="form-group">
                                                 <label for="selectParcelamentoCredito">Parcelamento</label>

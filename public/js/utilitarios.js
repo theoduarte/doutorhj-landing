@@ -30,6 +30,11 @@ $(document).ready(function() {
 		mask: ['999.999.999-99'],
 		keepStatic: true
 	});
+
+	$(".mascaraCNPJ").inputmask({
+		mask: ['99.999.999/9999-99'],
+		keepStatic: true
+	});
 	
 	try {
 		$('.input-daterange-datepicker').daterangepicker({

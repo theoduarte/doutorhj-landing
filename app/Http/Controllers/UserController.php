@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsuariosRequest;
 use Illuminate\Support\Carbon;
 use App\FuncoesPagamento;
-
+use MundiAPILib\MundiAPIClient;
 
 class UserController extends Controller
 {
@@ -537,7 +537,7 @@ HEREDOC;
 	        ->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	        ->select('pacientes.*')
 	        ->get();
-	    
+	  
         $user_send_token = $paciente_temp->first()->user;
         
         //--quando o usuario tenta logar sem ter se cadastrado

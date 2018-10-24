@@ -47,7 +47,7 @@ abstract class FuncoesPagamento
 			"exp_year"=>'20',
 			"cvv"=> '123',
 			"brand"=> 'Visa',
-			"private_label"=> false,
+			"private_label"=> true,
 			"options"=> [
 				"verify_card"=> true
 			]

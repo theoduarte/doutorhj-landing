@@ -1,5 +1,19 @@
 $(document).ready(function () {
 
+	$('#documento').change(function(){
+		
+		if($(this).val() ==1){
+			$('.inputCNPJCredito').empty();
+			$('.cnpj').hide();
+			$('.cpf').show();
+		}else{
+			$('.cnpj').show();
+			$('.inputCPFCredito').empty();
+			$('.cpf').hide();
+	 
+		}
+	})
+
 	$('.change-parcelamento').change(function(){
 		 
 
@@ -764,7 +778,15 @@ function efetuarPagamento() {
 			dados = "Empresarial"
 			break;
 		case "2":
-			// valida se existe credito especial
+		
+			if($('#cnpjTitularCartaoCredito').val().length ==0 && $('#cpfTitularCartaoCredito').val().length ==0 ){
+				
+				validarCampos($('#cnpjTitularCartaoCredito').val(), '#documento', "Documento é obrigatório")
+				dados = null;
+			} 
+		
+
+		 
 			if(parseInt($('#valor_disponivel').val()) >0){
 				dados = cartaoCreditoEmpresarial();
 			} else{
@@ -773,6 +795,14 @@ function efetuarPagamento() {
 		
 			break;
 		case "3":
+				if($('.inputCPFCredito').val().length ==0 && $('.inputCNPJCredito').val().length ==0 ){
+					validarCampos($('.inputCPFCredito').val(), '#documento', "Documento é obrigatório")
+				 
+					dados = null;
+				} 
+			
+			
+
 			dados =	cartaoCredito();
 			break;
 		case "4":
@@ -856,8 +886,8 @@ function efetuarPagamento() {
 				paciente_id,
 				titulo_pedido,
 				'_token': laravel_token 
-			},
-			   //timeout: 15000,
+				},
+			   timeout: 15000,
 			   success: function (result) {
 				
 				$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
@@ -916,6 +946,15 @@ function cartaoCreditoEmpresarial(){
 	let ano = $('#selectValidadeAnoCredito').val()
 	let cvv = $('#inputCodigoCredito  ').val()
 	let titularcpf = $('#inputCPFCredito').val()
+	let titularcnpj = $('#cnpjTitularCartaoCredito').val() 
+	if(titularcpf.length != 0){
+		titularcpf= $('#inputCPFCredito').val()
+	} 
+
+	if(titularcnpj.length != 0){
+		titularcpf= $('#cnpjTitularCartaoCredito').val() 
+	}
+	
 	let parcelas = $('#selectParcelamentoCredito').val()
 
  
@@ -929,7 +968,7 @@ function cartaoCreditoEmpresarial(){
 	resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
 	resp.push( validarCampos($('#selectValidadeAnoCredito  ').val(), '#selectValidadeAnoCredito', "Ano do cartão é obrigatório"));
 	resp.push( validarCampos($('#inputCodigoCredito  ').val(), '#inputCodigoCredito', "Código do cartão é obrigatório"));
-	resp.push( validarCampos($('#inputCPFCredito  ').val(), '#inputCPFCredito', "CPF titular é obrigatório"));
+	
 
 
 	resp.forEach(function(entry) {
@@ -1003,6 +1042,13 @@ function cartaoCredito() {
 	let ano = $('.selectValidadeAnoCredito').val()
 	let cvv = $('.inputCodigoCreditoCartao  ').val()
 	let titularcpf = $('.inputCPFCredito ').val()
+	let titularcnpj = $('.inputCNPJCredito ').val()
+	if(titularcpf.length !=0){
+		titularcpf =titularcpf
+	}
+	if(titularcnpj.length !=0){
+		titularcpf =titularcnpj
+	}
 	let parcelas = $('.selectParcelamentoCredito ').val()
 	let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0
 
@@ -1028,7 +1074,7 @@ function cartaoCredito() {
 		resp.push( validarCampos($('.selectValidadeMesCredito  ').val(), '#mesCartaoCredito', "Mês cartão é obrigatório"));
 		resp.push( validarCampos($('.selectValidadeAnoCredito  ').val(), '#anoCartaoCredito', "Ano do cartão é obrigatório"));
 		resp.push( validarCampos($('.inputCodigoCreditoCartao  ').val(), '#codigoCartaoCredito', "Código do cartão é obrigatório"));
-		resp.push( validarCampos($('.inputCPFCredito  ').val(), '#cpfTitularCartaoCredito', "CPF titular é obrigatório"));
+		
 
 		resp.forEach(function(entry) {
 			if(!entry) {
