@@ -16,8 +16,8 @@
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-caret-right"></i>
                                 Cadastro</a>
-                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Pagamento</a>
+                                {{--  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Pagamento</a>--}}
                             {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Anuidade</a>--}}
                             <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
@@ -240,7 +240,9 @@
 
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
+                                
                                     <div class="row">
+                                       {{--
                                         <div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Saldo / Limite</span>
                                             <div class="box-pagamento saldo-limite">
@@ -261,6 +263,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        --}}
+                                        {{--
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
                                             <div class="box-pagamento lista-cartoes">
@@ -349,6 +353,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        --}}
                                         {{--<div class="col-md-12 col-lg-7">
                                             <span class="label-titulo">Últimas Transações</span>
                                             <div class="box-pagamento lista-transacoes">
@@ -399,6 +404,7 @@
                                                 @endif
                                             </div>
                                         </div>--}}
+                                        {{--
                                         <div class="col-12">
                                             <span class="label-titulo">Histórico</span>
                                             <div class="box-pagamento historico">
@@ -568,9 +574,11 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        --}}
                                     </div>
                                 </div>
                             </div>
+                          
                             {{--<div class="tab-pane fade" id="v-pills-anuidade" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="area-tipo-plano">
