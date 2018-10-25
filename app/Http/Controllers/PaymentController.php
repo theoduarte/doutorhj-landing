@@ -30,7 +30,7 @@ use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use App\Preco;
 use App\Empresa;
-
+use App\User;
 class PaymentController extends Controller
 {
     /**
@@ -297,7 +297,34 @@ class PaymentController extends Controller
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
 		
 		$paciente =(object) Paciente::select("*")->where('id', $paciente_id)->first();
-			 		
+
+		if(empty($paciente->mundipagg_token)){
+			$email = User::where('id',$paciente->user_id)->first()->email;
+			// passa os valores para montar o objeto a ser enviado
+			$resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $email);
+			
+			try{
+				// cria o usuario na mundipagg
+				$userCreate = $client->getCustomers()->createCustomer( $resultado );
+				$paciente->mundipagg_token = $userCreate->id;
+				if(!$paciente->save()){
+					DB::rollBack();
+					return response()->json([
+						'messagem' => 'Não foi possivel salvar o usuario!',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
+			}catch(\Exception $e){
+				DB::rollBack();
+				return response()->json([
+					'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+					'errors' => $e->getMessage(),
+				], 500);
+			}
+			
+		
+		}
+	
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
 	 
@@ -419,11 +446,11 @@ class PaymentController extends Controller
 							
 			if(!$bandeira[1]) {
 				return response()->json([
-					'message' => 'Número do cartão inválido!',
+					'mensagem' => 'Número do cartão inválido!',
 				], 400);
 			} elseif(!$bandeira[2]) {
 				return response()->json([
-					'message' => 'Número do código de segurança inválido!',
+					'mensagem' => 'Número do código de segurança inválido!',
 				], 400);
 			} else { 
 				$bandeira = $bandeira[0];
@@ -516,7 +543,7 @@ class PaymentController extends Controller
 						}catch(\Exception $e){
 							DB::rollBack();
 							return response()->json([
-								'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -560,7 +587,7 @@ class PaymentController extends Controller
 							} catch(\Exception $e) {
 								DB::rollBack();
 								return response()->json([
-									'message' => 'Erro ao salvar o cartao!',
+									'mensagem' => 'Erro ao salvar o cartao!',
 									'errors' => $e->getMessage(),
 								], 500);
 							}
@@ -606,7 +633,7 @@ class PaymentController extends Controller
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
-							'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -650,7 +677,7 @@ class PaymentController extends Controller
 						} catch(\Exception $e) {
 							DB::rollBack();
 							return response()->json([
-								'message' => 'Erro ao salvar o cartao!',
+								'mensagem' => 'Erro ao salvar o cartao!',
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -681,13 +708,13 @@ class PaymentController extends Controller
 								
 			if($metodoPagamento ==2 && empty($dados->porcentagem)){
 				return response()->json([
-					'message' => 'Campo porcentagem nulo '.$dados->porcentagem
+					'mensagem' => 'Campo porcentagem nulo '.$dados->porcentagem
 					
 				], 500);
 			}
 			if($dados->porcentagem <0 || $dados->porcentagem >100){
 				return response()->json([
-					'message' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
+					'mensagem' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
 					
 				], 500);
 			}
@@ -707,7 +734,7 @@ class PaymentController extends Controller
 
 				 if(floatval($empresarial) > floatval($formatLimit) ){
 					return response()->json([
-						'message' => 'Calculo somatorio maior que o limite disponivel'
+						'mensagem' => 'Calculo somatorio maior que o limite disponivel'
 						
 					], 500);
 				 }
@@ -734,7 +761,7 @@ class PaymentController extends Controller
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Paciente não está vinculado a nenhuma empresa.',
+						'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -742,7 +769,7 @@ class PaymentController extends Controller
 				if(empty($empresa)){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Empresa não encontrada.',
+						'mensagem' => 'Empresa não encontrada.',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -755,7 +782,7 @@ class PaymentController extends Controller
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
+						'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -769,7 +796,7 @@ class PaymentController extends Controller
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Paciente não está vinculado a nenhuma empresa.',
+						'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -777,7 +804,7 @@ class PaymentController extends Controller
 				if(empty($empresa)){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Empresa não encontrada.',
+						'mensagem' => 'Empresa não encontrada.',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -802,7 +829,7 @@ class PaymentController extends Controller
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
-							'message' => 'Erro ao efetuar o pagamento com o cartão de crédito!',
+							'mensagem' => 'Erro ao efetuar o pagamento com o cartão de crédito!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -818,7 +845,7 @@ class PaymentController extends Controller
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
-							'message' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -832,7 +859,7 @@ class PaymentController extends Controller
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Não foi possivel gerar o boleto de pagamento!',
+						'mensagem' => 'Não foi possivel gerar o boleto de pagamento!',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -845,7 +872,7 @@ class PaymentController extends Controller
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([
-						'message' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado!',
+						'mensagem' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado!',
 						'errors' => $e->getMessage(),
 					], 500);
 				}

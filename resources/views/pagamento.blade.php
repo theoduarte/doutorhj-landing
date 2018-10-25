@@ -567,6 +567,7 @@
                                             </div>
                                             <div class="form-group row row-payment-card">
                                                 <div class="col col-12 col-sm-6">
+                                                
                                                     <label for="inputCPFCredito">CPF do titular do cartão</label>
                                                     <input type="text" id="inputCPFCredito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
                                                 </div>
