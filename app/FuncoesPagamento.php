@@ -155,7 +155,7 @@ abstract class FuncoesPagamento
 					"amount"=>$valorEmCentavos,
 					"payment_method"=>"boleto",
 					"boleto"=> [
-						"bank"=>  "033" , // tipo string
+						"bank"=>  "341" , // tipo string
 						"instructions"=>$instrucoesBoleto,
 						"due_at"=> "2020-12-31T00:00:00Z"
 					]
@@ -221,7 +221,7 @@ abstract class FuncoesPagamento
 					"amount"=>$valorEmCentavos,
 					"payment_method"=>"bank_transfer",					 
 					"bank_transfer"=>[
-						"bank"=> "001"
+						"bank"=> "341"
 					]
 				]
 			]

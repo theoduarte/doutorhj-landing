@@ -220,7 +220,7 @@ class PaymentController extends Controller
 		//dd( $result_agendamentos); die;
 		//var_dump(  $result_agendamentos);die;
         if ($result_agendamentos == null) {
-           return redirect()->route('landing-page');
+         //  return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
@@ -231,11 +231,11 @@ class PaymentController extends Controller
 		
 		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-    $request->session()->forget('result_agendamentos');
-        $request->session()->forget('pedido');
-		$request->session()->forget('valor_total_pedido');
-		$request->session()->forget('valor_empresa');
-		$request->session()->forget('varlor_credito');  
+   // $request->session()->forget('result_agendamentos');
+    //    $request->session()->forget('pedido');
+	//	$request->session()->forget('valor_total_pedido');
+	//	$request->session()->forget('valor_empresa');
+	//	$request->session()->forget('varlor_credito');  
         
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria','valor_credito','valor_empresa'));
     }
@@ -927,12 +927,13 @@ class PaymentController extends Controller
 		if(!empty($criarPagamento)){
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
 			
-			if($dadosPagamentos['charges'][0]['status'] ==="failed"){
+			if($dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed"){
 				DB::rollback();
 				return response()->json([
-					'error' => $dadosPagamentos['charges'][0]['last_transaction']['acquirer_message'],
-					'code' => $dadosPagamentos['charges'][0]['last_transaction']['acquirer_return_code'],
-					'message' =>'Não conseguimos realizar a transação ! tente novamente.',                    
+					
+					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
+					'mensagem' => 'Pedido não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
+				                 
 					], 422);
 			 }else{
 				 
@@ -1102,7 +1103,7 @@ class PaymentController extends Controller
 															$item_pedidoCredito->valor ==str_replace(",",".", number_format( $totalcredito, 2, ',', '.'))    ;
 															
 															$item_pedidoCredito->save();
-														//	$creditoCartaoSalvar=0;
+															//$creditoCartaoSalvar=0;
 															
 														}
 								 
@@ -1162,7 +1163,7 @@ class PaymentController extends Controller
 															$Payment->country                     	= "BRA";
 															$Payment->installments 				     = $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
 															$Payment->pedido_id  						= (int)$pedido;
-															$Payment->cs_status							=  $dadosPagamentos['status'];
+															$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
 															$Payment->cielo_result                 	= json_encode($criarPagamento);
 															
 														
@@ -1223,7 +1224,7 @@ class PaymentController extends Controller
 													$Payment->country                     		= "BRA";
 													$Payment->installments 				     	= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
 													$Payment->pedido_id  						= $pedido->id;
-													$Payment->cs_status							=  $dadosPagamentos['status'];
+													$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
 													$Payment->cielo_result                 		= json_encode($criarPagamento);
 													
 													if(!$Payment->save()) {
@@ -1269,7 +1270,8 @@ class PaymentController extends Controller
 								if($metodoPagamento==5){
 									$transferencia = [
 										"metodo" => $dados['charges'][0]['payment_method'],
-										"url" => 	$dados['charges'][0]['last_transaction']['url']									
+										"url" => 	$dados['charges'][0]['last_transaction']['url']	,
+										'datas'=>$dados								
 									];
 										
 																																		

@@ -1,7 +1,32 @@
 $(document).ready(function () {
+	$('.campos_endereco').hide();
 
-	$('#documento').change(function(){
+	$('#cep').keyup(function(){
+		let cep = $(this).val();
 		
+		if(cep.length ==9){
+			var res = cep.replace("-", "");
+
+			jQuery.ajax({
+				type: 'GET',
+				url: 'https://api.doctorhoje.com.br/api/v1/consultar-cep/'+res,
+				headers: {
+					"Authorization":"o2z554dpxadq0db137gw25ud5ahrlt1j" 
+					 
+				},	
+				dataType: 'json',			 
+				success: function (result) {
+					 console.log(result)
+				},
+				error: function (result) {
+					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				}
+			});
+		}
+	
+	})
+	$('#documento').change(function(){
+	 
 		if($(this).val() ==1){
 			$('.inputCNPJCredito').empty();
 			$('.cnpj').hide();
@@ -14,6 +39,22 @@ $(document).ready(function () {
 		}
 	})
 
+	$('#documento_boleto').change(function(){
+	 
+		if($(this).val() ==1){
+			$('.cnpj-boleto').empty();
+			$('.cnpj').hide();
+			$('.cpf').show();
+		}else{
+			$('.cnpj').show();
+			$('.cpf-boleto').empty();
+			$('.cpf').hide();
+	 
+		}
+	})
+
+
+	
 	$('.change-parcelamento').change(function(){
 		 
 

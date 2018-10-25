@@ -104,8 +104,7 @@
                                             @endif                                                                               
                                             @endif
                                             <option value="3" >Cartão de crédito</option>
-                                            <option value="4" >Boleto Bancario</option>
-                                            <option value="5" >Transferencia Bancario</option>                                                                                        
+                                                                                                                               
                                         </select>
                                   
                                     </section>    
@@ -363,11 +362,105 @@
                                     </div>
                                 </div>
 
+                                <div class="boletoBancario"  style="display:none; ">
+                                    <hr>
+                                    <div class="row" >
+                                                    <div class="col-md-3">
+                                                    <label for="inputDocumento">Documento</label>
+                                                    <select class="form-control" id="documento_boleto">
+                                                        <option value="1">CPF</option>
+                                                        <option value="2">CNPJ</option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                    <div class="cnpj" style="display:none;">
+                                                    <label for="inputCNPJCredito">CNPJ </label>
+                                                    <input type="text" id="id_cnpj_boleto" class="cnpj-boleto  form-control   mascaraCNPJ"  value=" " placeholder="CNPJ do titular" >
+                                                    </div>
+                                                    
+                                                    <div class="cpf"  >
+                                                    <label for="inputCPFCredito">CPF</label>
+                                                    <input type="text" id="id_cpf_boleto" class="cpf-boleto form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value=" " placeholder="CPF do titular" >
+                                                    </div>
+                                                    
+                                                
+                                                    </div>
+                                    </div>
 
-                                <div class="row boletoBancario" style="display:none;padding-left:25%; padding-top:5% ">
-                                <img src="/img/boleto.png" style="align-self:center" alt="" class="boleto-banc" height="100" width="200" >
+                                    <div class="row " style="margin-top:2%">
+                                        <div class="col-md-12" style="text-align:center">
+                                                <h3>Meu Endereço</h3>
+                                                <hr>
+                                        </div>
+                                    
+
+                                   
+                                    </div>
+                                    <div class="row">
+                                                <div class="col-md-4">
+                                                <div class="form-group row area-label">
+                                                    <label for="selectFormaPagamento" class="col-sm-12">CEP</label>
+                                                </div>
+                                                <input type="text" name="cep" id="cep" class="form-control cepMask" >                                                
+                                              
+                                                </div>
+                                                <div class="col-md-4 campos_endereco"> 
+                                                    <div class="form-group row area-label">
+                                                        <label for="selectFormaPagamento" class="col-sm-12">Rua</label>
+                                                    </div>
+                                                        <input type="text" name="Rua" id="Rua" class="form-control" >
+                                                                                                        
+                                                    </div>
+
+                                                    <div class="col-md-4 campos_endereco">
+                                                        <div class="form-group row area-label">
+                                                            <label for="selectFormaPagamento" class="col-sm-12">Numero</label>
+                                                        </div>
+                                                            <input type="text" name="Numero" id="Numero" class="form-control" >
+                                                                                                                                                                 
+                                                        </div>
+                                    </div>
+                                
+                                    <div class="campos_endereco">
+                                        <div class="row">
+                                                    <div class="col-md-4">
+                                                    <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Cidade</label>
+                                                            </div>
+                                                                <input type="text" name="Cidade" id="Cidade" class="form-control" >
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Estado</label>
+                                                            </div>
+                                                                <input type="text" name="Estado" id="Estado" class="form-control" >
+                                                        
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                        <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Bairro</label>
+                                                            </div>
+                                                                <input type="text" name="Bairro" id="Bairro" class="form-control" >
+                                                        
+                                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                    <div class="col-md-8">
+                                                    <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Complemento</label>
+                                                            </div>
+                                                                <input type="text" name="Complemento" id="Complemento" class="form-control" >
+                                                    </div>
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-md-12" style="text-align:center">
+                                            <img src="/img/boleto.png" style="align-self:center" alt="" class="boleto-banc" height="100" width="200" >
+                                            </div>
+                                    </div>
                                 </div>
-
                                 <div  class="row transferenciaBancaria" style="display:none;  padding-left:25%; padding-top:5%   ">
                                     <img src="/img/transferencia.png" style="align-self:center" alt="" class="transferencia-banc" height="100" width="200" >
                                 </div>

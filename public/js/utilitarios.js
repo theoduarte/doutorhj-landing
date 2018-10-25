@@ -19,6 +19,11 @@ $(document).ready(function() {
 	$(".mascaraTelefone").inputmask({
         mask: ["(99) 9999-9999", "(99) 99999-9999"],
         keepStatic: true
+	});
+	
+	$(".cepMask").inputmask({
+		mask: ['99999-999'],
+        keepStatic: true
     });
 	
 	$(".mascaraCNPJ").inputmask({
