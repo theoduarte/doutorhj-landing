@@ -30,7 +30,7 @@ use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use App\Preco;
 use App\Empresa;
-
+use App\User;
 class PaymentController extends Controller
 {
     /**
@@ -220,7 +220,7 @@ class PaymentController extends Controller
 		//dd( $result_agendamentos); die;
 		//var_dump(  $result_agendamentos);die;
         if ($result_agendamentos == null) {
-         //  return redirect()->route('landing-page');
+           return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
@@ -231,11 +231,11 @@ class PaymentController extends Controller
 		
 		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-   // $request->session()->forget('result_agendamentos');
-    //    $request->session()->forget('pedido');
-	//	$request->session()->forget('valor_total_pedido');
-	//	$request->session()->forget('valor_empresa');
-	//	$request->session()->forget('varlor_credito');  
+   		$request->session()->forget('result_agendamentos');
+        $request->session()->forget('pedido');
+		$request->session()->forget('valor_total_pedido');
+		$request->session()->forget('valor_empresa');
+		$request->session()->forget('varlor_credito');  
         
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria','valor_credito','valor_empresa'));
     }
@@ -297,7 +297,34 @@ class PaymentController extends Controller
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
 		
 		$paciente =(object) Paciente::select("*")->where('id', $paciente_id)->first();
-			 		
+					 
+		if(empty($paciente->mundipagg_token)){
+			$email = User::where('id',$paciente->user_id)->first()->email;
+			// passa os valores para montar o objeto a ser enviado
+			$resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $email);
+			
+			try{
+				// cria o usuario na mundipagg
+				$userCreate = $client->getCustomers()->createCustomer( $resultado );
+				$paciente->mundipagg_token = $userCreate->id;
+				if(!$paciente->save()){
+					DB::rollBack();
+					return response()->json([
+						'messagem' => 'Não foi possivel salvar o usuario!',
+						'errors' => $e->getMessage(),
+					], 500);
+				}
+			}catch(\Exception $e){
+				DB::rollBack();
+				return response()->json([
+					'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+					'errors' => $e->getMessage(),
+				], 500);
+			}
+			
+		
+		}
+
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
 	 
