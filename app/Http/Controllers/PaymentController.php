@@ -220,7 +220,7 @@ class PaymentController extends Controller
 		//dd( $result_agendamentos); die;
 		//var_dump(  $result_agendamentos);die;
         if ($result_agendamentos == null) {
-         //  return redirect()->route('landing-page');
+           return redirect()->route('landing-page');
         }
 
         $pedido = $request->session()->get('pedido');
@@ -231,11 +231,11 @@ class PaymentController extends Controller
 		
 		$transferencia_bancaria = $request->session()->get('trans_bancario');
         
-   // $request->session()->forget('result_agendamentos');
-    //    $request->session()->forget('pedido');
-	//	$request->session()->forget('valor_total_pedido');
-	//	$request->session()->forget('valor_empresa');
-	//	$request->session()->forget('varlor_credito');  
+   		$request->session()->forget('result_agendamentos');
+        $request->session()->forget('pedido');
+		$request->session()->forget('valor_total_pedido');
+		$request->session()->forget('valor_empresa');
+		$request->session()->forget('varlor_credito');  
         
         return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria','valor_credito','valor_empresa'));
     }
