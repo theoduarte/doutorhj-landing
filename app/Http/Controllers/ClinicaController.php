@@ -31,7 +31,8 @@ use App\Consulta;
 use App\CartaoPaciente;
 use App\Paciente;
 use App\Filial;
-
+use App\Plano;
+use App\VigenciaPaciente;
 class ClinicaController extends Controller
 {
     /**
@@ -630,7 +631,7 @@ class ClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function paginaPagamento(){
+    public function paginaPagamento() {
 
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
@@ -644,9 +645,11 @@ class ClinicaController extends Controller
     	$titulo_pedido = "";
     	$user_session->load('documentos');
 
+		$plano_id = Paciente::getPlanoAtivo($user_session->id);
+
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
-			$paciente = $paciente_tmp_id != '' ? Paciente::findOrFail($paciente_tmp_id) : [];
+			$paciente = Paciente::findOrFail($paciente_tmp_id);
 
 			if($item['attributes']['tipo_atendimento'] == 'simples') {
 				$atendimento_tmp_id = $item['attributes']['atendimento_id'];
@@ -654,7 +657,16 @@ class ClinicaController extends Controller
 				$clinica_tmp_id = $item['attributes']['clinica_id'];
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
-				$atendimento = Atendimento::findOrFail($atendimento_tmp_id);
+				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
+					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+						$query->where('precos.plano_id', '=', $plano_id);
+					})->first();
+
+				if(is_null($atendimento)) {
+					$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
+						->with('precoAtivo')->first();
+				}
+
 				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);
@@ -684,9 +696,9 @@ class ClinicaController extends Controller
 					foreach ($atendimento->profissional->especialidades as $especialidade) {
 						$nome_especialidade = $nome_especialidade . ' | ' . $especialidade->ds_especialidade;
 					}
-
+                    //dd($atendimento->consulta->tag_populars->first()->cs_tag); die;
 					$ds_atendimento = $atendimento->consulta->tag_populars->first()->cs_tag;
-
+                    
 					$atendimento->nome_especialidade = $nome_especialidade;
 					$atendimento->ds_atendimento = $ds_atendimento;
 
@@ -761,13 +773,14 @@ class ClinicaController extends Controller
     		array_push($carrinho, $item_carrinho);
     	}
 
-    	$valor_total = CVXCart::getTotal();
+    	$valor_total = ( CVXCart::getTotal());
     	$valor_desconto = 0;
-
+        
     	$cpf_titular = $user_session->documentos->first()->te_documento;
 
     	$valor_parcelamento = $valor_total-$valor_desconto;
-    	$parcelamentos = [];
+        $parcelamentos = [];
+        
     	$parcelamentos = array(
     	    1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.').' sem juros'
     	);
@@ -786,11 +799,18 @@ class ClinicaController extends Controller
     	}
     	
     	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
-    	
+
+
+        $plano_paciente = $resultado = Paciente::getPlanoAtivo($user_session->id);
+        
     	$responsavel_id = $user_session->id;
     	$pacientes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->orWhere('id', $responsavel_id)->orderBy('responsavel_id', 'desc')->get();
 
-    	return view('pagamento', compact('url', 'user_session', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
+        }
+
+    	return view('pagamento', compact('url', 'paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/

@@ -16,6 +16,8 @@ use App\TermosCondicoesUsuarios;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UsuariosRequest;
 use Illuminate\Support\Carbon;
+use App\FuncoesPagamento;
+use MundiAPILib\MundiAPIClient;
 
 class UserController extends Controller
 {
@@ -105,7 +107,12 @@ class UserController extends Controller
     {
     	$access_token = UtilController::getAccessToken();
     	$time_to_live = date('Y-m-d H:i:s');
-    	
+        
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+		$basicAuthPassword = "";
+		
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
+        
 //     	$encrypted = Crypt::encryptString('5');
     	
 //     	$decrypted = Crypt::decryptString($encrypted);
@@ -119,7 +126,13 @@ class UserController extends Controller
     	$usuario->cs_status 		= 'I';
     	$usuario->perfiluser_id 	= 3;
     	$usuario->save();
-    	
+        
+        // passa os valores para montar o objeto a ser enviado
+		$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
+			
+		// cria o usuario na mundipagg
+        $userCreate = $client->getCustomers()->createCustomer( $resultado );
+            
     	# dados do paciente
     	$paciente           		= new Paciente();
     	$paciente->user_id 			= $usuario->id;
@@ -128,7 +141,8 @@ class UserController extends Controller
     	$paciente->cs_sexo     		= $request->input('cs_sexo');
     	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
     	$paciente->access_token    	= $access_token;
-    	$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+        $paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+        $paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
     	//dd($usuario);
     	$paciente->save();
     	
@@ -523,7 +537,7 @@ HEREDOC;
 	        ->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	        ->select('pacientes.*')
 	        ->get();
-	    
+	  
         $user_send_token = $paciente_temp->first()->user;
         
         //--quando o usuario tenta logar sem ter se cadastrado

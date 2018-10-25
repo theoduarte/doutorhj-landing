@@ -55,7 +55,7 @@
 													<input type="hidden" class="cart_id" value="{{ $item['item_id'] }}">
 												</div>
 												<div class="valor-produto col-12 col-sm-2">
-													<span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
+													<span>R$ {{ $item['atendimento']->precoAtivo->vl_comercial }}</span>
 												</div>
 											</div>
 										</div>
