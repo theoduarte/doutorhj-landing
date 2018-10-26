@@ -207,7 +207,7 @@ class Paciente extends Model
 		      ->where(function($query) {
 		          $query->where('cobertura_ativa', '=', true)
 		          ->orWhere(function($query2) {
-		              $query2->where('data_inicio', '<=', date('Y-m-d'))->where('data_fim', '>=', date('Y-m-d'));
+		              $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
 		          });
 		})->first();
 		//$queries = DB::getQueryLog();
@@ -230,7 +230,7 @@ class Paciente extends Model
 	    ->where(function($query) {
 	        $query->where('cobertura_ativa', '=', true)
 	        ->orWhere(function($query2) {
-	            $query2->where('data_inicio', '<=', date('Y-m-d'))->where('data_fim', '>=', date('Y-m-d'));
+	            $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
 	        });
 	    })->first();
 
