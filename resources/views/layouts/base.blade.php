@@ -193,7 +193,7 @@
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
-									<img src="{{Auth::user()->paciente->empresa->logomarca_path}}" alt="">
+									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) Auth::user()->paciente->empresa->logomarca_path @else /libs/home-template/img/logo-branca.png @endif" alt="">
 								</div>
 							</div>
 							<div class="opcoes ie-plano">

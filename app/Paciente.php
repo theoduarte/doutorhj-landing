@@ -211,7 +211,7 @@ class Paciente extends Model
 		          });
 		})->first();
 		//$queries = DB::getQueryLog();
-		//dd($queries);
+		//dd($vigenciaPac);
 		
 		if(is_null($vigenciaPac)) {
 			return Plano::OPEN;
@@ -233,7 +233,7 @@ class Paciente extends Model
 	            $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
 	        });
 	    })->first();
-
+	    
 		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
 			if(!empty(UtilController::moedaBanco($vigenciaPac->vl_max_consumo))) {
 				return UtilController::moedaBanco($vigenciaPac->vl_max_consumo);
