@@ -202,11 +202,17 @@ class Paciente extends Model
 		if(is_null($paciente_id)) {
 			return Plano::OPEN;
 		}
-
-		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
-			->where('data_inicio', '<=', date('Y-m-d'))
-			->where('data_fim', '>=', date('Y-m-d'))->first();
-
+		//DB::enableQueryLog();
+		$vigenciaPac = VigenciaPaciente::where('paciente_id', '=', $paciente_id)
+		      ->where(function($query) {
+		          $query->where('cobertura_ativa', '=', true)
+		          ->orWhere(function($query2) {
+		              $query2->where('data_inicio', '<=', date('Y-m-d'))->where('data_fim', '>=', date('Y-m-d'));
+		          });
+		})->first();
+		//$queries = DB::getQueryLog();
+		//dd($queries);
+		
 		if(is_null($vigenciaPac)) {
 			return Plano::OPEN;
 		} else {
@@ -216,9 +222,17 @@ class Paciente extends Model
 
 	public static function getVlMaxConsumo($paciente_id)
 	{
-		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
-			->where('data_inicio', '<=', date('Y-m-d'))
-			->where('data_fim', '>=', date('Y-m-d'))->first();
+// 		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
+// 			->where('data_inicio', '<=', date('Y-m-d'))
+// 			->where('data_fim', '>=', date('Y-m-d'))->first();
+
+	    $vigenciaPac = VigenciaPaciente::where('paciente_id', '=', $paciente_id)
+	    ->where(function($query) {
+	        $query->where('cobertura_ativa', '=', true)
+	        ->orWhere(function($query2) {
+	            $query2->where('data_inicio', '<=', date('Y-m-d'))->where('data_fim', '>=', date('Y-m-d'));
+	        });
+	    })->first();
 
 		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
 			if(!empty(UtilController::moedaBanco($vigenciaPac->vl_max_consumo))) {
