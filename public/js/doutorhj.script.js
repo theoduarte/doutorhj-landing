@@ -411,8 +411,8 @@ $(function() {
 
 			// valor disponivel credito empresarial
 			valor_formatado = ( $('#valor_disponivel').val());
-
-			if(valor_formatado.length >6){
+			
+			if(valor_formatado != 'undefined' && valor_formatado.length > 6) {
 				resp = (valor_formatado.replace('.',''))
 			} else {
 				// valor credito especial formatado

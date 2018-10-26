@@ -193,7 +193,7 @@
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
-									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) Auth::user()->paciente->empresa->logomarca_path @else /libs/home-template/img/logo-branca.png @endif" alt="">
+									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
 								</div>
 							</div>
 							<div class="opcoes ie-plano">
@@ -220,8 +220,7 @@
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor
-                                    Hoje</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
