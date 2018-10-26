@@ -7,16 +7,57 @@
 @endpush
 
 @section('content')
-    <section class="pagamento">
+<style>
+	.slidecontainer {
+		width: 100%;
+	}
+
+	.slider {
+		-webkit-appearance: none;
+		width: 100%;
+		height: 25px;
+		border-radius:10px;
+		background: #d3d3d3;
+		outline: none;
+		opacity: 0.7;
+		-webkit-transition: .2s;
+		transition: opacity .2s;
+	}
+
+	.slider:hover {
+		opacity: 1;
+	}
+
+	.slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 15px;
+		height: 25px;
+		background: rgb(70, 117, 184);
+		border-radius:10px;
+		cursor: pointer;
+	}
+
+	.slider::-moz-range-thumb {
+		width: 15px;
+		height: 25px;
+		background: #4CAF50;
+		cursor: pointer;
+	}
+</style>
+
+<section class="pagamento">
+    {{ csrf_field() }}
         <div class="container">
             <div class="area-container">
                 <div class="titulo">
+                    <input type="hidden" value="">
                     <strong>Pagamento</strong>
                     <p>Selecione ou adicione seu cartão, escolha o beneficiário da compra e, caso houver, digite seu
                         cupom de desconto.</p>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6">
+                    <div class="col-md-12 col-lg-7">
                         <div class="card card-formulario">
                             <div class="card-header">
                                 Cupom de Desconto
@@ -36,12 +77,409 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="card card-formulario">
+
+                        {{---------------------------------------
+                        NOVA FORMA DE PAGAMENTO PLANO EMPRESARIAL
+                        ---------------------------------------}}
+
+                        <div id="pagamentoEmpresarial" class="card card-formulario">
                             <div class="card-header">
                                 Forma de pagamento
                             </div>
                             <div class="card-body">
-                                <form id="form-finalizar-pedido" method="post">
+
+                                <div class="row">
+                                    <section class="col-md-12 col-lg-12">
+                                    <h3>Método de pagamento </h3>
+                                            <div class="separador"></div>
+                                        <select class="form-control escolherMetodoPagamento">
+                                            <option value="" selected>Escolher metodo de pagamento</option>
+                                            {{--------------    ----------------}}
+                                            @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
+                                            @if(intval($valor_total-$valor_desconto) < intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
+                                            <option value="1" >Crédito empresarial</option>
+                                            @endif  
+                                            @if(intval($valor_total-$valor_desconto) > intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
+                                            <option value="2" >Crédito empresarial + Cartão de crédito</option>      
+                                            @endif                                                                               
+                                            @endif
+                                            <option value="3" >Cartão de crédito</option>
+                                            {{--
+                                                <option value="4" >Boleto Bancario</option>
+                                            <option value="5" >Transferencia Bancario</option>        
+                                            --}}                                                                              
+                                        </select>
+                                  
+                                    </section>    
+                                                               
+                                </div>
+                             
+                                <div class="row cartaoEmpresarial_Credito" style="display:none">
+                                    
+                                    
+                                    {{--CRÉDITO EMPRESARIAL--}}
+                                 
+                                    <div class="col-sm-12 col-md-6">
+                                        <h3>Crédito Empresarial</h3>
+                                        <div class="separador"></div>
+                                        <p class="te">Valor disponível:</p>
+                                        <span class="vlr-ce">R$ 00,00</span>
+                                        <div class="separador"></div>
+                                        <div id="credito-sim" class="alert alert-info complementar" role="alert">
+                                       
+                                        @if($paciente->plano_ativo->id != App\Plano::OPEN)
+                                    		<input type="hidden" value="{{Auth::user()->paciente->saldo_empresarial}}" id="valor_disponivel">
+										@else
+											<input type="hidden" value="0" id="valor_disponivel">
+                                        @endif
+                                        
+                                      
+                                        <input type="hidden" value="{{ $valor_total-$valor_desconto }}" id="total_pagar">
+                                        <input type="hidden" value="00,00" id="complemento">
+                                            <h4 class="alert-heading">Pagamento complementar</h4>
+                                            <hr>
+                                            <p>Total da compra:</p>
+                                            <span><strong class="total_a_pagar" >R$ 00,00</strong></span>
+                                            <p>Crédito Empresarial a ser usado:</p>
+                                            <span><strong class="creditoAserDebitado" id="creditoAserDebitado">R$ 00,00</strong></span>
+                                            <p>Valor complementar necessário:</p>
+                                            <span><strong class="valor_complementar" >R$ 00,00</strong></span>
+                                        </div>
+                                        <script>
+                                            $(function() {
+                                                $('#selecionaCreditoEmpresarial').change(function(){
+                                                    $('.complementar').hide();
+                                                    $('#' + $(this).val()).show();
+                                                });
+                                            });
+                                        </script>
+                                        <div  style="text-align:center" >
+                                        <hr>
+                                         <h3>definir crédito empresarial</h3>
+                                        
+
+                                        <div class="slidecontainer">
+                                            <input type="range" min="0.1" max="100"    step="0.0001"    class="slider" id="myRange">
+                                            <p> <span id="porcentagem_credito_empresarial"></span> % </p>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    {{--CARTÃO DE CRÉDITO--}}
+
+                                    <div class="col-sm-12 col-md-6">
+                                        <h3>Cartão de crédito</h3>
+                                        <div class="separador"></div>
+                                        <form action="">
+                                           
+                                            <section class="loadCartao " >
+                                         
+  
+                                            <div class="form-group">
+                                                <label for="inputNumeroCartaoCredito">Número do cartão</label>
+                                                <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                <input type="hidden" id="cartaoCredito+Empr" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
+                                                <input type="text" id="inputNomeCartaoCredito"  class="form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="selectValidadeMesCredito">Validade</label>
+                                                <div class="button dropdown">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="text" id="mesCartao"  name="mesCartao" class=" mesCartao form-control "/>
+                                                            <select id="selectValidadeMesCredito" class="form-control select-validade-mes" name="mes_cartao_credito" >
+                                                                <option>Mês</option>
+                                                                @for($i = 1; $i <= 12; $i++)
+                                                                    <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" id="anoCartao"  name="anoCartao" class=" anoCartao form-control "/>
+                                                            <select  id="selectValidadeAnoCredito" class="form-control" name="ano_cartao_credito">
+                                                                <option>Ano</option>
+                                                                @for($i = date('Y'); $i <= (date('Y')+10); $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group codigo-seguranca">
+                                                <label for="inputCodigoCredito" class="label-codigo-seguranca">Código de segurança</label>
+                                                <div class="area-codigo-seguranca">
+                                                    <input type="text" id="inputCodigoCredito" class="form-control inputCodigoCredito" name="cod_seg_cartao_credito" placeholder="0000" onkeypress="onlyNumbers(event)" maxlength="3">
+                                                    <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputCPFCredito">CPF do titular do cartão</label>
+                                                <input type="text" id="inputCPFCredito" class="form-control input-cpf-titular mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="selectParcelamentoCredito">Parcelamento </label>
+                                                <div class="button dropdown">
+                                                    <select id="selectParcelamentoCredito"   class="form-control change-parcelamento" name="parcelamento-cartao-credito">
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                           
+                                            </section>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row cartaoEmpresarial" style="display:none">
+                                    <div class="col-sm-12 col-md-12">
+                                            <h3>Crédito Empresarial</h3>
+                                            <div class="separador"></div>
+                                            <p class="te">Valor disponível:</p>
+                                            <span class="vlr-ce">R$ 00,00</span>     
+                                            <div class="separador"></div>                                      
+                                            <div id="credito-sim" class="alert alert-info complementar" role="alert">
+                                                <h4 class="alert-heading">Pagamento Crédito empresarial</h4>
+                                                <hr>
+                                                <p>Total da compra:</p>
+                                                <span><strong class="total_a_pagar" >R$ 00,00</strong></span>
+                                            <p>Crédito Empresarial a ser usado:</p>
+                                            <span><strong class="total_a_pagar" id="total_a_pagar">R$ 00,00</strong></span>
+                                               
+                                               
+                                            </div>
+                                            <script>
+                                                $(function() {
+                                                    $('#selecionaCreditoEmpresarial').change(function(){
+                                                        $('.complementar').hide();
+                                                        $('#' + $(this).val()).show();
+                                                    });
+                                                });
+                                            </script>
+                                        </div>
+                                </div>
+                             
+                                <div class="row cartaocredito" style="display:none">
+                                    
+                                  {{--CARTÃO DE CRÉDITO--}}
+
+                                    <div class="col-sm-12 col-md-12">
+                                        <h3>Cartão de crédito</h3>
+                                        <div class="separador"></div>
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="cartaoCadastrado">Cartão cadastrado</label>
+                                                <select class="form-control cartaoCadastradoCredito cartaoCadastrado" id="cartaoCadastrado" >
+                                                            <option value="">Novo Cartão</option>
+                                                            @foreach($cartoes_gravados as $item)
+                                                            <option value="{{ $item->id }}">Cartão {{ $item->bandeira }} - final {{ $item->numero }}</option>
+                                                            @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputNumeroCartaoCredito">Número do cartão</label>
+                                                <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number"  name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
+                                                <input type="text" id="nomeImpressoCartaoCredito"  class="inputNomeCartaoCredito form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="selectValidadeMesCredito">Validade</label>
+                                                <div class="button dropdown">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="text" id="mesCartao"  name="mesCartao" class=" mesCartao form-control "/>
+                                                            <select id="mesCartaoCredito" class="selectValidadeMesCredito form-control select-validade-mes" name="mes_cartao_credito" >
+                                                                <option value="">Mês</option>
+                                                                @for($i = 1; $i <= 12; $i++)
+                                                                    <option value="{{ sprintf('%02d', $i) }}">{{ sprintf('%02d', $i) }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" id="anoCartao"  name="anoCartao" class="anoCartao form-control "/>
+                                                            <select  id="anoCartaoCredito" class="selectValidadeAnoCredito form-control" name="ano_cartao_credito">
+                                                                <option value="">Ano</option>
+                                                                @for($i = date('Y'); $i <= (date('Y')+10); $i++)
+                                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group codigo-seguranca">
+                                                <label for="inputCodigoCredito" class="label-codigo-seguranca">Código de segurança</label>
+                                                <div class="area-codigo-seguranca">
+                                                    <input type="text" id="codigoCartaoCredito" class="inputCodigoCredito inputCodigoCreditoCartao form-control inputCodigoCredito" name="cod_seg_cartao_credito" placeholder="0000" onkeypress="onlyNumbers(event)" maxlength="3">
+                                                    <i class="fa fa-credit-card" data-toggle="tooltip" data-placement="top" title="Cógido de segurança ou CVV são os 3 dígitos eu ficam no verso do seu cartão."></i>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                <label for="inputDocumento">Documento</label>
+                                                <select class="form-control" id="documento">
+                                                    <option value="1">CPF</option>
+                                                    <option value="2">CNPJ</option>
+                                                </select>
+                                                </div>
+                                                <div class="col-md-9">
+                                                <div class="cnpj" style="display:none;">
+                                                <label for="inputCNPJCredito">CNPJ do titular do cartão</label>
+                                                <input type="text" id="cnpjTitularCartaoCredito" class=" inputCNPJCredito  form-control   mascaraCNPJ"  value=" " placeholder="CNPJ do titular do cartão" >
+                                                </div>
+                                                
+                                                <div class="cpf"  >
+                                                <label for="inputCPFCredito">CPF do titular do cartão</label>
+                                                <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value=" " placeholder="CPF do titular do cartão" >
+                                                </div>
+                                                
+                                              
+                                                </div>
+                                            </div>
+                                               
+                                                  
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="selectParcelamentoCredito">Parcelamento</label>
+                                                <div class="button dropdown">
+                                                    <select id="selectParcelamentoCredito" class="selectParcelamentoCredito form-control" name="parcelamento-cartao-credito">
+                                                        @for($i = 1; $i <= sizeof($parcelamentos); $i++)
+                                                            <option value="{{ $i }}">{{ $parcelamentos[$i] }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-check fc-checkbox row-payment-card">
+                                                <input type="checkbox" id="checkGravarCartaoCredito" class="checkGravarCartaoCredito form-check-input" name="gravar_cartao_credito">
+                                                <label class="form-check-label" for="checkGravarCartaoCredito">Gravar dados para futuras compras</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="boletoBancario"  style="display:none; ">
+                                    <hr>
+                                    <div class="row" >
+                                                    <div class="col-md-3">
+                                                    <label for="inputDocumento">Documento</label>
+                                                    <select class="form-control" id="documento_boleto">
+                                                        <option value="1">CPF</option>
+                                                        <option value="2">CNPJ</option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                    <div class="cnpj" style="display:none;">
+                                                    <label for="inputCNPJCredito">CNPJ </label>
+                                                    <input type="text" id="id_cnpj_boleto" class="cnpj-boleto  form-control   mascaraCNPJ"  value=" " placeholder="CNPJ do titular" >
+                                                    </div>
+                                                    
+                                                    <div class="cpf"  >
+                                                    <label for="inputCPFCredito">CPF</label>
+                                                    <input type="text" id="id_cpf_boleto" class="cpf-boleto form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value=" " placeholder="CPF do titular" >
+                                                    </div>
+                                                    
+                                                
+                                                    </div>
+                                    </div>
+
+                                    <div class="row " style="margin-top:2%">
+                                        <div class="col-md-12" style="text-align:center">
+                                                <h3>Meu Endereço</h3>
+                                                <hr>
+                                        </div>
+                                    
+
+                                   
+                                    </div>
+                                    <div class="row">
+                                                <div class="col-md-4">
+                                                <div class="form-group row area-label">
+                                                    <label for="selectFormaPagamento" class="col-sm-12">CEP</label>
+                                                </div>
+                                                <input type="text" name="cep" id="cep" class="form-control cepMask" >                                                
+                                              
+                                                </div>
+                                                <div class="col-md-4 campos_endereco"> 
+                                                    <div class="form-group row area-label">
+                                                        <label for="selectFormaPagamento" class="col-sm-12">Rua</label>
+                                                    </div>
+                                                        <input type="text" name="Rua" id="Rua" class="form-control" >
+                                                                                                        
+                                                    </div>
+
+                                                    <div class="col-md-4 campos_endereco">
+                                                        <div class="form-group row area-label">
+                                                            <label for="selectFormaPagamento" class="col-sm-12">Numero</label>
+                                                        </div>
+                                                            <input type="text" name="Numero" id="Numero" class="form-control" >
+                                                                                                                                                                 
+                                                        </div>
+                                    </div>
+                                
+                                    <div class="campos_endereco">
+                                        <div class="row">
+                                                    <div class="col-md-4">
+                                                    <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Cidade</label>
+                                                            </div>
+                                                                <input type="text" name="Cidade" id="Cidade" class="form-control" >
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Estado</label>
+                                                            </div>
+                                                                <input type="text" name="Estado" id="Estado" class="form-control" >
+                                                        
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                        <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Bairro</label>
+                                                            </div>
+                                                                <input type="text" name="Bairro" id="Bairro" class="form-control" >
+                                                        
+                                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                    <div class="col-md-8">
+                                                    <div class="form-group row area-label">
+                                                                <label for="selectFormaPagamento" class="col-sm-12">Complemento</label>
+                                                            </div>
+                                                                <input type="text" name="Complemento" id="Complemento" class="form-control" >
+                                                    </div>
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-md-12" style="text-align:center">
+                                            <img src="/img/boleto.png" style="align-self:center" alt="" class="boleto-banc" height="100" width="200" >
+                                            </div>
+                                    </div>
+                                </div>
+                                <div  class="row transferenciaBancaria" style="display:none;  padding-left:25%; padding-top:5%   ">
+                                    <img src="/img/transferencia.png" style="align-self:center" alt="" class="transferencia-banc" height="100" width="200" >
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-------------------------------------------
+                        FIM NOVA FORMA DE PAGAMENTO PLANO EMPRESARIAL
+                        -------------------------------------------}}
+
+                        <div class="card card-formulario " style="display: none;" >
+                            <div class="card-header">
+                                Forma de pagamento
+                            </div>
+                            <div class="card-body">
+                                
                                     <div class="form-group row area-label">
                                         <label for="selectFormaPagamento" class="col-sm-12">Escolha a Forma de pagamento</label>
                                     </div>
@@ -272,11 +710,14 @@
                                              -->
                                         </div>
                                     </div>
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-6">
+                   
+                   
+                   
+                    <div class="col-md-12 col-lg-5">
                         <div class="card card-formulario">
                             <div class="card-header">
                                 Resumo da compra
@@ -295,7 +736,7 @@
 															<a class="close-div" href="#"><i class="fa fa-trash"></i></a>
 														</div>-->
 														<div class="valor-produto col-12 col-sm-3">
-															<span>R$ {{ $item['atendimento']->getVlComercialAtendimento() }}</span>
+															<span>R$ {{ $item['atendimento']->precoAtivo->vl_comercial }}</span>
 														</div>
 													</div>
 													<div class="row">
@@ -502,18 +943,23 @@
 										@endif
                                     @endforeach
                                     
-                                    <div class="resumo-compra">
+                                    <div class="resumo-compra" >
                                         <div class="row">
                                             <div class="col-sm-8 linha-forma-pagamento linha-resumo">
                                                 <div class="titulo-resumo">
                                                     <span>Forma de pagamento:</span>
                                                 </div>
                                                 <div class="dados-resumo">
-                                                    <p><span id="resumo_compra_tipo_cartao"></span> - Final <span id="resumo_compra_final_cartao">XXXX</span></p>
+                                                <div class="metodoPagamento">
+                                                Escolha o metodo de pagamento
+                                                </div>
+                                                
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                       
+                                       <div class="cartao-credito" style="display:none;">
+                                       <div class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">
                                                     <span>Valor do(s) serviço(s):</span>
@@ -522,7 +968,7 @@
                                             <div class="col-md-7">
                                                 <div class="dados-resumo">
                                                     <p>R$ {{ number_format( $valor_total,  2, ',', '.') }}</p>
-                                                    <input type="hidden" id="valor_servicos" value="{{ $valor_total }}">
+                                                    <input type="hidden" id="valor_servicos" name="valor_servicos" value="{{ $valor_total }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -532,6 +978,7 @@
                                                     <span>Desconto aplicado:</span>
                                                 </div>
                                             </div>
+                                            
                                             <div class="col-md-7">
                                                 <div class="dados-resumo">
                                                     <p>- R$ {{ number_format( $valor_desconto,  2, ',', '.') }}</p>
@@ -554,15 +1001,45 @@
                                         <div id="parcelamento-content" class="row">
                                             <div class="col-md-5">
                                                 <div class="titulo-resumo">
-                                                    <span>Parcelamento:</span>
+                                                    <span>Parcelamento Cartão de Crédito:</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
-                                                <div id="resumo_parcelamento" class="dados-resumo">
+                                                <div id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
                                                     <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
-                                                    <p>{{ $parcelamentos[sizeof($parcelamentos)] }}</p>
+                                                    
                                                 </div>
                                             </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                           
+                                                <div class="titulo-resumo">
+                                                    <span>Crédito Empresarial: </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-7">
+                                                <div class="valor_cartao_empresarial">
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="titulo-resumo">
+                                                    <span>Cartão de Crédito: </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-7">
+                                                <div class="valor_cartao_credito">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5">
@@ -570,6 +1047,7 @@
                                                     <span>Total a pagar: </span>
                                                 </div>
                                             </div>
+                                            
                                             <div class="col-md-7">
                                                 <div class="dados-resumo valor-total-produtos">
                                                     <p>R$ {{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}</p>
@@ -578,11 +1056,14 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6 area-btn-finalizar">
-                                                <a href="{{ $url }}" class="btn btn-link btn-continuar-comprando">Continuar comprando</a>
+                                                {{--<a href="{{ $url }}" class="btn btn-link btn-continuar-comprando">Continuar comprando</a>--}}
                                             </div>
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                             	@if(sizeof($carrinho) > 0)
-                                                <button type="button" id="btn-finalizar-pedido" class="btn btn-vermelho btn-finalizar"><span id="lbl-finalizar-pedido">Finalizar Pagamento <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span></button>
+                                                <button  type="button"  id="btn-finalizar-pedido-landing" class="btn btn-vermelho btn-finalizar">
+                                                <span id="lbl-finalizar-pedido">Finalizar Pagamento <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span>
+                                                </button>
+                                                
                                                 @endif
                                             </div>
                                         </div>
@@ -594,6 +1075,7 @@
                 </div>
             </div>
         </div>
+        
     </section>
     @push('scripts')
         <script type="text/javascript">

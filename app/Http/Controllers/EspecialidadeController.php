@@ -6,9 +6,11 @@ use App\Agendamento;
 use App\Cidade;
 use App\Endereco;
 use App\Atendimento;
+use App\Paciente;
 use App\Procedimento;
 use App\Consulta;
 use App\Checkup;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 
@@ -24,18 +26,27 @@ class EspecialidadeController extends Controller
     {
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
         $result = [];
-        
+
+		$paciente_id = null;
+
+		if (Auth::check()) {
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+		}
+
+		$plano_id = Paciente::getPlanoAtivo($paciente_id);
+
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
             $consulta = new Consulta();
-            $result = $consulta->getActive();
+            $result = $consulta->getActive($plano_id);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
             $procedimento = new Procedimento();
-            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
+            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id) : $procedimento->getActiveOdonto($plano_id);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'checkup') {
             $checkup = new Checkup;
-            $checkups = $checkup->getActive();
+            $checkups = $checkup->getActive($plano_id);
             foreach($checkups as $checkup){
                 $item = [
                     'id'        => $checkup->id,

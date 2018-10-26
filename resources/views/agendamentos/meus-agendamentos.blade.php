@@ -79,19 +79,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
+        <p class="tipo"><p>{{ !empty($atendimento->consulta->tag_populars) ? $atendimento->consulta->tag_populars()->first()->cs_tag : ( !empty($atendimento->procedimento->tag_populars) ? $atendimento->procedimento->tag_populars()->first()->cs_tag : $atendimento->ds_preco) }}<br>
                                                         <strong>{{ $atendimento->clinica->nm_fantasia }}</strong></p>
                                                     
                                                     @if( !empty($atendimento->consulta_id) )
                                                         <p class="profissional">
                                                             Dr. {{ $atendimento->profissional->nm_primario.' '.$atendimento->profissional->nm_secundario }}
-                                                    @endif
-
-                                                    <p class="valor">R$ <span>@if(sizeof($agendamento->itempedidos) > 0 ) {{ number_format( $agendamento->itempedidos->first()->valor,  2, ',', '.') }} @endif</span>
-                                                        <span class="dt-pagamento">pago em @if(sizeof($agendamento->itempedidos) > 0 )  {{ date_format($agendamento->itempedidos->first()->created_at, 'd/m/Y') }} @endif</span>
+                                                    @endif                                                                                                                                                           
                                                     </p>
-                                                    <p class="endereco"><?php /*{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} */ ?> @if($agendamento->filial != null) <strong>{{ $agendamento->filial->nm_nome_fantasia }}</strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }} @endif</p>
+
+                                                    <p>  R$  {{ number_format ($agendamento->itempedidos->first()->valor, 2, ',', '.')  }}</p>
+                                                    <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
                                                 </div>
                                                 <div class="col col-lg-4">
                                                     <p class="tit-token">Token</p>

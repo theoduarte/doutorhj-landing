@@ -188,6 +188,24 @@
                             </ul>
                         </div>
                     </div>
+
+                    @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+						<div class="info-empresarial">
+							<div class="opcoes ie-logo">
+								<div class="logo-empresa">
+									<img src="{{Auth::user()->paciente->empresa->logomarca_path}}" alt="">
+								</div>
+							</div>
+							<div class="opcoes ie-plano">
+								<p class="titulo">Plano</p>
+								<p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
+							</div>
+							<div class="opcoes ie-saldo">
+								<p class="titulo">Saldo</p>
+								<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
+							</div>
+						</div>
+                    @endif
                 </div>
             </nav>
         @else

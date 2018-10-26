@@ -35,9 +35,7 @@ Route::get('home-logado', 'ClinicaController@homeLogado');
 Route::post('participe', 'MensagemController@participe');
 
 # rotas autocomplete
-Route::get('consulta-cep/cep/{cep}', 'Controller@cuse Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-onsultaCep')->name('cep');
+Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
@@ -50,9 +48,16 @@ Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAg
 #rota de notificacao CIELO
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
+
+
+
 Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
+
 Route::post('finalizar_pedido_cartao_cadastrado', 'PaymentController@fullTransactionSaveCard')->name('finalizar-pedido-cartao-cadastrado')->middleware('auth');
 Route::get('concluir_pedido', 'PaymentController@fullTransactionFinish');
+
+
+
 
 #rotas de teste
 Route::get('teste_concluir_pedido', 'PaymentController@fullTransactionTeste');
