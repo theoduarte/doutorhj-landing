@@ -102,12 +102,15 @@ $(document).ready(function () {
 			$('.form-busca').attr('onsubmit', 'return validaBuscaCheckup()');
 		}
 		$('#local_atendimento').empty();
+		
+		var uf_localizacao = $('#sg_estado_localizacao').val();
 
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
 				'tipo_atendimento': tipo_atendimento,
+				'uf_localizacao': uf_localizacao,
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
@@ -129,6 +132,7 @@ $(document).ready(function () {
 				    	  	url: '/consulta-todos-locais-atendimento',
 				    	  	data: {
 								'tipo_atendimento': tipo_atendimento,
+								'uf_localizacao': uf_localizacao,
 				    	  		'especialidade': $('#tipo_especialidade').val(),
 								'_token': laravel_token
 							},
@@ -295,6 +299,7 @@ $(document).ready(function () {
 		if( $('#tipo_atendimento').val() != 'checkup' ){
 			var atendimento_id = $(this).val();
 			var tipo_atendimento = $('#tipo_atendimento').val();
+			var uf_localizacao = $('#sg_estado_localizacao').val();
 			
 			if(atendimento_id == '') { return false; }
 
@@ -303,6 +308,7 @@ $(document).ready(function () {
 	    	  	url: '/consulta-todos-locais-atendimento',
 	    	  	data: {
 					'tipo_atendimento': tipo_atendimento,
+					'uf_localizacao': uf_localizacao,
 	    	  		'especialidade': $(this).val(),
 					'_token': laravel_token
 				},
@@ -484,77 +490,86 @@ $(function() {
 		}
 	}
 
-	if($('.escolherMetodoPagamento option:selected').val() == "2"){
-		setTimeout(function() {
-			let valor="";
-			let valor_formatado=""
-			let resp="";
-			let resultado="";
-			let final ="";
-			let complemento="";
-			let respCOmplemento="";
-			let resCOmplemento="";
-			let subtrair="";
-			let finalCOmplemento="";
 	
-			valor_formatado = (  $('#valor_disponivel').val());
+		if($('.escolherMetodoPagamento option:selected').val() == "2"){
+			setTimeout(function() {
 			
-			if(valor_formatado.length >6) {
-				resp = (valor_formatado.replace('.','')) 
-			} else {
-				resp = (valor_formatado.replace(',','.'))
-			}
+			
+				if(!(typeof valor_formatado === 'undefined') && valor_formatado.length > 6) {
+					resp = (valor_formatado.replace('.',''))
+				} else if(!(typeof valor_formatado === 'undefined')) {
+					// valor credito especial formatado
+					resp = (valor_formatado.replace(',','.'))
+				}
 			
 			complemento =  ($('#total_pagar').val());
-			respCOmplemento = (complemento.replace(',','.'))      
-			 
+			respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
+			
 			if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 				let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 				let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 				let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 				let empresa=0;		 
 				let complemt=0;
-				 
+				
 				slider.max = (porcentagem) - 0.1
-				
-				slider.value =  (porcentagem) - 0.1;
-				
-			 
-				empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
-				 
-				complemt  = (parseFloat(respCOmplemento) - empresa)	
-				 
-				output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
 	
-				//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
-			 
-				$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+				if(valor_formatado.length >6) {
+					resp = (valor_formatado.replace('.','')) 
+				} else {
+					resp = (valor_formatado.replace(',','.'))
+				}
 				
-				$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+				complemento =  ($('#total_pagar').val());
+				respCOmplemento = (complemento.replace(',','.'))      
 				
-				printParcelamento(complemt );
+				if(parseFloat(respCOmplemento) > parseFloat(resp)) {
+					let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+					let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+					let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+					let empresa=0;		 
+					let complemt=0;
+					
+					slider.max = (porcentagem) - 0.1
+					
+					slider.value =  (porcentagem) - 0.1;
+					
 				
-				$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+					empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+					
+					complemt  = (parseFloat(respCOmplemento) - empresa)	
+					
+					output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
+		
+					//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 				
-				$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
-			
-			} else {
-				let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
-	
-				let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
-				let valorComplemento =  (respCOmplemento) - totalEmpresarial
-				printParcelamento(valorComplemento);
-				slider.max = parseFloat(porcentagem) - 0.1;
-				slider.value =parseFloat(porcentagem) - 0.1;
-				output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
-	
-				$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
-				$('.valor_complementar').text('R$ '+valorComplemento)
-				$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
-			}
-																				   
-		}, 0);
-	}
+					$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+					
+					$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+					
+					printParcelamento(complemt );
+					
+					$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+					
+					$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
+				
+				} else {
+					let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
+		
+					let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+					let valorComplemento =  (respCOmplemento) - totalEmpresarial
+					printParcelamento(valorComplemento);
+					slider.max = parseFloat(porcentagem) - 0.1;
+					slider.value =parseFloat(porcentagem) - 0.1;
+					output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+		
+					$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
+					$('.valor_complementar').text('R$ '+valorComplemento)
+					$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
+				}
+			}																   
+			}, 0);
+		}
 	
 		
 	Number.prototype.formatMoney = function (c, d, t) {
