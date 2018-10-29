@@ -274,6 +274,7 @@
                             </li>
                         </ul>
                     </div>
+                    <span class="nome-estado-topo">Distrito Federal - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                 </div>
             </nav>
         @endif
@@ -285,6 +286,28 @@
     @if (!Auth::check())
         @include('includes/termos-condicoes')
         <footer class="footer-default">
+
+            <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstado" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Selecione um estado</p>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-10">
+                                    <select class="seleciona-estado" name="estado">
+                                        <option value="">Estado</option>
+                                        <option value="DF">Distrito Federal</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 col-lg-2">
+                                    <button type="button" class="btn btn-azul" data-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="floating-wpp"></div>
             <div class="container">
                 <div class="area-logo-rodape">
@@ -479,6 +502,18 @@
                 docCookies.setItem('uf_localizacao', sg_estado);
             });
         });
+
+        $(document).ready(function () {
+
+            $('.seleciona-estado').select2({width: '100%'});
+
+            $('#modalEstado').modal({
+                backdrop: 'static',
+                keyboard: false,
+            });
+
+        });
+
     </script>
 
 @endpush
