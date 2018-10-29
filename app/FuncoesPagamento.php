@@ -140,7 +140,8 @@ abstract class FuncoesPagamento
 
 
 
-	public static function pagamentoBoleto($valorEmCentavos,$costumer_id, $numeroBoleto, $instrucoesBoleto ) {
+	public static function pagamentoBoleto($valorEmCentavos,$costumer_name, $customer_email, $customer_document, $customer_street, $customer_number, $customer_complement, $customer_zip,  $numeroBoleto, $instrucoesBoleto ) {
+		
 		$payload =[
 			"items"=>[
 			[
@@ -149,7 +150,22 @@ abstract class FuncoesPagamento
 				"quantity"=>1
 			]
 			],
-			"customer_id"=>$costumer_id,
+			 
+			"customer"=> [
+				"name"=> "Tony Stark",
+				"email"=> "tstark@avengers.com",
+				  "document"=> "123456789",
+				"address"=> [
+					"street"=> "Av. General Justo",
+					"number"=> "375",
+					"complement"=> "9º andar",
+					"zip_code"=> "20021130",
+					"neighborhood"=> "Centro",
+					"city"=> "Rio de Janeiro",
+					"state"=> "RJ",
+					"country"=> "BR"
+			]
+				],
 			"payments"=>[				
 				[
 					"amount"=>$valorEmCentavos,

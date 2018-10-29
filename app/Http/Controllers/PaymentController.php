@@ -464,9 +464,9 @@ class PaymentController extends Controller
 		$pedido->titulo         = $titulo_pedido;
 		$pedido->descricao      = $descricao;
 		$pedido->dt_pagamento   = $dt_pagamento;
-		$pedido->tp_pagamento   = $metodoPagamento ==1? 'empresarial' : $metodoPagamento==2 ? 'empre+credito' : $metodoPagamento==3 ? 'credito' : $metodoPagamento==4? 'boleto' : $metodoPagamento==5 ?'transferencia':'';
+		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
-						
+		
 		// credito empresarial
 		if($metodoPagamento == 1) {
 			
@@ -542,6 +542,7 @@ class PaymentController extends Controller
 											
 						}catch(\Exception $e){
 							DB::rollBack();
+						 
 							return response()->json([
 								'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
 								'errors' => $e->getMessage(),
@@ -626,10 +627,10 @@ class PaymentController extends Controller
 						
 					try{									
 						// cria token cartao						
-						$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+				 		$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
 						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
 						$metodoCartao=2;
-						$cartao = $cartaoToken->id;
+						$cartao =   $cartaoToken->id;
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
@@ -705,55 +706,53 @@ class PaymentController extends Controller
 	 
 			$valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
 		}else  if($metodoPagamento ==2 ){
-								
-			if($metodoPagamento ==2 && empty($dados->porcentagem)){
-				return response()->json([
-					'mensagem' => 'Campo porcentagem nulo '.$dados->porcentagem
-					
-				], 500);
-			}
-			if($dados->porcentagem <0 || $dados->porcentagem >100){
-				return response()->json([
-					'mensagem' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
-					
-				], 500);
-			}
-
-				
-			//valor para fim de calculo
-			$valorFinal = $valor_total-$valor_desconto;
-				
-			// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
-			$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
-				
-				 
-				
-			$empresarial = (($dados->porcentagem *  $valorFinal)/100);
-				 
-				
-
-				 if(floatval($empresarial) > floatval($formatLimit) ){
+									
+				if($metodoPagamento ==2 && empty($dados->porcentagem)){
 					return response()->json([
-						'mensagem' => 'Calculo somatorio maior que o limite disponivel'
+						'mensagem' => 'Campo porcentagem nulo '.$dados->porcentagem
 						
 					], 500);
-				 }
-				
-				$cartaoCredito = floatval($valorFinal) - floatval($empresarial);
-				 
+				}
+				if($dados->porcentagem <0 || $dados->porcentagem >100){
+					return response()->json([
+						'mensagem' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
+						
+					], 500);
+				}
 
-				($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
-								
-				$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
-			 
+					
+				//valor para fim de calculo
+				$valorFinal = $valor_total-$valor_desconto;
+					
+				// efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
+				$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
+					
+					
+					
+				$empresarial = (($dados->porcentagem *  $valorFinal)/100);
+					
+					
+
+					if(floatval($empresarial) > floatval($formatLimit) ){
+						return response()->json([
+							'mensagem' => 'Calculo somatorio maior que o limite disponivel'
+							
+						], 500);
+					}
+					
+					$cartaoCredito = floatval($valorFinal) - floatval($empresarial);
+					
+
+					($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
+									
+					$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
 				
-			}else {
-				$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
-			}
+					
+		}else {
+			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+		}
 			
-	 
-
-
+	
 			if($metodoPagamento ==1){
 				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
@@ -782,7 +781,7 @@ class PaymentController extends Controller
 				}catch(\Exception $e){
 					DB::rollBack();
 					return response()->json([
-						'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
+						'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito  , pagamento não efetuado!',
 						'errors' => $e->getMessage(),
 					], 500);
 				}
@@ -836,22 +835,23 @@ class PaymentController extends Controller
 		 	
 
 			}
-			
-		 
+						 
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{
-						$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+					
+						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
-							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento não efetuado!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento  não efetuado!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
 															
 			}
-			
+		 
 			if($metodoPagamento ==4){
 				try{
 					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->mundipagg_token, 123456, "Pagar até o vencimento boleto")) ;
@@ -878,10 +878,8 @@ class PaymentController extends Controller
 				}
 			}
 
-			
-	 
-        
-        
+		 
+		 
         //-- pedido id do DoutorHoje----------------------------------
         //$MerchantOrderId = $pedido->id;
         
@@ -898,28 +896,7 @@ class PaymentController extends Controller
         $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
    
 		
-		if($metodoPagamento != 2){
-			if($metodoPagamento == 1){
-		 
-				$pedido->cartao_id = $cartaoEmpresarialDados->id;
-
-				if (!$pedido->save()) {
-					########### FINISHIING TRANSACTION ##########
-					DB::rollback();
-					#############################################
-					return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-				}
-			}else{
-				if (!$pedido->save()) {
-					########### FINISHIING TRANSACTION ##########
-					DB::rollback();
-					#############################################
-					return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-				}
-			}
-			
-			
-		}
+		
 
 		
 		if($metodoPagamento == 2){
@@ -950,20 +927,45 @@ class PaymentController extends Controller
 			$restoCredito = $cartaoCredito ;
 		}
 		 
-		
+	 
 		if(!empty($criarPagamento)){
+
+		
 			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
-			
+	 
 			if($dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed"){
 				DB::rollback();
 				return response()->json([
 					
 					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
-					'mensagem' => 'Pedido não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
+					'mensagem' => 'Pagamento não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
 				                 
 					], 422);
 			 }else{
 				 
+				if($metodoPagamento != 2){
+					if($metodoPagamento == 1){
+				 
+						$pedido->cartao_id = $cartaoEmpresarialDados->id;
+		
+						if (!$pedido->save()) {
+							########### FINISHIING TRANSACTION ##########
+							DB::rollback();
+							#############################################
+							return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+						}
+					}else{
+						if (!$pedido->save()) {
+							########### FINISHIING TRANSACTION ##########
+							DB::rollback();
+							#############################################
+							return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+						}
+					}
+					
+					
+				}
+
 				$valorEmpresa=null;
 				$valorCredito=null;
 			
@@ -1013,9 +1015,7 @@ class PaymentController extends Controller
 											$agendamento->load('profissional');
 											$agendamento->load('paciente');
 											
-											 
-										
-											
+										 
 												$item_pedido = new Itempedido();
 								
 								
@@ -1090,7 +1090,7 @@ class PaymentController extends Controller
 											if($metodoPagamento !=2){
 												
 												if(!$item_pedido->save()) {
-													echo "<script>console.log( 'Debug Objects: item do pedido ($MerchantOrderId) não foi salvo. Por favor, tente novamente.' );</script>";
+													return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
 												}
 											}  
 	
@@ -1164,10 +1164,7 @@ class PaymentController extends Controller
 															$agenda->load('checkup');
 															$agenda->load('datahoracheckups');
 														} 
-														 
-														//echo $agendamento; die;
-														//$dados =(array) $agendamento; //json_decode(json_encode($agendamento), true);
-														
+												 			
 														$agenda->valores = $valores[$o];
 													 
 														array_push($result_agendamentos,  $agenda );   
@@ -1180,18 +1177,18 @@ class PaymentController extends Controller
 														} catch (Exception $e) {}
 	
 															
-														$Payment                                 	= new Payment();				 			 				 
+															$Payment                                 	= new Payment();				 			 				 
 															$Payment->merchant_order_id             	= $dadosPagamentos['id'];
 															$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-															$Payment->tid 							= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
-															$Payment->payment_type 					= $dadosPagamentos['charges'][0]['payment_method']; 
-															$Payment->amount                        	=$this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
-															$Payment->currency                     	= $dadosPagamentos['charges'][0]['currency']; 
-															$Payment->country                     	= "BRA";
-															$Payment->installments 				     = $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
+															$Payment->tid 								= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
+															$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method']; 
+															$Payment->amount                        	= $this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
+															$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency']; 
+															$Payment->country                     		= "BRA";
+															$Payment->installments 				     	= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
 															$Payment->pedido_id  						= (int)$pedido;
 															$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
-															$Payment->cielo_result                 	= json_encode($criarPagamento);
+															$Payment->cielo_result                 		= json_encode($criarPagamento);
 															
 														
 															if(!$Payment->save()) {
@@ -1265,13 +1262,7 @@ class PaymentController extends Controller
 										
 												 
 									}
-											
-										
-										
-									
-							
-	
-									 
+			 
 										 
 								}
 								 
@@ -1303,26 +1294,16 @@ class PaymentController extends Controller
 										
 																																		
 								}
-	
-								
-							 
-	
-							 
-								
-							 
-							//	echo json_encode($result_agendamentos); die;
+	 
 	
 								 ########### FINISHIING TRANSACTION ##########
-							  	DB::commit();
+							  		DB::commit();
 								 #############################################
-								  CVXCart::clear();
+								  	CVXCart::clear();
 							
-								 $valor_total_pedido = $valor_total-$valor_desconto;
-								 //dd( $result_agendamentos); die;
-								//var_dump($result_agendamentos);die;
+								 $valor_total_pedido = $valor_total-$valor_desconto;							 
 								 $request->session()->put('result_agendamentos', $result_agendamentos);
-								
-						 
+														 
 								 $request->session()->put('pedido',$MerchantOrderId);
 								 
 								 $request->session()->put('valor_empresa', $valorEmpresa);
@@ -1330,25 +1311,37 @@ class PaymentController extends Controller
 								 $request->session()->put('valor_total_pedido', $valor_total_pedido);
 								 $request->session()->put('descricao_boleto', $boleto);
 								 $request->session()->put('trans_bancario', $transferencia)	;
-								 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
-								 
-								//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
+							 
 							  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
-	
+	 
 			}
 								
 		}else{
 			DB::rollback();
 			return response()->json([
-					'message' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: ',                    
+					'mensagem' =>'informe um tipo de pagamento correto, tipo de pagamento enviado: ' ,                    
 					], 422);
 		}
 
 	 
     }
 	
+	private function verificaTp($tp){
+		switch($tp){
+			case "1":
+			return 'Empresarial';break;
+			case "2":
+			return "empre+credito";break;
+			case "3":
+			return "credito";break;
+			case "4":
+			return "boleto";break;
+			case "5":
+			return "transferencia";break;
+			
+		}
+	}
 	
-
 	/**
 	 * Converte os valores recebidos em reais para centavos	 	
 	 */
