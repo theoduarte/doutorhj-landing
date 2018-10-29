@@ -955,7 +955,9 @@ function efetuarPagamento() {
 					swal(
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
-								  text: result.mensagem
+ 
+								  text:  result.mensagem
+ 
 							  }
 						  );
 						  $('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
