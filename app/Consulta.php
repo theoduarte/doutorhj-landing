@@ -91,8 +91,8 @@ class Consulta extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId ) {
-        // DB::enableQueryLog();
+    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
+        DB::enableQueryLog();
 
         $query = DB::table('atendimentos as at')
 			->distinct()
@@ -107,7 +107,7 @@ class Consulta extends Model
 			->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
 			->leftJoin('filials as f', 'c.id', '=', 'f.clinica_id')
 			->leftJoin('enderecos as e', 'f.endereco_id', '=', 'e.id')
-			->leftJoin('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			->join('cidades as cd', function($join9) use ($uf_localizacao) { $join9->where('e.cidade_id', '=', DB::raw('"cd"."id"'))->where('cd.sg_estado', '=', DB::raw("'$uf_localizacao'")); } )
 			->join('profissionals as pf', 'at.profissional_id', '=', 'pf.id')
 			->join('precos as pr', function($join8) use ($planoId) {
 				$join8->where('pr.id', function($query) {
@@ -125,9 +125,10 @@ class Consulta extends Model
 			->where('f.cs_status', 'A')
 			->where('pf.cs_status', 'A')
 			->where('at.consulta_id', $consultaId);
-
+		
+		
 //		dd($query->get()->toArray());
-
+		
         if( !empty($enderecoIds) ) {
             $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );
         }
@@ -136,7 +137,10 @@ class Consulta extends Model
 			->orderBy('f.eh_matriz', 'desc')
 			->orderBy('c.nm_fantasia', 'asc')
 			->orderBy('pf.nm_primario', 'asc');
-
-        return $query->get();
+		
+		$result = $query->get();
+		//dd( DB::getQueryLog() );
+		
+		return $result;
     }
 }
