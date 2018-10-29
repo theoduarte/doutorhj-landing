@@ -102,12 +102,15 @@ $(document).ready(function () {
 			$('.form-busca').attr('onsubmit', 'return validaBuscaCheckup()');
 		}
 		$('#local_atendimento').empty();
+		
+		var uf_localizacao = $('#sg_estado_localizacao').val();
 
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
 				'tipo_atendimento': tipo_atendimento,
+				'uf_localizacao': uf_localizacao,
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
@@ -129,6 +132,7 @@ $(document).ready(function () {
 				    	  	url: '/consulta-todos-locais-atendimento',
 				    	  	data: {
 								'tipo_atendimento': tipo_atendimento,
+								'uf_localizacao': uf_localizacao,
 				    	  		'especialidade': $('#tipo_especialidade').val(),
 								'_token': laravel_token
 							},
@@ -295,6 +299,7 @@ $(document).ready(function () {
 		if( $('#tipo_atendimento').val() != 'checkup' ){
 			var atendimento_id = $(this).val();
 			var tipo_atendimento = $('#tipo_atendimento').val();
+			var uf_localizacao = $('#sg_estado_localizacao').val();
 			
 			if(atendimento_id == '') { return false; }
 
@@ -303,6 +308,7 @@ $(document).ready(function () {
 	    	  	url: '/consulta-todos-locais-atendimento',
 	    	  	data: {
 					'tipo_atendimento': tipo_atendimento,
+					'uf_localizacao': uf_localizacao,
 	    	  		'especialidade': $(this).val(),
 					'_token': laravel_token
 				},
@@ -484,21 +490,30 @@ $(function() {
 		}
 	}
 
+ 
 	if($('.escolherMetodoPagamento option:selected').val() == "2"){
 		setTimeout(function() {
-			let valor="";
-			let valor_formatado=""
-			let resp="";
-			let resultado="";
-			let final ="";
-			let complemento="";
-			let respCOmplemento="";
-			let resCOmplemento="";
-			let subtrair="";
-			let finalCOmplemento="";
-	
-			valor_formatado = (  $('#valor_disponivel').val());
-			
+		 
+		
+		if(!(typeof valor_formatado === 'undefined') && valor_formatado.length > 6) {
+			resp = (valor_formatado.replace('.',''))
+		} else if(!(typeof valor_formatado === 'undefined')) {
+			// valor credito especial formatado
+			resp = (valor_formatado.replace(',','.'))
+		}
+		
+		complemento =  ($('#total_pagar').val());
+		respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
+		 
+		if(parseFloat(respCOmplemento) > parseFloat(resp)) {
+			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+			let empresa=0;		 
+			let complemt=0;
+		 	
+			slider.max = (porcentagem) - 0.1
+ 
 			if(valor_formatado.length >6) {
 				resp = (valor_formatado.replace('.','')) 
 			} else {
