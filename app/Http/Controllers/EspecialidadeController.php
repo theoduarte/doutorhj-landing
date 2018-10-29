@@ -25,6 +25,7 @@ class EspecialidadeController extends Controller
     public function consultaEspecialidades()
     {
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
+        $uf_localizacao = CVXRequest::get('uf_localizacao');
         $result = [];
 
 		$paciente_id = null;
@@ -38,11 +39,11 @@ class EspecialidadeController extends Controller
 
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
             $consulta = new Consulta();
-            $result = $consulta->getActive($plano_id);
+            $result = $consulta->getActive($plano_id, $uf_localizacao);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
             $procedimento = new Procedimento();
-            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id) : $procedimento->getActiveOdonto($plano_id);
+            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id, $uf_localizacao) : $procedimento->getActiveOdonto($plano_id);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'checkup') {
             $checkup = new Checkup;
@@ -64,13 +65,14 @@ class EspecialidadeController extends Controller
     {
     	$especialidade = CVXRequest::post('especialidade');
         $tipo_atendimento = CVXRequest::post('tipo_atendimento');
+        $uf_localizacao = CVXRequest::get('uf_localizacao');
 
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $result = $consulta->getActiveAddress( $especialidade );
+            $result = $consulta->getActiveAddress( $especialidade, $uf_localizacao );
         } elseif ($tipo_atendimento == 'exame' || $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $result = $procedimento->getActiveAddress( $especialidade );
+            $result = $procedimento->getActiveAddress( $especialidade, $uf_localizacao );
         }
     
     	return response()->json(['status' => true, 'endereco' => $result ]);

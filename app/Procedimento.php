@@ -47,7 +47,7 @@ class Procedimento extends Model
         return $this->belongsToMany('App\CupomDesconto');
     }
 
-    public function getActiveExameProcedimento($planoId) {
+    public function getActiveExameProcedimento($planoId, $uf_localizacao) {
         // DB::enableQueryLog();
         $query = DB::table('procedimentos')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, procedimentos.ds_procedimento) descricao, 'exame' tipo, procedimentos.id") )
@@ -68,9 +68,11 @@ class Procedimento extends Model
 							->orWhere('pr.plano_id', '=', Plano::OPEN);
 					});
 			})
-            ->whereExists(function ($query) {
+			->whereExists(function ($query) use ($uf_localizacao) {
                 $query->select(DB::raw(1))
                       ->from('filials')
+                      ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
+                      ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
                       ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
             })
             ->where(['atendimentos.cs_status' => 'A', 'clinicas.cs_status' => 'A'])
@@ -81,7 +83,7 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveOdonto($planoId){
+    public function getActiveOdonto($planoId, $uf_localizacao){
         // DB::enableQueryLog();
         $query = DB::table('procedimentos')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, procedimentos.ds_procedimento) descricao, 'odonto' tipo, procedimentos.id") )
@@ -102,9 +104,11 @@ class Procedimento extends Model
 							->orWhere('pr.plano_id', '=', Plano::OPEN);
 					});
 			})
-            ->whereExists(function ($query) {
+			->whereExists(function ($query) use ($uf_localizacao) {
                 $query->select(DB::raw(1))
                       ->from('filials')
+                      ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
+                      ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
                       ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
@@ -115,14 +119,14 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveAddress( $procedimentoId ){
+    public function getActiveAddress( $procedimentoId, $uf_localizacao ){
         $query = DB::select("   select string_agg( CAST(id AS varchar), ',' ) id, string_agg( CAST(filial_id AS varchar), ',' ) filial_id, 
                                        te_bairro, nm_cidade
                                   from (
                                 select distinct e.id, e.te_bairro, cd.nm_cidade, f.id filial_id
                                   from filials f
                                   join enderecos e on (f.endereco_id = e.id)
-                                  join cidades cd on (e.cidade_id = cd.id)
+                                  join cidades cd on (e.cidade_id = cd.id AND cd.sg_estado = ".DB::raw("'$uf_localizacao'").")
                                   join clinicas c on (f.clinica_id = c.id)
                                   join atendimentos at on (c.id = at.clinica_id)
                                  where at.cs_status = :status
