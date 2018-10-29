@@ -490,6 +490,7 @@ $(function() {
 		}
 	}
 
+
  
 	if($('.escolherMetodoPagamento option:selected').val() == "2"){
 		setTimeout(function() {
@@ -504,13 +505,14 @@ $(function() {
 			
 			complemento =  ($('#total_pagar').val());
 			respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
-			 
+
 			if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 				let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 				let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 				let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 				let empresa=0;		 
 				let complemt=0;
+
 			 	
 				slider.max = (porcentagem) - 0.1
 	 
@@ -523,17 +525,19 @@ $(function() {
 				complemento =  ($('#total_pagar').val());
 				respCOmplemento = (complemento.replace(',','.'))      
 				 
+
 				if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 					let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 					let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 					let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 					let empresa=0;		 
 					let complemt=0;
-					 
+
 					slider.max = (porcentagem) - 0.1
 					
 					slider.value =  (porcentagem) - 0.1;
 					
+
 				 
 					empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
 					 
@@ -552,7 +556,7 @@ $(function() {
 					$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
 					
 					$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
-				
+
 				} else {
 					let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
 		
@@ -567,10 +571,12 @@ $(function() {
 					$('.valor_complementar').text('R$ '+valorComplemento)
 					$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
 				}
+
 			}
 																				   
 		}, 0);
 	}
+
 	
 		
 	Number.prototype.formatMoney = function (c, d, t) {
