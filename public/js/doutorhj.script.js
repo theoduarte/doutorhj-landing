@@ -1,53 +1,77 @@
 $(document).ready(function () {
 	$('.campos_endereco').hide();
 
+	let efetuar = 0;
+
 	$('#cep').keyup(function(){
 		let cep = $(this).val();
-		
-		if(cep.length ==9){
-			var res = cep.replace("-", "");
+		var res =cep.replace(/[^\d]+/g,'')
 
-			jQuery.ajax({
-				type: 'GET',
-				url: 'https://api.doctorhoje.com.br/api/v1/consultar-cep/'+res,
-				headers: {
-					"Authorization":"o2z554dpxadq0db137gw25ud5ahrlt1j" 
+		if(res.length ==8){
+			if(efetuar==0){
+				$(this).addClass( "loading" );
+				$('.cep-user').prop('disabled', true);
+				efetuar=1;
+				jQuery.ajax({
+					type: 'GET',
+					url: '/consulta-cep/cep/'+res ,
+				 
+					  
+					success: function (result) {
+						$('.cep-user').removeClass( "loading" );
+						$('.cep-user').prop('disabled', false);
+						 $('.campos_endereco').slideDown();
 					 
-				},	
-				dataType: 'json',			 
-				success: function (result) {
-					 console.log(result)
-				},
-				error: function (result) {
-					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-				}
-			});
+						 
+						 $('#Complemento').empty().val(JSON.parse(result.endereco).logradouro)
+						 $('#Estado').empty().val(JSON.parse(result.endereco).estado)
+						 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
+						 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro)
+						
+					},
+					error: function (result) {
+						$('.cep-user').prop('disabled', false);
+						$('.cep-user').removeClass( "loading" );
+						$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+					}
+				});
+			}
+			 
+		}else{
+			$('.cep-user').prop('disabled', false);
+			$('.cep-user').removeClass( "loading" );
+			$('.campos_endereco').slideUp();
+			efetuar=0	
 		}
+	 
 	
 	})
 	$('#documento').change(function(){
 	 
 		if($(this).val() ==1){
-			$('.inputCNPJCredito').empty();
+			$('.inputCNPJCredito').val('');
 			$('.cnpj').hide();
 			$('.cpf').show();
 		}else{
 			$('.cnpj').show();
-			$('.inputCPFCredito').empty();
+			$('.inputCPFCredito').val('');
 			$('.cpf').hide();
 	 
 		}
 	})
 
+ 
+
+	
 	$('#documento_boleto').change(function(){
 	 
 		if($(this).val() ==1){
-			$('.cnpj-boleto').empty();
+			$('#id_cnpj_boleto').val('');
 			$('.cnpj').hide();
 			$('.cpf').show();
 		}else{
 			$('.cnpj').show();
-			$('.cpf-boleto').empty();
+			$('#id_cpf_boleto').val('');
 			$('.cpf').hide();
 	 
 		}
@@ -387,6 +411,12 @@ $(function() {
 	$('.vlr-ce').text('R$ '+$('#valor_disponivel').val());
 	$('.total_a_pagar').text('R$ '+$('#total_pagar').val());
 
+
+	$('.selectParcelamentoCredito').on('change',function(){
+
+		$('.parcelamento-cartao').empty().html($('.selectParcelamentoCredito option:selected').text())
+		
+	})
 	var slider = document.getElementById("myRange");
 
 	if(slider != null) {
@@ -454,75 +484,78 @@ $(function() {
 		}
 	}
 
-	setTimeout(function() {
-		let valor="";
-		let valor_formatado=""
-		let resp="";
-		let resultado="";
-		let final ="";
-		let complemento="";
-		let respCOmplemento="";
-		let resCOmplemento="";
-		let subtrair="";
-		let finalCOmplemento="";
-
-		valor_formatado = (  $('#valor_disponivel').val());
-		
-		if(valor_formatado.length >6) {
-			resp = (valor_formatado.replace('.','')) 
-		} else {
-			resp = (valor_formatado.replace(',','.'))
-		}
-		
-		complemento =  ($('#total_pagar').val());
-		respCOmplemento = (complemento.replace(',','.'))      
-		 
-		if(parseFloat(respCOmplemento) > parseFloat(resp)) {
-			let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
-			let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
-			let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-			let empresa=0;		 
-			let complemt=0;
-		 	
-			slider.max = (porcentagem) - 0.1
+	if($('.escolherMetodoPagamento option:selected').val() == "2"){
+		setTimeout(function() {
+			let valor="";
+			let valor_formatado=""
+			let resp="";
+			let resultado="";
+			let final ="";
+			let complemento="";
+			let respCOmplemento="";
+			let resCOmplemento="";
+			let subtrair="";
+			let finalCOmplemento="";
+	
+			valor_formatado = (  $('#valor_disponivel').val());
 			
-			slider.value =  (porcentagem) - 0.1;
+			if(valor_formatado.length >6) {
+				resp = (valor_formatado.replace('.','')) 
+			} else {
+				resp = (valor_formatado.replace(',','.'))
+			}
 			
-		 
-			empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+			complemento =  ($('#total_pagar').val());
+			respCOmplemento = (complemento.replace(',','.'))      
 			 
-			complemt  = (parseFloat(respCOmplemento) - empresa)	
+			if(parseFloat(respCOmplemento) > parseFloat(resp)) {
+				let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+				let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+				let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+				let empresa=0;		 
+				let complemt=0;
+				 
+				slider.max = (porcentagem) - 0.1
+				
+				slider.value =  (porcentagem) - 0.1;
+				
 			 
-			output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
-
-			//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
-		 
-			$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+				empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+				 
+				complemt  = (parseFloat(respCOmplemento) - empresa)	
+				 
+				output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
+	
+				//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
+			 
+				$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+				
+				$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+				
+				printParcelamento(complemt );
+				
+				$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+				
+				$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
 			
-			$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
-			
-			printParcelamento(complemt );
-			
-			$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
-			
-			$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
-		
-		} else {
-			let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
-
-			let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
-			let valorComplemento =  (respCOmplemento) - totalEmpresarial
-			printParcelamento(valorComplemento);
-			slider.max = parseFloat(porcentagem) - 0.1;
-			slider.value =parseFloat(porcentagem) - 0.1;
-			output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
-
-			$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
-			$('.valor_complementar').text('R$ '+valorComplemento)
-			$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
-		}
-                                                                               
-	}, 0);
+			} else {
+				let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
+	
+				let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+				let valorComplemento =  (respCOmplemento) - totalEmpresarial
+				printParcelamento(valorComplemento);
+				slider.max = parseFloat(porcentagem) - 0.1;
+				slider.value =parseFloat(porcentagem) - 0.1;
+				output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+	
+				$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
+				$('.valor_complementar').text('R$ '+valorComplemento)
+				$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
+			}
+																				   
+		}, 0);
+	}
+	
 		
 	Number.prototype.formatMoney = function (c, d, t) {
 		var n = this,
@@ -745,6 +778,9 @@ $(function() {
 			dadosResumo.empty().html('Cartão Empresarial + Cartão de Crédito')
 				break;
 			case "3":
+			$('.credito-valor-resumo').hide();
+			$('.empresarial-valor-resumo').hide();
+			$('.parcelamento-cartao').empty().html($('.selectParcelamentoCredito option:selected').text())
 			$('.transferenciaBancaria').hide();
 			$('.boletoBancario').hide();
 			$('.cartaocredito').slideDown();
@@ -847,8 +883,78 @@ function efetuarPagamento() {
 			dados =	cartaoCredito();
 			break;
 		case "4":
-			dados = "boleto"
-			// boleto bancario
+
+				
+				let resp = []
+				let permission=true;
+				removerError('#cep')
+				removerError('#Complemento')
+				removerError('#Bairro')
+				removerError('#Estado')
+				removerError('#Cidade')
+				removerError('#Numero')
+				removerError('#Rua')
+
+				if($('#documento_boleto option:selected').val()==1){
+					let cpf = $('.cpf-boleto').val();
+					var res =cpf.replace(/[^\d]+/g,'')
+					 
+					if(res.length != 11){
+						 
+						dados = null;
+						$( '#id_cpf_boleto').parent().addClass('cvx-has-error');
+						$( '#id_cpf_boleto').parent().append('<span class="help-block text-danger"><strong>Informe um número de documento correto</strong></span>');
+				
+						$( '#id_cpf_boleto').keypress(function(){
+							$(this).parent().removeClass('cvx-has-error');
+							$(this).parent().find('span.help-block').remove();
+						});
+					}
+				}else{
+				 
+					let cpnj = $('.cnpj-boleto').val();
+					var res =cpnj.replace(/[^\d]+/g,'')
+					if(res.length != 14){
+						dados = null;
+						$( '#id_cnpj_boleto').parent().addClass('cvx-has-error');
+						$( '#id_cnpj_boleto').parent().append('<span class="help-block text-danger"><strong>Informe um número de documento correto</strong></span>');
+				
+						$( '#id_cnpj_boleto').keypress(function(){
+							$(this).parent().removeClass('cvx-has-error');
+							$(this).parent().find('span.help-block').remove();
+						});
+					}
+				}
+
+				resp.push( validarCampos($('#Rua  ').val(), '#Rua', "Rua é obrigatório"));
+				resp.push(  validarCampos($('#Numero  ').val(), '#Numero', "Numero é obrigatório"));
+				resp.push( validarCampos($('#Cidade  ').val(), '#Cidade', "Cidade é obrigatório"));
+				resp.push( validarCampos($('#Estado  ').val(), '#Estado', "Estado é obrigatório"));
+				resp.push( validarCampos($('#Bairro  ').val(), '#Bairro', "Bairro é obrigatório"));
+				resp.push( validarCampos($('#Complemento  ').val(), '#Complemento', "Complemento é obrigatório"));
+				resp.push( validarCampos($('#cep  ').val(), '#cep', "Cep é obrigatório"));
+
+
+				resp.forEach(function(entry) {
+					if(!entry){
+						permission=false;
+					}
+
+				});
+
+				if(permission){
+					console.log('liberado')
+					dados = null;
+				}else{
+					dados = null;
+					swal(
+						{
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
+							text: 'É necessário preencher todos os campos para Finalizar o Pedido!'
+						}
+					);
+				}
+	 
 			break;
 		case "5":
 			dados = "transferencia"
@@ -951,12 +1057,13 @@ function efetuarPagamento() {
 				},
 				error: function (result) {
 
+				 
 			 
 					swal(
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
  
-								  text:  result.mensagem
+								  text:  result.responseJSON.mensagem
  
 							  }
 						  );
@@ -1092,7 +1199,9 @@ function cartaoCredito() {
 	if(titularcnpj.length !=0){
 		titularcpf =titularcnpj
 	}
-	let parcelas = $('.selectParcelamentoCredito ').val()
+	
+
+	let parcelas = $('.selectParcelamentoCredito option:selected').val()
 	let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0
 
 	if(cartaoid != ""){
@@ -1169,6 +1278,8 @@ validarCampos = (field, attrb, mensagem) => {
 
 		return false;
 	}else{
+		$(this).parent().removeClass('cvx-has-error');
+		$(this).parent().find('span.help-block').remove();
 		return true;
 	}
 }
