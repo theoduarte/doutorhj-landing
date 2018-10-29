@@ -52,6 +52,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        <input type="hidden" id="sg_estado_localizazao_form" name="sg_estado_localizacao" value="@if( !empty($_GET['sg_estado_localizacao']) && $_GET['sg_estado_localizacao'] != '' ) {{ $_GET['sg_estado_localizacao'] }} @endif">
                         <div class="form-group col-md-12 col-lg-3">
                             <button type="submit" class="btn btn-primary btn-vermelho"><i class="fa fa-search"></i> Alterar Busca</button>
                         </div>
@@ -63,7 +64,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
                         <div class="ordenar-por div-filtro">
-                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento={{$_GET['tipo_atendimento']}}&local_atendimento={{$_GET['local_atendimento']}}&tipo_especialidade={{$_GET['tipo_especialidade']}}&sort='+$(this).val() }">
+                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento=@if( !empty($_GET['tipo_atendimento'])){{$_GET['tipo_atendimento']}}@endif&local_atendimento=@if( !empty($_GET['local_atendimento'])){{$_GET['local_atendimento']}}@endif&tipo_especialidade=@if( !empty($_GET['tipo_especialidade'])){{$_GET['tipo_especialidade']}}@endif&sort='+$(this).val() }">
                                 <option value="">Ordenar por...</option>
                                 <option value="desc" @if( isset($_GET['sort']) && $_GET['sort'] == 'desc' ) selected="selected" @endif>Maior preço</option>
                                 <option value="asc" @if( isset($_GET['sort']) && $_GET['sort'] == 'asc' ) selected="selected" @endif>Menor preço</option>
@@ -156,6 +157,19 @@
     <script type="text/javascript">        
             var laravel_token = '{{ csrf_token() }}';
             var resizefunc = []; 
+
+            $('#btn-uf-localizacao').click(function(){
+        		uf_localizacao = docCookies.getItem('uf_localizacao');
+        		if(uf_localizacao != null) {
+            		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+
+                    var current_url = window.location.href;
+                    var resultao_url = current_url.slice(0, -2);
+                    
+                    window.location.href = resultao_url+uf_localizacao;
+        		}
+            });
 
             /*********************************
             *

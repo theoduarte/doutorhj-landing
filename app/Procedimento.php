@@ -138,7 +138,7 @@ class Procedimento extends Model
         return $query;
     }
 
-    public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem, $planoId ) {
+    public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
         // DB::enableQueryLog();
         $query = DB::table('atendimentos as at')
 			->distinct()
@@ -164,7 +164,8 @@ class Procedimento extends Model
 						->limit(1);
 				});
 			})
-			->join('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			//->join('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			->join('cidades as cd', function($join9) use ($uf_localizacao) { $join9->where('e.cidade_id', '=', DB::raw('"cd"."id"'))->where('cd.sg_estado', '=', DB::raw("'$uf_localizacao'")); } )
 			->where('at.cs_status', 'A')
 			->where('c.cs_status', 'A')
 			->where('f.cs_status', 'A')

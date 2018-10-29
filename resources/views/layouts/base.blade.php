@@ -238,42 +238,12 @@
                             <li class="nav-item btn-profissional">
                                 <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um parceiro</a>
                             </li>
-                            <li class="nav-item">
-                                <select id="sg_estado_localizacao" name="sg_estado_localizacao" class="form-control">
-                                    <option value="AC">Acre</option>
-                                    <option value="AL">Alagoas</option>
-                                    <option value="AP">Amapá</option>
-                                    <option value="AM">Amazonas</option>
-                                    <option value="BA">Bahia</option>
-                                    <option value="CE">Ceará</option>
-                                    <option value="DF">Distrito Federal</option>
-                                    <option value="ES">Espírito Santo</option>
-                                    <option value="GO">Goiás</option>
-                                    <option value="MA">Maranhão</option>
-                                    <option value="MT">Mato Grosso</option>
-                                    <option value="MS">Mato Grosso do Sul</option>
-                                    <option value="MG">Minas Gerais</option>
-                                    <option value="PA">Pará</option>
-                                    <option value="PB">Paraíba</option>
-                                    <option value="PR">Paraná</option>
-                                    <option value="PE">Pernambuco</option>
-                                    <option value="PI">Piauí</option>
-                                    <option value="RJ">Rio de Janeiro</option>
-                                    <option value="RN">Rio Grande do Norte</option>
-                                    <option value="RS">Rio Grande do Sul</option>
-                                    <option value="RO">Rondônia</option>
-                                    <option value="RR">Roraima</option>
-                                    <option value="SC">Santa Catarina</option>
-                                    <option value="SP">São Paulo</option>
-                                    <option value="SE">Sergipe</option>
-                                    <option value="TO">Tocantins</option>
-                                </select>
-                            </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                             </li>
                         </ul>
                     </div>
+                    <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                 </div>
             </nav>
         @endif
@@ -285,6 +255,54 @@
     @if (!Auth::check())
         @include('includes/termos-condicoes')
         <footer class="footer-default">
+
+            <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstado" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Selecione um estado</p>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-10">
+                                    <select id="sg_estado_localizacao" class="seleciona-estado" name="estado">
+                                        <option value="">Estado</option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 col-lg-2">
+                                    <button type="button" id="btn-uf-localizacao" class="btn btn-azul" data-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="floating-wpp"></div>
             <div class="container">
                 <div class="area-logo-rodape">
@@ -470,15 +488,41 @@
                 //headerColor: 'orange', // enable to change msg box color
                 headerTitle: 'Whatsapp do Doutor Hoje',
             });
+            
+        });
+
+        $(document).ready(function () {
+
+        	//docCookies.removeItem('uf_localizacao');
+
+            $('.seleciona-estado').select2({width: '100%'});
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
-            $('#sg_estado_localizacao option[value='+uf_localizacao+']').attr('selected','selected');
+            
+            $('#sg_estado_localizacao').val(uf_localizacao);
+            $('#sg_estado_localizazao_form').val(uf_localizacao);
+
+            //alert(uf_localizacao);
+            if(uf_localizacao === null) {
+                
+            	$('#modalEstado').modal({
+                    backdrop: 'static',
+                    keyboard: false,
+                });
+                
+            } else {
+            	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+                $('#ds_uf_localizacao').html(ds_uf_localizacao);
+            }
 
             $('#sg_estado_localizacao').change(function(){
                 var sg_estado = $(this).val();
                 docCookies.setItem('uf_localizacao', sg_estado);
+                $('#sg_estado_localizazao_form').val(sg_estado);
             });
+
         });
+
     </script>
 
 @endpush
