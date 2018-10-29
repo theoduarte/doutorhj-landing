@@ -4412,6 +4412,16 @@ footer ul li a:hover {
 
 @media only screen and (max-width: 575px) {
 
+    .modal-seleciona-estado {
+        width: 400px;
+        margin: 5.5rem;
+    }
+
+    .modal-seleciona-estado p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
     .banner-slider-home .area-texto,
     .banner-slider-home .banner-conheca .texto,
     .banner-slider-home .banner-precos-justos .texto {
@@ -4525,10 +4535,6 @@ footer ul li a:hover {
     .modal-seleciona-estado p {
         font-size: 18px;
         margin-bottom: 20px;
-    }
-
-    .modal-seleciona-estado .btn {
-        margin-top: 14px;
     }
 
     .nome-estado-topo {
