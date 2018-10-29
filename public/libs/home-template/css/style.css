@@ -138,6 +138,50 @@ p {
     font-size: 14px;
 }
 
+.modal-seleciona-estado {
+    width: 660px;
+}
+
+.modal-seleciona-estado .modal-body {
+    padding: 40px 60px;
+}
+
+.modal-seleciona-estado p {
+    font-size: 36px;
+    color: #1b71b9;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.modal-seleciona-estado .select2-selection__rendered {
+    line-height: 45px !important;
+}
+.modal-seleciona-estado .select2-container .select2-selection--single {
+    height: 46px;
+    font-size: 15px;
+}
+.modal-seleciona-estado .select2-selection__arrow {
+    height: 45px !important;
+}
+
+.modal-seleciona-estado .btn {
+    width: 100%;
+    height: 45px;
+}
+
+.nome-estado-topo {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 14px;
+    color: #1b71b9;
+}
+
+.nome-estado-topo a {
+    font-size: 12px;
+    color: #a32431;
+}
+
 /*********************************
 *
 *  2 TOPO E MENU
@@ -3820,41 +3864,8 @@ footer ul li a:hover {
 *
 *********************************/
 
-@media only screen and (min-width: 1200px) {
-    /*header .nav-link:before,
-    header .nav-link:after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 4px;
-        bottom: -24px;
-        background: rgb(163, 36, 49);
-    }
-
-    header .nav-link:before {
-        left: 0;
-    }
-
-    header .nav-link:after {
-        right: 0;
-        background: rgb(163, 36, 49);
-        transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-
-    header .nav-link:hover:before {
-        background: rgb(163, 36, 49);
-        width: 100%;
-        transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-
-    header .nav-link:hover:after {
-        background: transparent;
-        width: 100%;
-        transition: 0s;
-    }*/
-}
-
 @media only screen and (max-width: 1200px) {
+
     header {
         padding: 24px 0 0 0;
     }
@@ -4191,6 +4202,27 @@ footer ul li a:hover {
 
 @media only screen and (max-width: 768px) {
 
+    .modal-seleciona-estado {
+        width: 400px;
+    }
+
+    .modal-seleciona-estado p {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .modal-seleciona-estado .btn {
+        margin-top: 14px;
+    }
+
+    .nome-estado-topo {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 14px;
+        color: #1b71b9;
+    }
+
     .banner-slider-home .carousel-caption {
         bottom: 560px;
     }
@@ -4485,6 +4517,27 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 480px) {
+
+    .modal-seleciona-estado {
+        width: 300px;
+    }
+
+    .modal-seleciona-estado p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .modal-seleciona-estado .btn {
+        margin-top: 14px;
+    }
+
+    .nome-estado-topo {
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        font-size: 14px;
+        color: #1b71b9;
+    }
 
     .banner-slider-home .area-texto,
     .banner-slider-home .banner-conheca .texto,

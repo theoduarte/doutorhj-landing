@@ -29,6 +29,7 @@
                 </select>
                 <i class="cvx-no-loading fa fa-spin fa-spinner"></i>
             </div>
+            <input type="hidden" id="sg_estado_localizazao_form" name="sg_estado_localizacao">
             <div class="form-group col-md-12 col-lg-3">
                 <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
             </div>
