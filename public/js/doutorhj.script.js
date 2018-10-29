@@ -1,6 +1,9 @@
 $(document).ready(function () {
 	$('.campos_endereco').hide();
 
+
+
+	
 	let efetuar = 0;
 
 	$('#cep').keyup(function(){
