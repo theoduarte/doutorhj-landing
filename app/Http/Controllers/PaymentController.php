@@ -749,12 +749,10 @@ class PaymentController extends Controller
 				
 					
 		}else {
-					$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
-			}
+			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+		}
 			
-	 
-
-
+	
 			if($metodoPagamento ==1){
 				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
@@ -837,8 +835,7 @@ class PaymentController extends Controller
 		 	
 
 			}
-			
-			 
+						 
 				// pagamento com cartão de credito
 			if ($metodoPagamento ==3) {											
 					try{
@@ -941,7 +938,7 @@ class PaymentController extends Controller
 				return response()->json([
 					
 					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
-					'mensagem' => 'Pedido não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
+					'mensagem' => 'Pagamento não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
 				                 
 					], 422);
 			 }else{
@@ -1018,9 +1015,7 @@ class PaymentController extends Controller
 											$agendamento->load('profissional');
 											$agendamento->load('paciente');
 											
-											 
-										
-											
+										 
 												$item_pedido = new Itempedido();
 								
 								
@@ -1182,18 +1177,18 @@ class PaymentController extends Controller
 														} catch (Exception $e) {}
 	
 															
-														$Payment                                 	= new Payment();				 			 				 
+															$Payment                                 	= new Payment();				 			 				 
 															$Payment->merchant_order_id             	= $dadosPagamentos['id'];
 															$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-															$Payment->tid 							= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
-															$Payment->payment_type 					= $dadosPagamentos['charges'][0]['payment_method']; 
-															$Payment->amount                        	=$this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
-															$Payment->currency                     	= $dadosPagamentos['charges'][0]['currency']; 
-															$Payment->country                     	= "BRA";
-															$Payment->installments 				     = $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
+															$Payment->tid 								= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : ''; 
+															$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method']; 
+															$Payment->amount                        	= $this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ; 
+															$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency']; 
+															$Payment->country                     		= "BRA";
+															$Payment->installments 				     	= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;							
 															$Payment->pedido_id  						= (int)$pedido;
 															$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
-															$Payment->cielo_result                 	= json_encode($criarPagamento);
+															$Payment->cielo_result                 		= json_encode($criarPagamento);
 															
 														
 															if(!$Payment->save()) {
@@ -1299,22 +1294,16 @@ class PaymentController extends Controller
 										
 																																		
 								}
-	
-				 		
-							 
-							//	echo json_encode($result_agendamentos); die;
+	 
 	
 								 ########### FINISHIING TRANSACTION ##########
-							  	DB::commit();
+							  		DB::commit();
 								 #############################################
-								  CVXCart::clear();
+								  	CVXCart::clear();
 							
-								 $valor_total_pedido = $valor_total-$valor_desconto;
-								 //dd( $result_agendamentos); die;
-								//var_dump($result_agendamentos);die;
+								 $valor_total_pedido = $valor_total-$valor_desconto;							 
 								 $request->session()->put('result_agendamentos', $result_agendamentos);
-								
-						 
+														 
 								 $request->session()->put('pedido',$MerchantOrderId);
 								 
 								 $request->session()->put('valor_empresa', $valorEmpresa);
@@ -1322,9 +1311,7 @@ class PaymentController extends Controller
 								 $request->session()->put('valor_total_pedido', $valor_total_pedido);
 								 $request->session()->put('descricao_boleto', $boleto);
 								 $request->session()->put('trans_bancario', $transferencia)	;
-								 //return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
-								 
-								//return redirect()->route('payments.pedido_finalizado')->with('success', 'O Pedido foi realizado com sucesso!');
+							 
 							  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 	 
 			}

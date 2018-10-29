@@ -713,7 +713,7 @@ $(function() {
 		}
 	});
 
-	$('#btn-finalizar-pedido-landing').click(function(){
+	$('#btn-finalizar-pedido-landing').click(function(e){
 		removerError('#numeroCartaoCredito')
 		removerError('#nomeImpressoCartaoCredito')
 		removerError('#mesCartaoCredito')
@@ -729,6 +729,10 @@ $(function() {
 		removerError('#inputCPFCredito')
 
 	//	apenasLetras($('#inputNomeCartaoCredito').val())
+		$('#btn-finalizar-pedido-landing').attr('disabled', 'disabled');
+		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+	
+		e.preventDefault();
 		efetuarPagamento();
 
 
@@ -855,11 +859,12 @@ function efetuarPagamento() {
 			dados = "Empresarial"
 			break;
 		case "2":
-		
+		removerError('#documento')
 			if($('#cnpjTitularCartaoCredito').val().length ==0 && $('#cpfTitularCartaoCredito').val().length ==0 ){
 				
 				validarCampos($('#cnpjTitularCartaoCredito').val(), '#documento', "Documento é obrigatório")
 				dados = null;
+			 
 			} 
 		
 
@@ -872,13 +877,21 @@ function efetuarPagamento() {
 		
 			break;
 		case "3":
+				removerError('#documento')
 				if($('.inputCPFCredito').val().length ==0 && $('.inputCNPJCredito').val().length ==0 ){
 					validarCampos($('.inputCPFCredito').val(), '#documento', "Documento é obrigatório")
-				 
+					 
+					
 					dados = null;
 				} 
-			
-			
+				$( '.inputCNPJCredito').keypress(function(){
+					$('#documento').parent().removeClass('cvx-has-error');
+					$('#documento').parent().find('span.help-block').remove();
+				});
+				$( '.inputCPFCredito').keypress(function(){
+					$('#documento').parent().removeClass('cvx-has-error');
+					$('#documento').parent().find('span.help-block').remove();
+				});
 
 			dados =	cartaoCredito();
 			break;
@@ -894,6 +907,7 @@ function efetuarPagamento() {
 				removerError('#Cidade')
 				removerError('#Numero')
 				removerError('#Rua')
+				removerError('#Documento')
 
 				if($('#documento_boleto option:selected').val()==1){
 					let cpf = $('.cpf-boleto').val();
@@ -947,12 +961,7 @@ function efetuarPagamento() {
 					dados = null;
 				}else{
 					dados = null;
-					swal(
-						{
-							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> DrHoje: informa!</div>',
-							text: 'É necessário preencher todos os campos para Finalizar o Pedido!'
-						}
-					);
+				 
 				}
 	 
 			break;
@@ -1017,9 +1026,7 @@ function efetuarPagamento() {
 
 	if(executar==true && dados  != null){
 
-		$('#btn-finalizar-pedido-landing').attr('disabled', 'disabled');
-    $('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
-  
+	
 
 		$.ajax({
 			type:'post',
@@ -1038,12 +1045,13 @@ function efetuarPagamento() {
 			   success: function (result) {
 				
 				$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
-				$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
+			//	$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
 			
 				if(result.status) {
 					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 					window.location.href='/concluir_pedido';
 				} else {
+					$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
   //				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
 					swal(
 							  {
@@ -1072,6 +1080,9 @@ function efetuarPagamento() {
 				}
 		  }); 
 	} else {
+		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
+		$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
+
 		swal(
 			{
 				title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Atenção.</div>',
