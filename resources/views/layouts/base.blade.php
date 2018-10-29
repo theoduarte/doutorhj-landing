@@ -80,6 +80,7 @@
 
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
+		<script src="/libs/cookies-js/cookies_min.js"></script>
         <script src="/js/doutorhj.script.js"></script>
 
         <script type="text/javascript">
@@ -189,25 +190,23 @@
                         </div>
                     </div>
 
-                    @if(isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
+                    @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
 								<div class="logo-empresa">
-									<img src="/libs/home-template/img/empresas/caixa.png" alt="">
+									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
 								</div>
 							</div>
 							<div class="opcoes ie-plano">
 								<p class="titulo">Plano</p>
-								<p class="plano premium">{{$paciente->plano_ativo->ds_plano}}</p>
+								<p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
 							</div>
 							<div class="opcoes ie-saldo">
 								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{$paciente->vl_max_consumo}}</p>
+								<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
 							</div>
 						</div>
                     @endif
- 
-
                 </div>
             </nav>
         @else
@@ -222,8 +221,7 @@
                     <div class="collapse navbar-collapse" id="navbarMobile">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor
-                                    Hoje</a>
+                                <a class="nav-link" href="{{ route('landing-page') }}#area-sobre">O que é o Doutor Hoje</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
@@ -239,6 +237,37 @@
                             </li> -->
                             <li class="nav-item btn-profissional">
                                 <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um parceiro</a>
+                            </li>
+                            <li class="nav-item">
+                                <select id="sg_estado_localizacao" name="sg_estado_localizacao" class="form-control">
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
@@ -440,6 +469,14 @@
                 message: '',
                 //headerColor: 'orange', // enable to change msg box color
                 headerTitle: 'Whatsapp do Doutor Hoje',
+            });
+
+            var uf_localizacao = docCookies.getItem('uf_localizacao');
+            $('#sg_estado_localizacao option[value='+uf_localizacao+']').attr('selected','selected');
+
+            $('#sg_estado_localizacao').change(function(){
+                var sg_estado = $(this).val();
+                docCookies.setItem('uf_localizacao', sg_estado);
             });
         });
     </script>

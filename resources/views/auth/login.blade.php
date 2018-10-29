@@ -41,10 +41,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="form-group row area-label btn-login-token">
+                                    <div class="form-group row area-label btn-login-token" style="display: none;">
                                         <label for="inputToken" class="col-sm-12 ">Token de Acesso</label>
                                     </div>
-                                    <div class="form-group row btn-login-token">
+                                    <div class="form-group row btn-login-token" style="display: none;">
                                         <div class="col col-lg-7 col-xl-8">
                                             <input type="text" id="inputToken" class="form-control" name="cvx_token" placeholder="Token de Acesso">
                                             <input type="hidden" id="input_hidden_EmailTelefone" name="cvx_telefone">
@@ -185,7 +185,7 @@
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
 
-                $('.btn-login-token').hide();
+                //$('.btn-login-token').hide();
 
                 $('#btn-send-token').click(function () {
                     if ($('#inputEmailTelefone').val().length < 15) {

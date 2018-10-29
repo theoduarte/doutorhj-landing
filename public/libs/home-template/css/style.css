@@ -326,7 +326,8 @@ header .navbar-collapse {
 }
 
 .banner-slider-home .banner-conheca .texto,
-.banner-slider-home .banner-precos-justos .texto {
+.banner-slider-home .banner-precos-justos .texto,
+.banner-slider-home .banner-clinica .texto {
     float: right;
     text-align: left;
     width: 540px;
@@ -336,11 +337,6 @@ header .navbar-collapse {
     background-position: center top;
 }
 
-.banner-slider-home .banner-clinica .texto {
-    float: right;
-    text-align: left;
-    width: 540px;
-}
 .banner-slider-home .banner-clinica .texto .logo-clinica {
     display: block;
     width: 300px;
@@ -387,6 +383,45 @@ header .navbar-collapse {
     line-height: 28px;
     text-transform: none;
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .banner-outubro-rosa .texto {
+    float: right;
+    text-align: left;
+    width: 800px;
+}
+
+.banner-slider-home .banner-outubro-rosa .texto .imagens1 {
+    float: left;
+    width: 400px;
+}
+
+.banner-slider-home .banner-outubro-rosa .texto .imagens2 {
+    float: right;
+    width: 400px;
+}
+
+.banner-slider-home .banner-outubro-rosa .texto .titulo {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+    margin-top: 30px;
+}
+
+.banner-slider-home .banner-outubro-rosa .texto .valores {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+
+.banner-slider-home .banner-outubro-rosa .texto .frase {
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+}
+
+#busca-home .form-busca-home .row .form-group .btn-vermelho {
+    background-color: #ff2a99!important;
 }
 
 .banner-slider-home .carousel-control-next,
@@ -3861,6 +3896,24 @@ footer ul li a:hover {
         margin-top: -37px;
     }
 
+    .banner-slider-home .banner-outubro-rosa .texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 {
+        float: none;
+        width: 100%;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 {
+        float: none;
+        width: 100%;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .titulo {
+        margin-top: 0;
+    }
+
     .area-seleciona-profissional {
         font-size: 11px;
     }
@@ -3983,6 +4036,33 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 20px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa {
+        background-position: right top;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto {
+        width: 600px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 {
+        float: none;
+        width: 100%;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 {
+        float: none;
+        width: 100%;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
+        width: 50%;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 .frase {
+        margin-bottom: 14px;
     }
 
     .busca-welcome {
@@ -4149,9 +4229,17 @@ footer ul li a:hover {
         margin-bottom: 18px;
     }
 
-
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto {
+        width: 400px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
+        width: 76%;
     }
 
     .busca-welcome {
@@ -4336,6 +4424,15 @@ footer ul li a:hover {
         font-size: 22px;
     }
 
+    .banner-slider-home .banner-outubro-rosa .texto {
+        width: 320px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
+        width: 96%;
+    }
+
     .busca-welcome {
         width: 400px;
         bottom: 86px;
@@ -4393,6 +4490,15 @@ footer ul li a:hover {
     .banner-slider-home .banner-conheca .texto,
     .banner-slider-home .banner-precos-justos .texto {
         width: 320px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto {
+        width: 320px;
+    }
+
+    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
+    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
+        width: 96%;
     }
 
     .busca-welcome {

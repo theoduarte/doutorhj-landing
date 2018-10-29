@@ -6,9 +6,11 @@ use App\Agendamento;
 use App\Cidade;
 use App\Endereco;
 use App\Atendimento;
+use App\Paciente;
 use App\Procedimento;
 use App\Consulta;
 use App\Checkup;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 
@@ -23,19 +25,29 @@ class EspecialidadeController extends Controller
     public function consultaEspecialidades()
     {
         $tipo_atendimento = CVXRequest::get('tipo_atendimento');
+        $uf_localizacao = CVXRequest::get('uf_localizacao');
         $result = [];
-        
+
+		$paciente_id = null;
+
+		if (Auth::check()) {
+			$paciente = Auth::user()->paciente;
+			$paciente_id = $paciente->id;
+		}
+
+		$plano_id = Paciente::getPlanoAtivo($paciente_id);
+
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
             $consulta = new Consulta();
-            $result = $consulta->getActive();
+            $result = $consulta->getActive($plano_id, $uf_localizacao);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
             $procedimento = new Procedimento();
-            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento() : $procedimento->getActiveOdonto();
+            $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id, $uf_localizacao) : $procedimento->getActiveOdonto($plano_id);
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'checkup') {
             $checkup = new Checkup;
-            $checkups = $checkup->getActive();
+            $checkups = $checkup->getActive($plano_id);
             foreach($checkups as $checkup){
                 $item = [
                     'id'        => $checkup->id,
@@ -53,13 +65,14 @@ class EspecialidadeController extends Controller
     {
     	$especialidade = CVXRequest::post('especialidade');
         $tipo_atendimento = CVXRequest::post('tipo_atendimento');
+        $uf_localizacao = CVXRequest::get('uf_localizacao');
 
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $result = $consulta->getActiveAddress( $especialidade );
+            $result = $consulta->getActiveAddress( $especialidade, $uf_localizacao );
         } elseif ($tipo_atendimento == 'exame' || $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $result = $procedimento->getActiveAddress( $especialidade );
+            $result = $procedimento->getActiveAddress( $especialidade, $uf_localizacao );
         }
     
     	return response()->json(['status' => true, 'endereco' => $result ]);

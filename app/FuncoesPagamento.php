@@ -15,7 +15,7 @@ abstract class FuncoesPagamento
             "code"=> "DOUTOR_HOJE_001",				
             "type"=> "individual",				
             "metadata"=> [
-                "company"=> "Avengers"
+                "company"=> "Doutor Hoje"
                 ]
             ];
 
@@ -47,7 +47,7 @@ abstract class FuncoesPagamento
 			"exp_year"=>'20',
 			"cvv"=> '123',
 			"brand"=> 'Visa',
-			"private_label"=> false,
+			"private_label"=> true,
 			"options"=> [
 				"verify_card"=> true
 			]
@@ -62,6 +62,29 @@ abstract class FuncoesPagamento
 		}else{
 			return self::token($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao, $metodo);
 		}
+	}
+
+	public static function criarPagementoEmpresarial($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao ) {
+		$payload = [
+			"items"=> [
+			[
+				"amount"=> $valorEmCentavos,
+				"description"=> $produtoDescricao,
+				"quantity"=> 1
+			]
+			],
+			"customer_id"=> $customerId,
+			"payments"=> [[
+			"payment_method"=> "credit_card",
+			"credit_card"=> [
+				"installments"=> $parcelas,
+				"statement_descriptor"=> $descricaoFatura,
+				"card_id"=>$cartaoid,				 
+			]
+			]]
+		];
+
+  		return $payload; 
 	}
 
 	private static function token($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao, $metodo){
@@ -117,7 +140,8 @@ abstract class FuncoesPagamento
 
 
 
-	public static function pagamentoBoleto($valorEmCentavos,$costumer_id, $numeroBoleto, $instrucoesBoleto ) {
+	public static function pagamentoBoleto($valorEmCentavos,$costumer_name, $customer_email, $customer_document, $customer_street, $customer_number, $customer_complement, $customer_zip,  $numeroBoleto, $instrucoesBoleto ) {
+		
 		$payload =[
 			"items"=>[
 			[
@@ -126,13 +150,28 @@ abstract class FuncoesPagamento
 				"quantity"=>1
 			]
 			],
-			"customer_id"=>$costumer_id,
+			 
+			"customer"=> [
+				"name"=> "Tony Stark",
+				"email"=> "tstark@avengers.com",
+				  "document"=> "123456789",
+				"address"=> [
+					"street"=> "Av. General Justo",
+					"number"=> "375",
+					"complement"=> "9º andar",
+					"zip_code"=> "20021130",
+					"neighborhood"=> "Centro",
+					"city"=> "Rio de Janeiro",
+					"state"=> "RJ",
+					"country"=> "BR"
+			]
+				],
 			"payments"=>[				
 				[
 					"amount"=>$valorEmCentavos,
 					"payment_method"=>"boleto",
 					"boleto"=> [
-						"bank"=>  "033" , // tipo string
+						"bank"=>  "341" , // tipo string
 						"instructions"=>$instrucoesBoleto,
 						"due_at"=> "2020-12-31T00:00:00Z"
 					]
@@ -196,9 +235,9 @@ abstract class FuncoesPagamento
 			"payments"=>[				
 				[
 					"amount"=>$valorEmCentavos,
-					"payment_method"=>"bank_transfer",
+					"payment_method"=>"bank_transfer",					 
 					"bank_transfer"=>[
-						"bank"=> "001"
+						"bank"=> "341"
 					]
 				]
 			]
