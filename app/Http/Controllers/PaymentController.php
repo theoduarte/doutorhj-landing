@@ -464,9 +464,9 @@ class PaymentController extends Controller
 		$pedido->titulo         = $titulo_pedido;
 		$pedido->descricao      = $descricao;
 		$pedido->dt_pagamento   = $dt_pagamento;
-		$pedido->tp_pagamento   = $metodoPagamento ==1? 'empresarial' : $metodoPagamento==2 ? 'empre+credito' : $metodoPagamento==3 ? 'credito' : $metodoPagamento==4? 'boleto' : $metodoPagamento==5 ?'transferencia':'';
+		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
-						
+		
 		// credito empresarial
 		if($metodoPagamento == 1) {
 			
@@ -1339,8 +1339,22 @@ class PaymentController extends Controller
 	 
     }
 	
+	private function verificaTp($tp){
+		switch($tp){
+			case "1":
+			return 'Empresarial';break;
+			case "2":
+			return "empre+credito";break;
+			case "3":
+			return "credito";break;
+			case "4":
+			return "boleto";break;
+			case "5":
+			return "transferencia";break;
+			
+		}
+	}
 	
-
 	/**
 	 * Converte os valores recebidos em reais para centavos	 	
 	 */
