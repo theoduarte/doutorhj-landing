@@ -210,15 +210,7 @@ class PaymentController extends Controller
 		$result_agendamentos =   $request->session()->get('result_agendamentos'); //json_decode(, true);
 		$valor_empresa =   $request->session()->get('valor_empresa'); //json_decode(, true);
 		$valor_credito =   $request->session()->get('varlor_credito'); //json_decode(, true);
-		
-		//echo json_encode($result_agendamentos );die;
-		 
-		//echo json_encode($result_agendamentos->valor);
-
-		 
-	//	echo json_encode($result_agendamentos);die;
-		//dd( $result_agendamentos); die;
-		//var_dump(  $result_agendamentos);die;
+	 
         if ($result_agendamentos == null) {
            return redirect()->route('landing-page');
         }
@@ -297,11 +289,14 @@ class PaymentController extends Controller
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
 		
 		$paciente =(object) Paciente::select("*")->where('id', $paciente_id)->first();
- 
+		$user = User::where('id',$paciente->user_id)->first() ;
+
+		// se o usuario não tiver registro na dash board da mundipagg
+		// deve cria-lo para fazer futuras compras na plataforma doutor hoje.
 		if(empty($paciente->mundipagg_token)){
-			$email = User::where('id',$paciente->user_id)->first()->email;
+		
 			// passa os valores para montar o objeto a ser enviado
-			$resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $email);
+			$resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $user->email);
 			
 			try{
 				// cria o usuario na mundipagg
@@ -327,7 +322,7 @@ class PaymentController extends Controller
  
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
         $agendamento_atendimento = true;
-	 
+	
         //--verifica se profissional existe, indicando que se trata de um exame/procedimento que não precisa de profissional e nem data/hora--
         //--ou verifica que se trata de uma consulta ou atendimento em uma clinica que sempre necessita de data/hora--
         for ($i = 0; $i < count($agendamentos); $i++) {
@@ -418,6 +413,7 @@ class PaymentController extends Controller
         	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
         }
 			
+		 
         ########### STARTING TRANSACTION ############
    		DB::beginTransaction();
         #############################################
@@ -854,7 +850,10 @@ class PaymentController extends Controller
 		 
 			if($metodoPagamento ==4){
 				try{
-					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->mundipagg_token, 123456, "Pagar até o vencimento boleto")) ;
+					//$paciente->mundipagg_token
+					
+					 
+					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento, $dados->rua, $dados->numero, $dados->complemento, $dados->cep, $dados->bairro, $dados->cidade, $dados->estado, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();
@@ -894,10 +893,7 @@ class PaymentController extends Controller
         $customer_Identity_type         = $customer->documentos->first()->tp_documento;
         $customer_email                 = $customer->user->email;
         $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
-   
-		
-		
-
+    
 		
 		if($metodoPagamento == 2){
 			$pedidoEmpresarial  = new Pedido();        
@@ -1261,7 +1257,7 @@ class PaymentController extends Controller
 												}
 										
 												 
-									}
+										}
 			 
 										 
 								}
@@ -1295,11 +1291,11 @@ class PaymentController extends Controller
 																																		
 								}
 	 
-	
+							 
 								 ########### FINISHIING TRANSACTION ##########
-							  		DB::commit();
+							  	DB::commit();
 								 #############################################
-								  	CVXCart::clear();
+								CVXCart::clear();
 							
 								 $valor_total_pedido = $valor_total-$valor_desconto;							 
 								 $request->session()->put('result_agendamentos', $result_agendamentos);
@@ -1611,9 +1607,9 @@ class PaymentController extends Controller
 						if (!empty($item_agendamento->atendimento_id)) {
 							$agendamento->dt_atendimento = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
 							$agendamento->filial_id = $item_agendamento->filial_id;
-                            // $agendamento->clinica_id = $item_agendamento->clinica_id;
-							// $agendamento->atendimento_id = $item_agendamento->atendimento_id;
-							// $agendamento->profissional_id = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
+                            $agendamento->clinica_id = $item_agendamento->clinica_id;
+							$agendamento->atendimento_id = $item_agendamento->atendimento_id;
+							$agendamento->profissional_id = isset($item_agendamento->profissional_id) && !empty($item_agendamento->profissional_id) ? $item_agendamento->profissional_id : null;
 						} elseif (!empty($item_agendamento->checkup_id)) {
 							$agendamento->checkup_id = $item_agendamento->checkup_id;
 						}

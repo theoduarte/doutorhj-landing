@@ -112,7 +112,7 @@
 														<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
 														<a href="{{url('meus-agendamentos#checkup')}}" class="link-detalhes-checkup">Clique
 															aqui para ver todos os detalhes do Checkup</a>
-													</div>
+													</div>''
 												</div>
 											</div>
 										@endif
@@ -637,7 +637,8 @@
                 $('#local_atendimento option:first').prop("selected", false);
 
                 $('#btn-uf-localizacao').click(function(){
-            		uf_localizacao = docCookies.getItem('uf_localizacao');
+                    uf_localizacao = docCookies.getItem('uf_localizacao');
+                    
             		if(uf_localizacao != null) {
                 		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
                         $('#ds_uf_localizacao').html(ds_uf_localizacao);

@@ -21,15 +21,31 @@ $(document).ready(function () {
 				 
 					  
 					success: function (result) {
+
+						try {
+							
+								if(  JSON.parse(result.endereco).logradouro == undefined){
+									$('.cep-user').prop('disabled', false);
+									$('.cep-user').removeClass( "loading" );
+									$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
+								}else{
+									$('.cep-user').removeClass( "loading" );
+									$('.cep-user').prop('disabled', false);
+									 $('.campos_endereco').slideDown();
+									 $('#Complemento').empty().val(JSON.parse(result.endereco).logradouro )
+									 $('#Estado').empty().val(JSON.parse(result.endereco).estado)
+									 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
+									 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro )
+								}
+							 
+							
+						}
+						catch(err) {
+							$('.cep-user').prop('disabled', false);
 						$('.cep-user').removeClass( "loading" );
-						$('.cep-user').prop('disabled', false);
-						 $('.campos_endereco').slideDown();
-					 
-						 
-						 $('#Complemento').empty().val(JSON.parse(result.endereco).logradouro)
-						 $('#Estado').empty().val(JSON.parse(result.endereco).estado)
-						 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
-						 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro)
+							$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
+						}
+						
 						
 					},
 					error: function (result) {
@@ -62,10 +78,18 @@ $(document).ready(function () {
 	 
 		}
 	})
-
- 
-
-	
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+	} 
+	//Get latitude and longitude;
+	function successFunction(position) {
+		var lat = position.coords.latitude;
+		var long = position.coords.longitude;
+		console.log(lat)
+	}
+ function errorFunction(dados){
+console.log(dados)
+ }
 	$('#documento_boleto').change(function(){
 	 
 		if($(this).val() ==1){
@@ -107,13 +131,13 @@ $(document).ready(function () {
 		$('#local_atendimento').empty();
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
-
+		
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
 				'tipo_atendimento': tipo_atendimento,
-				'uf_localizacao': uf_localizacao,
+				'uf_localizacao': uf_localizacao == undefined ? 'DF'  : uf_localizacao  ,
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
@@ -921,11 +945,11 @@ function efetuarPagamento() {
 				removerError('#Numero')
 				removerError('#Rua')
 				removerError('#Documento')
-
+				let documento = "";
 				if($('#documento_boleto option:selected').val()==1){
 					let cpf = $('.cpf-boleto').val();
 					var res =cpf.replace(/[^\d]+/g,'')
-					 
+					documento = res;
 					if(res.length != 11){
 						 
 						dados = null;
@@ -941,6 +965,7 @@ function efetuarPagamento() {
 				 
 					let cpnj = $('.cnpj-boleto').val();
 					var res =cpnj.replace(/[^\d]+/g,'')
+					documento = res;
 					if(res.length != 14){
 						dados = null;
 						$( '#id_cnpj_boleto').parent().addClass('cvx-has-error');
@@ -971,6 +996,17 @@ function efetuarPagamento() {
 
 				if(permission){
 					console.log('liberado')
+					dados = {
+						rua:$('#Numero  ').val(),
+						numero:$('#Numero  ').val(),
+						cidade:$('#Numero  ').val(),
+						estado:$('#Numero  ').val(),
+						bairro:$('#Numero  ').val(),
+						complemento:$('#Numero  ').val(),
+						cep:$('#Numero  ').val(),
+						documento
+					};
+					console.log(dados)
 					dados = null;
 				}else{
 					dados = null;

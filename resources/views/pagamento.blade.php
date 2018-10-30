@@ -100,14 +100,14 @@
                                         @endif                                                                               
                                         @endif
                                         <option value="3" >Cartão de crédito</option>
-                                        <option value="4" >Boleto Bancario</option>
-                                        <option value="5" >Transferencia Bancario</option>
                                        
+                                        
                                         {{--
                                         <option value="4" >Boleto Bancario</option>
                                         <option value="5" >Transferencia Bancario</option>
                                         --}}                                                                              
                                     </select>
+                            
                                 </section>
                             </div>
                             <div class="row cartaoEmpresarial_Credito" style="display:none">
@@ -301,17 +301,17 @@
                                                     <label for="inputDocumento">Documento</label>
                                                     <select class="form-control" id="documento">
                                                         <option value="1">CPF</option>
-                                                        <option value="2">CNPJ</option>
+                                                     <option value="2">CNPJ</option>  
                                                     </select>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <div class="cnpj" style="display:none;">
+                                              <div class="cnpj" style="display:none;">
                                                         <label for="inputCNPJCredito">CNPJ do titular do cartão</label>
                                                         <input type="text" id="cnpjTitularCartaoCredito" class=" inputCNPJCredito  form-control   mascaraCNPJ"  value=" " placeholder="CNPJ do titular do cartão" >
-                                                    </div>
+                                                    </div> 
                                                     <div class="cpf"  >
                                                         <label for="inputCPFCredito">CPF do titular do cartão</label>
-                                                        <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value=" " placeholder="CPF do titular do cartão" >
+                                                        <input type="text" id="cpfTitularCartaoCredito" class="inputCPFCredito form-control input-cpf-titular  mascaraCPF" name="cpf-titular-cartao-credito" value="{{ $cpf_titular }}" placeholder="CPF do titular do cartão" >
                                                     </div>
                                                 </div>
                                             </div>
