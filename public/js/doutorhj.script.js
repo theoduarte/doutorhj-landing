@@ -746,7 +746,7 @@ $(function() {
 		removerError('#inputCodigoCredito')
 		removerError('#inputCPFCredito')
 
-	//	apenasLetras($('#inputNomeCartaoCredito').val())
+	
 		$('#btn-finalizar-pedido-landing').attr('disabled', 'disabled');
 		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
 	
@@ -861,12 +861,7 @@ $(function() {
 
 })
 
-function apenasLetras(string) 
-{
-	var numsStr = string.replace(/[^0-9,.;:=-"']/g,'');
-	console.log(numsStr)
-	return (numsStr);
-}
+
 
 function efetuarPagamento() {
 	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
