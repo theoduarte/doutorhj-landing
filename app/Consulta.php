@@ -33,7 +33,7 @@ class Consulta extends Model
     	return $this->hasMany('App\TagPopular');
     }
 
-    public function getActive($planoId) {
+    public function getActive($planoId, $uf_localizacao) {
         DB::enableQueryLog();
         $query = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
@@ -54,40 +54,45 @@ class Consulta extends Model
 							->orWhere('pr.plano_id', '=', Plano::OPEN);
 					});
 			})
-            ->whereExists(function ($query) {
+			->whereExists(function ($query) use ($uf_localizacao) {
                 $query->select(DB::raw(1))
                       ->from('filials')
+                      ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
+                      ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
                       ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
             ->get();
 
-        // dd( DB::getQueryLog() );
+        //dd( DB::getQueryLog() );
         return $query;
     } 
 
 
-    public function getActiveAddress( $consultaId ){
+    public function getActiveAddress( $consultaId, $uf_localizacao ){
+        
+        DB::enableQueryLog();
         $query = DB::select("   select string_agg( CAST(id AS varchar), ',' ) id, string_agg( CAST(filial_id AS varchar), ',' ) filial_id, 
                                        te_bairro, nm_cidade
                                   from (
                                 select distinct e.id, e.te_bairro, cd.nm_cidade, f.id filial_id
                                   from filials f
                                   join enderecos e on (f.endereco_id = e.id)
-                                  join cidades cd on (e.cidade_id = cd.id)
+                                  join cidades cd on (e.cidade_id = cd.id AND cd.sg_estado = ".DB::raw("'$uf_localizacao'").")
                                   join clinicas c on (f.clinica_id = c.id)
                                   join atendimentos at on (c.id = at.clinica_id)
-                                 where at.cs_status = :status
-                                   and c.cs_status = :status
-                                   and at.consulta_id = :consultaId) general
+                                 where at.cs_status = 'A'
+                                   and c.cs_status = 'A'
+                                   and at.consulta_id = $consultaId) general
                                  group by te_bairro, nm_cidade
-                                 order by te_bairro",  [ 'consultaId' => $consultaId, 'status' => 'A' ] );
-
+                                 order by te_bairro");
+        //dd( DB::getQueryLog() );
+        //dd($query);
         return $query;
     }
 
-    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId ) {
-        // DB::enableQueryLog();
+    public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
+        DB::enableQueryLog();
 
         $query = DB::table('atendimentos as at')
 			->distinct()
@@ -102,7 +107,7 @@ class Consulta extends Model
 			->join('clinicas as c', 'at.clinica_id', '=', 'c.id')
 			->leftJoin('filials as f', 'c.id', '=', 'f.clinica_id')
 			->leftJoin('enderecos as e', 'f.endereco_id', '=', 'e.id')
-			->leftJoin('cidades as cd', 'e.cidade_id', '=', 'cd.id')
+			->join('cidades as cd', function($join9) use ($uf_localizacao) { $join9->where('e.cidade_id', '=', DB::raw('"cd"."id"'))->where('cd.sg_estado', '=', DB::raw("'$uf_localizacao'")); } )
 			->join('profissionals as pf', 'at.profissional_id', '=', 'pf.id')
 			->join('precos as pr', function($join8) use ($planoId) {
 				$join8->where('pr.id', function($query) {
@@ -120,9 +125,10 @@ class Consulta extends Model
 			->where('f.cs_status', 'A')
 			->where('pf.cs_status', 'A')
 			->where('at.consulta_id', $consultaId);
-
+		
+		
 //		dd($query->get()->toArray());
-
+		
         if( !empty($enderecoIds) ) {
             $query->whereIn('f.endereco_id', explode(',', $enderecoIds) );
         }
@@ -131,7 +137,10 @@ class Consulta extends Model
 			->orderBy('f.eh_matriz', 'desc')
 			->orderBy('c.nm_fantasia', 'asc')
 			->orderBy('pf.nm_primario', 'asc');
-
-        return $query->get();
+		
+		$result = $query->get();
+		//dd( DB::getQueryLog() );
+		
+		return $result;
     }
 }

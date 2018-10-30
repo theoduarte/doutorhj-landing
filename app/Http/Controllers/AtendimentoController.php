@@ -32,6 +32,7 @@ class AtendimentoController extends Controller
     	$tipo_atendimento = $request->get('tipo_atendimento');
         $enderecoIds = $request->get('local_atendimento');
         $especialidade = $request->get('tipo_especialidade');
+        $sg_estado_localizacao = $request->get('sg_estado_localizacao');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
 		$paciente_id = null;
@@ -45,16 +46,16 @@ class AtendimentoController extends Controller
 
         if ($tipo_atendimento == 'saude') {
             $consulta = new Consulta();
-            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id );
-            $list_enderecos = $consulta->getActiveAddress( $especialidade );
-            $list_atendimentos = $consulta->getActive($plano_id);
+            $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id, $sg_estado_localizacao );
+            $list_enderecos = $consulta->getActiveAddress( $especialidade, $sg_estado_localizacao );
+            $list_atendimentos = $consulta->getActive($plano_id, $sg_estado_localizacao);
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
-            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id );
-            $list_enderecos = $procedimento->getActiveAddress( $especialidade );
-            $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id) : $procedimento->getActiveOdonto($plano_id);
+            $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id, $sg_estado_localizacao );
+            $list_enderecos = $procedimento->getActiveAddress( $especialidade, $sg_estado_localizacao );
+            $list_atendimentos = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id, $sg_estado_localizacao) : $procedimento->getActiveOdonto($plano_id, $sg_estado_localizacao);
         }
 
-        return view('resultado', compact('atendimentos', 'paciente', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps'));
+        return view('resultado', compact('atendimentos', 'paciente', 'list_atendimentos', 'list_enderecos', 'tipo_atendimento', 'locais_google_maps', 'sg_estado_localizacao'));
     }
 }
