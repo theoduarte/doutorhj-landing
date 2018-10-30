@@ -865,12 +865,12 @@ $(function() {
 
 })
 
-function apenasLetras(string) 
+/*function apenasLetras(string) 
 {
 	var numsStr = string.replace(/[^0-9,.;:=-"']/g,'');
 	console.log(numsStr)
 	return (numsStr);
-}
+} */
 
 function efetuarPagamento() {
 	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
