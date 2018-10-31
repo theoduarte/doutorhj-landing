@@ -927,7 +927,7 @@ class PaymentController extends Controller
 		if(!empty($criarPagamento)){
 
 			//print_r($criarPagamento);die;
-			$dadosPagamentos = json_decode( ($criarPagamento), true);
+			$dadosPagamentos = json_decode( json_encode($criarPagamento), true);
 	 
 			if(
 				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="not_authorized" ||
