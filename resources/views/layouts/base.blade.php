@@ -256,7 +256,7 @@
         @include('includes/termos-condicoes')
         <footer class="footer-default">
 
-            <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstado" aria-hidden="true">
+            <div class="modal fade" id="modalEstado" role="dialog" aria-labelledby="modalEstado" aria-hidden="true" style="overflow:hidden;">
                 <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -495,7 +495,14 @@
 
         	//docCookies.removeItem('uf_localizacao');
 
-            $('.seleciona-estado').select2({width: '100%'});
+            $('.seleciona-estado').select2({
+                width: '100%',
+                language: {
+                    noResults: function (params) {
+                      return "Nenhum Estado encontrado!";
+                    }
+                  }
+            });
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
             
