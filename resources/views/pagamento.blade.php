@@ -100,8 +100,11 @@
                                         @endif                                                                               
                                         @endif
                                         <option value="3" >Cartão de crédito</option>
+<<<<<<< HEAD
                                         <option value="4" >Boleto Bancario</option>
                                         <option value="5" >Transferencia Bancario</option>
+=======
+>>>>>>> c43d9cdb101af0e06839c412d13e47edfa2d5dfb
                                         
                                         {{--
                                         <option value="4" >Boleto Bancario</option>

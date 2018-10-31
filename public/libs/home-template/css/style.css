@@ -4412,6 +4412,17 @@ footer ul li a:hover {
 
 @media only screen and (max-width: 575px) {
 
+    .modal-seleciona-estado {
+        width: 375px;
+        /*margin: 5.5rem; */
+        margin: 0px;
+    }
+
+    .modal-seleciona-estado p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
     .banner-slider-home .area-texto,
     .banner-slider-home .banner-conheca .texto,
     .banner-slider-home .banner-precos-justos .texto {
@@ -4519,16 +4530,13 @@ footer ul li a:hover {
 @media only screen and (max-width: 480px) {
 
     .modal-seleciona-estado {
-        width: 300px;
+        width: 360px;
+        margin: 0px;
     }
 
     .modal-seleciona-estado p {
         font-size: 18px;
         margin-bottom: 20px;
-    }
-
-    .modal-seleciona-estado .btn {
-        margin-top: 14px;
     }
 
     .nome-estado-topo {
@@ -4596,6 +4604,11 @@ footer ul li a:hover {
         position: relative;
         height: 84px;
     }
+    
+    .modal-seleciona-estado {
+        width: 410px;
+        margin: 0px auto;
+    }
 
     .card-footer .form-check, .card-footer strong {
         position: absolute;
@@ -4629,6 +4642,12 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 375px) {
+	
+	.modal-seleciona-estado {
+        width: 350px;
+        margin: 0px auto;
+    }
+    
     .area-vantagens {
         padding-bottom: 236px;
     }
@@ -4643,6 +4662,12 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 320px) {
+	
+	.modal-seleciona-estado {
+        width: 320px;
+        margin: 0px;
+    }
+    
     .area-vantagens {
         padding-bottom: 190px;
     }

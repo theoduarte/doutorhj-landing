@@ -189,7 +189,6 @@
                             </ul>
                         </div>
                     </div>
-
                     @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
 						<div class="info-empresarial">
 							<div class="opcoes ie-logo">
@@ -208,6 +207,7 @@
 						</div>
                     @endif
                 </div>
+                <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
             </nav>
         @else
             <nav class="navbar navbar-expand-xl">
@@ -255,53 +255,6 @@
     @if (!Auth::check())
         @include('includes/termos-condicoes')
         <footer class="footer-default">
-
-            <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstado" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <p>Selecione um estado</p>
-                            <div class="row">
-                                <div class="col-md-12 col-lg-10">
-                                    <select id="sg_estado_localizacao" class="seleciona-estado" name="estado">
-                                        <option value="">Estado</option>
-                                        <option value="AC">Acre</option>
-                                        <option value="AL">Alagoas</option>
-                                        <option value="AP">Amapá</option>
-                                        <option value="AM">Amazonas</option>
-                                        <option value="BA">Bahia</option>
-                                        <option value="CE">Ceará</option>
-                                        <option value="DF">Distrito Federal</option>
-                                        <option value="ES">Espírito Santo</option>
-                                        <option value="GO">Goiás</option>
-                                        <option value="MA">Maranhão</option>
-                                        <option value="MT">Mato Grosso</option>
-                                        <option value="MS">Mato Grosso do Sul</option>
-                                        <option value="MG">Minas Gerais</option>
-                                        <option value="PA">Pará</option>
-                                        <option value="PB">Paraíba</option>
-                                        <option value="PR">Paraná</option>
-                                        <option value="PE">Pernambuco</option>
-                                        <option value="PI">Piauí</option>
-                                        <option value="RJ">Rio de Janeiro</option>
-                                        <option value="RN">Rio Grande do Norte</option>
-                                        <option value="RS">Rio Grande do Sul</option>
-                                        <option value="RO">Rondônia</option>
-                                        <option value="RR">Roraima</option>
-                                        <option value="SC">Santa Catarina</option>
-                                        <option value="SP">São Paulo</option>
-                                        <option value="SE">Sergipe</option>
-                                        <option value="TO">Tocantins</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 col-lg-2">
-                                    <button type="button" id="btn-uf-localizacao" class="btn btn-azul" data-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="floating-wpp"></div>
             <div class="container">
@@ -418,7 +371,52 @@
             </div>
         </footer>
     @endif
-
+    <div class="modal fade" id="modalEstado" role="dialog" aria-labelledby="modalEstado" aria-hidden="true" style="overflow:hidden;">
+        <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Selecione um estado</p>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-10">
+                            <select id="sg_estado_localizacao" class="seleciona-estado" name="estado">
+                                <option value="">Estado</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 col-lg-2">
+                            <button type="button" id="btn-uf-localizacao" class="btn btn-azul" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
     <script>
@@ -495,7 +493,14 @@
 
         	//docCookies.removeItem('uf_localizacao');
 
-            $('.seleciona-estado').select2({width: '100%'});
+            $('.seleciona-estado').select2({
+                width: '100%',
+                language: {
+                    noResults: function (params) {
+                      return "Nenhum Estado encontrado!";
+                    }
+                  }
+            });
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
             
