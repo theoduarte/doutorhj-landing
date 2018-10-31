@@ -622,7 +622,8 @@ class PaymentController extends Controller
 					 
 				if($dados->salvar ==0){
 						
-					try{									
+					try{			
+					
 						// cria token cartao						
 				 		$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
 						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
@@ -631,7 +632,7 @@ class PaymentController extends Controller
 					}catch(\Exception $e){
 						DB::rollBack();
 						return response()->json([
-							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de créditoo!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -838,7 +839,7 @@ class PaymentController extends Controller
 					try{
 					
 					//	$criarPagamento =   Storage::disk('local')->get('requisicao.json');					
-						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor Hoje",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
 
 					}catch(\Exception $e){
 						DB::rollBack();
