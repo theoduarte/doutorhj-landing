@@ -34,6 +34,8 @@ use App\Filial;
 use App\Plano;
 use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
+
+
 class ClinicaController extends Controller
 {
     /**
@@ -647,9 +649,9 @@ class ClinicaController extends Controller
 		
 		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
 
+      
 
-       
-
+      
     	$carrinho = [];
     	$user_session = Auth::user()->paciente;
     	$url = Request::root();

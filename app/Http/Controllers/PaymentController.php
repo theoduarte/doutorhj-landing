@@ -31,6 +31,7 @@ use App\FuncoesPagamento;
 use App\Preco;
 use App\Empresa;
 use App\User;
+use Storage;
 class PaymentController extends Controller
 {
     /**
@@ -283,7 +284,7 @@ class PaymentController extends Controller
 		$listCarrinho = $this->listCarrinhoItens();
 		
 		$paciente_id = CVXRequest::post('paciente_id');
-		
+	 
 		$titulo_pedido = CVXRequest::post('titulo_pedido');
 		
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
@@ -836,7 +837,10 @@ class PaymentController extends Controller
 			if ($metodoPagamento ==3) {											
 					try{
 					
-						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+						$criarPagamento =   Storage::disk('local')->get('requisicao.json');
+
+					
+						 // $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
 
 					}catch(\Exception $e){
 						DB::rollBack();
@@ -851,8 +855,7 @@ class PaymentController extends Controller
 			if($metodoPagamento ==4){
 				try{
 					//$paciente->mundipagg_token
-					echo json_encode(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto"));
-					die;					 
+				 				 
 					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
@@ -922,19 +925,30 @@ class PaymentController extends Controller
 
 			$restoCredito = $cartaoCredito ;
 		}
-		 
-	 
+	
 		if(!empty($criarPagamento)){
 
-		
-			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
+			//print_r($criarPagamento);die;
+			$dadosPagamentos = json_decode( ($criarPagamento), true);
 	 
-			if($dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed"){
+			if(
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="not_authorized" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="refunded" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="voided" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="partial_refunded" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="partial_void" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="error_on_voiding" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="error_on_refunding" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="waiting_cancellation" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="with_error" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed" 		
+			){
+		   
 				DB::rollback();
 				return response()->json([
 					
 					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
-					'mensagem' => 'Pagamento não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
+					'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! ',
 				                 
 					], 422);
 			 }else{

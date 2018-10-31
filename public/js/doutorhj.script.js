@@ -78,18 +78,7 @@ $(document).ready(function () {
 	 
 		}
 	})
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
-	} 
-	//Get latitude and longitude;
-	function successFunction(position) {
-		var lat = position.coords.latitude;
-		var long = position.coords.longitude;
-		console.log(lat)
-	}
- function errorFunction(dados){
-console.log(dados)
- }
+	 
 	$('#documento_boleto').change(function(){
 	 
 		if($(this).val() ==1){
