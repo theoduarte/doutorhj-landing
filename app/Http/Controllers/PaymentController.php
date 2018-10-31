@@ -837,10 +837,8 @@ class PaymentController extends Controller
 			if ($metodoPagamento ==3) {											
 					try{
 					
-						$criarPagamento =   Storage::disk('local')->get('requisicao.json');
-
-					
-						 // $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+					//	$criarPagamento =   Storage::disk('local')->get('requisicao.json');					
+						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
 
 					}catch(\Exception $e){
 						DB::rollBack();
