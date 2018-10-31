@@ -997,17 +997,16 @@ function efetuarPagamento() {
 				if(permission){
 					console.log('liberado')
 					dados = {
-						rua:$('#Numero  ').val(),
-						numero:$('#Numero  ').val(),
-						cidade:$('#Numero  ').val(),
-						estado:$('#Numero  ').val(),
-						bairro:$('#Numero  ').val(),
-						complemento:$('#Numero  ').val(),
-						cep:$('#Numero  ').val(),
-						documento
+						rua_endereco:$('#Rua  ').val(),
+						numero_endereco:$('#Numero  ').val(),
+						cidade_endereco:$('#Cidade  ').val(),
+						estado_endereco:$('#Estado  ').val(),
+						bairro_endereco:$('#Bairro  ').val(),
+						complemento_endereco:$('#Complemento  ').val(),
+						cep_endereco:$('#cep  ').val(),
+						documento_endereco:documento
 					};
-					console.log(dados)
-					dados = null;
+					 
 				}else{
 					dados = null;
 				 

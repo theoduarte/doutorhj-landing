@@ -33,6 +33,7 @@ use App\Paciente;
 use App\Filial;
 use App\Plano;
 use App\VigenciaPaciente;
+use MundiAPILib\MundiAPIClient;
 class ClinicaController extends Controller
 {
     /**
@@ -639,14 +640,30 @@ class ClinicaController extends Controller
     	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
 
+        								
+		$basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+
+
+       
+
     	$carrinho = [];
     	$user_session = Auth::user()->paciente;
     	$url = Request::root();
     	$titulo_pedido = "";
     	$user_session->load('documentos');
-
+        
 		$plano_id = Paciente::getPlanoAtivo($user_session->id);
-
+        $endereco_paciente=[];
+        if(!empty($user_session->mundipagg_token)){
+            $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+        }
+        
+        
+       
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
 			$paciente = Paciente::findOrFail($paciente_tmp_id);
@@ -810,7 +827,7 @@ class ClinicaController extends Controller
             $paciente = Auth::user()->paciente;
         }
 
-    	return view('pagamento', compact('url', 'paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+    	return view('pagamento', compact('url', 'paciente','endereco_paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/

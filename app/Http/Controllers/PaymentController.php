@@ -851,9 +851,9 @@ class PaymentController extends Controller
 			if($metodoPagamento ==4){
 				try{
 					//$paciente->mundipagg_token
-					
-					 
-					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento, $dados->rua, $dados->numero, $dados->complemento, $dados->cep, $dados->bairro, $dados->cidade, $dados->estado, 123456, "Pagar até o vencimento boleto")) ;
+					echo json_encode(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto"));
+					die;					 
+					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();
@@ -1310,7 +1310,7 @@ class PaymentController extends Controller
 							 
 							  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 	 
-			}
+			 }
 								
 		}else{
 			DB::rollback();
