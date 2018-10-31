@@ -140,7 +140,7 @@ abstract class FuncoesPagamento
 
 
 
-	public static function pagamentoBoleto($valorEmCentavos,$costumer_name, $customer_email, $customer_document, $customer_street, $customer_number, $customer_complement, $customer_zip,  $numeroBoleto, $instrucoesBoleto ) {
+	public static function pagamentoBoleto($valorEmCentavos,$costumer_name, $customer_email, $customer_document, $customer_street, $customer_number, $customer_complement, $customer_zip,$customer_bairro,  $customer_city, $customer_state ) {
 		
 		$payload =[
 			"items"=>[
@@ -152,17 +152,17 @@ abstract class FuncoesPagamento
 			],
 			 
 			"customer"=> [
-				"name"=> "Tony Stark",
-				"email"=> "tstark@avengers.com",
-				  "document"=> "123456789",
+				"name"=> $costumer_name,
+				"email"=> $customer_email,
+				  "document"=> $customer_document,
 				"address"=> [
-					"street"=> "Av. General Justo",
-					"number"=> "375",
-					"complement"=> "9º andar",
-					"zip_code"=> "20021130",
-					"neighborhood"=> "Centro",
-					"city"=> "Rio de Janeiro",
-					"state"=> "RJ",
+					"street"=> $customer_street,
+					"number"=> $customer_number,
+					"complement"=> $customer_complement,
+					"zip_code"=> $customer_zip,
+					"neighborhood"=> $customer_bairro,
+					"city"=> $customer_city,
+					"state"=>  $customer_state,
 					"country"=> "BR"
 			]
 				],
@@ -171,9 +171,9 @@ abstract class FuncoesPagamento
 					"amount"=>$valorEmCentavos,
 					"payment_method"=>"boleto",
 					"boleto"=> [
-						"bank"=>  "341" , // tipo string
-						"instructions"=>$instrucoesBoleto,
-						"due_at"=> "2020-12-31T00:00:00Z"
+						"bank"=>  "341" // tipo string
+					//	"instructions"=>$instrucoesBoleto,
+					//	"due_at"=> "2020-12-31T00:00:00Z"
 					]
 				]
 			]
