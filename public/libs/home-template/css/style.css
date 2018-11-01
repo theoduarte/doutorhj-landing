@@ -177,7 +177,16 @@ p {
     color: #1b71b9;
 }
 
-.nome-estado-topo a {
+.nome-estado-topo-empresarial {
+    position: absolute;
+    top: 10px;
+    right: 290px;
+    font-size: 14px;
+    color: #1b71b9;
+}
+
+.nome-estado-topo a,
+.nome-estado-topo-empresarial a {
     font-size: 12px;
     color: #a32431;
 }
@@ -427,45 +436,6 @@ header .navbar-collapse {
     line-height: 28px;
     text-transform: none;
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
-}
-
-.banner-slider-home .banner-outubro-rosa .texto {
-    float: right;
-    text-align: left;
-    width: 800px;
-}
-
-.banner-slider-home .banner-outubro-rosa .texto .imagens1 {
-    float: left;
-    width: 400px;
-}
-
-.banner-slider-home .banner-outubro-rosa .texto .imagens2 {
-    float: right;
-    width: 400px;
-}
-
-.banner-slider-home .banner-outubro-rosa .texto .titulo {
-    width: 90%;
-    margin: 0 auto;
-    display: block;
-    margin-top: 30px;
-}
-
-.banner-slider-home .banner-outubro-rosa .texto .valores {
-    width: 90%;
-    margin: 0 auto;
-    display: block;
-}
-
-.banner-slider-home .banner-outubro-rosa .texto .frase {
-    width: 70%;
-    margin: 0 auto;
-    display: block;
-}
-
-#busca-home .form-busca-home .row .form-group .btn-vermelho {
-    background-color: #ff2a99!important;
 }
 
 .banner-slider-home .carousel-control-next,
@@ -3867,7 +3837,11 @@ footer ul li a:hover {
 @media only screen and (max-width: 1200px) {
 
     header {
-        padding: 24px 0 0 0;
+        padding: 0;
+    }
+
+    header .navbar-brand {
+        margin-top: 0px;
     }
 
     header .navbar .container {
@@ -3878,10 +3852,43 @@ footer ul li a:hover {
         padding-top: 30px;
     }
 
+    header .container {
+        padding-top: 0px;
+    }
+
     .btn-profissional a {
         margin: 0!important;
         text-align: center;
         width: 234px;
+    }
+
+    .nome-estado-topo,
+    .nome-estado-topo-empresarial {
+        position: relative;
+        top: auto;
+        right: auto;
+        font-size: 14px;
+        margin: 10px 0 10px 0;
+        display: block;
+        overflow: auto;
+    }
+
+    .nome-estado-topo a,
+    .nome-estado-topo-empresarial a {
+        font-size: 12px;
+        color: #a32431;
+    }
+
+    .info-empresarial {
+        position: relative;
+        top: auto;
+        right: auto;
+        padding: 8px 16px 8px 0;
+        background: #eaeaea;
+        margin-top: 0;
+        display: block;
+        overflow: auto;
+        max-width: 300px;
     }
 
     .btn-entrar a {
@@ -3905,24 +3912,6 @@ footer ul li a:hover {
 
     .box-banner-conheca .area-imagem {
         margin-top: -37px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto {
-        width: 400px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 {
-        float: none;
-        width: 100%;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 {
-        float: none;
-        width: 100%;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .titulo {
-        margin-top: 0;
     }
 
     .area-seleciona-profissional {
@@ -3950,6 +3939,7 @@ footer ul li a:hover {
         padding: 5px 0 0 0;
         margin-top: 0;
         border-top: 1px solid rgb(220, 220, 220);
+        overflow: auto;
     }
 
     header .nav-item-mobile {
@@ -4006,6 +3996,11 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 991px) {
+
+    .modal-seleciona-estado .btn {
+        margin-top: 14px;
+    }
+    
     .banner-slider-home .carousel-item {
         height: 900px;
         padding: 60px 0 60px 0;
@@ -4047,33 +4042,6 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 20px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa {
-        background-position: right top;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto {
-        width: 600px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 {
-        float: none;
-        width: 100%;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 {
-        float: none;
-        width: 100%;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
-        width: 50%;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 .frase {
-        margin-bottom: 14px;
     }
 
     .busca-welcome {
@@ -4211,18 +4179,6 @@ footer ul li a:hover {
         margin-bottom: 20px;
     }
 
-    .modal-seleciona-estado .btn {
-        margin-top: 14px;
-    }
-
-    .nome-estado-topo {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 14px;
-        color: #1b71b9;
-    }
-
     .banner-slider-home .carousel-caption {
         bottom: 560px;
     }
@@ -4263,15 +4219,6 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto {
-        width: 400px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
-        width: 76%;
     }
 
     .busca-welcome {
@@ -4413,11 +4360,8 @@ footer ul li a:hover {
 @media only screen and (max-width: 575px) {
 
     .modal-seleciona-estado {
-        width: 375px;
-        /*margin: 5.5rem; */
-        margin: 0px;
+        width: auto;
     }
-
     .modal-seleciona-estado p {
         font-size: 18px;
         margin-bottom: 20px;
@@ -4465,15 +4409,6 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto {
-        width: 320px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
-        width: 96%;
     }
 
     .busca-welcome {
@@ -4529,37 +4464,15 @@ footer ul li a:hover {
 
 @media only screen and (max-width: 480px) {
 
-    .modal-seleciona-estado {
-        width: 360px;
-        margin: 0px;
-    }
-
     .modal-seleciona-estado p {
         font-size: 18px;
         margin-bottom: 20px;
-    }
-
-    .nome-estado-topo {
-        position: absolute;
-        top: -10px;
-        right: 20px;
-        font-size: 14px;
-        color: #1b71b9;
     }
 
     .banner-slider-home .area-texto,
     .banner-slider-home .banner-conheca .texto,
     .banner-slider-home .banner-precos-justos .texto {
         width: 320px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto {
-        width: 320px;
-    }
-
-    .banner-slider-home .banner-outubro-rosa .texto .imagens1 img,
-    .banner-slider-home .banner-outubro-rosa .texto .imagens2 img {
-        width: 96%;
     }
 
     .busca-welcome {
@@ -4603,11 +4516,6 @@ footer ul li a:hover {
     .card-footer {
         position: relative;
         height: 84px;
-    }
-    
-    .modal-seleciona-estado {
-        width: 410px;
-        margin: 0px auto;
     }
 
     .card-footer .form-check, .card-footer strong {

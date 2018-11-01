@@ -230,29 +230,12 @@
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
 
-                        <div class="banner-outubro-rosa carousel-item active" style="background-image: url('/libs/home-template/img/banner-outubro-rosa/bg.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <div class="imagens1">
-                                            <img class="titulo" src="/libs/home-template/img/banner-outubro-rosa/titulo.png" alt="">
-                                        </div>
-                                        <div class="imagens2">
-                                            <img class="valores" src="/libs/home-template/img/banner-outubro-rosa/valores.png" alt="">
-                                            <img class="frase" src="/libs/home-template/img/banner-outubro-rosa/frase.png" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="banner-clinica carousel-item" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
+                        <div class="banner-clinica carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">

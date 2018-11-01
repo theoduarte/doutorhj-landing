@@ -126,7 +126,7 @@
                                 <li>
                                     <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
                                 </li>
-                                <li>
+                                {{--<li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                     <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span>Notificações </span><i class="fa fa-bell"></i>
@@ -175,7 +175,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
+                                </li>--}}
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                         <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
@@ -188,26 +188,33 @@
                                 </li>
                             </ul>
                         </div>
+
+                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+                            <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                        @else
+                            <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                        @endif
+
+                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+                            <div class="info-empresarial">
+                                <div class="opcoes ie-logo">
+                                    <div class="logo-empresa">
+                                        <img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
+                                    </div>
+                                </div>
+                                <div class="opcoes ie-plano">
+                                    <p class="titulo">Plano</p>
+                                    <p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
+                                </div>
+                                <div class="opcoes ie-saldo">
+                                    <p class="titulo">Saldo</p>
+                                    <p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
-                    @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
-						<div class="info-empresarial">
-							<div class="opcoes ie-logo">
-								<div class="logo-empresa">
-									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
-								</div>
-							</div>
-							<div class="opcoes ie-plano">
-								<p class="titulo">Plano</p>
-								<p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
-							</div>
-							<div class="opcoes ie-saldo">
-								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
-							</div>
-						</div>
-                    @endif
                 </div>
-                <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
             </nav>
         @else
             <nav class="navbar navbar-expand-xl">
@@ -236,14 +243,14 @@
                                 <a class="nav-link" href="/contato">Contato</a>
                             </li> -->
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um parceiro</a>
+                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um prestador</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                             </li>
                         </ul>
+                        <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                     </div>
-                    <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                 </div>
             </nav>
         @endif
@@ -295,7 +302,7 @@
                     <div class="col-sm-6 col-md-3">
                         <h5>PROFISSIONAIS DE SAÚDE </h5>
                         <ul>
-                            <li><a href="https://prestador.doutorhoje.com.br/">Seja um parceiro</a></li>
+                            <li><a href="https://prestador.doutorhoje.com.br/">Seja um prestador</a></li>
                             <li><a href="#vantagens">Vantagens</a></li>
                             <li><a href="https://prestador.doutorhoje.com.br/login/">Área restrita</a></li>
                         </ul>
