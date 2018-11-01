@@ -4000,7 +4000,7 @@ footer ul li a:hover {
     .modal-seleciona-estado .btn {
         margin-top: 14px;
     }
-    
+
     .banner-slider-home .carousel-item {
         height: 900px;
         padding: 60px 0 60px 0;
@@ -4165,6 +4165,10 @@ footer ul li a:hover {
     .area-checkup .pacote-checkup .resumo .textos {
         display: block;
         min-height: auto;
+    }
+    .area-busca-interna {
+        background-position: left top;
+        background-size: auto 680px;
     }
 }
 
