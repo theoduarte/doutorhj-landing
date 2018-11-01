@@ -234,12 +234,23 @@
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
-
-                        <div class="banner-clinica carousel-item active" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
+                        
+                        <div class="banner-conheca carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
-                                        <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt="">
+                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
+                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="banner-clinica carousel-item" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <!-- <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt=""> -->
                                         <p>Nossa plataforma, oferece para você
                                             além de uma <span>ampla rede</span> de parceiros a
                                             primeira clínica Doutor Hoje do DF
@@ -248,17 +259,6 @@
                                         <p class="endereco-clinica"><i class="fa fa-map-marker" aria-hidden="true"></i> SCS QD. 03 BL. A LT. 107 - Asa Sul - Brasília/DF</p>
                                         <h3>Agende sua consulta ou exame
                                             aqui abaixo:</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
-                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
                                     </div>
                                 </div>
                             </div>
