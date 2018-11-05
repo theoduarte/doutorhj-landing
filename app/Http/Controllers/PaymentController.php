@@ -301,8 +301,9 @@ class PaymentController extends Controller
 			
 			try{
 				// cria o usuario na mundipagg
-				$userCreate = $client->getCustomers()->createCustomer( $resultado );
-				$paciente->mundipagg_token = $userCreate->id;
+				$userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+				$paciente->mundipagg_token 	= $userCreate->id;
+
 				if(!$paciente->save()){
 					DB::rollBack();
 					return response()->json([
@@ -310,6 +311,7 @@ class PaymentController extends Controller
 						'errors' => $e->getMessage(),
 					], 500);
 				}
+				
 			}catch(\Exception $e){
 				DB::rollBack();
 				return response()->json([
