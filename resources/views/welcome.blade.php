@@ -628,8 +628,40 @@
                         window.location.reload();
             		}
                 });
+
+           
+
             });
 
+            $(document).ready(function () {
+                $('.efetuar-busca').click(function(){
+                        
+                            if($( "#tipo_atendimento option:selected" ).val().length == 0) {
+                                validar('#tipo_atendimento', 'Selecione um atendimento')	
+                            }else
+
+                            if($( "#tipo_especialidade option:selected" ).val().length == 0) {
+                                validar('#tipo_especialidade', 'Selecione uma Especialide ou exame')	
+                            }else {
+                                $('.form-busca').submit();
+                            }
+                                            
+                })
+                        
+
+                function validar(id, mensagem){
+                    $(id).parent().addClass('cvx-has-error');
+                    $(id).parent().append('<span class="help-block text-danger"><strong>'+mensagem+'</strong></span>');
+                    $(id).change(function(){
+                        $(this).parent().removeClass('cvx-has-error');
+                            $(this).parent().find('span.help-block').remove();
+                    });
+                }
+
+
+                //selecionaData
+                //selecionaHora
+            })
             /*********************************
              *
              * VELOCIDADE CARROSSEL
