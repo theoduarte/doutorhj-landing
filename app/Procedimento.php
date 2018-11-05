@@ -77,6 +77,7 @@ class Procedimento extends Model
             })
             ->where(['atendimentos.cs_status' => 'A', 'clinicas.cs_status' => 'A'])
             ->whereIn('procedimentos.tipoatendimento_id', self::$_tipoAtendimentoExameProcedimento)
+            ->orderby('descricao', 'asc')
             ->get();
 
         // dd( DB::getQueryLog() );
@@ -113,6 +114,7 @@ class Procedimento extends Model
             })
             ->where('atendimentos.cs_status', 'A')
             ->whereIn('procedimentos.tipoatendimento_id', self::$_tipoAtendimentoOdonto)
+            ->orderby('descricao', 'asc')
             ->get();
 
         // dd( DB::getQueryLog() );
