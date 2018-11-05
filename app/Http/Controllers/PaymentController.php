@@ -757,6 +757,8 @@ class PaymentController extends Controller
 				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
 				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+				print_r($paciente );die;
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
