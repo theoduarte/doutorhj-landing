@@ -7,6 +7,8 @@
 @endpush
 
 @section('content')
+
+
     <section class="area-busca-interna home-logado">
         <div class="container">
             <div class="busca-home">
@@ -17,7 +19,7 @@
                     <div class="row">
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="tipo">Tipo de atendimento</label>
-                            <select id="tipo_atendimento" class="form-control" name="tipo_atendimento">
+                            <select id="tipo_atendimento" class="form-control" required name="tipo_atendimento">
                                 <option>Ex.: Consulta</option>
                                 <option value="saude">Consulta Médica</option>
                                 <option value="odonto">Consulta Odontológica</option>
@@ -27,7 +29,7 @@
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
                             <label for="especialidade">Especialidade ou exame</label>
-                            <select id="tipo_especialidade" class="form-control select2" name="tipo_especialidade">
+                            <select id="tipo_especialidade" class="form-control select2" required name="tipo_especialidade">
                                 <option>Ex.: Clínica Médica</option>
                                 <option>Opção 1</option>
                                 <option>Opção 2</option>
@@ -42,7 +44,7 @@
                             <input type="hidden" id="endereco_id" name="endereco_id">
                         </div>
                         <div class="form-group col-md-12 col-lg-3">
-                            <button type="submit" class="btn btn-primary btn-vermelho">Pesquisar</button>
+                            <button type="button" class="btn btn-primary btn-vermelho efetuar-busca" >Pesquisar</button>
                         </div>
                     </div>
                 </form>
@@ -134,6 +136,10 @@
     </section>
     @push('scripts')
         <script type="text/javascript">
+     
+ 
+  
+  
             $(document).ready(function () {
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
@@ -146,7 +152,7 @@
              *********************************/
 
             jQuery(function ($) {
-
+           
                 $('#copyButton').click(function () {
                     var pElement = $('#token')[0];
                     copyToClipboard(pElement, showSuccessMsg);

@@ -31,6 +31,7 @@ use App\FuncoesPagamento;
 use App\Preco;
 use App\Empresa;
 use App\User;
+use Storage;
 class PaymentController extends Controller
 {
     /**
@@ -283,7 +284,7 @@ class PaymentController extends Controller
 		$listCarrinho = $this->listCarrinhoItens();
 		
 		$paciente_id = CVXRequest::post('paciente_id');
-		
+	 
 		$titulo_pedido = CVXRequest::post('titulo_pedido');
 		
 		$num_parcela_selecionado = CVXRequest::post('num_parcela_selecionado');
@@ -300,8 +301,9 @@ class PaymentController extends Controller
 			
 			try{
 				// cria o usuario na mundipagg
-				$userCreate = $client->getCustomers()->createCustomer( $resultado );
-				$paciente->mundipagg_token = $userCreate->id;
+				$userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+				$paciente->mundipagg_token 	= $userCreate->id;
+
 				if(!$paciente->save()){
 					DB::rollBack();
 					return response()->json([
@@ -309,6 +311,7 @@ class PaymentController extends Controller
 						'errors' => $e->getMessage(),
 					], 500);
 				}
+
 			}catch(\Exception $e){
 				DB::rollBack();
 				return response()->json([
@@ -621,16 +624,21 @@ class PaymentController extends Controller
 					 
 				if($dados->salvar ==0){
 						
-					try{									
+					try{			
+					
 						// cria token cartao						
 				 		$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
 						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+					
+						
 						$metodoCartao=2;
 						$cartao =   $cartaoToken->id;
 					}catch(\Exception $e){
+						
+
 						DB::rollBack();
 						return response()->json([
-							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de créditoo!',
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -753,6 +761,8 @@ class PaymentController extends Controller
 				$paciente = Paciente::where(['id'=> $paciente_id])->first();
 				
 				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+				print_r($paciente );die;
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
@@ -836,7 +846,8 @@ class PaymentController extends Controller
 			if ($metodoPagamento ==3) {											
 					try{
 					
-						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor hoje cart",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
+					//	$criarPagamento =   Storage::disk('local')->get('requisicao.json');					
+						$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor Hoje",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;					
 
 					}catch(\Exception $e){
 						DB::rollBack();
@@ -851,9 +862,8 @@ class PaymentController extends Controller
 			if($metodoPagamento ==4){
 				try{
 					//$paciente->mundipagg_token
-					
-					 
-					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento, $dados->rua, $dados->numero, $dados->complemento, $dados->cep, $dados->bairro, $dados->cidade, $dados->estado, 123456, "Pagar até o vencimento boleto")) ;
+				 				 
+					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();
@@ -922,19 +932,30 @@ class PaymentController extends Controller
 
 			$restoCredito = $cartaoCredito ;
 		}
-		 
-	 
+	
 		if(!empty($criarPagamento)){
 
-		
-			$dadosPagamentos = json_decode(json_encode($criarPagamento), true);
+			//print_r($criarPagamento);die;
+			$dadosPagamentos = json_decode( json_encode($criarPagamento), true);
 	 
-			if($dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed"){
+			if(
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="not_authorized" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="refunded" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="voided" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="partial_refunded" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="partial_void" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="error_on_voiding" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="error_on_refunding" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="waiting_cancellation" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="with_error" ||
+				$dadosPagamentos['charges'][0]['last_transaction']['status'] ==="failed" 		
+			){
+		   
 				DB::rollback();
 				return response()->json([
 					
 					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
-					'mensagem' => 'Pagamento não foi realizado! '.$dadosPagamentos['charges'][0]['last_transaction']['gateway_response'][0]['errors']['message'],
+					'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! ',
 				                 
 					], 422);
 			 }else{
@@ -1310,7 +1331,7 @@ class PaymentController extends Controller
 							 
 							  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
 	 
-			}
+			 }
 								
 		}else{
 			DB::rollback();
