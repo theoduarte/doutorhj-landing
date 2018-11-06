@@ -126,7 +126,7 @@
                                 <li>
                                     <span class="al-nome-usuario">{{ Auth::user()->paciente->nm_primario }}</span>
                                 </li>
-                                <li>
+                                {{--<li>
                                     <div class="dropdown opcoes-menu-usuario drop-notificacoes">
                                     <!-- <button class="btn dropdown-toggle btn-notificacoes btn-area-logada" title="Notificações" type="button" id="dropdownNotificacoes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span>Notificações </span><i class="fa fa-bell"></i>
@@ -175,7 +175,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
+                                </li>--}}
                                 <li>
                                     <div class="dropdown opcoes-menu-usuario drop-carrinho">
                                         <button class="btn dropdown-toggle btn-carrinho btn-area-logada" title="Carrinho de Compras" type="button" id="dropdownCarrinho" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="window.location.href=$(this).find('a').attr('href')">
@@ -188,25 +188,32 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
 
-                    @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
-						<div class="info-empresarial">
-							<div class="opcoes ie-logo">
-								<div class="logo-empresa">
-									<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
-								</div>
-							</div>
-							<div class="opcoes ie-plano">
-								<p class="titulo">Plano</p>
-								<p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
-							</div>
-							<div class="opcoes ie-saldo">
-								<p class="titulo">Saldo</p>
-								<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
-							</div>
-						</div>
-                    @endif
+                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+                            <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                        @else
+                            <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                        @endif
+
+                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+                            <div class="info-empresarial">
+                                <div class="opcoes ie-logo">
+                                    <div class="logo-empresa">
+                                        <img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
+                                    </div>
+                                </div>
+                                <div class="opcoes ie-plano">
+                                    <p class="titulo">Plano</p>
+                                    <p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
+                                </div>
+                                <div class="opcoes ie-saldo">
+                                    <p class="titulo">Saldo</p>
+                                    <p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
+                                </div>
+                            </div>
+                        @endif
+
+                    </div>
                 </div>
             </nav>
         @else
@@ -236,14 +243,14 @@
                                 <a class="nav-link" href="/contato">Contato</a>
                             </li> -->
                             <li class="nav-item btn-profissional">
-                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um parceiro</a>
+                                <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um prestador</a>
                             </li>
                             <li class="nav-item btn-entrar">
                                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                             </li>
                         </ul>
+                        <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                     </div>
-                    <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                 </div>
             </nav>
         @endif
@@ -255,53 +262,6 @@
     @if (!Auth::check())
         @include('includes/termos-condicoes')
         <footer class="footer-default">
-
-            <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstado" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <p>Selecione um estado</p>
-                            <div class="row">
-                                <div class="col-md-12 col-lg-10">
-                                    <select id="sg_estado_localizacao" class="seleciona-estado" name="estado">
-                                        <option value="">Estado</option>
-                                        <option value="AC">Acre</option>
-                                        <option value="AL">Alagoas</option>
-                                        <option value="AP">Amapá</option>
-                                        <option value="AM">Amazonas</option>
-                                        <option value="BA">Bahia</option>
-                                        <option value="CE">Ceará</option>
-                                        <option value="DF">Distrito Federal</option>
-                                        <option value="ES">Espírito Santo</option>
-                                        <option value="GO">Goiás</option>
-                                        <option value="MA">Maranhão</option>
-                                        <option value="MT">Mato Grosso</option>
-                                        <option value="MS">Mato Grosso do Sul</option>
-                                        <option value="MG">Minas Gerais</option>
-                                        <option value="PA">Pará</option>
-                                        <option value="PB">Paraíba</option>
-                                        <option value="PR">Paraná</option>
-                                        <option value="PE">Pernambuco</option>
-                                        <option value="PI">Piauí</option>
-                                        <option value="RJ">Rio de Janeiro</option>
-                                        <option value="RN">Rio Grande do Norte</option>
-                                        <option value="RS">Rio Grande do Sul</option>
-                                        <option value="RO">Rondônia</option>
-                                        <option value="RR">Roraima</option>
-                                        <option value="SC">Santa Catarina</option>
-                                        <option value="SP">São Paulo</option>
-                                        <option value="SE">Sergipe</option>
-                                        <option value="TO">Tocantins</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 col-lg-2">
-                                    <button type="button" id="btn-uf-localizacao" class="btn btn-azul" data-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="floating-wpp"></div>
             <div class="container">
@@ -342,7 +302,7 @@
                     <div class="col-sm-6 col-md-3">
                         <h5>PROFISSIONAIS DE SAÚDE </h5>
                         <ul>
-                            <li><a href="https://prestador.doutorhoje.com.br/">Seja um parceiro</a></li>
+                            <li><a href="https://prestador.doutorhoje.com.br/">Seja um prestador</a></li>
                             <li><a href="#vantagens">Vantagens</a></li>
                             <li><a href="https://prestador.doutorhoje.com.br/login/">Área restrita</a></li>
                         </ul>
@@ -418,7 +378,52 @@
             </div>
         </footer>
     @endif
-
+    <div class="modal fade" id="modalEstado" role="dialog" aria-labelledby="modalEstado" aria-hidden="true" style="overflow:hidden;">
+        <div class="modal-dialog modal-dialog-centered modal-seleciona-estado" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Selecione um estado</p>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-10">
+                            <select id="sg_estado_localizacao" class="seleciona-estado" name="estado">
+                                <option value="">Estado</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 col-lg-2">
+                            <button type="button" id="btn-uf-localizacao" class="btn btn-azul" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @push('scripts')
     <script>
@@ -495,7 +500,14 @@
 
         	//docCookies.removeItem('uf_localizacao');
 
-            $('.seleciona-estado').select2({width: '100%'});
+            $('.seleciona-estado').select2({
+                width: '100%',
+                language: {
+                    noResults: function (params) {
+                      return "Nenhum Estado encontrado!";
+                    }
+                  }
+            });
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
             

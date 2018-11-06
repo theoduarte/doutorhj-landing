@@ -112,7 +112,7 @@
 														<p class="valor">R$ <span>{{ $agendamento->valor_total }}</span></p>--}}
 														<a href="{{url('meus-agendamentos#checkup')}}" class="link-detalhes-checkup">Clique
 															aqui para ver todos os detalhes do Checkup</a>
-													</div>
+													</div>''
 												</div>
 											</div>
 										@endif
@@ -230,23 +230,17 @@
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
-
-                        <div class="banner-outubro-rosa carousel-item active" style="background-image: url('/libs/home-template/img/banner-outubro-rosa/bg.jpg')">
+                        
+                        <div class="banner-conheca carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
-                                        <div class="imagens1">
-                                            <img class="titulo" src="/libs/home-template/img/banner-outubro-rosa/titulo.png" alt="">
-                                        </div>
-                                        <div class="imagens2">
-                                            <img class="valores" src="/libs/home-template/img/banner-outubro-rosa/valores.png" alt="">
-                                            <img class="frase" src="/libs/home-template/img/banner-outubro-rosa/frase.png" alt="">
-                                        </div>
+                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
+                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +250,7 @@
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
-                                        <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt="">
+                                        <!-- <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt=""> -->
                                         <p>Nossa plataforma, oferece para você
                                             além de uma <span>ampla rede</span> de parceiros a
                                             primeira clínica Doutor Hoje do DF
@@ -265,17 +259,6 @@
                                         <p class="endereco-clinica"><i class="fa fa-map-marker" aria-hidden="true"></i> SCS QD. 03 BL. A LT. 107 - Asa Sul - Brasília/DF</p>
                                         <h3>Agende sua consulta ou exame
                                             aqui abaixo:</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
-                                        <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
                                     </div>
                                 </div>
                             </div>
@@ -637,15 +620,48 @@
                 $('#local_atendimento option:first').prop("selected", false);
 
                 $('#btn-uf-localizacao').click(function(){
-            		uf_localizacao = docCookies.getItem('uf_localizacao');
+                    uf_localizacao = docCookies.getItem('uf_localizacao');
+                    
             		if(uf_localizacao != null) {
                 		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
                         $('#ds_uf_localizacao').html(ds_uf_localizacao);
                         window.location.reload();
             		}
                 });
+
+           
+
             });
 
+            $(document).ready(function () {
+                $('.efetuar-busca').click(function(){
+                        
+                            if($( "#tipo_atendimento option:selected" ).val().length == 0) {
+                                validar('#tipo_atendimento', 'Selecione um atendimento')	
+                            }else
+
+                            if($( "#tipo_especialidade option:selected" ).val().length == 0) {
+                                validar('#tipo_especialidade', 'Selecione uma Especialide ou exame')	
+                            }else {
+                                $('.form-busca').submit();
+                            }
+                                            
+                })
+                        
+
+                function validar(id, mensagem){
+                    $(id).parent().addClass('cvx-has-error');
+                    $(id).parent().append('<span class="help-block text-danger"><strong>'+mensagem+'</strong></span>');
+                    $(id).change(function(){
+                        $(this).parent().removeClass('cvx-has-error');
+                            $(this).parent().find('span.help-block').remove();
+                    });
+                }
+
+
+                //selecionaData
+                //selecionaHora
+            })
             /*********************************
              *
              * VELOCIDADE CARROSSEL

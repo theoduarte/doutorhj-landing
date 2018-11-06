@@ -1,10 +1,15 @@
 $(document).ready(function () {
 	$('.campos_endereco').hide();
 
-	let efetuar = 0;
+
+
+	
+	
 
 	$('#cep').keyup(function(){
-		let cep = $(this).val();
+		
+		var efetuar = "";
+		var cep = $(this).val();
 		var res =cep.replace(/[^\d]+/g,'')
 
 		if(res.length ==8){
@@ -18,15 +23,31 @@ $(document).ready(function () {
 				 
 					  
 					success: function (result) {
+
+						try {
+							
+								if(  JSON.parse(result.endereco).logradouro == undefined){
+									$('.cep-user').prop('disabled', false);
+									$('.cep-user').removeClass( "loading" );
+									$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
+								}else{
+									$('.cep-user').removeClass( "loading" );
+									$('.cep-user').prop('disabled', false);
+									 $('.campos_endereco').slideDown();
+									 $('#Complemento').empty().val(JSON.parse(result.endereco).logradouro )
+									 $('#Estado').empty().val(JSON.parse(result.endereco).estado)
+									 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
+									 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro )
+								}
+							 
+							
+						}
+						catch(err) {
+							$('.cep-user').prop('disabled', false);
 						$('.cep-user').removeClass( "loading" );
-						$('.cep-user').prop('disabled', false);
-						 $('.campos_endereco').slideDown();
-					 
-						 
-						 $('#Complemento').empty().val(JSON.parse(result.endereco).logradouro)
-						 $('#Estado').empty().val(JSON.parse(result.endereco).estado)
-						 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
-						 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro)
+							$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
+						}
+						
 						
 					},
 					error: function (result) {
@@ -59,10 +80,7 @@ $(document).ready(function () {
 	 
 		}
 	})
-
- 
-
-	
+	 
 	$('#documento_boleto').change(function(){
 	 
 		if($(this).val() ==1){
@@ -104,13 +122,13 @@ $(document).ready(function () {
 		$('#local_atendimento').empty();
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
-
+		
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
     	  	data: {
 				'tipo_atendimento': tipo_atendimento,
-				'uf_localizacao': uf_localizacao,
+				'uf_localizacao':   uf_localizacao  ,
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
@@ -218,7 +236,7 @@ $(document).ready(function () {
 						$('.inputBandeiraCartaoCredito').val('Visa');
 						$('.inputBandeiraCartaoDebito').val('Visa');
 						break;
-						$checkup
+					
 					case "mastercard":
 						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
@@ -252,7 +270,8 @@ $(document).ready(function () {
 					
 					case "elo":
 						$cardinput.css('background-position', '5px -332px');
-						$cardinput.addClass('card_maestro');$checkup
+						$cardinput.addClass('card_maestro');
+						
 						$('.inputBandeiraCartaoCredito').val('Elo');
 						break;
 						
@@ -432,16 +451,16 @@ $(function() {
 
 		slider.oninput = function() {
 			output.innerHTML   =(parseFloat(this.value)).formatMoney(2, '.', '.') 
-			let valor="";
-			let valor_formatado=""
-			let resp="";
-			let resultado="";
-			let final ="";
-			let totalPagar="";
-			let totalPagarFormatado="";
-			let resCOmplemento="";
-			let subtrair="";
-			let finalCOmplemento="";
+			var valor="";
+			var valor_formatado=""
+			var resp="";
+			var resultado="";
+			var final ="";
+			var totalPagar="";
+			var totalPagarFormatado="";
+			var resCOmplemento="";
+			var subtrair="";
+			var finalCOmplemento="";
 
 			valor = this.value 
 
@@ -507,11 +526,11 @@ $(function() {
 			respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
 
 			if(parseFloat(respCOmplemento) > parseFloat(resp)) {
-				let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
-				let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
-				let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-				let empresa=0;		 
-				let complemt=0;
+				var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+				var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+				var porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+				var empresa=0;		 
+				var complemt=0;
 
 			 	
 				slider.max = (porcentagem) - 0.1
@@ -527,11 +546,11 @@ $(function() {
 				 
 
 				if(parseFloat(respCOmplemento) > parseFloat(resp)) {
-					let valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
-					let totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
-					let porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-					let empresa=0;		 
-					let complemt=0;
+					var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+					var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+					var porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+					var empresa=0;		 
+					var complemt=0;
 
 					slider.max = (porcentagem) - 0.1
 					
@@ -545,7 +564,7 @@ $(function() {
 					 
 					output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
 		
-					//let valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
+					//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 				 
 					$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
 					
@@ -558,10 +577,10 @@ $(function() {
 					$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
 
 				} else {
-					let porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
+					var porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
 		
-					let totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
-					let valorComplemento =  (respCOmplemento) - totalEmpresarial
+					var totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+					var valorComplemento =  (respCOmplemento) - totalEmpresarial
 					printParcelamento(valorComplemento);
 					slider.max = parseFloat(porcentagem) - 0.1;
 					slider.value =parseFloat(porcentagem) - 0.1;
@@ -574,7 +593,7 @@ $(function() {
 
 			}
 																				   
-		}, 0);
+		}, 10);
 	}
 
 	
@@ -623,7 +642,7 @@ $(function() {
 						$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
 
 
-						let val = json.dt_validade.split("/");
+						var val = json.dt_validade.split("/");
 
 						$('.inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
 						$('.inputSaveCardId').val(json.id).prop("disabled", true);
@@ -693,7 +712,7 @@ $(function() {
 						$('#inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
 						$('#inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
 
-						let val = json.dt_validade.split("/");
+						var val = json.dt_validade.split("/");
 
 						$('#inputBrandSaveCard').val(json.bandeira).prop("disabled", true);
 						$('#inputSaveCardId').val(json.id).prop("disabled", true);
@@ -750,7 +769,7 @@ $(function() {
 		removerError('#inputCodigoCredito')
 		removerError('#inputCPFCredito')
 
-	//	apenasLetras($('#inputNomeCartaoCredito').val())
+	
 		$('#btn-finalizar-pedido-landing').attr('disabled', 'disabled');
 		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
 	
@@ -875,9 +894,9 @@ function apenasLetras(string)
  */
 
 function efetuarPagamento() {
-	let metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
-	let dados=null;
-	let executar = true;
+	var metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
+	var dados=null;
+	var executar = true;
 	switch(metodoPagamento) {
 		case "1":
 			dados = "Empresarial"
@@ -922,8 +941,8 @@ function efetuarPagamento() {
 		case "4":
 
 				
-				let resp = []
-				let permission=true;
+				var resp = []
+				var permission=true;
 				removerError('#cep')
 				removerError('#Complemento')
 				removerError('#Bairro')
@@ -932,11 +951,11 @@ function efetuarPagamento() {
 				removerError('#Numero')
 				removerError('#Rua')
 				removerError('#Documento')
-
+				var documento = "";
 				if($('#documento_boleto option:selected').val()==1){
-					let cpf = $('.cpf-boleto').val();
+					var cpf = $('.cpf-boleto').val();
 					var res =cpf.replace(/[^\d]+/g,'')
-					 
+					documento = res;
 					if(res.length != 11){
 						 
 						dados = null;
@@ -950,8 +969,9 @@ function efetuarPagamento() {
 					}
 				}else{
 				 
-					let cpnj = $('.cnpj-boleto').val();
+					var cpnj = $('.cnpj-boleto').val();
 					var res =cpnj.replace(/[^\d]+/g,'')
+					documento = res;
 					if(res.length != 14){
 						dados = null;
 						$( '#id_cnpj_boleto').parent().addClass('cvx-has-error');
@@ -982,7 +1002,17 @@ function efetuarPagamento() {
 
 				if(permission){
 					console.log('liberado')
-					dados = null;
+					dados = {
+						rua_endereco:$('#Rua  ').val(),
+						numero_endereco:$('#Numero  ').val(),
+						cidade_endereco:$('#Cidade  ').val(),
+						estado_endereco:$('#Estado  ').val(),
+						bairro_endereco:$('#Bairro  ').val(),
+						complemento_endereco:$('#Complemento  ').val(),
+						cep_endereco:$('#cep  ').val(),
+						documento_endereco:documento
+					};
+					 
 				}else{
 					dados = null;
 				 
@@ -1057,12 +1087,12 @@ function efetuarPagamento() {
 			   dataType:'json',
 			   url: '/finalizar_pedido',
 			   data: {
-				dados,
+				dados:dados,
 				metodo: metodoPagamento,
-				cupom_desconto,
+				cupom_desconto:cupom_desconto,
 				'agendamentos':agendamentos,
-				paciente_id,
-				titulo_pedido,
+				paciente_id:paciente_id,
+				titulo_pedido:titulo_pedido,
 				'_token': laravel_token 
 				},
 			   timeout: 15000,
@@ -1121,17 +1151,17 @@ function cartaoEmpresarial(){
 
 
 function cartaoCreditoEmpresarial(){
-	let objeto=null;
-	let resp =[];
-	let metodo = $('.escolherMetodoPagamento option:selected').val()
-	let cartaoid = $('#cartaoCadastrado option:selected').val()
-	let numero = $('#inputNumeroCartaoCredito ').val()
-	let nome = $('#inputNomeCartaoCredito ').val()
-	let mes = $('#selectValidadeMesCredito ').val()
-	let ano = $('#selectValidadeAnoCredito').val()
-	let cvv = $('#inputCodigoCredito  ').val()
-	let titularcpf = $('#inputCPFCredito').val()
-	let titularcnpj = $('#cnpjTitularCartaoCredito').val() 
+	var objeto=null;
+	var resp =[];
+	var metodo = $('.escolherMetodoPagamento option:selected').val()
+	var cartaoid = $('#cartaoCadastrado option:selected').val()
+	var numero = $('#inputNumeroCartaoCredito ').val()
+	var nome = $('#inputNomeCartaoCredito ').val()
+	var mes = $('#selectValidadeMesCredito ').val()
+	var ano = $('#selectValidadeAnoCredito').val()
+	var cvv = $('#inputCodigoCredito  ').val()
+	var titularcpf = $('#inputCPFCredito').val()
+	var titularcnpj = $('#cnpjTitularCartaoCredito').val() 
 	if(titularcpf.length != 0){
 		titularcpf= $('#inputCPFCredito').val()
 	} 
@@ -1140,14 +1170,14 @@ function cartaoCreditoEmpresarial(){
 		titularcpf= $('#cnpjTitularCartaoCredito').val() 
 	}
 	
-	let parcelas = $('#selectParcelamentoCredito').val()
+	var parcelas = $('#selectParcelamentoCredito').val()
 
  
-	let salvar =   0
-	let porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text()).replace(',', '.');
+	var salvar =   0
+	var porcentagemCreditoEspecial = ($('#porcentagem_credito_empresarial').text()).replace(',', '.');
 
 
-	let permission=true;
+	var permission=true;
 	resp.push( validarCampos($('#inputNumeroCartaoCredito  ').val(), '#inputNumeroCartaoCredito', "Número cartão obrigatório"));
 	resp.push(  validarCampos($('#inputNomeCartaoCredito  ').val(), '#inputNomeCartaoCredito', "Nome impresso é obrigatório"));
 	resp.push( validarCampos($('#selectValidadeMesCredito  ').val(), '#selectValidadeMesCredito', "Mês cartão é obrigatório"));
@@ -1165,16 +1195,16 @@ function cartaoCreditoEmpresarial(){
 
 	if(permission){
 		objeto = {
-			metodo,
-			cartaoid,
-			numero,
-			nome,
-			mes,
-			ano,
-			cvv,
-			titularcpf,
-			parcelas,
-			salvar,
+			metodo:metodo,
+			cartaoid:cartaoid,
+			numero:numero,
+			nome:nome,
+			nome:nome,
+			ano:ano,
+			cvv:cvv,
+			titularcpf:titularcpf,
+			parcelas:parcelas,
+			salvar:salvar,
 			porcentagem:porcentagemCreditoEspecial
 		}
 	}else{
@@ -1191,7 +1221,7 @@ function cartaoCreditoEmpresarial(){
 }
 
 function printParcelamento(valor){
-	let options = ""
+	var options = ""
 	$('#selectParcelamentoCredito').empty()
 
 	if(parseFloat(valor) >100){
@@ -1200,7 +1230,7 @@ function printParcelamento(valor){
 		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
 		var i=0;
 		for (i = 2; i <=5; i++) {
-			let vl = parseFloat(valor) / i
+			var vl = parseFloat(valor) / i
 			if(i <=3){
 				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
 			}else if(i >3){
@@ -1216,18 +1246,18 @@ function printParcelamento(valor){
 }
 
 function cartaoCredito() {
-	let objeto=null;
-	let resp =[];
-	let permission = true;
-	let metodo = $('.escolherMetodoPagamento option:selected').val()
-	let cartaoid = $('.cartaoCadastradoCredito option:selected').val()
-	let numero = $('.inputNumeroCartaoCredito ').val()
-	let nome = $('.inputNomeCartaoCredito ').val()
-	let mes = $('.selectValidadeMesCredito ').val()
-	let ano = $('.selectValidadeAnoCredito').val()
-	let cvv = $('.inputCodigoCreditoCartao  ').val()
-	let titularcpf = $('.inputCPFCredito ').val()
-	let titularcnpj = $('.inputCNPJCredito ').val()
+	var objeto=null;
+	var resp =[];
+	var permission = true;
+	var metodo = $('.escolherMetodoPagamento option:selected').val()
+	var cartaoid = $('.cartaoCadastradoCredito option:selected').val()
+	var numero = $('.inputNumeroCartaoCredito ').val()
+	var nome = $('.inputNomeCartaoCredito ').val()
+	var mes = $('.selectValidadeMesCredito ').val()
+	var ano = $('.selectValidadeAnoCredito').val()
+	var cvv = $('.inputCodigoCreditoCartao  ').val()
+	var titularcpf = $('.inputCPFCredito ').val()
+	var titularcnpj = $('.inputCNPJCredito ').val()
 	if(titularcpf.length !=0){
 		titularcpf =titularcpf
 	}
@@ -1236,15 +1266,15 @@ function cartaoCredito() {
 	}
 	
 
-	let parcelas = $('.selectParcelamentoCredito option:selected').val()
-	let salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0
+	var parcelas = $('.selectParcelamentoCredito option:selected').val()
+	var salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0
 
 	if(cartaoid != ""){
 
 		resp = validarCampos($('.inputCodigoCreditoCartao  ').val(), '#codigoCartaoCredito', "Mes cartão");
 
 		if(resp){
-			objeto = {salvar, parcelas, cartaoid, cvv}
+			objeto = {salvar:salvar, parcelas:parcelas, cartaoid:cartaoid, cvv:cvv}
 		} else {
 			//$.Notification.notify('error','top right', 'Solicitação Falhou!', 'Por favor, verifique os campos e tente novamente.');
 			swal({
@@ -1271,16 +1301,16 @@ function cartaoCredito() {
 
 		if(permission) {
 			objeto = {
-				metodo,
-				cartaoid,
-				numero,
-				nome,
-				mes,
-				ano,
-				cvv,
-				titularcpf,
-				parcelas,
-				salvar
+				metodo:metodo,
+				cartaoid:cartaoid,
+				numero:numero,
+				nome:nome,
+				mes:mes,
+				ano:ano,
+				cvv:cvv,
+				titularcpf:titularcpf,
+				parcelas:parcelas,
+				salvar:salvar
 			}
 		} else {
 			swal({
@@ -1295,12 +1325,12 @@ function cartaoCredito() {
 	return objeto
 }
 
-removerError = (attrb) => {
+function removerError(attrb){
 	$(attrb).parent().removeClass('cvx-has-error');
 	$(attrb).parent().find('span.help-block').remove();
 }
 
-validarCampos = (field, attrb, mensagem) => {
+function validarCampos  (field, attrb, mensagem) {
 	if(field.length == 0 || field =="Mês" || field =="Ano") {
 
 		$(attrb).parent().addClass('cvx-has-error');
@@ -1322,7 +1352,7 @@ validarCampos = (field, attrb, mensagem) => {
 
 function pagarCartaoCredito() {
 	var result = true;
-	let cartaoEmpresarial = $('#selecionaCreditoEmpresarial option:selected').val();
+	var cartaoEmpresarial = $('#selecionaCreditoEmpresarial option:selected').val();
 	var numero_cartao 	= $('#inputNumeroCartaoCredito');
 	var nome_impresso 	= $('#inputNomeCartaoCredito');
 	var mes_credito 	= $('#selectValidadeMesCredito');
