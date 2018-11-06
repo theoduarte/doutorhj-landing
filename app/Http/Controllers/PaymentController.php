@@ -1915,7 +1915,7 @@ class PaymentController extends Controller
     	$mensagem_drhj->rma_nome     	= $paciente->nm_primario.' '.$paciente->nm_secundario;
     	$mensagem_drhj->rma_email       = $paciente->user->email;
     	$mensagem_drhj->assunto     	= 'Pré-Agendamento Solicitado';
-    
+
     	$nome 		= $paciente->nm_primario.' '.$paciente->nm_secundario;
     	$email 		= $paciente->user->email;
     	$telefone 	= $paciente->contatos->first()->ds_contato;
