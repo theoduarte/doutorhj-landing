@@ -234,7 +234,7 @@ $(document).ready(function () {
 						$('.inputBandeiraCartaoCredito').val('Visa');
 						$('.inputBandeiraCartaoDebito').val('Visa');
 						break;
-						$checkup
+					
 					case "mastercard":
 						$cardinput.css('background-position', '5px -122px');
 						$cardinput.addClass('card_mastercard');
@@ -268,7 +268,8 @@ $(document).ready(function () {
 					
 					case "elo":
 						$cardinput.css('background-position', '5px -332px');
-						$cardinput.addClass('card_maestro');$checkup
+						$cardinput.addClass('card_maestro');
+						
 						$('.inputBandeiraCartaoCredito').val('Elo');
 						break;
 						
