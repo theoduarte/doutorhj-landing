@@ -311,7 +311,7 @@ class PaymentController extends Controller
 						'errors' => $e->getMessage(),
 					], 500);
 				}
-				
+
 			}catch(\Exception $e){
 				DB::rollBack();
 				return response()->json([
@@ -629,9 +629,13 @@ class PaymentController extends Controller
 						// cria token cartao						
 				 		$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
 						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+					
+						
 						$metodoCartao=2;
 						$cartao =   $cartaoToken->id;
 					}catch(\Exception $e){
+						
+
 						DB::rollBack();
 						return response()->json([
 							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de créditoo!',
@@ -1928,7 +1932,7 @@ class PaymentController extends Controller
     	$mensagem_drhj->rma_nome     	= $paciente->nm_primario.' '.$paciente->nm_secundario;
     	$mensagem_drhj->rma_email       = $paciente->user->email;
     	$mensagem_drhj->assunto     	= 'Pré-Agendamento Solicitado';
-    
+
     	$nome 		= $paciente->nm_primario.' '.$paciente->nm_secundario;
     	$email 		= $paciente->user->email;
     	$telefone 	= $paciente->contatos->first()->ds_contato;

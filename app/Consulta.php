@@ -62,6 +62,7 @@ class Consulta extends Model
                       ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
+            ->orderby('descricao', 'asc')
             ->get();
 
         //dd( DB::getQueryLog() );
