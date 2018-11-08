@@ -228,14 +228,30 @@
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                       {{-- <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>--}}
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
-                        
-                        <div class="banner-conheca carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+
+                        <div class="banner-novembro-azul carousel-item active" style="background-image: url('/libs/home-template/img/nov-azul/bg.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <div class="imagens1">
+                                            <img class="titulo" src="/libs/home-template/img/nov-azul/img1.png" alt="">
+                                        </div>
+                                        <div class="imagens2">
+                                            <img class="procedimentos" src="/libs/home-template/img/nov-azul/img2.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{--<div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -272,7 +288,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
                         @include('includes/main-search', [ 'class' => 'busca-welcome' ] )
                     </div>
