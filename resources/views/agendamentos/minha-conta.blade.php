@@ -26,6 +26,10 @@
                                 Notificações</a> -->
                             <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Deixe sua Sugestão</a> -->
+
+                                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-endereco" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
+                                Meu Endereço</a>
+
                             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Sair</a>
                         </div>
@@ -35,7 +39,7 @@
 
                             <!-- Cadastro -->
 
-                            <div class="tab-pane fade show active" id="v-pills-cadastro" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <div class="tab-pane fade " id="v-pills-cadastro" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-6 col-dados-cadastro">
                                         <span class="label-titulo">Cadastro</span>
@@ -236,6 +240,60 @@
                                 </div>
                             </div>
 
+                            <div class="tab-pane fade  show active" id="v-pills-endereco" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6 col-dados-cadastro listar">
+                                        <span class="label-titulo">Endereço</span>
+                                        <form id="form-endereco">
+                                            <fieldset  >
+                                            <div class="form-group">
+                                                    <label for="inputTelefone">CEP</label>
+                                                    <input type="text" name="cep" id="cep" class="form-control cep-user cepMask " value="{{}}" >   
+                                                </div>
+                                                <div class="form-group campos_endereco">
+                                                    <label for="inputNome">Rua</label>
+                                                    <input type="text" name="Rua" id="Rua" class="form-control" >
+                                                </div>
+                                                <div class="form-group campos_endereco">
+                                                    <label for="inputEmail">Numero</label>
+                                                    <input type="text" name="Numero" id="Numero" class="form-control" >
+                                                </div>
+
+                                                 <div class="form-group campos_endereco">
+                                                    <label for="inputEmail">Estado</label>
+                                                    <input type="text" name="Estado" maxlength="2"  id="Estado" class="form-control" >
+                                                </div>
+                                                
+                                                <div class="form-group campos_endereco">
+                                                    <label for="inputEmail">Cidade</label>
+                                                    <input type="text" name="Cidade" id="Cidade" class="form-control" >
+                                                </div>
+                                             
+                                                <div class="form-group campos_endereco">
+                                                    <label for="inputTelefone">Bairro</label>
+                                                    <input type="text" name="Bairro" id="Bairro" class="form-control" >
+                                                </div>
+                                                <div class="form-group campos_endereco">
+                                                    <label for="inputTelefone">Complemento</label>
+                                                    <input type="text" name="Complemento" id="Complemento" class="form-control" >
+                                                </div>
+                                               
+                                              
+                                                <button type="button" class="registrarEndereco">Registrar</button>
+                                                
+                                                <button type="button" class="deletar">Deletar</button>
+                                            </fieldset>
+                                        </form>
+                                        
+                                    </div>
+                                   <div class="cadastrar col-md-12 col-lg-6 " style="display:none">
+                                   </div>
+
+                                </div>
+                            </div>
+
+                             
+                           
                             <!-- Pagamento -->
 
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">

@@ -214,6 +214,66 @@ $(document).ready(function () {
             }
     	});
 	});
+
+	$('.registrarEndereco').click(function(){
+		
+		 
+		
+		jQuery.ajax({
+				type: 'POST',
+				url: '/registrar-endereco' ,
+				data: {
+					 cep:$('#cep').val(),
+					 rua:$('#Rua').val(),
+					 numero:$('#Numero').val(),
+					 estado:$('#Estado').val(),
+					 bairro:$('#Bairro').val(),
+					 cidade:$('#Cidade').val(),
+					 complemento:$('#Complemento').val(),
+					 registrar:true,
+					'_token': laravel_token
+				},
+				
+				success: function (result) {
+
+					
+				},
+				error: function (result) {
+				   
+				//    $.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				}
+			});
+	})
+	$('.deletar').click(function(){
+		
+		 
+		
+		jQuery.ajax({
+				type: 'POST',
+				url: '/registrar-endereco' ,
+				data: {
+					 cep:$('#cep').val(),
+					 rua:$('#Rua').val(),
+					 numero:$('#Numero').val(),
+					 estado:$('#Estado').val(),
+					 bairro:$('#Bairro').val(),
+					 cidade:$('#Cidade').val(),
+					 complemento:$('#Complemento').val(),
+					 excluir:true,
+
+					'_token': laravel_token
+				},
+				
+				success: function (result) {
+
+					
+				},
+				error: function (result) {
+				   
+				//    $.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+				}
+			});
+	})
 	
 	try {
 		var $cardinput = $('.cvx-checkout_card_number');

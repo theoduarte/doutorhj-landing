@@ -25,6 +25,8 @@ use App\Checkup;
 use App\TagPopular;
 use App\VigenciaPaciente;
 use App\Plano;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
 class AgendamentoController extends Controller
 {
     /**
@@ -736,6 +738,12 @@ class AgendamentoController extends Controller
         //$user_paciente->paciente->load('dependentes');
         $responsavel_id = $user_paciente->paciente->id;
         
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+        
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
@@ -755,10 +763,58 @@ class AgendamentoController extends Controller
         if (Auth::check()) {
             $paciente = Auth::user()->paciente;
         }
+        //print_r($paciente->mundipagg_token);die;
+        $enderecos =   $client->getCustomers()->GetAddresses($paciente->mundipagg_token);
+
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente'));
+        
+        // BUSCAR ENDEREÇOS PACIENTE NA MUNDIPAGG
+        
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente', 'enderecos'));
     }
     
+    public function  MundiEnderecoPaciente(Request $request) {
+       
+        $cep 		        = CVXRequest::post('cep');
+        $rua 		        = CVXRequest::post('rua');
+        $numero 		    = CVXRequest::post('numero');
+        $estado 		    = CVXRequest::post('estado');
+        $bairro 		    = CVXRequest::post('bairro');
+        $cidade 		    = CVXRequest::post('cidade');
+        $complemento 		= CVXRequest::post('complemento');
+        $line1              = $numero.','. $rua.','.$bairro ;
+        $line2              =  $complemento ;
+        
+        $registrar 		    = CVXRequest::post('registrar');
+        
+        $excluir 		    = CVXRequest::post('excluir');
+        
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
+        }
+
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+      
+
+      // if(!empty($registrar)){
+            $enderecos =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'  ));
+            echo json_encode( $enderecos);
+        //}
+ 
+     
+
+       if(!empty($excluir)){
+           // $enderecos =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'  ));           
+        }
+      
+
+die;
+
+    }
     /**
      * consultaAgendamentoDisponivel a newly created resource in storage.
      *

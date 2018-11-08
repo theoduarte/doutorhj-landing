@@ -100,7 +100,8 @@
                                         @endif                                                                               
                                         @endif
                                         <option value="3" >Cartão de crédito</option>
-                                        
+                                        <option value="4" >Boleto Bancario</option>
+                                        <option value="5" >Transferencia Bancario</option>
                                         {{--
                                         <option value="4" >Boleto Bancario</option>
                                         <option value="5" >Transferencia Bancario</option>
@@ -334,14 +335,14 @@
                             </div>
                             <div class="boletoBancario"  style="display:none; ">
                                 <hr>
-                                <div class="semEndereco">
+                                <div class="semEndereco" style="display:none">
                                         <p>Seguir para o pagamento</p>
                                 </div>
-                                <div class="comendereco" style="display:none">
+                                <div class="comendereco" >
                                     <div class="row" >
                                         <div class="col-md-3">
                                             <label for="inputDocumento">Documento</label>
-                                            <select class="form-control" id="documento_boleto">
+                                            <select class="form-control" id="documento_boleto" disabled>
                                                 <option value="1">CPF</option>
                                                 <option value="2">CNPJ</option>
                                             </select>
