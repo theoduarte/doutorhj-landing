@@ -228,9 +228,9 @@
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
-                       {{-- <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>--}}
+                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
@@ -251,7 +251,7 @@
                             </div>
                         </div>
 
-                        {{--<div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>--}}
+                        </div>
 
                         @include('includes/main-search', [ 'class' => 'busca-welcome' ] )
                     </div>
