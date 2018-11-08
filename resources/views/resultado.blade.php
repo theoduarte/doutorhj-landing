@@ -112,7 +112,7 @@
 	                                    <div class="area-escolher-data">
 	                                    	@if( !empty($atendimento->consulta_id) || $atendimento->tp_prestador == 'CLI')
 	                                        <div class="titulo-escolhe-data">
-	                                            Escolha data e horário
+	                                            Sugestão de data e hora
 	                                        </div>
 	                                        <div class="escolher-data">                                    
 	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData mascaraDataAgendamento" name="data_atendimento" placeholder="Data" autocomplete="off" >

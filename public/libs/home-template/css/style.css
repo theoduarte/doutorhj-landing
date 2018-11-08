@@ -197,25 +197,39 @@ p {
 * 
 *********************************/
 
-.mensagem-cupom {
-    text-align: center;
-    padding: 10px;
-    background: rgb(25, 118, 188);
-    background: -moz-linear-gradient(left, #40bbff 0%, #1976bc 100%);
-    background: -webkit-linear-gradient(left, #40bbff 0%, #1976bc 100%);
-    background: linear-gradient(to right, #40bbff 0%, #1976bc 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40bbff', endColorstr='#1976bc', GradientType=1);
+.welcome-bar {
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    line-height: 44px;
 }
 
-.mensagem-cupom p {
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 30px;
-    color: rgb(255, 255, 255);
+.welcome-bar .container {
+    padding-top: 0;
 }
 
-.mensagem-cupom p span {
-    font-weight: 700;
+.welcome-bar a {
+    color: #1b71b9;
+}
+
+.welcome-bar .wb-links {
+    float: right;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.welcome-bar .wb-links li {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    position: relative;
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
+.welcome-bar .wb-links li i {
+    font-size: 16px;
+    color: #1b71b9;
 }
 
 header .container {
