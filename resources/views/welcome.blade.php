@@ -443,7 +443,7 @@
                 </div>
             </div>
 
-            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')
+            {{--@includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')--}}
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">
