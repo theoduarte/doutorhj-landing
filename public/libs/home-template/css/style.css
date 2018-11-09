@@ -232,6 +232,29 @@ p {
     color: #1b71b9;
 }
 
+.wb-links-mobile {
+    padding: 20px 0 0 0;
+    list-style: none;
+    margin: 20px 0 0 0;
+    border-top: 1px solid #ddd;
+    display: none;
+}
+
+.wb-links-mobile a {
+    color: #1b71b9;
+}
+
+.wb-links-mobile li {
+    margin: 0;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.wb-links-mobile li i{
+    font-size: 16px;
+    color: #1b71b9;
+}
+
 header .container {
     padding-top: 72px;
     position: relative;
@@ -4042,6 +4065,14 @@ footer ul li a:hover {
 
     .modal-seleciona-estado .btn {
         margin-top: 14px;
+    }
+
+    .welcome-bar {
+        display: none;
+    }
+
+    .wb-links-mobile {
+        display: block;
     }
 
     .banner-slider-home .carousel-item {

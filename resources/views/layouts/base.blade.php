@@ -264,6 +264,11 @@
                                 <a class="nav-link" href="{{ route('login') }}">Login</a>
                             </li>
                         </ul>
+                        <ul class="wb-links-mobile">
+                            <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
+                            <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                        </ul>
                         {{--<span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>--}}
                     </div>
                 </div>
