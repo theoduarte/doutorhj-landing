@@ -81,6 +81,7 @@
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
 		<script src="/libs/cookies-js/cookies_min.js"></script>
+		<script src="/js/doutorhj.geolocation.js"></script>
         <script src="/js/doutorhj.script.js"></script>
 
         <script type="text/javascript">

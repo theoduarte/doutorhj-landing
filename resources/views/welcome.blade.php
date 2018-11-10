@@ -225,6 +225,8 @@
         <section class="banner-slider-home">
 
             <header>
+            	<input type="hidden" id="startLat">
+            	<input type="hidden" id="startLon">
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
