@@ -35,9 +35,7 @@ window.onload = function() {
 		                confirmButtonClass: 'btn btn-confirm mt-2',
 		                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
 		                confirmButtonText: 'Sim',
-		                cancelButtonText: 'NÃO',
-		                showLoaderOnConfirm: true,
-		                preConfirm: function(event) {
+		                cancelButtonText: 'NÃO'
 		    	   }).then(function(event) {
 		    		   $('#sg_estado_localizacao').val(uf_localizacao);
 	    				docCookies.setItem('uf_localizacao', uf_localizacao);
