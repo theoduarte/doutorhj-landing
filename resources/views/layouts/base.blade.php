@@ -519,7 +519,7 @@
 
         $(document).ready(function () {
 
-        	docCookies.removeItem('uf_localizacao');
+        	//docCookies.removeItem('uf_localizacao');
         	showModalUfLocation();
 
         });
