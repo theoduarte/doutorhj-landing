@@ -23,8 +23,9 @@ window.onload = function() {
 				var uf_localizacao = getUFfromGooglemaps(result);
 				
 				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
-				if(uf_localizacao_cookie != null) {
+				if(uf_escolha_manual == '1') {
 					uf_localizacao = uf_localizacao_cookie;
 				}
 				
@@ -103,6 +104,7 @@ function showModalUfLocation() {
     $('#sg_estado_localizacao').change(function(){
         var sg_estado = $(this).val();
         docCookies.setItem('uf_localizacao', sg_estado);
+        docCookies.setItem('uf_escolha_manual', 1);
         $('#sg_estado_localizazao_form').val(sg_estado);
     });
 }
