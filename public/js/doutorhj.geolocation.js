@@ -101,7 +101,7 @@ function getUFfromGooglemaps(input) {
 
 function getDescricaoFromUf(input) {
 	
-	var estados = {
+	var estados = [
 			'AC' => 'Acre',
         'AL' => 'Alagoas',
         'AP' => 'Amapá',
