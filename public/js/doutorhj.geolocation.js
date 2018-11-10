@@ -36,9 +36,8 @@ window.onload = function() {
 		                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
 		                confirmButtonText: 'Sim',
 		                cancelButtonText: 'NÃO'
-		    	   }).then(function(result) {
-		    	    	if(result.dismiss == 'cancel') {
-		    	    		uf_escolha_manual = 1;
+		    	   }).then(function(event) {
+		    	    	if(event.dismiss == 'cancel') {
 		    	    		docCookies.setItem('uf_escolha_manual', '1');
 		    	    		
 		    	        } else {
