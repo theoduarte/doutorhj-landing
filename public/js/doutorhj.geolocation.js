@@ -79,6 +79,7 @@ function showModalUfLocation() {
         
     } else {
     	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+    	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
         $('#ds_uf_localizacao').html(ds_uf_localizacao);
     }
 
