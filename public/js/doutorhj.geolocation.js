@@ -45,6 +45,14 @@ window.onload = function() {
 	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
 	                    
 		    	    }, function(dismiss){
+		    	    	
+		    	    	$('#sg_estado_localizacao').val(uf_localizacao_cookie);
+	    				docCookies.setItem('uf_localizacao', uf_localizacao_cookie);
+	    		        $('#sg_estado_localizazao_form').val(uf_localizacao_cookie);
+	    		        
+	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao_cookie);
+	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    
 		    	    	docCookies.setItem('uf_escolha_manual', '1');
 		    	    });
 				} else {
