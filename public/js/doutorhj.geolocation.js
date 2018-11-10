@@ -39,7 +39,7 @@ window.onload = function() {
 		    	   }).then(function(result) {
 		    	    	if(result.dismiss == 'cancel') {
 		    	    		uf_escolha_manual = 1;
-		    	    		docCookies.setItem('uf_escolha_manual', 1);
+		    	    		docCookies.setItem('uf_escolha_manual', '1');
 		    	    		
 		    	        } else {
 
@@ -52,7 +52,7 @@ window.onload = function() {
 		    	        }
 		    	    });
 				} else {
-					docCookies.setItem('uf_escolha_manual', 0);
+					docCookies.setItem('uf_escolha_manual', '0');
 					$('#sg_estado_localizacao').val(uf_localizacao);
     				docCookies.setItem('uf_localizacao', uf_localizacao);
     		        $('#sg_estado_localizazao_form').val(uf_localizacao);
