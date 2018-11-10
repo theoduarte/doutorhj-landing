@@ -24,7 +24,7 @@ window.onload = function() {
 				docCookies.setItem('uf_localizacao', uf_localizacao);
 		        $('#sg_estado_localizazao_form').val(uf_localizacao);
 		        
-		        var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
                 $('#ds_uf_localizacao').html(ds_uf_localizacao);
             },
             error: function (result) {
@@ -90,11 +90,46 @@ function showModalUfLocation() {
 
 function getUFfromGooglemaps(input) {
 	
-	console.log(input.results);
+	//console.log(input.results);
 	var uf = 'SP';
 	
 	if(input.results.length > 0) {
 		uf = input.results[4].address_components[5].short_name;
 	}
 	return uf; 
+}
+
+function getDescricaoFromUf(input) {
+	
+	var estados = [
+			'AC' => 'Acre',
+        'AL => Alagoas',
+        'AP => Amapá',
+        'AM => Amazonas',
+        'BA => Bahia',
+        'CE => Ceará',
+        'DF => Distrito Federal',
+        'ES => Espírito Santo',
+        'GO => Goiás',
+        'MA => Maranhão',
+        'MT => Mato Grosso',
+        'MS => Mato Grosso do Sul',
+        'MG => Minas Gerais',
+        'PA => Pará',
+        'PB => Paraíba',
+        'PR => Paraná',
+        'PE => Pernambuco',
+        'PI => Piauí',
+        'RJ => Rio de Janeiro',
+        'RN => Rio Grande do Norte',
+        'RS => Rio Grande do Sul',
+        'RO => Rondônia',
+        'RR => Roraima',
+        'SC => Santa Catarina',
+        'SP => São Paulo',
+        'SE => Sergipe',
+        'TO => Tocantins'
+    ];
+	
+	return estados[input];
 }
