@@ -103,4 +103,3 @@ function codeLatLng(results) {
         alert("No results found");
       }
 }
-}
