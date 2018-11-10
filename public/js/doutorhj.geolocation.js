@@ -13,24 +13,28 @@ window.onload = function() {
 	    
 	    var drhj_googlemaps_key = 'AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI';
 	    
-    	jQuery.ajax({
-    		type: 'GET',
-    	  	url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+drhj_latitude+','+drhj_longitude+'&key='+drhj_googlemaps_key,
-    	  	data: {},
-			success: function (result) {
-				var uf_localizacao = getUFfromGooglemaps(result);
-				
-				$('#sg_estado_localizacao').val(uf_localizacao);
-				docCookies.setItem('uf_localizacao', uf_localizacao);
-		        $('#sg_estado_localizazao_form').val(uf_localizacao);
-		        
-		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-                $('#ds_uf_localizacao').html(ds_uf_localizacao);
-            },
-            error: function (result) {
-            	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
-            }
-    	});
+	    var uf_localizacao = docCookies.getItem('uf_localizacao');
+	    
+	    if(uf_localizacao === null) {
+	    	jQuery.ajax({
+	    		type: 'GET',
+	    	  	url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+drhj_latitude+','+drhj_longitude+'&key='+drhj_googlemaps_key,
+	    	  	data: {},
+				success: function (result) {
+					var uf_localizacao = getUFfromGooglemaps(result);
+					
+					$('#sg_estado_localizacao').val(uf_localizacao);
+					docCookies.setItem('uf_localizacao', uf_localizacao);
+			        $('#sg_estado_localizazao_form').val(uf_localizacao);
+			        
+			        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+	                $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	            },
+	            error: function (result) {
+	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
+	            }
+	    	});
+	    }
     	
 	  };
 	  var geoError = function(error) {
