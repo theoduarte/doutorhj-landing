@@ -29,7 +29,7 @@ window.onload = function() {
 					
 					swal({
 						title: 'DoutorHoje: Alerta!',
-		                text: "Sua localização atual (<strong>"+uf_localizacao+"</strong>) é diferente da localização (<strong>"+uf_localizacao_cookie+"</strong>) escolhida. Você deseja mudar?",
+		                text: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização (<strong>'+uf_localizacao_cookie+'</strong>) escolhida. Você deseja mudar?',
 		                type: 'warning',
 		                showCancelButton: true,
 		                confirmButtonClass: 'btn btn-confirm mt-2',
