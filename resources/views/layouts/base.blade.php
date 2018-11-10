@@ -521,7 +521,7 @@
 
         	//docCookies.removeItem('uf_localizacao');
 
-            $('.seleciona-estado').select2({
+            /* $('.seleciona-estado').select2({
                 width: '100%',
                 language: {
                     noResults: function (params) {
@@ -552,7 +552,7 @@
                 var sg_estado = $(this).val();
                 docCookies.setItem('uf_localizacao', sg_estado);
                 $('#sg_estado_localizazao_form').val(sg_estado);
-            });
+            }); */
 
         });
 
