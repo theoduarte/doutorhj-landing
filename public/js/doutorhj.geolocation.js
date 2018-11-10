@@ -45,7 +45,7 @@ window.onload = function() {
 	    	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
 	    }
 	    if(error.code == 1 | error.code == 3) {
-	    	docCookies.removeItem('uf_localizacao');
+	    	//docCookies.removeItem('uf_localizacao');
 	    	showModalUfLocation();
 	    }
 	  };
