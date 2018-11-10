@@ -34,6 +34,10 @@ window.onload = function() {
 	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
 	            }
 	    	});
+	    } else {
+	    	var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+	    	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
+	        $('#ds_uf_localizacao').html(ds_uf_localizacao);
 	    }
     	
 	  };
