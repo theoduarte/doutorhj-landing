@@ -85,6 +85,7 @@ function codeLatLng(input) {
 	
 	console.log(input.results);
 	var uf = 'SP';
+	alert(input.results.lenght);
 	if(input.results.lenght > 0) {
 		uf = input.results[4].address_components[5].short_name;
 	}
