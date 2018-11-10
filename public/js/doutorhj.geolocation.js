@@ -8,8 +8,23 @@ window.onload = function() {
 
 	  var geoSuccess = function(position) {
 	    startPos 	   = position;
-	    user_latitude  = startPos.coords.latitude;
-	    user_longitude = startPos.coords.longitude;
+	    drhj_latitude  = startPos.coords.latitude;
+	    drhj_longitude = startPos.coords.longitude;
+	    
+	    var drhj_googlemaps_key = 'AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI';
+	    
+    	jQuery.ajax({
+    		type: 'GET',
+    	  	url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+drhj_latitude+','+drhj_longitude+'&key='+drhj_googlemaps_key,
+    	  	data: {},
+			success: function (result) {
+				codeLatLng(result);
+            },
+            error: function (result) {
+            	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
+            }
+    	});
+    	
 	  };
 	  var geoError = function(error) {
 	    console.log('Error occurred. Error code: ' + error.code);
@@ -18,20 +33,9 @@ window.onload = function() {
 	    //   1: permission denied
 	    //   2: position unavailable (error response from location provider)
 	    //   3: timed out
+	    
 	    if(error.code == 0) {
-	    	
-	    	var drhj_googlemaps_key = 'AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI';
-	    	jQuery.ajax({
-	    		type: 'GET',
-	    	  	url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+drhj_latitude+','+drhj_longitude+'&key='+drhj_googlemaps_key,
-	    	  	data: {},
-				success: function (result) {
-					codeLatLng(result);
-	            },
-	            error: function (result) {
-	            	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
-	            }
-	    	});
+	    	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
 	    }
 	    if(error.code == 1 | error.code == 3) {
 	    	showModalUfLocation();
