@@ -64,7 +64,7 @@ window.onload = function() {
 //	    	docCookies.removeItem('uf_localizacao');
 //	    }
 	    if(error.code == 1 | error.code == 3) {
-	    	showModalUfLocation();
+	    	editUfWheNotAllowedLocation();
 	    }
 	  };
 
@@ -100,6 +100,30 @@ function showModalUfLocation() {
     	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
         $('#ds_uf_localizacao').html(ds_uf_localizacao);
     }
+
+    $('#sg_estado_localizacao').change(function(){
+        var sg_estado = $(this).val();
+        docCookies.setItem('uf_localizacao', sg_estado);
+        docCookies.setItem('uf_escolha_manual', 1);
+        $('#sg_estado_localizazao_form').val(sg_estado);
+    });
+}
+
+function editUfWheNotAllowedLocation() {
+	
+	$('.seleciona-estado').select2({
+        width: '100%',
+        language: {
+            noResults: function (params) {
+              return "Nenhum Estado encontrado!";
+            }
+          }
+    });
+	
+	$('#modalEstado').modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
 
     $('#sg_estado_localizacao').change(function(){
         var sg_estado = $(this).val();
