@@ -25,7 +25,7 @@ window.onload = function() {
 				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
 				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
-				if(uf_escolha_manual != '1' & (uf_localizacao != uf_localizacao_cookie)) {
+				if(uf_escolha_manual == '0' & (uf_localizacao != uf_localizacao_cookie)) {
 					
 					swal({
 						title: 'Alerta de localização!',
@@ -105,6 +105,7 @@ window.onload = function() {
 //	    	docCookies.removeItem('uf_localizacao');
 //	    }
 	    if(error.code == 1 | error.code == 3) {
+	    	docCookies.setItem('uf_escolha_manual', '0');
 	    	showModalUfLocation();
 	    }
 	  };
