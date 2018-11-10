@@ -25,7 +25,7 @@ window.onload = function() {
 				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
 				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
-				if(uf_escolha_manual == '0' & (uf_localizacao != uf_localizacao_cookie)) {
+				if(!(uf_localizacao_cookie === null) && (uf_escolha_manual == '0' & (uf_localizacao != uf_localizacao_cookie))) {
 					
 					swal({
 						title: 'Alerta de localização!',
@@ -55,14 +55,13 @@ window.onload = function() {
 	                    
 		    	    	docCookies.setItem('uf_escolha_manual', '1');
 		    	    });
-				} else {
-					//docCookies.setItem('uf_escolha_manual', '0');
-//					$('#sg_estado_localizacao').val(uf_localizacao);
-//    				docCookies.setItem('uf_localizacao', uf_localizacao);
-//    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
-//    		        
-//    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-//                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+				} else if(uf_localizacao_cookie === null) {
+					$('#sg_estado_localizacao').val(uf_localizacao);
+    				docCookies.setItem('uf_localizacao', uf_localizacao);
+    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+    		        
+    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
 				}
 //				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
