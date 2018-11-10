@@ -22,6 +22,12 @@ window.onload = function() {
 			success: function (result) {
 				var uf_localizacao = getUFfromGooglemaps(result);
 				
+				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+				
+				if(uf_localizacao_cookie != null) {
+					uf_localizacao = uf_localizacao_cookie;
+				}
+				
 				$('#sg_estado_localizacao').val(uf_localizacao);
 				docCookies.setItem('uf_localizacao', uf_localizacao);
 		        $('#sg_estado_localizazao_form').val(uf_localizacao);
