@@ -16,7 +16,7 @@ window.onload = function() {
 	    //   1: permission denied
 	    //   2: position unavailable (error response from location provider)
 	    //   3: timed out
-	    if(error == 1 | error == 3) {
+	    if(error.code == 1 | error.code == 3) {
 	    	showModalUfLocation();
 	    }
 	  };
