@@ -18,7 +18,14 @@ window.onload = function() {
     	  	url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+drhj_latitude+','+drhj_longitude+'&key='+drhj_googlemaps_key,
     	  	data: {},
 			success: function (result) {
-				codeLatLng(result);
+				var uf_localizacao = getUFfromGooglemaps(result);
+				
+				$('#sg_estado_localizacao').val(uf_localizacao);
+				docCookies.setItem('uf_localizacao', uf_localizacao);
+		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+		        
+		        var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+                $('#ds_uf_localizacao').html(ds_uf_localizacao);
             },
             error: function (result) {
             	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
@@ -81,7 +88,7 @@ function showModalUfLocation() {
     });
 }
 
-function codeLatLng(input) {
+function getUFfromGooglemaps(input) {
 	
 	console.log(input.results);
 	var uf = 'SP';
@@ -90,26 +97,4 @@ function codeLatLng(input) {
 		uf = input.results[4].address_components[5].short_name;
 	}
 	return uf; 
-	/*if (results[1]) {
-		//formatted address
-		alert(results[0].formatted_address)
-		//find country name
-		for (var i=0; i<results[0].address_components.length; i++) {
-			for (var b=0; b<results[0].address_components[i].types.length;b++) {
-
-				//there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
-				if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-					//this is the object you are looking for
-					city= results[0].address_components[i];
-					break;
-				}
-			}
-		}
-		//city data
-		alert(city.short_name + " " + city.long_name)
-
-
-	} else {
-		alert("No results found");
-	}*/
 }
