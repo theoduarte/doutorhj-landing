@@ -528,6 +528,11 @@
                     }
                   }
             });
+
+        	var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+        	if(uf_escolha_manual == null) {
+        		docCookies.setItem('uf_escolha_manual', '0');
+        	}
             
         	$('#sg_estado_localizacao').change(function(){
                 var sg_estado = $(this).val();
