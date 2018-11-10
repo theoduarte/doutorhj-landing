@@ -42,11 +42,12 @@ window.onload = function() {
 	    //   3: timed out
 	    
 	    if(error.code == 0) {
+	    	docCookies.removeItem('uf_localizacao');
 	    	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
 	    }
-	    if(error.code == 1) {
-	    	docCookies.removeItem('uf_localizacao');
-	    }
+//	    if(error.code == 3) {
+//	    	docCookies.removeItem('uf_localizacao');
+//	    }
 	    if(error.code == 1 | error.code == 3) {
 	    	showModalUfLocation();
 	    }
