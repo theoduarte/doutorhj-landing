@@ -532,7 +532,6 @@
         	$('#sg_estado_localizacao').change(function(){
                 var sg_estado = $(this).val();
                 docCookies.setItem('uf_localizacao', sg_estado);
-                docCookies.setItem('uf_escolha_manual', 1);
                 $('#sg_estado_localizazao_form').val(sg_estado);
             });
             

@@ -25,16 +25,52 @@ window.onload = function() {
 				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
 				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
-				if(uf_escolha_manual == '1') {
-					uf_localizacao = uf_localizacao_cookie;
+				if(uf_escolha_manual != '1' & (uf_localizacao != uf_localizacao_cookie)) {
+					
+					swal({
+						title: 'DoutorHoje: Alerta!',
+		                text: "Sua localização atual é diferente da localização escolhida. Você deseja mudar?",
+		                type: 'warning',
+		                showCancelButton: true,
+		                confirmButtonClass: 'btn btn-confirm mt-2',
+		                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
+		                confirmButtonText: 'Sim',
+		                cancelButtonText: 'NÃO'
+		    	   }).then(function(result) {
+		    	    	if(result.dismiss == 'cancel') {
+		    	    		uf_escolha_manual = 1;
+		    	    		docCookies.setItem('uf_escolha_manual', 1);
+		    	    		
+		    	        } else {
+
+		    	        	$('#sg_estado_localizacao').val(uf_localizacao);
+		    				docCookies.setItem('uf_localizacao', uf_localizacao);
+		    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+		    		        
+		    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+		                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+		    	        }
+		    	    });
+				} else {
+					$('#sg_estado_localizacao').val(uf_localizacao);
+    				docCookies.setItem('uf_localizacao', uf_localizacao);
+    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+    		        
+    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
 				}
+//				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
-				$('#sg_estado_localizacao').val(uf_localizacao);
-				docCookies.setItem('uf_localizacao', uf_localizacao);
-		        $('#sg_estado_localizazao_form').val(uf_localizacao);
-		        
-		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-                $('#ds_uf_localizacao').html(ds_uf_localizacao);
+//				if(uf_escolha_manual == '1') {
+//					uf_localizacao = uf_localizacao_cookie;
+//				}
+				
+//				$('#sg_estado_localizacao').val(uf_localizacao);
+//				docCookies.setItem('uf_localizacao', uf_localizacao);
+//		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+//		        
+//		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+//                $('#ds_uf_localizacao').html(ds_uf_localizacao);
             },
             error: function (result) {
             	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
@@ -104,7 +140,6 @@ function showModalUfLocation() {
     $('#sg_estado_localizacao').change(function(){
         var sg_estado = $(this).val();
         docCookies.setItem('uf_localizacao', sg_estado);
-        docCookies.setItem('uf_escolha_manual', 1);
         $('#sg_estado_localizazao_form').val(sg_estado);
     });
 }
