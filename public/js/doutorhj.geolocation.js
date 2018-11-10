@@ -35,20 +35,19 @@ window.onload = function() {
 		                confirmButtonClass: 'btn btn-confirm mt-2',
 		                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
 		                confirmButtonText: 'Sim',
-		                cancelButtonText: 'NÃO'
+		                cancelButtonText: 'NÃO',
+		                showLoaderOnConfirm: true,
+		                preConfirm: function(event) {
 		    	   }).then(function(event) {
-		    	    	if(event.dismiss == 'cancel') {
-		    	    		docCookies.setItem('uf_escolha_manual', '1');
-		    	    		
-		    	        } else {
-
-		    	        	$('#sg_estado_localizacao').val(uf_localizacao);
-		    				docCookies.setItem('uf_localizacao', uf_localizacao);
-		    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
-		    		        
-		    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-		                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
-		    	        }
+		    		   $('#sg_estado_localizacao').val(uf_localizacao);
+	    				docCookies.setItem('uf_localizacao', uf_localizacao);
+	    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
+	    		        
+	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
+	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    
+		    	    }, function(dismiss){
+		    	    	docCookies.setItem('uf_escolha_manual', '1');
 		    	    });
 				} else {
 					docCookies.setItem('uf_escolha_manual', '0');
