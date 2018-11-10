@@ -28,8 +28,8 @@ window.onload = function() {
 				if(uf_escolha_manual != '1' & (uf_localizacao != uf_localizacao_cookie)) {
 					
 					swal({
-						title: 'DoutorHoje: Alerta!',
-						html: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização (<strong>'+uf_localizacao_cookie+'</strong>) escolhida. Você deseja mudar?',
+						title: 'Alerta de localização!',
+						html: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização escolhida (<strong>'+uf_localizacao_cookie+'</strong>). Você deseja mudar?',
 		                type: 'warning',
 		                showCancelButton: true,
 		                confirmButtonClass: 'btn btn-confirm mt-2',
