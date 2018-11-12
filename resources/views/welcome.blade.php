@@ -634,22 +634,10 @@
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
 
+                
                 $('#tipo_especialidade option:first').prop("selected", false);
                 $('#local_atendimento option:first').prop("selected", false);
 
-                $('#btn-uf-localizacao').click(function(){
-                    uf_localizacao = docCookies.getItem('uf_localizacao');
-                    
-            		if(uf_localizacao != null) {
-                		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
-                		$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
-                        $('#ds_uf_localizacao').html(ds_uf_localizacao);
-                        
-                        var sg_estado = $('#sg_estado_localizacao').val();
-                        docCookies.setItem('uf_localizacao', sg_estado);
-                        window.location.reload();
-            		}
-                });
 
                 $('#modalEstado').on("hidden.bs.modal", function() {
 

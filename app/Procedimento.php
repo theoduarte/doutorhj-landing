@@ -48,7 +48,7 @@ class Procedimento extends Model
     }
 
     public function getActiveExameProcedimento($planoId, $uf_localizacao) {
-        // DB::enableQueryLog();
+     //    DB::enableQueryLog();
         $query = DB::table('procedimentos')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, procedimentos.ds_procedimento) descricao, 'exame' tipo, procedimentos.id") )
             ->distinct()
@@ -73,14 +73,14 @@ class Procedimento extends Model
                       ->from('filials')
                       ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
                       ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
-                      ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
+                      ->whereRaw("filials.clinica_id = clinicas.id AND filials.cs_status = 'A'");
             })
             ->where(['atendimentos.cs_status' => 'A', 'clinicas.cs_status' => 'A'])
             ->whereIn('procedimentos.tipoatendimento_id', self::$_tipoAtendimentoExameProcedimento)
             ->orderby('descricao', 'asc')
             ->get();
 
-        // dd( DB::getQueryLog() );
+        //dd( DB::getQueryLog() ); 
         return $query;
     }
 

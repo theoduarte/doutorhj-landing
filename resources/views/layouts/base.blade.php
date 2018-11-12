@@ -110,7 +110,7 @@
                         <ul class="wb-links">
                             <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
                             <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
-                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
                         </ul>
                     </div>
                 </div>
@@ -206,9 +206,9 @@
                         </div>
 
                         {{--@if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
-                            <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                            <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                         @else
-                            <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                            <span class="nome-estado-topo"><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                         @endif--}}
 
                         @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
@@ -268,9 +268,9 @@
                         <ul class="wb-links-mobile">
                             <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
                             <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
-                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
                         </ul>
-                        {{--<span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>--}}
+                        {{--<span class="nome-estado-topo"><span id="ds_uf_localizacao" class="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>--}}
                     </div>
                 </div>
             </nav>
@@ -498,7 +498,8 @@
 
     <!-- <script src="/libs/jquery-ui/jquery-ui.js"></script> -->
 
-    <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+    <script src="/js/inputMask.min.js"></script>
+    
     <script src="/js/utilitarios.js"></script>
 
     <script>
@@ -541,27 +542,24 @@
                 $('#sg_estado_localizazao_form').val(sg_estado);
             });
             
-            /* 
-
-            var uf_localizacao = docCookies.getItem('uf_localizacao');
             
-            $('#sg_estado_localizacao').val(uf_localizacao);
-            $('#sg_estado_localizazao_form').val(uf_localizacao);
-
-            //alert(uf_localizacao);
-            if(uf_localizacao === null) {
-                
-            	$('#modalEstado').modal({
-                    backdrop: 'static',
-                    keyboard: false,
+            $('#btn-uf-localizacao').click(function(){
+                    uf_localizacao = docCookies.getItem('uf_localizacao');
+                    
+            		if(uf_localizacao != null) {
+                       
+                	 	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+                	    $('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
+                        $('.ds_uf_localizacao').empty().html( getDescricaoFromUf(uf_localizacao) );
+                        
+                        var sg_estado = $('#sg_estado_localizacao').val();
+                        docCookies.setItem('uf_localizacao', sg_estado);
+                      //  window.location.reload();
+                    }
+                    
                 });
-                
-            } else {
-            	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
-                $('#ds_uf_localizacao').html(ds_uf_localizacao);
-            }
 
-             */
+            
 
         });
 

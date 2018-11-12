@@ -34,7 +34,7 @@ class Consulta extends Model
     }
 
     public function getActive($planoId, $uf_localizacao) {
-        DB::enableQueryLog();
+       // DB::enableQueryLog();
         $query = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
             ->distinct()
@@ -59,13 +59,13 @@ class Consulta extends Model
                       ->from('filials')
                       ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
                       ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
-                      ->whereRaw("filials.clinica_id = clinicas.id AND cs_status = 'A'");
+                      ->whereRaw("filials.clinica_id = clinicas.id AND filials.cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
             ->orderby('descricao', 'asc')
             ->get();
 
-        //dd( DB::getQueryLog() );
+        //dd( DB::getQueryLog() );die;
         return $query;
     } 
 

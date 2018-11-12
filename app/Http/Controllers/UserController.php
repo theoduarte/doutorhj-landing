@@ -398,10 +398,12 @@ HEREDOC;
         
         $paciente->access_token = $access_token;
         $paciente->time_to_live = date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+       
         $paciente->save();
         
         # realiza a criptografia do token do paciente
         $user_send_token->access_token = bcrypt($access_token);
+        
         $user_send_token->save();
         
         $number = UtilController::retiraMascara($contato->ds_contato);

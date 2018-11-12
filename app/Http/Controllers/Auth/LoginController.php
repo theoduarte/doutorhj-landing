@@ -74,7 +74,7 @@ class LoginController extends Controller
 
     	$active = $user_login->cs_status;
 
-    	$credentials = ['email' => $username, 'password' => $access_token, 'cs_status' => 'A'];
+    	$credentials = ['email' => $username, 'password' =>  ($access_token), 'cs_status' => 'A'];
 
     	if($active == 'I') {
     		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
@@ -83,8 +83,8 @@ class LoginController extends Controller
     	if($user_login === null) {
     		//return view('login');
     		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
-    	}
-    	
+		}
+	 
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		Auth::user()->load('paciente');
