@@ -153,11 +153,11 @@ function getUFfromGooglemaps(input) {
 	 
 	var uf = 'SP';
 	 
-	for(var i=0; i< json.results.length; i++ ){
+	for(var i=0; i< input.results.length; i++ ){
                
-		for(var j=0; j<json.results[i].address_components.length; j++){
+		for(var j=0; j<input.results[i].address_components.length; j++){
    
-			 var resp = getUFArray(	json.results[i].address_components[j].short_name)
+			 var resp = getUFArray(	input.results[i].address_components[j].short_name)
 				console.log(resp)
 			 if(resp != null){
 					uf = resp
