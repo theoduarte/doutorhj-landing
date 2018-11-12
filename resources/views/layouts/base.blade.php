@@ -81,6 +81,7 @@
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
 		<script src="/libs/cookies-js/cookies_min.js"></script>
+		<script src="/js/doutorhj.geolocation.js"></script>
         <script src="/js/doutorhj.script.js"></script>
 
         <script type="text/javascript">
@@ -108,7 +109,7 @@
                     <div class="col-sm-7">
                         <ul class="wb-links">
                             <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
-                            <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
                         </ul>
                     </div>
@@ -519,8 +520,7 @@
         $(document).ready(function () {
 
         	//docCookies.removeItem('uf_localizacao');
-
-            $('.seleciona-estado').select2({
+        	$('.seleciona-estado').select2({
                 width: '100%',
                 language: {
                     noResults: function (params) {
@@ -528,6 +528,20 @@
                     }
                   }
             });
+
+        	var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+        	//alert(uf_escolha_manual);
+        	if(uf_escolha_manual === null) {
+        		docCookies.setItem('uf_escolha_manual', '0');
+        	}
+            
+        	$('#sg_estado_localizacao').change(function(){
+                var sg_estado = $(this).val();
+                docCookies.setItem('uf_localizacao', sg_estado);
+                $('#sg_estado_localizazao_form').val(sg_estado);
+            });
+            
+            /* 
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
             
@@ -547,11 +561,7 @@
                 $('#ds_uf_localizacao').html(ds_uf_localizacao);
             }
 
-            $('#sg_estado_localizacao').change(function(){
-                var sg_estado = $(this).val();
-                docCookies.setItem('uf_localizacao', sg_estado);
-                $('#sg_estado_localizazao_form').val(sg_estado);
-            });
+             */
 
         });
 

@@ -225,6 +225,8 @@
         <section class="banner-slider-home">
 
             <header>
+<!--             	<input type="hidden" id="startLat"> -->
+<!--             	<input type="hidden" id="startLon"> -->
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
@@ -640,8 +642,27 @@
                     
             		if(uf_localizacao != null) {
                 		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
+                		$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
                         $('#ds_uf_localizacao').html(ds_uf_localizacao);
+                        
+                        var sg_estado = $('#sg_estado_localizacao').val();
+                        docCookies.setItem('uf_localizacao', sg_estado);
                         window.location.reload();
+            		}
+                });
+
+                $('#modalEstado').on("hidden.bs.modal", function() {
+
+					uf_localizacao = docCookies.getItem('uf_localizacao');
+                    
+            		if(uf_localizacao == null) {
+                    	$('#sg_estado_localizacao').val('DF');
+        				docCookies.setItem('uf_localizacao', 'DF');
+        		        $('#sg_estado_localizazao_form').val('DF');
+        		        
+                        $('#ds_uf_localizacao').html('Distrito Federal');
+    
+                        $.Notification.notify('warning', 'top right', 'DoutorHJ Informa!', 'O estado do DISTRITO FEDERAL foi escolhido como localização automaticamente devido a essa escolha não ter sido realizada!');
             		}
                 });
 
