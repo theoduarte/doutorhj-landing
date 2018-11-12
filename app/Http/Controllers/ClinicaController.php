@@ -34,7 +34,7 @@ use App\Filial;
 use App\Plano;
 use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
-
+use App\FuncoesPagamento;
 
 class ClinicaController extends Controller
 {
