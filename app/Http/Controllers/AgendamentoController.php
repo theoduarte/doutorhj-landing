@@ -803,13 +803,13 @@ class AgendamentoController extends Controller
 		
         $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
       
-        
+
         if (Auth::check()) {
             $paciente = Auth::user()->paciente;
              	// se o usuario não tiver registro na dash board da mundipagg
             // deve cria-lo para fazer futuras compras na plataforma doutor hoje.
             if(empty($paciente->mundipagg_token)){
-            
+            	$user = User::where('id',$paciente->user_id)->first() ;
                 // passa os valores para montar o objeto a ser enviado
                 $resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $user->email);
                 
