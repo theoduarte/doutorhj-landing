@@ -797,16 +797,50 @@ class AgendamentoController extends Controller
         
         $excluir 		    = CVXRequest::post('excluir');
         
-        if (Auth::check()) {
-            $paciente = Auth::user()->paciente;
-        }
-
         $basicAuthUserName = env('MUNDIPAGG_KEY');
 
 		$basicAuthPassword = "";
 		
         $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
       
+        
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
+             	// se o usuario não tiver registro na dash board da mundipagg
+            // deve cria-lo para fazer futuras compras na plataforma doutor hoje.
+            if(empty($paciente->mundipagg_token)){
+            
+                // passa os valores para montar o objeto a ser enviado
+                $resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $user->email);
+                
+                try{
+                    // cria o usuario na mundipagg
+                    $userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+                    $paciente->mundipagg_token 	= $userCreate->id;
+
+                    if(!$paciente->save()){
+                        DB::rollBack();
+                        return response()->json([
+                            'messagem' => 'Não foi possivel salvar o usuario!',
+                            'errors' => $e->getMessage(),
+                        ], 500);
+                    }
+
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    return response()->json([
+                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+                
+            
+            }
+            
+        }
+
+       
+     
 
        if(!empty($registrar)){
             
