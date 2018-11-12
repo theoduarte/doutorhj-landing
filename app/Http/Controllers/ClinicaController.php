@@ -689,9 +689,17 @@ class ClinicaController extends Controller
                 
             
             }
-    
-            if(!empty($user_session->mundipagg_token)){
-                $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+            
+            try{
+                if(!empty($user_session->mundipagg_token)){
+                    $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+                }
+            }catch(\Exception $e){
+                return response()->json([
+                    'messagem' => 'Não conseguimos encontrar o Customer Token',
+                    'errors' => $e->getMessage(),
+                ], 500);
+
             }
         }
 
