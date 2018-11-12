@@ -14,7 +14,7 @@ class CreateColumnIdadressmundiPaciente extends Migration
     public function up()
     {
         Schema::table('enderecos', function (Blueprint $table) {
-            $table->string('token_adress_mundi',250)->nullable();;
+            $table->string('mundipagg_token',250)->nullable();;
             $table->string('cs_status', 1)->default('A');
         });
     }
@@ -27,7 +27,7 @@ class CreateColumnIdadressmundiPaciente extends Migration
     public function down()
     {
         Schema::table('enderecos', function (Blueprint $table) {
-            $table->dropColumn('token_adress_mundi');
+            $table->dropColumn('mundipagg_token');
             $table->dropColumn('cs_status');
         });
     }

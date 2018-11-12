@@ -27,6 +27,8 @@ use App\VigenciaPaciente;
 use App\Plano;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
+use App\Cidade;
+use App\Endereco;
 class AgendamentoController extends Controller
 {
     /**
@@ -763,9 +765,14 @@ class AgendamentoController extends Controller
         if (Auth::check()) {
             $paciente = Auth::user()->paciente;
         }
-        //print_r($paciente->mundipagg_token);die;
-        $enderecos =   $client->getCustomers()->GetAddresses($paciente->mundipagg_token);
 
+        $enderecos =[];
+        $endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first() ;
+        if(!empty($endereco)){
+            $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
+            array_push($enderecos,$endereco->toArray() );
+            array_push($enderecos,$cidade->toArray() );            
+        }
         
         
         // BUSCAR ENDEREÇOS PACIENTE NA MUNDIPAGG
@@ -782,6 +789,7 @@ class AgendamentoController extends Controller
         $bairro 		    = CVXRequest::post('bairro');
         $cidade 		    = CVXRequest::post('cidade');
         $complemento 		= CVXRequest::post('complemento');
+
         $line1              = $numero.','. $rua.','.$bairro ;
         $line2              =  $complemento ;
         
@@ -800,20 +808,43 @@ class AgendamentoController extends Controller
         $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
       
 
-      // if(!empty($registrar)){
-            $enderecos =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'  ));
-            echo json_encode( $enderecos);
-        //}
- 
-     
+       if(!empty($registrar)){
+            
+           $enderecos    =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'   ));
+           $cidade       =  Cidade::where('nm_cidade',  $cidade) ->orWhere('nm_cidade', 'like', '%' . $enderecos->city . '%')->first();     
+         
+           
+           $endereco = new Endereco();
+           $endereco->sg_logradouro =  $estado ;
+           $endereco->te_endereco = $rua ;
+           $endereco->nr_logradouro = $numero;
+           $endereco->te_bairro =  $bairro ;
+           $endereco->nr_cep = $cep;
+           $endereco->te_complemento = $complemento;
+           $endereco->cidade_id = $cidade ->id;
+           $endereco->mundipagg_token =$enderecos->id;   
+            
+           $endereco->save();
+           $paciente->enderecos()->sync( $endereco);           
+           $paciente->save();
 
-       if(!empty($excluir)){
-           // $enderecos =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'  ));           
+           $dado = false;
+           CVXCart::getTotal() !=0 ? $dado=true: $dado=false;
+           return response()->json(['mensagem' => 'Endereço registrado com sucesso',     'carrinho' =>    $dado  ], 200); 
+            
+            
+
         }
-      
-
-die;
-
+       
+     
+       if(!empty($excluir)){
+        $enderecos =[];
+        $endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first()  ;
+        $endereco->cs_status = 'I';
+        $endereco->save();
+        return response()->json(['mensagem' => 'Endereço deletado com sucesso',           ], 200);   
+        }
+ 
     }
     /**
      * consultaAgendamentoDisponivel a newly created resource in storage.
