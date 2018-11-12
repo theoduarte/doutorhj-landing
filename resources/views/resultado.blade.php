@@ -112,7 +112,7 @@
 	                                    <div class="area-escolher-data">
 	                                    	@if( !empty($atendimento->consulta_id) || $atendimento->tp_prestador == 'CLI')
 	                                        <div class="titulo-escolhe-data">
-	                                            Escolha data e horário
+	                                            Sugestão de data e hora
 	                                        </div>
 	                                        <div class="escolher-data">                                    
 	                                            <input type="text" id="selecionaData{{ $atendimento->id }}" class="selecionaData mascaraDataAgendamento" name="data_atendimento" placeholder="Data" autocomplete="off" >
@@ -395,20 +395,24 @@
             });
 
             function validaAgendarAtendimento(form_id) {
-                console.log(form_id);
+                 
             	
             	var clinica_id 		= jQuery('#'+form_id).find('#clinica_id').val();
         		var profissional_id = jQuery('#'+form_id).find('#profissional_id').val();
-        		
+                
+               
+
         		if(clinica_id == '') { return false; }
         		if(profissional_id != '') {
         			var ct_date_input = (jQuery('#'+form_id).find('.selecionaData').val()).split('.');
             		var dt_agendamento = ct_date_input[2]+'-'+ct_date_input[1]+'-'+ct_date_input[0];
-            		var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
+                    var ct_hora = jQuery('#'+form_id).find('.selecionaHora').val();
+                  
+                    
            		}
         		if(profissional_id != '' && dt_agendamento == '') { return false; }
         		if(profissional_id != '' && ct_hora == '') { return false; }
-        		
+        		 
         		jQuery.ajax({
             		type: 'POST',
             	  	url: '/consulta-agendamento-disponivel',
@@ -445,11 +449,22 @@
                 	    );
                     	return false;
                     }
-            	});
-            	
+            	});  
+            	 
             	
             	return false;
-            }            
+            } 
+            
+            
+            function validar(id, mensagem){
+                    $(id).parent().addClass('cvx-has-error');
+                    $(id).parent().append('<span class="help-block text-danger"><strong>'+mensagem+'</strong></span>');
+                    $(id).change(function(){
+                        $(this).parent().removeClass('cvx-has-error');
+                            $(this).parent().find('span.help-block').remove();
+                    });
+                }
+
 
             /*********************************
             *

@@ -33,6 +33,9 @@ use App\Paciente;
 use App\Filial;
 use App\Plano;
 use App\VigenciaPaciente;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
+
 class ClinicaController extends Controller
 {
     /**
@@ -218,8 +221,8 @@ class ClinicaController extends Controller
         $documentosclinica = $prestador->documentos;
 
         $user   = User::findorfail($prestador->responsavel->user_id);
-        $precoprocedimentos = Atendimento::where('clinica_id', $idClinica)->where('procedimento_id', '<>', null)->orderBy('ds_preco', 'asc')->orderBy('vl_atendimento', 'desc')->get();
-        $precoconsultas =     Atendimento::where('clinica_id', $idClinica)->where('consulta_id', '<>', null)->orderBy('ds_preco', 'asc')->orderBy('vl_atendimento', 'desc')->get();
+        $precoprocedimentos = Atendimento::where('clinica_id', $idClinica)->where('procedimento_id', '<>', null)->orderBy('ds_preco', 'asc')->get();
+        $precoconsultas =     Atendimento::where('clinica_id', $idClinica)->where('consulta_id', '<>', null)->orderBy('ds_preco', 'asc')->get();
 
         $documentoprofissional = [];
 
@@ -639,14 +642,71 @@ class ClinicaController extends Controller
     	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
 
+        								
+		$basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+
+      
+
+      
     	$carrinho = [];
     	$user_session = Auth::user()->paciente;
     	$url = Request::root();
     	$titulo_pedido = "";
     	$user_session->load('documentos');
-
+        
 		$plano_id = Paciente::getPlanoAtivo($user_session->id);
+        $endereco_paciente=[];
+        if (Auth::check()) {
+            if(empty($user_session->mundipagg_token)){
+                $user = User::where('id',$user_session->user_id)->first() ;
+                // passa os valores para montar o objeto a ser enviado
+                $resultado = FuncoesPagamento::criarUser($user_session->nm_primario . ' ' . $user_session->nm_secundario,  $user->email);
+                
+                try{
+                    // cria o usuario na mundipagg
+                    $userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+                    $user_session->mundipagg_token 	= $userCreate->id;
+    
+                    if(!$user_session->save()){
+                        DB::rollBack();
+                        return response()->json([
+                            'messagem' => 'Não foi possivel salvar o usuario!',
+                            'errors' => $e->getMessage(),
+                        ], 500);
+                    }
+    
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    return response()->json([
+                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+                
+            
+            }
+            
+            try{
+                if(!empty($user_session->mundipagg_token)){
+                    $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+                }
+            }catch(\Exception $e){
+                return response()->json([
+                    'messagem' => 'Não conseguimos encontrar o Customer Token',
+                    'errors' => $e->getMessage(),
+                ], 500);
 
+            }
+        }
+
+      
+        
+        
+       
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
 			$paciente = Paciente::findOrFail($paciente_tmp_id);
@@ -810,7 +870,7 @@ class ClinicaController extends Controller
             $paciente = Auth::user()->paciente;
         }
 
-    	return view('pagamento', compact('url', 'paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
+    	return view('pagamento', compact('url', 'paciente','endereco_paciente', 'user_session','plano_paciente', 'cpf_titular', 'carrinho', 'valor_total', 'valor_desconto', 'titulo_pedido', 'parcelamentos', 'cartoes_gravados', 'pacientes'));
     }
 
     /*colocar essa rota no local correto*/

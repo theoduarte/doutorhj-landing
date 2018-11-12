@@ -22,8 +22,19 @@ abstract class FuncoesPagamento
         return $payload;
     }
 
-	public static function criarResponse() {
-		
+	public static function criarEndereco($line1, $line2, $zip,$city, $state, $country ){
+			$payload = [
+				"line_1"=> $line1,			 
+			  	"line_2"=> $line2,
+			  	"zip_code"=> $zip,
+			  	"city"=> $city,
+			  	"state"=> $state,
+				"country"=>$country   
+				 
+			 
+			];
+
+			return $payload;
 	}
 	public static function criarTokenCartao($numero, $holdername, $mes, $ano, $cvv) {
 		$payload = [

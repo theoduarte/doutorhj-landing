@@ -11,6 +11,7 @@ use App\Contato;
 use Illuminate\Support\Facades\DB;
 use App\Paciente;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -43,11 +44,11 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function login(Request $request)
     {
     	$credentials = $request->only('cvx_telefone', 'cvx_token');
-    	
+
     	$cvx_telefone = $credentials['cvx_telefone'];
     	$cvx_token = $credentials['cvx_token'];
     	
@@ -63,19 +64,18 @@ class LoginController extends Controller
 	    	->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	    	->select('pacientes.*')
 	    	->get();
-    	
+
 	    //$query = DB::getQueryLog();
 	    //dd($query);
     	$user_login = $paciente_temp->first()->user;
-    	
+
     	$username = $user_login->email;
-    	$password = $cvx_token;
-    	
+    	$access_token = $cvx_token;
+
     	$active = $user_login->cs_status;
-    	
-    	$credentials = ['email' => $username, 'password' => $password, 'cs_status' => 'A'];
-    	//dd($user_login);
-    	
+
+    	$credentials = ['email' => $username, 'password' =>  ($access_token), 'cs_status' => 'A'];
+
     	if($active == 'I') {
     		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
     	}
@@ -83,8 +83,8 @@ class LoginController extends Controller
     	if($user_login === null) {
     		//return view('login');
     		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
-    	}
-    	
+		}
+	 
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		Auth::user()->load('paciente');

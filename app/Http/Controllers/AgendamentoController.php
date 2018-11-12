@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use App\Agendamento;
 use App\Clinica;
+use App\User;
 use App\Profissional;
 use App\Estado;
 use App\Atendimento;
@@ -25,6 +26,10 @@ use App\Checkup;
 use App\TagPopular;
 use App\VigenciaPaciente;
 use App\Plano;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
+use App\Cidade;
+use App\Endereco;
 class AgendamentoController extends Controller
 {
     /**
@@ -736,6 +741,12 @@ class AgendamentoController extends Controller
         //$user_paciente->paciente->load('dependentes');
         $responsavel_id = $user_paciente->paciente->id;
         
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+        
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
@@ -755,10 +766,121 @@ class AgendamentoController extends Controller
         if (Auth::check()) {
             $paciente = Auth::user()->paciente;
         }
+
+        $enderecos =[];
+        $endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first() ;
+        if(!empty($endereco)){
+            $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
+            array_push($enderecos,$endereco->toArray() );
+            array_push($enderecos,$cidade->toArray() );            
+        }
         
-        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente'));
+        
+        // BUSCAR ENDEREÇOS PACIENTE NA MUNDIPAGG
+        
+        return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente', 'enderecos'));
     }
     
+    public function  MundiEnderecoPaciente(Request $request) {
+       
+        $cep 		        = CVXRequest::post('cep');
+        $rua 		        = CVXRequest::post('rua');
+        $numero 		    = CVXRequest::post('numero');
+        $estado 		    = CVXRequest::post('estado');
+        $bairro 		    = CVXRequest::post('bairro');
+        $cidade 		    = CVXRequest::post('cidade');
+        $complemento 		= CVXRequest::post('complemento');
+
+        $line1              = $numero.','. $rua.','.$bairro ;
+        $line2              =  $complemento ;
+        
+        $registrar 		    = CVXRequest::post('registrar');
+        
+        $excluir 		    = CVXRequest::post('excluir');
+        
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+
+		$basicAuthPassword = "";
+		
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
+      
+
+        if (Auth::check()) {
+            $paciente = Auth::user()->paciente;
+             	// se o usuario não tiver registro na dash board da mundipagg
+            // deve cria-lo para fazer futuras compras na plataforma doutor hoje.
+            if(empty($paciente->mundipagg_token)){
+            	$user = User::where('id',$paciente->user_id)->first() ;
+                // passa os valores para montar o objeto a ser enviado
+                $resultado = FuncoesPagamento::criarUser($paciente->nm_primario . ' ' . $paciente->nm_secundario,  $user->email);
+                
+                try{
+                    // cria o usuario na mundipagg
+                    $userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+                    $paciente->mundipagg_token 	= $userCreate->id;
+
+                    if(!$paciente->save()){
+                        DB::rollBack();
+                        return response()->json([
+                            'messagem' => 'Não foi possivel salvar o usuario!',
+                            'errors' => $e->getMessage(),
+                        ], 500);
+                    }
+
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    return response()->json([
+                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+                
+            
+            }
+            
+        }
+
+       
+     
+
+       if(!empty($registrar)){
+            
+           $enderecos    =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'   ));
+           $cidade       =  Cidade::where('nm_cidade',  $cidade) ->orWhere('nm_cidade', 'like', '%' . $enderecos->city . '%')->first();     
+         
+           
+           $endereco = new Endereco();
+           $endereco->sg_logradouro =  $estado ;
+           $endereco->te_endereco = $rua ;
+           $endereco->nr_logradouro = $numero;
+           $endereco->te_bairro =  $bairro ;
+           $endereco->nr_cep = $cep;
+           $endereco->te_complemento = $complemento;
+           $endereco->cidade_id = $cidade ->id;
+           $endereco->mundipagg_token =$enderecos->id;   
+            
+           $endereco->save();
+           $paciente->enderecos()->sync( $endereco);           
+           $paciente->save();
+
+           $dado = false;
+           CVXCart::getTotal() !=0 ? $dado=true: $dado=false;
+           return response()->json(['mensagem' => 'Endereço registrado com sucesso',     'carrinho' =>    $dado  ], 200); 
+            
+            
+
+        }
+       
+     
+       if(!empty($excluir)){
+        $enderecos =[];
+        $endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first()  ;
+        $endereco->cs_status = 'I';
+        $endereco->save();
+        return response()->json(['mensagem' => 'Endereço deletado com sucesso',           ], 200);   
+        }
+ 
+    }
     /**
      * consultaAgendamentoDisponivel a newly created resource in storage.
      *
