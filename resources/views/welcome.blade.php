@@ -225,17 +225,35 @@
         <section class="banner-slider-home">
 
             <header>
+<!--             	<input type="hidden" id="startLat"> -->
+<!--             	<input type="hidden" id="startLon"> -->
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
-                        
-                        <div class="banner-conheca carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+
+                        <div class="banner-novembro-azul carousel-item active" style="background-image: url('/libs/home-template/img/nov-azul/bg.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="texto">
+                                        <div class="imagens1">
+                                            <img class="titulo" src="/libs/home-template/img/nov-azul/img1.png" alt="">
+                                        </div>
+                                        <div class="imagens2">
+                                            <img class="procedimentos" src="/libs/home-template/img/nov-azul/img2.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
@@ -443,7 +461,7 @@
                 </div>
             </div>
 
-            @includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')
+            {{--@includeWhen($hasActiveCheckup, 'includes/checkup-section-landing')--}}
 
             <div id="vantagens" class="area-vantagens">
                 <div class="container">
@@ -616,16 +634,23 @@
                 var laravel_token = '{{ csrf_token() }}';
                 var resizefunc = [];
 
+                
                 $('#tipo_especialidade option:first').prop("selected", false);
                 $('#local_atendimento option:first').prop("selected", false);
 
-                $('#btn-uf-localizacao').click(function(){
-                    uf_localizacao = docCookies.getItem('uf_localizacao');
+
+                $('#modalEstado').on("hidden.bs.modal", function() {
+
+					uf_localizacao = docCookies.getItem('uf_localizacao');
                     
-            		if(uf_localizacao != null) {
-                		var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
-                        $('#ds_uf_localizacao').html(ds_uf_localizacao);
-                        window.location.reload();
+            		if(uf_localizacao == null) {
+                    	$('#sg_estado_localizacao').val('DF');
+        				docCookies.setItem('uf_localizacao', 'DF');
+        		        $('#sg_estado_localizazao_form').val('DF');
+        		        
+                        $('#ds_uf_localizacao').html('Distrito Federal');
+    
+                        $.Notification.notify('warning', 'top right', 'DoutorHJ Informa!', 'O estado do DISTRITO FEDERAL foi escolhido como localização automaticamente devido a essa escolha não ter sido realizada!');
             		}
                 });
 

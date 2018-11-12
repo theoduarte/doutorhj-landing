@@ -1,5 +1,26 @@
 $(document).ready(function () {
-	$('.campos_endereco').hide();
+
+	try{
+		if(endereco !=""){
+			$('.campos_endereco').slideDown();
+			$('.registrarEndereco').hide();
+			$('.deletar').show();
+			$('#cep').attr('disabled',true)
+			$('#Rua').attr('disabled',true)
+			$('#Numero').attr('disabled',true)
+		}else{
+			$('#cep').attr('disabled',false)
+			$('#Rua').attr('disabled',false)
+			$('#Numero').attr('disabled',false)
+			$('.deletar').hide();
+			$('.campos_endereco').hide();
+			$(".dados").attr("disabled", "disabled");
+			
+		}
+	}catch(error){
+
+	}
+	
 
 
 
@@ -27,10 +48,12 @@ $(document).ready(function () {
 						try {
 							
 								if(  JSON.parse(result.endereco).logradouro == undefined){
+									$('.registrarEndereco').hide();
 									$('.cep-user').prop('disabled', false);
 									$('.cep-user').removeClass( "loading" );
 									$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
 								}else{
+									$('.registrarEndereco').slideDown();
 									$('.cep-user').removeClass( "loading" );
 									$('.cep-user').prop('disabled', false);
 									 $('.campos_endereco').slideDown();
@@ -43,6 +66,7 @@ $(document).ready(function () {
 							
 						}
 						catch(err) {
+							$('.registrarEndereco').hide();
 							$('.cep-user').prop('disabled', false);
 						$('.cep-user').removeClass( "loading" );
 							$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar o cep informado, tente novamente!');
@@ -51,6 +75,7 @@ $(document).ready(function () {
 						
 					},
 					error: function (result) {
+						$('.registrarEndereco').hide();
 						$('.cep-user').prop('disabled', false);
 						$('.cep-user').removeClass( "loading" );
 						$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
@@ -59,6 +84,7 @@ $(document).ready(function () {
 			}
 			 
 		}else{
+			$('.registrarEndereco').hide();
 			$('.cep-user').prop('disabled', false);
 			$('.cep-user').removeClass( "loading" );
 			$('.campos_endereco').slideUp();
@@ -214,6 +240,89 @@ $(document).ready(function () {
             }
     	});
 	});
+
+	$('.registrarEndereco').click(function(){
+		
+		 
+		
+		jQuery.ajax({
+				type: 'POST',
+				url: '/registrar-endereco' ,
+				data: {
+					 cep:$('#cep').val(),
+					 rua:$('#Rua').val(),
+					 numero:$('#Numero').val(),
+					 estado:$('#Estado').val(),
+					 bairro:$('#Bairro').val(),
+					 cidade:$('#Cidade').val(),
+					 complemento:$('#Complemento').val(),
+					 registrar:true,
+					'_token': laravel_token
+				},
+				
+				success: function (result) {
+					$('#cep').attr('disabled',true)
+					$('#Rua').attr('disabled',true)
+					$('#Numero').attr('disabled',true)
+					$('.registrarEndereco').hide();
+					$('.deletar').show();
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+ 
+
+
+			 
+				if(result.carrinho){
+					$.Notification.notify('success','top right', 'DrHoje', 'Estamos redirecionando você para o pagamento');
+						window.location.href='/pagamento';
+				} 
+				},
+				error: function (result) {
+				   
+					$.Notification.notify('error','top right', 'DrHoje', 'Falha ao registrar endereço !');
+
+				}
+			});
+	})
+	$('.deletar').click(function(){
+		
+		 
+		
+		jQuery.ajax({
+				type: 'POST',
+				url: '/registrar-endereco' ,
+				data: {
+					 cep:$('#cep').val(),
+					 rua:$('#Rua').val(),
+					 numero:$('#Numero').val(),
+					 estado:$('#Estado').val(),
+					 bairro:$('#Bairro').val(),
+					 cidade:$('#Cidade').val(),
+					 complemento:$('#Complemento').val(),
+					 excluir:true,
+
+					'_token': laravel_token
+				},
+				
+				success: function (result) {
+					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
+					$('#cep').val('')
+					$('#cep').attr('disabled',false)
+					$('#Rua').attr('disabled',false)
+					$('#Numero').attr('disabled',false)
+					$('.campos_endereco').slideUp();
+					$('.deletar').hide();
+					$('.registrarEndereco').hide();
+				 
+					
+				
+
+				},
+				error: function (result) {
+				   
+			   $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos deletar seu endereço!');
+				}
+			});
+	})
 	
 	try {
 		var $cardinput = $('.cvx-checkout_card_number');

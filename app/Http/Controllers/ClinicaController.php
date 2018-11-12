@@ -221,8 +221,8 @@ class ClinicaController extends Controller
         $documentosclinica = $prestador->documentos;
 
         $user   = User::findorfail($prestador->responsavel->user_id);
-        $precoprocedimentos = Atendimento::where('clinica_id', $idClinica)->where('procedimento_id', '<>', null)->orderBy('ds_preco', 'asc')->orderBy('vl_atendimento', 'desc')->get();
-        $precoconsultas =     Atendimento::where('clinica_id', $idClinica)->where('consulta_id', '<>', null)->orderBy('ds_preco', 'asc')->orderBy('vl_atendimento', 'desc')->get();
+        $precoprocedimentos = Atendimento::where('clinica_id', $idClinica)->where('procedimento_id', '<>', null)->orderBy('ds_preco', 'asc')->get();
+        $precoconsultas =     Atendimento::where('clinica_id', $idClinica)->where('consulta_id', '<>', null)->orderBy('ds_preco', 'asc')->get();
 
         $documentoprofissional = [];
 

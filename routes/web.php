@@ -39,6 +39,8 @@ Route::get('consulta-cep/cep/{cep}', 'Controller@consultaCep')->name('cep');
 
 # rotas da busca landing page
 Route::post('consulta-especialidades', 'EspecialidadeController@consultaEspecialidades');
+Route::post('registrar-endereco', 'AgendamentoController@MundiEnderecoPaciente');
+
 Route::post('consulta-todos-locais-atendimento', 'EspecialidadeController@consultaTodosLocaisAtendimento');
 
 Route::post('consulta-cartao-paciente', 'CartaoPacienteController@consultaCartao');

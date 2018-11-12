@@ -18,14 +18,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'tp_user', 'cs_status'];
+    protected $fillable = ['name', 'email', 'password', 'access_token', 'tp_user', 'cs_status'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'access_token', 'remember_token'];
     
     public function perfiluser()
     {
@@ -53,5 +53,8 @@ class User extends Authenticatable
     public function destinatarios(){
         return $this->hasMany('App\MensagemDestinatario', 'destinatario_id');
     }
-    
+
+	public function getAuthPassword(){
+		return $this->access_token;
+	}
 }
