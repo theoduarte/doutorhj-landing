@@ -564,7 +564,7 @@
                     uf_localizacao = docCookies.getItem('uf_localizacao');
                     
             		if(uf_localizacao != null) {
-                       
+                        //obterLocalizacao(); 
                 	 	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
                 	    $('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
                         $('.ds_uf_localizacao').empty().html( getDescricaoFromUf(uf_localizacao) );
@@ -572,12 +572,14 @@
                         var sg_estado = $('#sg_estado_localizacao').val();
                         docCookies.setItem('uf_localizacao', sg_estado);
                       //  window.location.reload();
+                      
                     }
                     
                 });
 
-            
 
+           
+               
         });
 
     </script>

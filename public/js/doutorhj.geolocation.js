@@ -1,4 +1,8 @@
 window.onload = function() {
+	obterLocalizacao();
+};
+
+function obterLocalizacao() {
 	var startPos;
 	var drhj_latitude = 0;
 	var drhj_longitude = 0;
@@ -42,7 +46,7 @@ window.onload = function() {
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    $('.ds_uf_localizacao').empty().html(ds_uf_localizacao);
 	                    
 		    	    }, function(dismiss){
 		    	    	
@@ -51,7 +55,7 @@ window.onload = function() {
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao_cookie);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao_cookie);
-	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    $('.ds_uf_localizacao').html(ds_uf_localizacao);
 	                    
 		    	    	docCookies.setItem('uf_escolha_manual', '1');
 		    	    });
@@ -61,7 +65,7 @@ window.onload = function() {
     		        $('#sg_estado_localizazao_form').val(uf_localizacao);
     		        
     		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+                    $('.ds_uf_localizacao').html(ds_uf_localizacao);
 				}
 //				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
@@ -84,7 +88,7 @@ window.onload = function() {
 	    if(uf_localizacao != null) {
 	    	var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
 	    	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
-	        $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	        $('.ds_uf_localizacao').html(ds_uf_localizacao);
 	    }
     	
 	  };
@@ -110,8 +114,7 @@ window.onload = function() {
 	  };
 
 	  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
-};
-
+}
 function showModalUfLocation() {
 	
 	$('.seleciona-estado').select2({
@@ -139,7 +142,7 @@ function showModalUfLocation() {
     } else {
     	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
     	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
-        $('#ds_uf_localizacao').html(ds_uf_localizacao);
+        $('.ds_uf_localizacao').html(ds_uf_localizacao);
     }
 
     $('#sg_estado_localizacao').change(function(){
@@ -150,16 +153,62 @@ function showModalUfLocation() {
 }
 
 function getUFfromGooglemaps(input) {
-	
-	//console.log(input.results);
+	 
 	var uf = 'SP';
-	
-	if(input.results.length > 0) {
-		uf = input.results[4].address_components[5].short_name;
+	 
+	for(var i=0; i< input.results.length; i++ ){
+               
+		for(var j=0; j<input.results[i].address_components.length; j++){
+   
+			 var resp = getUFArray(	input.results[i].address_components[j].short_name)
+			 
+			 if(resp != null){
+					uf = resp
+				 break;
+			 } 
+		 
+		}
 	}
+   
 	return uf; 
-}
+} 
+function getUFArray(uf){
+		var estados = {
+		AC: 'AC',
+		AL: 'AL',
+		AP: 'AP',
+		AM: 'AM',
+		BA: 'BA',
+		CE: 'CE',
+		DF: 'DF',
+		ES: 'ES',
+		GO: 'GO',
+		MA: 'MA',
+		MT: 'MT',
+		MS: 'MS',
+		MG: 'MG',
+		PA: 'PA',
+		PB: 'PB',
+		PR: 'PR',
+		PE: 'PE',
+		PI: 'PI',
+		RJ: 'RJ',
+		RN: 'RN',
+		RS: 'RS',
+		RO: 'RO',
+		RR: 'RR',
+		SC: 'SC',
+		SP: 'SP',
+		SE: 'SE',
+		TO: 'TO'
+	};
 
+	try{
+		return estados[uf];
+	}catch(error){
+		return null;
+	}
+}
 function getDescricaoFromUf(input) {
 	
 	var estados = {
