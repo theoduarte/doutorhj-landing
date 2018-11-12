@@ -81,6 +81,7 @@
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
 		<script src="/libs/cookies-js/cookies_min.js"></script>
+		<script src="/js/doutorhj.geolocation.js"></script>
         <script src="/js/doutorhj.script.js"></script>
 
         <script type="text/javascript">
@@ -100,6 +101,21 @@
 
 <div class="tudo">
     <header>
+        <div class="welcome-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5"><div class="container"><div class="boas-vindas">Bem vindo! <a href="{{ route('login') }}">Entre</a> ou
+                                <a href="{{ route('login') }}">Cadastre-se</a></div></div></div>
+                    <div class="col-sm-7">
+                        <ul class="wb-links">
+                            <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
+                            <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if (Auth::check())
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
@@ -189,11 +205,11 @@
                             </ul>
                         </div>
 
-                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+                        {{--@if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
                             <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
                         @else
                             <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
-                        @endif
+                        @endif--}}
 
                         @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
                             <div class="info-empresarial">
@@ -237,19 +253,24 @@
                                 <a class="nav-link" href="{{ route('landing-page') }}#vantagens">Vantagens</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="http://www.clinicasdoutorhoje.com.br/" target="_blank">Clínica</a>
+                                <a class="nav-link" href="http://www.clinicasdoutorhoje.com.br/" target="_blank">Clínicas Doutor Hoje</a>
                             </li>
-                            <!-- <li class="nav-item">
+                            {{--<li class="nav-item">
                                 <a class="nav-link" href="/contato">Contato</a>
-                            </li> -->
-                            <li class="nav-item btn-profissional">
+                            </li>--}}
+                           {{-- <li class="nav-item btn-profissional">
                                 <a class="nav-link" href="https://prestador.doutorhoje.com.br">Seja um prestador</a>
-                            </li>
+                            </li>--}}
                             <li class="nav-item btn-entrar">
-                                <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
                             </li>
                         </ul>
-                        <span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
+                        <ul class="wb-links-mobile">
+                            <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
+                            <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                        </ul>
+                        {{--<span class="nome-estado-topo"><span id="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>--}}
                     </div>
                 </div>
             </nav>
@@ -499,8 +520,7 @@
         $(document).ready(function () {
 
         	//docCookies.removeItem('uf_localizacao');
-
-            $('.seleciona-estado').select2({
+        	$('.seleciona-estado').select2({
                 width: '100%',
                 language: {
                     noResults: function (params) {
@@ -508,6 +528,20 @@
                     }
                   }
             });
+
+        	var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+        	//alert(uf_escolha_manual);
+        	if(uf_escolha_manual === null) {
+        		docCookies.setItem('uf_escolha_manual', '0');
+        	}
+            
+        	$('#sg_estado_localizacao').change(function(){
+                var sg_estado = $(this).val();
+                docCookies.setItem('uf_localizacao', sg_estado);
+                $('#sg_estado_localizazao_form').val(sg_estado);
+            });
+            
+            /* 
 
             var uf_localizacao = docCookies.getItem('uf_localizacao');
             
@@ -527,11 +561,7 @@
                 $('#ds_uf_localizacao').html(ds_uf_localizacao);
             }
 
-            $('#sg_estado_localizacao').change(function(){
-                var sg_estado = $(this).val();
-                docCookies.setItem('uf_localizacao', sg_estado);
-                $('#sg_estado_localizazao_form').val(sg_estado);
-            });
+             */
 
         });
 

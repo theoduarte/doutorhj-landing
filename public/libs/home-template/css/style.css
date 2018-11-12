@@ -197,25 +197,62 @@ p {
 * 
 *********************************/
 
-.mensagem-cupom {
-    text-align: center;
-    padding: 10px;
-    background: rgb(25, 118, 188);
-    background: -moz-linear-gradient(left, #40bbff 0%, #1976bc 100%);
-    background: -webkit-linear-gradient(left, #40bbff 0%, #1976bc 100%);
-    background: linear-gradient(to right, #40bbff 0%, #1976bc 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40bbff', endColorstr='#1976bc', GradientType=1);
+.welcome-bar {
+    border-bottom: 1px solid #ebebeb;
+    font-size: 12px;
+    line-height: 44px;
 }
 
-.mensagem-cupom p {
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 30px;
-    color: rgb(255, 255, 255);
+.welcome-bar .container {
+    padding-top: 0;
 }
 
-.mensagem-cupom p span {
-    font-weight: 700;
+.welcome-bar a {
+    color: #1b71b9;
+}
+
+.welcome-bar .wb-links {
+    float: right;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+.welcome-bar .wb-links li {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    position: relative;
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
+.welcome-bar .wb-links li i {
+    font-size: 16px;
+    color: #1b71b9;
+}
+
+.wb-links-mobile {
+    padding: 20px 0 0 0;
+    list-style: none;
+    margin: 20px 0 0 0;
+    border-top: 1px solid #ddd;
+    display: none;
+}
+
+.wb-links-mobile a {
+    color: #1b71b9;
+}
+
+.wb-links-mobile li {
+    margin: 0;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.wb-links-mobile li i{
+    font-size: 16px;
+    color: #1b71b9;
 }
 
 header .container {
@@ -436,6 +473,35 @@ header .navbar-collapse {
     line-height: 28px;
     text-transform: none;
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
+}
+
+.banner-slider-home .banner-novembro-azul {
+    background-position-x: 50%;
+}
+
+.banner-slider-home .banner-novembro-azul .texto {
+    float: right;
+    text-align: left;
+    width: 800px;
+}
+.banner-slider-home .banner-novembro-azul .texto .imagens1 {
+    float: left;
+    width: 400px;
+}
+.banner-slider-home .banner-novembro-azul .texto .imagens2 {
+    float: right;
+    width: 400px;
+}
+.banner-slider-home .banner-novembro-azul .texto .titulo {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+    margin-top: 30px;
+}
+.banner-slider-home .banner-novembro-azul .texto .procedimentos {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
 }
 
 .banner-slider-home .carousel-control-next,
@@ -4001,6 +4067,14 @@ footer ul li a:hover {
         margin-top: 14px;
     }
 
+    .welcome-bar {
+        display: none;
+    }
+
+    .wb-links-mobile {
+        display: block;
+    }
+
     .banner-slider-home .carousel-item {
         height: 900px;
         padding: 60px 0 60px 0;
@@ -4042,6 +4116,24 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 20px;
+    }
+
+    .banner-slider-home .banner-novembro-azul {
+        background-position-x: 38%;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto {
+        float: right;
+        text-align: left;
+        width: 600px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
+        float: left;
+        width: 300px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
+        float: right;
+        width: 300px;
     }
 
     .busca-welcome {
@@ -4223,6 +4315,30 @@ footer ul li a:hover {
 
     .banner-slider-home .banner-clinica .texto h3 {
         font-size: 22px;
+    }
+
+    .banner-slider-home .banner-novembro-azul {
+        background-position-x: 28%;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto {
+        float: right;
+        text-align: left;
+        width: 400px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
+        float: none;
+        width: 400px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
+        float: none;
+        width: 400px;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto .titulo,
+    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
+        width: 56%;
+        margin-top: 0;
     }
 
     .busca-welcome {
@@ -4415,6 +4531,30 @@ footer ul li a:hover {
         font-size: 22px;
     }
 
+    .banner-slider-home .banner-novembro-azul {
+        background-position-x: 30%;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto {
+        float: right;
+        text-align: left;
+        width: 400px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
+        float: none;
+        width: 400px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
+        float: none;
+        width: 400px;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto .titulo,
+    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
+        width: 56%;
+        margin-top: 0;
+    }
+
     .busca-welcome {
         width: 400px;
         bottom: 86px;
@@ -4477,6 +4617,30 @@ footer ul li a:hover {
     .banner-slider-home .banner-conheca .texto,
     .banner-slider-home .banner-precos-justos .texto {
         width: 320px;
+    }
+
+    .banner-slider-home .banner-novembro-azul {
+        background-position-x: 30%;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto {
+        float: right;
+        text-align: left;
+        width: 320px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
+        float: none;
+        width: 320px;
+    }
+    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
+        float: none;
+        width: 320px;
+    }
+
+    .banner-slider-home .banner-novembro-azul .texto .titulo,
+    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
+        width: 68%;
+        margin-top: 0;
     }
 
     .busca-welcome {
