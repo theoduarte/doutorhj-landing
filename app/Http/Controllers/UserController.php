@@ -375,6 +375,11 @@ HEREDOC;
         // $query = DB::getQueryLog();
         // print_r($query);
         $contato = $contato1->first();
+
+		if(is_null($contato)) {
+			return response()->json(['status' => false, 'mensagem' => 'Telefone não cadastrado.']);
+		}
+
         $contato_id = $contato->id;
         
         $paciente_temp = Paciente::with('user')
