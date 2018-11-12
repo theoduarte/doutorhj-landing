@@ -660,9 +660,42 @@ class ClinicaController extends Controller
         
 		$plano_id = Paciente::getPlanoAtivo($user_session->id);
         $endereco_paciente=[];
-        if(!empty($user_session->mundipagg_token)){
-            $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+        if (Auth::check()) {
+            if(empty($user_session->mundipagg_token)){
+                $user = User::where('id',$user_session->user_id)->first() ;
+                // passa os valores para montar o objeto a ser enviado
+                $resultado = FuncoesPagamento::criarUser($user_session->nm_primario . ' ' . $user_session->nm_secundario,  $user->email);
+                
+                try{
+                    // cria o usuario na mundipagg
+                    $userCreate 				= $client->getCustomers()->createCustomer( $resultado );
+                    $user_session->mundipagg_token 	= $userCreate->id;
+    
+                    if(!$user_session->save()){
+                        DB::rollBack();
+                        return response()->json([
+                            'messagem' => 'Não foi possivel salvar o usuario!',
+                            'errors' => $e->getMessage(),
+                        ], 500);
+                    }
+    
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    return response()->json([
+                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+                
+            
+            }
+    
+            if(!empty($user_session->mundipagg_token)){
+                $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
+            }
         }
+
+      
         
         
        
