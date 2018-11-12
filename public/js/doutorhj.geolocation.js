@@ -105,7 +105,7 @@ window.onload = function() {
 //	    }
 	    if(error.code == 1 | error.code == 3) {
 	    	docCookies.setItem('uf_escolha_manual', '0');
-	    	showModalUfLocation();
+	    	//showModalUfLocation();
 	    }
 	  };
 
@@ -150,16 +150,62 @@ function showModalUfLocation() {
 }
 
 function getUFfromGooglemaps(input) {
-	
-	//console.log(input.results);
+	 
 	var uf = 'SP';
-	
-	if(input.results.length > 0) {
-		uf = input.results[4].address_components[5].short_name;
-	}
-	return uf; 
-}
+	 
+	for(var i=0; i< json.results.length; i++ ){
+               
+		for(var j=0; j<json.results[i].address_components.length; j++){
+   
+			 var resp = getUFArray(	json.results[i].address_components[j].short_name)
 
+			 if(resp != null){
+					uf = resp
+				 break;
+			 } 
+		 
+		}
+	}
+   
+	return uf; 
+} 
+function getUFArray(uf){
+		var estados = {
+		AC: 'AC',
+		AL: 'AL',
+		AP: 'AP',
+		AM: 'AM',
+		BA: 'BA',
+		CE: 'CE',
+		DF: 'DF',
+		ES: 'ES',
+		GO: 'GO',
+		MA: 'MA',
+		MT: 'MT',
+		MS: 'MS',
+		MG: 'MG',
+		PA: 'PA',
+		PB: 'PB',
+		PR: 'PR',
+		PE: 'PE',
+		PI: 'PI',
+		RJ: 'RJ',
+		RN: 'RN',
+		RS: 'RS',
+		RO: 'RO',
+		RR: 'RR',
+		SC: 'SC',
+		SP: 'SP',
+		SE: 'SE',
+		TO: 'TO'
+	};
+
+	try{
+		return estados[uf];
+	}catch(error){
+		return null;
+	}
+}
 function getDescricaoFromUf(input) {
 	
 	var estados = {
