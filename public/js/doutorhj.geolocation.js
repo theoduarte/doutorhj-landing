@@ -158,7 +158,7 @@ function getUFfromGooglemaps(input) {
 		for(var j=0; j<json.results[i].address_components.length; j++){
    
 			 var resp = getUFArray(	json.results[i].address_components[j].short_name)
-
+				console.log(resp)
 			 if(resp != null){
 					uf = resp
 				 break;
