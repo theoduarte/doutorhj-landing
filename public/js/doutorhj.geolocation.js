@@ -46,7 +46,7 @@ function obterLocalizacao() {
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    $('.ds_uf_localizacao').empty().html(ds_uf_localizacao);
 	                    
 		    	    }, function(dismiss){
 		    	    	
@@ -55,7 +55,7 @@ function obterLocalizacao() {
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao_cookie);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao_cookie);
-	                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	                    $('.ds_uf_localizacao').html(ds_uf_localizacao);
 	                    
 		    	    	docCookies.setItem('uf_escolha_manual', '1');
 		    	    });
@@ -65,7 +65,7 @@ function obterLocalizacao() {
     		        $('#sg_estado_localizazao_form').val(uf_localizacao);
     		        
     		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
-                    $('#ds_uf_localizacao').html(ds_uf_localizacao);
+                    $('.ds_uf_localizacao').html(ds_uf_localizacao);
 				}
 //				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 				
@@ -88,7 +88,7 @@ function obterLocalizacao() {
 	    if(uf_localizacao != null) {
 	    	var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
 	    	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
-	        $('#ds_uf_localizacao').html(ds_uf_localizacao);
+	        $('.ds_uf_localizacao').html(ds_uf_localizacao);
 	    }
     	
 	  };
@@ -142,7 +142,7 @@ function showModalUfLocation() {
     } else {
     	var ds_uf_localizacao = $('#sg_estado_localizacao').select2('data')[0].text;
     	$('#sg_estado_localizacao').select2('data', { id: uf_localizacao, text: ds_uf_localizacao});
-        $('#ds_uf_localizacao').html(ds_uf_localizacao);
+        $('.ds_uf_localizacao').html(ds_uf_localizacao);
     }
 
     $('#sg_estado_localizacao').change(function(){
