@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use App\Agendamento;
 use App\Clinica;
+use App\User;
 use App\Profissional;
 use App\Estado;
 use App\Atendimento;
