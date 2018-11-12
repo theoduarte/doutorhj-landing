@@ -101,22 +101,22 @@
 
 <div class="tudo">
     <header>
+      
+        @if (Auth::check())
         <div class="welcome-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-5"><div class="container"><div class="boas-vindas">Bem vindo! <a href="{{ route('login') }}">Entre</a> ou
-                                <a href="{{ route('login') }}">Cadastre-se</a></div></div></div>
-                    <div class="col-sm-7">
-                        <ul class="wb-links">
-                            <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
-                            <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                   
+                    <div class="col-sm-12">
+                        <ul class="wb-links"   >
+                          
                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        @if (Auth::check())
+
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
@@ -205,12 +205,11 @@
                             </ul>
                         </div>
 
-                        {{--@if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
-                            <span class="nome-estado-topo-empresarial"><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
-                        @else
-                            <span class="nome-estado-topo"><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>
-                        @endif--}}
-
+                          <ul class="wb-links-mobile">
+                                
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                            </ul>
+                       
                         @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
                             <div class="info-empresarial">
                                 <div class="opcoes ie-logo">
@@ -233,6 +232,21 @@
                 </div>
             </nav>
         @else
+        <div class="welcome-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5"><div class="container"><div class="boas-vindas">Bem vindo! <a href="{{ route('login') }}">Entre</a> ou
+                                <a href="{{ route('login') }}">Cadastre-se</a></div></div></div>
+                    <div class="col-sm-7">
+                        <ul class="wb-links">
+                            <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
+                            <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
@@ -542,7 +556,10 @@
                 $('#sg_estado_localizazao_form').val(sg_estado);
             });
             
-            
+            uf_localizacao = docCookies.getItem('uf_localizacao');
+            if(   uf_localizacao != null ||    uf_localizacao  != "" ||    uf_localizacao  != undefined){
+                $('.ds_uf_localizacao').empty().html( getDescricaoFromUf(uf_localizacao) );
+            }
             $('#btn-uf-localizacao').click(function(){
                     uf_localizacao = docCookies.getItem('uf_localizacao');
                     
