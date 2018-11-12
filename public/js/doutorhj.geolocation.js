@@ -109,7 +109,7 @@ function obterLocalizacao() {
 //	    }
 	    if(error.code == 1 | error.code == 3) {
 	    	docCookies.setItem('uf_escolha_manual', '0');
-	    	//showModalUfLocation();
+	    	showModalUfLocation();
 	    }
 	  };
 
@@ -161,7 +161,7 @@ function getUFfromGooglemaps(input) {
 		for(var j=0; j<input.results[i].address_components.length; j++){
    
 			 var resp = getUFArray(	input.results[i].address_components[j].short_name)
-				console.log(resp)
+			 
 			 if(resp != null){
 					uf = resp
 				 break;
