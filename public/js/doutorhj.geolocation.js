@@ -1,4 +1,8 @@
 window.onload = function() {
+	obterLocalizacao();
+};
+
+function obterLocalizacao() {
 	var startPos;
 	var drhj_latitude = 0;
 	var drhj_longitude = 0;
@@ -110,8 +114,7 @@ window.onload = function() {
 	  };
 
 	  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
-};
-
+}
 function showModalUfLocation() {
 	
 	$('.seleciona-estado').select2({

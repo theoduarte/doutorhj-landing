@@ -572,6 +572,7 @@
                         var sg_estado = $('#sg_estado_localizacao').val();
                         docCookies.setItem('uf_localizacao', sg_estado);
                       //  window.location.reload();
+                      obterLocalizacao();
                     }
                     
                 });
