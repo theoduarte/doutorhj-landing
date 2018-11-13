@@ -7,38 +7,40 @@
 @endpush
 
 @section('content')
-<style>
-    .campos_endereco{
-        display:none;
-    }
-    .deletar{
-        display:none; 
-    }
-    .registrarEndereco{
-        display:none; 
-    }
-</style>
+    <style>
+        .campos_endereco {
+            display: none;
+        }
+
+        .deletar {
+            display: none;
+        }
+
+        .registrarEndereco {
+            display: none;
+        }
+    </style>
     <section class="area-busca-interna minha-conta">
         <div class="container">
-            
+
             <div class="box-minha-conta">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-3 menu">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-cadastro" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-caret-right"></i>
                                 Cadastro</a>
-                                {{--  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Pagamento</a>--}}
-                            {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
-                                Anuidade</a>--}}
-                            <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
+                        {{--  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-pagamento" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                        Pagamento</a>--}}
+                        {{--<a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-anuidade" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-caret-right"></i>
+                            Anuidade</a>--}}
+                        <!-- <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Mensagens</a> -->
                             <!-- <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notificacoes" role="tab" aria-controls="v-pills-notifications" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Notificações</a> -->
                             <!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sugestoes" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Deixe sua Sugestão</a> -->
 
-                                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-endereco" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-endereco" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
                                 Meu Endereço</a>
 
                             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-sair" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-caret-right"></i>
@@ -54,7 +56,7 @@
                                 <div class="row">
                                     <div class="col-md-12 col-lg-6 col-dados-cadastro">
                                         <span class="label-titulo">Cadastro</span>
-                                        <form>                                          
+                                        <form>
                                             <fieldset disabled>
                                                 <div class="form-group">
                                                     <label for="inputNome">Nome</label>
@@ -108,7 +110,8 @@
                                             </fieldset>
                                         </form>
                                         <div>
-                                            <a href="#" data-toggle="modal" data-target="#modalTermosUsers">Termo de Uso</a>
+                                            <a href="#" data-toggle="modal" data-target="#modalTermosUsers">Termo de
+                                                Uso</a>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-6 col-lista-dependentes">
@@ -253,89 +256,102 @@
 
                             <div class="tab-pane fade  " id="v-pills-endereco" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                 <div class="row">
-                                    <div class="col-md-12 col-lg-6 col-dados-cadastro listar">
+                                    <div class="col-sm-12 col-dados-cadastro listar">
                                         <span class="label-titulo">Endereço</span>
-                                            <form id="form-endereco">
-                                            <fieldset id="dados" >
-                                            <div class="form-group">
-                                                    <label for="inputTelefone">Informe o CEP</label>
-                                                    <input type="text" name="cep" id="cep" required  class="form-control cep-user cepMask " value="{{
-                                                         !empty($enderecos[0]['nr_cep'])  ? $enderecos[0]['nr_cep'] : ''
-                                                    }} " >   
-                                                </div>
-                                                
-                                                <div class="form-group campos_endereco"  >
-                                                    <label for="inputNome">Rua</label>
-                                                    <input type="text" name="Rua" id="Rua" required value="{{  !empty($enderecos[0]['te_endereco'])  ? $enderecos[0]['te_endereco'] : '' }} " class="form-control" >
-                                                </div>
-                                                <div class="form-group campos_endereco">
-                                                    <label for="inputEmail">Numero</label>
-                                                    <input type="text" name="Numero" id="Numero" required value="{{ !empty($enderecos[0]['nr_logradouro'])  ? $enderecos[0]['nr_logradouro'] : '' }} " class="form-control" >
-                                                </div>
+                                        <form id="form-endereco">
+                                            <fieldset id="dados">
 
-                                                 <div class="form-group campos_endereco">
-                                                    <label for="inputEmail">Estado</label>
-                                                    <input type="text" name="Estado" maxlength="2" disabled required value="{{ !empty($enderecos[0]['sg_logradouro'])  ? $enderecos[0]['sg_logradouro'] : ''}} "  id="Estado" class="form-control" >
+                                                <div class="form-row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="inputTelefone">Informe o CEP</label>
+                                                            <input type="text" name="cep" id="cep" required class="form-control cep-user cepMask " value="{{
+                                                         !empty($enderecos[0]['nr_cep'])  ? $enderecos[0]['nr_cep'] : ''
+                                                    }} ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputTelefone">Bairro/Distrito</label>
+                                                            <input type="text" name="Bairro" id="Bairro" disabled required value="{{!empty($enderecos[0]['te_bairro'])  ? $enderecos[0]['te_bairro'] : ''}} " class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputTelefone">Logradouro/Nome</label>
+                                                            <input type="text" name="Complemento" disabled id="Complemento" required value="{{!empty($enderecos[0]['te_complemento'])  ? $enderecos[0]['te_complemento'] : ''}} " class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputEmail">Numero</label>
+                                                            <input type="text" name="Numero" id="Numero" required value="{{ !empty($enderecos[0]['nr_logradouro'])  ? $enderecos[0]['nr_logradouro'] : '' }} " class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputEmail">Cidade</label>
+                                                            <input type="text" name="Cidade" id="Cidade" disabled required value="{{!empty($enderecos[1]['nm_cidade'])  ? $enderecos[1]['nm_cidade'] : ''}} " class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputEmail">Estado</label>
+                                                            <input type="text" name="Estado" maxlength="2" disabled required value="{{ !empty($enderecos[0]['sg_logradouro'])  ? $enderecos[0]['sg_logradouro'] : ''}} " id="Estado" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group campos_endereco">
+                                                            <label for="inputNome">Complemento</label>
+                                                            <input type="text" name="Rua" id="Rua" required value="{{  !empty($enderecos[0]['te_endereco'])  ? $enderecos[0]['te_endereco'] : '' }} " class="form-control">
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
-                                                <div class="form-group campos_endereco">
-                                                    <label for="inputEmail">Cidade</label>
-                                                    <input type="text" name="Cidade" id="Cidade"  disabled required value="{{!empty($enderecos[1]['nm_cidade'])  ? $enderecos[1]['nm_cidade'] : ''}} " class="form-control" >
-                                                </div>
-                                             
-                                                <div class="form-group campos_endereco">
-                                                    <label for="inputTelefone">Bairro</label>
-                                                    <input type="text" name="Bairro" id="Bairro" disabled required  value="{{!empty($enderecos[0]['te_bairro'])  ? $enderecos[0]['te_bairro'] : ''}} " class="form-control" >
-                                                </div>
-                                                <div class="form-group campos_endereco">
-                                                    <label for="inputTelefone">Complemento</label>
-                                                    <input type="text" name="Complemento" disabled id="Complemento" required value="{{!empty($enderecos[0]['te_complemento'])  ? $enderecos[0]['te_complemento'] : ''}} "  class="form-control" >
-                                                </div>
-                                               
-                                              
-                                                <button type="button" class="registrarEndereco btn btn-primary  ">Registrar</button>
-                                                
-                                                <button type="button" class="deletar  btn btn-primary btn-vermelho">Deletar</button>
+                                                <button type="button" class="registrarEndereco btn btn-primary  btn-vermelho">
+                                                    Registrar
+                                                </button>
+
+                                                <button type="button" class="deletar  btn btn-primary btn-vermelho">
+                                                    Deletar
+                                                </button>
                                             </fieldset>
                                         </form>
-                                        
+
                                     </div>
-                                   <div class="cadastrar col-md-12 col-lg-6 " style="display:none">
-                                   </div>
+                                    <div class="cadastrar col-md-12 col-lg-6 " style="display:none"></div>
 
                                 </div>
                             </div>
 
-                             
-                           
+
                             <!-- Pagamento -->
 
                             <div class="tab-pane fade" id="v-pills-pagamento" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
-                                
+
                                     <div class="row">
-                                       {{--
-                                        <div class="col-md-12 col-lg-7">
-                                            <span class="label-titulo">Saldo / Limite</span>
-                                            <div class="box-pagamento saldo-limite">
-                                                <p class="intro">Você faz parte de um plano Empresarial, confira abaixo o limite disponibilizado pela empresa e o saldo atual.</p>
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <p class="p1">Limite</p>
-                                                        <p class="p2">R$ 300,00</p>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <p class="p1">Saldo</p>
-                                                        <p class="p2">R$ 197,83</p>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <p class="p1">Plano</p>
-                                                        <p class="p2">Premium</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        --}}
+                                        {{--
+                                         <div class="col-md-12 col-lg-7">
+                                             <span class="label-titulo">Saldo / Limite</span>
+                                             <div class="box-pagamento saldo-limite">
+                                                 <p class="intro">Você faz parte de um plano Empresarial, confira abaixo o limite disponibilizado pela empresa e o saldo atual.</p>
+                                                 <div class="row">
+                                                     <div class="col-4">
+                                                         <p class="p1">Limite</p>
+                                                         <p class="p2">R$ 300,00</p>
+                                                     </div>
+                                                     <div class="col-4">
+                                                         <p class="p1">Saldo</p>
+                                                         <p class="p2">R$ 197,83</p>
+                                                     </div>
+                                                     <div class="col-4">
+                                                         <p class="p1">Plano</p>
+                                                         <p class="p2">Premium</p>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         --}}
                                         {{--
                                         <div class="col-md-12 col-lg-5">
                                             <span class="label-titulo">Cartões Salvos</span>
@@ -650,7 +666,7 @@
                                     </div>
                                 </div>
                             </div>
-                          
+
                             {{--<div class="tab-pane fade" id="v-pills-anuidade" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 <div>
                                     <div class="area-tipo-plano">
@@ -883,15 +899,14 @@
     </section>
     @push('scripts')
         <script type="text/javascript">
-             var endereco = "{{!empty($enderecos[0]['id']) ? $enderecos[0]['id'] : '' }}";
+            var endereco = "{{!empty($enderecos[0]['id']) ? $enderecos[0]['id'] : '' }}";
             $(document).ready(function () {
-                
-                
+
 
                 var laravel_token = '{{ csrf_token() }}';
-                
+
                 var resizefunc = [];
-                
+
                 $('#btn-add-dependente').click(function () {
                     var result = true;
                     var nm_primario_dependente = $('#inputNomeDependente');
