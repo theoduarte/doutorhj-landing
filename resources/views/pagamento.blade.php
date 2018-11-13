@@ -28,7 +28,7 @@
             appearance: none;
             width: 15px;
             height: 25px;
-            background: rgb(70, 117, 184);
+            background: rgb(255, 255, 255);
             border-radius: 10px;
             cursor: pointer;
         }
