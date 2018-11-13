@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -59,15 +60,15 @@ class LoginController extends Controller
     	$contato_id = $contato->id;
     	
     	//DB::enableQueryLog();
-    	$paciente_temp = Paciente::with('user')
+    	$paciente = Paciente::with('user')
 	    	->join('contato_paciente', function($join1) { $join1->on('pacientes.id', '=', 'contato_paciente.paciente_id');})
 	    	->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	    	->select('pacientes.*')
-	    	->get();
+	    	->first();
 
 	    //$query = DB::getQueryLog();
 	    //dd($query);
-    	$user_login = $paciente_temp->first()->user;
+    	$user_login = $paciente->user;
 
     	$username = $user_login->email;
     	$access_token = $cvx_token;
@@ -77,6 +78,7 @@ class LoginController extends Controller
     	$credentials = ['email' => $username, 'password' =>  ($access_token), 'cs_status' => 'A'];
 
     	if($active == 'I') {
+			$send_message = UserController::enviaEmailAtivacao($paciente);
     		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
     	}
     	
