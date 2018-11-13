@@ -112,32 +112,7 @@
                                 </section>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <section class="col-md-12 col-lg-12">
-                                        <h3>Método de pagamento </h3>
-                                        <div class="separador"></div>
-                                        <select class="form-control escolherMetodoPagamento">
-                                            <option value="" selected>Escolher metodo de pagamento</option>
-                                            {{--------------    ----------------}}
-                                            @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
-                                                @if(intval($valor_total-$valor_desconto) < intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
-                                                    <option value="1">Crédito empresarial</option>
-                                                @endif
-                                                @if(intval($valor_total-$valor_desconto) > intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
-                                                    <option value="2">Crédito empresarial + Cartão de crédito</option>
-                                                @endif
-                                            @endif
-                                            <option value="3">Cartão de crédito</option>
-                                            <option value="4">Boleto Bancario</option>
-                                            <option value="5">Transferencia Bancario</option>
-                                            {{--
-                                            <option value="4" >Boleto Bancario</option>
-                                            <option value="5" >Transferencia Bancario</option>
-                                            --}}
-                                        </select>
-
-                                    </section>
-                                </div>
+                              
                                 <div class="row cartaoEmpresarial_Credito" style="display:none">
                                     {{--CRÉDITO EMPRESARIAL--}}
                                     <div class="col-sm-12 col-md-6">
