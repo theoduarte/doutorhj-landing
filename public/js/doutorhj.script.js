@@ -455,7 +455,8 @@ $(document).ready(function () {
 		if( $('#tipo_atendimento').val() != 'checkup' ){
 			var atendimento_id = $(this).val();
 			var tipo_atendimento = $('#tipo_atendimento').val();
-			var uf_localizacao = $('#sg_estado_localizacao').val();
+			//var uf_localizacao = $('#sg_estado_localizacao').val();
+			var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
 			
 			if(atendimento_id == '') { return false; }
 
@@ -464,7 +465,7 @@ $(document).ready(function () {
 	    	  	url: '/consulta-todos-locais-atendimento',
 	    	  	data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao': uf_localizacao,
+					'uf_localizacao': uf_localizacao_cookie,
 	    	  		'especialidade': $(this).val(),
 					'_token': laravel_token
 				},
