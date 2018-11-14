@@ -34,6 +34,7 @@ class Consulta extends Model
     }
 
     public function getActive($planoId, $uf_localizacao) {
+    	dd( $uf_localizacao );
        DB::enableQueryLog();
         $query = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
