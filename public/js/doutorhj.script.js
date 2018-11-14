@@ -266,6 +266,8 @@ $(document).ready(function () {
 				}
 			});
 		}else{
+			$('.home-view').fadeIn();
+			$('.spinner1').fadeOut()
 			$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos obter o seu estado, escolha um estado e tente novamente!');
 		}
 		
