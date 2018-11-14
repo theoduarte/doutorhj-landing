@@ -64,7 +64,7 @@ class Consulta extends Model
             ->where('atendimentos.cs_status', 'A')
             ->orderby('descricao', 'asc')
             ->get();
-
+        dd($query);
         //dd( DB::getQueryLog() );die;
         return $query;
     } 
