@@ -162,8 +162,10 @@ $(document).ready(function () {
 			},
 			success: function (result) {
 			
-				 
-				if( result.atendimento != null ) {
+				$('.home-view').fadeIn();
+				$('.spinner1').fadeOut()
+				console.log(result.atendimento)
+				if( result != null ) {
 					var json = JSON.parse(result.atendimento);
 
 					$('#tipo_especialidade').empty();
@@ -248,8 +250,7 @@ $(document).ready(function () {
 						});
 					}
 				} else{
-					$('.home-view').fadeIn();
-					$('.spinner1').fadeOut()
+					
 					$.Notification.notify('error','top right', 'DrHoje', 'Nenhum tipo de atendimento foi retornado !');
 				}
             },
