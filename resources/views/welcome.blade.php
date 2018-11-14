@@ -237,7 +237,7 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
-                        <!-- sempre colocar classe "active" no primeiro banner -->
+                        <!-- sempre colocar classe "active" no primeiro banner 
 
                         <div class="banner-novembro-azul carousel-item active" style="background-image: url('/libs/home-template/img/nov-azul/bg.jpg')">
                             <div class="carousel-caption">
@@ -269,7 +269,7 @@
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
-                                        <!-- <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt=""> -->
+                                        <!-- <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt=""> 
                                         <p>Nossa plataforma, oferece para você
                                             além de uma <span>ampla rede</span> de parceiros a
                                             primeira clínica Doutor Hoje do DF
@@ -281,7 +281,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="banner-precos-justos carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
                             <div class="carousel-caption">
