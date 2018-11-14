@@ -43,7 +43,7 @@ class Consulta extends Model
                 	->where('atendimentos.cs_status', '=', 'A');
             })
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
-            ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
+            ->join('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
 			->join('precos as pr', function($join8) use ($planoId) {
 				$join8->on('pr.atendimento_id', '=', 'atendimentos.id')
 					->where('pr.cs_status', '=', 'A')
