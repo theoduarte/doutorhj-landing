@@ -171,31 +171,40 @@ class UserController extends Controller
         $termosCondicoesUsuarios->user_id = $usuario->id;
         $termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
         $termosCondicoesUsuarios->save();
-    	
-    	# envia o e-mail de ativação
-    	//Mail::to($usuario->email)->send(new PacienteSender($paciente));
-    	//$this->from('administrador@comvex.com.br', 'DoutorHoje')->subject('Contato DoutorHoje')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)])
-    	$verify_hash = Crypt::encryptString($paciente->id);
-    	$from = 'contato@doutorhoje.com.br';
-    	$to = $usuario->email;
-    	$subject = 'Contato DoutorHoje';
-    	
-    	$paciente_nm_primario = $paciente->nm_primario;
-    	$paciente_email = $usuario->email;
-    	
-    	$url = route('ativar_conta', $verify_hash);
-    	//$html_message = "<!DOCTYPE html><html><head><title>DoutorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2></body></html>";
-    	
-    	$html_message = view('users.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
-    	
-    	$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
-    	
-    	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+
+		$send_message = $this->enviaEmailAtivacao($paciente);
     	
     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
     	return view('users.register', compact('access_token'));
     }
-    
+
+	public static function enviaEmailAtivacao(Paciente $paciente)
+	{
+		$usuario = $paciente->user;
+
+		# envia o e-mail de ativação
+		//Mail::to($usuario->email)->send(new PacienteSender($paciente));
+		//$this->from('administrador@comvex.com.br', 'DoutorHoje')->subject('Contato DoutorHoje')->view('emails.paciente_verificacao_conta')->with(['verify_hash' => Crypt::encryptString($this->paciente->id)])
+		$verify_hash = Crypt::encryptString($paciente->id);
+		$from = 'contato@doutorhoje.com.br';
+		$to = $usuario->email;
+		$subject = 'Contato DoutorHoje';
+
+		$paciente_nm_primario = $paciente->nm_primario;
+		$paciente_email = $usuario->email;
+
+		$url = route('ativar_conta', $verify_hash);
+		//$html_message = "<!DOCTYPE html><html><head><title>DoutorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2></body></html>";
+
+		$html_message = view('users.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
+
+		$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
+
+		$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+
+		return $send_message;
+	}
+
     /**
      * sendTokenEmail a newly external user created resource in storage.
      *

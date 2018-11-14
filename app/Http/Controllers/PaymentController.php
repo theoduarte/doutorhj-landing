@@ -905,7 +905,10 @@ class PaymentController extends Controller
         $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
     
 		
+		// caso o pagamento seja cartao de credito + empresarial executa a condição
 		if($metodoPagamento == 2){
+
+			// cria o pedido para o pagamento com cartao empresarial
 			$pedidoEmpresarial  = new Pedido();        
 			$descricao = '';
 			$dt_pagamento = date('Y-m-d H:i:s');                        
@@ -916,7 +919,7 @@ class PaymentController extends Controller
 			$pedidoEmpresarial->paciente_id    = $paciente_id;
 			$pedidoEmpresarial->cartao_id = $cartaoEmpresarialDados->id;
 		
-
+			// cria o pedido para o pagamento com cartao de credito
 			$pedidoCredito = new Pedido();        
 			$descricao = '';
 			$dt_pagamento = date('Y-m-d H:i:s');                        
@@ -927,9 +930,9 @@ class PaymentController extends Controller
 			$pedidoCredito->paciente_id    = $paciente_id;
 			
 			 
-			
+			// valor a ser pago com credito empresarial
 			$restoEmpresarial = $empresarial;
-
+			// valor a ser pago com cartão de credito
 			$restoCredito = $cartaoCredito ;
 		}
 	
@@ -958,9 +961,13 @@ class PaymentController extends Controller
 					'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! ',
 				                 
 					], 422);
-			 }else{
+			
+			}else{
 				 
+
+				// caso o metodo de pagamento seja diferente de credito + empresarial entra na condição
 				if($metodoPagamento != 2){
+					// caso o metodo seja apenas credito empresarial  
 					if($metodoPagamento == 1){
 				 
 						$pedido->cartao_id = $cartaoEmpresarialDados->id;
@@ -979,8 +986,7 @@ class PaymentController extends Controller
 							return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
 						}
 					}
-					
-					
+										
 				}
 
 				$valorEmpresa=null;
@@ -1033,10 +1039,10 @@ class PaymentController extends Controller
 											$agendamento->load('paciente');
 											
 										 
-												$item_pedido = new Itempedido();
+											$item_pedido = new Itempedido();
 								
 								
-												if (!empty($item_agendamento->atendimento_id)) {
+											if (!empty($item_agendamento->atendimento_id)) {
 													$conta = $conta+1;
 													$user_session = Auth::user();
 													$plano = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
@@ -1056,7 +1062,13 @@ class PaymentController extends Controller
 												
 													$valores[] = $number ;
 													
-													  
+													/**
+													 * PAGAMENTO COM CARTAO DE CREDITO + EMPRESARIAL
+													 * 
+													 * Efetuar as validações do valores com base no valor escolhido em 
+													 * cada cartao pelo o usuario.
+													 * 
+													 */
 													if ($metodoPagamento ==2) {
 														$empresarial = $restoEmpresarial;
 																						
@@ -1081,7 +1093,7 @@ class PaymentController extends Controller
 														$item_pedido->pedido_id = $MerchantOrderId;
 														$item_pedido->valor = $number   * (1 - $percentual_desconto);	
 													}
-												} else {
+											} else {
 													foreach ($item_agendamento->itens as $item) {
 														$dataHoraCheckup = new Datahoracheckup();
 														$dataHoraCheckup->agendamento_id = $agendamento->id;
@@ -1100,7 +1112,7 @@ class PaymentController extends Controller
 														}
 													}
 													$item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
-												}
+											}
 											
 										
 				
