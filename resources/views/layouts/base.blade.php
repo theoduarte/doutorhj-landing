@@ -627,6 +627,9 @@
 //         		docCookies.setItem('uf_escolha_manual', '0');
         		window.localStorage.setItem('uf_escolha_manual', '0');
         	}
+
+        	var sg_estado_localizazao_form = window.localStorage.getItem('uf_localizacao');
+            $('#sg_estado_localizazao_form').val(sg_estado_localizazao_form);
             
         	$('#sg_estado_localizacao').change(function(){
                 var sg_estado = $(this).val();
