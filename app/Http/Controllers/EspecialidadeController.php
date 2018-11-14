@@ -40,6 +40,7 @@ class EspecialidadeController extends Controller
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
             $consulta = new Consulta();
             $result = $consulta->getActive($plano_id, $uf_localizacao);
+            dd(json_encode($result));
             $result = $result->toArray();
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
             $procedimento = new Procedimento();
@@ -57,7 +58,7 @@ class EspecialidadeController extends Controller
                 array_push($result, $item);
             }
         }
-        dd(json_encode($result));
+        
         return response()->json(['status' => true, 'atendimento' => json_encode($result)]);
     }
     
