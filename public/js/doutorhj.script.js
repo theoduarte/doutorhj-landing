@@ -151,8 +151,8 @@ $(document).ready(function () {
 		
 		$('.home-view').fadeOut('fast');
 		$('.spinner1').fadeIn() 
-
-		if(uf_localizacao != null || uf_localizacao != ""){
+		
+		if(uf_localizacao.length != 0){
 			jQuery.ajax({
 				type: 'POST',
 				  url: '/consulta-especialidades',
@@ -166,9 +166,7 @@ $(document).ready(function () {
 					var json = JSON.parse(result.atendimento);
 					
 					if(json.length !=0){
-						
-						 
-		
+												 		
 							$('#tipo_especialidade').empty();
 		
 							if( $('#tipo_atendimento').val() != 'checkup' ){
