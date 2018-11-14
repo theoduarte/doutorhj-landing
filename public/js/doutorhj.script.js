@@ -161,8 +161,9 @@ $(document).ready(function () {
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
-				
-	
+				$('.home-view').fadeIn();
+					$('.spinner1').fadeOut()
+				console.log(result)
 				
 				if( result != null) {
 					var json = JSON.parse(result.atendimento);
@@ -248,11 +249,7 @@ $(document).ready(function () {
 							}
 						});
 					}
-				}else{
-					$('.home-view').fadeIn();
-					$('.spinner1').fadeOut()
-					$.Notification.notify('error','top right', 'DrHoje', 'Não foi retornado nenhum tipo de atendimento');
-				}
+				} 
             },
             error: function (result) {
 				$('.home-view').fadeIn();
