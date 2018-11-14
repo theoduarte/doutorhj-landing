@@ -360,8 +360,7 @@
                     aqui veiculados são de propriedade exclusiva do DOUTOR HOJE TECNOLOGIA LTDA. É vedada qualquer
                     reprodução, total ou parcial, de qualquer elemento de identidade, sem expressa autorização.
                     A violação de qualquer direito mencionado implicará na responsabilização cível e criminal nos
-                    termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55 SCS Quadra 03 Bloco A
-                    Edifício Antônia Alves - CEP 70.303-907 - Brasília DF</p>
+                    termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55.</p>
             </div>
         </footer>
     @else
@@ -408,8 +407,7 @@
                         aqui veiculados são de propriedade exclusiva do DOUTOR HOJE TECNOLOGIA LTDA. É vedada qualquer
                         reprodução, total ou parcial, de qualquer elemento de identidade, sem expressa autorização.
                         A violação de qualquer direito mencionado implicará na responsabilização cível e criminal nos
-                        termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55 SCS Quadra 03 Bloco A
-                        Edifício Antônia Alves - CEP 70.303-907 - Brasília DF</p>
+                        termos da Lei. DOUTOR HOJE TECNOLOGIA LTDA - CNPJ: 21.520.255/0001-55.</p>
             </div>
         </footer>
     @endif
