@@ -58,6 +58,7 @@ class Consulta extends Model
             ->where('atendimentos.cs_status', 'A')
             ->orderby('descricao', 'asc')
             ->get();
+        print_r($uf_localizacao);
         print_r($consultas);
         //print_r(DB::getQueryLog() );die;
         dd( DB::getQueryLog() );
