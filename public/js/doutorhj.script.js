@@ -178,7 +178,7 @@ $(document).ready(function () {
 									  url: '/consulta-todos-locais-atendimento',
 									  data: {
 										'tipo_atendimento': tipo_atendimento,
-										'uf_localizacao': uf_localizacao,
+										'uf_localizacao': uf_localizacao_cookie,
 										  'especialidade': $('#tipo_especialidade').val(),
 										'_token': laravel_token
 									},
