@@ -65,7 +65,7 @@ class Consulta extends Model
             ->orderby('descricao', 'asc')
             ->get();
         print_r($query);
-        print_r(DB::getQueryLog() );die
+        print_r(DB::getQueryLog() );die;
         //dd( DB::getQueryLog() );die;
         return $query;
     } 
