@@ -20,12 +20,6 @@ $(document).ready(function () {
 	}catch(error){
 
 	}
-	
-
-
-
-	
-	
 
 	$('#cep').keyup(function(){
 		
