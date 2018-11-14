@@ -38,24 +38,21 @@ class Consulta extends Model
         $consultas = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
             ->distinct()
-            ->join('atendimentos', function ($query) { $query->on('consultas.id', '=', 'atendimentos.consulta_id')->where('atendimentos.cs_status', '=', 'A');})
+            ->join('atendimentos', function ($join1) { $join1->on('consultas.id', '=', 'atendimentos.consulta_id')->where('atendimentos.cs_status', '=', 'A');})
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
-            ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
+            ->leftJoin('tag_populars', function($join2) { $join2->on('tag_populars.consulta_id', '=', 'consultas.id');})
 			->join('precos as pr', function($join8) use ($planoId) {
 				$join8->on('pr.atendimento_id', '=', 'atendimentos.id')
 					->where('pr.cs_status', '=', 'A')
 					->where('pr.data_inicio', '<=', date('Y-m-d H:i:s'))
 					->where('pr.data_fim', '>=', date('Y-m-d H:i:s'))
-					->where(function($query) use ($planoId) {
-						$query->where('pr.plano_id', '=', $planoId)
-							->orWhere('pr.plano_id', '=', Plano::OPEN);
-					});
+					->where(function($join4) use ($planoId) { $join4->where('pr.plano_id', '=', $planoId)->orWhere('pr.plano_id', '=', Plano::OPEN);});
 			})
 			->whereExists(function ($query) use ($uf_localizacao) {
                 $query->select(DB::raw(1))
                       ->from('filials')
-                      ->join('enderecos', function($join1) { $join1->on('filials.endereco_id', '=', 'enderecos.id');})
-                      ->join('cidades', function($join2) use ($uf_localizacao) { $join2->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
+                      ->join('enderecos', function($join5) { $join5->on('filials.endereco_id', '=', 'enderecos.id');})
+                      ->join('cidades', function($join6) use ($uf_localizacao) { $join6->on('cidades.id', '=', 'enderecos.cidade_id')->on('cidades.sg_estado', '=', DB::raw("'$uf_localizacao'"));})
                       ->whereRaw("filials.clinica_id = clinicas.id AND filials.cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
