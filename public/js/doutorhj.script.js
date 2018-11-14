@@ -153,7 +153,7 @@ $(document).ready(function () {
 		$('.spinner').fadeIn() 
 		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
 		
-		if(uf_localizacao.length != 0){
+		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
 			jQuery.ajax({
 				type: 'POST',
 				  url: '/consulta-especialidades',
