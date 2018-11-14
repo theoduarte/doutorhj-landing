@@ -317,7 +317,7 @@
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-sm-12 col-md-5 col2-sobre">
-                            <p>O Doutor Hoje reúne uma ampla rede de profissionais de saúde em Brasília que, por meio da
+                            <p>O Doutor Hoje reúne uma ampla rede de profissionais de saúde no Brasil que, por meio da
                                 plataforma, oferecem o acesso a consultas e exames com preços acessíveis. (NÃO somos um
                                 plano ou seguro saúde).</p>
                             <a href="https://doutorhoje.com.br/login">Acesse e comece a usar agora mesmo
@@ -520,7 +520,7 @@
                             </div>
                             <div class="texto-vantagem">
                                 <h4>Onde você precisar</h4>
-                                <p>Mais de 700 prestadores em Brasília, 56 especialidades e 1200 exames. </p>
+                                <p>Mais de 1.300 médicos em todo o Brasil, 56 especialidades e 2.100 exames. </p>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
