@@ -149,8 +149,9 @@ $(document).ready(function () {
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
 		
-		//$('.home-view').fadeOut('fast');
-		$('.spinner1').fadeIn() 
+		
+		$('.spinner').fadeIn() 
+		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
 		
 		if(uf_localizacao.length != 0){
 			jQuery.ajax({
@@ -158,7 +159,7 @@ $(document).ready(function () {
 				  url: '/consulta-especialidades',
 				  data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao':   uf_localizacao  ,
+					'uf_localizacao':   uf_localizacao != null ? uf_localizacao : uf_localizacao_cookie  ,
 					'_token'		  : laravel_token
 				},
 				success: function (result) {
@@ -187,8 +188,7 @@ $(document).ready(function () {
 										'_token': laravel_token
 									},
 									success: function (result) {
-										$('.home-view').fadeIn();
-										$('.spinner1').fadeOut()
+										$('.spinner').fadeOut()
 										if( result != null) {
 											var json = result.endereco;
 											$('#local_atendimento').empty();
@@ -202,8 +202,7 @@ $(document).ready(function () {
 										}
 									},
 									error: function (result) {
-										$('.home-view').fadeIn();
-										$('.spinner1').fadeOut()
+										$('.spinner').fadeOut()
 						
 										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 									}
@@ -222,8 +221,7 @@ $(document).ready(function () {
 										'_token': laravel_token
 									},
 									success: function (result) {
-										$('.home-view').fadeIn();
-										$('.spinner1').fadeOut()
+										$('.spinner').fadeOut()
 										if( result != null) {
 											var json = result;
 											
@@ -242,32 +240,35 @@ $(document).ready(function () {
 										}
 									},
 									error: function (result) {
-										$('.home-view').fadeIn();
-										$('.spinner1').fadeOut()
+										$('.spinner').fadeOut()
 										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 									}
 								});
 							}
 						
 					}else{
-						$('.home-view').fadeIn();
-						$('.spinner1').fadeOut()
-						
-						$.Notification.notify('error','top right', 'DrHoje', 'Nenhum atendimento foi encontrado !');
+						$('.spinner').fadeOut()
+					//	$('#form-buscar').trigger("reset");
+					//	$('#form-buscar').reset();
+					
+					
+					$('#tipo_atendimento').prop('selectedIndex',0);
+					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
+					$('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
+						$.Notification.notify('error','top right', 'DrHoje', 'Não existe atendimentos para o estado selecionado !');
 					}
 
 					
 				},
 				error: function (result) {
-					$('.home-view').fadeIn();
-					$('.spinner1').fadeOut()
+					$('.spinner').fadeOut()
 					
 					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 				}
 			});
 		}else{
-			$('.home-view').fadeIn();
-			$('.spinner1').fadeOut()
+			
+			$('.spinner').fadeOut()
 			$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos obter o seu estado, escolha um estado e tente novamente!');
 		}
 		

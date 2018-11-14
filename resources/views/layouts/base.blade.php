@@ -100,33 +100,33 @@
 <!-- End Google Tag Manager (noscript) -->
 
 <style>
-
-.spinner1{
-    height:100vh;
-    background-color: #1b71b9;
+ 
+.home-view{
+    position: absolute;
+    
+  
 }
 .spinner {
   
-
-  width: 200px;
-  height: 50px;
+    background-color: #1b71b9cf;
+  width: 100%;
+  height:100vh;
   line-height: 50px;
   text-align:center;
   
   color: white;
   
   /* pura mágica */
-  position: absolute;
-  top: 50%; /* posiciona na metade da tela */
-  margin-top: -25px; /* e retrocede metade da altura */
-  left: 50%; /* posiciona na metade da tela */
-  margin-left: -100px; /* e retrocede metade da largura */
+  position: fixed;
+ 
+  
+  
 }
 
 .cube1, .cube2 {
-  background-color: #fff;
-  width: 15px;
-  height: 15px;
+  background-color: white;
+  width: 18px;
+  height: 18px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -167,17 +167,10 @@
 }
 </style>
 
-{{---
-    <div class="spinner1" style="display:none">
-    <div class="spinner">
-    <div class="cube1"></div>
-  <div class="cube2"></div>
-  </div>
-</div>
 
----}}
-
+ 
 <div class="tudo home-view"  >
+
 
     <header>
       
@@ -539,6 +532,12 @@
         </div>
     </div>
 </div>
+
+ <div class="spinner"  style="display:none"  >
+    <div class="cube1"></div>
+        <div class="cube2"></div>
+  </div>
+ 
 @push('scripts')
     <script>
         var laravel_token = '{{ csrf_token() }}';
@@ -641,6 +640,9 @@
             }
             $('#btn-uf-localizacao').click(function(){
                     uf_localizacao = docCookies.getItem('uf_localizacao');
+                    $('#tipo_atendimento').prop('selectedIndex',0);
+					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
+                    $('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
                     
             		if(uf_localizacao != null) {
                         //obterLocalizacao(); 
@@ -650,7 +652,7 @@
                         
                         var sg_estado = $('#sg_estado_localizacao').val();
                         docCookies.setItem('uf_localizacao', sg_estado);
-                      //  window.location.reload();
+                        window.location.reload();
                       
                     }
                     
