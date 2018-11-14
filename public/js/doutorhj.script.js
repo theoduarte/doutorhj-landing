@@ -93,6 +93,7 @@ $(document).ready(function () {
 	 
 	
 	})
+
 	$('#documento').change(function(){
 	 
 		if($(this).val() ==1){
@@ -121,11 +122,10 @@ $(document).ready(function () {
 		}
 	})
 
+ 	
 
-	
-	$('.change-parcelamento').change(function(){
-		 
 
+	$('.change-parcelamento').change(function(){		 
 		$('#resumo_parcelamento').empty().html($(".change-parcelamento option:selected").text())
 	})
 
@@ -149,96 +149,129 @@ $(document).ready(function () {
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
 		
-		jQuery.ajax({
-    		type: 'POST',
-    	  	url: '/consulta-especialidades',
-    	  	data: {
-				'tipo_atendimento': tipo_atendimento,
-				'uf_localizacao':   uf_localizacao  ,
-				'_token'		  : laravel_token
-			},
-			success: function (result) {
-				if( result != null) {
+		
+		$('.spinner').fadeIn() 
+		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+		
+		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
+			jQuery.ajax({
+				type: 'POST',
+				  url: '/consulta-especialidades',
+				  data: {
+					'tipo_atendimento': tipo_atendimento,
+					'uf_localizacao':   uf_localizacao != null ? uf_localizacao : uf_localizacao_cookie  ,
+					'_token'		  : laravel_token
+				},
+				success: function (result) {
+				
 					var json = JSON.parse(result.atendimento);
-
-					$('#tipo_especialidade').empty();
-
-					if( $('#tipo_atendimento').val() != 'checkup' ){
-						for(var i=0; i < json.length; i++) {
-							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-							$('#tipo_especialidade').append($(option));
-						}
-
-						if( !$('#tipo_especialidade').val()  ) { return false; }
-
-						jQuery.ajax({
-				    		type: 'POST',
-				    	  	url: '/consulta-todos-locais-atendimento',
-				    	  	data: {
-								'tipo_atendimento': tipo_atendimento,
-								'uf_localizacao': uf_localizacao,
-				    	  		'especialidade': $('#tipo_especialidade').val(),
-								'_token': laravel_token
-							},
-							success: function (result) {
-								if( result != null) {
-									var json = result.endereco;
-									$('#local_atendimento').empty();
-									var option = '<option value="">TODOS OS LOCAIS</option>';
-									$('#local_atendimento').append($(option));
-									
-									for(var i=0; i < json.length; i++) {
-										option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
-										$('#local_atendimento').append($(option));
-									}
+					
+					if(json.length !=0){
+												 		
+							$('#tipo_especialidade').empty();
+		
+							if( $('#tipo_atendimento').val() != 'checkup' ){
+								for(var i=0; i < json.length; i++) {
+									var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+									$('#tipo_especialidade').append($(option));
 								}
-				            },
-				            error: function (result) {
-				            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-				            }
-				    	});
-					} else {
-						for(var i=0; i < json.length; i++) {
-							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-							$('#tipo_especialidade').append($(option));
-						}
-
-						jQuery.ajax({
-							type: 'POST',
-							url: '/consulta-tipos-checkup',
-							data: {
-								'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
-								'_token': laravel_token
-							},
-							success: function (result) {
-								if( result != null) {
-									var json = result;
-									
-									$('#local_atendimento').empty();
-									var option = '<option value="">TODOS</option>';
-									$('#local_atendimento').append($(option));
-									
-									for(var i=0; i < json.length; i++) {
-										option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
-										$('#local_atendimento').append($(option));
+		
+								if( !$('#tipo_especialidade').val()  ) { return false; }
+		
+								jQuery.ajax({
+									type: 'POST',
+									  url: '/consulta-todos-locais-atendimento',
+									  data: {
+										'tipo_atendimento': tipo_atendimento,
+										'uf_localizacao': uf_localizacao,
+										  'especialidade': $('#tipo_especialidade').val(),
+										'_token': laravel_token
+									},
+									success: function (result) {
+										$('.spinner').fadeOut()
+										if( result != null) {
+											var json = result.endereco;
+											$('#local_atendimento').empty();
+											var option = '<option value="">TODOS OS LOCAIS</option>';
+											$('#local_atendimento').append($(option));
+											
+											for(var i=0; i < json.length; i++) {
+												option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
+												$('#local_atendimento').append($(option));
+											}
+										}
+									},
+									error: function (result) {
+										$('.spinner').fadeOut()
+						
+										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 									}
-
-									if(json.length > 0) {
-										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-									}
+								});
+							} else {
+								for(var i=0; i < json.length; i++) {
+									var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+									$('#tipo_especialidade').append($(option));
 								}
-							},
-							error: function (result) {
-								$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+		
+								jQuery.ajax({
+									type: 'POST',
+									url: '/consulta-tipos-checkup',
+									data: {
+										'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
+										'_token': laravel_token
+									},
+									success: function (result) {
+										$('.spinner').fadeOut()
+										if( result != null) {
+											var json = result;
+											
+											$('#local_atendimento').empty();
+											var option = '<option value="">TODOS</option>';
+											$('#local_atendimento').append($(option));
+											
+											for(var i=0; i < json.length; i++) {
+												option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
+												$('#local_atendimento').append($(option));
+											}
+		
+											if(json.length > 0) {
+												$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+											}
+										}
+									},
+									error: function (result) {
+										$('.spinner').fadeOut()
+										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+									}
+								});
 							}
-						});
+						
+					}else{
+						$('.spinner').fadeOut()
+					//	$('#form-buscar').trigger("reset");
+					//	$('#form-buscar').reset();
+					
+					
+					$('#tipo_atendimento').prop('selectedIndex',0);
+					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
+					$('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
+						$.Notification.notify('error','top right', 'DrHoje', 'Não existe atendimentos para o estado selecionado !');
 					}
+
+					
+				},
+				error: function (result) {
+					$('.spinner').fadeOut()
+					
+					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 				}
-            },
-            error: function (result) {
-            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-            }
-    	});
+			});
+		}else{
+			
+			$('.spinner').fadeOut()
+			$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos obter o seu estado, escolha um estado e tente novamente!');
+		}
+		
 	});
 
 	$('.registrarEndereco').click(function(){
@@ -618,92 +651,99 @@ $(function() {
 		}
 	}
 
-
- 
-	if($('.escolherMetodoPagamento option:selected').val() == "2"){
-		setTimeout(function() {
-		 
-		
-			if(!(typeof valor_formatado === 'undefined') && valor_formatado.length > 6) {
-				resp = (valor_formatado.replace('.',''))
-			} else if(!(typeof valor_formatado === 'undefined')) {
-				// valor credito especial formatado
-				resp = (valor_formatado.replace(',','.'))
-			}
+	
+	$('.escolherMetodoPagamento  ').change(function(){
+		if($(this).val() == "2"){
+			var resp="";
+			var valor_formatado = ( $('#valor_disponivel').val());
+			setTimeout(function() {
+			 
 			
-			complemento =  ($('#total_pagar').val());
-			respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
-
-			if(parseFloat(respCOmplemento) > parseFloat(resp)) {
-				var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
-				var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
-				var porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
-				var empresa=0;		 
-				var complemt=0;
-
-			 	
-				slider.max = (porcentagem) - 0.1
-	 
-				if(valor_formatado.length >6) {
-					resp = (valor_formatado.replace('.','')) 
-				} else {
+				if(!(typeof valor_formatado === 'undefined') && valor_formatado.length > 6) {
+					resp = (valor_formatado.replace('.',''))
+				} else if(!(typeof valor_formatado === 'undefined')) {
+					// valor credito especial formatado
 					resp = (valor_formatado.replace(',','.'))
 				}
 				
 				complemento =  ($('#total_pagar').val());
-				respCOmplemento = (complemento.replace(',','.'))      
-				 
-
+				respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
+			 
+				
 				if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 					var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 					var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
 					var porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
 					var empresa=0;		 
 					var complemt=0;
-
+	
+					 
 					slider.max = (porcentagem) - 0.1
+		 
+					if(valor_formatado.length >6) {
+						resp = (valor_formatado.replace('.','')) 
+					} else {
+						resp = (valor_formatado.replace(',','.'))
+					}
 					
-					slider.value =  (porcentagem) - 0.1;
-					
-
-				 
-					empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+					complemento =  ($('#total_pagar').val());
+					respCOmplemento = (complemento.replace(',','.'))      
 					 
-					complemt  = (parseFloat(respCOmplemento) - empresa)	
+					
+					if(parseFloat(respCOmplemento) > parseFloat(resp)) {
+						var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
+						var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
+						var porcentagem = (totalEmpresarial /parseFloat(respCOmplemento)) * 100;
+						var empresa=0;		 
+						var complemt=0;
+						
+						slider.max = (porcentagem) - 0.1
+						
+						slider.value =  (porcentagem) - 0.1;
+						
+	
 					 
-					output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
-		
-					//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
-				 
-					$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
-					
-					$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
-					
-					printParcelamento(complemt );
-					
-					$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
-					
-					$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
+						empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
+						 
+						complemt  = (parseFloat(respCOmplemento) - empresa)	
+						 
+						output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
+			
+						//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
+					 
+						$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+						
+						$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
+						
+						printParcelamento(complemt );
+						
+						$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
+						
+						$('.creditoAserDebitado').text('R$ '+  empresa.formatMoney(2, ',', '.')) 
+	
+					} else {
+						var porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
+			
+						var totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+						var valorComplemento =  (respCOmplemento) - totalEmpresarial
+						printParcelamento(valorComplemento);
+						
 
-				} else {
-					var porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
-		
-					var totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
-					var valorComplemento =  (respCOmplemento) - totalEmpresarial
-					printParcelamento(valorComplemento);
-					slider.max = parseFloat(porcentagem) - 0.1;
-					slider.value =parseFloat(porcentagem) - 0.1;
-					output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
-		
-					$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
-					$('.valor_complementar').text('R$ '+valorComplemento)
-					$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
+						slider.max = parseFloat(porcentagem) - 0.1;
+						slider.value =parseFloat(porcentagem) - 0.1;
+						output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
+			
+						$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
+						$('.valor_complementar').text('R$ '+valorComplemento)
+						$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
+					}
+	
 				}
-
-			}
-																				   
-		}, 10);
-	}
+																					   
+			}, 10);
+		}
+	})
+	
 
 	
 		

@@ -99,7 +99,79 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="tudo">
+<style>
+ 
+.home-view{
+    position: absolute;
+    
+  
+}
+.spinner {
+  
+    background-color: #1b71b9cf;
+  width: 100%;
+  height:100vh;
+  line-height: 50px;
+  text-align:center;
+  
+  color: white;
+  
+  /* pura mágica */
+  position: fixed;
+ 
+  
+  
+}
+
+.cube1, .cube2 {
+  background-color: white;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+  animation: sk-cubemove 1.8s infinite ease-in-out;
+}
+
+.cube2 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+@-webkit-keyframes sk-cubemove {
+  25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+  50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+  75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+  100% { -webkit-transform: rotate(-360deg) }
+}
+
+@keyframes sk-cubemove {
+  25% { 
+    transform: translateX(42px) rotate(-90deg) scale(0.5);
+    -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+  } 50% { 
+    transform: translateX(42px) translateY(42px) rotate(-179deg);
+    -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+  } 50.1% { 
+    transform: translateX(42px) translateY(42px) rotate(-180deg);
+    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+  } 75% { 
+    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+    -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+  } 100% { 
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+  }
+}
+</style>
+
+
+ 
+<div class="tudo home-view"  >
+
+
     <header>
       
         @if (Auth::check())
@@ -458,6 +530,12 @@
         </div>
     </div>
 </div>
+
+ <div class="spinner"  style="display:none"  >
+    <div class="cube1"></div>
+        <div class="cube2"></div>
+  </div>
+ 
 @push('scripts')
     <script>
         var laravel_token = '{{ csrf_token() }}';
@@ -560,6 +638,9 @@
             }
             $('#btn-uf-localizacao').click(function(){
                     uf_localizacao = docCookies.getItem('uf_localizacao');
+                    $('#tipo_atendimento').prop('selectedIndex',0);
+					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
+                    $('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
                     
             		if(uf_localizacao != null) {
                         
@@ -569,7 +650,9 @@
                         
                         var sg_estado = $('#sg_estado_localizacao').val();
                         docCookies.setItem('uf_localizacao', sg_estado);
-                       window.location.reload();
+ 
+                        window.location.reload();
+ 
                       
                     }
                     

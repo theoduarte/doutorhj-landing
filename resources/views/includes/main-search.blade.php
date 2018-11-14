@@ -1,8 +1,11 @@
-<div id="busca-home" class="{{ $class }}">
+
+ 
+<div id="busca-home" class="{{ $class }}  ">
+ 
 	<div class="titulo">
 		<span>Quero agendar</span>
 	</div>
-	<form action="/resultado"   class="form-busca-home form-busca" method="get" onsubmit="return validaBuscaAtendimento()">
+	<form action="/resultado"   class="form-busca-home form-busca" id="form-buscar" method="get" onsubmit="return validaBuscaAtendimento()">
 		<div class="row">
 			<div class="form-group col-md-12 col-lg-3">
 				<label for="tipo">Tipo de atendimento</label>

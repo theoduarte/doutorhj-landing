@@ -16,7 +16,7 @@
             <div class="titulo">
                 <strong>{{count($atendimentos)}} @if(count($atendimentos)>1)Resultados @else Resultado @endif da sua pesquisa</strong>
                 <p>Após a escolha do prestador, indique a data e horário para realizar o seu agendamento.</p>
-            </div>
+            </div>           
             <div class="area-alt-busca">
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
             </div>

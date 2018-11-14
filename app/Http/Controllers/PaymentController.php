@@ -698,7 +698,7 @@ class PaymentController extends Controller
 			}	
 		 			
 		} 
-
+		
 		 
 		if($metodoPagamento==1){
 			// adicionar o cartao id do cartao empresarial no pedido 
