@@ -162,9 +162,13 @@ $(document).ready(function () {
 			},
 			success: function (result) {
 			
-				$('.home-view').fadeIn();
-				$('.spinner1').fadeOut()
-				console.log(result.atendimento)
+			
+				if(result.atendimento != null || result.atendimento ==""){
+					$('.home-view').fadeIn();
+					$('.spinner1').fadeOut()
+					console.log()
+					$.Notification.notify('error','top right', 'DrHoje', 'Nenhum atendimento foi encontrado !');
+				}
 				if( result != null ) {
 					var json = JSON.parse(result.atendimento);
 
@@ -249,10 +253,7 @@ $(document).ready(function () {
 							}
 						});
 					}
-				} else{
-					
-					$.Notification.notify('error','top right', 'DrHoje', 'Nenhum tipo de atendimento foi retornado !');
-				}
+				}  
             },
             error: function (result) {
 				$('.home-view').fadeIn();
