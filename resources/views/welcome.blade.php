@@ -231,7 +231,7 @@
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        
                         
                     </ol>
                     <div class="carousel-inner" role="listbox">
@@ -255,15 +255,7 @@
 
                         
 
-                        <div class="banner-precos-justos carousel-item" style="background-image: url('/libs/home-template/img/banner_home_precos.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <h3>Preços justos<br>que cabem no<br>seu bolso.</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         @include('includes/main-search', [ 'class' => 'busca-welcome' ] )
                     </div>
