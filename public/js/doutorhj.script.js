@@ -93,6 +93,7 @@ $(document).ready(function () {
 	 
 	
 	})
+
 	$('#documento').change(function(){
 	 
 		if($(this).val() ==1){
@@ -121,11 +122,10 @@ $(document).ready(function () {
 		}
 	})
 
+ 	
 
-	
-	$('.change-parcelamento').change(function(){
-		 
 
+	$('.change-parcelamento').change(function(){		 
 		$('#resumo_parcelamento').empty().html($(".change-parcelamento option:selected").text())
 	})
 
@@ -149,6 +149,9 @@ $(document).ready(function () {
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
 		
+		$('.home-view').fadeOut('fast');
+		$('.spinner1').fadeIn() 
+
 		jQuery.ajax({
     		type: 'POST',
     	  	url: '/consulta-especialidades',
@@ -158,6 +161,9 @@ $(document).ready(function () {
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
+				
+	
+				
 				if( result != null) {
 					var json = JSON.parse(result.atendimento);
 
@@ -181,6 +187,8 @@ $(document).ready(function () {
 								'_token': laravel_token
 							},
 							success: function (result) {
+								$('.home-view').fadeIn();
+								$('.spinner1').fadeOut()
 								if( result != null) {
 									var json = result.endereco;
 									$('#local_atendimento').empty();
@@ -194,6 +202,9 @@ $(document).ready(function () {
 								}
 				            },
 				            error: function (result) {
+								$('.home-view').fadeIn();
+								$('.spinner1').fadeOut()
+				
 				            	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 				            }
 				    	});
@@ -211,6 +222,8 @@ $(document).ready(function () {
 								'_token': laravel_token
 							},
 							success: function (result) {
+								$('.home-view').fadeIn();
+								$('.spinner1').fadeOut()
 								if( result != null) {
 									var json = result;
 									
@@ -229,6 +242,8 @@ $(document).ready(function () {
 								}
 							},
 							error: function (result) {
+								$('.home-view').fadeIn();
+								$('.spinner1').fadeOut()
 								$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
 							}
 						});
@@ -236,6 +251,9 @@ $(document).ready(function () {
 				}
             },
             error: function (result) {
+				$('.home-view').fadeIn();
+				$('.spinner1').fadeOut()
+				
             	$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
             }
     	});

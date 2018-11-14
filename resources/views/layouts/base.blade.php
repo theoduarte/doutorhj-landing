@@ -99,7 +99,83 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="tudo">
+<style>
+
+.spinner1{
+    height:100vh;
+    background-color: #1b71b9;
+}
+.spinner {
+  
+
+  width: 200px;
+  height: 50px;
+  line-height: 50px;
+  text-align:center;
+  
+  color: white;
+  
+  /* pura mágica */
+  position: absolute;
+  top: 50%; /* posiciona na metade da tela */
+  margin-top: -25px; /* e retrocede metade da altura */
+  left: 50%; /* posiciona na metade da tela */
+  margin-left: -100px; /* e retrocede metade da largura */
+}
+
+.cube1, .cube2 {
+  background-color: #fff;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+  animation: sk-cubemove 1.8s infinite ease-in-out;
+}
+
+.cube2 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+@-webkit-keyframes sk-cubemove {
+  25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+  50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+  75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+  100% { -webkit-transform: rotate(-360deg) }
+}
+
+@keyframes sk-cubemove {
+  25% { 
+    transform: translateX(42px) rotate(-90deg) scale(0.5);
+    -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+  } 50% { 
+    transform: translateX(42px) translateY(42px) rotate(-179deg);
+    -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+  } 50.1% { 
+    transform: translateX(42px) translateY(42px) rotate(-180deg);
+    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+  } 75% { 
+    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+    -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+  } 100% { 
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+  }
+}
+</style>
+
+<div class="spinner1" style="display:none">
+    <div class="spinner">
+    <div class="cube1"></div>
+  <div class="cube2"></div>
+  </div>
+</div>
+
+<div class="tudo home-view"  >
+
     <header>
       
         @if (Auth::check())

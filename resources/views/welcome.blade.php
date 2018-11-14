@@ -6,6 +6,7 @@
 @endpush
 
 @section('content')
+
     @if (Auth::check())
         <section class="area-busca-interna home-logado">
             <div class="container">
