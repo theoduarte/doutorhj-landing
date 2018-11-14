@@ -161,11 +161,9 @@ $(document).ready(function () {
 				'_token'		  : laravel_token
 			},
 			success: function (result) {
-				$('.home-view').fadeIn();
-					$('.spinner1').fadeOut()
-				console.log(result)
-				
-				if( result != null) {
+			
+				 
+				if( result.atendimento != null ) {
 					var json = JSON.parse(result.atendimento);
 
 					$('#tipo_especialidade').empty();
@@ -249,7 +247,11 @@ $(document).ready(function () {
 							}
 						});
 					}
-				} 
+				} else{
+					$('.home-view').fadeIn();
+					$('.spinner1').fadeOut()
+					$.Notification.notify('error','top right', 'DrHoje', 'Nenhum tipo de atendimento foi retornado !');
+				}
             },
             error: function (result) {
 				$('.home-view').fadeIn();
