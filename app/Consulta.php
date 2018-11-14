@@ -35,15 +35,12 @@ class Consulta extends Model
 
     public function getActive($planoId, $uf_localizacao) {
         DB::enableQueryLog();
-        $query = DB::table('consultas')
+        $consultas = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
             ->distinct()
-            ->join('atendimentos', function ($join) {
-                $join->on('consultas.id', '=', 'atendimentos.consulta_id')
-                	->where('atendimentos.cs_status', '=', 'A');
-            })
+            ->join('atendimentos', function ($query) { $query->on('consultas.id', '=', 'atendimentos.consulta_id')->where('atendimentos.cs_status', '=', 'A');})
             ->join('clinicas', 'clinicas.id', '=', 'atendimentos.clinica_id')
-            ->join('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
+            ->leftJoin('tag_populars', function($query) { $query->on('tag_populars.consulta_id', '=', 'consultas.id');})
 			->join('precos as pr', function($join8) use ($planoId) {
 				$join8->on('pr.atendimento_id', '=', 'atendimentos.id')
 					->where('pr.cs_status', '=', 'A')
@@ -64,10 +61,10 @@ class Consulta extends Model
             ->where('atendimentos.cs_status', 'A')
             ->orderby('descricao', 'asc')
             ->get();
-        print_r($query);
+        print_r($consultas);
         //print_r(DB::getQueryLog() );die;
         dd( DB::getQueryLog() );
-        return $query;
+        return $consultas;
     } 
 
 
