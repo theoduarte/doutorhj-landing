@@ -149,7 +149,7 @@ $(document).ready(function () {
 		
 		var uf_localizacao = $('#sg_estado_localizacao').val();
 		
-		$('.home-view').fadeOut('fast');
+		//$('.home-view').fadeOut('fast');
 		$('.spinner1').fadeIn() 
 		
 		if(uf_localizacao.length != 0){

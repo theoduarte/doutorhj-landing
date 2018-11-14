@@ -167,12 +167,15 @@
 }
 </style>
 
-<div class="spinner1" style="display:none">
+{{---
+    <div class="spinner1" style="display:none">
     <div class="spinner">
     <div class="cube1"></div>
   <div class="cube2"></div>
   </div>
 </div>
+
+---}}
 
 <div class="tudo home-view"  >
 
