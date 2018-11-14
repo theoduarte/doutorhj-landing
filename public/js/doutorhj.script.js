@@ -154,7 +154,7 @@ $(document).ready(function () {
 				  url: '/consulta-especialidades',
 				  data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao':   uf_localizacao != null ? uf_localizacao : uf_localizacao_cookie  ,
+					'uf_localizacao':   uf_localizacao_cookie  ,
 					'_token'		  : laravel_token
 				},
 				success: function (result) {
