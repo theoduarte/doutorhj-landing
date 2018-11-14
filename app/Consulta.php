@@ -52,7 +52,7 @@ class Consulta extends Model
                 $query->select(DB::raw(1))
                       ->from('filials')
                       ->join('enderecos', function($join5) { $join5->on('filials.endereco_id', '=', 'enderecos.id');})
-                      ->join('cidades', function($join6) use ($uf_localizacao) { $join6->on('cidades.id', '=', 'enderecos.cidade_id');})
+                      ->join('cidades', function($join6) use ($uf_localizacao) { $join6->on('cidades.id', '=', 'enderecos.cidade_id')->on(DB::raw("cidades.sg_estado = '".$uf_localizacao."'"));})
                       ->whereRaw("filials.clinica_id = clinicas.id AND filials.cs_status = 'A'");
             })
             ->where('atendimentos.cs_status', 'A')
