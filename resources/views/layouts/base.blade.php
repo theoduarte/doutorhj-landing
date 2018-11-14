@@ -620,24 +620,29 @@
                   }
             });
 
-        	var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+//         	var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+        	var uf_escolha_manual = window.localStorage.getItem('uf_escolha_manual');
         	//alert(uf_escolha_manual);
         	if(uf_escolha_manual === null) {
-        		docCookies.setItem('uf_escolha_manual', '0');
+//         		docCookies.setItem('uf_escolha_manual', '0');
+        		window.localStorage.setItem('uf_escolha_manual', '0');
         	}
             
         	$('#sg_estado_localizacao').change(function(){
                 var sg_estado = $(this).val();
-                docCookies.setItem('uf_localizacao', sg_estado);
+//                 docCookies.setItem('uf_localizacao', sg_estado);
+                window.localStorage.setItem('uf_localizacao', sg_estado);
                 $('#sg_estado_localizazao_form').val(sg_estado);
             });
             
-            uf_localizacao = docCookies.getItem('uf_localizacao');
+//             uf_localizacao = docCookies.getItem('uf_localizacao');
+			uf_localizacao = window.localStorage.getItem('uf_localizacao');
             if(   uf_localizacao != null ||    uf_localizacao  != "" ||    uf_localizacao  != undefined){
                 $('.ds_uf_localizacao').empty().html( getDescricaoFromUf(uf_localizacao) );
             }
             $('#btn-uf-localizacao').click(function(){
-                    uf_localizacao = docCookies.getItem('uf_localizacao');
+//                     uf_localizacao = docCookies.getItem('uf_localizacao');
+                    uf_localizacao = window.localStorage.getItem('uf_localizacao');
                     $('#tipo_atendimento').prop('selectedIndex',0);
 					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
                     $('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
@@ -649,7 +654,8 @@
                         $('.ds_uf_localizacao').empty().html( getDescricaoFromUf(uf_localizacao) );
                         
                         var sg_estado = $('#sg_estado_localizacao').val();
-                        docCookies.setItem('uf_localizacao', sg_estado);
+//                         docCookies.setItem('uf_localizacao', sg_estado);
+						window.localStorage.setItem('uf_localizacao', sg_estado);
  
                         window.location.reload();
  

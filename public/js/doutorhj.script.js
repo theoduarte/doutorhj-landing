@@ -151,7 +151,8 @@ $(document).ready(function () {
 		
 		
 		$('.spinner').fadeIn() 
-		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+//		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
 		
 		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
 			jQuery.ajax({

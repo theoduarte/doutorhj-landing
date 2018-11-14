@@ -642,11 +642,13 @@
 
                 $('#modalEstado').on("hidden.bs.modal", function() {
 
-					uf_localizacao = docCookies.getItem('uf_localizacao');
+// 					uf_localizacao = docCookies.getItem('uf_localizacao');
+					uf_localizacao =  window.localStorage.getItem('uf_localizacao');
                     
             		if(uf_localizacao == null) {
                     	$('#sg_estado_localizacao').val('DF');
-        				docCookies.setItem('uf_localizacao', 'DF');
+//         				docCookies.setItem('uf_localizacao', 'DF');
+        				window.localStorage.setItem('uf_localizacao', 'DF');
         		        $('#sg_estado_localizazao_form').val('DF');
         		        
                         $('#ds_uf_localizacao').html('Distrito Federal');
