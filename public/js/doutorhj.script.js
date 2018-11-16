@@ -20,12 +20,6 @@ $(document).ready(function () {
 	}catch(error){
 
 	}
-	
-
-
-
-	
-	
 
 	$('#cep').keyup(function(){
 		
@@ -151,15 +145,16 @@ $(document).ready(function () {
 		
 		
 		$('.spinner').fadeIn() 
-		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
-		var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+//		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
+		
 		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
 			jQuery.ajax({
 				type: 'POST',
 				  url: '/consulta-especialidades',
 				  data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao':   uf_localizacao.length != 0 ? uf_localizacao : uf_localizacao_cookie.length != 0 ? uf_localizacao_cookie :  uf_escolha_manual.length !=0 ? uf_escolha_manual : 'SP'   ,
+					'uf_localizacao':   uf_localizacao_cookie  ,
 					'_token'		  : laravel_token
 				},
 				success: function (result) {
@@ -183,7 +178,7 @@ $(document).ready(function () {
 									  url: '/consulta-todos-locais-atendimento',
 									  data: {
 										'tipo_atendimento': tipo_atendimento,
-										'uf_localizacao': uf_localizacao,
+										'uf_localizacao': uf_localizacao_cookie,
 										  'especialidade': $('#tipo_especialidade').val(),
 										'_token': laravel_token
 									},
@@ -460,7 +455,8 @@ $(document).ready(function () {
 		if( $('#tipo_atendimento').val() != 'checkup' ){
 			var atendimento_id = $(this).val();
 			var tipo_atendimento = $('#tipo_atendimento').val();
-			var uf_localizacao = $('#sg_estado_localizacao').val();
+			//var uf_localizacao = $('#sg_estado_localizacao').val();
+			var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
 			
 			if(atendimento_id == '') { return false; }
 
@@ -469,7 +465,7 @@ $(document).ready(function () {
 	    	  	url: '/consulta-todos-locais-atendimento',
 	    	  	data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao': uf_localizacao,
+					'uf_localizacao': uf_localizacao_cookie,
 	    	  		'especialidade': $(this).val(),
 					'_token': laravel_token
 				},

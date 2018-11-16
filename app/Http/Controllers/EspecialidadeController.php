@@ -57,7 +57,7 @@ class EspecialidadeController extends Controller
                 array_push($result, $item);
             }
         }
-
+        
         return response()->json(['status' => true, 'atendimento' => json_encode($result)]);
     }
     

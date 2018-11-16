@@ -17,7 +17,8 @@ function obterLocalizacao() {
 	    
 	    var drhj_googlemaps_key = 'AIzaSyCkovLYQa6lqh1suWtV_ZFJ0i9ChWc9hqI';
 	    
-	    var uf_localizacao = docCookies.getItem('uf_localizacao');
+	    //var uf_localizacao = docCookies.getItem('uf_localizacao');
+	    var uf_localizacao = window.localStorage.getItem('uf_localizacao');
 	    
 	    jQuery.ajax({
     		type: 'GET',
@@ -26,8 +27,11 @@ function obterLocalizacao() {
 			success: function (result) {
 				var uf_localizacao = getUFfromGooglemaps(result);
 				
-				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
-				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+//				var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+//				var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
+				
+				var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
+				var uf_escolha_manual = window.localStorage.getItem('uf_escolha_manual');
 				
 				if(!(uf_localizacao_cookie === null) && (uf_escolha_manual == '0' & (uf_localizacao != uf_localizacao_cookie))) {
 					
@@ -42,7 +46,8 @@ function obterLocalizacao() {
 		                cancelButtonText: 'NÃO'
 		    	   }).then(function(event) {
 		    		   $('#sg_estado_localizacao').val(uf_localizacao);
-	    				docCookies.setItem('uf_localizacao', uf_localizacao);
+//	    				docCookies.setItem('uf_localizacao', uf_localizacao);
+		    		    window.localStorage.setItem('uf_localizacao', uf_localizacao);
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
@@ -51,17 +56,20 @@ function obterLocalizacao() {
 		    	    }, function(dismiss){
 		    	    	
 		    	    	$('#sg_estado_localizacao').val(uf_localizacao_cookie);
-	    				docCookies.setItem('uf_localizacao', uf_localizacao_cookie);
+//	    				docCookies.setItem('uf_localizacao', uf_localizacao_cookie);
+		    	    	window.localStorage.setItem('uf_localizacao', uf_localizacao_cookie);
 	    		        $('#sg_estado_localizazao_form').val(uf_localizacao_cookie);
 	    		        
 	    		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao_cookie);
 	                    $('.ds_uf_localizacao').html(ds_uf_localizacao);
 	                    
-		    	    	docCookies.setItem('uf_escolha_manual', '1');
+		    	    	//docCookies.setItem('uf_escolha_manual', '1');
+	                    window.localStorage.setItem('uf_escolha_manual', '1');
 		    	    });
 				} else if(uf_localizacao_cookie === null) {
 					$('#sg_estado_localizacao').val(uf_localizacao);
-    				docCookies.setItem('uf_localizacao', uf_localizacao);
+//    				docCookies.setItem('uf_localizacao', uf_localizacao);
+					window.localStorage.setItem('uf_localizacao', uf_localizacao);
     		        $('#sg_estado_localizazao_form').val(uf_localizacao);
     		        
     		        var ds_uf_localizacao = getDescricaoFromUf(uf_localizacao);
@@ -101,14 +109,16 @@ function obterLocalizacao() {
 	    //   3: timed out
 	    
 	    if(error.code == 0) {
-	    	docCookies.removeItem('uf_localizacao');
+//	    	docCookies.removeItem('uf_localizacao');
+	    	window.localStorage.removeItem('uf_localizacao');
 	    	$.Notification.notify('error','top right', 'DrHoje', 'Falha no carregamento da sua localização!');
 	    }
 //	    if(error.code == 3) {
 //	    	docCookies.removeItem('uf_localizacao');
 //	    }
 	    if(error.code == 1 | error.code == 3) {
-	    	docCookies.setItem('uf_escolha_manual', '0');
+//	    	docCookies.setItem('uf_escolha_manual', '0');
+	    	window.localStorage.setItem('uf_escolha_manual', '0');
 	    	showModalUfLocation();
 	    }
 	  };
@@ -126,7 +136,8 @@ function showModalUfLocation() {
           }
     });
 
-    var uf_localizacao = docCookies.getItem('uf_localizacao');
+//    var uf_localizacao = docCookies.getItem('uf_localizacao');
+	var uf_localizacao = window.localStorage.getItem('uf_localizacao');
     
     $('#sg_estado_localizacao').val(uf_localizacao);
     $('#sg_estado_localizazao_form').val(uf_localizacao);
@@ -147,7 +158,8 @@ function showModalUfLocation() {
 
     $('#sg_estado_localizacao').change(function(){
         var sg_estado = $(this).val();
-        docCookies.setItem('uf_localizacao', sg_estado);
+//        docCookies.setItem('uf_localizacao', sg_estado);
+        window.localStorage.setItem('uf_localizacao', sg_estado);
         $('#sg_estado_localizazao_form').val(sg_estado);
     });
 }
