@@ -152,14 +152,14 @@ $(document).ready(function () {
 		
 		$('.spinner').fadeIn() 
 		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
-		
+		var uf_escolha_manual = docCookies.getItem('uf_escolha_manual');
 		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
 			jQuery.ajax({
 				type: 'POST',
 				  url: '/consulta-especialidades',
 				  data: {
 					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao':   uf_localizacao != null ? uf_localizacao : uf_localizacao_cookie  ,
+					'uf_localizacao':   uf_localizacao.length != 0 ? uf_localizacao : uf_localizacao_cookie.length != 0 ? uf_localizacao_cookie :  uf_escolha_manual.length !=0 ? uf_escolha_manual : 'SP'   ,
 					'_token'		  : laravel_token
 				},
 				success: function (result) {

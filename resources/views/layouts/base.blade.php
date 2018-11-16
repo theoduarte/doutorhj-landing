@@ -118,6 +118,7 @@
   
   /* pura mágica */
   position: fixed;
+  z-index:20;
  
   
   
