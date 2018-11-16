@@ -161,7 +161,7 @@ class Procedimento extends Model
 						->from('precos')
 						->whereRaw('atendimento_id = at.id')
 						->where('cs_status', '=', 'A')
-						//->where('plano_id', '=', DB::raw("'$planoId'"))
+						->where('plano_id', '=', DB::raw("'$planoId'"))
 						->where('data_inicio', '<=', date('Y-m-d H:i:s'))
 						->where('data_fim', '>=', date('Y-m-d H:i:s'))
 						->limit(1);
