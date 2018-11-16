@@ -111,11 +111,12 @@ class Consulta extends Model
 			->join('cidades as cd', function($join9) use ($uf_localizacao) { $join9->where('e.cidade_id', '=', DB::raw('"cd"."id"'))->where('cd.sg_estado', '=', DB::raw("'$uf_localizacao'")); } )
 			->join('profissionals as pf', 'at.profissional_id', '=', 'pf.id')
 			->join('precos as pr', function($join8) use ($planoId) {
-				$join8->where('pr.id', function($query) {
+			    $join8->where('pr.id', function($query) use ($planoId) {
 					$query->select('id')
 						->from('precos')
 						->whereRaw('atendimento_id = at.id')
 						->where('cs_status', '=', 'A')
+						->where('plano_id', '=', DB::raw("'$planoId'"))
 						->where('data_inicio', '<=', date('Y-m-d H:i:s'))
 						->where('data_fim', '>=', date('Y-m-d H:i:s'))
 						->limit(1);
