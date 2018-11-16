@@ -202,21 +202,21 @@ class Paciente extends Model
 		if(is_null($paciente_id)) {
 			return Plano::OPEN;
 		}
-		//DB::enableQueryLog();
-		$vigenciaPac = VigenciaPaciente::where('paciente_id', '=', $paciente_id)
+		
+// 		DB::enableQueryLog();
+		$vigenciaPac = VigenciaPaciente::with('anuidade')->where('paciente_id', '=', $paciente_id)
 		      ->where(function($query) {
-		          $query->where('cobertura_ativa', '=', true)
-		          ->orWhere(function($query2) {
+		          $query->where('cobertura_ativa', '=', true)->orWhere(function($query2) {
 		              $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
 		          });
 		})->first();
-		//$queries = DB::getQueryLog();
-		//dd($vigenciaPac);
+// 		$queries = DB::getQueryLog();
+// 		dd($vigenciaPac);
 		
-		if(is_null($vigenciaPac)) {
+		if(is_null($vigenciaPac->anuidade)) {
 			return Plano::OPEN;
 		} else {
-			return $vigenciaPac->plano_id;
+		    return $vigenciaPac->anuidade->plano_id;
 		}
 	}
 
