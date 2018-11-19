@@ -592,12 +592,17 @@ class AgendamentoController extends Controller
             
          //$query_temp = DB::getQueryLog();
 		 
-            
-            if (Auth::check()) {
-                $paciente = Auth::user()->paciente;
-            }
+            $paciente = Auth::user()->paciente;
             
         }
+        
+        //dd($agendamentos_home);
+        
+//         foreach($agendamentos_home as $agendamento) {
+//         	if(sizeof($agendamento->filial) == 0) {
+//         		dd($agendamento);
+//         	}
+//         }
         
         return view('agendamentos.meus-agendamentos', compact('agendamentos_home','paciente'));
     }
