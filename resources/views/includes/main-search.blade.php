@@ -10,7 +10,7 @@
 			<div class="form-group col-md-12 col-lg-3">
 				<label for="tipo">Tipo de atendimento</label>
 				<select id="tipo_atendimento" class="form-control"   name="tipo_atendimento">
-					<option value="" disabled selected hidden>Ex.: Consulta</option>
+					<!-- <option value="" disabled selected hidden>Ex.: Consulta</option> -->
 					@foreach($tipoAtendimentos as $tipoAtendimento)
 						<option value="{{ $tipoAtendimento->tag_value }}">{{ $tipoAtendimento->ds_atendimento }}</option>
 					@endforeach
