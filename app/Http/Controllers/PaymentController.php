@@ -762,7 +762,7 @@ class PaymentController extends Controller
 				
 				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
 
-				print_r($paciente );die;
+				
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
@@ -862,8 +862,23 @@ class PaymentController extends Controller
 			if($metodoPagamento ==4){
 				try{
 					//$paciente->mundipagg_token
-				 				 
-					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
+					$enderecos =[];
+        
+					$endereco = $paciente->enderecos()->first(); 
+					
+					if($endereco->cs_status != "I"){
+						
+					 $endereco = 	$client->getCustomers()->getAddress($paciente->mundipagg_token,$endereco->mundipagg_token );
+					 $lista = explode(",", $endereco->line1);
+					 print_r($lista);
+					 die;
+					 $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor, $paciente->mundipagg_token, $endereco->id )) ;					 
+ 
+				//$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $endereco->zipCode, $endereco->zipCode, $dados->bairro_endereco,  $endereco->city,  $endereco->state, 123456, "Pagar até o vencimento boleto")) ;
+					}
+					
+					
+				//	$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();

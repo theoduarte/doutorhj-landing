@@ -105,6 +105,8 @@
                                                 @endif
                                             @endif
                                             <option value="3">Cartão de crédito</option>
+                                            <option value="4" >Boleto Bancario</option>
+                                            <option value="5" >Transferencia Bancario</option>
                                             {{--
                                             <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>
@@ -112,6 +114,7 @@
                                         </select>
                                     </section>
                                 </div>
+                            
                                 <div class="card-body">
 
                                     <div class="row cartaoEmpresarial_Credito" style="display:none">
@@ -372,55 +375,61 @@
                                                 </div>
                                             </div>
                                             <div class="row " style="margin-top:2%">
+                                           
                                                 <div class="col-md-12">
-                                                    <h3>Informe seu Endereço</h3>
+                                                    <h3>Seu Endereço</h3>
                                                     <hr>
                                                 </div>
                                             </div>
-                                            <div class="form-row campos-pagamento">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="cep">CEP</label>
-                                                        <input type="text" name="cep" id="cep" class="form-control cep-user cepMask  ">
+                                            @if(!empty($endereco_paciente))
+                                                <div class="form-row campos-pagamento">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="cep">CEP</label>
+                                                            <input type="text" name="cep"  value="{{$endereco_paciente[0]['nr_cep']}}" disabled id="cep" class="form-control cep-user cepMask  ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="Bairro">Bairro/Distrito</label>
+                                                            <input type="text" name="Bairro" value="{{$endereco_paciente[0]['te_bairro']}}" disabled id="Bairro" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="Complemento">Logradouro/Nome</label>
+                                                            <input type="text" name="Complemento" value="{{$endereco_paciente[0]['te_endereco']}}"  disabled id="Complemento" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="Numero">Numero</label>
+                                                            <input type="text" name="Numero" value="{{$endereco_paciente[0]['nr_logradouro']}}"  disabled  id="Numero" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="Cidade">Cidade</label>
+                                                            <input type="text" name="Cidade"  value="{{$endereco_paciente[1]['nm_cidade']}}"  disabled id="Cidade" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="Estado">Estado</label>
+                                                            <input type="text" name="Estado" value="{{$endereco_paciente[0]['sg_logradouro']}}" disabled maxlength="2" id="Estado" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="Rua">Complemento</label>
+                                                            <input type="text" name="Rua"  value="{{$endereco_paciente[0]['te_complemento']}}" disabled id="Rua" class="form-control">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="Bairro">Bairro/Distrito</label>
-                                                        <input type="text" name="Bairro" id="Bairro" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="Complemento">Logradouro/Nome</label>
-                                                        <input type="text" name="Complemento" id="Complemento" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="Numero">Numero</label>
-                                                        <input type="text" name="Numero" id="Numero" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="Cidade">Cidade</label>
-                                                        <input type="text" name="Cidade" id="Cidade" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="Estado">Estado</label>
-                                                        <input type="text" name="Estado" maxlength="2" id="Estado" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label for="Rua">Complemento</label>
-                                                        <input type="text" name="Rua" id="Rua" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @else
+                                                <button type="button" class="btn btn-vermelho cadastrar-endereco">Cadastrar Endereço</button>
+                                            @endif
+                                            
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12" style="text-align:center; margin-top:2%">
@@ -1057,7 +1066,9 @@
                  * ALTERA FORMULARIO PAGAMENTO
                  *
                  *********************************/
-
+                $('.cadastrar-endereco').click(function(){
+                    window.location.href='/minha-conta';
+                })
                 $(function () {
                     $('#selectFormaPagamento').change(function () {
                         $('.row-payment-card').css('display', 'flex');
