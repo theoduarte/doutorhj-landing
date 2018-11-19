@@ -770,7 +770,7 @@ class AgendamentoController extends Controller
         
         $endereco = $paciente->enderecos()->first(); 
         
-        if($endereco->cs_status != "I"){
+        if(!is_null($endereco) && $endereco->cs_status == Endereco::ATIVO) {
             $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
             array_push($enderecos,$endereco->toArray() );
             array_push($enderecos,$cidade->toArray() );            
