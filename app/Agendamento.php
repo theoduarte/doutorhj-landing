@@ -18,6 +18,7 @@ class Agendamento extends Model
     /*
      * Constants
      */
+	const PRE_AUTORIZADO = 0;
     const PRE_AGENDADO   = 10;
     const CONFIRMADO     = 20;
     const NAO_CONFIRMADO = 30;
@@ -30,6 +31,7 @@ class Agendamento extends Model
     const PAGO           = 100;
     
     protected static $cs_status = array(
+		self::PRE_AUTORIZADO => 'Pre-Autorizado',
         self::PRE_AGENDADO   => 'Pré-Agendado',
         self::CONFIRMADO     => 'Confirmado',
         self::NAO_CONFIRMADO => 'Não Confirmado',
