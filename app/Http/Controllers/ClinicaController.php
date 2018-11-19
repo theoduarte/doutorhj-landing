@@ -694,30 +694,24 @@ class ClinicaController extends Controller
                 if(!empty($user_session->mundipagg_token)){
                     $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
                 }
-            }catch(\Exception $e){
+            } catch(\Exception $e) {
                 return response()->json([
                     'messagem' => 'Não conseguimos encontrar o Customer Token',
                     'errors' => $e->getMessage(),
                 ], 500);
 
             }
-
-
             
             $endereco_paciente =[];
             
-            $endereco = $user_session->enderecos()->first(); 
-            
-            if( $endereco->cs_status != 'I'){
+            $endereco = $user_session->enderecos()->first();
+
+            if(!is_null($endereco) && $endereco->cs_status == Endereco::ATIVO) {
                 $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
                 array_push($endereco_paciente,$endereco->toArray());
                 array_push($endereco_paciente,$cidade->toArray());            
             }
-
         }
- 
-        
-        
        
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
