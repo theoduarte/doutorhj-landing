@@ -769,7 +769,7 @@ class AgendamentoController extends Controller
 
         $enderecos =[];
         //dd($paciente);
-        $endereco = $paciente->enderecos()->first(); //--O VITOR TEM QUE VERIFICAR ESTA REGRA, ESTAVA COM ERRO 500----------------------
+        $endereco = $paciente->enderecos()->where('cs_status', 'A')->first();
         if(!empty($endereco)){
             $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
             array_push($enderecos,$endereco->toArray() );
