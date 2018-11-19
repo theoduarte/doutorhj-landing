@@ -22,11 +22,13 @@ $(document).ready(function () {
 
 	}
 	
-	var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
-	
-	if(uf_localizacao_cookie.length != 0){
-		consultaEspecialidades('saude', uf_localizacao_cookie);
-	}
+	try{
+		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
+		
+		if(uf_localizacao_cookie.length != 0){
+			consultaEspecialidades('saude', uf_localizacao_cookie);
+		}
+	} catch(error){}	
 
 	$('#cep').keyup(function(){
 		
