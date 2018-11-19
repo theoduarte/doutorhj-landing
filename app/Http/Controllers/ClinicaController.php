@@ -718,19 +718,13 @@ class ClinicaController extends Controller
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
 				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+					->with(['precoAtivo' => function($query) use($plano_id) {
 						$query->where('precos.plano_id', '=', $plano_id);
-					})->first();
-
-				if(is_null($atendimento)) {
-					$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-						->with('precoAtivo')->first();
-				}
+					}])->first();
 
 				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);
-
 
 				$url = $item['attributes']['current_url'];
 

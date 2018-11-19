@@ -1048,14 +1048,11 @@ class PaymentController extends Controller
 													$plano = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
 	
 													$atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
-													 ->with('precoAtivo')->whereHas('precoAtivo', function ($query) use ($plano) {
-														 $query->where('precos.plano_id', '=', $plano);
-													 })->first();
+														->with(['precoAtivo' => function($query) use($plano) {
+															$query->where('precos.plano_id', '=', $plano);
+														}])->first();
 										
-													if (is_null($atendimento)) {
-														$atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
-														 ->with('precoAtivo')->first() ;
-													}
+
 													$resp = json_decode(json_encode($atendimento), true);
 	
 													$number = str_replace(',', '.', preg_replace('#[^\d\,]#is', '', $resp['preco_ativo']['vl_comercial']));
