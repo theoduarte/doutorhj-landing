@@ -51,7 +51,6 @@ class AgendamentoController extends Controller
         return view('agenda.index', compact('agenda'));
     }
     
-    
     /**
      * informaBeneficiario a listing of the resource.
      *
