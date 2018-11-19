@@ -162,7 +162,7 @@ abstract class FuncoesPagamento
 			]
 			],
 			 
-			"customer"=> [
+			"customer_id"=> [
 				"name"=> $costumer_name,
 				"email"=> $customer_email,
 				  "document"=> $customer_document,

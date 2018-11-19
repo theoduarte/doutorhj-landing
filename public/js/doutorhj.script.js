@@ -618,12 +618,9 @@ $(function() {
 		
 			if(parseFloat(totalPagarFormatado) > parseFloat(resp)) {
 				// valor a ser debitado do credito especial
-			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
-	 
-					
+			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );	 					
 					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
-				
-			 
+							 
 			} else {
 				// valor a ser debitado do credito especial
 
@@ -739,9 +736,7 @@ $(function() {
 			}, 10);
 		}
 	})
-	
-
-	
+		
 		
 	Number.prototype.formatMoney = function (c, d, t) {
 		var n = this,
@@ -754,11 +749,13 @@ $(function() {
 		return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 	};
 
+
 	$('.anoCartao').hide();
 	$('.mesCartao').hide();
 	$('#anoCartao').hide();
 	$('#mesCartao').hide();
 	$('.cartaoCadastrado ').change(function() {
+		
 		removerError('#numeroCartaoCredito')
 		removerError('#nomeImpressoCartaoCredito')
 		removerError('#mesCartaoCredito')

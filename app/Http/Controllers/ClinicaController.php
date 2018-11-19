@@ -701,9 +701,21 @@ class ClinicaController extends Controller
                 ], 500);
 
             }
-        }
 
-      
+
+            
+            $endereco_paciente =[];
+            
+            $endereco = $user_session->enderecos()->first(); 
+            
+            if( $endereco->cs_status != 'I'){
+                $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
+                array_push($endereco_paciente,$endereco->toArray());
+                array_push($endereco_paciente,$cidade->toArray());            
+            }
+
+        }
+ 
         
         
        
