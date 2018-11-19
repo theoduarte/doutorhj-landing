@@ -10,7 +10,7 @@
 			<div class="form-group col-md-12 col-lg-3">
 				<label for="tipo">Tipo de atendimento</label>
 				<select id="tipo_atendimento" class="form-control"   name="tipo_atendimento">
-					<option value="" disabled selected hidden>Ex.: Consulta</option>
+					<!-- <option value="" disabled selected hidden>Ex.: Consulta</option> -->
 					@foreach($tipoAtendimentos as $tipoAtendimento)
 						<option value="{{ $tipoAtendimento->tag_value }}">{{ $tipoAtendimento->ds_atendimento }}</option>
 					@endforeach
@@ -28,7 +28,8 @@
 			<div class="form-group col-md-12 col-lg-3" id="dvLocalAtendimento">
 				<label for="local">Local de atedimento</label>
 				<select id="local_atendimento" class="form-control select2"   name="local_atendimento">
-					<option value="" disabled selected hidden>Ex.: Asa Sul</option>
+					<!-- <option value="" disabled selected hidden>Ex.: Asa Sul</option> -->
+					<option value="" disabled selected hidden>Selecione</option>
 				</select>
 				<i class="cvx-no-loading fa fa-spin fa-spinner"></i>
 			</div>

@@ -17,8 +17,15 @@ $(document).ready(function () {
 			$(".dados").attr("disabled", "disabled");
 			
 		}
+		
 	}catch(error){
 
+	}
+	
+	var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
+	
+	if(uf_localizacao_cookie.length != 0){
+		consultaEspecialidades('saude', uf_localizacao_cookie);
 	}
 
 	$('#cep').keyup(function(){
@@ -149,120 +156,8 @@ $(document).ready(function () {
 		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
 		
 		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
-			jQuery.ajax({
-				type: 'POST',
-				  url: '/consulta-especialidades',
-				  data: {
-					'tipo_atendimento': tipo_atendimento,
-					'uf_localizacao':   uf_localizacao_cookie  ,
-					'_token'		  : laravel_token
-				},
-				success: function (result) {
-				
-					var json = JSON.parse(result.atendimento);
-					
-					if(json.length !=0){
-												 		
-							$('#tipo_especialidade').empty();
-		
-							if( $('#tipo_atendimento').val() != 'checkup' ){
-								for(var i=0; i < json.length; i++) {
-									var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-									$('#tipo_especialidade').append($(option));
-								}
-		
-								if( !$('#tipo_especialidade').val()  ) { return false; }
-		
-								jQuery.ajax({
-									type: 'POST',
-									  url: '/consulta-todos-locais-atendimento',
-									  data: {
-										'tipo_atendimento': tipo_atendimento,
-										'uf_localizacao': uf_localizacao_cookie,
-										  'especialidade': $('#tipo_especialidade').val(),
-										'_token': laravel_token
-									},
-									success: function (result) {
-										$('.spinner').fadeOut()
-										if( result != null) {
-											var json = result.endereco;
-											$('#local_atendimento').empty();
-											var option = '<option value="">TODOS OS LOCAIS</option>';
-											$('#local_atendimento').append($(option));
-											
-											for(var i=0; i < json.length; i++) {
-												option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
-												$('#local_atendimento').append($(option));
-											}
-										}
-									},
-									error: function (result) {
-										$('.spinner').fadeOut()
-						
-										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-									}
-								});
-							} else {
-								for(var i=0; i < json.length; i++) {
-									var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
-									$('#tipo_especialidade').append($(option));
-								}
-		
-								jQuery.ajax({
-									type: 'POST',
-									url: '/consulta-tipos-checkup',
-									data: {
-										'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
-										'_token': laravel_token
-									},
-									success: function (result) {
-										$('.spinner').fadeOut()
-										if( result != null) {
-											var json = result;
-											
-											$('#local_atendimento').empty();
-											var option = '<option value="">TODOS</option>';
-											$('#local_atendimento').append($(option));
-											
-											for(var i=0; i < json.length; i++) {
-												option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
-												$('#local_atendimento').append($(option));
-											}
-		
-											if(json.length > 0) {
-												$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
-											}
-										}
-									},
-									error: function (result) {
-										$('.spinner').fadeOut()
-										$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-									}
-								});
-							}
-						
-					}else{
-						$('.spinner').fadeOut()
-					//	$('#form-buscar').trigger("reset");
-					//	$('#form-buscar').reset();
-					
-					
-					$('#tipo_atendimento').prop('selectedIndex',0);
-					$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
-					$('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
-						$.Notification.notify('error','top right', 'DrHoje', 'Não existe atendimentos para o estado selecionado !');
-					}
-
-					
-				},
-				error: function (result) {
-					$('.spinner').fadeOut()
-					
-					$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
-				}
-			});
-		}else{
-			
+			consultaEspecialidades(tipo_atendimento, uf_localizacao_cookie);
+		} else{
 			$('.spinner').fadeOut()
 			$.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos obter o seu estado, escolha um estado e tente novamente!');
 		}
@@ -1037,6 +932,122 @@ function apenasLetras(string)
  return (numsStr);
  }
  */
+
+function consultaEspecialidades(tipo_atendimento, uf_localizacao_cookie) {
+	
+	jQuery.ajax({
+		type: 'POST',
+		  url: '/consulta-especialidades',
+		  data: {
+			'tipo_atendimento': tipo_atendimento,
+			'uf_localizacao':   uf_localizacao_cookie  ,
+			'_token'		  : laravel_token
+		},
+		success: function (result) {
+		
+			var json = JSON.parse(result.atendimento);
+			
+			if(json.length !=0){
+										 		
+					$('#tipo_especialidade').empty();
+
+					if( $('#tipo_atendimento').val() != 'checkup' ){
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
+						if( !$('#tipo_especialidade').val()  ) { return false; }
+
+						jQuery.ajax({
+							type: 'POST',
+							  url: '/consulta-todos-locais-atendimento',
+							  data: {
+								'tipo_atendimento': tipo_atendimento,
+								'uf_localizacao': uf_localizacao_cookie,
+								  'especialidade': $('#tipo_especialidade').val(),
+								'_token': laravel_token
+							},
+							success: function (result) {
+								$('.spinner').fadeOut()
+								if( result != null) {
+									var json = result.endereco;
+									$('#local_atendimento').empty();
+									var option = '<option value="">TODOS OS LOCAIS</option>';
+									$('#local_atendimento').append($(option));
+									
+									for(var i=0; i < json.length; i++) {
+										option = '<option value="'+json[i].id+'">'+json[i].te_bairro+': ' + json[i].nm_cidade + '</option>';
+										$('#local_atendimento').append($(option));
+									}
+								}
+							},
+							error: function (result) {
+								$('.spinner').fadeOut()
+				
+								$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+							}
+						});
+					} else {
+						for(var i=0; i < json.length; i++) {
+							var option = '<option value="'+json[i].id+'">'+json[i].descricao+'</option>';
+							$('#tipo_especialidade').append($(option));
+						}
+
+						jQuery.ajax({
+							type: 'POST',
+							url: '/consulta-tipos-checkup',
+							data: {
+								'tipo_atendimento': $('select[name="tipo_especialidade"]').val(),
+								'_token': laravel_token
+							},
+							success: function (result) {
+								$('.spinner').fadeOut()
+								if( result != null) {
+									var json = result;
+									
+									$('#local_atendimento').empty();
+									var option = '<option value="">TODOS</option>';
+									$('#local_atendimento').append($(option));
+									
+									for(var i=0; i < json.length; i++) {
+										option = '<option value="'+json[i].tipo+'">'+json[i].tipo+'</option>';
+										$('#local_atendimento').append($(option));
+									}
+
+									if(json.length > 0) {
+										$('#local_atendimento option[value="'+json[0].tipo+'"]').prop("selected", true);
+									}
+								}
+							},
+							error: function (result) {
+								$('.spinner').fadeOut()
+								$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+							}
+						});
+					}
+				
+			}else{
+				$('.spinner').fadeOut()
+			//	$('#form-buscar').trigger("reset");
+			//	$('#form-buscar').reset();
+			
+			
+			$('#tipo_atendimento').prop('selectedIndex',0);
+			$('#local_atendimento').empty().html('<option value="" disabled selected hidden>Ex.: Asa Sul</option>')
+			$('#tipo_especialidade').empty().html('<option value="" disabled selected hidden>Ex.: Clínica Médica</option>')
+				$.Notification.notify('error','top right', 'DrHoje', 'Não existe atendimentos para o estado selecionado !');
+			}
+
+			
+		},
+		error: function (result) {
+			$('.spinner').fadeOut()
+			
+			$.Notification.notify('error','top right', 'DrHoje', 'Falha na operação!');
+		}
+	});
+} 
 
 function efetuarPagamento() {
 	var metodoPagamento = $('.escolherMetodoPagamento option:selected').val();
