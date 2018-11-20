@@ -92,7 +92,7 @@
                                                     @else
                                                     <p class="text-danger">PEDIDO SEM ITENS</p>
                                                     @endif
-                                                     @if(sizeof($agendamento->filial) > 0)
+                                                     @if(!is_null($agendamento->filial))
                                                     <p class="endereco"><strong>{{ $agendamento->eh_matriz ? 'Matriz - ' : 'Filial - ' }} {{ $agendamento->filial->nm_nome_fantasia }} </strong><br/>{{ $agendamento->filial->endereco->te_endereco . ' - ' . $agendamento->filial->endereco->te_bairro . ' - ' . $agendamento->filial->endereco->cidade->nm_cidade . '/' . $agendamento->filial->endereco->cidade->estado->sg_estado }}</p>
                                                      @else
                                                     <p class="text-danger">FILIAL NÃO INFORMADA</p>
