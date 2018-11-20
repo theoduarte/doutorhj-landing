@@ -543,7 +543,7 @@ class PaymentController extends Controller
 							DB::rollBack();
 						 
 							return response()->json([
-								'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado!' ,
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -762,7 +762,7 @@ class PaymentController extends Controller
 				
 				$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
 
-				print_r($paciente );die;
+				
 				if(empty($cartaoPaciente)){
 					DB::rollBack();
 					return response()->json([
@@ -828,7 +828,7 @@ class PaymentController extends Controller
 					$metodoCartao,
 					1);
 				 
-			
+					
 					try{
 						$criarPagamento =  $client->getOrders()->createOrder($dados);
 					}catch(\Exception $e){
@@ -862,8 +862,23 @@ class PaymentController extends Controller
 			if($metodoPagamento ==4){
 				try{
 					//$paciente->mundipagg_token
-				 				 
-					$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
+					$enderecos =[];
+        
+					$endereco = $paciente->enderecos()->first(); 
+					
+					if($endereco->cs_status != "I"){
+						
+					 $endereco = 	$client->getCustomers()->getAddress($paciente->mundipagg_token,$endereco->mundipagg_token );
+					 $lista = explode(",", $endereco->line1);
+					 print_r($lista);
+					 die;
+					 $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor, $paciente->mundipagg_token, $endereco->id )) ;					 
+ 
+				//$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $endereco->zipCode, $endereco->zipCode, $dados->bairro_endereco,  $endereco->city,  $endereco->state, 123456, "Pagar até o vencimento boleto")) ;
+					}
+					
+					
+				//	$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
 					//echo json_encode($criarPagamento); die;
 				}catch(\Exception $e){
 					DB::rollBack();
@@ -1048,14 +1063,11 @@ class PaymentController extends Controller
 													$plano = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
 	
 													$atendimento = Atendimento::where(['atendimentos.id' => $item_agendamento->atendimento_id])
-													 ->with('precoAtivo')->whereHas('precoAtivo', function ($query) use ($plano) {
-														 $query->where('precos.plano_id', '=', $plano);
-													 })->first();
+														->with(['precoAtivo' => function($query) use($plano) {
+															$query->where('precos.plano_id', '=', $plano);
+														}])->first();
 										
-													if (is_null($atendimento)) {
-														$atendimento = Atendimento::where(['atendimentos.id' =>  $item_agendamento->atendimento_id ])
-														 ->with('precoAtivo')->first() ;
-													}
+
 													$resp = json_decode(json_encode($atendimento), true);
 	
 													$number = str_replace(',', '.', preg_replace('#[^\d\,]#is', '', $resp['preco_ativo']['vl_comercial']));

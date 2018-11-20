@@ -38,8 +38,7 @@ class AgendamentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
+	{
         $get_term = CVXRequest::get('dt_atendimento');
         $search_term = UtilController::toStr($get_term);
         
@@ -52,7 +51,6 @@ class AgendamentoController extends Controller
         return view('agenda.index', compact('agenda'));
     }
     
-    
     /**
      * informaBeneficiario a listing of the resource.
      *
@@ -62,7 +60,7 @@ class AgendamentoController extends Controller
     {
         $cartCollection = CVXCart::getContent();
         $itens = $cartCollection->toArray();
-        // dd($itens);die;
+
         $carrinho = [];
         $user_session = Auth::user();
         $url = '';
@@ -79,11 +77,26 @@ class AgendamentoController extends Controller
                 $paciente = !empty($paciente_tmp_id) ? Paciente::find($paciente_tmp_id) : [];
                 $url = $item['attributes']['current_url'];                
 
-                if( !empty($paciente) && $user_session->paciente->id == $paciente->id ) {
+                if(!empty($paciente) && $user_session->paciente->id == $paciente->id) {
                     $titular = true;
                     $tem_titular = true;
                 }
-                
+
+				$user_session = Auth::user();
+				$plano_id = $user_session->paciente->getPlanoAtivo($user_session->paciente->id);
+
+				$atendimento = Atendimento::where(['atendimentos.id' => $item['attributes']['atendimento_id']])
+					->with(['precoAtivo' => function($query) use($plano_id) {
+						$query->where('precos.plano_id', '=', $plano_id);
+					}])->first();
+
+				/** Atualiza o valor do carrinho */
+				$card = $cartCollection->toArray()[$item['id']];
+
+				$card['quantity'] = 0;
+				$card['price'] = UtilController::moedaBanco($atendimento->precoAtivo->vl_comercial);
+				CVXCart::update($item['id'], $card);
+
                 $tem_pacientes = true;
 
                 $item_carrinho = array(
@@ -198,14 +211,9 @@ class AgendamentoController extends Controller
 			$paciente_id = $request->input('paciente_id') ?? Auth::user()->paciente->id ?? null;
 
 			$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_id])
-				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+				->with(['precoAtivo' => function($query) use($plano_id) {
 					$query->where('precos.plano_id', '=', $plano_id);
-				})->first();
-
-			if(is_null($atendimento)) {
-				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_id])
-					->with('precoAtivo')->first();
-			}
+				}])->first();
 
 			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
 			$source = array('.', ',');
@@ -315,14 +323,9 @@ class AgendamentoController extends Controller
       //  CVXCart::clear();
 		if($card['attributes']['paciente_id'] != $paciente_id) {
 			$atendimento = Atendimento::where(['atendimentos.id' => $card['attributes']['atendimento_id']])
-				->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+				->with(['precoAtivo' => function($query) use($plano_id) {
 					$query->where('precos.plano_id', '=', $plano_id);
-				})->first();
-
-			if(is_null($atendimento)) {
-				$atendimento = Atendimento::where(['atendimentos.id' => $card['attributes']['atendimento_id']])
-					->with('precoAtivo')->first();
-			}
+				}])->first();
 
 			$vl_comercial = $atendimento->precoAtivo->vl_comercial;
 
@@ -381,14 +384,9 @@ class AgendamentoController extends Controller
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
 				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+					->with(['precoAtivo' => function($query) use($plano_id) {
 						$query->where('precos.plano_id', '=', $plano_id);
-					})->first();
-
-				if(is_null($atendimento)) {
-					$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-						->with('precoAtivo')->first();
-				}
+					}])->first();
 
 				$profissional = !empty($profissional_tmp_id) ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
@@ -736,8 +734,8 @@ class AgendamentoController extends Controller
      * @param string $consulta
      * @return \Illuminate\Http\JsonResponse
      */
-    public function minhaConta(){
-    	
+    public function minhaConta()
+	{
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
     	date_default_timezone_set('America/Sao_Paulo');
         
@@ -773,9 +771,10 @@ class AgendamentoController extends Controller
         }
 
         $enderecos =[];
-        //dd($paciente);
-        $endereco = $paciente->enderecos()->first(); //--O VITOR TEM QUE VERIFICAR ESTA REGRA, ESTAVA COM ERRO 500----------------------
-        if(!empty($endereco)){
+        
+        $endereco = $paciente->enderecos()->first(); 
+        
+        if(!is_null($endereco) && $endereco->cs_status == Endereco::ATIVO) {
             $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
             array_push($enderecos,$endereco->toArray() );
             array_push($enderecos,$cidade->toArray() );            
@@ -786,9 +785,9 @@ class AgendamentoController extends Controller
         
         return view('agendamentos.minha-conta', compact('user_paciente', 'dt_nascimento', 'dependentes', 'cartoes_paciente', 'agendamentos', 'paciente', 'enderecos'));
     }
-    
-    public function  MundiEnderecoPaciente(Request $request) {
-       
+
+    public function MundiEnderecoPaciente(Request $request)
+	{
         $cep 		        = CVXRequest::post('cep');
         $rua 		        = CVXRequest::post('rua');
         $numero 		    = CVXRequest::post('numero');
@@ -809,7 +808,6 @@ class AgendamentoController extends Controller
 		$basicAuthPassword = "";
 		
         $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
-      
 
         if (Auth::check()) {
             $paciente = Auth::user()->paciente;
@@ -829,64 +827,54 @@ class AgendamentoController extends Controller
                         DB::rollBack();
                         return response()->json([
                             'messagem' => 'Não foi possivel salvar o usuario!',
-                            'errors' => $e->getMessage(),
                         ], 500);
                     }
 
                 }catch(\Exception $e){
                     DB::rollBack();
                     return response()->json([
-                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
+                        'messagem' => 'Não foi possivel criar usuario na mundipagg',
                         'errors' => $e->getMessage(),
                     ], 500);
                 }
-                
-            
             }
-            
         }
 
-       
-     
+     	if(!empty($registrar)) {
+			$enderecos    =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'   ));
+			$cidade       =  Cidade::where('nm_cidade',  $cidade) ->orWhere('nm_cidade', 'like', '%' . $enderecos->city . '%')->first();
 
-       if(!empty($registrar)){
-            
-           $enderecos    =   $client->getCustomers()->CreateAddress($paciente->mundipagg_token,FuncoesPagamento::criarEndereco($line1,  $line2,$cep , $cidade, $estado, 'BR'   ));
-           $cidade       =  Cidade::where('nm_cidade',  $cidade) ->orWhere('nm_cidade', 'like', '%' . $enderecos->city . '%')->first();     
-         
-           
-           $endereco = new Endereco();
-           $endereco->sg_logradouro =  $estado ;
-           $endereco->te_endereco = $rua ;
-           $endereco->nr_logradouro = $numero;
-           $endereco->te_bairro =  $bairro ;
-           $endereco->nr_cep = $cep;
-           $endereco->te_complemento = $complemento;
-           $endereco->cidade_id = $cidade ->id;
-           $endereco->mundipagg_token =$enderecos->id;   
-            
-           $endereco->save();
-           $paciente->enderecos()->sync( $endereco);           
-           $paciente->save();
+		 	$endereco = new Endereco();
+			$endereco->sg_logradouro =  $estado ;
+			$endereco->te_endereco = $rua ;
+		   	$endereco->nr_logradouro = $numero;
+		   	$endereco->te_bairro =  $bairro ;
+		   	$endereco->nr_cep = $cep;
+		   	$endereco->te_complemento = $complemento;
+		   	$endereco->cidade_id = $cidade ->id;
+		   	$endereco->mundipagg_token =$enderecos->id;
 
-           $dado = false;
-           CVXCart::getTotal() !=0 ? $dado=true: $dado=false;
-           return response()->json(['mensagem' => 'Endereço registrado com sucesso',     'carrinho' =>    $dado  ], 200); 
-            
-            
+		   	$endereco->save();
+		   	$paciente->enderecos()->sync( $endereco);
+		   	$paciente->save();
 
-        }
-       
-     
-       if(!empty($excluir)){
-        $enderecos =[];
-        $endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first()  ;
-        $endereco->cs_status = 'I';
-        $endereco->save();
-        return response()->json(['mensagem' => 'Endereço deletado com sucesso',           ], 200);   
-        }
- 
-    }
+		   	$dado = false;
+		   	CVXCart::getTotal() !=0 ? $dado=true: $dado=false;
+		   	return response()->json(['mensagem' => 'Endereço registrado com sucesso',     'carrinho' =>    $dado  ], 200);
+		}
+
+		if(!empty($excluir)) {
+			$enderecos = [];
+			$endereco = $paciente->enderecos()->where('cs_status','LIKE', 'A')->first()  ;
+			$endereco->cs_status = 'I';
+			$endereco->save();
+
+			return response()->json([
+				'mensagem' => 'Endereço deletado com sucesso',
+			], 200);
+		}
+	}
+
     /**
      * consultaAgendamentoDisponivel a newly created resource in storage.
      *

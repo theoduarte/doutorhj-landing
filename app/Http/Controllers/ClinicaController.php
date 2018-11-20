@@ -694,18 +694,24 @@ class ClinicaController extends Controller
                 if(!empty($user_session->mundipagg_token)){
                     $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
                 }
-            }catch(\Exception $e){
+            } catch(\Exception $e) {
                 return response()->json([
                     'messagem' => 'Não conseguimos encontrar o Customer Token',
                     'errors' => $e->getMessage(),
                 ], 500);
 
             }
-        }
+            
+            $endereco_paciente =[];
+            
+            $endereco = $user_session->enderecos()->first();
 
-      
-        
-        
+            if(!is_null($endereco) && $endereco->cs_status == Endereco::ATIVO) {
+                $cidade = Cidade::where('id',$endereco->cidade_id) ->first();
+                array_push($endereco_paciente,$endereco->toArray());
+                array_push($endereco_paciente,$cidade->toArray());            
+            }
+        }
        
     	foreach ($itens as $item) {
 			$paciente_tmp_id = $item['attributes']['paciente_id'];
@@ -718,19 +724,13 @@ class ClinicaController extends Controller
 				$filial_tmp_id = $item['attributes']['filial_id'];
 
 				$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-					->with('precoAtivo')->whereHas('precoAtivo', function($query) use ($plano_id) {
+					->with(['precoAtivo' => function($query) use($plano_id) {
 						$query->where('precos.plano_id', '=', $plano_id);
-					})->first();
-
-				if(is_null($atendimento)) {
-					$atendimento = Atendimento::where(['atendimentos.id' => $atendimento_tmp_id])
-						->with('precoAtivo')->first();
-				}
+					}])->first();
 
 				$profissional = isset($profissional_tmp_id) && $profissional_tmp_id != 'null' ? Profissional::findOrFail($profissional_tmp_id) : null;
 				$clinica = Clinica::findOrFail($clinica_tmp_id);
 				$filial = Filial::findOrFail($filial_tmp_id);
-
 
 				$url = $item['attributes']['current_url'];
 

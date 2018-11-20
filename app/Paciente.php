@@ -197,42 +197,33 @@ class Paciente extends Model
 		return $this->getSaldoEmpresarial($this->attributes['id']);
 	}
 
-	public static function getPlanoAtivo($paciente_id = null)
+	public static function getPlanoAtivo($paciente_id)
 	{
-		if(is_null($paciente_id)) {
-			return Plano::OPEN;
-		}
-		
-// 		DB::enableQueryLog();
-		$vigenciaPac = VigenciaPaciente::with('anuidade')->where('paciente_id', '=', $paciente_id)
-		      ->where(function($query) {
-		          $query->where('cobertura_ativa', '=', true)->orWhere(function($query2) {
-		              $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
-		          });
-		})->first();
-// 		$queries = DB::getQueryLog();
-// 		dd($vigenciaPac);
-		
-		if(is_null($vigenciaPac->anuidade)) {
+		$vigenciaPac = self::getVigenciaAtiva($paciente_id);
+
+		if(is_null($vigenciaPac)) {
 			return Plano::OPEN;
 		} else {
-		    return $vigenciaPac->anuidade->plano_id;
+			return $vigenciaPac->anuidade->plano_id;
 		}
+	}
+
+	public static function getVigenciaAtiva($paciente_id)
+	{
+		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id])
+			->where(function($query) {
+				$query->whereDate('data_inicio', '<=', date('Y-m-d H:i:s'))
+					->whereDate('data_fim', '>=', date('Y-m-d H:i:s'))
+					->orWhere(DB::raw('cobertura_ativa'), '=', true);
+			})
+			->first();
+
+		return $vigenciaPac;
 	}
 
 	public static function getVlMaxConsumo($paciente_id)
 	{
-// 		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id, 'cobertura_ativa' => true])
-// 			->where('data_inicio', '<=', date('Y-m-d'))
-// 			->where('data_fim', '>=', date('Y-m-d'))->first();
-
-	    $vigenciaPac = VigenciaPaciente::where('paciente_id', '=', $paciente_id)
-	    ->where(function($query) {
-	        $query->where('cobertura_ativa', '=', true)
-	        ->orWhere(function($query2) {
-	            $query2->where('data_inicio', '<=', date('Y-m-d H:i:s'))->where('data_fim', '>=', date('Y-m-d H:i:s'));
-	        });
-	    })->first();
+		$vigenciaPac = self::getVigenciaAtiva($paciente_id);
 	    
 		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
 			if(!empty(UtilController::moedaBanco($vigenciaPac->vl_max_consumo))) {
@@ -263,23 +254,24 @@ class Paciente extends Model
 			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
 			->with(['cartao_paciente', 'itempedidos'])
 			->get();
-
+		 
 		if($pedido->count() == 0) {
 			return 0;
 		}
-        //dd($pedido); die;
+        
 		$vlConsumido = Itempedido::whereIn('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))->first();
-
+			
 		if(is_null($vlConsumido) && empty($vlConsumido->vl_consumido)) {
 			return 0;
 		} else {
-			return UtilController::moedaBanco($vlConsumido->vl_consumido);
+			return $vlConsumido->vl_consumido;
 		}
 	}
 
 	public static function getSaldoEmpresarial($paciente_id)
 	{
+	
 		$saldo = self::getVlMaxConsumo($paciente_id) - self::getVlConsumido($paciente_id);
 
 		if($saldo < 0) {

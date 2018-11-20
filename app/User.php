@@ -33,8 +33,7 @@ class User extends Authenticatable
     }
     
     public function paciente(){
-        //--O VITOR TEM QUE VERIFICAR ESTA REGRA----------------------
-        return $this->hasOne('App\Paciente')->where('cs_status','LIKE', 'A');
+        return $this->hasOne('App\Paciente');
     }
     
     public function profissional(){
