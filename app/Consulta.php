@@ -93,7 +93,7 @@ class Consulta extends Model
     }
 
     public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
-       // DB::enableQueryLog();
+        //DB::enableQueryLog();
 
         $query = DB::table('atendimentos as at')
 			->distinct()
@@ -140,8 +140,8 @@ class Consulta extends Model
 			->orderBy('c.nm_fantasia', 'asc')
 			->orderBy('pf.nm_primario', 'asc');
 		
-		$result = $query->get();
-		//dd( DB::getQueryLog() );
+ 		$result = $query->get();
+// 		dd( DB::getQueryLog() );
 		
 		return $result;
     }

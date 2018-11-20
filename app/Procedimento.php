@@ -141,7 +141,7 @@ class Procedimento extends Model
     }
 
     public function getActiveAtendimentos( $procedimentoId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
-        // DB::enableQueryLog();
+        //DB::enableQueryLog();
         $query = DB::table('atendimentos as at')
 			->distinct()
 			->select( DB::raw("at.id, pr.vl_comercial, at.ds_preco,
@@ -182,8 +182,10 @@ class Procedimento extends Model
 			->orderBy('f.eh_matriz', 'desc')
 			->orderBy('c.nm_fantasia', 'asc');
   
-        // dd( DB::getQueryLog() );
-        return $query->get();
+		$result = $query->get();
+		//dd( DB::getQueryLog() );
+			
+        return $result;
         
 
         

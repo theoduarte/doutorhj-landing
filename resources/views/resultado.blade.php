@@ -64,7 +64,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-5">
                         <div class="ordenar-por div-filtro">
-                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento=@if( !empty($_GET['tipo_atendimento'])){{$_GET['tipo_atendimento']}}@endif&local_atendimento=@if( !empty($_GET['local_atendimento'])){{$_GET['local_atendimento']}}@endif&tipo_especialidade=@if( !empty($_GET['tipo_especialidade'])){{$_GET['tipo_especialidade']}}@endif&sort='+$(this).val() }">
+                            <select class="form-control" id="ordenar" onchange="if($(this).val() != '') { window.location.href='{{ Request::url() }}?tipo_atendimento=@if( !empty($_GET['tipo_atendimento'])){{$_GET['tipo_atendimento']}}@endif&local_atendimento=@if( !empty($_GET['local_atendimento'])){{$_GET['local_atendimento']}}@endif&tipo_especialidade=@if( !empty($_GET['tipo_especialidade'])){{$_GET['tipo_especialidade']}}@endif&sg_estado_localizacao=@if( !empty($_GET['sg_estado_localizacao'])){{$_GET['sg_estado_localizacao']}}@endif&sort='+$(this).val() }">
                                 <option value="">Ordenar por...</option>
                                 <option value="desc" @if( isset($_GET['sort']) && $_GET['sort'] == 'desc' ) selected="selected" @endif>Maior preço</option>
                                 <option value="asc" @if( isset($_GET['sort']) && $_GET['sort'] == 'asc' ) selected="selected" @endif>Menor preço</option>
