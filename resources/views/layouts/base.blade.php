@@ -281,7 +281,7 @@
 						<ul class="wb-links-mobile">
 							<li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
 						</ul>
-
+                                
                         @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
                             <div class="info-empresarial">
                                 <div class="opcoes ie-logo">

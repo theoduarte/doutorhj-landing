@@ -28,7 +28,7 @@
             appearance: none;
             width: 15px;
             height: 25px;
-            background: rgb(255, 255, 255);
+            background: rgb(70, 117, 184);
             border-radius: 10px;
             cursor: pointer;
         }
@@ -97,24 +97,26 @@
                                             <option value="" selected>Escolher metodo de pagamento</option>
                                             {{--------------    ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
-                                                @if(intval($valor_total-$valor_desconto) < intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
-                                                    <option value="1">Crédito empresarial</option>
+                                                @if(floatval($valor_total-$valor_desconto) < floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
+                                                    <option value="1">Crédito Empresarial</option>
                                                 @endif
-                                                @if(intval($valor_total-$valor_desconto) > intval($paciente->saldo_empresarial)  &&  intval($paciente->saldo_empresarial)  > 0 )
+                                                @if(floatval($valor_total-$valor_desconto) > floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
                                                     <option value="2">Crédito empresarial + Cartão de crédito</option>
                                                 @endif
                                             @endif
+                                            
                                             <option value="3">Cartão de crédito</option>
-                                            <option value="4" >Boleto Bancario</option>
-                                            <option value="5" >Transferencia Bancario</option>
+                                           
                                             {{--
+                                                <option value="4" >Boleto Bancario</option>
+                                            <option value="5" >Transferencia Bancario</option>
                                             <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>
                                             --}}
                                         </select>
                                     </section>
                                 </div>
-                            
+                                
                                 <div class="card-body">
 
                                     <div class="row cartaoEmpresarial_Credito" style="display:none">
@@ -154,8 +156,12 @@
                                                 <hr>
                                                 <h3>definir crédito empresarial</h3>
                                                 <div class="slidecontainer">
-                                                    <input type="range" min="0.1" max="100" step="0.0001" class="slider" id="myRange">
+                                                    <input type="range" min="0.1" max="100" step="0.00001" class="slider" id="myRange">
+                                                   
+                                                    <div  style="display:none">
                                                     <p><span id="porcentagem_credito_empresarial"></span> % </p>
+                                                    </div>
+                                                  
                                                 </div>
                                             </div>
                                         </div>
@@ -962,7 +968,7 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
-                                                        <span>Desconto aplicado:</span>
+                                                        <span>Cupom aplicado:</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7">
@@ -973,7 +979,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" style="display:none">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
                                                         <span>Anuidade:</span>
@@ -985,6 +991,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row empresarial-valor-resumo">
+                                                <div class="col-md-5">
+                                                    <div class="titulo-resumo">
+                                                        <span>Crédito Empresarial: </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="valor_cartao_empresarial"></div>
+                                                </div>
+                                            </div>
+
                                             <div id="parcelamento-content" class="row">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
@@ -998,26 +1016,8 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="row empresarial-valor-resumo">
-                                                <div class="col-md-5">
-                                                    <div class="titulo-resumo">
-                                                        <span>Crédito Empresarial: </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <div class="valor_cartao_empresarial"></div>
-                                                </div>
-                                            </div>
-                                            <div class="row credito-valor-resumo">
-                                                <div class="col-md-5">
-                                                    <div class="titulo-resumo">
-                                                        <span>Cartão de Crédito: </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <div class="valor_cartao_credito"></div>
-                                                </div>
-                                            </div>
+                                          
+                                          
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5">

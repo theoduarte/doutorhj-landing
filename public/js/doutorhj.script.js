@@ -584,11 +584,16 @@ $(function() {
 
 	if(slider != null) {
 		var output = document.getElementById("porcentagem_credito_empresarial");
-
+		
+		
 		
 
 		slider.oninput = function() {
 			output.innerHTML   =(parseFloat(this.value)).formatMoney(2, '.', '.') 
+			
+			
+			
+			
 			var valor="";
 			var valor_formatado=""
 			var resp="";
@@ -671,7 +676,7 @@ $(function() {
 					var complemt=0;
 	
 					 
-					slider.max = (porcentagem) - 0.1
+					slider.max = (porcentagem) //- 0.1
 		 
 					if(valor_formatado.length >6) {
 						resp = (valor_formatado.replace('.','')) 
@@ -690,9 +695,9 @@ $(function() {
 						var empresa=0;		 
 						var complemt=0;
 						
-						slider.max = (porcentagem) - 0.1
+						slider.max = (porcentagem) //- 0.1
 						
-						slider.value =  (porcentagem) - 0.1;
+						slider.value =  (porcentagem) //- 0.1;
 						
 	
 					 
@@ -701,7 +706,7 @@ $(function() {
 						complemt  = (parseFloat(respCOmplemento) - empresa)	
 						 
 						output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
-			
+						
 						//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 					 
 						$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
@@ -717,15 +722,14 @@ $(function() {
 					} else {
 						var porcentagem = parseFloat(respCOmplemento) / parseFloat(resp)  * 100
 			
-						var totalEmpresarial = ((porcentagem - 0.1) * parseFloat(resp)) /100
+						var totalEmpresarial = ((porcentagem  ) * parseFloat(resp)) /100
 						var valorComplemento =  (respCOmplemento) - totalEmpresarial
 						printParcelamento(valorComplemento);
 						
 
-						slider.max = parseFloat(porcentagem) - 0.1;
-						slider.value =parseFloat(porcentagem) - 0.1;
-						output.innerHTML =(parseFloat(porcentagem) - 0.1).formatMoney(2, ',', '.')
-			
+						slider.max = parseFloat(porcentagem) //- 0.1;
+						slider.value =parseFloat(porcentagem) // - 0.1;
+						output.innerHTML =(parseFloat(porcentagem)  ).formatMoney(2, ',', '.')						
 						$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
 						$('.valor_complementar').text('R$ '+valorComplemento)
 						$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
@@ -1341,7 +1345,7 @@ function cartaoCreditoEmpresarial(){
 			cartaoid:cartaoid,
 			numero:numero,
 			nome:nome,
-			nome:nome,
+			mes:mes,
 			ano:ano,
 			cvv:cvv,
 			titularcpf:titularcpf,

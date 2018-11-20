@@ -543,7 +543,7 @@ class PaymentController extends Controller
 							DB::rollBack();
 						 
 							return response()->json([
-								'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito!',
+								'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado!' ,
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -828,7 +828,7 @@ class PaymentController extends Controller
 					$metodoCartao,
 					1);
 				 
-			
+					
 					try{
 						$criarPagamento =  $client->getOrders()->createOrder($dados);
 					}catch(\Exception $e){

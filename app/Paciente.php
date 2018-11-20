@@ -254,23 +254,24 @@ class Paciente extends Model
 			->whereBetween('dt_pagamento', array($firstDay, $lastDay))
 			->with(['cartao_paciente', 'itempedidos'])
 			->get();
-
+		 
 		if($pedido->count() == 0) {
 			return 0;
 		}
-        //dd($pedido); die;
+        
 		$vlConsumido = Itempedido::whereIn('pedido_id', $pedido->pluck('id')->toArray())
 			->select(DB::raw('SUM(valor) as vl_consumido'))->first();
-
+			
 		if(is_null($vlConsumido) && empty($vlConsumido->vl_consumido)) {
 			return 0;
 		} else {
-			return UtilController::moedaBanco($vlConsumido->vl_consumido);
+			return $vlConsumido->vl_consumido;
 		}
 	}
 
 	public static function getSaldoEmpresarial($paciente_id)
 	{
+	
 		$saldo = self::getVlMaxConsumo($paciente_id) - self::getVlConsumido($paciente_id);
 
 		if($saldo < 0) {
