@@ -13,7 +13,8 @@ use App\Checkup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
-
+use \GuzzleHttp\Client;
+use  \GuzzleHttp\Psr7;
 class EspecialidadeController extends Controller
 {
     // ############# PUBLIC SERVICES - NOT AUTHENTICATED ##################
@@ -37,10 +38,34 @@ class EspecialidadeController extends Controller
 
 		$plano_id = Paciente::getPlanoAtivo($paciente_id);
 
+
+
+
         if ($tipo_atendimento == 'saude') { //--realiza a busca pelos itens do tipo CONSULTA-------- 
             $consulta = new Consulta();
+
             $result = $consulta->getActive($plano_id, $uf_localizacao);
-            $result = $result->toArray();
+
+             $result = $result->toArray();
+          
+           /*
+           descricao
+           tipo
+           id
+           */
+
+           // $client = new  Client();
+          //  $res = $client->request('GET', 'http://192.168.1.87/api/v1/especialidades?tipo_atendimento_id=1&uf_atendimento=sp');
+
+            //echo $res->getStatusCode();
+            // 200
+           // $res->getHeaderLine('content-type');
+            // 'application/json; charset=utf8'
+           // $resultado =   $res->getBody();
+        
+           // echo var_export($resultado);
+       
+   
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') { //--realiza a busca pelos itens do tipo CONSULTA--------
             $procedimento = new Procedimento();
             $result = ( $tipo_atendimento == 'exame' ) ? $procedimento->getActiveExameProcedimento($plano_id, $uf_localizacao) : $procedimento->getActiveOdonto($plano_id);

@@ -835,8 +835,11 @@ class ClinicaController extends Controller
 
     	$valor_total = ( CVXCart::getTotal());
     	$valor_desconto = 0;
-        
-    	$cpf_titular = $user_session->documentos->first()->te_documento;
+        $cpf_titular="";
+        if(isset($user_session->documentos->first()->te_documento)){
+            $cpf_titular = $user_session->documentos->first()->te_documento;
+        }
+    	
 
     	$valor_parcelamento = $valor_total-$valor_desconto;
         $parcelamentos = [];

@@ -1370,12 +1370,24 @@ function printParcelamento(valor){
 	var options = ""
 	$('#selectParcelamentoCredito').empty()
 
-	if(parseFloat(valor) >100){
+	if(parseFloat(valor) >50 && parseFloat(valor) < 500 ){
 		 
 		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
 		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
 		var i=0;
-		for (i = 2; i <=5; i++) {
+		for (i = 2; i <=3; i++) {
+			var vl = parseFloat(valor) / i
+			if(i <=3){
+				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
+			} 
+		}
+
+	}else if(parseFloat(valor) >500) {
+	 
+		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
+		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
+		var i=0;
+		for (i = 2; i <=10; i++) {
 			var vl = parseFloat(valor) / i
 			if(i <=3){
 				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
@@ -1383,9 +1395,7 @@ function printParcelamento(valor){
 				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(parseFloat(vl) *1.05).formatMoney(2, ',', '.') +' com juros (5% a.m.) </option>' )
 			}
 		}
-
 	}else{
-	 
 		$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros')
 		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros </option>' )
 	}

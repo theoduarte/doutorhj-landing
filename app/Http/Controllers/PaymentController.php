@@ -905,7 +905,7 @@ class PaymentController extends Controller
 		 
 		 
         //-- pedido id do DoutorHoje----------------------------------
-        //$MerchantOrderId = $pedido->id;
+        //$MerchantOrderId = $pedido->id;quan
         
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
@@ -913,11 +913,7 @@ class PaymentController extends Controller
         $customer->load('documentos');
         $customer->load('contatos');
 		
-		$customer_name                  = $customer->nm_primario.' '.$customer->nm_secundario; //-- usado no pagamento por debito tambem
-        $customer_identity              = $customer->documentos->first()->te_documento;
-        $customer_Identity_type         = $customer->documentos->first()->tp_documento;
-        $customer_email                 = $customer->user->email;
-        $customer_birthdate             = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", $customer->dt_nascimento);
+	 
     
 		
 		// caso o pagamento seja cartao de credito + empresarial executa a condição

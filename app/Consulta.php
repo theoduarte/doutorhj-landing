@@ -34,7 +34,7 @@ class Consulta extends Model
     }
 
     public function getActive($planoId, $uf_localizacao) {
-//        DB::enableQueryLog();
+     //   DB::enableQueryLog();
         $query = DB::table('consultas')
             ->select( DB::raw("COALESCE(tag_populars.cs_tag, atendimentos.ds_preco, consultas.ds_consulta) descricao, 'consulta' tipo, consultas.id") )
             ->distinct()
@@ -65,7 +65,7 @@ class Consulta extends Model
             ->orderby('descricao', 'asc')
             ->get();
 //         print_r($query);
-//         dd( DB::getQueryLog() );
+         
         return $query;
     } 
 
@@ -93,7 +93,7 @@ class Consulta extends Model
     }
 
     public function getActiveAtendimentos( $consultaId, $enderecoIds, $sortItem, $planoId, $uf_localizacao ) {
-        DB::enableQueryLog();
+       // DB::enableQueryLog();
 
         $query = DB::table('atendimentos as at')
 			->distinct()
