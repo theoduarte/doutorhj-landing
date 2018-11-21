@@ -955,7 +955,7 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
-                                                        <span>Valor do(s) serviço(s):</span>
+                                                        <span>Valor da compra:</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7">
@@ -968,7 +968,7 @@
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
-                                                        <span>Cupom aplicado:</span>
+                                                        <span>Cupom :</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7">
@@ -1003,35 +1003,26 @@
                                                 </div>
                                             </div>
 
-                                            <div id="parcelamento-content" class="row">
+                                            <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="titulo-resumo">
-                                                        <span>Parcelamento Cartão de Crédito:</span>
+                                                        <span>Total a pagar: </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-7">
+                                                    <div class="dados-resumo valor-total-produtos">
+
+                                                    </div>
                                                     <div id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
                                                         <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr>
+
                                           
                                           
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="titulo-resumo">
-                                                    <span>Total a pagar: </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div class="dados-resumo valor-total-produtos">
-                                                    <p>
-                                                        R$ {{ number_format( $valor_total-$valor_desconto,  2, ',', '.') }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="row">
                                             <div class="col-12 col-md-6 area-btn-finalizar">
                                                 {{--<a href="{{ $url }}" class="btn btn-link btn-continuar-comprando">Continuar comprando</a>--}}

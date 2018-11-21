@@ -740,7 +740,7 @@ class PaymentController extends Controller
 			} catch(\Exception $e) {
 				DB::rollBack();
 				return response()->json([
-					'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito  , pagamento não efetuado!',
+					'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito  , pagamento não efetuado! '.$e->getMessage(),
 					'errors' => $e->getMessage(),
 				], 500);
 			}
@@ -785,7 +785,7 @@ class PaymentController extends Controller
 			} catch(\Exception $e) {
 				DB::rollBack();
 				return response()->json([
-					'mensagem' => 'Erro ao efetuar o pagamento com o cartão de crédito!',
+					'mensagem' => 'Erro ao efetuar o pagamento com o cartão de crédito! '. $e->getMessage(),
 					'errors' => $e->getMessage(),
 				], 500);
 			}
@@ -800,7 +800,7 @@ class PaymentController extends Controller
 			}catch(\Exception $e){
 				DB::rollBack();
 				return response()->json([
-					'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento  não efetuado!',
+					'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento  não efetuado! '. $e->getMessage(),
 					'errors' => $e->getMessage(),
 				], 500);
 			}
@@ -830,7 +830,7 @@ class PaymentController extends Controller
 			} catch(\Exception $e) {
 				DB::rollBack();
 				return response()->json([
-					'mensagem' => 'Não foi possivel gerar o boleto de pagamento!',
+					'mensagem' => 'Não foi possivel gerar o boleto de pagamento! '.$e->getMessage(),
 					'errors' => $e->getMessage(),
 				], 500);
 			}
@@ -844,7 +844,7 @@ class PaymentController extends Controller
 			} catch(\Exception $e) {
 				DB::rollBack();
 				return response()->json([
-					'mensagem' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado!',
+					'mensagem' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado! '. $e->getMessage(),
 					'errors' => $e->getMessage(),
 				], 500);
 			}
@@ -926,13 +926,16 @@ class PaymentController extends Controller
 							#############################################
 							return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
 						}
+
 					} else {
+
 						if (!$pedido->save()) {
 							########### FINISHIING TRANSACTION ##########
 							DB::rollback();
 							#############################################
 							return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
 						}
+
 					}
 				}
 
@@ -947,6 +950,7 @@ class PaymentController extends Controller
 				$resp =null;
 				$conta=0;
 				$valores=[];
+
 				foreach($agendamentoItens as $i=>$item_agendamento) {
 
 					$MerchantOrderId = $pedido->id;

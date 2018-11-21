@@ -539,7 +539,8 @@ $(function() {
 			subtrair = (resCOmplemento - resultado )
 			finalCOmplemento = subtrair.formatMoney(2, ',', '.');
 			printParcelamento(subtrair);
-			$('.valor_cartao_empresarial').empty().html('<p>R$ '+final+'</p>');
+            $('.valor-total-produtos').empty().html('<p>R$ '+subtrair.formatMoney(2, ',', '.')+'</p>' )
+			$('.valor_cartao_empresarial').empty().html('<p>- R$ '+final+'</p>');
 			$('.valor_cartao_credito').empty().html('<p>R$ '+finalCOmplemento +'</p>');
 			$('.valor_complementar').text('R$ '+finalCOmplemento)
 			$('.creditoAserDebitado').text('R$ '+final);
@@ -606,10 +607,10 @@ $(function() {
 						
 						//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 					 
-						$('.valor_cartao_empresarial').empty().html('<p>R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+						$('.valor_cartao_empresarial').empty().html('<p> - R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
 						
-						$('.valor_cartao_credito').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>');
-						
+
+                        $('.valor-total-produtos').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>' )
 						printParcelamento(complemt );
 						
 						$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
@@ -627,7 +628,7 @@ $(function() {
 						slider.max = parseFloat(porcentagem) //- 0.1;
 						slider.value =parseFloat(porcentagem) // - 0.1;
 						output.innerHTML =(parseFloat(porcentagem)  ).formatMoney(2, ',', '.')						
-						$('.valor_cartao_empresarial').empty().html('<p>R$ '+totalEmpresarial+'</p>');
+						$('.valor_cartao_empresarial').empty().html('<p>- R$ '+totalEmpresarial+'</p>');
 						$('.valor_complementar').text('R$ '+valorComplemento)
 						$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
 					}
@@ -635,6 +636,8 @@ $(function() {
 				}
 																					   
 			}, 10);
+		}else{
+			$('.valor-total-produtos').empty().html('<p>R$ '+totalPagarFormatado+'</p>' )
 		}
 	})
 		
@@ -863,7 +866,7 @@ $(function() {
 
 			$('.cartao-credito').slideDown();
 		
-			dadosResumo.empty().html('Cartão Empresarial + Cartão de Crédito')
+			dadosResumo.empty().html('Cartão Empresarial + Cartão de Crédito Pessoal')
 				break;
 			case "3":
 			$('.credito-valor-resumo').hide();
@@ -1409,8 +1412,8 @@ function printParcelamento(valor){
 			}
 		}
 	}else{
-		$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros')
-		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).toLocaleString('pt-BR')+' sem juros </option>' )
+		$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros')
+		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros </option>' )
 	}
 }
 
