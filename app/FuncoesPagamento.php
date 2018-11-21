@@ -51,17 +51,20 @@ abstract class FuncoesPagamento
 			return $payload;
 	}
     public static function criarCartao($nm_cartao, $holdername,  $mes, $ano, $cvv, $bandeira){
-		$payload = [
-			"number"=> '5339884372690071',
-			"holder_name"=> 'testando',			
-			"exp_month"=>'02',
-			"exp_year"=>'20',
-			"cvv"=> '123',
-			"brand"=> 'Visa',
-			"private_label"=> true
 
-			];
+        $payload = [
+            "number"=> $nm_cartao,
+            "holder_name"=> $holdername,
+            "exp_month"=>$mes,
+            "exp_year"=>$ano,
+            "cvv"=> $cvv,
+            "brand"=> $bandeira,
+            "private_label"=> true,
+            "options"=> [
+                "verify_card"=> true
+            ]
 
+        ];
 		return $payload;
 	}
 
