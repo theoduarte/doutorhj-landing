@@ -121,7 +121,7 @@ abstract class FuncoesPagamento
   		return $payload;
 	}
 
-	private static function card($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao, $metodo,$cvv){
+	private static function card($customerId,$valorEmCentavos,  $parcelas, $descricaoFatura, $cartaoid, $produtoDescricao){
 		$payload = [
 			"items"=> [
 			[
@@ -136,10 +136,7 @@ abstract class FuncoesPagamento
 			"credit_card"=> [
 				"installments"=> $parcelas,
 				"statement_descriptor"=> $descricaoFatura,
-				"card_id"=>$cartaoid,
-				"card"=> [
-					"cvv"=> $cvv
-				]
+				"card_id"=>$cartaoid
 			]
 			]]
 		];
