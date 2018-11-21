@@ -485,7 +485,7 @@ class PaymentController extends Controller
 					
 			$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
 
-			if($limiteCartaoFuncionario ==0){
+			if($limiteCartaoFuncionario == 0){
 				return response()->json([
 					'mensagem' => 'Não existe limite no cartao empresarial.'
 				], 422);
@@ -496,7 +496,7 @@ class PaymentController extends Controller
 			// caso tenha id do cartão resgatar o id token do mesmo para realizar a transação		
 			if(!empty($dados->cartaoid)) {
 					
-				$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+				$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' => $paciente_id]);
 					
 				if(!$cartao->exists()) {
 					DB::rollback();
@@ -515,76 +515,76 @@ class PaymentController extends Controller
 				
 				$metodoCartao=1;
 
+			} else {
+				// caso o usuario não queira salvar o cartão é criado um token enviando os dados do cartao para mundipagg
+				if( $dados->salvar == 0){
+
+					try {
+						// cria token cartao
+						$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+
+						// token gerado a partir da mundipagg sem salvar o cartao do usuario.
+						$metodoCartao=2;
+
+						$cartao = $cartaoToken->id;
+
+					} catch(\Exception $e) {
+						DB::rollBack();
+
+						return response()->json([
+							'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado!' ,
+							'errors' => $e->getMessage(),
+						], 500);
+					}
 				} else {
-					// caso o usuario não queira salvar o cartão é criado um token enviando os dados do cartao para mundipagg
-					if( $dados->salvar == 0){
-			
+					$cartaoPaciente = CartaoPaciente::where([
+						'numero' => substr($dados->numero, -4),
+						'dt_validade' => $dados->mes.'/'.$dados->ano,
+						'bandeira' => $bandeira
+					])->exists();
+
+					if(!$cartaoPaciente) {
 						try {
-							// cria token cartao						
-							$cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
-								
-							// token gerado a partir da mundipagg sem salvar o cartao do usuario.
-							$metodoCartao=2;
-							
-							$cartao = $cartaoToken->id;
-											
+							$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+								$dados->numero,
+								$dados->nome,
+								$dados->mes,
+								$dados->ano,
+								$dados->cvv,
+								$bandeira
+							));
+
+							$cartao_paciente = new CartaoPaciente();
+							$cartao_paciente->bandeira 		= $bandeira;
+							$cartao_paciente->nome_impresso = $dados->nome;
+							$cartao_paciente->numero 		= substr($dados->numero, -4);
+							$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+							$cartao_paciente->card_token 	= $saveCartao->id;
+							$cartao_paciente->paciente_id 	= $paciente->id;
+
+							if($cartao_paciente->save()) {
+
+								// card_id cartao salvo
+								$metodoCartao=1;
+
+								$cartao = $saveCartao->id;
+
+							}
 						} catch(\Exception $e) {
 							DB::rollBack();
-						 
 							return response()->json([
-								'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado!' ,
+								'mensagem' => 'Erro ao salvar o cartao!',
 								'errors' => $e->getMessage(),
 							], 500);
 						}
 					} else {
-						$cartaoPaciente = CartaoPaciente::where([
-							'numero' => substr($dados->numero, -4),
-							'dt_validade' => $dados->mes.'/'.$dados->ano,
-							'bandeira' => $bandeira
-						])->exists();
-								
-						if(!$cartaoPaciente) {
-							try {
-								$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
-									$dados->numero,
-									$dados->nome,
-									$dados->mes,
-									$dados->ano,
-									$dados->cvv,
-									$bandeira
-								));
-											
-								$cartao_paciente = new CartaoPaciente();
-								$cartao_paciente->bandeira 		= $bandeira;
-								$cartao_paciente->nome_impresso = $dados->nome;
-								$cartao_paciente->numero 		= substr($dados->numero, -4);
-								$cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
-								$cartao_paciente->card_token 	= $saveCartao->id;
-								$cartao_paciente->paciente_id 	= $paciente->id;
-
-								if($cartao_paciente->save()) {											
-									
-									// card_id cartao salvo
-									$metodoCartao=1;
-
-									$cartao = $saveCartao->id;	
-
-								}
-							} catch(\Exception $e) {
-								DB::rollBack();
-								return response()->json([
-									'mensagem' => 'Erro ao salvar o cartao!',
-									'errors' => $e->getMessage(),
-								], 500);
-							}
-						} else {
-							DB::rollback();
-							return response()->json([
-								'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
-							], 404);	
-						}	
+						DB::rollback();
+						return response()->json([
+							'mensagem' => 'Não é possivel cadastrar um cartão que já está salvo.'
+						], 404);
 					}
 				}
+			}
 			 
 		// faz validação para efetuar compra com o  cartao de credito
 		} elseif($metodoPagamento == Payment::METODO_CRED_IND) {
@@ -1193,12 +1193,12 @@ class PaymentController extends Controller
 							$Payment                                 	= new Payment();
 							$Payment->merchant_order_id             	= $dadosPagamentos['id'];
 							$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-							$Payment->tid 								= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : '';
+							$Payment->tid 								= $metodoPagamento == Payment::METODO_CRED_IND ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : '';
 							$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method'];
 							$Payment->amount                        	= $this->convertRealEmCentavos( number_format(   $dadosPagamentos['charges'][0]['amount'] , 2, ',', '.') ) ;
 							$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency'];
 							$Payment->country                     		= "BRA";
-							$Payment->installments 				     	= $metodoPagamento == 3 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;
+							$Payment->installments 				     	= $metodoPagamento == Payment::METODO_CRED_IND ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;
 							$Payment->pedido_id  						= $pedido->id;
 							$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
 							$Payment->cielo_result                 		= json_encode($criarPagamento);
@@ -1216,8 +1216,8 @@ class PaymentController extends Controller
 
 				$dados = json_decode(json_encode($criarPagamento), true);
 
-				$boleto=null;
-				if($metodoPagamento == 4) {
+				$boleto = null;
+				if($metodoPagamento == Payment::METODO_BOLETO) {
 
 					$boleto = [
 						"instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
@@ -1230,7 +1230,7 @@ class PaymentController extends Controller
 				}
 
 				$transferencia = null;
-				if($metodoPagamento == 5) {
+				if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
 					$transferencia = [
 						"metodo" => $dados['charges'][0]['payment_method'],
 						"url" => 	$dados['charges'][0]['last_transaction']['url']	,
@@ -1268,16 +1268,16 @@ class PaymentController extends Controller
 	
 	private function verificaTp($tp) {
 		switch($tp) {
-			case "1":
-			return 'Empresarial';break;
-			case "2":
-			return "empre+credito";break;
-			case "3":
-			return "credito";break;
-			case "4":
-			return "boleto";break;
-			case "5":
-			return "transferencia";break;
+			case Payment::METODO_CRED_EMP:
+				return 'Empresarial';break;
+			case Payment::METODO_CRED_EMP_CRED_IND:
+				return "empre+credito";break;
+			case Payment::METODO_CRED_IND:
+				return "credito";break;
+			case Payment::METODO_BOLETO:
+				return "boleto";break;
+			case Payment::METODO_TRANSFERENCIA:
+				return "transferencia";break;
 		}
 	}
 	
