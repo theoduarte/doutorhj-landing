@@ -637,7 +637,7 @@ $(function() {
 																					   
 			}, 10);
 		}else{
-			$('.valor-total-produtos').empty().html('<p>R$ '+totalPagarFormatado+'</p>' )
+			$('.valor-total-produtos').empty().html('<p>R$ '+($('#total_pagar').val())+'</p>' )
 		}
 	})
 		
