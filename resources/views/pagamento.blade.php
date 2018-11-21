@@ -260,7 +260,7 @@
                                             <h3>Cartão de crédito</h3>
                                             <div class="separador"></div>
                                             <form action="">
-                                                <div class="form-group">
+                                                <div class="form-group" style="display:none">
                                                     <label for="cartaoCadastrado">Cartão cadastrado</label>
                                                     <select class="form-control cartaoCadastradoCredito cartaoCadastrado" id="cartaoCadastrado">
                                                         <option value="">Novo Cartão</option>
@@ -347,7 +347,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="form-check fc-checkbox row-payment-card">
+                                                <div class="form-check fc-checkbox row-payment-card" style="display:none">
                                                     <input type="checkbox" id="checkGravarCartaoCredito" class="checkGravarCartaoCredito form-check-input" name="gravar_cartao_credito">
                                                     <label class="form-check-label" for="checkGravarCartaoCredito">Gravar
                                                         dados para futuras compras</label>

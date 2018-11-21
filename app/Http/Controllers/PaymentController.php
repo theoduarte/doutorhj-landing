@@ -532,7 +532,7 @@ class PaymentController extends Controller
 						DB::rollBack();
 
 						return response()->json([
-							'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado!' ,
+							'mensagem' => 'Não foi possivel criar o token do cartão de credito, Pagamento não realizado! '. $e->getMessage() ,
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -573,7 +573,7 @@ class PaymentController extends Controller
 						} catch(\Exception $e) {
 							DB::rollBack();
 							return response()->json([
-								'mensagem' => 'Erro ao salvar o cartao!',
+								'mensagem' => 'Erro ao salvar o cartao! '.$e->getMessage(),
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -617,7 +617,7 @@ class PaymentController extends Controller
 					} catch(\Exception $e) {
 						DB::rollBack();
 						return response()->json([
-							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de créditoo!',
+							'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito! '. $e->getMessage(),
 							'errors' => $e->getMessage(),
 						], 500);
 					}
@@ -655,7 +655,7 @@ class PaymentController extends Controller
 						} catch(\Exception $e) {
 							DB::rollBack();
 							return response()->json([
-								'mensagem' => 'Erro ao salvar o cartao!',
+								'mensagem' => 'Erro ao salvar o cartao! '.$e->getMessage(),
 								'errors' => $e->getMessage(),
 							], 500);
 						}
@@ -908,7 +908,7 @@ class PaymentController extends Controller
 				return response()->json([
 					
 					'code' => $dadosPagamentos['charges'][0]['last_transaction']['gateway_response']['code'],
-					'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! ',
+					'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! '.$dadosPagamentos['charges'][0]['last_transaction']['status'],
 				                 
 					], 422);
 			
