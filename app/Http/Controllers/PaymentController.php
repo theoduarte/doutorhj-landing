@@ -794,13 +794,7 @@ class PaymentController extends Controller
 		// pagamento com cartão de credito
 		if ($metodoPagamento == Payment::METODO_CRED_IND) {
 			try{
-			    if(empty($dados->cvv)){
-                    DB::rollBack();
-                    return response()->json([
-                        'mensagem' => 'Informe o cvv do seu cartão !'
-                    ], 500);
-                }
-			//	$criarPagamento =   Storage::disk('local')->get('requisicao.json');
+
 				$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor Hoje",$cartao, "Doutor hoje",$metodoCartao,$dados->cvv ))    ;
 
 			}catch(\Exception $e){
