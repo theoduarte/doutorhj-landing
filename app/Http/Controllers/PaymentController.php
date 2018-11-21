@@ -141,7 +141,7 @@ class PaymentController extends Controller
 	
 	
 
-	
+	/*
     public function fullTransactionTeste(Request $request)
     {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -198,7 +198,7 @@ class PaymentController extends Controller
     
     	return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido'));
     }
-    
+    */
     public function fullTransactionFinish(Request $request)
     {
     	setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
@@ -303,19 +303,16 @@ class PaymentController extends Controller
 					DB::rollBack();
 					return response()->json([
 						'messagem' => 'Não foi possivel salvar o usuario!',
-						'errors' => $e->getMessage(),
 					], 500);
 				}
 
-			}catch(\Exception $e){
+			} catch(\Exception $e) {
 				DB::rollBack();
 				return response()->json([
 					'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
 					'errors' => $e->getMessage(),
 				], 500);
 			}
-			
-		
 		}
  
         //--verifica se todos os agendamentos possuem um atendimento relacionado------
@@ -410,13 +407,11 @@ class PaymentController extends Controller
         if (!$agendamento_atendimento) {
         	return response()->json(['status' => false, 'mensagem' => 'O seu Agendamento não foi realizado, pois um dos itens não possui um Atendimento Relacionado. Por favor, tente novamente.']);
         }
-			
-		 
+
         ########### STARTING TRANSACTION ############
    		DB::beginTransaction();
         #############################################
-        
-        
+
 		$valor_total = CVXCart::getTotal();
 						
         $valor_desconto = $valor_total*$percentual_desconto;
@@ -429,7 +424,7 @@ class PaymentController extends Controller
 		);
 		
 		//valida a bandeira do cartao
-		if(!empty($dados->numero)  && empty($pagamento[0]->cartao->cartao_id)){
+		if(!empty($dados->numero)){
 			if(empty($dados->cvv)){
 				return response()->json([
 					'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
@@ -451,7 +446,6 @@ class PaymentController extends Controller
 			}			
 		}
 
-		
 		$pedido = new Pedido();        
 		$descricao = '';
 		$dt_pagamento = date('Y-m-d H:i:s');                        
@@ -461,8 +455,8 @@ class PaymentController extends Controller
 		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
 		
-		// credito empresarial
-		if($metodoPagamento == 1) {
+		/** Credito Empresarial */
+		if($metodoPagamento == Payment::METODO_CRED_EMP) {
 			
 			if (Auth::check()) {
 				$pacient = Auth::user()->paciente;
@@ -472,16 +466,16 @@ class PaymentController extends Controller
 			
 			$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;								
 
-			if($limiteCartaoFuncionario ==0){
+			if($limiteCartaoFuncionario == 0){
 				return response()->json([
 					'mensagem' => 'Não existe limite no cartao empresarial.'
 				], 422);
-			}else{
+			} else {
 				$valorLimiteRestante = $limiteCartaoFuncionario ;
 			}
 		
-		// credito empresarial + cartao de credito
-		} elseif($metodoPagamento ==2) {
+		/** Credito empresarial + Cartao de credito */
+		} elseif($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 
 			if (Auth::check()) {
 				$pacient = Auth::user()->paciente;
@@ -552,13 +546,13 @@ class PaymentController extends Controller
 						if(!$cartaoPaciente) {
 							try {
 								$saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
-								$dados->numero, 
-								$dados->nome, 				
-								$dados->mes, 
-								$dados->ano,
-								$dados->cvv, 
-								$bandeira
-								)); 
+									$dados->numero,
+									$dados->nome,
+									$dados->mes,
+									$dados->ano,
+									$dados->cvv,
+									$bandeira
+								));
 											
 								$cartao_paciente = new CartaoPaciente();
 								$cartao_paciente->bandeira 		= $bandeira;
@@ -593,7 +587,7 @@ class PaymentController extends Controller
 				}
 			 
 		// faz validação para efetuar compra com o  cartao de credito
-		} elseif($metodoPagamento == 3) {
+		} elseif($metodoPagamento == Payment::METODO_CRED_IND) {
 			if(!empty($dados->cartaoid)){
 				$cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
 					if(!$cartao->exists()) {
@@ -675,7 +669,7 @@ class PaymentController extends Controller
 			}
 		} 
 
-		if($metodoPagamento == 1) {
+		if($metodoPagamento == Payment::METODO_CRED_EMP) {
 			// adicionar o cartao id do cartao empresarial no pedido 
 			// $pedido->cartao_id = 
 			//valor para fim de calculo
@@ -684,17 +678,15 @@ class PaymentController extends Controller
 			$formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 	 
 			$valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
-		} elseif($metodoPagamento == 2) {
-			if($metodoPagamento ==2 && empty($dados->porcentagem)){
+		} elseif($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND && empty($dados->porcentagem)){
 				return response()->json([
 					'mensagem' => 'Campo porcentagem nulo '.$dados->porcentagem
-
 				], 500);
 			}
-			if($dados->porcentagem <0 || $dados->porcentagem >100){
+			if($dados->porcentagem < 0 || $dados->porcentagem > 100){
 				return response()->json([
 					'mensagem' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
-
 				], 500);
 			}
 
@@ -715,16 +707,15 @@ class PaymentController extends Controller
 			$cartaoCredito = floatval($valorFinal) - floatval($empresarial);
 
 
-			($dados->parcelas >3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
+			($dados->parcelas > 3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
 
 			$valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
 
 		} else {
 			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
 		}
-			
-	
-		if($metodoPagamento == 1) {
+
+		if($metodoPagamento == Payment::METODO_CRED_EMP) {
 			$paciente = Paciente::where(['id'=> $paciente_id])->first();
 
 			$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
@@ -733,7 +724,6 @@ class PaymentController extends Controller
 				DB::rollBack();
 				return response()->json([
 					'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
-					'errors' => $e->getMessage(),
 				], 500);
 			}
 			$empresa = Empresa::where('id',$paciente->empresa_id)->first();
@@ -741,7 +731,6 @@ class PaymentController extends Controller
 				DB::rollBack();
 				return response()->json([
 					'mensagem' => 'Empresa não encontrada.',
-					'errors' => $e->getMessage(),
 				], 500);
 			}
 			$metodoCartao = 1;
@@ -758,7 +747,7 @@ class PaymentController extends Controller
 		}
 
 		// pagamento com cartão de credito e empresarial
-		if ($metodoPagamento == 2) {
+		if ($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 			$paciente = Paciente::where(['id'=> $paciente_id])->first();
 
 			$cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
@@ -766,7 +755,6 @@ class PaymentController extends Controller
 				DB::rollBack();
 				return response()->json([
 					'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
-					'errors' => $e->getMessage(),
 				], 500);
 			}
 			$empresa = Empresa::where('id',$paciente->empresa_id)->first();
@@ -774,7 +762,6 @@ class PaymentController extends Controller
 				DB::rollBack();
 				return response()->json([
 					'mensagem' => 'Empresa não encontrada.',
-					'errors' => $e->getMessage(),
 				], 500);
 			}
 			$dados = FuncoesPagamento::pagamentoMultiMeio(
@@ -805,7 +792,7 @@ class PaymentController extends Controller
 		}
 
 		// pagamento com cartão de credito
-		if ($metodoPagamento == 3) {
+		if ($metodoPagamento == Payment::METODO_CRED_IND) {
 			try{
 			//	$criarPagamento =   Storage::disk('local')->get('requisicao.json');
 				$criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor Hoje",$cartao, "Doutor hoje",$metodoCartao,!empty($dados->cvv)  ? $dados->cvv : '' ))    ;
@@ -820,7 +807,8 @@ class PaymentController extends Controller
 
 		}
 
-		if($metodoPagamento == 4) {
+		/** Boleto */
+		if($metodoPagamento == Payment::METODO_BOLETO) {
 			try{
 				//$paciente->mundipagg_token
 				$enderecos =[];
@@ -848,7 +836,8 @@ class PaymentController extends Controller
 			}
 		}
 
-		if($metodoPagamento == 5) {
+		/** Transferencia Bancária */
+		if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
 			try{
 				$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarTranferencia($valor,"Doutor hoje",$paciente->mundipagg_token));
 				//var_dump($criarPagamento); die;
@@ -871,7 +860,7 @@ class PaymentController extends Controller
         $customer->load('contatos');
 
 		// caso o pagamento seja cartao de credito + empresarial executa a condição
-		if($metodoPagamento == 2){
+		if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND){
 			// cria o pedido para o pagamento com cartao empresarial
 			$pedidoEmpresarial  = new Pedido();        
 			$descricao = '';
@@ -925,9 +914,9 @@ class PaymentController extends Controller
 			
 			} else {
 				// caso o metodo de pagamento seja diferente de credito + empresarial entra na condição
-				if($metodoPagamento != 2){
+				if($metodoPagamento != Payment::METODO_CRED_EMP_CRED_IND){
 					// caso o metodo seja apenas credito empresarial  
-					if($metodoPagamento == 1) {
+					if($metodoPagamento == Payment::METODO_CRED_EMP) {
 
 						$pedido->cartao_id = $cartaoEmpresarialDados->id;
 		
@@ -989,7 +978,7 @@ class PaymentController extends Controller
 
 						$agendamento->atendimentos()->attach( $item_agendamento->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s') ] );
 						$agendamento_id[] = $agendamento->id;
-						$atendimento_id[] =$item_agendamento->atendimento_id;
+						$atendimento_id[] = $item_agendamento->atendimento_id;
 						$agendamento->load('atendimento');
 						$agendamento->load('clinica');
 						$agendamento->load('filial');
@@ -1022,7 +1011,7 @@ class PaymentController extends Controller
 							 * cada cartao pelo o usuario.
 							 *
 							 */
-							if ($metodoPagamento == 2) {
+							if ($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 								$empresarial = $restoEmpresarial;
 
 								if ($empresarial != $empresarialSalvar) {
@@ -1037,7 +1026,7 @@ class PaymentController extends Controller
 									$creditoCartaoSalvar +=$number;
 								}
 
-							} elseif($metodoPagamento == 1) {
+							} elseif($metodoPagamento == Payment::METODO_CRED_EMP) {
 								$item_pedido->agendamento_id = $agendamento_id[$i]  ;
 								$item_pedido->pedido_id = $pedido->id;
 								$item_pedido->valor = $number   * (1 - $percentual_desconto);
@@ -1067,13 +1056,13 @@ class PaymentController extends Controller
 							$item_pedido->valor	= ItemCheckup::query()->where('checkup_id', $checkups_id)->sum('vl_com_checkup');
 						}
 
-						if($metodoPagamento != 2) {
+						if($metodoPagamento != Payment::METODO_CRED_EMP_CRED_IND) {
 							if(!$item_pedido->save()) {
 								return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
 							}
 						}
 
-						if($metodoPagamento == 2) {
+						if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 							if (($conta) == count($agendamentoItens)) {
 
 								$pedidoEmpresarial->save();
@@ -1153,12 +1142,12 @@ class PaymentController extends Controller
 									$Payment                                 	= new Payment();
 									$Payment->merchant_order_id             	= $dadosPagamentos['id'];
 									$Payment->payment_id                     	= $dadosPagamentos['charges'][0]['id'];
-									$Payment->tid 								= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : '';
+									$Payment->tid 								= $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND ? $dadosPagamentos['charges'][0]['last_transaction']['acquirer_tid'] : '';
 									$Payment->payment_type 						= $dadosPagamentos['charges'][0]['payment_method'];
 									$Payment->amount                        	= $this->convertRealEmCentavos( number_format(    $valores[$o], 2, ',', '.') )  ;
 									$Payment->currency                     		= $dadosPagamentos['charges'][0]['currency'];
 									$Payment->country                     		= "BRA";
-									$Payment->installments 				     	= $metodoPagamento == 2 ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;
+									$Payment->installments 				     	= $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;
 									$Payment->pedido_id  						= (int)$pedido;
 									$Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
 									$Payment->cielo_result                 		= json_encode($criarPagamento);
@@ -1277,8 +1266,8 @@ class PaymentController extends Controller
 		}
     }
 	
-	private function verificaTp($tp){
-		switch($tp){
+	private function verificaTp($tp) {
+		switch($tp) {
 			case "1":
 			return 'Empresarial';break;
 			case "2":
@@ -1289,7 +1278,6 @@ class PaymentController extends Controller
 			return "boleto";break;
 			case "5":
 			return "transferencia";break;
-			
 		}
 	}
 	
@@ -1314,17 +1302,14 @@ class PaymentController extends Controller
 		return (int) $resultado;
 	}
 
-
-
-
-
     /**
      * realiza o pagamento na Cielo por cartao de credito cadastrado no padrao completo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function fullTransactionSaveCard(Request $request)
+/*
+	public function fullTransactionSaveCard(Request $request)
     {
     	$merchantKey    = env('CIELO_MERCHANT_KEY');
     	$merchantId     = env('CIELO_MERCHANT_ID');
@@ -1743,7 +1728,7 @@ class PaymentController extends Controller
     	} else {
     		return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
     	}
-    }
+    }*/
     
     /**
      * validarCupomDesconto a newly created resource in storage.
