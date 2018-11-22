@@ -1049,11 +1049,7 @@ class PaymentController extends Controller
 									$creditoCartaoSalvar +=$number;
 								}
 
-							} elseif($metodoPagamento == Payment::METODO_CRED_EMP) {
-								$item_pedido->agendamento_id = $agendamento_id[$i]  ;
-								$item_pedido->pedido_id = $pedido->id;
-								$item_pedido->valor = $number   * (1 - $percentual_desconto);
-							} else {
+							}  else {
 								$item_pedido->agendamento_id = $agendamento_id[$i]  ;
 								$item_pedido->pedido_id = $MerchantOrderId;
 								$item_pedido->valor = $number   * (1 - $percentual_desconto);
