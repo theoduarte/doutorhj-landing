@@ -454,7 +454,7 @@ class PaymentController extends Controller
 		$pedido->dt_pagamento   = $dt_pagamento;
 		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
-		
+
 		/** Credito Empresarial */
 		if($metodoPagamento == Payment::METODO_CRED_EMP) {
 			
@@ -463,7 +463,13 @@ class PaymentController extends Controller
 			}
 			
 			$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
-			
+
+			if(is_null($cartaoEmpresarialDados)) {
+				return response()->json([
+					'mensagem' => 'A empresa não cadastrou cartao empresarial ainda. Contacte o Departamento Pessoal da sua empresa.',
+				], 400);
+			}
+
 			$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;								
 
 			if($limiteCartaoFuncionario == 0){
@@ -484,6 +490,12 @@ class PaymentController extends Controller
 			$limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;
 					
 			$cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+			if(is_null($cartaoEmpresarialDados)) {
+				return response()->json([
+					'mensagem' => 'A empresa não cadastrou cartao empresarial ainda. Contacte o Departamento Pessoal da sua empresa.',
+				], 400);
+			}
 
 			if($limiteCartaoFuncionario == 0){
 				return response()->json([
@@ -585,7 +597,7 @@ class PaymentController extends Controller
 					}
 				}
 			}
-			 
+
 		// faz validação para efetuar compra com o  cartao de credito
 		} elseif($metodoPagamento == Payment::METODO_CRED_IND) {
 			if(!empty($dados->cartaoid)){
@@ -667,7 +679,7 @@ class PaymentController extends Controller
 					}
 				}
 			}
-		} 
+		}
 
 		if($metodoPagamento == Payment::METODO_CRED_EMP) {
 			// adicionar o cartao id do cartao empresarial no pedido 
@@ -713,6 +725,13 @@ class PaymentController extends Controller
 
 		} else {
 			$valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+		}
+
+		/** Verirfica se colaborador vai utilizar Crédito Empresarial  */
+		if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
+			$cartaoToken;
+			$cartao;
+			$agendamentos = $this->saveAgendamento();
 		}
 
 		if($metodoPagamento == Payment::METODO_CRED_EMP) {
@@ -1269,7 +1288,53 @@ class PaymentController extends Controller
 			], 422);
 		}
     }
-	
+
+	public function saveAgendamento(Paciente $paciente, Array $agendamentos, $metodoPagamento, $titulo_pedido, $valor_total, $valor_emp = null, CartaoPaciente $cartaoInd = null, CartaoPaciente $cartaoEmp = null)
+	{
+		$dt_pagamento = date('Y-m-d H:i:s');
+
+		// cria o pedido para o pagamento com cartao de credito
+		$pedidoInd = new Pedido();
+		$pedidoInd->titulo = $titulo_pedido;
+		$pedidoInd->descricao = null;
+		$pedidoInd->dt_pagamento = $dt_pagamento;
+		$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento);
+		$pedidoInd->paciente_id = $paciente->id;
+		if(!is_null($cartaoInd)) $pedidoInd->cartao_id = $cartaoInd->id;
+
+		// valor a ser pago com credito empresarial
+		$restoEmpresarial = $valorTotal;
+		// valor a ser pago com cartão de credito
+		$restoCredito = $cartaoCredito ;
+
+		if(in_array($metodoPagamento, [Payment::METODO_CRED_EMP, Payment::METODO_CRED_EMP_CRED_IND])) {
+			// cria o pedido para o pagamento com cartao empresarial
+			$pedidoEmpresarial  = new Pedido();
+
+			$pedidoEmpresarial->titulo			= $titulo_pedido;
+			$pedidoEmpresarial->descricao		= null;
+			$pedidoEmpresarial->dt_pagamento	= $dt_pagamento;
+			$pedidoEmpresarial->tp_pagamento	= $this->verificaTp($metodoPagamento);
+			$pedidoEmpresarial->paciente_id		= $paciente->id;
+			$pedidoEmpresarial->cartao_id		= $cartaoEmp->id;
+		}
+
+
+
+
+
+		foreach($agendamentos as $i=>$agendamento) {
+			$agendamento = new Agendamento();
+			$agendamento->te_ticket = UtilController::getAccessToken();
+			$agendamento->cs_status = 10;
+			$agendamento->bo_remarcacao = 'N';
+			$agendamento->bo_retorno = 'N';
+			$agendamento->paciente_id = $agendamento->paciente_id;
+		}
+
+		dd('testesaveAgendamento');
+	}
+
 	private function verificaTp($tp) {
 		switch($tp) {
 			case Payment::METODO_CRED_EMP:
