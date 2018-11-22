@@ -821,6 +821,13 @@ class PaymentController extends Controller
             }
         //================================================================= FIM REALIZACAO DO PAGAMENTO  ============================================================//
 
+        /** Verirfica se colaborador vai utilizar Crédito Empresarial  */
+        if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
+            $cartaoToken;
+            $cartao;
+            $agendamentos = $this->saveAgendamento();
+        }
+
         
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
