@@ -427,7 +427,6 @@ class PaymentController extends Controller
 		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
 
-
 		//================================================================= VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
             /**valida a bandeira do cartao*/
             if(!empty($dados->numero)){
