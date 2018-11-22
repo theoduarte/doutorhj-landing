@@ -861,7 +861,7 @@ class ClinicaController extends Controller
     	    }
     	}
     	
-    	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->get();
+    	$cartoes_gravados = CartaoPaciente::where('paciente_id', $user_session->id)->where('cs_status','like','A')->get();
 
 
         $plano_paciente = $resultado = Paciente::getPlanoAtivo($user_session->id);

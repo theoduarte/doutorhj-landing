@@ -182,7 +182,6 @@
                         <h3>Alguns de nossos parceiros</h3>
                     </div>
                     <div class="owl-carousel owl-theme">
-                        <div class="item"><img src="/libs/home-template/img/parceiros/alianca.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/bela-vista.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/biocardios.png" alt=""></div>
                         <div class="item"><img src="/libs/home-template/img/parceiros/biovida.png" alt=""></div>
@@ -233,7 +232,6 @@
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
@@ -260,24 +258,6 @@
                                     <div class="texto">
                                         <h3>Conheça o novo jeito de cuidar da sua saúde</h3>
                                         <p>Agende consultas e exames.<br> É simples, é rápido, é online!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="banner-clinica carousel-item" style="background-image: url('/libs/home-template/img/banner_home_clinica.jpg')">
-                            <div class="carousel-caption">
-                                <div class="area-texto">
-                                    <div class="texto">
-                                        <!-- <img class="logo-clinica" src="/libs/home-template/img/clinica-drhj.png" alt=""> -->
-                                        <p>Nossa plataforma, oferece para você
-                                            além de uma <span>ampla rede</span> de parceiros a
-                                            primeira clínica Doutor Hoje do DF
-                                            para um <span>atendimento personalizado</span>,
-                                            <span>ágil</span> e de <span>qualidade.</span></p>
-                                        <p class="endereco-clinica"><i class="fa fa-map-marker" aria-hidden="true"></i> SCS QD. 03 BL. A LT. 107 - Asa Sul - Brasília/DF</p>
-                                        <h3>Agende sua consulta ou exame
-                                            aqui abaixo:</h3>
                                     </div>
                                 </div>
                             </div>
