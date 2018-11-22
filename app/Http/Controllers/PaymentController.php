@@ -1187,6 +1187,7 @@ class PaymentController extends Controller
 					}
 				}
 
+
 				$dados = json_decode(json_encode($criarPagamento), true);
 
 				$boleto = null;
