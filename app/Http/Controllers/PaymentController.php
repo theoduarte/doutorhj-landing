@@ -415,36 +415,8 @@ class PaymentController extends Controller
 		$valor_total = CVXCart::getTotal();
 						
         $valor_desconto = $valor_total*$percentual_desconto;
-        
-        //-- determina o numero de parcelas -------
-        $valor_parcelamento = $valor_total-$valor_desconto;
-                
-        $parcelamentos = array(
-            1 => '1x R$ '.number_format( $valor_parcelamento,  2, ',', '.')
-		);
-		
-		//valida a bandeira do cartao
-		if(!empty($dados->numero)){
-			if(empty($dados->cvv)){
-				return response()->json([
-					'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
-				], 422);
-			}
 
-			$bandeira = UtilController::validaCartao($dados->numero, $dados->cvv);
-							
-			if(!$bandeira[1]) {
-				return response()->json([
-					'mensagem' => 'Número do cartão inválido!',
-				], 400);
-			} elseif(!$bandeira[2]) {
-				return response()->json([
-					'mensagem' => 'Número do código de segurança inválido!',
-				], 400);
-			} else { 
-				$bandeira = $bandeira[0];
-			}			
-		}
+
 
 		$pedido = new Pedido();        
 		$descricao = '';
@@ -455,9 +427,408 @@ class PaymentController extends Controller
 		$pedido->tp_pagamento   = $this->verificaTp($metodoPagamento);
 		$pedido->paciente_id    = $paciente_id;
 
-		 
-        //-- pedido id do DoutorHoje----------------------------------
-        //$MerchantOrderId = $pedido->id;quan
+
+		//================================================================= VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
+            /**valida a bandeira do cartao*/
+            if(!empty($dados->numero)){
+                if(empty($dados->cvv)){
+                    return response()->json([
+                        'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+                    ], 422);
+                }
+
+                $bandeira = UtilController::validaCartao($dados->numero, $dados->cvv);
+
+                if(!$bandeira[1]) {
+                    return response()->json([
+                        'mensagem' => 'Número do cartão inválido!',
+                    ], 400);
+                } elseif(!$bandeira[2]) {
+                    return response()->json([
+                        'mensagem' => 'Número do código de segurança inválido!',
+                    ], 400);
+                } else {
+                    $bandeira = $bandeira[0];
+                }
+            }
+
+            /** Credito Empresarial */
+            if($metodoPagamento == Payment::METODO_CRED_EMP) {
+
+                $cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+                $limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;
+
+                if($limiteCartaoFuncionario == 0){
+                    return response()->json([
+                        'mensagem' => 'Não existe limite no cartao empresarial.'
+                    ], 422);
+                } else {
+                    $valorLimiteRestante = $limiteCartaoFuncionario ;
+                }
+
+                // adicionar o cartao id do cartao empresarial no pedido
+                // $pedido->cartao_id =
+                //valor para fim de calculo
+                $valorPagamentoEmpresarial = $valor_total-$valor_desconto;
+
+                $valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
+
+                $paciente = Paciente::where(['id'=> $paciente_id])->first();
+
+                $cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+                if(empty($cartaoPaciente)){
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
+                    ], 500);
+                }
+                $empresa = Empresa::where('id',$paciente->empresa_id)->first();
+                if(empty($empresa)){
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Empresa não encontrada.',
+                    ], 500);
+                }
+
+            }
+
+            /** Credito empresarial + Cartao de credito */
+            if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+
+                $limiteCartaoFuncionario =Auth::user()->paciente->saldo_empresarial;
+
+                $cartaoEmpresarialDados  = (object) CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+                if($limiteCartaoFuncionario == 0){
+                    return response()->json([
+                        'mensagem' => 'Não existe limite no cartao empresarial.'
+                    ], 422);
+                } else {
+                    $valorLimiteRestante = $limiteCartaoFuncionario ;
+                }
+
+                /**caso tenha id do cartão resgatar o id token do mesmo para realizar a transação*/
+                if(!empty($dados->cartaoid)) {
+
+                    $cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' => $paciente_id]);
+
+                    if(!$cartao->exists()) {
+                        DB::rollback();
+                        return response()->json([
+                            'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+                        ], 404);
+                    }
+                    if(empty($dados->cvv)){
+                        return response()->json([
+                            'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+                        ], 422);
+                    }
+
+                    // card_id quando o cartao está salvo no sistema
+                    $cartao =$cartao->first()->card_token;
+
+                    $metodoCartao=1;
+
+                }
+                else {
+                    /** caso o usuario não queira salvar o cartão é criado um token enviando os dados do cartao para mundipagg*/
+                    if( $dados->salvar == 0){
+
+                        try {
+                            /**cria token cartao*/
+                            $cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+                            /**token gerado a partir da mundipagg sem salvar o cartao do usuario.*/
+                            $metodoCartao=2;
+                            $cartao = $cartaoToken->id;
+
+                        } catch(\Exception $e) {
+                            DB::rollBack();
+                            return response()->json([
+                                'mensagem' => 'Não foi possivel criar o token do cartão de credito,agendamento não realizado,  Pagamento não processado! '. $e->getMessage() ,
+                                'errors' => $e->getMessage(),
+                            ], 500);
+                        }
+                    } else {
+                            try {
+                                $saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+                                    $dados->numero,
+                                    $dados->nome,
+                                    $dados->mes,
+                                    $dados->ano,
+                                    $dados->cvv,
+                                    $bandeira
+                                ));
+
+                                $cartao_paciente = new CartaoPaciente();
+                                $cartao_paciente->bandeira 		= $bandeira;
+                                $cartao_paciente->nome_impresso = $dados->nome;
+                                $cartao_paciente->numero 		= substr($dados->numero, -4);
+                                $cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+                                $cartao_paciente->card_token 	= $saveCartao->id;
+                                $cartao_paciente->paciente_id 	= $paciente->id;
+
+                                if($cartao_paciente->save()) {
+
+                                    // card_id cartao salvo
+                                    $metodoCartao=1;
+
+                                    $cartao = $saveCartao->id;
+
+                                }
+                            } catch(\Exception $e) {
+                                DB::rollBack();
+                                return response()->json([
+                                    'mensagem' => 'Não conseguimos! '.$e->getMessage(),
+                                    'errors' => $e->getMessage(),
+                                ], 500);
+                            }
+
+                    }
+                }
+
+
+                if(empty($dados->porcentagem)){
+                    return response()->json([
+                        'mensagem' => 'Campo porcentagem nulo '.$dados->porcentagem
+                    ], 500);
+                }
+                if($dados->porcentagem < 0 || $dados->porcentagem > 100){
+                    return response()->json([
+                        'mensagem' => 'Valor de porcentagem informado incorretamente valor recebido '.$dados->porcentagem
+                    ], 500);
+                }
+
+                //valor para fim de calculo
+                $valorFinal = $valor_total-$valor_desconto;
+
+                // efetua o desconto sobre o valor restante do credito empresarial definido pelo usuario
+                $formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
+
+                $empresarial = (($dados->porcentagem *  $valorFinal)/100);
+                if(floatval($empresarial) > floatval($formatLimit) ){
+                    return response()->json([
+                        'mensagem' => 'Calculo somatorio maior que o limite disponivel'
+
+                    ], 500);
+                }
+
+                $cartaoCredito = floatval($valorFinal) - floatval($empresarial);
+
+
+                ($dados->parcelas > 3) ? $valorCartaoCredito = $this->convertRealEmCentavos(  number_format( $cartaoCredito * (1 + 0.05) **$dados->parcelas, 2, ',', '.') ) : $valorCartaoCredito = $this->convertRealEmCentavos( number_format(  $cartaoCredito , 2, ',', '.') ) ;
+
+                $valorCartaoEmpresarial = $this->convertRealEmCentavos( number_format(  $empresarial , 2, ',', '.') );
+
+                $cartaoPaciente = CartaoPaciente::where('empresa_id',$paciente->empresa_id )->first();
+
+                if(empty($cartaoPaciente)){
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Paciente não está vinculado a nenhuma empresa.',
+                    ], 500);
+                }
+                $empresa = Empresa::where('id',$paciente->empresa_id)->first();
+                if(empty($empresa)){
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Empresa não encontrada.',
+                    ], 500);
+                }
+
+            }
+
+            /**faz validação para efetuar compra com o  cartao de credito utilizando cartão de credito pessoal*/
+            if($metodoPagamento == Payment::METODO_CRED_IND) {
+                if(!empty($dados->cartaoid)){
+                    $cartao = CartaoPaciente::where(['id'=>$dados->cartaoid , 'paciente_id' =>$paciente_id]);
+                        if(!$cartao->exists()) {
+                            DB::rollback();
+                            return response()->json([
+                                'mensagem' => 'ID do Cartão do Paciente não encontrado. Por favor, tente novamente.'
+                            ], 404);
+                        }
+                        if(empty($dados->cvv)){
+                            return response()->json([
+                                'mensagem' => 'CVV obrigatorio quando enviado apenas o cartao_id.'
+                            ], 422);
+                        }
+
+                        // card_id quando o cartao está salvo no sistema
+                        $cartao =$cartao->first()->card_token;
+                        $metodoCartao=1;
+                } else {
+                    if($dados->salvar == 0){
+                        try {
+                            // cria token cartao
+                            $cartaoToken = $client->getTokens()->createToken(env('MUNDIPAGG_KEY_PUBLIC'), FuncoesPagamento::criarTokenCartao($dados->numero, $dados->nome,$dados->mes, $dados->ano, $dados->cvv));
+                            // token gerado a partir da mundipagg sem salvar o cartao do usuario.
+
+                            $metodoCartao = 2;
+                            $cartao =   $cartaoToken->id;
+                        } catch(\Exception $e) {
+                            DB::rollBack();
+                            return response()->json([
+                                'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito! '. $e->getMessage(),
+                                'errors' => $e->getMessage(),
+                            ], 500);
+                        }
+                    }
+                    else {
+                            try {
+                                $saveCartao = $client->getCustomers()->createCard($paciente->mundipagg_token, FuncoesPagamento::criarCartao(
+                                    $dados->numero,
+                                    $dados->nome,
+                                    $dados->mes,
+                                    $dados->ano,
+                                    $dados->cvv,
+                                    $bandeira
+                                ));
+
+                                $cartao_paciente = new CartaoPaciente();
+                                $cartao_paciente->bandeira 		= $bandeira;
+                                $cartao_paciente->nome_impresso = $dados->nome;
+                                $cartao_paciente->numero 		= substr($dados->numero, -4);
+                                $cartao_paciente->dt_validade 	= $dados->mes . '/' . $dados->ano;
+                                $cartao_paciente->card_token 	= $saveCartao->id;
+                                $cartao_paciente->paciente_id 	= $paciente->id;
+
+                                if($cartao_paciente->save()) {
+                                    // card_id cartao salvo
+                                    $metodoCartao=1;
+                                    $cartao = $saveCartao->id;
+                                }
+                            } catch(\Exception $e) {
+                                DB::rollBack();
+                                return response()->json([
+                                    'mensagem' => 'Não conseguimos registrar no sistema, agendamento não realizado, pagamento não processado! '.$e->getMessage(),
+                                    'errors' => $e->getMessage(),
+                                ], 500);
+                            }
+                    }
+                }
+            }
+
+            // caso o pagamento seja diferente do empresarial ou multcartoes
+            $valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
+
+        //================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
+
+
+        //================================================================= REALIZACAO DO PAGAMENTO  ============================================================//
+            if($metodoPagamento == Payment::METODO_CRED_EMP) {
+                $metodoCartao = 1;
+                try {
+                    $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarPagementoEmpresarial($empresa->mundipagg_token,$valorCartaoEmpresarialOne, 1, "Doutor hoje cart",$cartaoPaciente->card_token, "Doutor hoje"  ))    ;
+
+                } catch(\Exception $e) {
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito  , pagamento não efetuado! '.$e->getMessage(),
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+            }
+
+            /**pagamento com cartão de credito e empresarial*/
+            if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+
+                $dados = FuncoesPagamento::pagamentoMultiMeio(
+                    $empresa->mundipagg_token,  // custom token empresa buscar
+                    $valorCartaoCredito+$valorCartaoEmpresarial,
+                    $titulo_pedido,
+                    $valorCartaoCredito,
+                    $valorCartaoEmpresarial,
+                    $dados->parcelas,
+                    1,
+                    'Doutor Hoje',
+                    'Doutor Hoje',
+                    $cartao,
+                    $cartaoPaciente->card_token,
+                    $metodoCartao,
+                    1
+                );
+
+                try {
+                    $criarPagamento =  $client->getOrders()->createOrder($dados);
+                } catch(\Exception $e) {
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Erro ao efetuar o pagamento com o cartão de crédito! '. $e->getMessage(),
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+            }
+
+            // pagamento com cartão de credito
+            if($metodoPagamento == Payment::METODO_CRED_IND) {
+                try{
+
+                    $criarPagamento =  $client->getOrders()->createOrder(FuncoesPagamento::criarPagamentoCartaoUnico($paciente->mundipagg_token,$valor, $dados->parcelas, "Doutor Hoje",$cartao, "Doutor hoje",$metodoCartao,$dados->cvv ))    ;
+
+                }catch(\Exception $e){
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Não foi possivel efetuar o pagamento com o cartao de crédito, pagamento  não efetuado! '. $e->getMessage(),
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+
+            }
+
+            /** Boleto */
+            if($metodoPagamento == Payment::METODO_BOLETO) {
+                try{
+                    //$paciente->mundipagg_token
+                    $enderecos =[];
+
+                    $endereco = $paciente->enderecos()->first();
+
+                    if($endereco->cs_status != "I"){
+                        $endereco = 	$client->getCustomers()->getAddress($paciente->mundipagg_token,$endereco->mundipagg_token );
+                        $lista = explode(",", $endereco->line1);
+                        print_r($lista);
+                        die;
+                        $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor, $paciente->mundipagg_token, $endereco->id )) ;
+
+                        //$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $endereco->zipCode, $endereco->zipCode, $dados->bairro_endereco,  $endereco->city,  $endereco->state, 123456, "Pagar até o vencimento boleto")) ;
+                    }
+
+                    //	$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $dados->complemento_endereco, $dados->cep_endereco, $dados->bairro_endereco, $dados->cidade_endereco, $dados->estado_endereco, 123456, "Pagar até o vencimento boleto")) ;
+                    //echo json_encode($criarPagamento); die;
+                } catch(\Exception $e) {
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Não foi possivel gerar o boleto de pagamento! '.$e->getMessage(),
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+            }
+
+            /** Transferencia Bancária */
+            if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
+                try{
+                    $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarTranferencia($valor,"Doutor hoje",$paciente->mundipagg_token));
+                    //var_dump($criarPagamento); die;
+                } catch(\Exception $e) {
+                    DB::rollBack();
+                    return response()->json([
+                        'mensagem' => 'Não foi possivel realizar transferencia bancaria, pagamento não efetuado! '. $e->getMessage(),
+                        'errors' => $e->getMessage(),
+                    ], 500);
+                }
+            }
+        //================================================================= FIM REALIZACAO DO PAGAMENTO  ============================================================//
+
+        /** Verirfica se colaborador vai utilizar Crédito Empresarial  */
+        if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
+            $cartaoToken;
+            $cartao;
+            $agendamentos = $this->saveAgendamento();
+        }
+
+
         
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
@@ -819,6 +1190,7 @@ class PaymentController extends Controller
 						}
 					}
 				}
+
 
 				$dados = json_decode(json_encode($criarPagamento), true);
 
