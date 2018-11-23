@@ -76,7 +76,7 @@ class LoginController extends Controller
     	$active = $user_login->cs_status;
 
     	$credentials = ['email' => $username, 'password' =>  ($access_token), 'cs_status' => 'A'];
-
+// 		dd($credentials);
     	if($active == 'I') {
 			$send_message = UserController::enviaEmailAtivacao($paciente);
     		return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não está ativa. Por favor, acesse o e-mail de ativação e clique no link existente nele!');
@@ -87,13 +87,14 @@ class LoginController extends Controller
     		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
 		}
 	 
+		//dd($user_login);
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		Auth::user()->load('paciente');
     		
     		return redirect()->intended('/');
     	} else {
-    		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou!');
+    		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou. As credenciais não conferem!');
     	}
     }
     

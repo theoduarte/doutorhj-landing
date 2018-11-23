@@ -49,6 +49,7 @@ class AtendimentoController extends Controller
             $atendimentos = $consulta->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id, $sg_estado_localizacao );
             $list_enderecos = $consulta->getActiveAddress( $especialidade, $sg_estado_localizacao );
             $list_atendimentos = $consulta->getActive($plano_id, $sg_estado_localizacao);
+            //dd($list_atendimentos);
         } elseif ($tipo_atendimento == 'exame' | $tipo_atendimento == 'odonto') {
             $procedimento = new Procedimento();
             $atendimentos = $procedimento->getActiveAtendimentos( $especialidade, $enderecoIds, $sortItem, $plano_id, $sg_estado_localizacao );

@@ -347,7 +347,21 @@
                 // Change hash for page-reload
                 $('.nav-tabs a').on('shown.bs.tab', function (e) {
                     window.location.hash = e.target.hash;
-                })
+                });
+
+				$('.efetuar-busca').click(function(){
+                    
+                    if($( "#tipo_atendimento option:selected" ).val().length == 0) {
+                        validar('#tipo_atendimento', 'Selecione um atendimento')	
+                    }else
+
+                    if($( "#tipo_especialidade option:selected" ).val().length == 0) {
+                        validar('#tipo_especialidade', 'Selecione uma Especialide ou exame')	
+                    }else {
+                        $('.form-busca').submit();
+                    }
+                                    
+        		});
             });
 
             /*********************************
