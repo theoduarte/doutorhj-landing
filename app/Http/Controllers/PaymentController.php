@@ -259,7 +259,7 @@ class PaymentController extends Controller
 		$metodoPagamento  = CVXRequest::post('metodo');
 		
 		$dados  = (object) CVXRequest::post('dados');
-		
+
 		$cod_cupom_desconto = CVXRequest::post('cod_cupom_desconto');
 		
 		$percentual_desconto = 0; // '0' indica que o cliente vai pagar 100% do valor total dos produtos-----		  
@@ -471,7 +471,7 @@ class PaymentController extends Controller
                 //valor para fim de calculo
                 $valorPagamentoEmpresarial = $valor_total-$valor_desconto;
 
-                $valorCartaoEmpresarialOne = $this->convertRealEmCentavos( number_format(  $valorPagamentoEmpresarial , 2, ',', '.') );
+                $valorCartaoEmpresarialOne = $this->convertRealEmCentavos(number_format($valorPagamentoEmpresarial , 2, ',', '.'));
 
                 $paciente = Paciente::where(['id'=> $paciente_id])->first();
 
@@ -606,10 +606,9 @@ class PaymentController extends Controller
                 $formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 
                 $empresarial = (($dados->porcentagem *  $valorFinal)/100);
-                if(floatval($empresarial) > floatval($formatLimit) ){
+                if(floatval($empresarial) > floatval($formatLimit)) {
                     return response()->json([
                         'mensagem' => 'Calculo somatorio maior que o limite disponivel'
-
                     ], 500);
                 }
 
@@ -714,6 +713,23 @@ class PaymentController extends Controller
 
         //================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
 
+		/** Verirfica se colaborador vai utilizar Crédito Empresarial  */
+		if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
+			$cartaoToken;
+			$cartao;
+
+			$valorFinal = $valor_total-$valor_desconto;
+			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+				$valorEmpresarial = ($dados->porcentagem * $valorFinal) / 100;
+			} else {
+				$valorEmpresarial = $valorFinal;
+			}
+
+			$parcelas = $dados->parcelas ?? 1;
+
+
+			$agendamentos = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
+		}
 
         //================================================================= REALIZACAO DO PAGAMENTO  ============================================================//
             if($metodoPagamento == Payment::METODO_CRED_EMP) {
@@ -820,15 +836,6 @@ class PaymentController extends Controller
             }
         //================================================================= FIM REALIZACAO DO PAGAMENTO  ============================================================//
 
-        /** Verirfica se colaborador vai utilizar Crédito Empresarial  */
-        if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
-            $cartaoToken;
-            $cartao;
-            $agendamentos = $this->saveAgendamento();
-        }
-
-
-        
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
         $customer->load('user');
@@ -1243,11 +1250,11 @@ class PaymentController extends Controller
 		}
     }
 
-	public function saveAgendamento(Paciente $paciente, Array $agendamentos, $metodoPagamento, $titulo_pedido, $valor_total, $valor_emp = null, CartaoPaciente $cartaoInd = null, CartaoPaciente $cartaoEmp = null)
+	public function saveAgendamento(Paciente $paciente, Array $agendamentos, $metodoPagamento, $titulo_pedido, $parcelas, $valor_total, $valor_emp = null, CartaoPaciente $cartaoInd = null)
 	{
 		$dt_pagamento = date('Y-m-d H:i:s');
 
-		// cria o pedido para o pagamento com cartao de credito
+		// cria o pedido para o pagamento com cartao individual
 		$pedidoInd = new Pedido();
 		$pedidoInd->titulo = $titulo_pedido;
 		$pedidoInd->descricao = null;
@@ -1255,11 +1262,6 @@ class PaymentController extends Controller
 		$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento);
 		$pedidoInd->paciente_id = $paciente->id;
 		if(!is_null($cartaoInd)) $pedidoInd->cartao_id = $cartaoInd->id;
-
-		// valor a ser pago com credito empresarial
-		$restoEmpresarial = $valorTotal;
-		// valor a ser pago com cartão de credito
-		$restoCredito = $cartaoCredito ;
 
 		if(in_array($metodoPagamento, [Payment::METODO_CRED_EMP, Payment::METODO_CRED_EMP_CRED_IND])) {
 			// cria o pedido para o pagamento com cartao empresarial
@@ -1270,10 +1272,21 @@ class PaymentController extends Controller
 			$pedidoEmpresarial->dt_pagamento	= $dt_pagamento;
 			$pedidoEmpresarial->tp_pagamento	= $this->verificaTp($metodoPagamento);
 			$pedidoEmpresarial->paciente_id		= $paciente->id;
-			$pedidoEmpresarial->cartao_id		= $cartaoEmp->id;
+			$pedidoEmpresarial->cartao_id		= $paciente->empresa->cartaoPacientes()->first()->id;
 		}
 
+		if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+			$valor_ind = $valor_total - $valor_emp;
 
+			if($parcelas > 3) {
+				$valor_ind_pag = $this->convertRealEmCentavos(number_format($valor_ind * (1 + 0.05) ** $parcelas, 2, ',', '.'));
+			} else {
+				$valor_ind_pag = $this->convertRealEmCentavos(number_format($valor_ind , 2, ',', '.'));
+			}
+		} else {
+			$valor_ind = null;
+			$valor_ind_pag = null;
+		}
 
 
 
