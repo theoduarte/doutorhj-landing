@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'administrador@comvex.com.br'),
-        'name' => env('MAIL_FROM_NAME', 'DoctorHoje'),
+        'name' => env('MAIL_FROM_NAME', 'DoutorHoje'),
     ],
 
     /*
