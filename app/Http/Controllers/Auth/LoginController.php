@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 use App\Paciente;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\Hash;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
+
 
 class LoginController extends Controller
 {
@@ -52,8 +55,16 @@ class LoginController extends Controller
 
     	$cvx_telefone = $credentials['cvx_telefone'];
     	$cvx_token = $credentials['cvx_token'];
-    	
-    	$ds_contato = UtilController::retiraMascara($cvx_telefone);
+
+        $basicAuthUserName = env('MUNDIPAGG_KEY');
+
+        $basicAuthPassword = "";
+
+        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword);
+
+
+
+        $ds_contato = UtilController::retiraMascara($cvx_telefone);
     	$contato1 = Contato::where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', $ds_contato)->get();
     	
     	$contato = $contato1->first();
@@ -90,9 +101,31 @@ class LoginController extends Controller
 		//dd($user_login);
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
-    		Auth::user()->load('paciente');
-    		
-    		return redirect()->intended('/');
+    		$session = Auth::user()->load('paciente');
+
+    		if(empty($session->paciente->mundipagg_token)) {
+                // passa os valores para montar o objeto a ser enviado
+                $resultado = FuncoesPagamento::criarUser($session->paciente->nm_primario . ' ' . $session->paciente->nm_secundario, $session->email);
+
+                try {
+                    // cria o usuario na mundipagg
+                    $userCreate = $client->getCustomers()->createCustomer($resultado);
+                    $paciente->mundipagg_token = $userCreate->id;;
+                    if(!$paciente->save()){
+                        return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! não conseguimos criar e validar seu usuario ' );
+                    }
+
+                    return redirect()->intended('/');
+                } catch (\Exception $e) {
+
+                    return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! não conseguimos validar seu usuario, '.$e->getMessage());
+
+                }
+
+            }else {
+               return redirect()->intended('/');
+    		}
+
     	} else {
     		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou. As credenciais não conferem!');
     	}

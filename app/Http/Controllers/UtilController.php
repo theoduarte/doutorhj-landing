@@ -277,7 +277,11 @@ class UtilController extends Controller
 	{
 	    $token = env('SENDGRID_API_KEY');
 	    $url = 'https://api.sendgrid.com/v3/mail/send';
-	    
+
+		if(env('APP_ENV') != 'production') {
+			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
+		}
+
 	    $payload = '{"personalizations": [{"to": [{"email": "'.$to.'"}]}],"from": {"email": "'.$from.'"},"subject": "'.$subject.'","content": [{"type": "text/html", "value": "'.$html_message.'"}]}';
 	    //$payload = '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "contato@doutorhoje.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste3 DoutorHoje</h1>"}]}';
 	    
