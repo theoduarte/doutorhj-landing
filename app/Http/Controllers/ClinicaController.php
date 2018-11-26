@@ -642,14 +642,6 @@ class ClinicaController extends Controller
     	$cartCollection = CVXCart::getContent();
     	$itens = $cartCollection->toArray();
 
-        								
-		$basicAuthUserName = env('MUNDIPAGG_KEY');
-
-		$basicAuthPassword = "";
-		
-		$client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
-
-      
 
       
     	$carrinho = [];
@@ -661,47 +653,7 @@ class ClinicaController extends Controller
 		$plano_id = Paciente::getPlanoAtivo($user_session->id);
         $endereco_paciente=[];
         if (Auth::check()) {
-            if(empty($user_session->mundipagg_token)){
-                $user = User::where('id',$user_session->user_id)->first() ;
-                // passa os valores para montar o objeto a ser enviado
-                $resultado = FuncoesPagamento::criarUser($user_session->nm_primario . ' ' . $user_session->nm_secundario,  $user->email);
-                
-                try{
-                    // cria o usuario na mundipagg
-                    $userCreate 				= $client->getCustomers()->createCustomer( $resultado );
-                    $user_session->mundipagg_token 	= $userCreate->id;
-    
-                    if(!$user_session->save()){
-                        DB::rollBack();
-                        return response()->json([
-                            'messagem' => 'Não foi possivel salvar o usuario!',
-                            'errors' => $e->getMessage(),
-                        ], 500);
-                    }
-    
-                }catch(\Exception $e){
-                    DB::rollBack();
-                    return response()->json([
-                        'messagem' => 'Não foi possivel criar usuario na mundipagg'.$e,
-                        'errors' => $e->getMessage(),
-                    ], 500);
-                }
-                
-            
-            }
-            
-            try{
-                if(!empty($user_session->mundipagg_token)){
-                    $endereco_paciente = $client->getCustomers()->getAddresses($user_session->mundipagg_token);
-                }
-            } catch(\Exception $e) {
-                return response()->json([
-                    'messagem' => 'Não conseguimos encontrar o Customer Token',
-                    'errors' => $e->getMessage(),
-                ], 500);
 
-            }
-            
             $endereco_paciente =[];
             
             $endereco = $user_session->enderecos()->first();

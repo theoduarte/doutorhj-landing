@@ -174,7 +174,7 @@ class UserController extends Controller
 
 		$send_message = $this->enviaEmailAtivacao($paciente);
     	
-    	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
+
     	return view('users.register', compact('access_token'));
     }
 
