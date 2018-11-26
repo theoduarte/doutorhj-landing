@@ -736,6 +736,35 @@ class PaymentController extends Controller
         $empresarialLaco=1;
         $pedidos_array=[];
         $dividirValores =0;
+
+        // caso o metodo de pagamento seja diferente de credito + empresarial entra na condição
+        if($metodoPagamento != Payment::METODO_CRED_EMP_CRED_IND){
+            // caso o metodo seja apenas credito empresarial
+            if($metodoPagamento == Payment::METODO_CRED_EMP) {
+
+                $pedido->cartao_id = $cartaoEmpresarialDados->id;
+
+                if (!$pedido->save()) {
+                    ########### FINISHIING TRANSACTION ##########
+                    DB::rollback();
+                    #############################################
+                    return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+                }
+                $MerchantOrderId =$pedido->id;
+                array_push($pedidos_array,$pedido->id);
+            } else {
+
+                if (!$pedido->save()) {
+                    ########### FINISHIING TRANSACTION ##########
+                    DB::rollback();
+                    #############################################
+                    return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
+                }
+                $MerchantOrderId =$pedido->id;
+                array_push($pedidos_array,$pedido->id);
+            }
+        }
+
         foreach($agendamentoItens as $i=>$item_agendamento) {
 
             $MerchantOrderId = $pedido->id;
@@ -1111,31 +1140,7 @@ class PaymentController extends Controller
                 ], 422);
 
             } else {
-                // caso o metodo de pagamento seja diferente de credito + empresarial entra na condição
-                if($metodoPagamento != Payment::METODO_CRED_EMP_CRED_IND){
-                    // caso o metodo seja apenas credito empresarial
-                    if($metodoPagamento == Payment::METODO_CRED_EMP) {
 
-                        $pedido->cartao_id = $cartaoEmpresarialDados->id;
-
-                        if (!$pedido->save()) {
-                            ########### FINISHIING TRANSACTION ##########
-                            DB::rollback();
-                            #############################################
-                            return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-                        }
-                        $MerchantOrderId =$pedido->id;
-                    } else {
-
-                        if (!$pedido->save()) {
-                            ########### FINISHIING TRANSACTION ##########
-                            DB::rollback();
-                            #############################################
-                            return response()->json(['status' => false, 'mensagem' => 'O Pedido não foi salvo. Por favor, tente novamente.']);
-                        }
-                        $MerchantOrderId =$pedido->id;
-                    }
-                }
 
                 foreach($result_agendamentos as $agendamento){
                     try {
@@ -1162,7 +1167,7 @@ class PaymentController extends Controller
                         $Payment->currency                     		= $dadosPagamentos['charges'][0]['currency'];
                         $Payment->country                     		= "BRA";
                         $Payment->installments 				     	= $metodoPagamento == Payment::METODO_CRED_IND ? $dadosPagamentos['charges'][0]['last_transaction']['installments'] : 0;
-                        $Payment->pedido_id  						= $pedidosArray->pedido_id;
+                        $Payment->pedido_id  						= isset($pedidosArray->pedido_id) ? $pedidosArray->pedido_id : $pedidosArray;
                         $Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
                         $Payment->cielo_result                 		= json_encode($criarPagamento);
                         $Payment->save();
