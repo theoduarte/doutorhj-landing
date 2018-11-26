@@ -1244,6 +1244,70 @@ header .navbar-collapse {
 *
 *********************************/
 
+#modalCadastro .modal-content {
+    display: block;
+    width: 400px;
+    height: 300px;
+    position: relative;
+    background-image: url(../img/bg-modal-cadastro.png);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: top left;
+}
+
+#modalCadastro .modal-content h4 {
+    display: block;
+    width: 200px;
+    text-align: right;
+    font-size: 40px;
+    color: #4470b4;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+#modalCadastro .modal-content p {
+    display: block;
+    width: 165px;
+    text-align: right;
+    font-size: 15px;
+    color: #a21b26;
+    position: absolute;
+    right: 30px;
+    top: 140px;
+}
+
+.boas-vindas-cadastro {
+    position: relative;
+    background-image: url(../img/bg-modal-cadastro.png);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: top left;
+    height: 300px;
+}
+
+.boas-vindas-cadastro h4 {
+    display: block;
+    width: 290px;
+    text-align: right;
+    font-size: 40px;
+    color: #4470b4;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.boas-vindas-cadastro p {
+    display: block;
+    width: 265px;
+    text-align: right;
+    font-size: 15px;
+    color: #a21b26;
+    position: absolute;
+    right: 30px;
+    top: 100px;
+}
+
 .login .area-container {
     border-radius: 4px;
     padding: 30px 25px;

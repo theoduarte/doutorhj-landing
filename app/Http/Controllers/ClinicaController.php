@@ -43,6 +43,13 @@ class ClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function cadastroAtivado()
+    {
+        /*Request::flash();*/
+        return view('auth.confirmacao');
+    }
+
     public function index()
     {
         $prestadores = Clinica::where(function($query){
