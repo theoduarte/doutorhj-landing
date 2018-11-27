@@ -40,10 +40,10 @@ function obterLocalizacao() {
 						html: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização escolhida (<strong>'+uf_localizacao_cookie+'</strong>). Você deseja mudar?',
 		                type: 'warning',
 		                showCancelButton: true,
-		                confirmButtonClass: 'btn btn-confirm mt-2',
-		                cancelButtonClass: 'btn btn-cancel ml-2 mt-2',
-		                confirmButtonText: 'Sim',
-		                cancelButtonText: 'NÃO'
+		                confirmButtonClass: 'btn btn-cancel ml-2 mt-2',
+		                cancelButtonClass: 'btn btn-confirm mt-2',
+		                confirmButtonText: 'NÃO',
+		                cancelButtonText: 'Sim'
 		    	   }).then(function(event) {
 		    		   $('#sg_estado_localizacao').val(uf_localizacao);
 //	    				docCookies.setItem('uf_localizacao', uf_localizacao);
