@@ -54,6 +54,31 @@ class PaymentController extends Controller
         //
     }
 
+    public function successPayment($hash){
+
+        $hashVerificar = "58493ab3daa14af1c4b87cdcc592ace8";
+
+        $resultado = strcmp($hashVerificar,$hash );
+
+        if($resultado ==0){
+            return view('payments.success');
+        }else{
+            return redirect('/');
+        }
+
+    }
+
+    public function failedPayment($hash){
+        $hashVerificar = "58493ab3daa14af1c4b87cdcc592ace989";
+
+        $resultado = strcmp($hashVerificar,$hash );
+
+        if($resultado ==0){
+            return view('payments.failed');
+        }else{
+            return redirect('/');
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
