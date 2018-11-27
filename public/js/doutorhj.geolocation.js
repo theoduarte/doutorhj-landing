@@ -37,7 +37,7 @@ function obterLocalizacao() {
 					
 					swal({
 						title: 'Alerta de localização!',
-						html: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização escolhida (<strong>'+uf_localizacao_cookie+'</strong>). Você deseja mudar?',
+						html: 'Sua localização atual (<strong>'+uf_localizacao+'</strong>) é diferente da localização escolhida (<strong>'+uf_localizacao_cookie+'</strong>). Você deseja manter (<strong>'+uf_localizacao_cookie+'</strong>)?',
 		                type: 'warning',
 		                showCancelButton: true,
 		                confirmButtonClass: 'btn btn-cancel ml-2 mt-2',
