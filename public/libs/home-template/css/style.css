@@ -1596,6 +1596,35 @@ header .nav-item-mobile {
 *
 *********************************/
 
+.status-pagamento-boleto {
+    text-align: center;
+    padding: 80px 0;
+}
+
+.status-pagamento-boleto i {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.status-pagamento-boleto h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.status-pagamento-boleto p {
+    font-size: 16px;
+}
+
+.spb-erro i,
+.spb-erro h3 {
+    color: rgb(163, 36, 49);
+}
+
+.spb-sucesso i,
+.spb-sucesso h3 {
+    color: #00C853;
+}
+
 .pagamento .area-container .titulo {
     margin-bottom: 30px;
 }
