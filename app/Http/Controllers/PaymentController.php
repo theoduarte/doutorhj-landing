@@ -606,6 +606,7 @@ class PaymentController extends Controller
                 $formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 
                 $empresarial = (($dados->porcentagem *  $valorFinal)/100);
+				$empresarial = number_format($empresarial, 2);
                 if(floatval($empresarial) > floatval($formatLimit)) {
                     return response()->json([
                         'mensagem' => 'Calculo somatorio maior que o limite disponivel'
@@ -720,7 +721,7 @@ class PaymentController extends Controller
 
 			$valorFinal = $valor_total-$valor_desconto;
 			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
-				$valorEmpresarial = ($dados->porcentagem * $valorFinal) / 100;
+				$valorEmpresarial = number_format(($dados->porcentagem * $valorFinal) / 100, 2);
 			} else {
 				$valorEmpresarial = $valorFinal;
 			}
@@ -728,7 +729,7 @@ class PaymentController extends Controller
 			$parcelas = $dados->parcelas ?? 1;
 
 
-			$agendamentos = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
+			$agendamentos = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
 		}
 
         //================================================================= REALIZACAO DO PAGAMENTO  ============================================================//
@@ -771,7 +772,8 @@ class PaymentController extends Controller
                     DB::rollBack();
                     return response()->json([
                         'mensagem' => 'Erro ao efetuar o pagamento com o cartão de crédito! '. $e->getMessage(),
-                        'errors' => $e->getMessage(),
+                        'line' => $e->getLine(),
+						'errors' => $e->getMessage(),
                     ], 500);
                 }
             }
@@ -1001,7 +1003,7 @@ class PaymentController extends Controller
 							if ($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 								$empresarial = $restoEmpresarial;
 
-								if ($empresarial != $empresarialSalvar) {
+								if ($empresarial != $empresarialSalvar)  {
 									$empresarialSalvar += $number;
 
 									if ($empresarialSalvar >$empresarial) {
@@ -1250,21 +1252,26 @@ class PaymentController extends Controller
 		}
     }
 
-	public function saveAgendamento(Paciente $paciente, Array $agendamentos, $metodoPagamento, $titulo_pedido, $parcelas, $valor_total, $valor_emp = null, CartaoPaciente $cartaoInd = null)
+	public function saveAgendamento(Paciente $paciente, Array $agendamentos, $metodoPagamento, $codCupomDesconto, $titulo_pedido, $parcelas, $valor_total, $valor_emp = null, CartaoPaciente $cartaoInd = null)
 	{
 		$dt_pagamento = date('Y-m-d H:i:s');
+		$user_session = Auth::user();
+		$valorEmp = $valor_emp ?? 0;
 
 		// cria o pedido para o pagamento com cartao individual
-		$pedidoInd = new Pedido();
-		$pedidoInd->titulo = $titulo_pedido;
-		$pedidoInd->descricao = null;
-		$pedidoInd->dt_pagamento = $dt_pagamento;
-		$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento);
-		$pedidoInd->paciente_id = $paciente->id;
-		if(!is_null($cartaoInd)) $pedidoInd->cartao_id = $cartaoInd->id;
+		if($metodoPagamento != Payment::METODO_CRED_EMP) {
+			$pedidoInd = new Pedido();
+			$pedidoInd->titulo = $titulo_pedido;
+			$pedidoInd->descricao = null;
+			$pedidoInd->dt_pagamento = $dt_pagamento;
+			$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento);
+			$pedidoInd->paciente_id = $paciente->id;
+			if (!is_null($cartaoInd)) $pedidoInd->cartao_id = $cartaoInd->id;
+			$pedidoInd->save();
+		}
 
+		// cria o pedido para o pagamento com cartao empresarial
 		if(in_array($metodoPagamento, [Payment::METODO_CRED_EMP, Payment::METODO_CRED_EMP_CRED_IND])) {
-			// cria o pedido para o pagamento com cartao empresarial
 			$pedidoEmpresarial  = new Pedido();
 
 			$pedidoEmpresarial->titulo			= $titulo_pedido;
@@ -1273,6 +1280,11 @@ class PaymentController extends Controller
 			$pedidoEmpresarial->tp_pagamento	= $this->verificaTp($metodoPagamento);
 			$pedidoEmpresarial->paciente_id		= $paciente->id;
 			$pedidoEmpresarial->cartao_id		= $paciente->empresa->cartaoPacientes()->first()->id;
+			$pedidoEmpresarial->save();
+
+			$status_agendamento = $paciente->empresa->pre_autorizar ? Agendamento::PRE_AUTORIZAR : Agendamento::PRE_AGENDADO;
+		} else {
+			$status_agendamento = Agendamento::PRE_AGENDADO;
 		}
 
 		if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
@@ -1289,17 +1301,85 @@ class PaymentController extends Controller
 		}
 
 
+//		dd($paciente->empresa->pre_autorizar);
+//		dd('ok até aqui');
 
-		foreach($agendamentos as $i=>$agendamento) {
+
+		foreach($agendamentos as $i=>$agend) {
 			$agendamento = new Agendamento();
-			$agendamento->te_ticket = UtilController::getAccessToken();
-			$agendamento->cs_status = 10;
-			$agendamento->bo_remarcacao = 'N';
-			$agendamento->bo_retorno = 'N';
-			$agendamento->paciente_id = $agendamento->paciente_id;
+			$agendamento->te_ticket 			= UtilController::getAccessToken();
+			$agendamento->cs_status 			= $status_agendamento;
+			$agendamento->bo_remarcacao 		= 'N';
+			$agendamento->bo_retorno 			= 'N';
+			$agendamento->paciente_id 			= $agend->paciente_id;
+
+			if(!empty($agend->atendimento_id)) {
+				$agendamento->dt_atendimento    = isset($agend->dt_atendimento) && !empty($agend->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $agend->dt_atendimento)->format('Y-m-d H:i:s') : null;
+				$agendamento->clinica_id        = $agend->clinica_id;
+				$agendamento->filial_id			= $agend->filial_id;
+				$agendamento->atendimento_id    = $agend->atendimento_id;
+				$agendamento->profissional_id   = isset($agend->profissional_id) && !empty($agend->profissional_id) ? $agend->profissional_id : null;
+			} elseif(!empty($agend->checkup_id)) {
+				$agendamento->checkup_id = $agend->checkup_id;
+			}
+
+			//--busca o cupom de desconto------------
+			$cupomDesconto = $this->buscaCupomDesconto($codCupomDesconto);
+
+			if (count($cupomDesconto) > 0) {
+				$agendamento->cupom_id = $cupomDesconto->first()->id;
+			}
+
+			if ($agendamento->save()) {
+				$agendamento->atendimentos()->attach($agend->atendimento_id, ['created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+				$agendamento_id[] = $agendamento->id;
+				$atendimento_id[] = $agend->atendimento_id;
+
+				$itempedido = new Itempedido();
+
+				if (!empty($agendamento->atendimento_id)) {
+					$atendimento = Atendimento::where(['atendimentos.id' => $agendamento->atendimento_id])
+						->with(['precoAtivo' => function($query) use($user_session) {
+							$query->where('precos.plano_id', '=', $user_session->paciente->plano_ativo->id);
+						}])->first();
+
+					$vlAtendRest = $atendimento->precoAtivo->vl_comercial_bd;
+					$valores[] = $atendimento->precoAtivo->vl_comercial_bd;
+
+					/** Define quanto será pago no cartão EMPRESARIAL */
+					if(in_array($metodoPagamento, [Payment::METODO_CRED_EMP, Payment::METODO_CRED_EMP_CRED_IND])) {
+						if($atendimento->precoAtivo->vl_comercial_bd <= $valorEmp) {
+							$itempedido->agendamento_id 	= $agendamento->id;
+							$itempedido->pedido_id 			= $pedidoEmpresarial->id;
+							$itempedido->valor				= $atendimento->precoAtivo->vl_comercial_bd;
+							$itempedido->save();
+
+							$valorEmp -= $atendimento->precoAtivo->vl_comercial_bd; //Subtrai o valor do atendimento do valor a ser pago no cartão empresarial
+							$vlAtendRest -= $atendimento->precoAtivo->vl_comercial_bd;
+						} else {
+							$itempedido->agendamento_id 	= $agendamento->id;
+							$itempedido->pedido_id 			= $pedidoEmpresarial->id;
+							$itempedido->valor				= $valorEmp;
+							$itempedido->save();
+
+							$vlAtendRest -= $valorEmp;
+							$valorEmp = 0;
+						}
+
+					}
+
+					if($valorEmp == 0 && $vlAtendRest != 0) {
+						$itempedido = new Itempedido();
+						$itempedido->agendamento_id		= $agendamento->id;
+						$itempedido->pedido_id			= $pedidoInd->id;
+						$itempedido->valor				= $vlAtendRest;
+						$itempedido->save();
+					}
+				}
+			}
 		}
 
-		dd('testesaveAgendamento');
+		dd('testesaveAgendamento', Agendamento::whereIn('id', $agendamento_id)->with(['itempedidos.pedido'])->get()->toArray());
 	}
 
 	private function verificaTp($tp) {

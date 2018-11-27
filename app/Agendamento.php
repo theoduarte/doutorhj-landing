@@ -6,6 +6,37 @@ use Illuminate\Support\Carbon;
 use Kyslik\ColumnSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $clinica_id
+ * @property int $paciente_id
+ * @property int $atendimento_id
+ * @property int $profissional_id
+ * @property int $convenio_id
+ * @property int $cupom_id
+ * @property int $filial_id
+ * @property int $checkup_id
+ * @property string $te_ticket
+ * @property string $dt_atendimento
+ * @property string $obs_agendamento
+ * @property string $obs_cancelamento
+ * @property int $cs_status
+ * @property string $bo_remarcacao
+ * @property string $created_at
+ * @property string $updated_at
+ * @property string $bo_retorno
+ * @property Atendimento $atendimento
+ * @property Checkup $checkup
+ * @property Clinica $clinica
+ * @property Convenio $convenio
+ * @property CupomDesconto $cupomDesconto
+ * @property Filial $filial
+ * @property Paciente $paciente
+ * @property Profissional $profissional
+ * @property Datahoracheckup[] $datahoracheckups
+ * @property Itempedido[] $itempedidos
+ * @property AgendamentoAtendimento[] $agendamentoAtendimentos
+ */
 class Agendamento extends Model
 {
     use Sortable;
@@ -18,7 +49,7 @@ class Agendamento extends Model
     /*
      * Constants
      */
-	const PRE_AUTORIZADO = 0;
+	const PRE_AUTORIZAR  = 0;
     const PRE_AGENDADO   = 10;
     const CONFIRMADO     = 20;
     const NAO_CONFIRMADO = 30;
@@ -31,7 +62,7 @@ class Agendamento extends Model
     const PAGO           = 100;
     
     protected static $cs_status = array(
-		self::PRE_AUTORIZADO => 'Pre-Autorizado',
+		self::PRE_AUTORIZAR  => 'Pre-Autorizar',
         self::PRE_AGENDADO   => 'Pré-Agendado',
         self::CONFIRMADO     => 'Confirmado',
         self::NAO_CONFIRMADO => 'Não Confirmado',
