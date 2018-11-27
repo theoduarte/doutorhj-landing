@@ -877,11 +877,13 @@ class PaymentController extends Controller
                 }
 
                 if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
+                    // condição  executa apenas quando o laço dos agendamentos estiver sido executado
                     if (($conta) == count($agendamentoItens)) {
 
                         $pedidoEmpresarial->save();
                         $pedidoCredito->save();
-
+                        $valorEmpresa = $empresarialSalvar;
+                        $valorCredito = $creditoCartaoSalvar ;
                         $contaa=0;
                         $pedido =0;
                         $totalcredito=0;
@@ -901,6 +903,7 @@ class PaymentController extends Controller
                                 $empresarialLaco=0;
                                 array_push($pedidos_array, $item_pedidoEmpresarial);
 
+                                // caso haja apenas um procedimento para para realizar o pagamento
                                 if(count($agendamento_id)==1){
                                     $item_pedidoCredito = new Itempedido();
                                     $totalcredito = ($creditoCartaoSalvar  );
@@ -912,7 +915,7 @@ class PaymentController extends Controller
                                     $pedido=$pedidoCredito->id;
                                     array_push($pedidos_array, $item_pedidoCredito);
                                 }
-
+                            // se houver apenas um procedimento essa condição não será utilizada
                             } else {
 
                                     $item_pedidoCredito = new Itempedido();
@@ -972,6 +975,8 @@ class PaymentController extends Controller
                         }
                     }
                     $MerchantOrderId =$pedido;
+
+                    // caso o metodo de pagamento não seja por dois meios, cartao de credito e empresarial
                 } else {
                     //--busca pelas especialidades do atendimento--------------------------------------
 
@@ -991,7 +996,6 @@ class PaymentController extends Controller
                     $MerchantOrderId =$pedido->id;
                     array_push($result_agendamentos,  $agendamento);
                     array_push($payment_ids,    $pedido->id);
-
                 }
             }
         }
@@ -1002,11 +1006,12 @@ class PaymentController extends Controller
 
 
         /** ================================================================= REALIZACAO DO PAGAMENTO  ============================================================*/
+
+        /**pagamento com cartão   empresarial*/
         if($metodoPagamento == Payment::METODO_CRED_EMP) {
             $metodoCartao = 1;
             try {
                 $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::criarPagementoEmpresarial($empresa->mundipagg_token,$valorCartaoEmpresarialOne, 1, "Doutor hoje cart",$cartaoPaciente->card_token, "Doutor hoje"  ))    ;
-
             } catch(\Exception $e) {
                 DB::rollBack();
                 return response()->json([
@@ -1113,9 +1118,7 @@ class PaymentController extends Controller
             $agendamentos = $this->saveAgendamento();
         }
 
-
         if(!empty($criarPagamento)){
-            //print_r($criarPagamento);die;
             $dadosPagamentos = json_decode( json_encode($criarPagamento), true);
 
             if(
@@ -1141,7 +1144,7 @@ class PaymentController extends Controller
 
             } else {
 
-
+                //--enviar mensagem informando o pre agendamento da solicitacao----------------
                 foreach($result_agendamentos as $agendamento){
                     try {
                         if(!is_null($agendamento->atendimento_id))
@@ -1149,14 +1152,7 @@ class PaymentController extends Controller
                     } catch (Exception $e) {}
 
                 }
-                $anterior="";
-
-
-
                 foreach($pedidos_array as $pedidosArray){
-
-
-
 
                         $Payment                                 	= new Payment();
                         $Payment->merchant_order_id             	= $dadosPagamentos['id'];
@@ -1171,44 +1167,34 @@ class PaymentController extends Controller
                         $Payment->cs_status							=  $dadosPagamentos['charges'][0]['last_transaction']['status'];
                         $Payment->cielo_result                 		= json_encode($criarPagamento);
                         $Payment->save();
-
-
                 }
-
-
-
-                //--enviar mensagem informando o pre agendamento da solicitacao----------------
-
 
                     $dados = json_decode(json_encode($criarPagamento), true);
 
                     $boleto = null;
                     if($metodoPagamento == Payment::METODO_BOLETO) {
 
-                    $boleto = [
-                    "instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
-                    "url" => 	$dados['charges'][0]['last_transaction']['url'],
-                    "qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
-                    "pdf_url" => $dados['charges'][0]['last_transaction']['pdf']
-                    ];
-
+                        $boleto = [
+                        "instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
+                        "url" => 	$dados['charges'][0]['last_transaction']['url'],
+                        "qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
+                        "pdf_url" => $dados['charges'][0]['last_transaction']['pdf']
+                        ];
                     //	$this->enviarEmailPagamentoRealizado($paciente, $pedido, $dados['charges'][0]['last_transaction']['url']);
                     }
 
                     $transferencia = null;
                     if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
-                    $transferencia = [
-                    "metodo" => $dados['charges'][0]['payment_method'],
-                    "url" => 	$dados['charges'][0]['last_transaction']['url']	,
-                    'datas'=>$dados
-                    ];
-
-
+                        $transferencia = [
+                        "metodo" => $dados['charges'][0]['payment_method'],
+                        "url" => 	$dados['charges'][0]['last_transaction']['url']	,
+                        'datas'=>$dados
+                        ];
                     }
 
 
                 ########### FINISHIING TRANSACTION ##########
-                DB::commit();
+                    DB::commit();
                 #############################################
                     CVXCart::clear();
 
