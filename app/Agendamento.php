@@ -165,4 +165,14 @@ class Agendamento extends Model
 			->where('dt_atendimento', '=', \DateTime::createFromFormat('d/m/Y H:i', $dataHoraAgendamento)->format('Y-m-d H:i:s'))
 			->exists();
 	}
+
+	public static function getValorPedidoEmpresarial(Array $agendamento_ids)
+	{
+		$vlPedidoEmpresarial = Itempedido::whereIn('agendamento_id', $agendamento_ids)
+			->with(['pedido.cartao_paciente'])->whereHas('pedido.cartao_paciente', function($query) {
+				$query->where('tp_cartao_id', TipoCartao::EMPRESARIAL);
+			})->sum('valor');
+
+		return $vlPedidoEmpresarial;
+	}
 }

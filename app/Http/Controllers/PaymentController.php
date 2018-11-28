@@ -7,7 +7,9 @@ use App\Datahoracheckup;
 use App\Especialidade;
 use App\ItemCheckup;
 use App\Payment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use App\Pedido;
@@ -721,7 +723,8 @@ class PaymentController extends Controller
 
 			$valorFinal = $valor_total-$valor_desconto;
 			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
-				$valorEmpresarial = number_format(($dados->porcentagem * $valorFinal) / 100, 2);
+				$valorEmpresarial = ceil(($dados->porcentagem * $valorFinal) / 100);
+				$valorEmpresarial = number_format($valorEmpresarial, 2);
 			} else {
 				$valorEmpresarial = $valorFinal;
 			}
@@ -1264,10 +1267,10 @@ class PaymentController extends Controller
 			$pedidoInd->titulo = $titulo_pedido;
 			$pedidoInd->descricao = null;
 			$pedidoInd->dt_pagamento = $dt_pagamento;
-			$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento);
+			$pedidoInd->tp_pagamento = $this->verificaTp($metodoPagamento, 2);
 			$pedidoInd->paciente_id = $paciente->id;
 			if (!is_null($cartaoInd)) $pedidoInd->cartao_id = $cartaoInd->id;
-			$pedidoInd->save();
+			$pedidoInd->saveOrFail();
 		}
 
 		// cria o pedido para o pagamento com cartao empresarial
@@ -1277,10 +1280,10 @@ class PaymentController extends Controller
 			$pedidoEmpresarial->titulo			= $titulo_pedido;
 			$pedidoEmpresarial->descricao		= null;
 			$pedidoEmpresarial->dt_pagamento	= $dt_pagamento;
-			$pedidoEmpresarial->tp_pagamento	= $this->verificaTp($metodoPagamento);
+			$pedidoEmpresarial->tp_pagamento	= $this->verificaTp($metodoPagamento, 1);
 			$pedidoEmpresarial->paciente_id		= $paciente->id;
 			$pedidoEmpresarial->cartao_id		= $paciente->empresa->cartaoPacientes()->first()->id;
-			$pedidoEmpresarial->save();
+			$pedidoEmpresarial->saveOrFail();
 
 			$status_agendamento = $paciente->empresa->pre_autorizar ? Agendamento::PRE_AUTORIZAR : Agendamento::PRE_AGENDADO;
 		} else {
@@ -1299,11 +1302,6 @@ class PaymentController extends Controller
 			$valor_ind = null;
 			$valor_ind_pag = null;
 		}
-
-
-//		dd($paciente->empresa->pre_autorizar);
-//		dd('ok até aqui');
-
 
 		foreach($agendamentos as $i=>$agend) {
 			$agendamento = new Agendamento();
@@ -1352,7 +1350,7 @@ class PaymentController extends Controller
 							$itempedido->agendamento_id 	= $agendamento->id;
 							$itempedido->pedido_id 			= $pedidoEmpresarial->id;
 							$itempedido->valor				= $atendimento->precoAtivo->vl_comercial_bd;
-							$itempedido->save();
+							$itempedido->saveOrFail();
 
 							$valorEmp -= $atendimento->precoAtivo->vl_comercial_bd; //Subtrai o valor do atendimento do valor a ser pago no cartão empresarial
 							$vlAtendRest -= $atendimento->precoAtivo->vl_comercial_bd;
@@ -1360,34 +1358,48 @@ class PaymentController extends Controller
 							$itempedido->agendamento_id 	= $agendamento->id;
 							$itempedido->pedido_id 			= $pedidoEmpresarial->id;
 							$itempedido->valor				= $valorEmp;
-							$itempedido->save();
+							$itempedido->saveOrFail();
 
 							$vlAtendRest -= $valorEmp;
 							$valorEmp = 0;
 						}
 
 					}
+					$valorEmp = number_format($valorEmp, 2);
 
 					if($valorEmp == 0 && $vlAtendRest != 0) {
 						$itempedido = new Itempedido();
 						$itempedido->agendamento_id		= $agendamento->id;
 						$itempedido->pedido_id			= $pedidoInd->id;
 						$itempedido->valor				= $vlAtendRest;
-						$itempedido->save();
+						$itempedido->saveOrFail();
 					}
 				}
 			}
 		}
 
-		dd('testesaveAgendamento', Agendamento::whereIn('id', $agendamento_id)->with(['itempedidos.pedido'])->get()->toArray());
+//		DB::commit();
+		$agendamentos = Agendamento::whereIn('id', $agendamento_id)->with(['itempedidos.pedido'])->get();
+		$this->enviarEmailPreAutorizar($paciente, $agendamentos);
+
+		return response()->json([
+			'status' => true,
+			'mensagem' => 'O Pedido foi enviado para aprovaçao da empresa!'
+		]);
 	}
 
-	private function verificaTp($tp) {
+	private function verificaTp($tp, $op = null) {
 		switch($tp) {
 			case Payment::METODO_CRED_EMP:
-				return 'Empresarial';break;
+				return 'empresarial';break;
 			case Payment::METODO_CRED_EMP_CRED_IND:
-				return "empre+credito";break;
+				if(!is_null($op) && $op == 1) {
+					return 'empresarial';break;
+				} elseif(!is_null($op) && $op == 2) {
+					return "credito";break;
+				} else {
+					return "empre+credito";break;
+				}
 			case Payment::METODO_CRED_IND:
 				return "credito";break;
 			case Payment::METODO_BOLETO:
@@ -1949,7 +1961,106 @@ class PaymentController extends Controller
     
     	return view('provisorio');
     }
-    
+
+	public function enviarEmailPreAutorizar(Paciente $paciente, Collection $agendamentos)
+	{
+		foreach ($agendamentos as $agendamento) {
+			$mensagem					= new Mensagem();
+			$mensagem->rma_nome			= $paciente->nm_primario.' '.$paciente->nm_secundario;
+			$mensagem->rma_email		= $paciente->user->email;
+			$mensagem->assunto			= 'Pré-Autorização Solicitada';
+
+			$nome 						= $paciente->nm_primario.' '.$paciente->nm_secundario;
+			$email 						= $paciente->user->email;
+			$telefone 					= $paciente->contatos->first()->ds_contato;
+			$especialidade				= Especialidade::getNomeEspecialidade($agendamento->id);
+
+			$agendamento->ds_atendimento 	= $especialidade['ds_atendimento'];
+			$agendamento->nm_especialidade 	= $especialidade['nome_especialidades'];
+			$dt_atendimento					= Carbon::createFromFormat('d/m/Y H:i', $agendamento->dt_atendimento);
+
+			if (!empty($agendamento->profissional_id)) {
+				$agendamento->nm_profissional		= "Dr(a): ".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario;
+			} else {
+				$agendamento->nm_profissional = '---------';
+			}
+
+			if ($agendamento->filial->endereco != null) {
+				$enderecoClinica = $agendamento->filial->endereco;
+				$agendamento->enderecoAgendamento = $enderecoClinica->te_endereco.', '.$enderecoClinica->nr_logradouro.', '.$enderecoClinica->te_bairro.', '.$enderecoClinica->cidade->nm_cidade.'/ '.$enderecoClinica->cidade->sg_estado;
+			} else {
+				$agendamento->enderecoAgendamento = '--------------------';
+			}
+
+			$conteudo = "<h4>Pré-Autorização de Cliente:</h4><br>
+							<ul>
+								<li>Nome: $nome</li>
+								<li>E-mail: $email</li>
+								<li>Telefone: $telefone</li>
+							</ul>";
+
+			$mensagem->conteudo     	= $conteudo;
+			$mensagem->saveOrFail();
+
+			$destinatario                      = new MensagemDestinatario();
+			$destinatario->tipo_destinatario   = 'DH';
+			$destinatario->mensagem_id         = $mensagem->id;
+			$destinatario->destinatario_id     = 1;
+			$destinatario->saveOrFail();
+
+			$destinatario                      = new MensagemDestinatario();
+			$destinatario->tipo_destinatario   = 'DH';
+			$destinatario->mensagem_id         = $mensagem->id;
+			$destinatario->destinatario_id     = 3;
+			$destinatario->saveOrFail();
+
+			/** Dados da mensagem para o cliente */
+			$msgCliente            		= new Mensagem();
+			$msgCliente->rma_nome     	= 'Contato DoutorHoje';
+			$msgCliente->rma_email       = 'contato@doutorhoje.com.br';
+			$msgCliente->assunto     	= 'Pré-Agendamento Solicitado';
+
+			$conteudo = "<h4>Seu Pré-Agendamento:</h4><br>
+						<ul>
+							<li>Nº do Agendamento: {$agendamento->id}</li>
+							<li>{$agendamento->nm_especialidade}</li>
+							<li>Dr(a): {$agendamento->nm_profissional}</li>
+							<li>Data: {$dt_atendimento->format('d/m/Y')}</li>
+							<li>Horário: {$dt_atendimento->format('H:i')} (por ordem de chegada)</li>
+							<li>Endereço: {$agendamento->enderecoAgendamento}</li>
+						</ul>";
+
+			$msgCliente->conteudo     	= $conteudo;
+			$msgCliente->saveOrFail();
+
+			$from = 'contato@doutorhoje.com.br';
+			$to = $email;
+			$subject = 'Autorização Solicitada';
+
+			$htmlCliente = view('payments.email_confirma_pre_autorizacao', compact('agendamento', 'dt_atendimento'));
+			$htmlCliente = str_replace(["\r", "\n", "\t"], '', $htmlCliente);
+
+//			$send_message[] = UtilController::sendMail($to, $from, $subject, $htmlCliente);
+		}
+
+		if(!is_null($paciente->empresa->resp_financeiro_id))
+			$toEmpresa = $paciente->empresa->responsavelFinanceiro->user->email;
+		else
+			$toEmpresa = $paciente->empresa->representantes()->first()->user->email;
+
+		$subjectEmpresa = 'Autorizar Utilização de Crédito Empresarial';
+
+		$verify_hash = Crypt::encryptString($paciente->id.'@'.$paciente->empresa->id.'@'.$agendamentos->pluck('id')->toJson());
+		$url = route('autoriza_credito_empresarial', $verify_hash);
+		$vlPedidoEmpresarial = Agendamento::getValorPedidoEmpresarial($agendamentos->pluck('id')->toArray());
+
+		$htmlEmpresa = view('payments.email_autorizar_cred_empresarial', compact('paciente', 'vlPedidoEmpresarial', 'url'));
+		$htmlEmpresa = str_replace(["\r", "\n", "\t"], '', $htmlEmpresa);
+		$send_message[] = UtilController::sendMail($toEmpresa, $from, $subjectEmpresa, $htmlEmpresa);
+
+		return $send_message;
+	}
+
     /**
      * enviarEmailPreAgendamento a newly external user created resource in storage.
      *
@@ -2050,280 +2161,10 @@ class PaymentController extends Controller
     	$to = $email;
     	$subject = 'Pré-Agendamento Solicitado';
     
-    	$html_message = <<<HEREDOC
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>DoutorHoje</title>
-    </head>
-    <body>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'>&nbsp;</td>
-                <td width='120' style='text-align:right'>&nbsp;</td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color:#fff;'>
-                <td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Solicitação de agendamento</span></td>
-                <td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
-            </tr>
-        </table>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td><img src='https://doutorhoje.com.br/libs/home-template/img/email/h1.png' width='600' height='113' alt='DoutorHoje'/></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px; font-weight: bold;'>Solicitação de agendamento</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 28px; line-height: 50px; color: #434342; background-color: #fff; text-align: center; font-weight: bold;'>
-                    Olá, <strong style='color: #1d70b7;'>$nm_primario</strong>
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-                    Sua <strong>solicitação</strong> foi realizada com sucesso. Em até 48 horas você<br>
-                    receberá a confirmação do agendamento escolhido.
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/numero-pedido.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Nº do pedido: <span>$nr_pedido</span></td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>$nome_especialidade</td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>$nome_profissional</td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/data.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>$data_agendamento</span></td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/hora.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>$hora_agendamento</span></td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/local.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>$endereco_agendamento</span>
-                </td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/status.png' width='34' height='30' alt=''/></td>
-                <td width='10'>&nbsp;</td>
-                <td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Status: <span>$agendamento_status</span></td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        &nbsp;
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: justify;'>
-                    Acompanhe no Perfil do Cliente o <em><strong>status</strong></em> da sua solicitação de
-                    agendamento. Evite transtornos! Caso ocorra algum imprevisto,
-                    impossibilitando o comparecimento ao serviço contratado, nos
-                    informe com até 24 horas de antecedência.
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff; text-align: center;'>
-                    É um grande satisfação tê-lo como cliente.<br><br>
-                    Abraços,<br>
-                    Equipe Doutor Hoje
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='209'></td>
-                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/facebook.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/youtube.png' width='27' height='24' alt=''/></a></td>
-                <td width='27'><a href='#'><img src='https://doutorhoje.com.br/libs/home-template/img/email/instagram.png' width='27' height='24' alt=''/></a></td>
-                <td width='210'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='30'></td>
-                <td width='540' style='line-height:16px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#434342; text-align: center;'>
-                    Em caso de qualquer dúvida, fique à vontade <br>
-                    para responder esse e-mail ou
-                    nos contatar no <br><br>
-                    <a href='mailto:cliente@doutorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doutorhoje.com.br</a>
-                    <br><br>
-                    Ou ligue para (61) 3221-5350, o atendimento é de<br>
-                    segunda à sexta-feira
-                    das 8h00 às 18h00. <br><br>
-                    <strong>Doutor Hoje</strong> 2018 
-                </td>
-                <td width='30'></td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-            <tr style='background-color: #f9f9f9;'>
-                <td width='513'>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
-    </body>
-</html>
-HEREDOC;
-    
-    	$html_message = str_replace(array("\r", "\n"), '', $html_message);
+    	$html_message = view('payments.email_confirma_pre_agendamento', compact('nm_primario', 'nr_pedido', 'nome_especialidade',
+			'nome_profissional', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
+
+		$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
     
     	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
     	

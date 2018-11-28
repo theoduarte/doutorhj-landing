@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ItemCheckup;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\DB;
@@ -906,7 +907,17 @@ class AgendamentoController extends Controller
         
         return response()->json(['status' => true, 'mensagem' => 'Agendamento disponível!']);
     }
-    
+
+	public function autorizaCreditoEmpresarial($verify_hash)
+	{
+		$decryptString = Crypt::decryptString($verify_hash);
+		$dados = explode('@', $decryptString);
+		dd($dados);
+
+
+
+	}
+
     /**
      * enviarEmailCancelarAgendamento a newly external user created resource in storage.
      *

@@ -12,7 +12,7 @@ class Especialidade extends Model
 	    return $this->belongsToMany('App\Profissional');
 	}
 
-	public function getNomeEspecialidade($agendamento_id)
+	public static function getNomeEspecialidade($agendamento_id)
 	{
 		$agendamento = Agendamento::find($agendamento_id);
 
