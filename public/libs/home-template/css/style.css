@@ -2409,6 +2409,22 @@ header .nav-item-mobile {
     background: url('../img/icone-star.png') 0 -16px;
 }
 
+.area-avaliacao {
+    text-align: center;
+}
+
+.area-avaliacao .titulo {
+    margin-bottom: 30px;
+}
+
+.area-avaliacao .nota-atendimento {
+    margin-bottom: 30px;
+}
+
+.area-avaliacao .nota-atendimento p {
+    font-size: 16px;
+}
+
 .box-minha-conta .row .conteudo .itens-sair {
     width: 100%;
     text-align: center;

@@ -50,6 +50,12 @@ class ClinicaController extends Controller
         return view('auth.confirmacao');
     }
 
+    public function avaliaAtendimento()
+    {
+        /*Request::flash();*/
+        return view('avaliacao');
+    }
+
     public function index()
     {
         $prestadores = Clinica::where(function($query){
