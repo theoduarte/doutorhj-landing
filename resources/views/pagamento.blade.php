@@ -221,7 +221,7 @@
                                                     <div class="form-group">
                                                         <label for="selectParcelamentoCredito">Parcelamento </label>
                                                         <div class="button dropdown">
-                                                            <select id="selectParcelamentoCredito" class="form-control change-parcelamento" name="parcelamento-cartao-credito">
+                                                            <select id="selectParcelamentoCredito" class="form-control change-parcelamento selectParcelamentoCredito" name="parcelamento-cartao-credito">
                                                             </select>
                                                         </div>
                                                     </div>
@@ -1001,6 +1001,7 @@
                                                 <div class="col-md-7">
                                                     <div class="valor_cartao_empresarial"></div>
                                                 </div>
+                                                <input type="hidden" id="valor_empresarial">
                                             </div>
 
                                             <div class="row">
@@ -1013,9 +1014,10 @@
                                                     <div class="dados-resumo valor-total-produtos">
 
                                                     </div>
-                                                    <div id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
+                                                    <div  id="resumo_parcelamento" class="dados-resumo parcelamento-cartao">
                                                         <!-- <p>10x com juros (5% a.m.) de R$ 48,50</p> -->
                                                     </div>
+
                                                 </div>
                                             </div>
 
@@ -1033,6 +1035,8 @@
                                                         <span id="lbl-finalizar-pedido">Finalizar Pagamento <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i></span>
                                                     </button>
                                                 @endif
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -1110,64 +1114,7 @@
                     $('#resumo_compra_final_cartao').html(num_cartao.substr(-4));
                 });
 
-                $('#btn-validar-cupom').click(function () {
 
-                    var codigo = $('#inputCupom').val();
-                    var activeCupom = localStorage.getItem('activeCupom');
-                    var valor_total = $('#valor_servicos').val();
-
-                    if (codigo.length == 0 | activeCupom == 't') {
-                        return false;
-                    }
-
-                    $.ajax({
-                        type: 'post',
-                        dataType: 'json',
-                        url: '/validar-cupom-desconto',
-                        data: {
-                            'codigo': codigo,
-                            'valor_parcelamento': valor_total,
-                            '_token': laravel_token
-                        },
-                        timeout: 15000,
-                        success: function (result) {
-
-                            if (result.status) {
-                                var desconto = valor_total * result.percentual;
-                                var valor_com_desconto = valor_total - desconto;
-                                var parcelamentos = result.parcelamentos;
-
-                                //localStorage.setItem('activeCupom', 'f');
-                                $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
-                                $('#valor_desconto').parent().find('p').html('- R$ ' + numberToReal(desconto));
-                                $('.valor-total-produtos').find('p').html('R$ ' + numberToReal(valor_com_desconto));
-
-                                $('#selectParcelamentoCredito').empty();
-                                $('#selectParcelamentoCredito2').empty();
-                                for (var i = 0; i < parcelamentos.length; i++) {
-                                    var option = '<option value="' + (i + 1) + '">' + parcelamentos[i] + '</option>';
-                                    $('#selectParcelamentoCredito').append($(option));
-                                    $('#selectParcelamentoCredito2').append($(option));
-                                }
-
-                                $('#resumo_parcelamento p').html(result.resumo_parcelamento);
-
-                            } else {
-
-                                swal(
-                                    {
-                                        title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-                                        text: result.mensagem
-                                    }
-                                );
-
-                            }
-                        },
-                        error: function (result) {
-                            $.Notification.notify('error', 'top right', 'DrHoje', 'Falha na operação!');
-                        }
-                    });
-                });
 
                 /*********************************
                  *
