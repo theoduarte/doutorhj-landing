@@ -19,6 +19,10 @@ Route::get('confirmacao-checkup', 'CheckupController@confirmacaoCheckup');
 Route::post('consulta-tipos-checkup','CheckupController@getTipoCheckupAtivo');
 Route::get('terms-and-conditions','HomeController@terms')->middleware('web');
 
+/** rotas de sucesso e falha apos o pagamento transferencia */
+Route::get('payment/success/{hash}', 'PaymentController@successPayment');
+Route::get('payment/failed/{hash}', 'PaymentController@failedPayment');
+
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
 

@@ -12,7 +12,7 @@ abstract class FuncoesPagamento
         $payload =  [
             "name"=> $nome,
             "email"=> $emai,
-            "code"=> "DOUTOR_HOJE_001",				
+            "code"=> "DOUTOR_HOJE",
             "type"=> "individual",				
             "metadata"=> [
                 "company"=> "Doutor Hoje"

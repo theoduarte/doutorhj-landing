@@ -594,7 +594,7 @@
     <script>
         $(function () {
             $('.floating-wpp').floatingWhatsApp({
-                phone: '+5561986792680',
+                phone: '5561986792680',
                 popupMessage: 'Bem vindo! Envie sua dúvida e logo responderemos:',
                 showPopup: true,
                 position: 'right', // left or right

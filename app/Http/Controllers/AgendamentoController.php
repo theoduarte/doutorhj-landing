@@ -744,13 +744,7 @@ class AgendamentoController extends Controller
         $user_paciente->paciente->load('contatos');
         //$user_paciente->paciente->load('dependentes');
         $responsavel_id = $user_paciente->paciente->id;
-        
-        $basicAuthUserName = env('MUNDIPAGG_KEY');
 
-		$basicAuthPassword = "";
-		
-        $client = new MundiAPIClient($basicAuthUserName, $basicAuthPassword); 
-        
         $dependentes = Paciente::where('responsavel_id', $responsavel_id)->where('cs_status', '=', 'A')->get();
         
         $dt_nascimento = explode('/', $user_paciente->paciente->dt_nascimento);
