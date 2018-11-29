@@ -770,8 +770,15 @@ $(function() {
 		}
 	});
 
+    $('.change-parcelamento').change(function(){
 
-	$('#cartaoCadastrado').change(function() {
+        $('.parcelamento-cartao').empty().append($(".change-parcelamento option:selected").text())
+    })
+
+	$('.change-parcelamento-credito').change(function() {
+        $('.parcelamento-cartao').empty().append($(".change-parcelamento-credito option:selected").text())
+	})
+    $('#cartaoCadastrado').change(function() {
 		removerError('#numeroCartaoCredito')
 		removerError('#nomeImpressoCartaoCredito')
 		removerError('#mesCartaoCredito')
@@ -1446,10 +1453,10 @@ function printParcelamento(valor){
 
 	}else if(parseFloat(valor) >500) {
 
-	 	$('.selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
+
 		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
 		var i=0;
-		for (i = 2; i <=10; i++) {
+		for (i = 1; i <=10; i++) {
 			var vl = parseFloat(valor) / i
 			if(i <=3){
 				$('.selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
@@ -1654,6 +1661,7 @@ function pagarCartaoCredito() {
 
 		result = false;
 	}
+
 
 	pacientes.each(function(){
 

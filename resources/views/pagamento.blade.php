@@ -340,7 +340,7 @@
                                                 <div class="form-group">
                                                     <label for="selectParcelamentoCredito">Parcelamento</label>
                                                     <div class="button dropdown">
-                                                        <select id="selectParcelamentoCredito" class="selectParcelamentoCredito form-control" name="parcelamento-cartao-credito">
+                                                        <select id="selectParcelamentoCredito" class="selectParcelamentoCredito change-parcelamento-credito form-control" name="parcelamento-cartao-credito">
                                                             @for($i = 1; $i <= sizeof($parcelamentos); $i++)
                                                                 <option value="{{ $i }}">{{ $parcelamentos[$i] }}</option>
                                                             @endfor
