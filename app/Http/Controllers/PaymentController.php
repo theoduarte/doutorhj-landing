@@ -1935,7 +1935,7 @@ class PaymentController extends Controller
         
         ##################################################################################
          
-        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'nome_profissional', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
+        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
          
         $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
          
