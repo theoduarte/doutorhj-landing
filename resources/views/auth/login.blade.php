@@ -167,11 +167,22 @@
                                             minha inclusão pagarei o valor de 48,80 referente a anuidade. </label>
                                     </div>--}}
                                     
-                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta">
+                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta" data-toggle="modal" data-target="#modalCadastro">
                                         <i class="fa fa-user"></i>
-                                        <span id="lbl-criar-conta">Criar conta <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
+                                        <span id="lbl-criar-conta" >Criar conta <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
                                     </button>
                                 </form>
+                                <div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4>Estamos quase lá!</h4>
+                                            <p>Confira a caixa de entrada do seu e-mail que você cadastrou, e clique no botão para ativar seu cadastro.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
