@@ -167,7 +167,7 @@
                                             minha inclusão pagarei o valor de 48,80 referente a anuidade. </label>
                                     </div>--}}
                                     
-                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta" data-toggle="modal" data-target="#modalCadastro">
+                                    <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta" > <!-- data-toggle="modal" data-target="#modalCadastro" -->
                                         <i class="fa fa-user"></i>
                                         <span id="lbl-criar-conta" >Criar conta <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
                                     </button>
@@ -281,6 +281,7 @@
 
                 $('#btn-criar-conta').attr('disabled', 'disabled');
                 $('#btn-criar-conta').find('#lbl-criar-conta').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
+                $('#btn-criar-conta').modal('show');
                 setTimeout(function () {
                     $('#btn-criar-conta').find('#lbl-criar-conta').html('Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                     $('#btn-criar-conta').removeAttr('disabled');

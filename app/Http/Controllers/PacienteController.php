@@ -59,7 +59,24 @@ class PacienteController extends Controller
         $user_id = $user_activate_temp->id;
         $user_activate = User::findOrFail($user_id);
         $user_activate->cs_status = 'A';
-        $user_activate->save();
+        
+        if($user_activate->save()) {
+        	
+        	$from = 'contato@doutorhoje.com.br';
+        	$to = $usuario->email;
+        	$subject = 'Contato DoutorHoje';
+        	
+        	$paciente_nm_primario = $paciente->nm_primario;
+        	$paciente_email = $user_activate->email;
+        	
+        	$url = route('landing-page');
+        	
+        	$html_message = view('users.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'));
+        	
+        	$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
+        	
+        	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+        }
         
         return redirect()->route( 'activate-redirect' );
     }

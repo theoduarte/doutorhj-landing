@@ -32,6 +32,7 @@ use App\Preco;
 use App\Empresa;
 use App\User;
 use Storage;
+use Illuminate\Support\Facades\Crypt;
 class PaymentController extends Controller
 {
     /**
@@ -1782,34 +1783,36 @@ class PaymentController extends Controller
 
 
     public function testeEnviarEmail(){
+    	
+    	try {
+    		$paciente_id = 294;
+    		$paciente = Paciente::with('user')->findOrFail($paciente_id);
+//     		dd($paciente);
+    		 
+    		$verify_hash = Crypt::encryptString($paciente_id);
+    		$from = 'contato@doutorhoje.com.br';
+    		$to = $paciente->user->email;
+    		$subject = 'Contato DoutorHoje';
+    		 
+    		$paciente_nm_primario = $paciente->nm_primario;
+    		$paciente_email = $paciente->user->email;
+    		 
+    		$url = route('ativar_conta', $verify_hash);
+    		
+    	} catch (Exception $e) {
+    		report($e);
+    	
+    		return false;
+    	}
+    	
+//         $send_message = $this->enviarEmailPreAgendamento($paciente, $pedido, $agendamento);
 
-        $paciente = Paciente::findorfail(21);
-        $paciente->load('user');
-        $paciente->load('documentos');
-        $paciente->load('contatos');
+//         if ($send_message) {
+//             dd('O e-mail foi enviado com sucesso!');
+//             //dd($output);
+//         }
 
-        $pedido = Pedido::findorfail(11);
-
-        $agendamento = Agendamento::findorfail(5);
-        $agendamento->load('profissional');
-        $agendamento->load('clinica');
-
-        $nome_especialidade = "";
-
-        foreach ($agendamento->profissional->especialidades as $especialidade) {
-            $nome_especialidade = $nome_especialidade.' | '.$especialidade->ds_especialidade;
-        }
-
-        $agendamento->nome_especialidade = $nome_especialidade;
-
-        $send_message = $this->enviarEmailPreAgendamento($paciente, $pedido, $agendamento);
-
-        if ($send_message) {
-            dd('O e-mail foi enviado com sucesso!');
-            //dd($output);
-        }
-
-        return view('provisorio');
+        return view('users.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
     }
 
     /**
