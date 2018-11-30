@@ -21,14 +21,7 @@ $(document).ready(function () {
 	}catch(error){
 
 	}
-	
-//	try{
-//		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
-//		
-//		if(uf_localizacao_cookie.length != 0){
-//			consultaEspecialidades('saude', uf_localizacao_cookie);
-//		}
-//	} catch(error){}
+
 
 	$('#cep').keyup(function(){
 		
@@ -65,8 +58,6 @@ $(document).ready(function () {
 									 $('#Cidade').empty().val(JSON.parse(result.endereco).cidade)
 									 $('#Bairro').empty().val(JSON.parse(result.endereco).bairro )
 								}
-							 
-							
 						}
 						catch(err) {
 							$('.registrarEndereco').hide();
@@ -93,8 +84,6 @@ $(document).ready(function () {
 			$('.campos_endereco').slideUp();
 			efetuar=0	
 		}
-	 
-	
 	})
 
 	$('#documento').change(function(){
@@ -125,13 +114,6 @@ $(document).ready(function () {
 		}
 	})
 
- 	
-
-
-	$('.change-parcelamento').change(function(){		 
-		$('#resumo_parcelamento').empty().html($(".change-parcelamento option:selected").text())
-	})
-
 	$('#tipo_atendimento').change(function(){
 
 		var tipo_atendimento = $(this).val();
@@ -153,8 +135,7 @@ $(document).ready(function () {
 		var uf_localizacao = $('#sg_estado_localizacao').val();
 		
 		
-		$('.spinner').fadeIn() 
-//		var uf_localizacao_cookie = docCookies.getItem('uf_localizacao');
+		$('.spinner').fadeIn()
 		var uf_localizacao_cookie = window.localStorage.getItem('uf_localizacao');
 		
 		if(uf_localizacao.length != 0 || uf_localizacao_cookie.length != 0){
@@ -167,8 +148,6 @@ $(document).ready(function () {
 	});
 
 	$('.registrarEndereco').click(function(){
-		
-		 
 		
 		jQuery.ajax({
 				type: 'POST',
@@ -192,10 +171,7 @@ $(document).ready(function () {
 					$('.registrarEndereco').hide();
 					$('.deletar').show();
 					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
- 
 
-
-			 
 				if(result.carrinho){
 					$.Notification.notify('success','top right', 'DrHoje', 'Estamos redirecionando você para o pagamento');
 						window.location.href='/pagamento';
@@ -209,9 +185,7 @@ $(document).ready(function () {
 			});
 	})
 	$('.deletar').click(function(){
-		
-		 
-		
+
 		jQuery.ajax({
 				type: 'POST',
 				url: '/registrar-endereco' ,
@@ -472,35 +446,27 @@ $(function() {
 	$('.total_a_pagar').text('R$ '+$('#total_pagar').val());
 
 
-	$('.selectParcelamentoCredito').on('change',function(){
 
-		$('.parcelamento-cartao').empty().html($('.selectParcelamentoCredito option:selected').text())
-		
-	})
 	var slider = document.getElementById("myRange");
 
+    var valor="";
+    var valor_formatado=""
+    var resp="";
+    var resultado="";
+    var final ="";
+    var totalPagar="";
+    var totalPagarFormatado="";
+    var resCOmplemento="";
+    var subtrair="";
+    var finalCOmplemento="";
+    var vl_desconto=""
 	if(slider != null) {
 		var output = document.getElementById("porcentagem_credito_empresarial");
-		
-		
-		
 
 		slider.oninput = function() {
-			output.innerHTML   =(parseFloat(this.value)).formatMoney(2, '.', '.') 
-			
-			
-			
-			
-			var valor="";
-			var valor_formatado=""
-			var resp="";
-			var resultado="";
-			var final ="";
-			var totalPagar="";
-			var totalPagarFormatado="";
-			var resCOmplemento="";
-			var subtrair="";
-			var finalCOmplemento="";
+			output.innerHTML   =(parseFloat(this.value)).formatMoney(2, '.', '.')
+
+            vl_desconto = $('#valor_desconto').val();
 
 			valor = this.value 
 
@@ -522,34 +488,39 @@ $(function() {
 				// valor a ser debitado do credito especial
 			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );	 					
 					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
-							 
 			} else {
 				// valor a ser debitado do credito especial
-
 				resultado =parseFloat((valor * parseFloat(resp)  ) /100  );
-
 			}
 
 			// fomata o valor
 			final = resultado.formatMoney(2, ',', '.');
 
-
 			resCOmplemento = parseFloat( (100 * totalPagarFormatado )/100 );
 
 			subtrair = (resCOmplemento - resultado )
-			finalCOmplemento = subtrair.formatMoney(2, ',', '.');
+
+            finalCOmplemento = subtrair.formatMoney(2, ',', '.');
+			if(parseFloat(vl_desconto) != 0){
+                subtrair =   subtrair - parseFloat(vl_desconto)
+                finalCOmplemento = subtrair.formatMoney(2, ',', '.');
+            }
 			printParcelamento(subtrair);
             $('.valor-total-produtos').empty().html('<p>R$ '+subtrair.formatMoney(2, ',', '.')+'</p>' )
 			$('.valor_cartao_empresarial').empty().html('<p>- R$ '+final+'</p>');
+            $('#valor_empresarial').val(final);
 			$('.valor_cartao_credito').empty().html('<p>R$ '+finalCOmplemento +'</p>');
 			$('.valor_complementar').text('R$ '+finalCOmplemento)
 			$('.creditoAserDebitado').text('R$ '+final);
 		}
 	}
 
-	
+
+
 	$('.escolherMetodoPagamento  ').change(function(){
+
 		if($(this).val() == "2"){
+            console.log($(this).val())
 			var resp="";
 			var valor_formatado = ( $('#valor_disponivel').val());
 			setTimeout(function() {
@@ -561,8 +532,9 @@ $(function() {
 					// valor credito especial formatado
 					resp = (valor_formatado.replace(',','.'))
 				}
-				
-				complemento =  ($('#total_pagar').val());
+                vl_desconto = $('#valor_desconto').val();
+
+                complemento =  ($('#total_pagar').val());
 				respCOmplemento = !(typeof complemento === 'undefined') ? (complemento.replace(',','.')) : '';
 			 
 				
@@ -596,9 +568,7 @@ $(function() {
 						slider.max = (porcentagem) //- 0.1
 						
 						slider.value =  (porcentagem) //- 0.1;
-						
-	
-					 
+
 						empresa = (((parseFloat(slider.value) ) * parseFloat(respCOmplemento)) / 100)
 						 
 						complemt  = (parseFloat(respCOmplemento) - empresa)	
@@ -608,8 +578,10 @@ $(function() {
 						//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
 					 
 						$('.valor_cartao_empresarial').empty().html('<p> - R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
-						
-
+                        $('#valor_empresarial').val(empresa.formatMoney(2, ',', '.'));
+                        if(parseFloat(vl_desconto) != 0){
+                            complemt =   complemt - parseFloat(vl_desconto)
+                        }
                         $('.valor-total-produtos').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>' )
 						printParcelamento(complemt );
 						
@@ -622,13 +594,16 @@ $(function() {
 			
 						var totalEmpresarial = ((porcentagem  ) * parseFloat(resp)) /100
 						var valorComplemento =  (respCOmplemento) - totalEmpresarial
-						printParcelamento(valorComplemento);
-						
 
+						if(parseFloat(vl_desconto) != 0){
+                            valorComplemento =   valorComplemento - parseFloat(vl_desconto)
+                        }
+						printParcelamento(valorComplemento);
 						slider.max = parseFloat(porcentagem) //- 0.1;
 						slider.value =parseFloat(porcentagem) // - 0.1;
 						output.innerHTML =(parseFloat(porcentagem)  ).formatMoney(2, ',', '.')						
 						$('.valor_cartao_empresarial').empty().html('<p>- R$ '+totalEmpresarial+'</p>');
+						$('#valor_empresarial').val(totalEmpresarial);
 						$('.valor_complementar').text('R$ '+valorComplemento)
 						$('.creditoAserDebitado').text('R$ '+totalEmpresarial) 
 					}
@@ -637,10 +612,75 @@ $(function() {
 																					   
 			}, 10);
 		}else{
-			$('.valor-total-produtos').empty().html('<p>R$ '+($('#total_pagar').val())+'</p>' )
+            var total = ($('#total_pagar').val());
+            vl_desconto = $('#valor_desconto').val();
+            var valor = 0;
+
+                valor =   parseFloat(total) - parseFloat(vl_desconto)
+
+			$('.valor-total-produtos').empty().html('<p>R$ '+valor+'</p>' )
+            printParcelamento(valor );
 		}
 	})
-		
+
+    $('#btn-validar-cupom').click(function () {
+
+        var codigo = $('#inputCupom').val();
+        var activeCupom = localStorage.getItem('activeCupom');
+        var valor_total = $('#valor_servicos').val();
+
+        if (codigo.length == 0 | activeCupom == 't') {
+            return false;
+        }
+
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: '/validar-cupom-desconto',
+            data: {
+                'codigo': codigo,
+                'valor_parcelamento': valor_total,
+                '_token': laravel_token
+            },
+            timeout: 15000,
+            success: function (result) {
+
+                if (result.status) {
+                    var desconto = valor_total * result.percentual;
+                    var valor_com_desconto = valor_total - desconto;
+                    $('#valor_desconto').val(desconto)
+                    var parcelamentos = result.parcelamentos;
+
+                    $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
+                    $('#valor_desconto').parent().find('p').html('- R$ ' + numberToReal(desconto));
+
+                    if($('.escolherMetodoPagamento option:selected').val() ==2){
+						var valor = ($('#valor_empresarial').val());
+                        var empresa = valor.replace(',','.');
+						var total = (parseFloat($('#valor_servicos').val()) - (parseFloat(empresa) + 	(desconto)))
+						$('.valor-total-produtos').html('R$ '+total.formatMoney(2, ',', '.'));
+                        printParcelamento(total );
+						//parcelamento-cartao
+                    }else{
+						$('.valor-total-produtos').find('p').html('R$ ' + numberToReal(valor_com_desconto));
+                        printParcelamento(valor_com_desconto );
+                    }
+                } else {
+
+                    swal(
+                        {
+                            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                            text: result.mensagem
+                        }
+                    );
+
+                }
+            },
+            error: function (result) {
+                $.Notification.notify('error', 'top right', 'DrHoje', 'Falha na operação!');
+            }
+        });
+    });
 		
 	Number.prototype.formatMoney = function (c, d, t) {
 		var n = this,
@@ -730,8 +770,15 @@ $(function() {
 		}
 	});
 
+    $('.change-parcelamento').change(function(){
 
-	$('#cartaoCadastrado').change(function() {
+        $('.parcelamento-cartao').empty().append($(".change-parcelamento option:selected").text())
+    })
+
+	$('.change-parcelamento-credito').change(function() {
+        $('.parcelamento-cartao').empty().append($(".change-parcelamento-credito option:selected").text())
+	})
+    $('#cartaoCadastrado').change(function() {
 		removerError('#numeroCartaoCredito')
 		removerError('#nomeImpressoCartaoCredito')
 		removerError('#mesCartaoCredito')
@@ -853,8 +900,10 @@ $(function() {
 			$('.cartaoEmpresarial_Credito').hide();
 			$('.cartaoEmpresarial').slideDown();
 
-		
-			$('.cartao-credito').slideUp();
+                $('.parcelamento-cartao').hide();
+                $('.empresarial-valor-resumo').hide();
+
+			$('.cartao-credito').slideDown();
 			dadosResumo.empty().html('Cartão Empresarial')
 				break;
 			case "2":
@@ -863,23 +912,25 @@ $(function() {
 			$('.cartaocredito').hide();
 			$('.cartaoEmpresarial_Credito').slideDown();
 			$('.cartaoEmpresarial').hide();
-
+                $('.empresarial-valor-resumo').show();
 			$('.cartao-credito').slideDown();
-		
+                $('.parcelamento-cartao').show();
+                $('.empresarial-valor-resumo').show();
 			dadosResumo.empty().html('Cartão Empresarial + Cartão de Crédito Pessoal')
 				break;
 			case "3":
 			$('.credito-valor-resumo').hide();
 			$('.empresarial-valor-resumo').hide();
-			$('.parcelamento-cartao').empty().html($('.selectParcelamentoCredito option:selected').text())
 			$('.transferenciaBancaria').hide();
 			$('.boletoBancario').hide();
-			$('.cartaocredito').slideDown();
+
 			$('.cartaoEmpresarial_Credito').hide();
 			$('.cartaoEmpresarial').hide();
 
+			$('.cartaocredito').slideDown();
 			$('.cartao-credito').slideDown();
-		
+             $('.parcelamento-cartao').show();
+             $('.empresarial-valor-resumo').hide();
 			dadosResumo.empty().html('  Cartão de Crédito')
 				break;
 
@@ -1188,7 +1239,7 @@ function efetuarPagamento() {
 			break;
 	}
 
-	var cupom_desconto 	=  $('#inputCupom').val() != "" ? $('#inputCupom').val() :  '';
+    var cupom_desconto 	=  $('#inputCupom').val() != "" ? $('#inputCupom').val() :  '';
 	var pacientes		= $('.paciente_agendamento_id');
 
 	pacientes.each(function(){
@@ -1251,7 +1302,7 @@ function efetuarPagamento() {
 			   data: {
 				dados:dados,
 				metodo: metodoPagamento,
-				cupom_desconto:cupom_desconto,
+                cod_cupom_desconto:cupom_desconto,
 				'agendamentos':agendamentos,
 				paciente_id:paciente_id,
 				titulo_pedido:titulo_pedido,
@@ -1384,37 +1435,41 @@ function cartaoCreditoEmpresarial(){
 
 function printParcelamento(valor){
 	var options = ""
-	$('#selectParcelamentoCredito').empty()
+	$('.selectParcelamentoCredito').empty()
+    $('.parcelamento-cartao').empty()
 
 	if(parseFloat(valor) >50 && parseFloat(valor) < 500 ){
-		 
-		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
+
+		$('.selectParcelamentoCredito').empty().append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
 		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
+
 		var i=0;
 		for (i = 2; i <=3; i++) {
 			var vl = parseFloat(valor) / i
 			if(i <=3){
-				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
-			} 
+				$('.selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
+			}
 		}
 
 	}else if(parseFloat(valor) >500) {
-	 
-		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+ valor.formatMoney(2, ',', '.')+' sem juros </option>' )
+
+
 		$('.parcelamento-cartao').empty().html('1 x R$ '+valor.formatMoney(2, ',', '.')+' sem juros')
 		var i=0;
-		for (i = 2; i <=10; i++) {
+		for (i = 1; i <=10; i++) {
 			var vl = parseFloat(valor) / i
 			if(i <=3){
-				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
+				$('.selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(vl).formatMoney(2, ',', '.')+' sem juros </option>' )
 			}else if(i >3){
-				$('#selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(parseFloat(vl) *1.05).formatMoney(2, ',', '.') +' com juros (5% a.m.) </option>' )
+				$('.selectParcelamentoCredito').append( '  <option value="'+i+'" > '+i+' x R$ '+(parseFloat(vl) *1.05).formatMoney(2, ',', '.') +' com juros (5% a.m.) </option>' )
 			}
 		}
 	}else{
-		$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros')
-		$('#selectParcelamentoCredito').append( '  <option value="1" > 1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros </option>' )
+
+	 	$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros')
+		$('.selectParcelamentoCredito').empty().append( '  <option value="1" > 1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros </option>' )
 	}
+
 }
 
 function cartaoCredito() {
@@ -1606,6 +1661,7 @@ function pagarCartaoCredito() {
 
 		result = false;
 	}
+
 
 	pacientes.each(function(){
 
