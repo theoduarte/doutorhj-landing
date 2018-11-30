@@ -71,7 +71,7 @@ class PacienteController extends Controller
         	
         	$url = route('landing-page');
         	
-        	$html_message = view('users.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'));
+        	$html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'));
         	
         	$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
         	
