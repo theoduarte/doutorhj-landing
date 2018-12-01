@@ -1785,20 +1785,22 @@ class PaymentController extends Controller
 
     public function testeEnviarEmail(){
     	
+        $send_message = false;
     	try {
-    		$paciente_id = 294;
+    		$paciente_id = 26;
     		$paciente = Paciente::with('user')->findOrFail($paciente_id);
-//     		dd($paciente);
+//      		dd($paciente);
     		 
-    		$verify_hash = Crypt::encryptString($paciente_id);
-    		$from = 'contato@doutorhoje.com.br';
-    		$to = $paciente->user->email;
-    		$subject = 'Contato DoutorHoje';
+//     		$verify_hash = Crypt::encryptString($paciente_id);
+//     		$from = 'contato@doutorhoje.com.br';
+//     		$to = $paciente->user->email;
+//     		$subject = 'Contato DoutorHoje';
     		 
-    		$paciente_nm_primario = $paciente->nm_primario;
-    		$paciente_email = $paciente->user->email;
+//     		$paciente_nm_primario = $paciente->nm_primario;
+//     		$paciente_email = $paciente->user->email;
     		 
-    		$url = route('ativar_conta', $verify_hash);
+//     		$url = route('ativar_conta', $verify_hash);
+    		$send_message = UserController::enviaEmailAtivacao($paciente);
     		
     	} catch (Exception $e) {
     		report($e);
@@ -1808,12 +1810,13 @@ class PaymentController extends Controller
     	
 //         $send_message = $this->enviarEmailPreAgendamento($paciente, $pedido, $agendamento);
 
-//         if ($send_message) {
-//             dd('O e-mail foi enviado com sucesso!');
-//             //dd($output);
-//         }
+        if ($send_message) {
+            dd('O e-mail foi enviado com sucesso!');
+            //dd($output);
+        }
+        dd('O e-mail não foi enviado.');
 
-        return view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
+//         return view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
     }
 
     /**

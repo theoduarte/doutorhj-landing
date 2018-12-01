@@ -19,7 +19,7 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='184' style='background-color: #fff;'>&nbsp;</td>
-                <td width='233'><img src='https://doutorhoje.com.br/img/logo-home-header.png' width='233' height='50' alt=''/></td>
+                <td width='233'><img src='{{ Request::root() }}/img/logo-home-header.png' width='233' height='50' alt=''/></td>
                 <td width='183' style='background-color: #fff;'>&nbsp;</td>
             </tr>
         </table>
@@ -37,7 +37,7 @@
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 18px; line-height: 18px; color: #000; background-color: #fff; text-align: center;'>
-                    <strong>Olá,</strong> <strong style='color: #1d70b7;'>{{ strtoupper($paciente_nm_primario) }}</strong>
+                    <strong>Olá,</strong> <strong style='color: #1d70b7;'>{{ strtoupper( $paciente_nm_primario ) }}</strong>
                 </td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
