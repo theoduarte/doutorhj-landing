@@ -1873,20 +1873,12 @@ class PaymentController extends Controller
             if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito') {
                 $pedido_obj->load('pagamentos');
                 $tipo_pagamento = 'CRÉDITO';
-                
-//                 $pagamento = Payment::where(['pedido_id' => $pedido])->first();
-//                 if(!empty($pagamento)) {
-//                     $crc_brand = "";
                     
-// //                     try {
-//                         $response = $pagamento->cielo_result;
-//                         $credit_card_response = json_decode($response, true);
-//                         $crc_brand = $credit_card_response->charges[0]->last_transaction->card->brand;
-//                         $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
-// //                     } catch (\Exception $e) {}
-//                 }
-                $crc_brand = $paciente->credit_card_brand;
-                $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+                try {
+                    $crc_brand = $paciente->credit_card_brand;
+                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+                } catch (\Exception $e) {}
+                
                 dd($tipo_pagamento);
             } else {
                 $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
