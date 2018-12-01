@@ -19,14 +19,14 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='184' style='background-color: #fff;'>&nbsp;</td>
-                <td width='233'><img src='https://doutorhoje.com.br/img/logo-home-header.png' width='233' height='50' alt=''/></td>
+                <td width='233'><img src='{{ Request::root() }}/img/logo-home-header.png' width='233' height='50' alt=''/></td>
                 <td width='183' style='background-color: #fff;'>&nbsp;</td>
             </tr>
         </table>
         <br>
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
-                <td><img src='https://doutorhoje.com.br/img/banner-top-pre-agendamento.png' width='600' height='460' alt=''/></td>
+                <td><img src='{{ Request::root() }}/img/banner-top-pre-agendamento.png' width='600' height='460' alt=''/></td>
             </tr>
         </table>
         <br>
@@ -67,9 +67,9 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='122'>&nbsp;</td>
-                <td width='68'><img src='https://doutorhoje.com.br/img/cliente.png' width='68' height='65' alt=''/></td>
+                <td width='68'><img src='{{ Request::root() }}/img/cliente.png' width='68' height='65' alt=''/></td>
                 <td width='220'>&nbsp;</td>
-                <td width='68'><img src='https://doutorhoje.com.br/img/lista.png' width='68' height='65' alt=''/></td>
+                <td width='68'><img src='{{ Request::root() }}/img/lista.png' width='68' height='65' alt=''/></td>
                 <td width='122'>&nbsp;</td>
             </tr>
         </table>
@@ -88,9 +88,9 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='122'>&nbsp;</td>
-                <td width='68'><img src='https://doutorhoje.com.br/img/local.png' width='68' height='65' alt=''/></td>
+                <td width='68'><img src='{{ Request::root() }}/img/local.png' width='68' height='65' alt=''/></td>
                 <td width='220'>&nbsp;</td>
-                <td width='68'><img src='https://doutorhoje.com.br/img/pagamento.png' width='68' height='65' alt=''/></td>
+                <td width='68'><img src='{{ Request::root() }}/img/pagamento.png' width='68' height='65' alt=''/></td>
                 <td width='122'>&nbsp;</td>
             </tr>
         </table>
@@ -109,7 +109,7 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='266'>&nbsp;</td>
-                <td width='68'><img src='https://doutorhoje.com.br/img/calendario.png' width='68' height='65' alt=''/></td>
+                <td width='68'><img src='{{ Request::root() }}/img/calendario.png' width='68' height='65' alt=''/></td>
                 <td width='266'>&nbsp;</td>
             </tr>
         </table>
@@ -153,11 +153,11 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='225'>&nbsp;</td>
-                <td width='30'><a href='https://www.instagram.com/doutor_hoje/'><img src='https://doutorhoje.com.br/img/instagram.png' alt='' width='30' height='31' border='0'/></a></td>
+                <td width='30'><a href='https://www.instagram.com/doutor_hoje/'><img src='{{ Request::root() }}/img/instagram.png' alt='' width='30' height='31' border='0'/></a></td>
                 <td width='30'>&nbsp;</td>
-                <td width='30'><img src='https://doutorhoje.com.br/img/facebook.png' width='30' height='30' alt=''/></td>
+                <td width='30'><img src='{{ Request::root() }}/img/facebook.png' width='30' height='30' alt=''/></td>
                 <td width='30'>&nbsp;</td>
-                <td width='30'><a href='https://wa.me/5561986792680'><img src='https://doutorhoje.com.br/img/whatsapp.png' width='30' height='30' alt=''/></a></td>
+                <td width='30'><a href='https://wa.me/5561986792680'><img src='{{ Request::root() }}/img/whatsapp.png' width='30' height='30' alt=''/></a></td>
                 <td width='225'>&nbsp;</td>
             </tr>
         </table>
