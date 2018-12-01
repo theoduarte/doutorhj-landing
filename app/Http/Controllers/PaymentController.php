@@ -1172,8 +1172,8 @@ class PaymentController extends Controller
                 //--enviar mensagem informando o pre agendamento da solicitacao----------------
                 foreach($result_agendamentos as $agendamento){
                     try {
-                        dd($dadosPagamentos);
-                        $customer->credit_card_brand = $dadosPagamentos['charges'][0]['last_transaction']['brand'];
+                        $customer->credit_card_brand = $dadosPagamentos['charges'][0]['last_transaction']['card']['brand'];
+                        dd($customer);
                         if(!is_null($agendamento->atendimento_id))
                             $this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
                     } catch (Exception $e) {}
