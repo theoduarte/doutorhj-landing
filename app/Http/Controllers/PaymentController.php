@@ -1870,11 +1870,18 @@ class PaymentController extends Controller
         $pedido_obj = Pedido::findorfail($pedido);
         if(!empty($pedido_obj)) {
             if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito') {
-                $pedido_obj->load('cartao_paciente');
+                $pedido_obj->load('pagamentos');
                 $tipo_pagamento = 'CRÉDITO';
                 
-                if(!empty($pedido_obj->cartao_paciente)) {
-                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($pedido_obj->cartao_paciente->bandeira);
+                if(!empty($pedido_obj->pagamentos) && sizeof($pedido_obj->pagamentos) > 0) {
+                    $crc_brand = "";
+                    
+//                     try {
+                        $response = $pedido_obj->pagamentos[0]->cielo_result;
+                        $credit_card_response = json_decode($response, true);
+                        $crc_brand = $credit_card_response->charges[0]->last_transaction->card->brand;
+                        $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+//                     } catch (\Exception $e) {}
                 }
             } else {
                 $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
