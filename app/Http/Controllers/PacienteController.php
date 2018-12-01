@@ -63,7 +63,7 @@ class PacienteController extends Controller
         if($user_activate->save()) {
         	
         	$from = 'contato@doutorhoje.com.br';
-        	$to = $usuario->email;
+        	$to = $user_activate->email;
         	$subject = 'Contato DoutorHoje';
         	
         	$paciente_nm_primario = $paciente->nm_primario;
@@ -71,7 +71,7 @@ class PacienteController extends Controller
         	
         	$url = route('landing-page');
         	
-        	$html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'));
+        	$html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
         	
         	$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
         	
