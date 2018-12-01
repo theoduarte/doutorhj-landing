@@ -1172,6 +1172,7 @@ class PaymentController extends Controller
                 //--enviar mensagem informando o pre agendamento da solicitacao----------------
                 foreach($result_agendamentos as $agendamento){
                     try {
+                        $customer->credit_card_brand = $dadosPagamentos['charges'][0]['last_transaction']['brand'];
                         if(!is_null($agendamento->atendimento_id))
                             $this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
                     } catch (Exception $e) {}
@@ -1873,18 +1874,20 @@ class PaymentController extends Controller
                 $pedido_obj->load('pagamentos');
                 $tipo_pagamento = 'CRÉDITO';
                 
-                $pagamento = Payment::where(['pedido_id' => $pedido])->first();
-                dd($pedido);
-                if(!empty($pagamento)) {
-                    $crc_brand = "";
+//                 $pagamento = Payment::where(['pedido_id' => $pedido])->first();
+//                 if(!empty($pagamento)) {
+//                     $crc_brand = "";
                     
-//                     try {
-                        $response = $pagamento->cielo_result;
-                        $credit_card_response = json_decode($response, true);
-                        $crc_brand = $credit_card_response->charges[0]->last_transaction->card->brand;
-                        $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
-//                     } catch (\Exception $e) {}
-                }
+// //                     try {
+//                         $response = $pagamento->cielo_result;
+//                         $credit_card_response = json_decode($response, true);
+//                         $crc_brand = $credit_card_response->charges[0]->last_transaction->card->brand;
+//                         $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+// //                     } catch (\Exception $e) {}
+//                 }
+                $crc_brand = $paciente->credit_card_brand;
+                $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+                dd($pedido);
             } else {
                 $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
             }
