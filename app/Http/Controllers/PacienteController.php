@@ -78,7 +78,8 @@ class PacienteController extends Controller
         	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
         }
         
-        return redirect()->route( 'activate-redirect' );
+//         return redirect()->route( 'activate-redirect' );
+        return view('pacientes.activate');
     }
 
     /**
