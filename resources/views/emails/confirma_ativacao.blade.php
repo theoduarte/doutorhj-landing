@@ -19,14 +19,14 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="184" style="background-color: #fff;">&nbsp;</td>
-                <td width="233"><img src="https://doutorhoje.com.br/img/logo-home-header.png" width="233" height="50" alt=""/></td>
+                <td width="233"><img src="{{ Request::root() }}/img/logo-home-header.png" width="233" height="50" alt=""/></td>
                 <td width="183" style="background-color: #fff;">&nbsp;</td>
             </tr>
         </table>
         <br>
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
-                <td><img src="https://doutorhoje.com.br/img/banner-top.png" width="600" height="610" alt=""/></td>
+                <td><img src="{{ Request::root() }}/img/banner-top.png" width="600" height="610" alt=""/></td>
             </tr>
         </table>
         <br>
@@ -64,7 +64,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-vermelho.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}img/icone-vermelho.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Agendar consultas e exames em menos de um minuto;
                 </td>
@@ -75,7 +75,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-azul.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-azul.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Prazo de agendamento em até 5 dias úteis;
                 </td>
@@ -86,7 +86,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-vermelho.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-vermelho.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Ter acesso a uma ampla rede de clínicas, laboratórios e médicos de excelência distribuída nas grandes capitais e grandes centros do Brasil;
                 </td>
@@ -97,7 +97,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-azul.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-azul.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #000;">Valores de consultas e exames até 80% mais barato em relação aos valores particulares;
                 </td>
@@ -108,7 +108,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-vermelho.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-vermelho.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Acompanhar seu histórico de visitas e de saúde, saiba quando foi suas últimas consultas e exames realizados;
                 </td>
@@ -119,7 +119,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-azul.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-azul.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Controlar seu custo com a saúde;
                 </td>
@@ -130,7 +130,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-vermelho.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-vermelho.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Ver seus orçamentos de exames;
                 </td>
@@ -141,7 +141,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-azul.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-azul.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Verificar seus próximos agendamentos;
                 </td>
@@ -152,7 +152,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-vermelho.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-vermelho.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Pagar utilizando cartão de crédito em até 6x, boleto bancário ou transferência bancária;
                 </td>
@@ -163,7 +163,7 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="30">&nbsp;</td>
-                <td width="14"><img src="icone-azul.png" width="14" height="15" alt=""/></td>
+                <td width="14"><img src="{{ Request::root() }}/img/icone-azul.png" width="14" height="15" alt=""/></td>
                 <td width="10">&nbsp;</td>
                 <td width="527" style="font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;">Praticar a prevenção.
                 </td>
@@ -204,11 +204,11 @@
         <table width="600" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr>
                 <td width="225">&nbsp;</td>
-                <td width="30"><a href="https://www.instagram.com/doutor_hoje/"><img src="instagram.png" alt="" width="30" height="31" border="0"/></a></td>
+                <td width="30"><a href="https://www.instagram.com/doutor_hoje/"><img src="{{ Request::root() }}/img/instagram.png" alt="" width="30" height="31" border="0"/></a></td>
                 <td width="30">&nbsp;</td>
-                <td width="30"><img src="facebook.png" width="30" height="30" alt=""/></td>
+                <td width="30"><img src="{{ Request::root() }}/img/facebook.png" width="30" height="30" alt=""/></td>
                 <td width="30">&nbsp;</td>
-                <td width="30"><a href="https://wa.me/5561986792680"><img src="whatsapp.png" width="30" height="30" alt=""/></a></td>
+                <td width="30"><a href="https://wa.me/5561986792680"><img src="{{ Request::root() }}/img/whatsapp.png" width="30" height="30" alt=""/></a></td>
                 <td width="225">&nbsp;</td>
             </tr>
         </table>

@@ -196,7 +196,7 @@ class UserController extends Controller
 		$url = route('ativar_conta', $verify_hash);
 		//$html_message = "<!DOCTYPE html><html><head><title>DoutorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2></body></html>";
 		
-		$html_message = view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
+		$html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
 
 		$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
 
