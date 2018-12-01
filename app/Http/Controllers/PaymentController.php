@@ -1879,7 +1879,6 @@ class PaymentController extends Controller
                     $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
                 } catch (\Exception $e) {}
                 
-                dd($tipo_pagamento);
             } else {
                 $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
             }
