@@ -1800,7 +1800,8 @@ class PaymentController extends Controller
 //     		$paciente_email = $paciente->user->email;
     		 
 //     		$url = route('ativar_conta', $verify_hash);
-    		$send_message = UserController::enviaEmailAtivacao($paciente);
+            $user_temp = new UserController();
+            $send_message = $user_temp->sendTokenEmail('111111', 'teocomp@gmail.com', 'Theo Duarte', '01/12/2018 às 16:49:00');
     		
     	} catch (Exception $e) {
     		report($e);
