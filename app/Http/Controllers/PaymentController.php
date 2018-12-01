@@ -1955,7 +1955,7 @@ class PaymentController extends Controller
         $subject = 'Pré-Agendamento Solicitado';
         
         ######################## ENVIO DE EMAIL DE PRE-AGENDAMENTO##############################
-        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
+        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'))->render();
          
         $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
 
@@ -2104,7 +2104,7 @@ class PaymentController extends Controller
         $subject = 'Pré-Agendamento Solicitado';
         
         ######################## ENVIO DE EMAIL DE PRE-AGENDAMENTO##############################
-        $html_message = view('emails.compra_boleto', compact('nm_primario', 'nr_pedido', 'url_boleto', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
+        $html_message = view('emails.compra_boleto', compact('nm_primario', 'nr_pedido', 'url_boleto', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'))->render();
         
         $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
         
