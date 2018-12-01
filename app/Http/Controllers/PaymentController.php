@@ -1860,10 +1860,12 @@ class PaymentController extends Controller
         		$tipo_atendimento = "Exame";
         	}
         	
-        	$preco_ativo = $agendamento->atendimento->getPrecoByPlano($plano_ativo_id);
-        	$preco_ativo = 'R$ '.$preco_ativo;
+        	$atendimento_id = $agendamento->atendimento->id;
+         	$atend_temp = new Atendimento(); 
+         	$preco_ativo = $atend_temp->getPrecoByPlano($plano_ativo_id, $atendimento_id);
+         	$preco_ativo = 'R$ '.$preco_ativo->vl_comercial;
         }
-        dd($preco_ativo);
+//         dd($preco_ativo);
         $tipo_pagamento = '--------';
         $pedido_obj = Pedido::findorfail($pedido);
         if(!empty($pedido_obj)) {
