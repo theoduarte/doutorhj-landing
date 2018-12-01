@@ -1863,19 +1863,19 @@ class PaymentController extends Controller
         	$preco_ativo = $agendamento->atendimento->getPrecoByPlano($plano_ativo_id);
         	$preco_ativo = 'R$ '.$preco_ativo;
         }
-        
+        dd($preco_ativo);
         $tipo_pagamento = '--------';
-        
-        if(!empty($pedido)) {
-            if($pedido->tp_pagamento == 'Crédito' | $pedido->tp_pagamento == 'credito') {
-                $pedido->load('cartao_paciente');
+        $pedido_obj = Pedido::findorfail($pedido);
+        if(!empty($pedido_obj)) {
+            if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito') {
+                $pedido_obj->load('cartao_paciente');
                 $tipo_pagamento = 'CRÉDITO';
                 
-                if(!empty($pedido->cartao_paciente)) {
-                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($pedido->cartao_paciente->bandeira);
+                if(!empty($pedido_obj->cartao_paciente)) {
+                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($pedido_obj->cartao_paciente->bandeira);
                 }
             } else {
-                $tipo_pagamento = strtoupper($pedido->tp_pagamento);
+                $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
             }
             
         }
@@ -1885,7 +1885,7 @@ class PaymentController extends Controller
         $hora_agendamento = '---------';
 
         if (!empty($agendamento->profissional_id)) {
-            $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
+            $nome_profissional		= "Dr(a): ".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."";
         }
 
         if(!empty($agendamento->clinica->tp_prestador)){
