@@ -1887,7 +1887,7 @@ class PaymentController extends Controller
 //                 }
                 $crc_brand = $paciente->credit_card_brand;
                 $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
-                dd($pedido);
+                dd($tipo_pagamento);
             } else {
                 $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
             }
