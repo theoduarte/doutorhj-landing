@@ -1874,7 +1874,7 @@ class PaymentController extends Controller
                 $tipo_pagamento = 'CRÉDITO';
                 
                 $pagamento = Payment::where(['pedido_id' => $pedido])->first();
-                dd($pagamento);
+                dd($pedido);
                 if(!empty($pagamento)) {
                     $crc_brand = "";
                     
