@@ -290,10 +290,10 @@ class UtilController extends Controller
 	    $ch = curl_init();
 	    curl_setopt($ch, CURLOPT_URL, $url);
 	    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	    $output = curl_exec($ch);
-	    
+
 	    if ($output == "") {
 	        return true;
 	    }

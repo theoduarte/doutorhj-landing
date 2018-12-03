@@ -726,8 +726,19 @@ class PaymentController extends Controller
 
 			$parcelas = $dados->parcelas ?? 1;
 
-
-			$agendamentos = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
+			$respAgend = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
+			if($respAgend) {
+				CVXCart::clear(); /** Limpa carrinho e retorna reposta */
+				return response()->json([
+					'status' => true,
+					'mensagem' => 'O Pedido foi enviado para aprovaçao da empresa!'
+				]);
+			} else {
+				return response()->json([
+					'status' => false,
+					'mensagem' => 'Erro ao solicitar pre-autorizaçao!'
+				]);
+			}
 		}
 
         //================================================================= AGENDAMENTOS ============================================================//
@@ -1377,10 +1388,7 @@ class PaymentController extends Controller
 		$agendamentos = Agendamento::whereIn('id', $agendamento_id)->with(['itempedidos.pedido'])->get();
 		$this->enviarEmailPreAutorizar($paciente, $agendamentos);
 
-		return response()->json([
-			'status' => true,
-			'mensagem' => 'O Pedido foi enviado para aprovaçao da empresa!'
-		]);
+		return true;
 	}
 
 	private function verificaTp($tp, $op = null) {
@@ -1391,12 +1399,12 @@ class PaymentController extends Controller
 				if(!is_null($op) && $op == 1) {
 					return 'empresarial';break;
 				} elseif(!is_null($op) && $op == 2) {
-					return "credito";break;
+					return "individual";break;
 				} else {
-					return "empre+credito";break;
+					return "empre+indiv";break;
 				}
 			case Payment::METODO_CRED_IND:
-				return "credito";break;
+				return "individual";break;
 			case Payment::METODO_BOLETO:
 				return "boleto";break;
 			case Payment::METODO_TRANSFERENCIA:
@@ -2035,7 +2043,7 @@ class PaymentController extends Controller
 			$htmlCliente = view('payments.email_confirma_pre_autorizacao', compact('agendamento', 'dt_atendimento'));
 			$htmlCliente = str_replace(["\r", "\n", "\t"], '', $htmlCliente);
 
-//			$send_message[] = UtilController::sendMail($to, $from, $subject, $htmlCliente);
+			$send_message[] = UtilController::sendMail($to, $from, $subject, $htmlCliente);
 		}
 
 		if(!is_null($paciente->empresa->resp_financeiro_id))
