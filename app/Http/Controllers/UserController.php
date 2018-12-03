@@ -18,6 +18,7 @@ use App\Http\Requests\UsuariosRequest;
 use Illuminate\Support\Carbon;
 use App\FuncoesPagamento;
 use MundiAPILib\MundiAPIClient;
+use App\VigenciaPaciente;
 
 class UserController extends Controller
 {
@@ -116,63 +117,99 @@ class UserController extends Controller
 //     	$encrypted = Crypt::encryptString('5');
     	
 //     	$decrypted = Crypt::decryptString($encrypted);
+
+        ########### STARTING TRANSACTION ############
+        DB::beginTransaction();
+        #############################################
     	
-    	# dados de acesso do usuário paciente
-    	$usuario            		= new User();
-    	$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
-    	$usuario->email     		= $request->input('email');
-    	$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
-		$usuario->access_token		= bcrypt($access_token);
-    	$usuario->tp_user   		= 'PAC';
-    	$usuario->cs_status 		= 'I';
-    	$usuario->perfiluser_id 	= 3;
-    	$usuario->save();
-
-        // passa os valores para montar o objeto a ser enviado
-		$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
-
-		// cria o usuario na mundipagg
-        $userCreate = $client->getCustomers()->createCustomer( $resultado );
-            
-    	# dados do paciente
-    	$paciente           		= new Paciente();
-    	$paciente->user_id 			= $usuario->id;
-    	$paciente->nm_primario      = $request->input('nm_primario');
-    	$paciente->nm_secundario    = $request->input('nm_secundario');
-    	$paciente->cs_sexo     		= $request->input('cs_sexo');
-    	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
-    	$paciente->access_token    	= $access_token;
-        $paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
-        $paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
-    	//dd($usuario);
-    	$paciente->save();
-    	
-    	# cpf do paciente
-    	$documento 					= new Documento();
-    	$documento->tp_documento 	= 'CPF';
-    	$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
-    	$documento->save();
-    	$documento_ids = [$documento->id];
-    	
-    	# contato do paciente
-    	$contato1             		= new Contato();
-    	$contato1->tp_contato 		= 'CP';
-    	$contato1->ds_contato 		= $request->input('ds_contato');
-    	$contato1->save();
-    	$contato_ids = [$contato1->id];
-    	
-    	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
-
-        # vinculação com o termo e condição
-        $termosCondicoes = new TermosCondicoes();
-        $termosCondicoesActual = $termosCondicoes->getActual();
-
-        $termosCondicoesUsuarios = new TermosCondicoesUsuarios();
-        $termosCondicoesUsuarios->user_id = $usuario->id;
-        $termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
-        $termosCondicoesUsuarios->save();
-
-		$send_message = $this->enviaEmailAtivacao($paciente);
+        try {
+        	# dados de acesso do usuário paciente
+        	$usuario            		= new User();
+        	$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
+        	$usuario->email     		= $request->input('email');
+        	$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
+        	$usuario->access_token		= bcrypt($access_token);
+        	$usuario->tp_user   		= 'PAC';
+        	$usuario->cs_status 		= 'I';
+        	$usuario->perfiluser_id 	= 3;
+        	$usuario->save();
+        	
+        	// passa os valores para montar o objeto a ser enviado
+        	$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
+        	
+        	// cria o usuario na mundipagg
+        	$userCreate = $client->getCustomers()->createCustomer( $resultado );
+        	
+        	############# verifica se o usuario pertece a lista da ANASPS ##############
+        	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
+        	$nr_documento = UtilController::retiraMascara($request->input('te_documento'));
+        	$documento_anasps = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
+        	############################################################################
+        	
+        	# dados do paciente
+        	$paciente           		= new Paciente();
+        	$paciente->user_id 			= $usuario->id;
+        	$paciente->nm_primario      = $request->input('nm_primario');
+        	$paciente->nm_secundario    = $request->input('nm_secundario');
+        	$paciente->cs_sexo     		= $request->input('cs_sexo');
+        	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
+        	if (!empty($documento_anasps)) {
+        		$paciente->empresa_id = 3;
+        	}
+        	$paciente->access_token    	= $access_token;
+        	$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+        	$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
+        	//dd($usuario);
+        	$paciente->save();
+        	
+        	############# coloca vigencia no colaborador ANASPS ##############
+        	if (!empty($documento_anasps)) {
+        		
+        		# vigencia do colaborador ANASPS
+        		$vigencia 					= new VigenciaPaciente();
+        		$vigencia->data_inicio 		= date('Y-m-d', strtotime('2018-12-01'));
+        		$vigencia->data_fim 		= date('Y-m-d', strtotime('2019-12-01'));
+        		$vigencia->cobertura_ativa 	= true;
+        		$vigencia->vl_max_consumo	= 0;
+        		$vigencia->paciente_id 		= $paciente->id;
+        		$vigencia->anuidade_id 		= 15;
+        		$vigencia->save();
+        	}
+        	#################################################################
+        	 
+        	# cpf do paciente
+        	$documento 					= new Documento();
+        	$documento->tp_documento 	= 'CPF';
+        	$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
+        	$documento->save();
+        	$documento_ids = [$documento->id];
+        	 
+        	# contato do paciente
+        	$contato1             		= new Contato();
+        	$contato1->tp_contato 		= 'CP';
+        	$contato1->ds_contato 		= $request->input('ds_contato');
+        	$contato1->save();
+        	$contato_ids = [$contato1->id];
+        	 
+        	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
+        	
+        	# vinculação com o termo e condição
+        	$termosCondicoes = new TermosCondicoes();
+        	$termosCondicoesActual = $termosCondicoes->getActual();
+        	
+        	$termosCondicoesUsuarios = new TermosCondicoesUsuarios();
+        	$termosCondicoesUsuarios->user_id = $usuario->id;
+        	$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
+        	$termosCondicoesUsuarios->save();
+        	
+        	$send_message = $this->enviaEmailAtivacao($paciente);
+        } catch (Exception $e) {
+        	DB::rollback();
+        }
+        
+        ########### FINISHIING TRANSACTION ##########
+        DB::commit();
+        #############################################
 
 //     	return view('users.register', compact('access_token'));
 		return view('auth.login', compact('access_token'));
