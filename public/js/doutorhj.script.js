@@ -1338,7 +1338,7 @@ function efetuarPagamento() {
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
  
-								  text:  result.responseJSON.mensagem
+								  text:  result.mensagem
  
 							  }
 						  );
