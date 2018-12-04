@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Especialidade;
 use App\ItemCheckup;
+use App\TipoCartao;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\DB;
@@ -900,7 +905,117 @@ class AgendamentoController extends Controller
         
         return response()->json(['status' => true, 'mensagem' => 'Agendamento disponível!']);
     }
-    
+
+	public function autorizaCreditoEmpresarial($verify_hash)
+	{
+		$decryptString = Crypt::decryptString($verify_hash);
+		$dados = explode('@', $decryptString);
+
+		$paciente_id = $dados[0];
+		$empresa_id = $dados[1];
+		$agendamento_ids = json_decode($dados[2]);
+
+		$paciente = Paciente::find($paciente_id);
+		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
+
+		/** Verifica se algum agendamento ja foi pré-agendado */
+		if(Agendamento::whereIn('id', $agendamento_ids)->where('cs_status', '<>', Agendamento::PRE_AUTORIZAR)->exists()) {
+			return response()->json([
+				'status' => false,
+				'mensagem' => 'Agendamento já autorizado.'
+			]);
+		}
+
+		$itemPedidoIndividual = Itempedido::whereIn('agendamento_id', $agendamento_ids)
+			->with(['pedido', 'pedido.cartao_paciente'])->whereHas('pedido', function($query) {
+				$query->where('tp_pagamento', 'individual');
+			});
+
+		/** Caso seja somente pagamento empresarial, os agendamentos são atualizados para pré-agendado */
+		if(!$itemPedidoIndividual->exists()) {
+			Agendamento::whereIn('id', $agendamento_ids)->update(['cs_status' => Agendamento::PRE_AGENDADO]);
+
+			/**
+			 *
+			 * ######### ATENÇÃO #########
+			 * É necessário implementar PAGAMENTO no cartão EMPRESARIAL nesse ponto
+			 *
+			 * Enviar EMAIL para usuário CONFIRMANDO o Pré-Agendamento
+			 *
+			 */
+		} else { /** Caso exista complementação de crédito com o cartão INDIVIDUAL */
+			/**
+			 * Envia email para usuário com LINK para efetuar o pagamento
+			 */
+
+			$this->enviaEmailPagamentoIndividual($paciente, $agendamentos);
+		}
+
+		dd($agendamento_ids, $itemPedidoIndividual);
+
+		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
+
+
+
+		dd($paciente_id, $empresa_id, $agendamento_ids);
+	}
+
+	public function enviaEmailPagamentoIndividual(Paciente $paciente, Collection $agendamentos)
+	{
+		$nome 						= $paciente->nm_primario.' '.$paciente->nm_secundario;
+		$email 						= $paciente->user->email;
+		$telefone 					= $paciente->contatos->first()->ds_contato;
+		$conteudo = '';
+
+		foreach ($agendamentos as $agendamento) {
+			$especialidade					= Especialidade::getNomeEspecialidade($agendamento->id);
+			$agendamento->ds_atendimento 	= $especialidade['ds_atendimento'];
+			$agendamento->nm_especialidade 	= $especialidade['nome_especialidades'];
+			$dt_atendimento					= Carbon::createFromFormat('d/m/Y H:i', $agendamento->dt_atendimento);
+
+			if (!empty($agendamento->profissional_id)) {
+				$agendamento->nm_profissional		= "Dr(a): ".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario;
+			} else {
+				$agendamento->nm_profissional = '---------';
+			}
+
+			if ($agendamento->filial->endereco != null) {
+				$enderecoClinica = $agendamento->filial->endereco;
+				$agendamento->enderecoAgendamento = $enderecoClinica->te_endereco.', '.$enderecoClinica->nr_logradouro.', '.$enderecoClinica->te_bairro.', '.$enderecoClinica->cidade->nm_cidade.'/ '.$enderecoClinica->cidade->sg_estado;
+			} else {
+				$agendamento->enderecoAgendamento = '--------------------';
+			}
+
+			$conteudo .= "<h4>Seu Pré-Agendamento:</h4><br>
+						<ul>
+							<li>Nº do Agendamento: {$agendamento->id}</li>
+							<li>{$agendamento->nm_especialidade}</li>
+							<li>Dr(a): {$agendamento->nm_profissional}</li>
+							<li>Data: {$dt_atendimento->format('d/m/Y')}</li>
+							<li>Horário: {$dt_atendimento->format('H:i')} (por ordem de chegada)</li>
+							<li>Endereço: {$agendamento->enderecoAgendamento}</li>
+						</ul>";
+		}
+
+		/** Dados da mensagem para o cliente */
+		$msgCliente					= new Mensagem();
+		$msgCliente->rma_nome		= 'Contato DoutorHoje';
+		$msgCliente->rma_email		= 'contato@doutorhoje.com.br';
+		$msgCliente->assunto		= 'Pagamento de Agendamento(s)';
+		$msgCliente->conteudo		= $conteudo;
+		$msgCliente->saveOrFail();
+
+
+		$from = 'contato@doutorhoje.com.br';
+		$to = $email;
+		$subject = 'Autorização Solicitada';
+
+		$htmlCliente = view('payments.email_confirma_pre_autorizacao', compact('agendamento', 'dt_atendimento'));
+		$htmlCliente = str_replace(["\r", "\n", "\t"], '', $htmlCliente);
+
+		$send_message[] = UtilController::sendMail($to, $from, $subject, $htmlCliente);
+	}
+
     /**
      * enviarEmailCancelarAgendamento a newly external user created resource in storage.
      *

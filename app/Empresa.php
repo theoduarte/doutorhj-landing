@@ -87,7 +87,7 @@ class Empresa extends Model
 	 */
 	public function cartaoPacientes()
 	{
-		return $this->hasMany('App\CartaoPaciente');
+		return $this->hasMany('App\CartaoPaciente')->where('cs_status', 'A');
 	}
 
 	/**

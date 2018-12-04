@@ -87,11 +87,21 @@ class Preco extends Model
 
 	public function getVlNetAttribute()
 	{
-		return number_format( $this->attributes['vl_net'],  2, ',', '.');
+		return number_format($this->attributes['vl_net'],  2, ',', '.');
 	}
 
 	public function getVlComercialAttribute($val)
 	{
-		return number_format( $this->attributes['vl_comercial'],  2, ',', '.');
+		return number_format($this->attributes['vl_comercial'],  2, ',', '.');
+	}
+
+	public function getVlNetBdAttribute()
+	{
+		return $this->attributes['vl_net'];
+	}
+
+	public function getVlComercialBdAttribute($val)
+	{
+		return $this->attributes['vl_comercial'];
 	}
 }

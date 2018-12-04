@@ -24,6 +24,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @property Filial[] $filials
  * @property ItemCheckup[] $itemCheckups
  * @property Agendamento[] $agendamentos
+ * @property Preco $precoAtivo
+ * @propery Preco[] $precos
  */
 
 class Atendimento extends Model

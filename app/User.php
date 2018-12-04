@@ -6,6 +6,28 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * @property int $id
+ * @property int $perfiluser_id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $tp_user
+ * @property string $cs_status
+ * @property string $avatar
+ * @property string $created_at
+ * @property string $updated_at
+ * @property Perfiluser $perfiluser
+ * @property Mensagem[] $mensagems
+ * @property Responsavel[] $responsavels
+ * @property RegistroLog[] $registroLogs
+ * @property TermosCondicoesUsuario[] $termosCondicoesUsuarios
+ * @property Profissional[] $profissionals
+ * @property MensagemDestinatario[] $mensagemDestinatarios
+ * @property Representante[] $representantes
+ * @property Paciente[] $pacientes
+ */
 class User extends Authenticatable
 {
     use Notifiable;

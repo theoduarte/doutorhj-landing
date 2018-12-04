@@ -198,7 +198,7 @@ class UserController extends Controller
 
 		$html_message = view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
 
-		$html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
+		$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
 
 		$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
 
