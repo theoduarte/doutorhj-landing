@@ -1184,9 +1184,7 @@ class PaymentController extends Controller
                     'mensagem' => 'Pagamento não foi realizado e o agendamento não foi processado ! '.$dadosPagamentos['charges'][0]['last_transaction']['status'],
 
                 ], 422);
-
             } else {
-
                 //--enviar mensagem informando o pre agendamento da solicitacao----------------
                 foreach($result_agendamentos as $agendamento){
                     try {
