@@ -48,7 +48,7 @@ class VigenciaPaciente extends Model
 
 	public function setVlMaxConsumoAttribute($value)
 	{
-		$this->attributes['vl_max_consumo'] = UtilController::removeMaskMoney($value);
+		$this->attributes['vl_max_consumo'] = UtilController::retiraMascara($value);
 	}
 
 	public function getVlMaxConsumoAttribute()

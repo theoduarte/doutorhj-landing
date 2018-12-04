@@ -18,6 +18,7 @@ use App\Http\Requests\UsuariosRequest;
 use Illuminate\Support\Carbon;
 use App\FuncoesPagamento;
 use MundiAPILib\MundiAPIClient;
+use App\VigenciaPaciente;
 
 class UserController extends Controller
 {
@@ -116,66 +117,102 @@ class UserController extends Controller
 //     	$encrypted = Crypt::encryptString('5');
     	
 //     	$decrypted = Crypt::decryptString($encrypted);
+
+        ########### STARTING TRANSACTION ############
+        DB::beginTransaction();
+        #############################################
     	
-    	# dados de acesso do usuário paciente
-    	$usuario            		= new User();
-    	$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
-    	$usuario->email     		= $request->input('email');
-    	$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
-		$usuario->access_token		= bcrypt($access_token);
-    	$usuario->tp_user   		= 'PAC';
-    	$usuario->cs_status 		= 'I';
-    	$usuario->perfiluser_id 	= 3;
-    	$usuario->save();
+        try {
+        	# dados de acesso do usuário paciente
+        	$usuario            		= new User();
+        	$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
+        	$usuario->email     		= $request->input('email');
+        	$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
+        	$usuario->access_token		= bcrypt($access_token);
+        	$usuario->tp_user   		= 'PAC';
+        	$usuario->cs_status 		= 'I';
+        	$usuario->perfiluser_id 	= 3;
+        	$usuario->save();
+        	
+        	// passa os valores para montar o objeto a ser enviado
+        	$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
+        	
+        	// cria o usuario na mundipagg
+        	$userCreate = $client->getCustomers()->createCustomer( $resultado );
+        	
+        	############# verifica se o usuario pertece a lista da ANASPS ##############
+        	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
+        	$nr_documento = UtilController::retiraMascara($request->input('te_documento'));
+        	$documento_anasps = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
+        	############################################################################
+        	
+        	# dados do paciente
+        	$paciente           		= new Paciente();
+        	$paciente->user_id 			= $usuario->id;
+        	$paciente->nm_primario      = $request->input('nm_primario');
+        	$paciente->nm_secundario    = $request->input('nm_secundario');
+        	$paciente->cs_sexo     		= $request->input('cs_sexo');
+        	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
+        	if (!empty($documento_anasps)) {
+        		$paciente->empresa_id = 3;
+        	}
+        	$paciente->access_token    	= $access_token;
+        	$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
+        	$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
+        	//dd($usuario);
+        	$paciente->save();
+        	
+        	############# coloca vigencia no colaborador ANASPS ##############
+        	if (!empty($documento_anasps)) {
+        		
+        		# vigencia do colaborador ANASPS
+        		$vigencia 					= new VigenciaPaciente();
+        		$vigencia->data_inicio 		= date('Y-m-d', strtotime('2018-12-01'));
+        		$vigencia->data_fim 		= date('Y-m-d', strtotime('2019-12-01'));
+        		$vigencia->cobertura_ativa 	= true;
+        		$vigencia->vl_max_consumo	= 0;
+        		$vigencia->paciente_id 		= $paciente->id;
+        		$vigencia->anuidade_id 		= 15;
+        		$vigencia->save();
+        	}
+        	#################################################################
+        	 
+        	# cpf do paciente
+        	$documento 					= new Documento();
+        	$documento->tp_documento 	= 'CPF';
+        	$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
+        	$documento->save();
+        	$documento_ids = [$documento->id];
+        	 
+        	# contato do paciente
+        	$contato1             		= new Contato();
+        	$contato1->tp_contato 		= 'CP';
+        	$contato1->ds_contato 		= $request->input('ds_contato');
+        	$contato1->save();
+        	$contato_ids = [$contato1->id];
+        	 
+        	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
+        	
+        	# vinculação com o termo e condição
+        	$termosCondicoes = new TermosCondicoes();
+        	$termosCondicoesActual = $termosCondicoes->getActual();
+        	
+        	$termosCondicoesUsuarios = new TermosCondicoesUsuarios();
+        	$termosCondicoesUsuarios->user_id = $usuario->id;
+        	$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
+        	$termosCondicoesUsuarios->save();
+        	
+        	$send_message = $this->enviaEmailAtivacao($paciente);
+        } catch (Exception $e) {
+        	DB::rollback();
+        }
+        
+        ########### FINISHIING TRANSACTION ##########
+        DB::commit();
+        #############################################
 
-        // passa os valores para montar o objeto a ser enviado
-		$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
-
-		// cria o usuario na mundipagg
-        $userCreate = $client->getCustomers()->createCustomer( $resultado );
-            
-    	# dados do paciente
-    	$paciente           		= new Paciente();
-    	$paciente->user_id 			= $usuario->id;
-    	$paciente->nm_primario      = $request->input('nm_primario');
-    	$paciente->nm_secundario    = $request->input('nm_secundario');
-    	$paciente->cs_sexo     		= $request->input('cs_sexo');
-    	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
-    	$paciente->access_token    	= $access_token;
-        $paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
-        $paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
-    	//dd($usuario);
-    	$paciente->save();
-    	
-    	# cpf do paciente
-    	$documento 					= new Documento();
-    	$documento->tp_documento 	= 'CPF';
-    	$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
-    	$documento->save();
-    	$documento_ids = [$documento->id];
-    	
-    	# contato do paciente
-    	$contato1             		= new Contato();
-    	$contato1->tp_contato 		= 'CP';
-    	$contato1->ds_contato 		= $request->input('ds_contato');
-    	$contato1->save();
-    	$contato_ids = [$contato1->id];
-    	
-    	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
-
-        # vinculação com o termo e condição
-        $termosCondicoes = new TermosCondicoes();
-        $termosCondicoesActual = $termosCondicoes->getActual();
-
-        $termosCondicoesUsuarios = new TermosCondicoesUsuarios();
-        $termosCondicoesUsuarios->user_id = $usuario->id;
-        $termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
-        $termosCondicoesUsuarios->save();
-
-		$send_message = $this->enviaEmailAtivacao($paciente);
-    	
-
-    	return view('users.register', compact('access_token'));
+//     	return view('users.register', compact('access_token'));
+		return view('auth.login', compact('access_token'));
     }
 
 	public static function enviaEmailAtivacao(Paciente $paciente)
@@ -195,8 +232,8 @@ class UserController extends Controller
 
 		$url = route('ativar_conta', $verify_hash);
 		//$html_message = "<!DOCTYPE html><html><head><title>DoutorHoje Ativação</title></head><body><h2><a href='$url'>Clique no link aqui para Ativar sua conta DoutorHoje</a></h2></body></html>";
-
-		$html_message = view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
+		
+		$html_message = view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
 
 		$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
 
@@ -218,98 +255,9 @@ class UserController extends Controller
         $to = $email_destinatario;
         $subject = 'NOVO TOKEN DoutorHoje';
         
-        $html_message = <<<HEREDOC
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-        <title>DoutorHoje</title>
-    </head>
-    <body>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color:#fff;'>
-                <td width='600' style='text-align:left'>&nbsp;</td>
-            </tr>
-        </table>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr style='background-color:#fff;'>
-                <td width='600' style='text-align:center'><span style='font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#bbb;'>Doutor Hoje - Novo token de acesso</span></td>
-            </tr>
-        </table>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='184' style='background-color: #fff;'>&nbsp;</td>
-                <td width='233'><img src='https://doutorhoje.com.br/img/logo-home-header.png' width='233' height='50' alt=''/></td>
-                <td width='183' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 36px; line-height: 60px;'><strong>Novo token de acesso</strong></td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 18px; line-height: 18px; color: #000; background-color: #fff; text-align: center;'>
-                    <strong>Olá,</strong> <strong style='color: #1d70b7;'>$paciente_nm_primario</strong>
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #434342; background-color: #fff; text-align: center;'>
-                    Segue abaixo seu <strong>token de acesso</strong>, com seis dígitos, conforme solicitado em <strong>$data_solicitacao.</strong>
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='240' style='background-color: #fff;'>&nbsp;</td>
-                <td width='120' style='font-family:Arial, Helvetica, sans-serif; font-size: 20px; line-height: 46px; background-color: #a21b26; text-align: center; color: #fff;'>$access_token</td>
-                <td width='240' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 14px; line-height: 26px; color: #434342; background-color: #fff; text-align: center;'>
-                    Esse token expira em 2 horas. <br>
-Enviaremos um novo token a cada vez que acessar a área logada.</strong>
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-            <tr>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-                <td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 12px; line-height: 26px; color: #999; background-color: #fff; text-align: center;'>
-                    Mensagem automática, por favor não responda a esse e-mail.
-                </td>
-                <td width='30' style='background-color: #fff;'>&nbsp;</td>
-            </tr>
-        </table>
-    </body>
-</html>
-HEREDOC;
+        $html_message = view('emails.login_token', compact('access_token', 'email_destinatario', 'paciente_nm_primario', 'data_solicitacao'))->render();
         
-        $html_message = str_replace(array("\r", "\n"), '', $html_message);
+        $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
         
         $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
         

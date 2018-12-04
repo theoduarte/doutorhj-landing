@@ -33,8 +33,8 @@ use App\FuncoesPagamento;
 use App\Preco;
 use App\Empresa;
 use App\User;
-use Storage;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
+
 class PaymentController extends Controller
 {
     /**
@@ -255,7 +255,7 @@ class PaymentController extends Controller
         $request->session()->forget('valor_empresa');
         $request->session()->forget('varlor_credito');
 
-        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario','transferencia_bancaria','valor_credito','valor_empresa'));
+        return view('payments.finalizar_pedido', compact('result_agendamentos', 'pedido', 'valor_total_pedido', 'boleto_bancario', 'transferencia_bancaria', 'valor_credito', 'valor_empresa'));
     }
 
     /**
@@ -1190,6 +1190,7 @@ class PaymentController extends Controller
                 //--enviar mensagem informando o pre agendamento da solicitacao----------------
                 foreach($result_agendamentos as $agendamento){
                     try {
+                        $customer->credit_card_brand = $dadosPagamentos['charges'][0]['last_transaction']['card']['brand'];
                         if(!is_null($agendamento->atendimento_id))
                             $this->enviarEmailPreAgendamento($customer, $MerchantOrderId, $agendamento);
                     } catch (Exception $e) {}
@@ -1211,48 +1212,49 @@ class PaymentController extends Controller
                         $Payment->cielo_result                 		= json_encode($criarPagamento);
                         $Payment->save();
                 }
+                
+                $dados = json_decode(json_encode($criarPagamento), true);
 
-                    $dados = json_decode(json_encode($criarPagamento), true);
-
-                    $boleto = null;
-                    if($metodoPagamento == Payment::METODO_BOLETO) {
-
-                        $boleto = [
+                $boleto = null;
+                if($metodoPagamento == Payment::METODO_BOLETO) {
+                    
+                    $boleto = [
                         "instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
                         "url" => 	$dados['charges'][0]['last_transaction']['url'],
                         "qr_code" => $dados['charges'][0]['last_transaction']['qr_code'],
                         "pdf_url" => $dados['charges'][0]['last_transaction']['pdf']
                         ];
                     //	$this->enviarEmailPagamentoRealizado($paciente, $pedido, $dados['charges'][0]['last_transaction']['url']);
-                    }
-
-                    $transferencia = null;
-                    if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
-                        $transferencia = [
+//                     $url_boleto = $dados['charges'][0]['last_transaction']['url'];
+//                     $this->enviarEmailPreAgendamentoBoleto($paciente, $pedido, $agendamento, $url_boleto);
+                }
+                
+                $transferencia = null;
+                if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
+                    $transferencia = [
                         "metodo" => $dados['charges'][0]['payment_method'],
                         "url" => 	$dados['charges'][0]['last_transaction']['url']	,
                         'datas'=>$dados
-                        ];
-                    }
+                    ];
+                }
 
+                ########### FINISHIING TRANSACTION ##########
+                DB::commit();
+                #############################################
+                CVXCart::clear();
 
-                	########### FINISHIING TRANSACTION ##########
-                    DB::commit();
-                	#############################################
-                    CVXCart::clear();
+                $valor_total_pedido = $valor_total-$valor_desconto;
+                $request->session()->put('result_agendamentos', $result_agendamentos);
 
-                  $valor_total_pedido = $valor_total-$valor_desconto;
-                  $request->session()->put('result_agendamentos', $result_agendamentos);
+                $request->session()->put('pedido',$MerchantOrderId);
 
-                  $request->session()->put('pedido',$MerchantOrderId);
+                $request->session()->put('valor_empresa', $valorEmpresa);
+                $request->session()->put('varlor_credito', $valorCredito);
+                $request->session()->put('valor_total_pedido', $valor_total_pedido);
+                $request->session()->put('descricao_boleto', $boleto);
+                $request->session()->put('trans_bancario', $transferencia)	;
 
-                  $request->session()->put('valor_empresa', $valorEmpresa);
-                  $request->session()->put('varlor_credito', $valorCredito);
-                  $request->session()->put('valor_total_pedido', $valor_total_pedido);
-                  $request->session()->put('descricao_boleto', $boleto);
-                  $request->session()->put('trans_bancario', $transferencia)	;
-
-                  return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+                return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
             }
         } else {
             DB::rollback();
@@ -1937,20 +1939,23 @@ class PaymentController extends Controller
 
     public function testeEnviarEmail(){
     	
+        $send_message = false;
     	try {
-    		$paciente_id = 294;
+    		$paciente_id = 26;
     		$paciente = Paciente::with('user')->findOrFail($paciente_id);
-//     		dd($paciente);
+//      		dd($paciente);
     		 
-    		$verify_hash = Crypt::encryptString($paciente_id);
-    		$from = 'contato@doutorhoje.com.br';
-    		$to = $paciente->user->email;
-    		$subject = 'Contato DoutorHoje';
+//     		$verify_hash = Crypt::encryptString($paciente_id);
+//     		$from = 'contato@doutorhoje.com.br';
+//     		$to = $paciente->user->email;
+//     		$subject = 'Contato DoutorHoje';
     		 
-    		$paciente_nm_primario = $paciente->nm_primario;
-    		$paciente_email = $paciente->user->email;
+//     		$paciente_nm_primario = $paciente->nm_primario;
+//     		$paciente_email = $paciente->user->email;
     		 
-    		$url = route('ativar_conta', $verify_hash);
+//     		$url = route('ativar_conta', $verify_hash);
+            $user_temp = new UserController();
+            $send_message = $user_temp->sendTokenEmail('111111', 'teocomp@gmail.com', 'Theo Duarte', '01/12/2018 às 16:49:00');
     		
     	} catch (Exception $e) {
     		report($e);
@@ -1960,12 +1965,13 @@ class PaymentController extends Controller
     	
 //         $send_message = $this->enviarEmailPreAgendamento($paciente, $pedido, $agendamento);
 
-//         if ($send_message) {
-//             dd('O e-mail foi enviado com sucesso!');
-//             //dd($output);
-//         }
+        if ($send_message) {
+            dd('O e-mail foi enviado com sucesso!');
+            //dd($output);
+        }
+        dd('O e-mail não foi enviado.');
 
-        return view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
+//         return view('emails.email_confirma_cadastro', compact('paciente_nm_primario', 'url', 'paciente_email'));
     }
 
 	public function enviarEmailPreAutorizar(Paciente $paciente, Collection $agendamentos)
@@ -2107,8 +2113,28 @@ class PaymentController extends Controller
         		$tipo_atendimento = "Exame";
         	}
         	
-        	$preco_ativo = $agendamento->atendimento->getPrecoByPlano($plano_ativo_id);
-        	$preco_ativo = 'R$ '.$preco_ativo;
+        	$atendimento_id = $agendamento->atendimento->id;
+         	$atend_temp = new Atendimento(); 
+         	$preco_ativo = $atend_temp->getPrecoByPlano($plano_ativo_id, $atendimento_id);
+         	$preco_ativo = 'R$ '.$preco_ativo->vl_comercial;
+        }
+//         dd($preco_ativo);
+        $tipo_pagamento = '--------';
+        $pedido_obj = Pedido::findorfail($pedido);
+        if(!empty($pedido_obj)) {
+            if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito') {
+                $pedido_obj->load('pagamentos');
+                $tipo_pagamento = 'CRÉDITO';
+                    
+                try {
+                    $crc_brand = $paciente->credit_card_brand;
+                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($crc_brand);
+                } catch (\Exception $e) {}
+                
+            } else {
+                $tipo_pagamento = strtoupper($pedido_obj->tp_pagamento);
+            }
+            
         }
 
         $nome_profissional = '---------';
@@ -2116,7 +2142,7 @@ class PaymentController extends Controller
         $hora_agendamento = '---------';
 
         if (!empty($agendamento->profissional_id)) {
-            $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
+            $nome_profissional		= "Dr(a): ".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."";
         }
 
         if(!empty($agendamento->clinica->tp_prestador)){
@@ -2186,14 +2212,163 @@ class PaymentController extends Controller
         $to = $email;
         $subject = 'Pré-Agendamento Solicitado';
         
-        ##################################################################################
-         
-        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'));
+        ######################## ENVIO DE EMAIL DE PRE-AGENDAMENTO##############################
+        $html_message = view('emails.compra_concluida', compact('nm_primario', 'nr_pedido', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'))->render();
          
         $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
 
         $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+        ########################################################################################
 
+        return $send_message;
+    }
+    
+    /**
+     * enviarEmailPreAgendamento a newly external user created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function enviarEmailPreAgendamentoBoleto($paciente, $pedido, $agendamento, $url_boleto)
+    {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
+        # dados da mensagem
+        $mensagem_drhj            		= new Mensagem();
+        
+        $mensagem_drhj->rma_nome     	= $paciente->nm_primario.' '.$paciente->nm_secundario;
+        $mensagem_drhj->rma_email       = $paciente->user->email;
+        $mensagem_drhj->assunto     	= 'Pré-Agendamento Solicitado';
+        
+        $nome 		= $paciente->nm_primario.' '.$paciente->nm_secundario;
+        $email 		= $paciente->user->email;
+        $telefone 	= $paciente->contatos->first()->ds_contato;
+        
+        $nm_primario 			= $paciente->nm_primario;
+        $nr_pedido 				= sprintf("%010d", $pedido );
+        $nome_especialidade 	= "Especialidade/exame: <span>".$agendamento->nome_especialidade."</span>";
+        $tipo_atendimento		= "";
+        
+        $paciente_id = $paciente->id;
+        $plano_ativo_id = Paciente::getPlanoAtivo($paciente_id);
+        $preco_ativo = 'R$ 0,00';
+        
+        if (!empty($agendamento->atendimento)) {
+            if(!is_null($agendamento->atendimento->consulta_id)) {
+                $tipo_atendimento = "Consulta";
+            }
+            
+            if(!is_null($agendamento->atendimento->procedimento_id)) {
+                $tipo_atendimento = "Exame";
+            }
+            
+            $preco_ativo = $agendamento->atendimento->getPrecoByPlano($plano_ativo_id);
+            $preco_ativo = 'R$ '.$preco_ativo;
+        }
+        
+        $tipo_pagamento = '--------';
+        
+        if(!empty($pedido)) {
+            if($pedido->tp_pagamento == 'Crédito' | $pedido->tp_pagamento == 'credito') {
+                $pedido->load('cartao_paciente');
+                $tipo_pagamento = 'CRÉDITO';
+                
+                if(!empty($pedido->cartao_paciente)) {
+                    $tipo_pagamento = $tipo_pagamento.' - '.strtoupper($pedido->cartao_paciente->bandeira);
+                }
+            } else {
+                $tipo_pagamento = strtoupper($pedido->tp_pagamento);
+            }
+            
+        }
+        
+        $nome_profissional = '---------';
+        $data_agendamento = '---------';
+        $hora_agendamento = '---------';
+        
+        if (!empty($agendamento->profissional_id)) {
+            $nome_profissional		= "Dr(a): <span>".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario."</span>";
+        }
+        
+        if(!empty($agendamento->clinica->tp_prestador)){
+            if($agendamento->consulta_id != null | $agendamento->clinica->tp_prestador == 'CLI') {
+                $data_agendamento		= date('d', strtotime($agendamento->getRawDtAtendimentoAttribute())).' de '.strftime('%B', strtotime($agendamento->getRawDtAtendimentoAttribute())).' / '.strftime('%A', strtotime($agendamento->getRawDtAtendimentoAttribute())) ;
+                $hora_agendamento		= date('H:i', strtotime($agendamento->getRawDtAtendimentoAttribute())).' (por ordem de chegada)';
+            }
+        }
+        
+        
+        $nome_especialidade 	= "Descrição do atendimento: <span>".$agendamento->ds_atendimento." (".$agendamento->nome_especialidade.")</span>";
+        $ds_especialidade		= $agendamento->nome_especialidade;
+        
+        $endereco_agendamento = '--------------------';
+        
+        //$agendamento->clinica->load('enderecos');
+        $agendamento->filial->load('endereco');
+        $enderecos_clinica = $agendamento->filial->endereco;
+        
+        if ($agendamento->filial->endereco != null) {
+            $enderecos_clinica->load('cidade');
+            $cidade_clinica = $enderecos_clinica->cidade;
+            
+            if ($cidade_clinica != null) {
+                $endereco_agendamento = $enderecos_clinica->te_endereco.', '.$enderecos_clinica->nr_logradouro.', '.$enderecos_clinica->te_bairro.', '.$cidade_clinica->nm_cidade.'/ '.$cidade_clinica->sg_estado;
+            }
+        }
+        
+        $agendamento_status = 'Pré-agendado';
+        
+        $mensagem_drhj->conteudo     	= "<h4>Pré-Agendamento de Cliente:</h4><br><ul><li>Nome: $nome</li><li>E-mail: $email</li><li>Telefone: $telefone</li></ul>";
+        
+        $mensagem_drhj->save();
+        
+        /* if(!$mensagem->save()) {
+         return redirect()->route('landing-page')->with('error', 'A Sua mensagem não foi enviada. Por favor, tente novamente');
+         } */
+        
+        $destinatario                      = new MensagemDestinatario();
+        $destinatario->tipo_destinatario   = 'DH';
+        $destinatario->mensagem_id         = $mensagem_drhj->id;
+        $destinatario->destinatario_id     = 1;
+        $destinatario->save();
+        
+        $destinatario                      = new MensagemDestinatario();
+        $destinatario->tipo_destinatario   = 'DH';
+        $destinatario->mensagem_id         = $mensagem_drhj->id;
+        $destinatario->destinatario_id     = 3;
+        $destinatario->save();
+        
+        #dados da mensagem para o cliente
+        $mensagem_cliente            		= new Mensagem();
+        
+        $mensagem_cliente->rma_nome     	= 'Contato DoutorHoje';
+        $mensagem_cliente->rma_email       	= 'contato@doutorhoje.com.br';
+        $mensagem_cliente->assunto     		= 'Pré-Agendamento Solicitado';
+        $mensagem_cliente->conteudo     	= "<h4>Seu Pré-Agendamento:</h4><br><ul><li>Nº do Pedido: $nr_pedido</li><li>$nome_especialidade</li><li>Dr(a): $nome_profissional</li><li>Data: $data_agendamento</li><li>Horário: $hora_agendamento (por ordem de chegada)</li><li>Endereço: $endereco_agendamento</li></ul>";
+        $mensagem_cliente->save();
+        
+        $destinatario                      = new MensagemDestinatario();
+        $destinatario->tipo_destinatario   = 'PC';
+        $destinatario->mensagem_id         = $mensagem_cliente->id;
+        $destinatario->destinatario_id     = $paciente->user->id;
+        $destinatario->save();
+        
+        $from = 'contato@doutorhoje.com.br';
+        $to = $email;
+        $subject = 'Pré-Agendamento Solicitado';
+        
+        ######################## ENVIO DE EMAIL DE PRE-AGENDAMENTO##############################
+        $html_message = view('emails.compra_boleto', compact('nm_primario', 'nr_pedido', 'url_boleto', 'tipo_atendimento', 'nome_especialidade', 'ds_especialidade', 'preco_ativo', 'nome_profissional', 'tipo_pagamento', 'data_agendamento', 'hora_agendamento', 'endereco_agendamento', 'agendamento_status'))->render();
+        
+        $html_message = str_replace(array("\r", "\n", "\t"), '', $html_message);
+        
+        $send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+        ########################################################################################
+        
+        //     	echo "<script>console.log( 'Debug Objects: " . $send_message . "' );</script>";
+        //     	return redirect()->route('provisorio')->with('success', 'A Sua mensagem foi enviada com sucesso!');
+        
         return $send_message;
     }
 

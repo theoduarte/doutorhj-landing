@@ -197,6 +197,9 @@
                 var resizefunc = [];
 
                 //$('.btn-login-token').hide();
+                @if(isset($access_token) && $access_token != null)
+                	$('#modalCadastro').modal('show');
+                @endif
 
                 $('#btn-send-token').click(function () {
                     if ($('#inputEmailTelefone').val().length < 15) {
@@ -281,7 +284,6 @@
 
                 $('#btn-criar-conta').attr('disabled', 'disabled');
                 $('#btn-criar-conta').find('#lbl-criar-conta').html('Processando... <i class="fa fa-spin fa-spinner" style="float: right; font-size: 16px;"></i>');
-                $('#btn-criar-conta').modal('show');
                 setTimeout(function () {
                     $('#btn-criar-conta').find('#lbl-criar-conta').html('Criar conta <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
                     $('#btn-criar-conta').removeAttr('disabled');

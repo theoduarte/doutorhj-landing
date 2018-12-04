@@ -15,8 +15,8 @@
 					<div class="boas-vindas-cadastro">
 						<h4>Parabéns!</h4>
 						<p>
-							Seu cadastro foi concluído com sucesso. Você recebera um novo
-							email com mais informações sobre o Doutor Hoje. <br>
+							Seu cadastro foi concluído com sucesso. Você receberá um novo
+							e-mail com mais informações sobre o Doutor Hoje. <br>
 							<br>Para logar na sua conta, digite seu celular e insira o token
 							que receberá por SMS e E-mail.
 						</p>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\RegraAnasps;
 
 class UsuariosRequest extends FormRequest
 {
@@ -42,7 +43,7 @@ class UsuariosRequest extends FormRequest
             'nm_primario'       		=> 'required|max:50',
             'nm_secundario'     		=> 'required|max:50',
             'cs_sexo'           		=> 'required|max:1',
-            'te_documento'      		=> 'required|max:14|min:11|cpf',
+            'te_documento'      		=> ['required', 'max:14', 'min:11', 'cpf', new RegraAnasps()],
             'ds_contato'        		=> 'max:30|required_with:ds_contato_confirmation|same:ds_contato_confirmation|unique:contatos,ds_contato',
         	'ds_contato_confirmation'	=> 'required|max:30|',
             'dt_nascimento' 			=> 'required|max:10|date_format:"d/m/Y"',
