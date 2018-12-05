@@ -182,10 +182,9 @@ class UserController extends Controller
         		$documento->tp_documento 	= 'CPF';
         		$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
         		$documento->save();
+        		$documento_ids = [$documento->id];
         	}
         	#################################################################
-        	 
-        	
         	 
         	# contato do paciente
         	$contato1             		= new Contato();
