@@ -710,15 +710,11 @@ class PaymentController extends Controller
         // caso o pagamento seja diferente do empresarial ou multcartoes
         $valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
 
-        //================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
-
-		//COMENTEI PELO FATO DE QUE CASO A PESSOA ATIVE A OPCAO DE PRE_AUTORIZAR E GERADO UMA FALHA NO PAGAMENTO, CRIANDO MESMO ASSIM O AGENDAMENTO E FINALIZANDO O PAGAMENTO
-		/*
-		 // Verifica se colaborador vai utilizar Crédito Empresarial
+		//================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
+		/** Verifica se colaborador vai utilizar Crédito Empresarial  */
 		if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
 			$cartaoToken;
 			$cartao;
-
 			$valorFinal = $valor_total-$valor_desconto;
 			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 				$valorEmpresarial = ceil(($dados->porcentagem * $valorFinal) / 100);
@@ -726,11 +722,10 @@ class PaymentController extends Controller
 			} else {
 				$valorEmpresarial = $valorFinal;
 			}
-
 			$parcelas = $dados->parcelas ?? 1;
 			$respAgend = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
 			if($respAgend) {
-				CVXCart::clear(); // Limpa carrinho e retorna reposta
+				CVXCart::clear(); /** Limpa carrinho e retorna reposta */
 				return response()->json([
 					'status' => true,
 					'mensagem' => 'O Pedido foi enviado para aprovaçao da empresa!'
@@ -742,9 +737,7 @@ class PaymentController extends Controller
 				]);
 			}
 		}
-		*/
-
-        //================================================================= AGENDAMENTOS ============================================================//
+		//================================================================= AGENDAMENTOS ============================================================//
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
         $customer->load('user');
