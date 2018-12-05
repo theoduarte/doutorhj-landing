@@ -174,15 +174,18 @@ class UserController extends Controller
         		$vigencia->paciente_id 		= $paciente->id;
         		$vigencia->anuidade_id 		= 15;
         		$vigencia->save();
+        		
+        		$documento_ids = [$documento_anasps->id];
+        	} else {
+        		# cpf do paciente
+        		$documento 					= new Documento();
+        		$documento->tp_documento 	= 'CPF';
+        		$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
+        		$documento->save();
         	}
         	#################################################################
         	 
-        	# cpf do paciente
-        	$documento 					= new Documento();
-        	$documento->tp_documento 	= 'CPF';
-        	$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
-        	$documento->save();
-        	$documento_ids = [$documento->id];
+        	
         	 
         	# contato do paciente
         	$contato1             		= new Contato();
