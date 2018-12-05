@@ -161,7 +161,7 @@
                         <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
-                            <p><strong>(61) 3221-5350</strong></p>
+                            <p><strong>0800 7273620</strong></p>
                             <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
                         </div>
                     </div>

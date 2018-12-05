@@ -251,7 +251,7 @@
 			nos contatar no <br><br>
 			<a href='mailto:cliente@doutorhoje.com.br' style='color:#1d70b7; text-decoration: none;'>cliente@doutorhoje.com.br</a>
 			<br><br>
-			Ou ligue para (61) 3221-5350, o atendimento é de<br>
+			Ou ligue para 0800 727 3620, o atendimento é de<br>
 			segunda à sexta-feira
 			das 8h00 às 18h00. <br><br>
 			<strong>Doutor Hoje</strong> 2018
