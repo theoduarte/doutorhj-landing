@@ -712,7 +712,9 @@ class PaymentController extends Controller
 
         //================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
 
-		/** Verifica se colaborador vai utilizar Crédito Empresarial  */
+		//COMENTEI PELO FATO DE QUE CASO A PESSOA ATIVE A OPCAO DE PRE_AUTORIZAR E GERADO UMA FALHA NO PAGAMENTO, CRIANDO MESMO ASSIM O AGENDAMENTO E FINALIZANDO O PAGAMENTO
+		/*
+		 // Verifica se colaborador vai utilizar Crédito Empresarial
 		if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
 			$cartaoToken;
 			$cartao;
@@ -726,10 +728,9 @@ class PaymentController extends Controller
 			}
 
 			$parcelas = $dados->parcelas ?? 1;
-
 			$respAgend = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
 			if($respAgend) {
-				CVXCart::clear(); /** Limpa carrinho e retorna reposta */
+				CVXCart::clear(); // Limpa carrinho e retorna reposta
 				return response()->json([
 					'status' => true,
 					'mensagem' => 'O Pedido foi enviado para aprovaçao da empresa!'
@@ -741,6 +742,7 @@ class PaymentController extends Controller
 				]);
 			}
 		}
+		*/
 
         //================================================================= AGENDAMENTOS ============================================================//
         //-- dados do comprador---------------------------------------
@@ -1194,6 +1196,7 @@ class PaymentController extends Controller
                     } catch (Exception $e) {}
 
                 }
+
                 foreach($pedidos_array as $pedidosArray){
 
                         $Payment                                 	= new Payment();
@@ -1215,7 +1218,7 @@ class PaymentController extends Controller
 
                 $boleto = null;
                 if($metodoPagamento == Payment::METODO_BOLETO) {
-                    
+
                     $boleto = [
                         "instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
                         "url" => 	$dados['charges'][0]['last_transaction']['url'],
@@ -1226,7 +1229,7 @@ class PaymentController extends Controller
 //                     $url_boleto = $dados['charges'][0]['last_transaction']['url'];
 //                     $this->enviarEmailPreAgendamentoBoleto($paciente, $pedido, $agendamento, $url_boleto);
                 }
-                
+
                 $transferencia = null;
                 if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
                     $transferencia = [
@@ -1241,18 +1244,18 @@ class PaymentController extends Controller
                 #############################################
                 CVXCart::clear();
 
-                $valor_total_pedido = $valor_total-$valor_desconto;
-                $request->session()->put('result_agendamentos', $result_agendamentos);
+				 $valor_total_pedido = $valor_total-$valor_desconto;
+				 $request->session()->put('result_agendamentos', $result_agendamentos);
 
-                $request->session()->put('pedido',$MerchantOrderId);
+				 $request->session()->put('pedido',$MerchantOrderId);
 
-                $request->session()->put('valor_empresa', $valorEmpresa);
-                $request->session()->put('varlor_credito', $valorCredito);
-                $request->session()->put('valor_total_pedido', $valor_total_pedido);
-                $request->session()->put('descricao_boleto', $boleto);
-                $request->session()->put('trans_bancario', $transferencia)	;
+				 $request->session()->put('valor_empresa', $valorEmpresa);
+				 $request->session()->put('varlor_credito', $valorCredito);
+				 $request->session()->put('valor_total_pedido', $valor_total_pedido);
+				 $request->session()->put('descricao_boleto', $boleto);
+				 $request->session()->put('trans_bancario', $transferencia)	;
 
-                return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+			 	return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
             }
         } else {
             DB::rollback();
