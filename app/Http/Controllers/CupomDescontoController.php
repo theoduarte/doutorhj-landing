@@ -97,9 +97,56 @@ class CupomDescontoController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
-    
+
+    public function validarCupomCartao(Request $request) {
+
+		$cartao = CVXRequest::post('cartao');
+		$cupom = CVXRequest::post('cupom');
+		$ct_date = date('Y-m-d H:i:s');
+
+		if((strcmp($cartao,$cupom ) ==0)){
+			$cupomDesconto = CupomDesconto::where('codigo', '=',trim($cartao) )
+				->where('codigo', '=',trim( $cupom))
+				->where('cs_status', '=', 'A')
+				->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
+				->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
+
+			return response()->json(['status' => true, 'mensagem' => $cupomDesconto->titulo ]);
+		}else{
+			$verificaCupom = CupomDesconto::where('codigo', '=',trim($cupom) )
+				->where('cs_status', '=', 'A')
+				->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
+				->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
+			if(!empty($verificaCupom)){
+				$cliente = false;
+				if(strcmp($verificaCupom->titulo, "Cliente Caixa")==0){
+					$cliente=true;
+				}else{
+					$cliente=false;
+				}
+
+				$verificaCupomCartao = CupomDesconto::where('codigo', '=',trim($cartao) )
+					->where('cs_status', '=', 'A')
+					->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
+					->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
+
+
+				if($cliente && empty($verificaCupomCartao) ){
+					return response()->json(['status' => false,'cliente' =>true, 'cartao'=>false,   'mensagem' => 'Observamos que você ativou um cupom 
+					'.$verificaCupom->titulo.', más não informou o cartão do banco fidelizado. Para finalizar o pagamento utilizando o desconto, informe um cartao '.$verificaCupom->titulo.' ou prossiga com pagamento sem o desconto aplicado.']);
+				}
+				// se  o cupom e o inicio do cartao nao forem iguais, más são cliente caixa retorna true
+				if($cliente && !empty($verificaCupomCartao)){
+					return response()->json(['status' => true, 'mensagem' => $verificaCupom->titulo ]);
+				}
+			}
+			return response()->json(['status' => null,'cliente' =>null, 'cartao'=>null]);
+
+
+		}
+	}
     /**
      * validarCupomDesconto a newly created resource in storage.
      *
@@ -116,8 +163,11 @@ class CupomDescontoController extends Controller
         }
         
         $ct_date = date('Y-m-d H:i:s');
-        
-        $cupomDesconto = CupomDesconto::where('codigo', '=', $codCupomDesconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
+
+        $cupomDesconto = CupomDesconto::where('codigo', '=', $codCupomDesconto)
+			->where('cs_status', '=', 'A')
+			->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
+			->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
 
         if( empty($cupomDesconto) ) {
             return response()->json(['status' => false, 'mensagem' => 'CUPOM DE DESCONTO informado, não foi encontrado.']);
@@ -125,10 +175,10 @@ class CupomDescontoController extends Controller
         
         $user_session = Auth::user();
         $paciente_id = $user_session->paciente->id;
-        $cupom_id = $cupomDesconto->first()->id;
-        
+        $cupom_id = $cupomDesconto->id;
+
         $agendamentoCupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->first();
-        
+
         if( !empty($agendamentoCupom) ) {
             return response()->json(['status' => false, 'mensagem' => 'O CUPOM DE DESCONTO informado, já foi utilizado por você em um outro Agendamento e não está mais disponível.']);
         }

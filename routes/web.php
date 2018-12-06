@@ -73,6 +73,8 @@ Route::get('pacientes/activate/{verify_hash}', 'PacienteController@ativarConta')
 Route::get('pacientes/activate-redirect', 'PacienteController@ativarContaRedirect')->name('activate-redirect');
 Route::post('remover-item_carrinho', 'ClinicaController@RemoverItemCarrinho');
 Route::post('validar-cupom-desconto', 'CupomDescontoController@validarCupomDesconto')->name('validar_cupom_desconto');
+Route::post('validar-cupom-cartao', 'CupomDescontoController@validarCupomCartao')->name('validar_cupom_cartao');
+
 
 Route::get('consultas/consulta/{consulta}', 'ClinicaController@getConsultas')->middleware('auth');
 Route::get('procedimentos/consulta/{consulta}', 'ClinicaController@getProcedimentos')->middleware('auth');

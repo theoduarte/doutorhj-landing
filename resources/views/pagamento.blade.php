@@ -93,20 +93,20 @@
                                     <section class="col-md-12 col-lg-12">
                                         <h3>Método de pagamento </h3>
                                         <div class="separador"></div>
-                                        <select class="form-control escolherMetodoPagamento">
+                                        <select class="form-control escolherMetodoPagamento" id="escolherMetodoPagamento2">
                                             <option value="" selected>Escolher metodo de pagamento</option>
+
                                             {{--------------    ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
                                                 @if(floatval($valor_total-$valor_desconto) < floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
                                                     <option value="1">Crédito Empresarial</option>
                                                 @endif
                                                 @if(floatval($valor_total-$valor_desconto) > floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
-                                                    <option value="2">Crédito empresarial + Cartão de crédito</option>
+                                                    <option value="2"  >Crédito empresarial + Cartão de crédito</option>
                                                 @endif
                                             @endif
                                             
                                             <option value="3">Cartão de crédito</option>
-                                           
                                             {{--
                                                 <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>
@@ -116,7 +116,8 @@
                                         </select>
                                     </section>
                                 </div>
-                                
+								<input type="hidden" value="{{$paciente->plano_ativo->id}}" id="plano_ativo">
+								<input type="hidden" value="{{ App\Plano::OPEN}}" id="plano_open">
                                 <div class="card-body">
 
                                     <div class="row cartaoEmpresarial_Credito" style="display:none">
