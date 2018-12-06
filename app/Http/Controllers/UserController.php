@@ -175,6 +175,7 @@ class UserController extends Controller
         		$vigencia->anuidade_id 		= 15;
         		$vigencia->save();
         		
+        		$documento_anasps->save();
         		$documento_ids = [$documento_anasps->id];
         	} else {
         		# cpf do paciente
