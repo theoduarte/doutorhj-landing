@@ -212,8 +212,8 @@ class Paciente extends Model
 	{
 		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id])
 			->where(function($query) {
-				$query->whereDate('data_inicio', '<=', date('Y-m-d H:i:s'))
-					->whereDate('data_fim', '>=', date('Y-m-d H:i:s'))
+				$query->where('data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('data_fim', '>=', date('Y-m-d H:i:s'))
 					->orWhere(DB::raw('cobertura_ativa'), '=', true);
 			})
 			->first();
