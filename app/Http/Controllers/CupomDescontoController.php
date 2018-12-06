@@ -119,9 +119,9 @@ class CupomDescontoController extends Controller
 				->where('cs_status', '=', 'A')
 				->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
 				->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
-			if(!empty($verificaCupom->codigo)){
+
 				$cliente = false;
-				if(strcmp($verificaCupom->titulo, "Cliente Caixa")==0){
+				if(strcmp($verificaCupom->titulo, ("Cliente Caixa" | "cliente Caixa"  | "Cliente caixa" | "CLIENTE CAIXA" | "CLIENTECAIXA" | "Clientes Caixa"))==0){
 					$cliente=true;
 				}else{
 					$cliente=false;
@@ -141,9 +141,7 @@ class CupomDescontoController extends Controller
 				if($cliente && !empty($verificaCupomCartao)){
 					return response()->json(['status' => true, 'mensagem' => $verificaCupom->titulo ]);
 				}
-			}else{
-				return response()->json(['status' => null,'cliente' =>null, 'cartao'=>null, 'cupom' => $verificaCupom]);
-			}
+
 
 
 
