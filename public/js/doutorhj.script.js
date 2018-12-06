@@ -1438,22 +1438,22 @@ function efetuarPagamento() {
 					swal(
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
-								  text: result.mensagem
+								  text: result.responseJSON.mensagem
 							  }
 						  );
 						 
 				}
-				
+
 				},
 				error: function (result) {
 
-				 
+
 			 
 					swal(
 							  {
-								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
  
-								  text:  result.mensagem
+								  text:  result.responseJSON.mensagem
  
 							  }
 						  );
