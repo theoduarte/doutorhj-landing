@@ -121,7 +121,7 @@ class CupomDescontoController extends Controller
 				->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
 			if(!empty($verificaCupom)){
 				$cliente = false;
-				if(strcmp($verificaCupom->titulo, ("Cliente Caixa" | "cliente Caixa"  | "Cliente caixa" | "CLIENTE CAIXA" | "CLIENTECAIXA" | "Clientes Caixa"))==0){
+				if(strcmp($verificaCupom->titulo, "CAIXA")==0){
 					$cliente=true;
 				}else{
 					$cliente=false;
