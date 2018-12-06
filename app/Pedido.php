@@ -18,7 +18,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $updated_at
  * @property CartaoPaciente $cartao_paciente
  * @property Paciente $paciente
- * @property Itempedido[] $itens_pedido
+ * @property Itempedido[] $itempedidos
  * @property Payment[] $pagamentos
  */
 class Pedido extends Model
