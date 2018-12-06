@@ -781,7 +781,7 @@ $(function() {
 					}
 
                 } else {
-
+					$('#inputCupom').val('');
                     swal(
                         {
                             title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
