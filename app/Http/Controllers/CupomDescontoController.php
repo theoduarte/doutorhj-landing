@@ -107,7 +107,7 @@ class CupomDescontoController extends Controller
 		$ct_date = date('Y-m-d H:i:s');
 
 		if((strcmp($cartao,$cupom ) ==0)){
-			$cupomDesconto = CupomDesconto::where('codigo', '=',trim($cartao) )
+			$cupomDesconto = CupomDesconto::where('codigo', '=', ($cartao) )
 				->where('codigo', '=',trim( $cupom))
 				->where('cs_status', '=', 'A')
 				->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
@@ -115,7 +115,7 @@ class CupomDescontoController extends Controller
 
 			return response()->json(['status' => true, 'mensagem' => $cupomDesconto->titulo ]);
 		}else{
-			$verificaCupom = CupomDesconto::where('codigo', '=',trim($cupom) )
+			$verificaCupom = CupomDesconto::where('codigo', '=', ($cupom) )
 				->where('cs_status', '=', 'A')
 				->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
 				->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
@@ -142,7 +142,7 @@ class CupomDescontoController extends Controller
 					return response()->json(['status' => true, 'mensagem' => $verificaCupom->titulo ]);
 				}
 			}
-			return response()->json(['status' => null,'cliente' =>null, 'cartao'=>null]);
+			return response()->json(['status' => null,'cliente' =>null, 'cartao'=>null, 'cupom' => $verificaCupom]);
 
 
 		}
