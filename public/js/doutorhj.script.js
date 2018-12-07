@@ -468,9 +468,6 @@ $(function() {
 
  	$('.total_a_pagar').text('R$ '+total_pagar);
 
-
-
-
 	var slider = document.getElementById("myRange");
 
     var valor="";
@@ -1017,7 +1014,7 @@ $(function() {
 
                 $('.parcelamento-cartao').hide();
                 $('.empresarial-valor-resumo').hide();
-
+			console.log($('.valor-total-produtos').text())
 			$('.cartao-credito').slideDown();
 			dadosResumo.empty().html('Cartão Empresarial')
 				break;
@@ -2211,7 +2208,7 @@ function validarCupoCartao(cartao, cupom){
 				if(!result.cartao && result.cliente && !result.status) {
 					//alert(result.mensagem)
 					swal({
-						title: 'Atenção !',
+						title: '<div class="tit-sweet tit-warning">  Ops!</div>',
 						text: result.mensagem,
 						animation: true,
 						showCancelButton: true,
@@ -2219,19 +2216,20 @@ function validarCupoCartao(cartao, cupom){
 						allowEscapeKey: false,
 						allowOutsideClick: false,
 						cancelButtonColor: '#d33',
-						confirmButtonText: 'Utilizar Cartão Fidelizado',
-						cancelButtonText: 'Prosseguir sem desconto',
+						confirmButtonText: 'Pagar sem desconto',
+						cancelButtonText: 'Pagar com desconto',
 						useRejections: true
 					}).then(
 						value => {
+							location.reload();
 
-							$('#inputNumeroCartaoCredito').val('');
 
 							// handle confirm
 						},
 						dismiss => {
+							$('#inputNumeroCartaoCredito').val('');
+							$('#numeroCartaoCredito').val('');
 
-							location.reload();
 							// handle dismiss
 						}
 					).catch(swal.noop)

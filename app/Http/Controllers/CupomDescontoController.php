@@ -132,20 +132,16 @@ class CupomDescontoController extends Controller
 					->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))
 					->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
 
-
+				// cupom valido mas o inicio do cartao invalido
 				if($cliente && empty($verificaCupomCartao) ){
-					return response()->json(['status' => false,'cliente' =>true, 'cartao'=>false,   'mensagem' => 'Observamos que você ativou um cupom 
-					'.$verificaCupom->titulo.', más não informou o cartão do banco fidelizado. Para finalizar o pagamento utilizando o desconto, informe um cartao '.$verificaCupom->titulo.' ou prossiga com pagamento sem o desconto aplicado.']);
+					return response()->json(['status' => false,'cliente' =>true, 'cartao'=>false,   'mensagem' => $verificaCupom->descricao]);
 				}
 				// se  o cupom e o inicio do cartao nao forem iguais, más são cliente caixa retorna true
 				if($cliente && !empty($verificaCupomCartao)){
 					return response()->json(['status' => true, 'mensagem' => $verificaCupom->titulo ]);
 				}
-
 			}
 			return response()->json(['status' => null,'cliente' =>null, 'cartao'=>null , 'cliente'=>$cliente]);
-
-
 		}
 	}
     /**
