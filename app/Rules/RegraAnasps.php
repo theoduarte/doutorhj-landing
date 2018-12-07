@@ -30,15 +30,23 @@ class RegraAnasps implements Rule
     {
     	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
 //     	DB::enableQueryLog();
-    	$documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->where('created_at', '<>', $date_regra)->where('updated_at', '<>', $date_regra)->first();
+    	$documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra)->whereDate('updated_at', '=', $date_regra)->first();
 //     	$query_log = DB::getQueryLog();
 //     	dd($query_log);
     	
-        if (empty($documento)) {
+    	//--verifica se eh documento de colaborador anasps
+        if (!empty($documento)) {
         	return true;
         }
         
-        return false;
+        
+        $documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->first();
+        //--verifica o documento dos demais pacientes
+        if (!empty($documento)) {
+        	return false;
+        }
+        
+        return true;
     }
 
     /**

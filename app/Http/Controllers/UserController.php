@@ -175,6 +175,7 @@ class UserController extends Controller
         		$vigencia->anuidade_id 		= 15;
         		$vigencia->save();
         		
+        		$documento_anasps->updated_at = date('Y-m-d H:i:s');
         		$documento_anasps->save();
         		$documento_ids = [$documento_anasps->id];
         	} else {
