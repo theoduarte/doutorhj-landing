@@ -403,6 +403,8 @@ footer {
 .accordion .btn-link {
     color: #666;
     font-size: 20px;
+    white-space: normal;
+    text-align: left;
 }
 
 .accordion .card-body {
@@ -496,15 +498,71 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 992px) {
-
+    header .logo-oferta-caixa {
+        width: 280px;
+        top: 100px;
+        left: 0;
+    }
+    header .logo-cartoes-caixa {
+        width: 200px;
+        top: 215px;
+        right: 0;
+    }
 }
 
 @media only screen and (max-width : 768px) {
+    header .logo-oferta-caixa {
+        position: relative;
+        width: 280px;
+        margin: 0 auto;
+        top: 20px;
+    }
+    header .logo-cartoes-caixa {
+        position: relative;
+        width: 200px;
+        top: 15px;
+        left: 320px;
+    }
+    header .btn {
+        margin-top: 45px;
+    }
+}
 
+@media only screen and (max-width : 548px) {
+    header .logo-oferta-caixa {
+        position: relative;
+        width: 222px;
+        margin: 0 auto;
+        top: 20px;
+    }
+    header .logo-cartoes-caixa {
+        position: relative;
+        width: 160px;
+        margin: 0 auto;
+        top: 40px;
+        left:auto;
+    }
+    header .btn {
+        margin-top: 108px;
+    }
 }
 
 @media only screen and (max-width : 480px) {
-
+    header .logo-oferta-caixa {
+        position: relative;
+        width: 222px;
+        margin: 0 auto;
+        top: 20px;
+    }
+    header .logo-cartoes-caixa {
+        position: relative;
+        width: 160px;
+        margin: 0 auto;
+        top: 40px;
+    }
+    header .btn {
+        margin-top: 108px;
+    }
 }
 
 @media only screen and (max-width : 320px) {
