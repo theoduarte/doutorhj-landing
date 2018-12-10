@@ -94,7 +94,7 @@ Route::get('notificacoes/visualizado/{id}','MensagemController@setStatusVisualiz
 Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middleware('auth');
 
 #rotas da campanha caixa
-Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar_caixa');
+Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
 Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa');
 
 
