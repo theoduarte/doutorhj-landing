@@ -15,7 +15,7 @@
     				<div class="home-wrapper" style="margin: 60px 0px;">
     					<h1 class="icon-main text-primary m-b-25"><img alt="site-em-construção" src="{{ Request::root() }}/img/site-under-construction.png"></h1>
     					<h3 class="home-text text-uppercase">Esta página está em Construção</h3>
-    					<h4 class="mt-3">Por favor, visite ela mais tarde.</h4>
+    					<!-- <h4 class="mt-3">Por favor, visite ela mais tarde.</h4> -->
     				</div>
     			</div>
     		</div>
@@ -25,7 +25,6 @@
     @push('scripts')
         <script type="text/javascript">
             $(document).ready(function () {
-                $('.footer-default').css('display', 'none');
             });
 
             $('.carousel').carousel({
