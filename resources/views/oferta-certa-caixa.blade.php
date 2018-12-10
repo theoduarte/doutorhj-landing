@@ -43,7 +43,9 @@
             <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
             <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa">
         </div>
-        <button type="button" class="btn btn-ativacao"><strong>Clique</strong> e ative seu<br>cadastro sem custo
+        <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
+            <strong>Clique</strong> e ative seu<br>cadastro
+            sem custo
         </button>
     </header>
     <main>
@@ -109,7 +111,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="box-vantagens">
                             <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Qualidade">
+                                <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Condições especiais">
                             </div>
                             <h3>Condições Especiais</h3>
                             <div class="detalhe"></div>
@@ -121,7 +123,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="box-vantagens">
                             <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Qualidade">
+                                <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Consultas médicas">
                             </div>
                             <h3>Consultas médicas</h3>
                             <div class="detalhe"></div>
@@ -132,7 +134,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="box-vantagens">
                             <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Qualidade">
+                                <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Exames">
                             </div>
                             <h3>Exames</h3>
                             <div class="detalhe"></div>
@@ -142,7 +144,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="box-vantagens">
                             <div class="icone">
-                                <img src="img/icone-vant-locais.png" alt="Qualidade">
+                                <img src="/landingpages/caixa/img/icone-vant-locais.png" alt="Locais">
                             </div>
                             <h3>Locais</h3>
                             <div class="detalhe"></div>
@@ -153,7 +155,7 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="box-vantagens">
                             <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Qualidade">
+                                <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Aplicativo Doutor Hoje">
                             </div>
                             <h3>Aplicativo Doutor Hoje</h3>
                             <div class="detalhe"></div>
@@ -298,7 +300,8 @@
                         </p>
                     </div>
                 </div>
-                <button type="button" class="btn btn-ativacao btn-bonus"><strong>Clique</strong> e ative seu<br>cadastro
+                <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
+                    <strong>Clique</strong> e ative seu<br>cadastro
                     sem custo
                 </button>
             </div>
@@ -374,12 +377,129 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-ativacao btn-bonus"><strong>Clique</strong> e ative seu<br>cadastro
+                <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
+                    <strong>Clique</strong> e ative seu<br>cadastro
                     sem custo
                 </button>
             </div>
         </div>
     </main>
+    <div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="tituloModalCadastro" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalCadastro">Ative seu cadastro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-ativacao-caixa">
+                    <form class="form-horizontal " action="{{ route('registrar') }}" method="post" onsubmit="return validaRegistrar()">
+
+                        {{ csrf_field() }}
+
+                        <div class="form-group row ">
+                            <div class="col col-sm-6 {{ $errors->has('nm_primario') ? ' cvx-has-error' : '' }}">
+                                <label for="inputNome">Nome</label>
+                                <input type="text" id="inputNome" class="form-control" name="nm_primario" value="{{ old('nm_primario') }}" placeholder="Nome" required="required">
+                                @if ($errors->has('nm_primario'))
+                                    <span class="help-block"><strong>{{ $errors->first('nm_primario') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="col col-sm-6 {{ $errors->has('nm_secundario') ? ' cvx-has-error' : '' }}">
+                                <label for="inputSobrenome">Sobrenome</label>
+                                <input type="text" id="inputSobrenome" class="form-control" name="nm_secundario" value="{{ old('nm_secundario') }}" placeholder="Sobrenome" required="required">
+                                @if ($errors->has('nm_secundario'))
+                                    <span class="help-block"> <strong>{{ $errors->first('nm_secundario') }}</strong></span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row ">
+                            <div class="col col-sm-6 {{ $errors->has('te_documento') ? ' cvx-has-error' : '' }}">
+                                <label for="inputCPF">CPF</label>
+                                <input type="text" id="inputCPF" class="form-control mascaraCPF" name="te_documento" value="{{ old('te_documento') }}" placeholder="CPF" required="required">
+                                @if ($errors->has('te_documento'))
+                                    <span class="help-block"><strong>{{ $errors->first('te_documento') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="col col-sm-6 {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
+                                <label for="inputEmail">E-mail</label>
+                                <input type="email" id="inputEmail" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required="required">
+                                @if ($errors->has('email'))
+                                    <span class="help-block"> <strong>{{ $errors->first('email') }}</strong></span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col col-sm-6">
+                                <label for="inputSexo">Sexo</label>
+                                <select id="cs_sexo" class="form-control" name="cs_sexo" required="required">
+                                    <option value="">Sexo</option>
+                                    <option value="M" @if( old('cs_sexo') == 'M' ) selected="selected" @endif >
+                                        Masculino
+                                    </option>
+                                    <option value="F" @if( old('cs_sexo') == 'F' ) selected="selected" @endif>
+                                        Feminino
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col col-sm-6 {{ $errors->has('dt_nascimento') ? ' cvx-has-error' : '' }}">
+                                <label for="inputTelefone">Data de Nascimento</label>
+                                <input type="text" id="inputNascimento" class="form-control mascaraData" name="dt_nascimento" value="{{ old('dt_nascimento') }}" placeholder="Data de Nascimento" required="required">
+
+                                @if ($errors->has('dt_nascimento'))
+                                    <span class="help-block"><strong>{{ $errors->first('dt_nascimento') }}</strong></span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col col-sm-6 {{ $errors->has('ds_contato') ? ' cvx-has-error' : '' }}">
+                                <label for="inputCelular">Celular</label>
+                                <input type="text" id="inputCelular" class="form-control mascaraTelefone" name="ds_contato" value="{{ old('ds_contato') }}" placeholder="Celular" required="required">
+                                @if ($errors->has('ds_contato'))
+                                    <span class="help-block"><strong>{{ $errors->first('ds_contato') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="col col-sm-6 {{ $errors->has('ds_contato_confirmation') ? ' cvx-has-error' : '' }}">
+                                <label for="inputCelularConfirma">Confirme Celular</label>
+                                <input type="text" id="inputCelularConfirma" class="form-control mascaraTelefone" name="ds_contato_confirmation" value="{{ old('ds_contato_confirmation') }}" placeholder="Confirme o Celular" required="required">
+                                @if ($errors->has('ds_contato_confirm'))
+                                    <span class="help-block"><strong>{{ $errors->first('ds_contato_confirmation') }}</strong></span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-check fc-checkbox">
+                            <input type="checkbox" class="form-check-input" id="termoCheck" required="required">
+                            <label class="form-check-label" for="termoCheck">Declaro que li e concordo com
+                                os <a href="#" data-toggle="modal" data-target="#modalTermos">termos de uso
+                                    do Doutor Hoje</a></label>
+                        </div>
+                        <button type="submit" id="btn-criar-conta" class="btn btn-vermelho btn-criar-conta">
+                            <!-- data-toggle="modal" data-target="#modalCadastro" -->
+                            <i class="fa fa-user"></i>
+                            <span id="lbl-criar-conta">Ativar cadastro <i class="fa fa-spin fa-spinner" style="display: none; font-size: 14px; margin-left: 5px;"></i></span>
+                        </button>
+                    </form>
+                    <div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4>Estamos quase lá!</h4>
+                                <p>Confira a caixa de entrada do seu e-mail que você cadastrou, e clique no botão para
+                                    ativar seu cadastro.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link btn-fechar" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer>
         <div class="container">
             <div class="row">
@@ -390,7 +510,6 @@
                     <div class="contato">
                         <span>Central de Atendimento</span>
                         <p><i class="fas fa-phone-square"></i> 0800 727 3620</p>
-
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">

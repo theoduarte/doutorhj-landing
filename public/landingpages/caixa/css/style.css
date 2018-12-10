@@ -410,6 +410,60 @@ footer {
     font-size: 18px;
 }
 
+.modal-header {
+    color: rgb(255, 255, 255)!important;
+    background-color: rgb(70, 117, 184);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.modal-ativacao-caixa label {
+    color: rgb(70, 117, 184);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.modal-ativacao-caixa input,
+.modal-ativacao-caixa select {
+    height: 38px;
+    font-size: 12px;
+}
+
+.modal-ativacao-caixa .fc-checkbox .form-check-input {
+    display: block;
+    height: auto;
+}
+
+.modal-ativacao-caixa .fc-checkbox .form-check-label {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    color: rgb(98, 98, 98);
+}
+
+.modal-ativacao-caixa .btn-vermelho {
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 52px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: rgb(163, 36, 49);
+    border: 0;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.modal-footer {
+    padding: 0;
+    justify-content: center;
+}
+
+.modal-footer .btn-fechar {
+    font-size: 11px;
+    color: #999;
+}
+
 footer {
     background-color: #192a42;
 }
