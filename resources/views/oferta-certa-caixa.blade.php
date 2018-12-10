@@ -25,7 +25,7 @@
     @push('scripts')
         <script type="text/javascript">
             $(document).ready(function () {
-                
+                $('.footer-default').css('display', 'none');
             });
 
             $('.carousel').carousel({
