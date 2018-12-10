@@ -93,6 +93,8 @@ Route::get('notificacoes','MensagemController@getListaNotificacoes')->middleware
 Route::get('notificacoes/visualizado/{id}','MensagemController@setStatusVisualizado')->middleware('auth');
 Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middleware('auth');
 
+Route::get('oferta-certa-caixa', 'ClinicaController@ofertaCertaCaixa');
+
 
 Auth::routes();
 

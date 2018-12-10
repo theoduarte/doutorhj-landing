@@ -49,6 +49,12 @@ class ClinicaController extends Controller
         /*Request::flash();*/
         return view('auth.confirmacao');
     }
+    
+    public function ofertaCertaCaixa()
+    {
+    	/*Request::flash();*/
+    	return view('oferta-certa-caixa');
+    }
 
     public function avaliaAtendimento()
     {
