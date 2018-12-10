@@ -394,7 +394,7 @@
                     </button>
                 </div>
                 <div class="modal-body modal-ativacao-caixa">
-                    <form class="form-horizontal " action="{{ route('registrar') }}" method="post" onsubmit="return validaRegistrar()">
+                    <form class="form-horizontal " action="{{ route('registrar-caixa') }}" method="post" onsubmit="return validaRegistrar()">
 
                         {{ csrf_field() }}
 
