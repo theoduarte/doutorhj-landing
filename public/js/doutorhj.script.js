@@ -776,6 +776,17 @@ $(function() {
 						$('.verificador-cartao').slideUp();
 						$('#verificador-cartao').slideUp();
 
+						$('.anoCartao').hide();
+						$('.mesCartao').hide();
+						$('.selectValidadeMesCredito').show();
+						$('.selectValidadeAnoCredito').show();
+						$('.inputNomeCartaoCredito').val('').prop("disabled",  false);
+						$('.inputNumeroCartaoCredito').val('').prop("disabled", false);
+						$('.row-payment-card').css('display', 'flex');
+						$('.row-card-token').css('display', 'none');
+						$('.row-payment.repayment').css('display', 'flex');
+						$('#resumo_compra_final_cartao').html( 'XXXX' );
+
 					}
 
 					if($('#plano_ativo').val() != $('#plano_open').val()){
@@ -926,7 +937,7 @@ $(function() {
 
 					if(result) {
 						var json = result.cartao;
-
+						$('.verificador-cartao').slideDown();
 						$('.inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
 						$('.inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
 						$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
@@ -961,6 +972,8 @@ $(function() {
 				}
 			});
 		} else {
+			$('.verificador-cartao').slideUp();
+
 			$('.anoCartao').hide();
 			$('.mesCartao').hide();
 			$('.selectValidadeMesCredito').show();
