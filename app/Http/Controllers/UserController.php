@@ -304,10 +304,10 @@ class UserController extends Controller
     		if (empty($documento)) {
     			$documento 					= new Documento();
     		} else {
-    			if($documento->pacientes->first()->id != $paciente->id) {
-    				DB::rollback();
-    				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Documento que você está tentando usar pertence a outro usuário. Por favor, verifique.');
-    			}
+//     			if($documento->pacientes->first()->id != $paciente->id) {
+//     				DB::rollback();
+//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Documento que você está tentando usar pertence a outro usuário. Por favor, verifique.');
+//     			}
     		}
     		
     		$documento->tp_documento 	= 'CPF';
@@ -323,10 +323,10 @@ class UserController extends Controller
     		if (empty($contato1)) {
     			$contato1             		= new Contato();
     		} else {
-    			if($contato1->pacientes->first()->id != $paciente->id) {
-    				DB::rollback();
-    				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Contato que você está tentando usar pertence a outro usuário. Por favor, verifique.');
-    			}
+//     			if($contato1->pacientes->first()->id != $paciente->id) {
+//     				DB::rollback();
+//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Contato que você está tentando usar pertence a outro usuário. Por favor, verifique.');
+//     			}
     		}
     		
     		$contato1->tp_contato 		= 'CP';
