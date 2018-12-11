@@ -1,5 +1,25 @@
 $(document).ready(function () {
 
+
+	/* VALIDA CARTAO INSERIDO QUANDO A BIN FOR IGUAL A DA CAIXA ECONOMICA*/
+
+		$('.inputNumeroCartaoCredito').keypress(function() {
+			var cartao = $(this).val();
+			var cupom = $('#inputCupom').val();
+
+			validarCupoCartao(cartao, cupom);
+		})
+		$('#inputNumeroCartaoCredito').keypress(function() {
+			var cartao = $(this).val();
+			var cupom = $('#inputCupom').val();
+
+			validarCupoCartao(cartao, cupom);
+		})
+
+
+
+
+	/* VALIDA CARTAO INSERIDO QUANDO A BIN FOR IGUAL A DA CAIXA ECONOMICA*/
 	try{
 		if(endereco !=""){
 			$('.campos_endereco').slideDown();
@@ -442,10 +462,11 @@ $(document).ready(function () {
 
 /*  ------------------------------------------------------------------------------------------INICIO------------------------------------------------------------------------------------------------------ */
 $(function() {
-	$('.vlr-ce').text('R$ '+$('#valor_disponivel').val());
-	$('.total_a_pagar').text('R$ '+$('#total_pagar').val());
+	var valorDisponivel = $('#valor_disponivel').val();
+	var total_pagar = $('#total_pagar').val();
 
 
+ 	$('.total_a_pagar').text('R$ '+total_pagar);
 
 	var slider = document.getElementById("myRange");
 
@@ -460,6 +481,7 @@ $(function() {
     var subtrair="";
     var finalCOmplemento="";
     var vl_desconto=""
+
 	if(slider != null) {
 		var output = document.getElementById("porcentagem_credito_empresarial");
 
@@ -472,7 +494,7 @@ $(function() {
 
 			// valor disponivel credito empresarial
 			valor_formatado = ( $('#valor_disponivel').val());
-			
+
 			if(valor_formatado != 'undefined' && valor_formatado.length > 6) {
 				resp = (valor_formatado.replace('.',''))
 			} else {
@@ -486,7 +508,7 @@ $(function() {
 		
 			if(parseFloat(totalPagarFormatado) > parseFloat(resp)) {
 				// valor a ser debitado do credito especial
-			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );	 					
+			//	resultado =parseFloat( ((valor * totalPagarFormatado )  )/100   );
 					resultado = (((parseFloat(slider.value) ) * parseFloat(totalPagarFormatado)) / 100)
 			} else {
 				// valor a ser debitado do credito especial
@@ -507,6 +529,7 @@ $(function() {
             }
 			printParcelamento(subtrair);
             $('.valor-total-produtos').empty().html('<p>R$ '+subtrair.formatMoney(2, ',', '.')+'</p>' )
+			$('#total_a_pagar').empty().html('R$ '+subtrair.formatMoney(2, ',', '.'));
 			$('.valor_cartao_empresarial').empty().html('<p>- R$ '+final+'</p>');
             $('#valor_empresarial').val(final);
 			$('.valor_cartao_credito').empty().html('<p>R$ '+finalCOmplemento +'</p>');
@@ -520,7 +543,7 @@ $(function() {
 	$('.escolherMetodoPagamento  ').change(function(){
 
 		if($(this).val() == "2"){
-            console.log($(this).val())
+
 			var resp="";
 			var valor_formatado = ( $('#valor_disponivel').val());
 			setTimeout(function() {
@@ -553,11 +576,13 @@ $(function() {
 					} else {
 						resp = (valor_formatado.replace(',','.'))
 					}
-					
+
+					$('.vlr-ce').text('R$ '+(parseFloat(resp)).formatMoney(2, '.', '.') );
+
 					complemento =  ($('#total_pagar').val());
-					respCOmplemento = (complemento.replace(',','.'))      
-					 
-					
+
+					respCOmplemento = (complemento.replace(',','.'))
+
 					if(parseFloat(respCOmplemento) > parseFloat(resp)) {
 						var valorComplemento =  parseFloat(respCOmplemento)  -parseFloat(resp)
 						var totalEmpresarial = parseFloat(respCOmplemento)  - valorComplemento
@@ -574,16 +599,21 @@ $(function() {
 						complemt  = (parseFloat(respCOmplemento) - empresa)	
 						 
 						output.innerHTML =(parseFloat(slider.value)).formatMoney(2, '.', '.') 
-						
-						//var valor =	parseFloat(porcentagem) - 0.1 * parseFloat(respCOmplemento) / 100
+
 					 
 						$('.valor_cartao_empresarial').empty().html('<p> - R$ '+empresa.formatMoney(2, ',', '.')+'</p>');
+
                         $('#valor_empresarial').val(empresa.formatMoney(2, ',', '.'));
+
                         if(parseFloat(vl_desconto) != 0){
                             complemt =   complemt - parseFloat(vl_desconto)
                         }
+
                         $('.valor-total-produtos').empty().html('<p>R$ '+complemt.formatMoney(2, ',', '.')+'</p>' )
-						printParcelamento(complemt );
+
+						$('#total_a_pagar').empty().html('R$ '+complemt.formatMoney(2, ',', '.'));
+
+                        printParcelamento(complemt );
 						
 						$('.valor_complementar').text('R$ '+complemt.formatMoney(2, ',', '.'))
 						
@@ -618,7 +648,8 @@ $(function() {
 
                 valor =   parseFloat(total) - parseFloat(vl_desconto)
 
-			$('.valor-total-produtos').empty().html('<p>R$ '+valor+'</p>' )
+			$('#total_a_pagar').empty().html('R$ '+valor.formatMoney(2, ',', '.'));
+			$('.valor-total-produtos').empty().html('<p>R$ '+valor.formatMoney(2, ',', '.') +'</p>' )
             printParcelamento(valor );
 		}
 	})
@@ -650,23 +681,104 @@ $(function() {
                     var valor_com_desconto = valor_total - desconto;
                     $('#valor_desconto').val(desconto)
                     var parcelamentos = result.parcelamentos;
-
+					var validaInput =true;
                     $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
                     $('#valor_desconto').parent().find('p').html('- R$ ' + numberToReal(desconto));
 
-                    if($('.escolherMetodoPagamento option:selected').val() ==2){
-						var valor = ($('#valor_empresarial').val());
-                        var empresa = valor.replace(',','.');
-						var total = (parseFloat($('#valor_servicos').val()) - (parseFloat(empresa) + 	(desconto)))
-						$('.valor-total-produtos').html('R$ '+total.formatMoney(2, ',', '.'));
-                        printParcelamento(total );
-						//parcelamento-cartao
-                    }else{
-						$('.valor-total-produtos').find('p').html('R$ ' + numberToReal(valor_com_desconto));
-                        printParcelamento(valor_com_desconto );
-                    }
-                } else {
 
+					if($('#plano_ativo').val() != $('#plano_open').val()){
+						if($('.escolherMetodoPagamento option:selected').val() ==2){
+							var valor = ($('#valor_empresarial').val());
+							var empresa = valor.replace(',','.');
+							var total = (parseFloat($('#valor_servicos').val()) - (parseFloat(empresa) + 	(desconto)))
+							$('.valor-total-produtos').html('R$ '+total.formatMoney(2, ',', '.'));
+							$('.valor_complementar').html('R$ '+total.formatMoney(2, ',', '.'));
+							$('#total_a_pagar').empty().html('R$ '+total.formatMoney(2, ',', '.'));
+
+							printParcelamento(total );
+
+							var valorEmpresarial = parseFloat($('#valor_disponivel').val())
+
+							if(parseFloat((total).formatMoney(2, '.', ',')) < valorEmpresarial){
+
+								var selectobject=document.getElementById("escolherMetodoPagamento2");
+								for (var i=0; i<selectobject.length; i++){
+									if (selectobject.options[i].value == '2' ){
+										selectobject.remove(i);
+									}
+
+
+									if (  validaInput ==true  ){
+
+										if (selectobject.options[i].value == '1' ){
+											selectobject.remove(i);
+
+
+										}
+
+										$('#escolherMetodoPagamento2').append($('<option>', {
+											value: 1,
+											text: 'Crédito Empresarial'
+										}));
+										validaInput=false;
+									}
+								}
+
+								$('.cartao-credito').slideUp();
+
+								$('.metodoPagamento').empty().html('Escolha o método de pagamento')
+								$('.transferenciaBancaria').hide();
+								$('.boletoBancario').hide();
+								$('.cartaocredito').hide();
+								$('.cartaoEmpresarial_Credito').hide();
+								$('.cartaoEmpresarial').hide();
+							}
+							//parcelamento-cartao
+						}
+						else{
+							var valor = ($('#valor_empresarial').val());
+
+							$('.valor-total-produtos').find('p').html('R$ ' + numberToReal(valor_com_desconto));
+							$('.valor_complementar').html('R$ '+numberToReal(valor_com_desconto));
+							$('#total_a_pagar').empty().html('R$ '+numberToReal(valor_com_desconto));
+
+							printParcelamento(valor_com_desconto );
+							var valorEmpresarial = parseFloat($('#valor_disponivel').val())
+							if(parseFloat((valor_com_desconto).formatMoney(2, '.', ',')) < valorEmpresarial){
+
+								var selectobject=document.getElementById("escolherMetodoPagamento2");
+
+								for (var i=0; i<selectobject.length; i++){
+									if (selectobject.options[i].value == '2' ){
+										selectobject.remove(i);
+									}
+
+
+									if (validaInput ==true ){
+										$("#escolherMetodoPagamento2 option[value='1']").remove();
+										$('#escolherMetodoPagamento2').append($('<option>', {
+											value: 1,
+											text: 'Crédito Empresarial'
+										}));
+										validaInput=false;
+									}
+
+								}
+
+								$('.cartao-credito').slideUp();
+
+								$('.metodoPagamento').empty().html('Escolha o método de pagamento')
+								$('.transferenciaBancaria').hide();
+								$('.boletoBancario').hide();
+								$('.cartaocredito').hide();
+								$('.cartaoEmpresarial_Credito').hide();
+								$('.cartaoEmpresarial').hide();
+							}
+						}
+					}
+
+                } else {
+					$('#inputCupom').val('');
                     swal(
                         {
                             title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
@@ -902,7 +1014,7 @@ $(function() {
 
                 $('.parcelamento-cartao').hide();
                 $('.empresarial-valor-resumo').hide();
-
+			console.log($('.valor-total-produtos').text())
 			$('.cartao-credito').slideDown();
 			dadosResumo.empty().html('Cartão Empresarial')
 				break;
@@ -1323,22 +1435,22 @@ function efetuarPagamento() {
 					swal(
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
-								  text: result.mensagem
+								  text: result.responseJSON.mensagem
 							  }
 						  );
 						 
 				}
-				
+
 				},
 				error: function (result) {
 
-				 
+
 			 
 					swal(
 							  {
-								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje</div>',
+								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
  
-								  text:  result.mensagem
+								  text:  result.responseJSON.mensagem
  
 							  }
 						  );
@@ -1433,7 +1545,7 @@ function cartaoCreditoEmpresarial(){
 	return objeto;
 }
 
-function printParcelamento(valor){
+function printParcelamento(valor ){
 	var options = ""
 	$('.selectParcelamentoCredito').empty()
     $('.parcelamento-cartao').empty()
@@ -1465,6 +1577,8 @@ function printParcelamento(valor){
 			}
 		}
 	}else{
+
+
 
 	 	$('.parcelamento-cartao').empty().html('1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros')
 		$('.selectParcelamentoCredito').empty().append( '  <option value="1" > 1 x R$ '+(valor).formatMoney(2, ',', '.')  +' sem juros </option>' )
@@ -2078,6 +2192,56 @@ function pagarCartaoDebito() {
 	return result;
 }
 
+function validarCupoCartao(cartao, cupom){
+	if(cartao.length==6 && cupom.length ==6){
+		jQuery.ajax({
+			type: 'POST',
+			url: '/validar-cupom-cartao' ,
+			data: {
+				cartao:cartao,
+				cupom: cupom,
+				'_token': laravel_token
+			},
+			dataType: "json",
+			success: function (result) {
+
+				if(!result.cartao && result.cliente && !result.status) {
+					//alert(result.mensagem)
+					swal({
+						title: '<div class="tit-sweet tit-warning">  Ops!</div>',
+						text: result.mensagem,
+						animation: true,
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						allowEscapeKey: false,
+						allowOutsideClick: false,
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Pagar sem desconto',
+						cancelButtonText: 'Pagar com desconto',
+						useRejections: true
+					}).then(
+						value => {
+							location.reload();
+
+
+							// handle confirm
+						},
+						dismiss => {
+							$('#inputNumeroCartaoCredito').val('');
+							$('#numeroCartaoCredito').val('');
+
+							// handle dismiss
+						}
+					).catch(swal.noop)
+
+				}
+			},
+			error: function (result) {
+
+			}
+		});
+	}
+}
 function pagarCartaoCadastrado()
 {
 	var result = true;
