@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="/landingpages/caixa/vendor/bootstrap-4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/landingpages/caixa/vendor/fontawesome-5.2.0/css/all.min.css">
+    <link rel="stylesheet" href="/landingpages/caixa/vendor/floating-whatsapp/floating-wpp.css">
     <link rel="stylesheet" href="/landingpages/caixa/css/style.css">
     <title>Caixa Oferta Certa - Doutor Hoje</title>
 </head>
@@ -39,19 +40,23 @@
                 </div>
             </div>
         </nav>
-        <div class="container area-logos">
-            <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
-            <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa">
-            <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
-        </div>
-        <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
-            <strong>Clique</strong> e ative seu<br>cadastro
-            sem custo
-        </button>
     </header>
     <main>
+        <div class="banner-home">
+            <div class="container">
+                <div class="area">
+                    <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
+                    <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-desktop">
+                    <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
+                </div>
+            </div>
+        </div>
         <div class="bg-branco condicoes">
             <div class="container">
+                <button type="button" class="btn btn-ativacao" data-toggle="modal" data-target="#modalCadastro">
+                    <strong>Clique</strong> e ative seu<br>cadastro
+                    sem custo
+                </button>
                 <div class="titulo">
                     <h2>Consultas e Exames</h2>
                     <p>Condições especiais e exclusivas para clientes CAIXA</p>
@@ -98,7 +103,7 @@
                     <span class="detalhe"></span>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-qualidade.png" alt="Qualidade">
@@ -109,7 +114,7 @@
                                 profissionais da saúde.</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Condições especiais">
@@ -121,7 +126,7 @@
                                 - Parcelamento das consultas e exames em até 3 parcelas sem juros.</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Consultas médicas">
@@ -132,7 +137,7 @@
                                 ginecologia, etc.</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Exames">
@@ -142,7 +147,7 @@
                             <p>São mais de 3.000 tipos de exames e os mais conceituados laboratórios do país</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-locais.png" alt="Locais">
@@ -153,7 +158,7 @@
                                 você</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Aplicativo Doutor Hoje">
@@ -500,8 +505,10 @@
                 </div>
             </div>
         </div>
+
     </div>
     <footer>
+        <div class="floating-wpp"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-3">
@@ -532,42 +539,67 @@
 </div>
 <script src="/landingpages/caixa/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script src="/landingpages/caixa/vendor/bootstrap-4.1.3/js/bootstrap.min.js"></script>
+<script src="/landingpages/caixa/vendor/floating-whatsapp/floating-wpp.min.js"></script>
 <script>
-    /*********************************
-     *
-     * Smooth Scroll
-     *
-     *********************************/
+    $(document).ready(function () {
 
-    $('a[href*="#"]')
-        .not('[href="#"]')
-        .not('[href="#0"]')
-        .click(function (event) {
-            if (
-                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-                &&
-                location.hostname == this.hostname
-            ) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    event.preventDefault();
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000, function () {
-                        var $target = $(target);
-                        $target.focus();
-                        if ($target.is(":focus")) {
-                            return false;
-                        } else {
-                            $target.attr('tabindex', '-1');
+        /*********************************
+         *
+         * Smooth Scroll
+         *
+         *********************************/
+
+        $('a[href*="#"]')
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function (event) {
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                    &&
+                    location.hostname == this.hostname
+                ) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        event.preventDefault();
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000, function () {
+                            var $target = $(target);
                             $target.focus();
-                        }
-                        ;
-                    });
+                            if ($target.is(":focus")) {
+                                return false;
+                            } else {
+                                $target.attr('tabindex', '-1');
+                                $target.focus();
+                            }
+                            ;
+                        });
+                    }
                 }
-            }
+            });
+
+        /*********************************
+         *
+         * WhatsApp
+         *
+         *********************************/
+
+        $(function () {
+            $('.floating-wpp').floatingWhatsApp({
+                phone: '5561986792680',
+                popupMessage: 'Bem vindo! Envie sua dúvida e logo responderemos:',
+                showPopup: true,
+                position: 'right', // left or right
+                autoOpen: false, // true or false
+                //autoOpenTimer: 4000,
+                message: '',
+                //headerColor: 'orange', // enable to change msg box color
+                headerTitle: 'Whatsapp do Doutor Hoje',
+            });
         });
+
+    });
 </script>
 </body>
 </html>
