@@ -762,19 +762,30 @@ $(function() {
 					var validaInput =true;
                     $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
                     $('#valor_desconto').parent().find('p').html('- R$ ' + numberToReal(desconto));
-					alert(result.titulo)
+
                     if(result.titulo =="CAIXA"){
 						var selectobject=document.getElementById("cartaoCadastrado");
 
 						$('#cartaoCadastrado').prop('selectedIndex',0);
 						$('#cartaoCadastrado').attr('disabled', 'disabled');
 						$('#cartaoCadastrado').empty();
-						$('#cartaoCadastrado').append("<option>Novo Cartão</option>")
+						$('#cartaoCadastrado').append("<option value=''>Novo Cartão</option>")
 						$('#numeroCartaoCredito').val('');
 						$('#inputNumeroCartaoCredito').val('');
 
 						$('.verificador-cartao').slideUp();
 						$('#verificador-cartao').slideUp();
+
+						$('.anoCartao').hide();
+						$('.mesCartao').hide();
+						$('.selectValidadeMesCredito').show();
+						$('.selectValidadeAnoCredito').show();
+						$('.inputNomeCartaoCredito').val('').prop("disabled",  false);
+						$('.inputNumeroCartaoCredito').val('').prop("disabled", false);
+						$('.row-payment-card').css('display', 'flex');
+						$('.row-card-token').css('display', 'none');
+						$('.row-payment.repayment').css('display', 'flex');
+						$('#resumo_compra_final_cartao').html( 'XXXX' );
 
 					}
 
@@ -926,7 +937,7 @@ $(function() {
 
 					if(result) {
 						var json = result.cartao;
-
+						$('.verificador-cartao').slideDown();
 						$('.inputNomeCartaoCredito').val(json.nome_impresso).prop("disabled", true);
 						$('.inputNumeroCartaoCredito').val(json.numero).prop("disabled", true);
 						$('.inputExpirationDateSaveCard').val(json.dt_validade).prop("disabled", true);
@@ -961,6 +972,8 @@ $(function() {
 				}
 			});
 		} else {
+			$('.verificador-cartao').slideUp();
+
 			$('.anoCartao').hide();
 			$('.mesCartao').hide();
 			$('.selectValidadeMesCredito').show();
