@@ -17,4 +17,12 @@ class Documento extends Model
 	public function estado(){
 		return $this->belongsTo('App\Estado'); 
 	}
+	
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function pacientes()
+	{
+		return $this->belongsToMany('App\Paciente');
+	}
 }
