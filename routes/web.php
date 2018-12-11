@@ -97,7 +97,6 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
 Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa');
 
-
 Auth::routes();
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');

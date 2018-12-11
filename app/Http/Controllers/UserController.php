@@ -268,7 +268,7 @@ class UserController extends Controller
     		$paciente->nm_secundario    = $request->input('nm_secundario');
     		$paciente->cs_sexo     		= $request->input('cs_sexo');
     		$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
-    		$paciente->empresa_id = 3;
+    		$paciente->empresa_id       = 5;
     		$paciente->access_token    	= $access_token;
     		$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
     		$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
@@ -282,7 +282,7 @@ class UserController extends Controller
     		$vigencia->cobertura_ativa 	= true;
     		$vigencia->vl_max_consumo	= 0;
     		$vigencia->paciente_id 		= $paciente->id;
-    		$vigencia->anuidade_id 		= 2;
+    		$vigencia->anuidade_id 		= 34;
     		$vigencia->save();
     		
     		# cpf do paciente
@@ -313,6 +313,7 @@ class UserController extends Controller
     		$termosCondicoesUsuarios->save();
     		 
     		$send_message = $this->enviaEmailAtivacaoCaixa($paciente);
+    		
     	} catch (Exception $e) {
     		DB::rollback();
     	}
