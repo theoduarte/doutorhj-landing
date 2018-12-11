@@ -14,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#"><img src="/landingpages/caixa/img/logo-doutor-hoje.png" alt="Doutor Hoje"></a>
+                <a class="navbar-brand" href="https://doutorhoje.com.br/" target="_blank"><img src="/landingpages/caixa/img/logo-doutor-hoje.png" alt="Doutor Hoje"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-qualidade.png" alt="Qualidade">
                             </div>
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Condições especiais">
                             </div>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-top">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Consultas médicas">
                             </div>
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Exames">
                             </div>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-locais.png" alt="Locais">
                             </div>
@@ -154,7 +154,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens">
+                        <div class="box-vantagens bv-bottom">
                             <div class="icone">
                                 <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Aplicativo Doutor Hoje">
                             </div>
@@ -521,8 +521,8 @@
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <div class="contato">
-                        <a class="social" href="https://www.facebook.com/DoctorHoje/"><i class="fab fa-facebook-square"></i></a>
-                        <a class="social" href="https://www.instagram.com/doutor_hoje/"><i class="fab fa-instagram"></i></a><br>
+                        <a class="social" href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fab fa-facebook-square"></i></a>
+                        <a class="social" href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fab fa-instagram"></i></a><br>
                         <a href="https://www.doutorhoje.com.br">www.doutorhoje.com.br</a>
                     </div>
                 </div>
