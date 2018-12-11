@@ -248,8 +248,7 @@
                                         </div>
                                         <span class="label-titulo">Alteração Cadastral</span>
                                         <p>Para alterar as informações do seu cadastro é necessário entrar em contato
-                                            com a nossa central de atendimento pelo número: <strong>(61)
-                                                3221-5350</strong></p>
+                                            com a nossa central de atendimento pelo número: <strong>0800 727 3620</strong></p>
                                     </div>
                                 </div>
                             </div>

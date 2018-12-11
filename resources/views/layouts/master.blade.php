@@ -444,7 +444,7 @@
         <script src="/libs/comvex-template/js/jquery.tree.js"></script>
         
 		<script src="/libs/jquery-ui/jquery-ui.js"></script>
-		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+		<script src="/libs/comvex-template/js/jquery.inputmask.bundle.js"></script>
 		
         <script type="text/javascript">
             jQuery(document).ready(function($) {

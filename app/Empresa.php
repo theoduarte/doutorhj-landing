@@ -17,7 +17,6 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $cs_status
  * @property float $vl_max_empresa
  * @property float $vl_max_funcionario
- * @property float $anuidade
  * @property float $desconto
  * @property string $created_at
  * @property string $updated_at
@@ -32,6 +31,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property CartaoPaciente[] $cartaoPacientes
  * @property Contato[] $contatos
  * @property Paciente[] $pacientes
+ * @property Anuidades[] $anuidades
  */
 class Empresa extends Model
 {
@@ -104,6 +104,14 @@ class Empresa extends Model
 	public function pacientes()
 	{
 		return $this->hasMany('App\Paciente');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function anuidades()
+	{
+		return $this->hasMany('App\Anuidade');
 	}
 
 	public function setCnpjAttribute($value)

@@ -221,7 +221,7 @@
                         <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
-                            <p><strong>(61) 3221-5350</strong></p>
+                            <p><strong>0800 7273620</strong></p>
                             <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
         
 		<!-- <script src="/libs/jquery-ui/jquery-ui.js"></script> -->
 		
-		<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+		<script src="/libs/comvex-template/js/jquery.inputmask.bundle.js"></script>
     	<script src="/js/utilitarios.js"></script>
     
 </body>

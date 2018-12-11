@@ -64,7 +64,7 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='30'>&nbsp;</td>
-                <td width='14'><img src='{{ Request::root() }}img/icone-vermelho.png' width='14' height='15' alt=''/></td>
+                <td width='14'><img src='{{ Request::root() }}/img/icone-vermelho.png' width='14' height='15' alt=''/></td>
                 <td width='10'>&nbsp;</td>
                 <td width='527' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 26px; color: #000;'>Agendar consultas e exames em menos de um minuto;
                 </td>
