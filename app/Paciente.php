@@ -216,6 +216,7 @@ class Paciente extends Model
 					->where('data_fim', '>=', date('Y-m-d H:i:s'))
 					->orWhere(DB::raw('cobertura_ativa'), '=', true);
 			})
+			->orderBy('id', 'DESC')
 			->first();
 
 		return $vigenciaPac;
