@@ -306,7 +306,7 @@
         <div class="welcome-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-5"><div class="container"><div class="boas-vindas">Bem vindo! <a href="{{ route('login') }}">Entre</a> ou
+                    <div class="col-sm-5"><div class=""><div class="boas-vindas">Bem vindo! <a href="{{ route('login') }}">Entre</a> ou
                                 <a href="{{ route('login') }}">Cadastre-se</a></div></div></div>
                     <div class="col-sm-7">
                         <ul class="wb-links">
@@ -352,7 +352,7 @@
                         </ul>
                         <ul class="wb-links-mobile">
                             <li><a href="https://prestador.doutorhoje.com.br" target="_blank"><i class="fa fa-stethoscope" aria-hidden="true"></i> Área do Prestador</a></li>
-                            <li><a href="#"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
+                            <li><a href="https://empresarial.doutorhoje.com.br"><i class="fa fa-building-o" aria-hidden="true"></i> Para Empresas</a></li>
                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
                         </ul>
                         {{--<span class="nome-estado-topo"><span id="ds_uf_localizacao" class="ds_uf_localizacao">Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span>--}}
@@ -380,9 +380,9 @@
                         <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
-                            <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
+                            <p><strong><i class="fa fa-phone" aria-hidden="true"></i> 0800 727 3620</strong></p>
                             <p><strong><i class="fa fa-whatsapp" aria-hidden="true"></i> (61) 98679-2680</strong></p>
-                            <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
+                            <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, exceto feriados.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
@@ -447,7 +447,7 @@
                         <img class="logo-rodape" src="/libs/home-template/img/logo-branca.png" alt="Doutor Hoje">
                         <div class="info-atendimento">
                             <p>Central de Atendimento</p>
-                            <p><strong><i class="fa fa-phone" aria-hidden="true"></i> (61) 3221-5350</strong></p>
+                            <p><strong><i class="fa fa-phone" aria-hidden="true"></i> 0800 727 3620</strong></p>
                             <p><strong><i class="fa fa-whatsapp" aria-hidden="true"></i> (61) 98679-2680</strong></p>
                             <p>Horário de atendimento das 8h às 18h, de segunda à sexta-feira, excetos feriados.</p>
                         </div>

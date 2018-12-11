@@ -19,7 +19,7 @@
         <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
             <tr>
                 <td width='184' style='background-color: #fff;'>&nbsp;</td>
-                <td width='233'><img src='https://doutorhoje.com.br/img/logo-home-header.png' width='233' height='50' alt=''/></td>
+                <td width='233'><img src='{{ Request::root() }}/img/logo-home-header.png' width='233' height='50' alt=''/></td>
                 <td width='183' style='background-color: #fff;'>&nbsp;</td>
             </tr>
         </table>

@@ -64,7 +64,7 @@
                     </div>
                     <div class="contact-box">
                         <h4><i class="fa fa-phone"></i> Ligue para nós</h4>
-                        <p>Central de atendimento: (61) 3221-5350</p>
+                        <p>Central de atendimento: 0800 7273620</p>
                     </div>
                     <div class="contact-box">
                         <h4><i class="fa fa-envelope-o"></i> Envie-nos um E-mail</h4>

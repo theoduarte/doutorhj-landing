@@ -606,7 +606,7 @@ class PaymentController extends Controller
             $formatLimit =(float) str_replace(".","",$valorLimiteRestante)  ;
 
             $empresarial = (($dados->porcentagem *  $valorFinal)/100);
-            if(floatval($empresarial) > floatval($formatLimit) ){
+            if(number_format($empresarial, 2) > floatval($formatLimit) ){
                 return response()->json([
                     'mensagem' => 'Calculo somatorio maior que o limite disponivel'
                 ], 500);
