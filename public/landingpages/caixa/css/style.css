@@ -509,6 +509,9 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 1200px) {
+    .mensagem-caixa {
+        font-size: 28px;
+    }
     .box-vantagens h3 {
         font-size: 21px;
     }
