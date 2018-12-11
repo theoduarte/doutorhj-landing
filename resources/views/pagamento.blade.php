@@ -93,20 +93,20 @@
                                     <section class="col-md-12 col-lg-12">
                                         <h3>Método de pagamento </h3>
                                         <div class="separador"></div>
-                                        <select class="form-control escolherMetodoPagamento">
+                                        <select class="form-control escolherMetodoPagamento" id="escolherMetodoPagamento2">
                                             <option value="" selected>Escolher metodo de pagamento</option>
+
                                             {{--------------    ----------------}}
                                             @if( isset($paciente) && $paciente->plano_ativo->id != App\Plano::OPEN)
                                                 @if(floatval($valor_total-$valor_desconto) < floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
                                                     <option value="1">Crédito Empresarial</option>
                                                 @endif
                                                 @if(floatval($valor_total-$valor_desconto) > floatval($paciente->saldo_empresarial)  &&  floatval($paciente->saldo_empresarial)  > 1 )
-                                                    <option value="2">Crédito empresarial + Cartão de crédito</option>
+                                                    <option value="2"  >Crédito empresarial + Cartão de crédito</option>
                                                 @endif
                                             @endif
                                             
                                             <option value="3">Cartão de crédito</option>
-                                           
                                             {{--
                                                 <option value="4" >Boleto Bancario</option>
                                             <option value="5" >Transferencia Bancario</option>
@@ -116,7 +116,8 @@
                                         </select>
                                     </section>
                                 </div>
-                                
+								<input type="hidden" value="{{$paciente->plano_ativo->id}}" id="plano_ativo">
+								<input type="hidden" value="{{ App\Plano::OPEN}}" id="plano_open">
                                 <div class="card-body">
 
                                     <div class="row cartaoEmpresarial_Credito" style="display:none">
@@ -176,6 +177,10 @@
                                                         <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
                                                         <input type="hidden" id="cartaoCredito+Empr" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                     </div>
+
+													<div id="verificador-cartao" style="display:none">
+
+
                                                     <div class="form-group">
                                                         <label for="inputNomeCartaoCredito">Nome impresso no
                                                             cartão</label>
@@ -225,6 +230,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
+													</div>
                                                 </section>
                                             </form>
                                         </div>
@@ -273,9 +279,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                    <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                    <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito  numeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
                                                     <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                 </div>
+												<div class="verificador-cartao" style="display:none">
                                                 <div class="form-group">
                                                     <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
                                                     <input type="text" id="nomeImpressoCartaoCredito" class="inputNomeCartaoCredito form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
@@ -352,6 +359,7 @@
                                                     <label class="form-check-label" for="checkGravarCartaoCredito">Gravar
                                                         dados para futuras compras</label>
                                                 </div>
+												</div>
                                             </form>
                                         </div>
                                     </div>
@@ -507,7 +515,7 @@
                                             <div class="form-group row row-payment-card">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                    <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                    <input type="text" id="inputNumeroCartaoCredito" class="form-control numeroCartaoCredito input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
                                                     <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                 </div>
                                                 <div class="col col-12 col-sm-6">

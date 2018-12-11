@@ -710,13 +710,11 @@ class PaymentController extends Controller
         // caso o pagamento seja diferente do empresarial ou multcartoes
         $valor =  $this->convertRealEmCentavos( number_format( $valor_total-$valor_desconto, 2, ',', '.') ) ;
 
-        //================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
-
+		//================================================================= FIM VALIDACOES DO TIPO DE PAGAMENTO ============================================================//
 		/** Verifica se colaborador vai utilizar Crédito Empresarial  */
 		if(!is_null($paciente->empresa_id) && $paciente->empresa->pre_autorizar && ($metodoPagamento == Payment::METODO_CRED_EMP || $metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND)) {
 			$cartaoToken;
 			$cartao;
-
 			$valorFinal = $valor_total-$valor_desconto;
 			if($metodoPagamento == Payment::METODO_CRED_EMP_CRED_IND) {
 				$valorEmpresarial = ceil(($dados->porcentagem * $valorFinal) / 100);
@@ -724,9 +722,7 @@ class PaymentController extends Controller
 			} else {
 				$valorEmpresarial = $valorFinal;
 			}
-
 			$parcelas = $dados->parcelas ?? 1;
-
 			$respAgend = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
 			if($respAgend) {
 				CVXCart::clear(); /** Limpa carrinho e retorna reposta */
@@ -741,8 +737,7 @@ class PaymentController extends Controller
 				]);
 			}
 		}
-
-        //================================================================= AGENDAMENTOS ============================================================//
+		//================================================================= AGENDAMENTOS ============================================================//
         //-- dados do comprador---------------------------------------
         $customer = Paciente::findorfail($paciente_id);
         $customer->load('user');
@@ -757,7 +752,7 @@ class PaymentController extends Controller
             $pedidoEmpresarial->titulo         = $titulo_pedido;
             $pedidoEmpresarial->descricao      = $descricao;
             $pedidoEmpresarial->dt_pagamento   = $dt_pagamento;
-            $pedidoEmpresarial->tp_pagamento   = 'empre+credito';
+            $pedidoEmpresarial->tp_pagamento   = $this->verificaTp($metodoPagamento, 1);
             $pedidoEmpresarial->paciente_id    = $paciente_id;
             $pedidoEmpresarial->cartao_id = $cartaoEmpresarialDados->id;
 
@@ -768,8 +763,8 @@ class PaymentController extends Controller
             $pedidoCredito->titulo         = $titulo_pedido;
             $pedidoCredito->descricao      = $descricao;
             $pedidoCredito->dt_pagamento   = $dt_pagamento;
-            $pedidoCredito->tp_pagamento   = 'empre+credito';
-            $pedidoCredito->paciente_id    = $paciente_id;
+            $pedidoCredito->tp_pagamento   = $this->verificaTp($metodoPagamento, 2);
+			$pedidoCredito->paciente_id    = $paciente_id;
 
             // valor a ser pago com credito empresarial
             $restoEmpresarial = $empresarial;
@@ -998,7 +993,6 @@ class PaymentController extends Controller
 
                             $especialidade_obj = new Especialidade();
                             $especialidade = $especialidade_obj->getNomeEspecialidade( $agendamento_id[$o]);
-
                             $agenda = Agendamento::find($agendamento_id[$o]);
                             $agenda->save();
 
@@ -1007,23 +1001,18 @@ class PaymentController extends Controller
                             $agenda->load('filial');
                             $agenda->load('profissional');
                             $agenda->load('paciente');
-
                             $agenda->ds_atendimento =  $especialidade['ds_atendimento'];
                             $agenda->nome_especialidade = $especialidade['nome_especialidades'];
 
                             //--busca os itens de pedido relacionados------------------------------------------
                             $agenda->load('itempedidos');
-
                             if(!is_null($agendamento->checkup_id)) {
                                 $agenda->load('checkup');
                                 $agenda->load('datahoracheckups');
                             }
 
                             $agenda->valores = $valores[$o];
-
                             array_push($result_agendamentos,  $agenda );
-
-
                             array_push($payment_ids,   $pedido);
 
                         }
@@ -1124,14 +1113,28 @@ class PaymentController extends Controller
                 $enderecos =[];
 
                 $endereco = $paciente->enderecos()->first();
-
+				$paciente->load('documentos');
                 if($endereco->cs_status != "I"){
                     $endereco = 	$client->getCustomers()->getAddress($paciente->mundipagg_token,$endereco->mundipagg_token );
                     $lista = explode(",", $endereco->line1);
-                    print_r($lista);
-                    die;
-                    $criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor, $paciente->mundipagg_token, $endereco->id )) ;
 
+                    /*$paciente->user->name,
+						$paciente->user->email,
+						$paciente->documentos[0]->te_documento,
+						$lista[0],
+						$endereco->line2,
+						$lista[1],
+						$endereco->zipCode,
+						$lista[2],
+						$endereco->city,
+						$endereco->state*/
+					$object = FuncoesPagamento::pagamentoBoleto($valor//,$paciente->mundipagg_token,$endereco->id
+
+
+					);
+
+                    $criarPagamento = $client->getOrders()->createOrder($object) ;
+                    dd( $criarPagamento);
                     //$criarPagamento = $client->getOrders()->createOrder(FuncoesPagamento::pagamentoBoleto($valor,$paciente->nm_primario . ' ' . $paciente->nm_secundario,$user->email ,$dados->documento_endereco, $dados->rua_endereco, $dados->numero_endereco, $endereco->zipCode, $endereco->zipCode, $dados->bairro_endereco,  $endereco->city,  $endereco->state, 123456, "Pagar até o vencimento boleto")) ;
                 }
 
@@ -1194,6 +1197,7 @@ class PaymentController extends Controller
                     } catch (Exception $e) {}
 
                 }
+
                 foreach($pedidos_array as $pedidosArray){
 
                         $Payment                                 	= new Payment();
@@ -1215,7 +1219,7 @@ class PaymentController extends Controller
 
                 $boleto = null;
                 if($metodoPagamento == Payment::METODO_BOLETO) {
-                    
+
                     $boleto = [
                         "instrucoes" => $dados['charges'][0]['last_transaction']['instructions'],
                         "url" => 	$dados['charges'][0]['last_transaction']['url'],
@@ -1226,7 +1230,7 @@ class PaymentController extends Controller
 //                     $url_boleto = $dados['charges'][0]['last_transaction']['url'];
 //                     $this->enviarEmailPreAgendamentoBoleto($paciente, $pedido, $agendamento, $url_boleto);
                 }
-                
+
                 $transferencia = null;
                 if($metodoPagamento == Payment::METODO_TRANSFERENCIA) {
                     $transferencia = [
@@ -1241,18 +1245,18 @@ class PaymentController extends Controller
                 #############################################
                 CVXCart::clear();
 
-                $valor_total_pedido = $valor_total-$valor_desconto;
-                $request->session()->put('result_agendamentos', $result_agendamentos);
+				 $valor_total_pedido = $valor_total-$valor_desconto;
+				 $request->session()->put('result_agendamentos', $result_agendamentos);
 
-                $request->session()->put('pedido',$MerchantOrderId);
+				 $request->session()->put('pedido',$MerchantOrderId);
 
-                $request->session()->put('valor_empresa', $valorEmpresa);
-                $request->session()->put('varlor_credito', $valorCredito);
-                $request->session()->put('valor_total_pedido', $valor_total_pedido);
-                $request->session()->put('descricao_boleto', $boleto);
-                $request->session()->put('trans_bancario', $transferencia)	;
+				 $request->session()->put('valor_empresa', $valorEmpresa);
+				 $request->session()->put('varlor_credito', $valorCredito);
+				 $request->session()->put('valor_total_pedido', $valor_total_pedido);
+				 $request->session()->put('descricao_boleto', $boleto);
+				 $request->session()->put('trans_bancario', $transferencia)	;
 
-                return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
+			 	return response()->json(['status' => true, 'mensagem' => 'O Pedido foi realizado com sucesso!', 'pagamento' => $criarPagamento]);
             }
         } else {
             DB::rollback();
@@ -1401,8 +1405,6 @@ class PaymentController extends Controller
 					return 'empresarial';break;
 				} elseif(!is_null($op) && $op == 2) {
 					return "individual";break;
-				} else {
-					return "empre+indiv";break;
 				}
 			case Payment::METODO_CRED_IND:
 				return "individual";break;
@@ -1878,7 +1880,7 @@ class PaymentController extends Controller
 
         $ct_date = date('Y-m-d H:i:s');
 
-        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->get();
+        $cupom_desconto = CupomDesconto::where('codigo', '=', $cod_cupom_desconto)->where('cs_status', '=', 'A')->whereDate('dt_inicio', '<=', date('Y-m-d H:i:s', strtotime($ct_date)))->whereDate('dt_fim', '>=', date('Y-m-d H:i:s', strtotime($ct_date)))->first();
 
         if($cupom_desconto === null) {
             return 0;
@@ -1886,7 +1888,7 @@ class PaymentController extends Controller
 
         $user_session = Auth::user();
         $paciente_id = $user_session->paciente->id;
-        $cupom_id = $cupom_desconto->first()->id;
+        $cupom_id = $cupom_desconto->id;
 
         $agendamento_cupom = Agendamento::where('paciente_id', '=', $paciente_id)->where('cupom_id', '=', $cupom_id)->get();
 
@@ -1894,7 +1896,7 @@ class PaymentController extends Controller
             return 0;
         }
 
-        $percentual = $cupom_desconto->first()->percentual/100;
+        $percentual = $cupom_desconto->percentual/100;
 
         return $percentual;
     }
@@ -2120,7 +2122,7 @@ class PaymentController extends Controller
         $tipo_pagamento = '--------';
         $pedido_obj = Pedido::findorfail($pedido);
         if(!empty($pedido_obj)) {
-            if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito') {
+            if($pedido_obj->tp_pagamento == 'Crédito' | $pedido_obj->tp_pagamento == 'credito' | $pedido_obj->tp_pagamento == 'empresarial' | $pedido_obj->tp_pagamento == 'EMPRESARIAL' | $pedido_obj->tp_pagamento == 'individual' |  $pedido_obj->tp_pagamento == 'INDIVIDUAL') {
                 $pedido_obj->load('pagamentos');
                 $tipo_pagamento = 'CRÉDITO';
                     
@@ -2268,7 +2270,7 @@ class PaymentController extends Controller
         $tipo_pagamento = '--------';
         
         if(!empty($pedido)) {
-            if($pedido->tp_pagamento == 'Crédito' | $pedido->tp_pagamento == 'credito') {
+            if($pedido->tp_pagamento == 'Crédito' | $pedido->tp_pagamento == 'credito' | $pedido->tp_pagamento == 'empresarial' | $pedido->tp_pagamento == 'EMPRESARIAL' | $pedido->tp_pagamento == 'individual' |  $pedido->tp_pagamento == 'INDIVIDUAL') {
                 $pedido->load('cartao_paciente');
                 $tipo_pagamento = 'CRÉDITO';
                 

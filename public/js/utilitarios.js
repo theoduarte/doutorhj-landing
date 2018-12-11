@@ -13,7 +13,13 @@ $(document).ready(function() {
         mask: ["99:99"],
         keepStatic: true
     });
-	
+
+	$(".numero_cartao").inputmask({
+		mask: ["9999"],
+		keepStatic: true
+	});
+
+
 	$(".mascaraMonetaria").maskMoney({prefix:'', allowNegative: false, thousands:'.', decimal:',', affixesStay: false});
 	
 	$(".mascaraTelefone").inputmask({
