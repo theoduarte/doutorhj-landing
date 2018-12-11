@@ -765,6 +765,7 @@ $(function() {
 
                     if(result.titulo =="CAIXA"){
 						var selectobject=document.getElementById("cartaoCadastrado");
+						console.log(result.titulo)
 						$('#cartaoCadastrado').prop('selectedIndex',0);
 						$('#cartaoCadastrado').attr('disabled', 'disabled');
 						$('#cartaoCadastrado').empty();
