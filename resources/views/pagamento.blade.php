@@ -177,6 +177,10 @@
                                                         <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
                                                         <input type="hidden" id="cartaoCredito+Empr" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                     </div>
+
+													<div id="verificador-cartao" style="display:none">
+
+
                                                     <div class="form-group">
                                                         <label for="inputNomeCartaoCredito">Nome impresso no
                                                             cartão</label>
@@ -226,6 +230,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
+													</div>
                                                 </section>
                                             </form>
                                         </div>
@@ -274,9 +279,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                    <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                    <input type="text" id="numeroCartaoCredito" class="inputNumeroCartaoCredito  numeroCartaoCredito form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" required="true" onkeypress="onlyNumbers(event)" maxlength="16">
                                                     <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                 </div>
+												<div class="verificador-cartao" style="display:none">
                                                 <div class="form-group">
                                                     <label for="inputNomeCartaoCredito">Nome impresso no cartão</label>
                                                     <input type="text" id="nomeImpressoCartaoCredito" class="inputNomeCartaoCredito form-control" name="nome_impresso_cartao_credito" placeholder="Nome impresso no cartão">
@@ -353,6 +359,7 @@
                                                     <label class="form-check-label" for="checkGravarCartaoCredito">Gravar
                                                         dados para futuras compras</label>
                                                 </div>
+												</div>
                                             </form>
                                         </div>
                                     </div>
@@ -508,7 +515,7 @@
                                             <div class="form-group row row-payment-card">
                                                 <div class="col col-12 col-sm-6">
                                                     <label for="inputNumeroCartaoCredito">Número do cartão</label>
-                                                    <input type="text" id="inputNumeroCartaoCredito" class="form-control input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
+                                                    <input type="text" id="inputNumeroCartaoCredito" class="form-control numeroCartaoCredito input-numero-cartao cvx-checkout_card_number" name="num_cartao_credito" placeholder="Número do cartão" onkeypress="onlyNumbers(event)" maxlength="16">
                                                     <input type="hidden" id="inputBandeiraCartaoCredito" class="inputBandeiraCartaoCredito" name="bandeira_cartao_credito">
                                                 </div>
                                                 <div class="col col-12 col-sm-6">

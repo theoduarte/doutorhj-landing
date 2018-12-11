@@ -209,6 +209,6 @@ class CupomDescontoController extends Controller
         
         $resumo_parcelamento = $parcelamentos[ count($parcelamentos)-1 ];        
                 
-        return response()->json(['status' => true, 'mensagem' => 'O Cupom foi encontrado com sucesso!', 'percentual' => $percentual, 'resumo_parcelamento' => $resumo_parcelamento, 'parcelamentos' => $parcelamentos]);
+        return response()->json(['status' => true,'titulo' =>$cupomDesconto->titulo,  'mensagem' => 'O Cupom foi encontrado com sucesso!', 'percentual' => $percentual, 'resumo_parcelamento' => $resumo_parcelamento, 'parcelamentos' => $parcelamentos]);
     }
 }
