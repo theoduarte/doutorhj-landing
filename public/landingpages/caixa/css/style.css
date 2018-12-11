@@ -62,17 +62,20 @@ header .logo-cartoes-caixa {
     position: absolute;
     display: block;
 }
+header .logo-cartoes-caixa-mobile {
+    display: none;
+}
 
 header .logo-oferta-caixa {
-     width: 400px;
-     top: 100px;
-    left: 0;
+    width: 332px;
+    top: 151px;
+    left: -74px;
 }
 
 header .logo-cartoes-caixa {
-    width: 300px;
-    top: 260px;
-    right: 0;
+    width: 270px;
+    top: 284px;
+    right: -44px;
 }
 
 .condicoes,
@@ -508,6 +511,9 @@ footer .contato .social {
         top: 215px;
         right: 0;
     }
+    .valores div {
+        margin-bottom: 20px;
+    }
 }
 
 @media only screen and (max-width : 768px) {
@@ -540,7 +546,7 @@ footer .contato .social {
         width: 160px;
         margin: 0 auto;
         top: 40px;
-        left:auto; 
+        left:auto;
     }
     header .btn {
         margin-top: 108px;
@@ -548,20 +554,120 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 480px) {
+    header {
+        background-position: -294px center;
+    }
     header .logo-oferta-caixa {
-        position: relative;
         width: 222px;
-        margin: 0 auto;
         top: 20px;
+        left: 75px;
     }
     header .logo-cartoes-caixa {
+        display: none;
+    }
+    header .logo-cartoes-caixa-mobile {
         position: relative;
         width: 160px;
         margin: 0 auto;
         top: 40px;
+        left: 88px;
+        display: block;
     }
     header .btn {
-        margin-top: 108px;
+        margin-top: 94px;
+        font-size: 20px;
+        padding: 10px 26px;
+    }
+    .condicoes .titulo h2 {
+        font-size: 30px;
+    }
+    .condicoes .titulo p {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    .icone-condicoes img {
+        width: 88%;
+    }
+    .texto-condicoes strong {
+        font-size: 22px;
+    }
+    .mensagem-caixa {
+        font-size: 18px;
+        margin-top: 36px;
+        margin-bottom: 0;
+    }
+    .sobre-dr-hoje .titulo h2 {
+        font-size: 26px;
+    }
+    .sobre-dr-hoje p {
+        font-size: 17px;
+        line-height: 30px;
+    }
+    .vantagens .titulo h2 {
+        font-size: 26px;
+    }
+    .box-vantagens .icone {
+        width: 70px;
+        height: 70px;
+        padding: 15px 0;
+    }
+    .box-vantagens .icone img {
+        height: 40px;
+    }
+    .box-vantagens h3 {
+        font-size: 20px;
+    }
+    .box-vantagens p {
+        font-size: 15px;
+    }
+    .passos-saude .titulo h2 {
+        font-size: 26px;
+    }
+    .exemplos-valores .titulo h2 {
+        font-size: 26px;
+    }
+    .exemplos-valores .titulo p {
+        font-size: 18px;
+        margin-bottom: 26px;
+    }
+    .exemplos-valores .valores {
+        font-size: 15px;
+    }
+    .exemplos-valores p.obs {
+        margin-top: 24px;
+    }
+    .instrucoes-bonus .titulo h2 {
+        font-size: 27px;
+    }
+    .instrucoes-bonus img.cartoes-caixa {
+        width: 60%;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+    .instrucoes-bonus .texto-cartoes-caixa {
+        font-size: 20px;
+        line-height: 32px;
+        text-align: center;
+    }
+    .instrucoes-bonus .btn-bonus {
+        margin-top: 20px;
+    }
+    .perguntas-frequentes .titulo h2 {
+        font-size: 28px;
+    }
+    footer img.logo {
+        width: 70%;
+        margin: 0 auto;
+        display: block;
+        margin-bottom: 20px;
+    }
+    footer .contato p {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+    footer .contato .social {
+        font-size: 30px;
+        margin: 0 10px;
     }
 }
 

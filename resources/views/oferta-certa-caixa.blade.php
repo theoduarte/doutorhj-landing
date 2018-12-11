@@ -21,19 +21,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">O que é?</a>
+                            <a class="nav-link" href="#sobre">O que é?</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Ative seu Cadastro</a>
+                            <a class="nav-link" href="#ativar">Ative seu Cadastro</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Vantagens</a>
+                            <a class="nav-link" href="#vantagens">Vantagens</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Como Agendar</a>
+                            <a class="nav-link" href="#passos">Como Agendar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Perguntas Frequentes</a>
+                            <a class="nav-link" href="#perguntas">Perguntas Frequentes</a>
                         </li>
                     </ul>
                 </div>
@@ -42,6 +42,7 @@
         <div class="container area-logos">
             <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
             <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa">
+            <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
         </div>
         <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
             <strong>Clique</strong> e ative seu<br>cadastro
@@ -78,7 +79,7 @@
                     CAIXA, incentivando a prevenção e a promoção da saúde. </p>
             </div>
         </div>
-        <div class="bg-cinza sobre-dr-hoje">
+        <div id="sobre" class="bg-cinza sobre-dr-hoje">
             <div class="container">
                 <div class="titulo">
                     <h2>O que é o Doutor Hoje?</h2>
@@ -90,7 +91,7 @@
                     incentiva o acesso ao direito básico, de saúde para todos, a PREVENÇÃO e a PROMOÇÃO DA SAÚDE.</p>
             </div>
         </div>
-        <div class="bg-laranja vantagens">
+        <div id="vantagens" class="bg-laranja vantagens">
             <div class="container">
                 <div class="titulo">
                     <h2>Vantagens</h2>
@@ -166,7 +167,7 @@
                 </div>
             </div>
         </div>
-        <div class="passos-saude">
+        <div id="passos" class="passos-saude">
             <div class="container">
                 <div class="titulo">
                     <h2>Veja como é fácil cuidar da sua saúde</h2>
@@ -193,7 +194,7 @@
                     </div>
                     <div class="col">
                         <div class="icone">
-                            <img src="img/icone-passos-saude-data.png" alt="">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-data.png" alt="">
                         </div>
                         <div class="numero">
                             3
@@ -259,29 +260,29 @@
                     <p>(consulte os valores da sua região no site www.doutorhoje.com.br)</p>
                 </div>
                 <div class="row valores">
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Cardiologia<br>R$ 72,54
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Pediatria<br>R$ 86,92
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Ginecologia<br>R$ 71,54
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Clínico Geral<br>R$ 65,54
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Ortopedia<br>R$ 75,38
                     </div>
-                    <div class="col-sm-4 col-md-2">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
                         Urologia<br>R$ 78,29
                     </div>
                 </div>
                 <p class="obs">*Valores baseados na região de São Paulo, consulte sua região no site.</p>
             </div>
         </div>
-        <div class="instrucoes-bonus">
+        <div id="ativar" class="instrucoes-bonus">
             <div class="container">
                 <div class="titulo">
                     <h2>Como utilizar meu bônus de 30%?</h2>
@@ -306,7 +307,7 @@
                 </button>
             </div>
         </div>
-        <div class="bg-cinza perguntas-frequentes">
+        <div id="perguntas" class="bg-cinza perguntas-frequentes">
             <div class="container">
                 <div class="titulo">
                     <h2>Perguntas Frequentes</h2>
@@ -531,5 +532,42 @@
 </div>
 <script src="/landingpages/caixa/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script src="/landingpages/caixa/vendor/bootstrap-4.1.3/js/bootstrap.min.js"></script>
+<script>
+    /*********************************
+     *
+     * Smooth Scroll
+     *
+     *********************************/
+
+    $('a[href*="#"]')
+        .not('[href="#"]')
+        .not('[href="#0"]')
+        .click(function (event) {
+            if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                &&
+                location.hostname == this.hostname
+            ) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000, function () {
+                        var $target = $(target);
+                        $target.focus();
+                        if ($target.is(":focus")) {
+                            return false;
+                        } else {
+                            $target.attr('tabindex', '-1');
+                            $target.focus();
+                        }
+                        ;
+                    });
+                }
+            }
+        });
+</script>
 </body>
 </html>
