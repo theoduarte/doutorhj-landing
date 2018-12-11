@@ -225,7 +225,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function registrarCaixa(UsuariosRequest $request)
+    public function registrarCaixa(Request $request)
     {
     	$access_token = UtilController::getAccessToken();
     	$time_to_live = date('Y-m-d H:i:s');
@@ -238,10 +238,21 @@ class UserController extends Controller
     	########### STARTING TRANSACTION ############
     	DB::beginTransaction();
     	#############################################
-    	 
+//     	dd($request); 
     	try {
     		# dados de acesso do usuário paciente
-    		$usuario            		= new User();
+//     		DB::enableQueryLog();
+    		$usuario = User::where(['email' => $request->input('email')])->first();
+//     		dd( DB::getQueryLog() );
+    		$user_id = 0;
+    		
+    		if(is_null($usuario)) {
+    			$usuario            	= new User();
+    		} else {
+    			$user_id = $usuario->id; 
+    		}
+//     		dd($usuario);
+    		
     		$usuario->name      		= $request->input('nm_primario').' '.$request->input('nm_secundario');
     		$usuario->email     		= $request->input('email');
     		$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
@@ -257,18 +268,20 @@ class UserController extends Controller
     		// cria o usuario na mundipagg
     		$userCreate = $client->getCustomers()->createCustomer( $resultado );
     		 
-    		############# verifica se o usuario pertece a lista da ANASPS ##############
-    		
-    		############################################################################
-    		 
     		# dados do paciente
-    		$paciente           		= new Paciente();
-    		$paciente->user_id 			= $usuario->id;
+    		
+    		if($user_id != 0) {
+    			$paciente = Paciente::where(['user_id' => $user_id])->first();
+    		} else {
+    			$paciente           	= new Paciente();
+    			$paciente->user_id 		= $usuario->id;
+    		}
+//     		dd($paciente);
     		$paciente->nm_primario      = $request->input('nm_primario');
     		$paciente->nm_secundario    = $request->input('nm_secundario');
     		$paciente->cs_sexo     		= $request->input('cs_sexo');
     		$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
-    		$paciente->empresa_id = 3;
+    		$paciente->empresa_id       = 5;
     		$paciente->access_token    	= $access_token;
     		$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
     		$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
@@ -282,11 +295,21 @@ class UserController extends Controller
     		$vigencia->cobertura_ativa 	= true;
     		$vigencia->vl_max_consumo	= 0;
     		$vigencia->paciente_id 		= $paciente->id;
-    		$vigencia->anuidade_id 		= 2;
+    		$vigencia->anuidade_id 		= 34;
     		$vigencia->save();
     		
     		# cpf do paciente
-    		$documento 					= new Documento();
+    		$documento = Documento::with(['pacientes'])->where(['te_documento' => UtilController::retiraMascara($request->input('te_documento'))])->first();
+//     		dd($paciente);
+    		if (empty($documento)) {
+    			$documento 					= new Documento();
+    		} else {
+//     			if($documento->pacientes->first()->id != $paciente->id) {
+//     				DB::rollback();
+//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Documento que você está tentando usar pertence a outro usuário. Por favor, verifique.');
+//     			}
+    		}
+    		
     		$documento->tp_documento 	= 'CPF';
     		$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
     		$documento->save();
@@ -295,7 +318,17 @@ class UserController extends Controller
     		#################################################################
     
     		# contato do paciente
-    		$contato1             		= new Contato();
+    		$contato1 = Contato::with(['pacientes'])->where(['ds_contato' => $request->input('ds_contato')])->first();
+    		
+    		if (empty($contato1)) {
+    			$contato1             		= new Contato();
+    		} else {
+//     			if($contato1->pacientes->first()->id != $paciente->id) {
+//     				DB::rollback();
+//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Contato que você está tentando usar pertence a outro usuário. Por favor, verifique.');
+//     			}
+    		}
+    		
     		$contato1->tp_contato 		= 'CP';
     		$contato1->ds_contato 		= $request->input('ds_contato');
     		$contato1->save();
@@ -313,6 +346,7 @@ class UserController extends Controller
     		$termosCondicoesUsuarios->save();
     		 
     		$send_message = $this->enviaEmailAtivacaoCaixa($paciente);
+    		
     	} catch (Exception $e) {
     		DB::rollback();
     	}
@@ -321,7 +355,8 @@ class UserController extends Controller
     	DB::commit();
     	#############################################
     	
-    	return view('oferta-certa-caixa', compact('access_token'));
+//     	return view('oferta-certa-caixa', compact('access_token'));
+    	return view('auth.login', compact('access_token'));
     }
 
 	public static function enviaEmailAtivacao(Paciente $paciente)
