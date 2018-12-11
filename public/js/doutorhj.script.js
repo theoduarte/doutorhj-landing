@@ -769,7 +769,7 @@ $(function() {
 						$('#cartaoCadastrado').prop('selectedIndex',0);
 						$('#cartaoCadastrado').attr('disabled', 'disabled');
 						$('#cartaoCadastrado').empty();
-						$('#cartaoCadastrado').append("<option>Novo Cartão</option>")
+						$('#cartaoCadastrado').append("<option value=''>Novo Cartão</option>")
 						$('#numeroCartaoCredito').val('');
 						$('#inputNumeroCartaoCredito').val('');
 
