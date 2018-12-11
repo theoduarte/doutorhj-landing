@@ -762,10 +762,10 @@ $(function() {
 					var validaInput =true;
                     $('.cvx-check-cupom-desconto').removeClass('cvx-no-loading');
                     $('#valor_desconto').parent().find('p').html('- R$ ' + numberToReal(desconto));
-
+					console.log(result.titulo)
                     if(result.titulo =="CAIXA"){
 						var selectobject=document.getElementById("cartaoCadastrado");
-						console.log(result.titulo)
+
 						$('#cartaoCadastrado').prop('selectedIndex',0);
 						$('#cartaoCadastrado').attr('disabled', 'disabled');
 						$('#cartaoCadastrado').empty();
