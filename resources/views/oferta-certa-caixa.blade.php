@@ -28,7 +28,7 @@
                             <a class="nav-link" href="#sobre">O que é?</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ativar">Ative seu Cadastro</a>
+                            <a class="nav-link" href="#ativar" data-toggle="modal" data-target="#modalCadastro">Ative seu Cadastro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#vantagens">Vantagens</a>
