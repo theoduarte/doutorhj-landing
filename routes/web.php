@@ -95,8 +95,7 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 
 #rotas da campanha caixa
 Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
-Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa');
-
+Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa')->name('oferta-certa-caixa');
 
 Auth::routes();
 
