@@ -273,7 +273,7 @@
                         <div class="numero">
                             4
                         </div>
-                        <p>Realize o pagamento com o cupom de desconto (6 primeiros dígitos do seu cartão de crédito
+                        <p>Realize o pagamento com o bonus de desconto (6 primeiros dígitos do seu cartão de crédito
                             Caixa)</p>
                     </div>
                     <div class="col">
@@ -360,14 +360,14 @@
                         <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    E depois da primeira compra continuo com descontos?
+                                    E depois da primeira consulta ou exame continua com acesso às tabela de valores exclusiva para clientes caixa?
                                 </button>
                             </h5>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionPerguntas">
                             <div class="card-body">
                                 Sim. Voce será automaticamente um cliente Doutor Hoje Plus e contará com acesso a
-                                consultas e exames com preços hiper acessíveis, em toda a rede nacional Doutor Hoje.
+                                consultas e exames com condições especiais, em toda a rede nacional Doutor Hoje.
                                 Acesse! <a href="https://www.doutorhoje.com.br">www.doutorhoje.com.br</a>
                             </div>
                         </div>
@@ -383,7 +383,7 @@
                         </div>
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionPerguntas">
                             <div class="card-body">
-                                Claro que sim. Para você e para quem mais precisar. Fique a vontade para presentear com
+                                Claro que sim. Para você e para quem mais precisar (qualquer pessoa, familiares, amigos, colaboradores.). Fique a vontade para presentear com
                                 saúde qualquer pessoa.
                             </div>
                         </div>
