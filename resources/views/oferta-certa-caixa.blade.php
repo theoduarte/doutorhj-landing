@@ -10,7 +10,6 @@
     <link href="/libs/sweet-alert/sweetalert2.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="/landingpages/caixa/css/style.css">
     <script src="/landingpages/caixa/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <script src="/landingpages/caixa/vendor/bootstrap-4.1.3/js/bootstrap.min.js"></script>
     <title>Caixa Oferta Certa - Doutor Hoje</title>
 </head>
 <body>
@@ -28,7 +27,8 @@
                             <a class="nav-link" href="#sobre">O que é?</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ativar" data-toggle="modal" data-target="#modalCadastro">Ative seu Cadastro</a>
+                            <a class="nav-link" href="#ativar" data-toggle="modal" data-target="#modalCadastro">Ative
+                                seu Cadastro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#vantagens">Vantagens</a>
@@ -44,16 +44,16 @@
             </div>
         </nav>
     </header>
-    <main>
-        <div class="banner-home">
-            <div class="container">
-                <div class="area">
-                    <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
-                    <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-desktop">
-                    <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
-                </div>
+    <div class="banner-home">
+        <div class="container">
+            <div class="area">
+                <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
+                <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-desktop">
+                <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
             </div>
         </div>
+    </div>
+    <main>
         <div class="bg-branco condicoes">
             <div class="container">
                 <button type="button" class="btn btn-ativacao" data-toggle="modal" data-target="#modalCadastro">
@@ -87,16 +87,73 @@
                     CAIXA, incentivando a prevenção e a promoção da saúde. </p>
             </div>
         </div>
+        <div class="exemplos-valores bg-azul">
+            <div class="container">
+                <div class="titulo">
+                    <h2>Exemplos de valores de consultas e exames*</h2>
+                    <p>(consulte os valores da sua região no site www.doutorhoje.com.br)</p>
+                </div>
+                <div class="row valores">
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Cardiologia<br>R$ 72,54
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Pediatria<br>R$ 86,92
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Ginecologia<br>R$ 71,54
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Clínico Geral<br>R$ 65,54
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Ortopedia<br>R$ 75,38
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
+                        Urologia<br>R$ 78,29
+                    </div>
+                </div>
+                <p class="obs">*Valores baseados na região de São Paulo, consulte sua região no site.</p>
+            </div>
+        </div>
+        <div id="ativar" class="instrucoes-bonus">
+            <div class="container">
+                <div class="titulo">
+                    <h2>Como utilizar meu bônus de 30%?</h2>
+                    <div class="detalhe"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <img class="cartoes-caixa" src="/landingpages/caixa/img/cartoes-caixa.png" alt="Cartões Caixa">
+                    </div>
+                    <div class="col-sm-12 col-md-1">
+
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <p class="texto-cartoes-caixa">No momento do pagamento do seu primeiro agendamento, informe no
+                            campo “CUPOM” os <br><strong>6 primeiros dígitos do seu cartão de crédito CAIXA.</strong>
+                        </p>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
+                    <strong>Clique</strong> e ative seu<br>cadastro
+                    sem custo
+                </button>
+            </div>
+        </div>
         <div id="sobre" class="bg-cinza sobre-dr-hoje">
             <div class="container">
                 <div class="titulo">
                     <h2>O que é o Doutor Hoje?</h2>
                     <span class="detalhe"></span>
                 </div>
-                <p>O Doutor Hoje é uma rede de serviços de atenção a saúde. O Doutor Hoje trabalha para que a Medicina
-                    Preventiva, seja acessível a todos, de forma igual, rápida e efetiva.</p>
-                <p>Promover um ambiente sustentável aos médicos, clínicas, laboratórios e a população. O Doutor Hoje
-                    incentiva o acesso ao direito básico, de saúde para todos, a PREVENÇÃO e a PROMOÇÃO DA SAÚDE.</p>
+                <p>Doutor Hoje, é uma rede de serviços de atenção a saúde. </p>
+                <p>A Doutor Hoje, trabalha para que a Medicina Preventiva, seja acessível a todos, de forma igual,
+                    rápida e efetiva. </p>
+                <p>Promover um ambiente sustentável aos médicos, clínicas, laboratórios e a população.</p>
+                <p>A Doutor Hoje incentiva o acesso ATENÇÃO PRIMÁRIA, a PREVENÇÃO e a PROMOÇÃO DE SAÚDE, o engajamento
+                    da população a práticas saudáveis, melhorando a qualidade de vida de nossos clientes.</p>
+                <p>Prevenir é a melhor prática para a saúde.</p>
             </div>
         </div>
         <div id="vantagens" class="bg-laranja vantagens">
@@ -259,60 +316,6 @@
                         <p>Pronto! Agora é deixar que o Doutor Hoje cuide de você</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="exemplos-valores bg-azul">
-            <div class="container">
-                <div class="titulo">
-                    <h2>Exemplos de valores de consultas e exames*</h2>
-                    <p>(consulte os valores da sua região no site www.doutorhoje.com.br)</p>
-                </div>
-                <div class="row valores">
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Cardiologia<br>R$ 72,54
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Pediatria<br>R$ 86,92
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Ginecologia<br>R$ 71,54
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Clínico Geral<br>R$ 65,54
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Ortopedia<br>R$ 75,38
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-2">
-                        Urologia<br>R$ 78,29
-                    </div>
-                </div>
-                <p class="obs">*Valores baseados na região de São Paulo, consulte sua região no site.</p>
-            </div>
-        </div>
-        <div id="ativar" class="instrucoes-bonus">
-            <div class="container">
-                <div class="titulo">
-                    <h2>Como utilizar meu bônus de 30%?</h2>
-                    <div class="detalhe"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-4">
-                        <img class="cartoes-caixa" src="/landingpages/caixa/img/cartoes-caixa.png" alt="Cartões Caixa">
-                    </div>
-                    <div class="col-sm-12 col-md-1">
-
-                    </div>
-                    <div class="col-sm-12 col-md-7">
-                        <p class="texto-cartoes-caixa">No momento do pagamento do seu primeiro agendamento, informe no
-                            campo “CUPOM” os <br><strong>6 primeiros dígitos do seu cartão de crédito CAIXA.</strong>
-                        </p>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
-                    <strong>Clique</strong> e ative seu<br>cadastro
-                    sem custo
-                </button>
             </div>
         </div>
         <div id="perguntas" class="bg-cinza perguntas-frequentes">

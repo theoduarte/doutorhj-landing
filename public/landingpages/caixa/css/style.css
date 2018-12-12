@@ -41,7 +41,7 @@ header nav.navbar {
 }
 
 .banner-home {
-    background: url(../img/bg-topo.jpg) no-repeat center center fixed;
+    background: url(../img/bg-topo.jpg) no-repeat center -160px;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -544,8 +544,16 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 1200px) {
+    .banner-home {
+        background: url(../img/bg-topo.jpg) no-repeat center -116px;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
     .mensagem-caixa {
         font-size: 28px;
+        margin-top: 30px;
     }
     .box-vantagens h3 {
         font-size: 21px;
@@ -561,7 +569,7 @@ footer .contato .social {
 
 @media only screen and (max-width : 992px) {
     .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat -94px center fixed;
+        background: url(../img/bg-topo.jpg) no-repeat center 0px;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -602,23 +610,26 @@ footer .contato .social {
         padding: 10px 28px;
     }
     .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat -206px center fixed;
+        background: url(../img/bg-topo.jpg) no-repeat center 0px;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
     }
     .banner-home .logo-oferta-caixa {
-        width: 310px;
-        top: -20px;
-        left: 97px;
+        width: 250px;
+        position: relative;
+        margin: 40px auto 40px auto;
+        top: auto;
+        left: auto;
     }
     .banner-home .logo-cartoes-caixa-mobile {
         display: block;
-        position: absolute;
-        width: 240px;
-        top: 324px;
-        right: 137px;
+        position: relative;
+        margin: 0 auto;
+        top: auto;
+        left: auto;
+        right: auto;
     }
     .condicoes .titulo h2 {
         font-size: 30px;
@@ -635,7 +646,7 @@ footer .contato .social {
     }
     .mensagem-caixa {
         font-size: 18px;
-        margin-top: 36px;
+        margin-top: 0px;
         margin-bottom: 0;
     }
     .sobre-dr-hoje .titulo h2 {
@@ -721,47 +732,49 @@ footer .contato .social {
 
 @media only screen and (max-width : 548px) {
     .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat -314px center fixed;
+        background: url(../img/bg-topo.jpg) no-repeat -160 0px;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
     }
     .banner-home .logo-oferta-caixa {
-        width: 290px;
-        top: -10px;
-        left: 114px;
+        width: 200px;
+        position: relative;
+        margin: 40px auto 66px auto;
+        top: auto;
+        left: auto;
     }
     .banner-home .logo-cartoes-caixa-mobile {
         display: block;
-        position: absolute;
-        width: 214px;
-        top: 323px;
+        position: relative;
+        margin: 0 auto;
+        top: auto;
+        left: auto;
         right: auto;
-        left: 145px;
     }
 }
 
 @media only screen and (max-width : 480px) {
     .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat -314px center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+        background-image: url(../img/bg-topo.jpg);
+        background-size: auto 577px;
+        background-position: center top;
     }
     .banner-home .logo-oferta-caixa {
-        width: 290px;
-        top: -10px;
-        left: 80px;
+        width: 200px;
+        position: relative;
+        margin: 40px auto 66px auto;
+        top: auto;
+        left: auto;
     }
     .banner-home .logo-cartoes-caixa-mobile {
         display: block;
-        position: absolute;
-        width: 214px;
-        top: 323px;
+        position: relative;
+        margin: 0 auto;
+        top: auto;
+        left: auto;
         right: auto;
-        left: 113px;
     }
 }
 
