@@ -3,13 +3,13 @@ $(document).ready(function () {
 
 	/* VALIDA CARTAO INSERIDO QUANDO A BIN FOR IGUAL A DA CAIXA ECONOMICA*/
 
-		$('.inputNumeroCartaoCredito').keypress(function() {
+		$('.inputNumeroCartaoCredito').keydown(function() {
 			var cartao = $(this).val();
 			var cupom = $('#inputCupom').val();
 
 			validarCupoCartao(cartao, cupom);
 		})
-		$('#inputNumeroCartaoCredito').keypress(function() {
+		$('#inputNumeroCartaoCredito').keydown(function() {
 			var cartao = $(this).val();
 			var cupom = $('#inputCupom').val();
 
