@@ -52,7 +52,6 @@ class LoginController extends Controller
     public function login(Request $request)
     {
     	$credentials = $request->only('cvx_telefone', 'cvx_token');
-
     	$cvx_telefone = $credentials['cvx_telefone'];
     	$cvx_token = $credentials['cvx_token'];
 
