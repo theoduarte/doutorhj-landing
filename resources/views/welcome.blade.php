@@ -231,12 +231,39 @@
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
 
-                        <div class="banner-conheca carousel-item active" style="background-image: url('/libs/home-template/img/banner1.jpg')">
+                        <div class="banner-caixa carousel-item active" style="background-image: url('/libs/home-template/img/banner-caixa/bg.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="intro">
+                                        <span>Consultas e Exames com<br>
+                                        condições especiais e<br>
+                                        exclusivas para clientes CAIXA</span>
+                                    </div>
+                                    <div class="logos">
+                                        <img src="/libs/home-template/img/banner-caixa/logos-caixa.png" alt="">
+                                    </div>
+                                    <div class="beneficios">
+                                        <div class="beneficio1">
+                                            <img src="/libs/home-template/img/banner-caixa/icone-b1.png" alt="">
+                                            <span><strong>30% de bônus</strong> no primeiro agendamento (Qualquer consulta e exame).</span>
+                                        </div>
+                                        <div class="beneficio2">
+                                            <img src="/libs/home-template/img/banner-caixa/icone-b2.png" alt="">
+                                            <span><strong>Isenção de mensalidade</strong> ao plano Doutor Hoje PLUS (100% de desconto no primeiro ano).</span>
+                                        </div>
+                                    </div>
+                                    <a href="https://doutorhoje.com.br/ofertacertacaixa" class="btn-lp">Ative seu cadastro sem custo</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="banner-conheca carousel-item" style="background-image: url('/libs/home-template/img/banner1.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="texto">
