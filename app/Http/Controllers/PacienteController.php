@@ -73,7 +73,7 @@ class PacienteController extends Controller
         	
         	############ VERIFICACAO TEMPORARIA EXCLUSIVA PARA CLIENTE CAIXA ####################
         	if ($paciente->empresa_id == 5) {
-        	    $html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
+        	    $html_message = view('emails.confirma_ativacao_caixa', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
         	} else {
         	    $html_message = view('emails.confirma_ativacao', compact('paciente_nm_primario', 'url', 'paciente_email'))->render();
         	}
