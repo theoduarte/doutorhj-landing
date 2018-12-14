@@ -14,6 +14,15 @@ body {
     background-color: #1b71b9;
 }
 
+header {
+    height: 500px;
+    background: url(../img/bg-topo.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 header nav.navbar {
     background-color: rgba(255, 255, 255, 0.8);
 }
@@ -40,44 +49,33 @@ header nav.navbar {
     display: block;
 }
 
-.banner-home {
-    background: url(../img/bg-topo.jpg) no-repeat center -160px;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+header .btn {
+    margin-top: 374px;
 }
 
-.banner-home .container .area {
+header .area-logos {
     position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
 }
 
-.banner-home .logo-oferta-caixa {
-    display: block;
+header .logo-oferta-caixa,
+header .logo-cartoes-caixa {
     position: absolute;
-    width: 340px;
-    top: 200px;
-    left: 0;
-}
-
-.banner-home .logo-cartoes-caixa-desktop {
     display: block;
-    position: absolute;
-    width: 240px;
-    top: 338px;
-    right: 0;
 }
-
-.banner-home .logo-cartoes-caixa-mobile {
+header .logo-cartoes-caixa-mobile {
     display: none;
 }
 
-.condicoes .btn-ativacao {
-    margin-top: -110px;
-    margin-bottom: 36px;
+header .logo-oferta-caixa {
+    width: 332px;
+    top: 151px;
+    left: -74px;
+}
+
+header .logo-cartoes-caixa {
+    width: 270px;
+    top: 284px;
+    right: -44px;
 }
 
 .condicoes,
@@ -544,16 +542,8 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 1200px) {
-    .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat center -116px;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
     .mensagem-caixa {
         font-size: 28px;
-        margin-top: 30px;
     }
     .box-vantagens h3 {
         font-size: 21px;
@@ -568,68 +558,82 @@ footer .contato .social {
 }
 
 @media only screen and (max-width : 992px) {
-    .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat center 0px;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+    header .logo-oferta-caixa {
+        width: 280px;
+        top: 100px;
+        left: 0;
     }
-    .banner-home .logo-oferta-caixa {
-        width: 310px;
-        top: -20px;
-        left: 194px;
-    }
-    .banner-home .logo-cartoes-caixa-desktop {
-        display: none;
-    }
-    .banner-home .logo-cartoes-caixa-mobile {
-        display: block;
-        position: absolute;
-        width: 240px;
-        top: 324px;
-        right: 230px;
+    header .logo-cartoes-caixa {
+        width: 200px;
+        top: 215px;
+        right: 0;
     }
     .valores div {
         margin-bottom: 20px;
     }
-    .bv-bottom {
-        min-height: 440px;
-    }
 }
 
 @media only screen and (max-width : 768px) {
-    .condicoes .btn-ativacao {
-        margin-top: -96px;
-        margin-bottom: 26px;
-        font-size: 20px;
-        padding: 10px 28px;
-    }
-    .btn-ativacao {
-        font-size: 20px;
-        padding: 10px 28px;
-    }
-    .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat center 0px;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-    .banner-home .logo-oferta-caixa {
-        width: 250px;
+    header .logo-oferta-caixa {
         position: relative;
-        margin: 40px auto 40px auto;
-        top: auto;
-        left: auto;
-    }
-    .banner-home .logo-cartoes-caixa-mobile {
-        display: block;
-        position: relative;
+        width: 280px;
         margin: 0 auto;
-        top: auto;
-        left: auto;
-        right: auto;
+        top: 20px;
+    }
+    header .logo-cartoes-caixa {
+        position: relative;
+        width: 200px;
+        top: 15px;
+        left: 320px;
+    }
+    header .btn {
+        margin-top: 45px;
+    }
+}
+
+@media only screen and (max-width : 548px) {
+    header .logo-oferta-caixa {
+        position: relative;
+        width: 222px;
+        margin: 0 auto;
+        top: 20px;
+    }
+    header .logo-cartoes-caixa {
+        position: relative;
+        width: 160px;
+        margin: 0 auto;
+        top: 40px;
+        left:auto;
+    }
+    header .btn {
+        margin-top: 108px;
+    }
+}
+
+@media only screen and (max-width : 480px) {
+    header {
+        background-position: -294px center;
+    }
+    header .logo-oferta-caixa {
+        width: 222px;
+        top: 20px;
+        left: 75px;
+    }
+    header .logo-cartoes-caixa {
+        display: none;
+    }
+    header .logo-cartoes-caixa-mobile {
+        position: relative;
+        width: 160px;
+        margin: 0 auto;
+        top: 40px;
+        left: 88px;
+        display: block;
+    }
+    header .btn {
+        margin-top: 94px;
+        font-size: 20px;
+        padding: 10px 26px;
     }
     .condicoes .titulo h2 {
         font-size: 30px;
@@ -646,7 +650,7 @@ footer .contato .social {
     }
     .mensagem-caixa {
         font-size: 18px;
-        margin-top: 0px;
+        margin-top: 36px;
         margin-bottom: 0;
     }
     .sobre-dr-hoje .titulo h2 {
@@ -672,12 +676,6 @@ footer .contato .social {
     }
     .box-vantagens p {
         font-size: 15px;
-    }
-    .bv-top {
-        min-height: auto;
-    }
-    .bv-bottom {
-        min-height: auto;
     }
     .passos-saude .titulo h2 {
         font-size: 26px;
@@ -727,54 +725,6 @@ footer .contato .social {
     footer .contato .social {
         font-size: 30px;
         margin: 0 10px;
-    }
-}
-
-@media only screen and (max-width : 548px) {
-    .banner-home {
-        background: url(../img/bg-topo.jpg) no-repeat -160 0px;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-    .banner-home .logo-oferta-caixa {
-        width: 200px;
-        position: relative;
-        margin: 40px auto 66px auto;
-        top: auto;
-        left: auto;
-    }
-    .banner-home .logo-cartoes-caixa-mobile {
-        display: block;
-        position: relative;
-        margin: 0 auto;
-        top: auto;
-        left: auto;
-        right: auto;
-    }
-}
-
-@media only screen and (max-width : 480px) {
-    .banner-home {
-        background-image: url(../img/bg-topo.jpg);
-        background-size: auto 577px;
-        background-position: center top;
-    }
-    .banner-home .logo-oferta-caixa {
-        width: 200px;
-        position: relative;
-        margin: 40px auto 66px auto;
-        top: auto;
-        left: auto;
-    }
-    .banner-home .logo-cartoes-caixa-mobile {
-        display: block;
-        position: relative;
-        margin: 0 auto;
-        top: auto;
-        left: auto;
-        right: auto;
     }
 }
 
