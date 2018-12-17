@@ -20,7 +20,7 @@
                         <p>Após a escolha do prestador, indique a data e horário para realizar o seu agendamento.</p>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <a href="https://doutorhoje.com.br/ofertacertacaixa" class="mini-banner-resultado"><img style="width: 200px;" src="/libs/home-template/img/banner-caixa/mini-banner.png" alt=""></a>
+                        <a href="https://doutorhoje.com.br/ofertacertacaixa" class="mini-banner-resultado"><img style="width: 320px;" src="/libs/home-template/img/banner-caixa/mini-banner.png" alt=""></a>
                     </div>
                 </div>
             </div>           
