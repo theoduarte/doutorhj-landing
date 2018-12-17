@@ -14,8 +14,15 @@
     <div class="container">
         <div class="area-container">
             <div class="titulo">
-                <strong>{{count($atendimentos)}} @if(count($atendimentos)>1)Resultados @else Resultado @endif da sua pesquisa</strong>
-                <p>Após a escolha do prestador, indique a data e horário para realizar o seu agendamento.</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-8">
+                        <strong>{{count($atendimentos)}} @if(count($atendimentos)>1)Resultados @else Resultado @endif da sua pesquisa</strong>
+                        <p>Após a escolha do prestador, indique a data e horário para realizar o seu agendamento.</p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <a href="https://doutorhoje.com.br/ofertacertacaixa" class="mini-banner-resultado"><img style="width: 320px;" src="/libs/home-template/img/banner-caixa/mini-banner.png" alt=""></a>
+                    </div>
+                </div>
             </div>           
             <div class="area-alt-busca">
                 <a class="btn btn-primary btn-alt-busca" data-toggle="collapse" href="#collapseFormulario" role="button" aria-expanded="false" aria-controls="collapseFormulario">Alterar Busca <i class="fa fa-edit"></i></a>
