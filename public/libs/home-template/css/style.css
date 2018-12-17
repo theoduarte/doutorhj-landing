@@ -440,6 +440,13 @@ header .navbar-collapse {
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
 }
 
+.mini-banner-resultado {
+    display: block;
+    overflow: auto;
+    float: right;
+    margin-bottom: 16px;
+}
+
 .banner-caixa .area-texto {
     width: 1110px;
     padding-left: 470px;
@@ -4395,6 +4402,16 @@ footer ul li a:hover {
     .banner-slider-home .banner-conheca .texto h3,
     .banner-slider-home .banner-precos-justos .texto h3 {
         font-size: 32px;
+    }
+
+    .mini-banner-resultado {
+        float: none;
+        margin: 4px 0 15px 0;
+    }
+
+    .mini-banner-resultado img{
+        margin:0 auto;
+        display: block;
     }
 
     .banner-caixa .intro {
