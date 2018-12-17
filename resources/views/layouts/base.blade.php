@@ -26,7 +26,7 @@
     <meta name="keywords" content="doutorhoje saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
-    <title>@yield('title', 'DoutorHJ')</title>
+    <title>@yield('title', 'DoutorHoje')</title>
 
 @push('style')
 
