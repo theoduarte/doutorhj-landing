@@ -28,13 +28,21 @@ class RegraAnasps implements Rule
      */
     public function passes($attribute, $value)
     {
-    	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
+    	$date_regra_anasps = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
 //     	DB::enableQueryLog();
-    	$documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra)->whereDate('updated_at', '=', $date_regra)->first();
+    	$documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra_anasps)->whereDate('updated_at', '=', $date_regra_anasps)->first();
 //     	$query_log = DB::getQueryLog();
 //     	dd($query_log);
     	
     	//--verifica se eh documento de colaborador anasps
+        if (!empty($documento)) {
+        	return true;
+        }
+        
+        $date_regra_assetran = date('Y-m-d H:i:s', strtotime('2018-12-16 00:00:00'));
+        $documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra_assetran)->whereDate('updated_at', '=', $date_regra_assetran)->first();
+         
+        //--verifica se eh documento de colaborador assetran
         if (!empty($documento)) {
         	return true;
         }

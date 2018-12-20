@@ -6,11 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="/landingpages/caixa/vendor/bootstrap-4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/landingpages/caixa/vendor/fontawesome-5.2.0/css/all.min.css">
-    <!-- Sweet Alert css -->
+    <link rel="stylesheet" href="/landingpages/caixa/vendor/floating-whatsapp/floating-wpp.css">
     <link href="/libs/sweet-alert/sweetalert2.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="/landingpages/caixa/css/style.css">
     <script src="/landingpages/caixa/vendor/jquery/jquery-3.3.1.min.js"></script>
-	<script src="/landingpages/caixa/vendor/bootstrap-4.1.3/js/bootstrap.min.js"></script>
     <title>Caixa Oferta Certa - Doutor Hoje</title>
 </head>
 <body>
@@ -28,7 +27,8 @@
                             <a class="nav-link" href="#sobre">O que é?</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ativar">Ative seu Cadastro</a>
+                            <a class="nav-link" href="#ativar" data-toggle="modal" data-target="#modalCadastro">Ative
+                                seu Cadastro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#vantagens">Vantagens</a>
@@ -43,19 +43,23 @@
                 </div>
             </div>
         </nav>
-        <div class="container area-logos">
-            <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
-            <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa">
-            <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
-        </div>
-        <button type="button" class="btn btn-ativacao btn-bonus" data-toggle="modal" data-target="#modalCadastro">
-            <strong>Clique</strong> e ative seu<br>cadastro
-            sem custo
-        </button>
     </header>
+    <div class="banner-home">
+        <div class="container">
+            <div class="area">
+                <img src="/landingpages/caixa/img/oferta-certa.png" alt="Oferta certa caixa" class="logo-oferta-caixa">
+                <img src="/landingpages/caixa/img/logo-cartoes-caixa.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-desktop">
+                <img src="/landingpages/caixa/img/brand-cx.png" alt="Oferta certa caixa" class="logo-cartoes-caixa-mobile">
+            </div>
+        </div>
+    </div>
     <main>
         <div class="bg-branco condicoes">
             <div class="container">
+                <button type="button" class="btn btn-ativacao" data-toggle="modal" data-target="#modalCadastro">
+                    <strong>Clique</strong> e ative seu<br>cadastro
+                    sem custo
+                </button>
                 <div class="titulo">
                     <h2>Consultas e Exames</h2>
                     <p>Condições especiais e exclusivas para clientes CAIXA</p>
@@ -81,180 +85,6 @@
                 </div>
                 <p class="mensagem-caixa">
                     CAIXA, incentivando a prevenção e a promoção da saúde. </p>
-            </div>
-        </div>
-        <div id="sobre" class="bg-cinza sobre-dr-hoje">
-            <div class="container">
-                <div class="titulo">
-                    <h2>O que é o Doutor Hoje?</h2>
-                    <span class="detalhe"></span>
-                </div>
-                <p>O Doutor Hoje é uma rede de serviços de atenção a saúde. O Doutor Hoje trabalha para que a Medicina
-                    Preventiva, seja acessível a todos, de forma igual, rápida e efetiva.</p>
-                <p>Promover um ambiente sustentável aos médicos, clínicas, laboratórios e a população. O Doutor Hoje
-                    incentiva o acesso ao direito básico, de saúde para todos, a PREVENÇÃO e a PROMOÇÃO DA SAÚDE.</p>
-            </div>
-        </div>
-        <div id="vantagens" class="bg-laranja vantagens">
-            <div class="container">
-                <div class="titulo">
-                    <h2>Vantagens</h2>
-                    <span class="detalhe"></span>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-top">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-qualidade.png" alt="Qualidade">
-                            </div>
-                            <h3>Qualidade</h3>
-                            <div class="detalhe"></div>
-                            <p>Com o Doutor Hoje você tem atendimento de qualidade com os mais bem avaliados
-                                profissionais da saúde.</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-top">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Condições especiais">
-                            </div>
-                            <h3>Condições Especiais</h3>
-                            <div class="detalhe"></div>
-                            <p>- 30% de bônus no primeiro agendamento<br>
-                                - 100% de desconto da mensalidade doutor hoje<br>
-                                - Parcelamento das consultas e exames em até 3 parcelas sem juros.</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-top">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Consultas médicas">
-                            </div>
-                            <h3>Consultas médicas</h3>
-                            <div class="detalhe"></div>
-                            <p>Todas as especialidades médicas entre elas: pediatria, clínica geral, cardiologia,
-                                ginecologia, etc.</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-bottom">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Exames">
-                            </div>
-                            <h3>Exames</h3>
-                            <div class="detalhe"></div>
-                            <p>São mais de 3.000 tipos de exames e os mais conceituados laboratórios do país</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-bottom">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-locais.png" alt="Locais">
-                            </div>
-                            <h3>Locais</h3>
-                            <div class="detalhe"></div>
-                            <p>Presente em todos os estados brasileiros. Basta localizar o lugar mais próximo de
-                                você</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div class="box-vantagens bv-bottom">
-                            <div class="icone">
-                                <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Aplicativo Doutor Hoje">
-                            </div>
-                            <h3>Aplicativo Doutor Hoje</h3>
-                            <div class="detalhe"></div>
-                            <p>Baixe nas lojas. Com ele você tem acesso à agenda de exames e consultas e lembretes e
-                                incentivo à programas de saúde</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="passos" class="passos-saude">
-            <div class="container">
-                <div class="titulo">
-                    <h2>Veja como é fácil cuidar da sua saúde</h2>
-                    <div class="detalhe"></div>
-                </div>
-                <div class="row passos">
-                    <div class="col">
-                        <div class="icone">
-                            <img src="/landingpages/caixa/img/icone-passos-saude-cadastro.png" alt="">
-                        </div>
-                        <div class="numero">
-                            1
-                        </div>
-                        <p>Realize seu cadastro</p>
-                    </div>
-                    <div class="col">
-                        <div class="icone">
-                            <img src="/landingpages/caixa/img/icone-passos-saude-local.png" alt="">
-                        </div>
-                        <div class="numero">
-                            2
-                        </div>
-                        <p>Escolha o prestador e local</p>
-                    </div>
-                    <div class="col">
-                        <div class="icone">
-                            <img src="/landingpages/caixa/img/icone-passos-saude-data.png" alt="">
-                        </div>
-                        <div class="numero">
-                            3
-                        </div>
-                        <p>Sugira o dia e horário</p>
-                    </div>
-                    <div class="col">
-                        <div class="icone">
-                            <img src="/landingpages/caixa/img/icone-passos-saude-cartao.png" alt="">
-                        </div>
-                        <div class="numero">
-                            4
-                        </div>
-                        <p>Realize o pagamento com o cupom de desconto (6 primeiros dígitos do seu cartão de crédito
-                            Caixa)</p>
-                    </div>
-                    <div class="col">
-                        <div class="icone">
-                            <img src="/landingpages/caixa/img/icone-passos-saude-feliz.png" alt="">
-                        </div>
-                        <div class="numero">
-                            5
-                        </div>
-                        <p>Pronto! Agora é só ir ao médico e cuidar da sua saúde</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="passos-consulta bg-cinza">
-            <div class="container">
-                <div class="titulo">
-                    <h2>No dia da consulta</h2>
-                    <div class="detalhe"></div>
-                </div>
-                <div class="row passos">
-                    <div class="col">
-                        <div class="numero">
-                            1
-                        </div>
-                        <p>Prepare-se: Leve para sua consulta o seu documento pessoal, seu código de autorização e os
-                            seus últimos exames</p>
-                    </div>
-                    <div class="col">
-                        <div class="numero">
-                            2
-                        </div>
-                        <p>Sem se preocupar: Nós enviamos um lembrete antes do seu atendimento e direto na sua
-                            agenda</p>
-                    </div>
-                    <div class="col">
-                        <div class="numero">
-                            3
-                        </div>
-                        <p>Pronto! Agora é deixar que o Doutor Hoje cuide de você</p>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="exemplos-valores bg-azul">
@@ -311,6 +141,183 @@
                 </button>
             </div>
         </div>
+        <div id="sobre" class="bg-cinza sobre-dr-hoje">
+            <div class="container">
+                <div class="titulo">
+                    <h2>O que é o Doutor Hoje?</h2>
+                    <span class="detalhe"></span>
+                </div>
+                <p>Doutor Hoje, é uma rede de serviços de atenção a saúde. </p>
+                <p>A Doutor Hoje, trabalha para que a Medicina Preventiva, seja acessível a todos, de forma igual,
+                    rápida e efetiva. </p>
+                <p>Promover um ambiente sustentável aos médicos, clínicas, laboratórios e a população.</p>
+                <p>A Doutor Hoje incentiva o acesso ATENÇÃO PRIMÁRIA, a PREVENÇÃO e a PROMOÇÃO DE SAÚDE, o engajamento
+                    da população a práticas saudáveis, melhorando a qualidade de vida de nossos clientes.</p>
+                <p>Prevenir é a melhor prática para a saúde.</p>
+            </div>
+        </div>
+        <div id="vantagens" class="bg-laranja vantagens">
+            <div class="container">
+                <div class="titulo">
+                    <h2>Vantagens</h2>
+                    <span class="detalhe"></span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-top">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-qualidade.png" alt="Qualidade">
+                            </div>
+                            <h3>Qualidade</h3>
+                            <div class="detalhe"></div>
+                            <p>Com o Doutor Hoje você tem atendimento de qualidade com os mais bem avaliados
+                                profissionais da saúde.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-top">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-condicoes.png" alt="Condições especiais">
+                            </div>
+                            <h3>Condições Especiais</h3>
+                            <div class="detalhe"></div>
+                            <p>- 30% de bônus no primeiro agendamento<br>
+                                - 100% de desconto da mensalidade doutor hoje<br>
+                                - Parcelamento das consultas e exames em até 3 parcelas sem juros.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-top">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-consultas.png" alt="Consultas médicas">
+                            </div>
+                            <h3>Consultas médicas</h3>
+                            <div class="detalhe"></div>
+                            <p>Todas as especialidades médicas entre elas: pediatria, clínica geral, cardiologia,
+                                ginecologia, etc.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-bottom">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-exames.png" alt="Exames">
+                            </div>
+                            <h3>Exames</h3>
+                            <div class="detalhe"></div>
+                            <p>São mais de 3.000 tipos de exames e os mais conceituados laboratórios do país</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-bottom">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-locais.png" alt="Locais">
+                            </div>
+                            <h3>Locais</h3>
+                            <div class="detalhe"></div>
+                            <p>Presente em todos os estados brasileiros. Basta localizar o lugar mais próximo de
+                                você</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="box-vantagens bv-bottom">
+                            <div class="icone">
+                                <img src="/landingpages/caixa/img/icone-vant-aplicativo.png" alt="Aplicativo Doutor Hoje">
+                            </div>
+                            <h3>Aplicativo Doutor Hoje</h3>
+                            <div class="detalhe"></div>
+                            <p>Baixe nas lojas. Com ele você tem acesso à agenda de exames e consultas e lembretes e
+                                incentivo à programas de saúde</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="passos" class="passos-saude">
+            <div class="container">
+                <div class="titulo">
+                    <h2>Veja como é fácil cuidar da sua saúde</h2>
+                    <div class="detalhe"></div>
+                </div>
+                <div class="row passos">
+                    <div class="col">
+                        <div class="icone">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-cadastro.png" alt="">
+                        </div>
+                        <div class="numero">
+                            1
+                        </div>
+                        <p>Realize seu cadastro</p>
+                    </div>
+                    <div class="col">
+                        <div class="icone">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-local.png" alt="">
+                        </div>
+                        <div class="numero">
+                            2
+                        </div>
+                        <p>Escolha o prestador e local</p>
+                    </div>
+                    <div class="col">
+                        <div class="icone">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-data.png" alt="">
+                        </div>
+                        <div class="numero">
+                            3
+                        </div>
+                        <p>Sugira o dia e horário</p>
+                    </div>
+                    <div class="col">
+                        <div class="icone">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-cartao.png" alt="">
+                        </div>
+                        <div class="numero">
+                            4
+                        </div>
+                        <p>Realize o pagamento com o bonus de desconto (6 primeiros dígitos do seu cartão de crédito
+                            Caixa)</p>
+                    </div>
+                    <div class="col">
+                        <div class="icone">
+                            <img src="/landingpages/caixa/img/icone-passos-saude-feliz.png" alt="">
+                        </div>
+                        <div class="numero">
+                            5
+                        </div>
+                        <p>Pronto! Agora é só ir ao médico e cuidar da sua saúde</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="passos-consulta bg-cinza">
+            <div class="container">
+                <div class="titulo">
+                    <h2>No dia da consulta</h2>
+                    <div class="detalhe"></div>
+                </div>
+                <div class="row passos">
+                    <div class="col">
+                        <div class="numero">
+                            1
+                        </div>
+                        <p>Prepare-se: Leve para sua consulta o seu documento pessoal, seu código de autorização e os
+                            seus últimos exames</p>
+                    </div>
+                    <div class="col">
+                        <div class="numero">
+                            2
+                        </div>
+                        <p>Sem se preocupar: Nós enviamos um lembrete antes do seu atendimento e direto na sua
+                            agenda</p>
+                    </div>
+                    <div class="col">
+                        <div class="numero">
+                            3
+                        </div>
+                        <p>Pronto! Agora é deixar que o Doutor Hoje cuide de você</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="perguntas" class="bg-cinza perguntas-frequentes">
             <div class="container">
                 <div class="titulo">
@@ -353,14 +360,14 @@
                         <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
                                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    E depois da primeira compra continuo com descontos?
+                                    E depois da primeira consulta ou exame continua com acesso às tabela de valores exclusiva para clientes caixa?
                                 </button>
                             </h5>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionPerguntas">
                             <div class="card-body">
                                 Sim. Voce será automaticamente um cliente Doutor Hoje Plus e contará com acesso a
-                                consultas e exames com preços hiper acessíveis, em toda a rede nacional Doutor Hoje.
+                                consultas e exames com condições especiais, em toda a rede nacional Doutor Hoje.
                                 Acesse! <a href="https://www.doutorhoje.com.br">www.doutorhoje.com.br</a>
                             </div>
                         </div>
@@ -376,7 +383,7 @@
                         </div>
                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionPerguntas">
                             <div class="card-body">
-                                Claro que sim. Para você e para quem mais precisar. Fique a vontade para presentear com
+                                Claro que sim. Para você e para quem mais precisar (qualquer pessoa, familiares, amigos, colaboradores.). Fique a vontade para presentear com
                                 saúde qualquer pessoa.
                             </div>
                         </div>
@@ -504,9 +511,11 @@
                 </div>
             </div>
         </div>
+
     </div>
     @include('flash-message')
     <footer>
+        <div class="floating-wpp"></div>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-3">
@@ -535,17 +544,22 @@
         </div>
     </footer>
     <div class="modal fade" id="modalConclusaoCadastro" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    	<div class="modal-dialog modal-dialog-centered" role="document">
-    		<div class="modal-content">
-    			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    				<span aria-hidden="true">&times;</span>
-    			</button>
-    			<h4>Estamos quase lá!</h4>
-    			<p>Confira a caixa de entrada do seu e-mail que você cadastrou, e clique no botão para ativar seu cadastro.</p>
-    		</div>
-    	</div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4>Estamos quase lá!</h4>
+                <p>Confira a caixa de entrada do seu e-mail que você cadastrou, e clique no botão para ativar seu
+                    cadastro.</p>
+            </div>
+        </div>
     </div>
 </div>
+
+<script src="/landingpages/caixa/vendor/jquery/jquery-3.3.1.min.js"></script>
+<script src="/landingpages/caixa/vendor/bootstrap-4.1.3/js/bootstrap.min.js"></script>
+<script src="/landingpages/caixa/vendor/floating-whatsapp/floating-wpp.min.js"></script>
 <script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
 <script src="/libs/comvex-template/js/jquery.inputmask.bundle.js"></script>
 <!-- Sweet Alert Js  -->
@@ -554,14 +568,15 @@
 <script src="/libs/comvex-template/js/jquery.core.js"></script>
 <script src="/js/utilitarios.js"></script>
 <script>
-$(document).ready(function () {
-    var laravel_token = '{{ csrf_token() }}';
-    var resizefunc = [];
+    $(document).ready(function () {
+        var laravel_token = '{{ csrf_token() }}';
+        var resizefunc = [];
 
-    @if(isset($access_token) && $access_token != null)
-    	$('#modalConclusaoCadastro').modal('show');
-    @endif
-});
+        @if(isset($access_token) && $access_token != null)
+        $('#modalConclusaoCadastro').modal('show');
+        @endif
+    });
+
     /*********************************
      *
      * Smooth Scroll
@@ -597,24 +612,44 @@ $(document).ready(function () {
                 }
             }
         });
-    
-function validaRegistrar() {
 
-	var contato1 = $('#inputCelular').val();
-	var contato2 = $('#inputCelularConfirma').val();
-	
-	if(contato1 != contato2) {
-		swal(
-		        {
-		            title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
-		            text: 'Os números de telefone informados devem ser iguais!'
-		        }
-		    );
-	    return false;
-	}
+    /*********************************
+     *
+     * WhatsApp
+     *
+     *********************************/
 
-	return true;
-}
+    $(function () {
+        $('.floating-wpp').floatingWhatsApp({
+            phone: '5561986792680',
+            popupMessage: 'Bem vindo! Envie sua dúvida e logo responderemos:',
+            showPopup: true,
+            position: 'right', // left or right
+            autoOpen: false, // true or false
+            //autoOpenTimer: 4000,
+            message: '',
+            //headerColor: 'orange', // enable to change msg box color
+            headerTitle: 'Whatsapp do Doutor Hoje',
+        });
+    });
+
+    function validaRegistrar() {
+
+        var contato1 = $('#inputCelular').val();
+        var contato2 = $('#inputCelularConfirma').val();
+
+        if (contato1 != contato2) {
+            swal(
+                {
+                    title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                    text: 'Os números de telefone informados devem ser iguais!'
+                }
+            );
+            return false;
+        }
+
+        return true;
+    }
 </script>
 </body>
 </html>

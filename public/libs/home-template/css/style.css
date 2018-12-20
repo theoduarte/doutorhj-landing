@@ -396,7 +396,7 @@ header .navbar-collapse {
 .banner-slider-home .carousel-item {
     height: 738px;
     padding: 448px 0 60px 0;
-    background: no-repeat left center scroll;
+    background: no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -440,33 +440,70 @@ header .navbar-collapse {
     text-shadow: 1px 5px 20px rgb(105, 105, 105);
 }
 
-.banner-slider-home .banner-novembro-azul {
-    background-position-x: 50%;
+.mini-banner-resultado {
+    display: block;
+    overflow: auto;
+    float: right;
+    margin-bottom: 16px;
 }
 
-.banner-slider-home .banner-novembro-azul .texto {
-    float: right;
-    text-align: left;
-    width: 800px;
+.banner-caixa .area-texto {
+    width: 1110px;
+    padding-left: 470px;
+    margin: 0 auto;
 }
-.banner-slider-home .banner-novembro-azul .texto .imagens1 {
+.banner-caixa .intro,
+.banner-caixa .logos,
+.banner-caixa .beneficios {
+    width: 100%;
+}
+.banner-caixa .intro {
+    margin-bottom: 30px;
+}
+.banner-caixa .logos {
+    margin-bottom: 50px;
+}
+.banner-caixa .beneficios {
+    margin-bottom: 30px;
+    overflow: auto;
+}
+.banner-caixa .intro span {
+    color: #005caa;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 38px;
+}
+.banner-caixa .logos img {
+    margin: 0 auto;
+}
+.banner-caixa .beneficios .beneficio1,
+.banner-caixa .beneficios .beneficio2 {
+    width: 49%;
     float: left;
-    width: 400px;
+    text-align: left;
 }
-.banner-slider-home .banner-novembro-azul .texto .imagens2 {
-    float: right;
-    width: 400px;
+.banner-caixa .beneficios .beneficio1 img,
+.banner-caixa .beneficios .beneficio2 img {
+    float: left;
+    margin-right: 15px;
 }
-.banner-slider-home .banner-novembro-azul .texto .titulo {
-    width: 90%;
-    margin: 0 auto;
+.banner-caixa .beneficios .beneficio1 span,
+.banner-caixa .beneficios .beneficio2 span {
+    color: #005caa;
+    font-size: 15px;
+    text-align: left;
+}
+.btn-lp {
     display: block;
-    margin-top: 30px;
-}
-.banner-slider-home .banner-novembro-azul .texto .procedimentos {
-    width: 90%;
+    padding: 10px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #fff;
+    background: #f6891d;
+    width: 300px;
     margin: 0 auto;
-    display: block;
 }
 
 .banner-slider-home .carousel-control-next,
@@ -3996,7 +4033,6 @@ footer ul li a:hover {
     header .container {
         padding-top: 0px;
     }
-
     .btn-profissional a {
         margin: 0!important;
         text-align: center;
@@ -4053,6 +4089,15 @@ footer ul li a:hover {
 
     .box-banner-conheca .area-imagem {
         margin-top: -37px;
+    }
+
+    .banner-caixa {
+        background-position: -270px center !important;
+    }
+    .banner-caixa .area-texto {
+        width: 900px;
+        padding-left: 270px;
+        margin: 0 auto;
     }
 
     .area-seleciona-profissional {
@@ -4165,22 +4210,44 @@ footer ul li a:hover {
         width: 600px;
     }
 
-    .banner-slider-home .banner-novembro-azul {
-        background-position-x: 38%;
+    .banner-caixa {
+        background-position: -660px center !important;
     }
-
-    .banner-slider-home .banner-novembro-azul .texto {
-        float: right;
-        text-align: left;
+    .banner-caixa .area-texto {
         width: 600px;
+        padding-left: 0;
+        margin: 0 auto;
     }
-    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
-        float: left;
-        width: 300px;
+    .banner-caixa .intro {
+        margin-bottom: 14px;
     }
-    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
-        float: right;
-        width: 300px;
+    .banner-caixa .intro span {
+        font-size: 24px;
+        line-height: 28px;
+    }
+    .banner-caixa .logos {
+        margin-bottom: 24px;
+    }
+    .banner-caixa .logos img {
+        display: block;
+        width: 224px;
+    }
+    .banner-caixa .beneficios {
+        margin-bottom: 16px;
+        overflow: auto;
+    }
+    .banner-caixa .beneficios .beneficio1 img,
+    .banner-caixa .beneficios .beneficio2 img {
+        display: block;
+        width: 50px;
+    }
+    .banner-caixa .beneficios .beneficio1 span,
+    .banner-caixa .beneficios .beneficio2 span {
+        font-size: 14px;
+        line-height: 18px!important;
+    }
+    .btn-lp {
+        margin-bottom: 20px;
     }
 
     .busca-welcome {
@@ -4337,28 +4404,40 @@ footer ul li a:hover {
         font-size: 32px;
     }
 
-    .banner-slider-home .banner-novembro-azul {
-        background-position-x: 28%;
+    .mini-banner-resultado {
+        float: none;
+        margin: 4px 0 15px 0;
     }
 
-    .banner-slider-home .banner-novembro-azul .texto {
-        float: right;
+    .mini-banner-resultado img{
+        margin:0 auto;
+        display: block;
+    }
+
+    .banner-caixa .intro {
+        margin-bottom: 10px;
+    }
+    .banner-caixa .intro span {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .banner-caixa .logos {
+        margin-bottom: 16px;
+    }
+    .banner-caixa .beneficios {
+        margin-bottom: 0;
+    }
+    .banner-caixa .beneficios .beneficio1 img, .banner-caixa .beneficios .beneficio2 img {
+        width: 40px;
+    }
+    .banner-caixa .beneficios .beneficio1, .banner-caixa .beneficios .beneficio2 {
+        width: 100%;
+        margin-bottom: 10px;
+        float: left;
         text-align: left;
-        width: 400px;
     }
-    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
-        float: none;
-        width: 400px;
-    }
-    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
-        float: none;
-        width: 400px;
-    }
-
-    .banner-slider-home .banner-novembro-azul .texto .titulo,
-    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
-        width: 56%;
-        margin-top: 0;
+    .btn-lp {
+        font-size: 13px;
     }
 
     .busca-welcome {
@@ -4523,28 +4602,8 @@ footer ul li a:hover {
         font-size: 20px;
     }
 
-    .banner-slider-home .banner-novembro-azul {
-        background-position-x: 30%;
-    }
-
-    .banner-slider-home .banner-novembro-azul .texto {
-        float: right;
-        text-align: left;
-        width: 400px;
-    }
-    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
-        float: none;
-        width: 400px;
-    }
-    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
-        float: none;
-        width: 400px;
-    }
-
-    .banner-slider-home .banner-novembro-azul .texto .titulo,
-    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
-        width: 56%;
-        margin-top: 0;
+    .banner-caixa {
+        background-position: -830px center !important;
     }
 
     .busca-welcome {
@@ -4611,28 +4670,12 @@ footer ul li a:hover {
         width: 320px;
     }
 
-    .banner-slider-home .banner-novembro-azul {
-        background-position-x: 30%;
+    .banner-caixa .beneficios .beneficio1 img, .banner-caixa .beneficios .beneficio2 img {
+        width: 30px;
     }
-
-    .banner-slider-home .banner-novembro-azul .texto {
-        float: right;
-        text-align: left;
-        width: 320px;
-    }
-    .banner-slider-home .banner-novembro-azul .texto .imagens1 {
-        float: none;
-        width: 320px;
-    }
-    .banner-slider-home .banner-novembro-azul .texto .imagens2 {
-        float: none;
-        width: 320px;
-    }
-
-    .banner-slider-home .banner-novembro-azul .texto .titulo,
-    .banner-slider-home .banner-novembro-azul .texto .procedimentos {
-        width: 68%;
-        margin-top: 0;
+    .banner-caixa .beneficios .beneficio1 span, .banner-caixa .beneficios .beneficio2 span {
+        font-size: 11px;
+        line-height: 14px!important;
     }
 
     .busca-welcome {

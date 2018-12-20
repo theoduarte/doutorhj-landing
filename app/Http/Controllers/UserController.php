@@ -144,6 +144,11 @@ class UserController extends Controller
         	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-03 00:00:00'));
         	$nr_documento = UtilController::retiraMascara($request->input('te_documento'));
         	$documento_anasps = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
+        	
+        	############# verifica se o usuario pertece a lista da ASSETRAN ##############
+        	$date_regra = date('Y-m-d H:i:s', strtotime('2018-12-16 00:00:00'));
+        	$nr_documento = UtilController::retiraMascara($request->input('te_documento'));
+        	$documento_assetran = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
         	############################################################################
         	
         	# dados do paciente
@@ -153,9 +158,15 @@ class UserController extends Controller
         	$paciente->nm_secundario    = $request->input('nm_secundario');
         	$paciente->cs_sexo     		= $request->input('cs_sexo');
         	$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
+        	
         	if (!empty($documento_anasps)) {
         		$paciente->empresa_id = 3;
         	}
+        	
+        	if (!empty($documento_assetran)) {
+        		$paciente->empresa_id = 6;
+        	}
+        	
         	$paciente->access_token    	= $access_token;
         	$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
         	$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
@@ -178,6 +189,21 @@ class UserController extends Controller
         		$documento_anasps->updated_at = date('Y-m-d H:i:s');
         		$documento_anasps->save();
         		$documento_ids = [$documento_anasps->id];
+        	} elseif (!empty($documento_assetran)) {
+        		
+        		# vigencia do colaborador ASSENTRAN
+        		$vigencia 					= new VigenciaPaciente();
+        		$vigencia->data_inicio 		= date('Y-m-d', strtotime('2018-12-17'));
+        		$vigencia->data_fim 		= date('Y-m-d', strtotime('2019-12-17'));
+        		$vigencia->cobertura_ativa 	= true;
+        		$vigencia->vl_max_consumo	= 0;
+        		$vigencia->paciente_id 		= $paciente->id;
+        		$vigencia->anuidade_id 		= 70;
+        		$vigencia->save();
+        		
+        		$documento_assetran->updated_at = date('Y-m-d H:i:s');
+        		$documento_assetran->save();
+        		$documento_ids = [$documento_assetran->id];
         	} else {
         		# cpf do paciente
         		$documento 					= new Documento();

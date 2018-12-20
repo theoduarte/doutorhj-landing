@@ -48,8 +48,7 @@
                                                     @else
                                                         <p id="dia_{{ $agendamento->id }}" class="dia"> -- </p>
                                                         <p id="mes_{{ $agendamento->id }}" class="mes text-center"> --- </p>
-                                                        <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;">
-                                                            ---- </p>
+                                                        <p id="hora_{{ $agendamento->id }}" class="mes" style="font-size: 28px;"> --- </p>
                                                     @endif
                                                 </div>
                                                 <div class="col col-lg-5 area-informacoes">
@@ -102,8 +101,7 @@
                                                     <p class="tit-token">Token</p>
                                                     <p class="txt-token">Apresente este código no momento da consulta</p>
                                                     <div class="area-token">
-                                                        <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else
-                                                                ●●●●●● @endif</p>
+                                                        <p id="token_{{ $agendamento->id }}" class="token">@if($agendamento->getRawCsStatusAttribute() == 20 | $agendamento->getRawCsStatusAttribute() == 70) {{ $agendamento->te_ticket }} @else ●●●●●● @endif</p>
                                                         <p>
                                                             <button type="button" id="copyButton_{{ $agendamento->id }}" class="btn btn-azul copyButton" @if($agendamento->getRawCsStatusAttribute() != 20 & $agendamento->getRawCsStatusAttribute() != 70) disabled="disabled" @endif >
                                                                 Copiar
@@ -121,7 +119,7 @@
                                                             <button type="button" class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v"></i>
                                                             </button>
-                                                            <div class="dropdown-menu ddm-opcoes">
+                                                            {{--<div class="dropdown-menu ddm-opcoes">
                                                                 @if(!is_null($agendamento->profissional_id))
                                                                     <p>
                                                                         <a href="javascript:void(0);" onclick="remarcarAgendamento(this, '{{ $agendamento->clinica->id }}', '{{ $agendamento->profissional->id }}', '{{ $agendamento->id }}')">Remarcar</a>
@@ -130,7 +128,7 @@
                                                                 <p>
                                                                     <a href="javascript:void(0)" onclick="cancelarAgendamento(this, '{{ $agendamento->id }}')">Cancelar</a>
                                                                 </p>
-                                                            </div>
+                                                            </div>--}}
                                                         </div>
                                                     @endif
                                                 </div>

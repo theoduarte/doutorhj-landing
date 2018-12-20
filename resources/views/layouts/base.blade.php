@@ -26,7 +26,7 @@
     <meta name="keywords" content="doutorhoje saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
-    <title>@yield('title', 'DoutorHJ')</title>
+    <title>@yield('title', 'DoutorHoje')</title>
 
 @push('style')
 
@@ -293,10 +293,12 @@
                                     <p class="titulo">Plano</p>
                                     <p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
                                 </div>
-                                <div class="opcoes ie-saldo">
-                                    <p class="titulo">Saldo</p>
-                                    <p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
-                                </div>
+								@if(Auth::user()->paciente->saldo_empresarial != 0)
+									<div class="opcoes ie-saldo">
+										<p class="titulo">Saldo</p>
+										<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
+									</div>
+								@endif
                             </div>
                         @endif
                     </div>
