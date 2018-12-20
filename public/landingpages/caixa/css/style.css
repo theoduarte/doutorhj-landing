@@ -78,6 +78,7 @@ header nav.navbar {
 .condicoes .btn-ativacao {
     margin-top: -110px;
     margin-bottom: 36px;
+    position: relative;
 }
 
 .condicoes,
