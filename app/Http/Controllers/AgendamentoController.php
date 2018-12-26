@@ -99,6 +99,12 @@ class AgendamentoController extends Controller
 				$card = $cartCollection->toArray()[$item['id']];
 
 				$card['quantity'] = 0;
+
+				if(is_null($atendimento->precoAtivo)) {
+					CVXCart::remove($item['id']);
+					return redirect()->back()->with('cart', 'O atendimento '.$atendimento->ds_perco.' foi excluido do carrinho pois não possui preço ativo.');
+				}
+
 				$card['price'] = UtilController::moedaBanco($atendimento->precoAtivo->vl_comercial);
 				CVXCart::update($item['id'], $card);
 

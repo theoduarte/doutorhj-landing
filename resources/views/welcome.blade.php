@@ -230,14 +230,36 @@
                 <div id="carouselBannerHome" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselBannerHome" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselBannerHome" data-slide-to="1"></li>
+                        {{--<li data-target="#carouselBannerHome" data-slide-to="1"></li>
                         <li data-target="#carouselBannerHome" data-slide-to="2"></li>
+                        <li data-target="#carouselBannerHome" data-slide-to="3"></li>--}}
                     </ol>
                     <div class="carousel-inner" role="listbox">
 
                         <!-- sempre colocar classe "active" no primeiro banner -->
 
-                        <div class="banner-caixa carousel-item active" style="background-image: url('/libs/home-template/img/banner-caixa/bg.jpg')">
+                        <div class="banner-natal carousel-item active" style="background-image: url('/libs/home-template/img/banner-natal/bg.jpg')">
+                            <div class="carousel-caption">
+                                <div class="area-texto">
+                                    <div class="intro">
+                                        Que tal presentear a
+                                        quem você ama com um
+                                        <strong>Vale Consulta ou Exame?</strong>
+                                    </div>
+                                    <div class="texto">
+                                        Proporcionar o acesso à saúde é o
+                                        melhor presente! Até <strong>31/12</strong> bônus de
+                                        <strong>20%</strong> em quaisquer procedimento.
+                                    </div>
+                                    <div class="cupom">
+                                        <p>Cupom de desconto</p>
+                                        <span><strong>DOUTOR20</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{--<div class="banner-caixa carousel-item" style="background-image: url('/libs/home-template/img/banner-caixa/bg.jpg')">
                             <div class="carousel-caption">
                                 <div class="area-texto">
                                     <div class="intro">
@@ -282,7 +304,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
                         @include('includes/main-search', [ 'class' => 'busca-welcome' ] )
                     </div>
