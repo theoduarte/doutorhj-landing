@@ -39,7 +39,6 @@ class AtendimentoController extends Controller
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
 		if(is_null($sg_estado_localizacao) || is_null($especialidade)) {
-			Session::flush();
 			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
 		}
 

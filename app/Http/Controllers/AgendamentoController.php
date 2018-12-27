@@ -188,21 +188,15 @@ class AgendamentoController extends Controller
    	    // \Cart::clear();
 
     	$item_pedido = Itempedido::all()->last();
-    	$cart_id = 0;
+		$cart_id = $item_pedido->id;
     	 
     	$cartCollection = CVXCart::getContent();
+		$cart = $cartCollection->toArray();
     	$num_itens = $cartCollection->count();
-    	 
-    	if (!isset($item_pedido) & $num_itens == 0) {
-    		$cart_id = 1;
-    	} elseif (isset($item_pedido) & $num_itens == 0) {
-    		$cart_id = $item_pedido->id;
-    	} elseif (isset($item_pedido) & $num_itens > 0) {
-    		$cart_id = $item_pedido->id;
-    		$cart_id = $cart_id + $num_itens + 1;
-    	} else {
-    		$cart_id = $num_itens + 1;
-    	}
+
+		if($num_itens > 0) {
+			$cart_id = max(array_keys($cart)) + 1;
+		}
 
 		if (Auth::check()) $paciente_id_s = Auth::user()->paciente->id;
 		else $paciente_id_s = null;
