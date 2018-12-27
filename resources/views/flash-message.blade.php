@@ -100,6 +100,9 @@ $(document).ready(function () {
 @endif
 
 @if ($message = Session::get('erro-clear-storage'))
+<?php
+Illuminate\Support\Facades\Session::flush();
+?>
 <script type="text/javascript">
 $(document).ready(function () {
 	localStorage.clear();
