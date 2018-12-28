@@ -220,6 +220,10 @@ class AgendamentoController extends Controller
 					$query->where('precos.plano_id', '=', $plano_id);
 				}])->first();
 
+			if(is_null($atendimento->precoAtivo)) {
+				return redirect()->back()->with('cart', 'O atendimento '.$atendimento->ds_perco.' não foi incluido no carrinho pois não possui preço ativo.');
+			}
+
 			$vl_com_atendimento = $atendimento->precoAtivo->vl_comercial;
 			$source = array('.', ',');
 			$replace = array('', '.');
