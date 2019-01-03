@@ -59,6 +59,17 @@ class Paciente extends Model
 	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
 	protected $appends = ['plano_ativo', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
 
+	/*
+     * Constants
+     */
+	const ATIVO   = 'A';
+	const INATIVO = 'I';
+
+	protected static $cs_status = array(
+		self::ATIVO   => 'Ativo',
+		self::INATIVO => 'Inativo'
+	);
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

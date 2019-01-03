@@ -22,24 +22,24 @@ class ClienteController extends Controller
     public function index()
     {
         $paciente = \App\Paciente::whereHas('user', function($query){
-                                            if(!empty(Request::input('nm_busca'))){
-                                                switch (Request::input('tp_filtro')){
-                                                    case "nome" :
-                                                        $query->where(DB::raw('to_str(name)'), 'like', '%'.UtilController::toStr(Request::input('nm_busca')).'%');
-                                                        break;
-                                                    case "email" :
-                                                        $query->where(DB::raw('to_str(email)'), '=', UtilController::toStr(Request::input('nm_busca')));
-                                                        break;
-                                                    default :
-                                                        $query->where(DB::raw('to_str(name)'), 'like', '%'.UtilController::toStr(Request::input('nm_busca')).'%');
-                                                }
-                                            }
-                
-                                            $arFiltroStatusIn = array();
-                                            if(!empty(Request::input('tp_usuario_somente_ativos'))  ){ $arFiltroStatusIn[] = 'A'; }
-                                            if(!empty(Request::input('tp_usuario_somente_inativos'))){ $arFiltroStatusIn[] = 'I'; }
-                                            if( count($arFiltroStatusIn) > 0 ) { $query->whereIn('cs_status', $arFiltroStatusIn); }      
-                                        })->sortable()->paginate(20);
+			if(!empty(Request::input('nm_busca'))){
+				switch (Request::input('tp_filtro')){
+					case "nome" :
+						$query->where(DB::raw('to_str(name)'), 'like', '%'.UtilController::toStr(Request::input('nm_busca')).'%');
+						break;
+					case "email" :
+						$query->where(DB::raw('to_str(email)'), '=', UtilController::toStr(Request::input('nm_busca')));
+						break;
+					default :
+						$query->where(DB::raw('to_str(name)'), 'like', '%'.UtilController::toStr(Request::input('nm_busca')).'%');
+				}
+			}
+
+			$arFiltroStatusIn = array();
+			if(!empty(Request::input('tp_usuario_somente_ativos'))  ){ $arFiltroStatusIn[] = 'A'; }
+			if(!empty(Request::input('tp_usuario_somente_inativos'))){ $arFiltroStatusIn[] = 'I'; }
+			if( count($arFiltroStatusIn) > 0 ) { $query->whereIn('cs_status', $arFiltroStatusIn); }
+		})->sortable()->paginate(20);
         $paciente->load('user');
         $paciente->load('documentos');
 

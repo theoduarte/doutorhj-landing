@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Paciente;
 use Illuminate\Contracts\Validation\Rule;
 use App\Documento;
 use Illuminate\Support\Facades\DB;
@@ -41,14 +42,19 @@ class RegraAnasps implements Rule
         
         $date_regra_assetran = date('Y-m-d H:i:s', strtotime('2018-12-16 00:00:00'));
         $documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra_assetran)->whereDate('updated_at', '=', $date_regra_assetran)->first();
-         
+
         //--verifica se eh documento de colaborador assetran
         if (!empty($documento)) {
         	return true;
         }
         
         
-        $documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->first();
+        $documento = Documento::with('pacientes')
+			->where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])
+			->whereHas('pacientes', function($query) {
+				$query->where('cs_status', Paciente::ATIVO);
+			})
+			->first();
         //--verifica o documento dos demais pacientes
         if (!empty($documento)) {
         	return false;
