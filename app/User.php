@@ -34,7 +34,18 @@ class User extends Authenticatable
     use Sortable;
     
     public $sortable  = ['id', 'name', 'email', 'tp_user', 'cs_status', 'perfiluser_id'];
-    
+
+	/*
+     * Constants
+     */
+	const ATIVO   = 'A';
+	const INATIVO = 'I';
+
+	protected static $cs_status = array(
+		self::ATIVO   => 'Ativo',
+		self::INATIVO => 'Inativo'
+	);
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,6 +68,11 @@ class User extends Authenticatable
     public function paciente(){
         return $this->hasOne('App\Paciente');
     }
+
+	public function pacientes()
+	{
+		return $this->hasMany('App\Paciente');
+	}
     
     public function profissional(){
         return $this->hasOne('App\Profissional');

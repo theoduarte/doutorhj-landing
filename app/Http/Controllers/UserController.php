@@ -206,32 +206,46 @@ class UserController extends Controller
         		$documento_ids = [$documento_assetran->id];
         	} else {
         		# cpf do paciente
-        		$documento 					= new Documento();
-        		$documento->tp_documento 	= 'CPF';
-        		$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
-        		$documento->save();
+				$te_documento = UtilController::retiraMascara($request->input('te_documento'));
+				$documento = Documento::where('tp_documento', Documento::TP_CPF)->where('te_documento', $te_documento);
+
+				if($documento->exists()) {
+					$documento = $documento->first();
+				} else {
+					$documento 					= new Documento();
+					$documento->tp_documento 	= Documento::TP_CPF;
+					$documento->te_documento 	= UtilController::retiraMascara($request->input('te_documento'));
+					$documento->save();
+				}
         		$documento_ids = [$documento->id];
         	}
         	#################################################################
-        	 
+
         	# contato do paciente
-        	$contato1             		= new Contato();
-        	$contato1->tp_contato 		= 'CP';
-        	$contato1->ds_contato 		= $request->input('ds_contato');
-        	$contato1->save();
-        	$contato_ids = [$contato1->id];
-        	 
+			$ds_contato = $request->input('ds_contato');
+			$contato = Contato::where('ds_contato', $ds_contato);
+
+			if($contato->exists()) {
+				$contato = $contato->first();
+			} else {
+				$contato             		= new Contato();
+				$contato->tp_contato 		= 'CP';
+				$contato->ds_contato 		= $request->input('ds_contato');
+				$contato->save();
+			}
+			$contato_ids = [$contato->id];
+
         	$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
-        	
+
         	# vinculação com o termo e condição
         	$termosCondicoes = new TermosCondicoes();
         	$termosCondicoesActual = $termosCondicoes->getActual();
-        	
+
         	$termosCondicoesUsuarios = new TermosCondicoesUsuarios();
         	$termosCondicoesUsuarios->user_id = $usuario->id;
         	$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
         	$termosCondicoesUsuarios->save();
-        	
+
         	$send_message = $this->enviaEmailAtivacao($paciente);
         } catch (Exception $e) {
         	DB::rollback();
@@ -470,7 +484,12 @@ class UserController extends Controller
     {
         // DB::enableQueryLog();
         $ds_contato = UtilController::retiraMascara(CVXRequest::post('ds_contato'));
-        $contato1 = Contato::where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', $ds_contato)->get();
+        $contato1 = Contato::with('pacientes')
+			->where(DB::raw("regexp_replace(ds_contato , '[^0-9]*', '', 'g')"), '=', $ds_contato)
+			->whereHas('pacientes', function($query) {
+				$query->where('cs_status', Paciente::ATIVO);
+			})
+			->get();
         // $query = DB::getQueryLog();
         // print_r($query);
         $contato = $contato1->first();
@@ -482,6 +501,7 @@ class UserController extends Controller
         $contato_id = $contato->id;
         
         $paciente_temp = Paciente::with('user')
+			->where('cs_status', Paciente::ATIVO)
         	->join('contato_paciente', function($join1) { $join1->on('pacientes.id', '=', 'contato_paciente.paciente_id');})
 	        ->join('contatos', function($join2) use ($contato_id) { $join2->on('contato_paciente.contato_id', '=', 'contatos.id')->on('contatos.id', '=', DB::raw($contato_id));})
 	        ->select('pacientes.*')
