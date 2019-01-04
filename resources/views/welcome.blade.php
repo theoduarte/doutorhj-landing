@@ -248,7 +248,7 @@
                                     </div>
                                     <div class="texto">
                                         Proporcionar o acesso à saúde é o
-                                        melhor presente! Até <strong>31/12</strong> bônus de
+                                        melhor presente! Até <strong>31/07/2019</strong> bônus de
                                         <strong>20%</strong> em quaisquer procedimento.
                                     </div>
                                     <div class="cupom">

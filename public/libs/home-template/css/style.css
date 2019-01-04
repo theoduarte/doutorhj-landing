@@ -4300,6 +4300,10 @@ footer ul li a:hover {
         margin-bottom: 20px;
     }
 
+    .banner-natal {
+        background-position: -470px center !important;
+    }
+
     .banner-natal .area-texto {
         width: 600px;
         padding-left: 120px;
@@ -4514,6 +4518,9 @@ footer ul li a:hover {
         font-size: 13px;
     }
 
+    .banner-natal {
+        background-position: -800px center !important;
+    }
     .banner-natal .area-texto {
         width: 400px;
         padding-left: 0;
