@@ -975,11 +975,7 @@ class AgendamentoController extends Controller
 			return redirect()->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
 		}
 
-		dd($agendamentos);
-//		DB::commit();
-
-
-//		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
+		DB::commit();
 
 		return redirect('/')->with('success-alert', 'Foi autorizada a utilização do crédito empresarial.');
 	}
