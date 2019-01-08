@@ -119,7 +119,7 @@
 		<td width='30'></td>
 		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/data.png' width='34' height='30' alt=''/></td>
 		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{$dt_atendimento->format('d/m/Y')}}</span></td>
+		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{(!is_null($dt_atendimento) ? $dt_atendimento->format('d/m/Y') : '----')}}</span></td>
 		<td width='30'></td>
 	</tr>
 </table>
@@ -135,7 +135,7 @@
 		<td width='30'></td>
 		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/hora.png' width='34' height='30' alt=''/></td>
 		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{$dt_atendimento->format('H:i')}}</span></td>
+		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{(!is_null($dt_atendimento) ? $dt_atendimento->format('H:i') : '----')}}</span></td>
 		<td width='30'></td>
 	</tr>
 </table>

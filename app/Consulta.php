@@ -84,9 +84,9 @@ class Consulta extends Model
                                   join atendimentos at on (c.id = at.clinica_id)
                                  where at.cs_status = 'A'
                                    and c.cs_status = 'A'
-                                   and at.consulta_id = $consultaId) general
+                                   and at.consulta_id = :consultaId) general
                                  group by te_bairro, nm_cidade
-                                 order by te_bairro");
+                                 order by te_bairro", ['consultaId' => $consultaId]);
         //dd( DB::getQueryLog() );
         //dd($query);
         return $query;

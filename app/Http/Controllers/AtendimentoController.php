@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Paciente;
 use App\Plano;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,8 @@ use App\Cidade;
 use App\Agendamento;
 use App\Filial;
 use App\VigenciaPaciente;
+use Illuminate\Support\Facades\Session;
+
 class AtendimentoController extends Controller
 {
     
@@ -34,6 +37,10 @@ class AtendimentoController extends Controller
         $especialidade = $request->get('tipo_especialidade');
         $sg_estado_localizacao = $request->get('sg_estado_localizacao');
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
+
+		if(is_null($sg_estado_localizacao) || is_null($especialidade)) {
+			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
+		}
 
 		$paciente_id = null;
 
