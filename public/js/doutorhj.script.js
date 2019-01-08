@@ -1119,7 +1119,7 @@ $(function() {
 
                 $('.parcelamento-cartao').hide();
                 $('.empresarial-valor-resumo').hide();
-			console.log($('.valor-total-produtos').text())
+
 			$('.cartao-credito').slideDown();
 			dadosResumo.empty().html('Cartão Empresarial')
 				break;

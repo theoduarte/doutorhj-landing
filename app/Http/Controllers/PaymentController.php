@@ -415,8 +415,6 @@ class PaymentController extends Controller
 
         $valor_desconto = $valor_total*$percentual_desconto;
 
-
-
         $pedido = new Pedido();
         $descricao = '';
         $dt_pagamento = date('Y-m-d H:i:s');
@@ -1128,6 +1126,7 @@ class PaymentController extends Controller
 						$lista[2],
 						$endereco->city,
 						$endereco->state*/
+
 					$object = FuncoesPagamento::pagamentoBoleto($valor//,$paciente->mundipagg_token,$endereco->id
 
 
@@ -1435,6 +1434,7 @@ class PaymentController extends Controller
 		//echo $resultado; die;
 		return (int) $resultado;
 	}
+
 
     /**
      * realiza o pagamento na Cielo por cartao de credito cadastrado no padrao completo.
