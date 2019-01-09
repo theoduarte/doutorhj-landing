@@ -783,7 +783,10 @@ class PaymentController extends Controller
 			$respAgend = $this->saveAgendamento($paciente, $agendamentoItens, $metodoPagamento, $cod_cupom_desconto, 'titulo pedido', $parcelas, $valorFinal, $valorEmpresarial);
 			if($respAgend) {
 				CVXCart::clear(); /** Limpa carrinho e retorna reposta */
-				return redirect('/')->with('success-alert', 'O Pedido foi enviado para aprovaçao da empresa!');
+				return response()->json([
+					'status' => true,
+					'mensagem' => 'O Pedido foi realizado com sucesso!'
+				]);
 			} else {
 				return response()->json([
 					'status' => false,
