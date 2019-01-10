@@ -18,6 +18,7 @@ class TermosCondicoesComposer
 	    }
 	    
 	    $termosCondicoesActual = $termosCondicoes->getActual();
+
         $view->with( 'termosCondicoesActual', $termosCondicoesActual->ds_termo );
 	}
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Especialidade;
 use App\ItemCheckup;
+use App\Payment;
 use App\TipoCartao;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
@@ -31,10 +32,15 @@ use App\Checkup;
 use App\TagPopular;
 use App\VigenciaPaciente;
 use App\Plano;
+use Mockery\CountValidator\Exception;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use App\Cidade;
 use App\Endereco;
+use GuzzleHttp\Client;
+use App\Empresa;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 class AgendamentoController extends Controller
 {
     /**
@@ -913,21 +919,25 @@ class AgendamentoController extends Controller
 	public function autorizaCreditoEmpresarial($verify_hash)
 	{
 		$decryptString = Crypt::decryptString($verify_hash);
+
+
 		$dados = explode('@', $decryptString);
 
 		$paciente_id = $dados[0];
 		$empresa_id = $dados[1];
 		$agendamento_ids = json_decode($dados[2]);
 
+
 		$paciente = Paciente::find($paciente_id);
 		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
 
+		if(!Agendamento::whereIn('id', $agendamento_ids)->exists()) {
+			return redirect('/')->with('info-alert', 'Não existem agendamentos cadastrados.');
+		}
+
 		/** Verifica se algum agendamento ja foi pré-agendado */
 		if(Agendamento::whereIn('id', $agendamento_ids)->where('cs_status', '<>', Agendamento::PRE_AUTORIZAR)->exists()) {
-			return response()->json([
-				'status' => false,
-				'mensagem' => 'Agendamento já autorizado.'
-			]);
+			return redirect('/')->with('info-alert', 'Agendamento já autorizado.');
 		}
 
 		$itemPedidoIndividual = Itempedido::whereIn('agendamento_id', $agendamento_ids)
@@ -935,33 +945,77 @@ class AgendamentoController extends Controller
 				$query->where('tp_pagamento', 'individual');
 			});
 
-		/** Caso seja somente pagamento empresarial, os agendamentos são atualizados para pré-agendado */
-		if(!$itemPedidoIndividual->exists()) {
-			Agendamento::whereIn('id', $agendamento_ids)->update(['cs_status' => Agendamento::PRE_AGENDADO]);
+		$itemPedidoEmpresarial = Itempedido::whereIn('agendamento_id', $agendamento_ids)
+			->with(['pedido', 'pedido.cartao_paciente'])->whereHas('pedido', function($query) {
+				$query->where('tp_pagamento', 'empresarial');
+			})->sum('valor');
 
-			/**
-			 *
-			 * ######### ATENÇÃO #########
-			 * É necessário implementar PAGAMENTO no cartão EMPRESARIAL nesse ponto
-			 *
-			 * Enviar EMAIL para usuário CONFIRMANDO o Pré-Agendamento
-			 *
-			 */
-		} else { /** Caso exista complementação de crédito com o cartão INDIVIDUAL */
-			/**
-			 * Envia email para usuário com LINK para efetuar o pagamento
-			 */
 
-			$this->enviaEmailPagamentoIndividual($paciente, $agendamentos);
+		$empresa = Empresa::findOrFail($empresa_id);
+		$cartaoAtivo = $empresa->getCartaoAtivo();
+
+
+		DB::beginTransaction();
+
+		try {
+			/** Caso exista complementação de crédito com o cartão INDIVIDUAL */
+			if($itemPedidoIndividual->exists()) {
+				/**
+				 * Envia email para usuário com LINK para efetuar o pagamento
+				 */
+
+				$this->enviaEmailPagamentoIndividual($paciente, $agendamentos);
+			} else { /** Caso seja somente pagamento empresarial, os agendamentos são atualizados para pré-agendado */
+
+				$client = new Client(['timeout'  => 1500,]);
+
+				$valor = str_replace(".", ",", $itemPedidoEmpresarial);
+
+				try{
+					if(env('APP_ENV') != 'production') {
+						$to = env('API_URL_HOMOLOG') ;
+					}else{
+						$to = env('API_URL_PROD') ;
+					}
+
+					 $client->request('POST', $to.'payment-dthoje', [
+						 'headers' => [
+							 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+						 ],
+						'form_params' => [
+							'method' => '1',
+							'empresa' => '1',
+							'custom_id' => $empresa->mundipagg_token,
+							'valor' => Payment::convertRealEmCentavos($valor),
+							'cartao_id' => $cartaoAtivo->card_token,
+							'parcelas' => 1
+
+						]
+					]);
+				} catch (RequestException $e) {
+					DB::rollBack();
+					return redirect('/')->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
+				}
+
+				Agendamento::whereIn('id', $agendamento_ids)->update(['cs_status' => Agendamento::PRE_AGENDADO]);
+
+				$paymentControl = new PaymentController();
+				foreach($agendamentos as $agendamento) {
+					$merchantId = $agendamento->itemPedidos->first()->pedido->id;
+					$paymentControl->enviarEmailPreAgendamento($paciente, $merchantId, $agendamento);
+				}
+
+			}
+		} catch(Exception $e) {
+			DB::rollBack();
+			return redirect('/')->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
 		}
 
-		dd($agendamento_ids, $itemPedidoIndividual);
 
-		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
+		DB::commit();
+		return redirect('/')->with('success-alert', 'Foi autorizada a utilização do crédito empresarial.');
 
 
-
-		dd($paciente_id, $empresa_id, $agendamento_ids);
 	}
 
 	public function enviaEmailPagamentoIndividual(Paciente $paciente, Collection $agendamentos)
@@ -971,11 +1025,26 @@ class AgendamentoController extends Controller
 		$telefone 					= $paciente->contatos->first()->ds_contato;
 		$conteudo = '';
 
+		$itemPedidoIndividual = Itempedido::whereIn('agendamento_id', $agendamentos->pluck('id'))
+			->with(['pedido', 'pedido.cartao_paciente'])->whereHas('pedido', function($query) {
+				$query->where('tp_pagamento', 'individual');
+			});
+
+		$itemPedidoEmpresarial = Itempedido::whereIn('agendamento_id', $agendamentos->pluck('id'))
+			->with(['pedido', 'pedido.cartao_paciente'])->whereHas('pedido', function($query) {
+				$query->where('tp_pagamento', 'empresarial');
+			});
+
 		foreach ($agendamentos as $agendamento) {
 			$especialidade					= Especialidade::getNomeEspecialidade($agendamento->id);
 			$agendamento->ds_atendimento 	= $especialidade['ds_atendimento'];
 			$agendamento->nm_especialidade 	= $especialidade['nome_especialidades'];
-			$dt_atendimento					= Carbon::createFromFormat('d/m/Y H:i', $agendamento->dt_atendimento);
+
+			if (!empty($item['dt_atendimento'])) {
+				$dt_atendimento = Carbon::createFromFormat('d/m/Y H:i', $agendamento->dt_atendimento);
+			} else {
+				$dt_atendimento = null;
+			}
 
 			if (!empty($agendamento->profissional_id)) {
 				$agendamento->nm_profissional		= "Dr(a): ".$agendamento->profissional->nm_primario." ".$agendamento->profissional->nm_secundario;
@@ -995,8 +1064,8 @@ class AgendamentoController extends Controller
 							<li>Nº do Agendamento: {$agendamento->id}</li>
 							<li>{$agendamento->nm_especialidade}</li>
 							<li>Dr(a): {$agendamento->nm_profissional}</li>
-							<li>Data: {$dt_atendimento->format('d/m/Y')}</li>
-							<li>Horário: {$dt_atendimento->format('H:i')} (por ordem de chegada)</li>
+							<li>Data: ".(!is_null($dt_atendimento) ? $dt_atendimento->format('d/m/Y') : '----')."</li>
+							<li>Horário: ".(!is_null($dt_atendimento) ? $dt_atendimento->format('H:i') : '----')." (por ordem de chegada)</li>
 							<li>Endereço: {$agendamento->enderecoAgendamento}</li>
 						</ul>";
 		}
@@ -1009,12 +1078,15 @@ class AgendamentoController extends Controller
 		$msgCliente->conteudo		= $conteudo;
 		$msgCliente->saveOrFail();
 
+		$verify_hash = Crypt::encryptString($paciente->id.'@'.$paciente->empresa->id.'@'.$agendamentos->pluck('id')->toJson());
+		$url = route('informaCartao', $verify_hash);
+		$vlPedidoEmpresarial = Agendamento::getValorPedidoEmpresarial($agendamentos->pluck('id')->toArray());
 
 		$from = 'contato@doutorhoje.com.br';
 		$to = $email;
-		$subject = 'Autorização Solicitada';
+		$subject = 'Crédito Empresarial Aprovado';
 
-		$htmlCliente = view('payments.email_confirma_pre_autorizacao', compact('agendamento', 'dt_atendimento'));
+		$htmlCliente = view('agendamentos.email_pagamento_individual', compact('agendamentos', 'dt_atendimento', 'itemPedidoIndividual', 'itemPedidoEmpresarial', 'url'));
 		$htmlCliente = str_replace(["\r", "\n", "\t"], '', $htmlCliente);
 
 		$send_message[] = UtilController::sendMail($to, $from, $subject, $htmlCliente);
