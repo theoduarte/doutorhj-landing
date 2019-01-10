@@ -979,6 +979,9 @@ class AgendamentoController extends Controller
 					}
 
 					 $client->request('POST', $to.'payment-dthoje', [
+						 'headers' => [
+							 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+						 ],
 						'form_params' => [
 							'method' => '1',
 							'empresa' => '1',

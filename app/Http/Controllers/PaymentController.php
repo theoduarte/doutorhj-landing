@@ -262,6 +262,9 @@ class PaymentController extends Controller
 				}
 
 				 $client->request('POST', $to.'payment-dthoje', [
+					 'headers' => [
+						 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+					 ],
 					'form_params' => [
 						'method' 	=> '0',
 						'empresa' 	=> '0',
