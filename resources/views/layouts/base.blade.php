@@ -78,6 +78,8 @@
         <script src="/libs/owlcarousel/owl.carousel.min.js"></script>
         <script src="/libs/floating-whatsapp/floating-wpp.min.js"></script>
 
+		<script src="/libs/card/dist/jquery.card.js"></script>
+
         <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
 
 		<script src="/libs/cookies-js/cookies_min.js"></script>

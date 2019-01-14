@@ -58,6 +58,8 @@ Route::post('consulta-agendamento-disponivel', 'AgendamentoController@consultaAg
 Route::post('notificacao', 'PaymentController@notificacao')->name('notificacao');
 
 Route::get('agendamentos/empresa/autorizar/{verify_hash}', 'AgendamentoController@autorizaCreditoEmpresarial')->name('autoriza_credito_empresarial');
+Route::get('payments/cartao/preautorizar/{verify_hash}', 'PaymentController@informaCartao')->name('informaCartao');
+Route::post('payments/cartao/preautorizar/finaliza/{verify_hash}', 'PaymentController@finalizaPreAutorizacao')->name('finaliza_pre_autorizacao');
 
 Route::post('finalizar_pedido', 'PaymentController@fullTransaction')->name('finalizar-pedido')->middleware('auth');
 

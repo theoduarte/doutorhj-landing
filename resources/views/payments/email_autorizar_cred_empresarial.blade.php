@@ -78,7 +78,7 @@
 	<tr style='background-color: #f9f9f9;'>
 		<td width='30'></td>
 		<td width='483' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>
-			<a href='{{$url}}' target='_blank'>Clique aqui</a> para auttorizar a utilização do crédito empresarial pelo colaborador.
+			<a href='{{$url}}' target='_blank'>Clique aqui</a> para autorizar a utilização do crédito empresarial pelo colaborador.
 		</td>
 	</tr>
 </table>

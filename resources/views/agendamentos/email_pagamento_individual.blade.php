@@ -13,7 +13,7 @@
 </table>
 <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
 	<tr style='background-color:#fff;'>
-		<td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Solicitação de pré-autorização</span></td>
+		<td width='480' style='text-align:left'><span style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>DoutorHoje - Autorizada utilização do crédito empresarial</span></td>
 		<td width='120' style='text-align:right'><a href='#' target='_blank' style='font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#434342;'>Abrir no navegador</a></td>
 	</tr>
 </table>
@@ -25,18 +25,7 @@
 </table>
 <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
 	<tr>
-		<td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px; font-weight: bold;'>Solicitação de agendamento</td>
-	</tr>
-</table>
-<br>
-<br>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr>
-		<td width='30' style='background-color: #fff;'>&nbsp;</td>
-		<td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 28px; line-height: 50px; color: #434342; background-color: #fff; text-align: center; font-weight: bold;'>
-			Olá, <strong style='color: #1d70b7;'>{{$agendamento->paciente->nm_primario}}</strong>
-		</td>
-		<td width='30' style='background-color: #fff;'>&nbsp;</td>
+		<td style='background: #1d70b7; font-family:Arial, Helvetica, sans-serif; text-align: center; color: #ffffff; font-size: 28px; line-height: 80px; font-weight: bold;'>Pagamento do Agendamento</td>
 	</tr>
 </table>
 <br>
@@ -45,13 +34,30 @@
 	<tr>
 		<td width='30' style='background-color: #fff;'>&nbsp;</td>
 		<td width='540' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342; background-color: #fff;'>
-			Sua <strong>solicitação</strong> foi realizada com sucesso. Aguarde a empresa autorizar a utilização do crédito empresarial.
+			A <strong>utilização</strong> do crédito empresarial foi aprovada. Agora é necessário realizar o pagamento da diferença
+			 no seu cartão pessoal. Abaixo um resumo da transação:
 		</td>
 		<td width='30' style='background-color: #fff;'>&nbsp;</td>
 	</tr>
 </table>
 <br>
 <br>
+
+<table width='600' align='center' style='background-color: #fff;'>
+	<tr style='background-color: #fff;'>
+		<th width='135' style='border:1px solid black;'>Paciente</th>
+		<th width='135' style='border:1px solid black;'>Produto</th>
+		<th width='135' style='border:1px solid black;'>Preço</th>
+	</tr>
+	@foreach($agendamentos as $agendamento)
+		<tr style='background-color: #fff;'>
+			<td width='180' style='border:1px solid black;'>{{$agendamento->paciente->nm_primario}}</td>
+			<td width='250' style='border:1px solid black;'>{{$agendamento->atendimento->ds_preco}}</td>
+			<td width='40' style='text-align: right; border:1px solid black;'>R$ {{number_format($agendamento->itempedidos()->sum('valor'), 2, ',', '.')}}</td>
+		</tr>
+	@endforeach
+</table>
+
 <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
 	<tr style='background-color: #f9f9f9;'>
 		<td width='513'>
@@ -61,121 +67,11 @@
 </table>
 <table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
 	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
 		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/numero-pedido.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Nº do pedido: <span>{{$agendamento->id}}</span></td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>{{$agendamento->nm_especialidade}}</td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/especialidade.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>{{$agendamento->nm_profissional}}</td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/data.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{(!is_null($dt_atendimento) ? $dt_atendimento->format('d/m/Y') : '----')}}</span></td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/hora.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{(!is_null($dt_atendimento) ? $dt_atendimento->format('H:i') : '----')}}</span></td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/local.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'><span>{{$agendamento->enderecoAgendamento}}</span>
-		</td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
-		</td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='30'></td>
-		<td width='34'><img src='https://doutorhoje.com.br/libs/home-template/img/email/status.png' width='34' height='30' alt=''/></td>
-		<td width='10'>&nbsp;</td>
-		<td width='496' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>Status: <span>{{$agendamento->cs_status}}</span></td>
-		<td width='30'></td>
-	</tr>
-</table>
-<table width='600' border='0' cellspacing='0' cellpadding='10' align='center'>
-	<tr style='background-color: #f9f9f9;'>
-		<td width='513'>
-			&nbsp;
+		<td width='483' style='font-family:Arial, Helvetica, sans-serif; font-size: 16px; line-height: 22px; color: #434342;'>
+			O valor aprovado para debitar do crédito empresarial foi R${{number_format($itemPedidoEmpresarial->sum('valor'), 2, ',', '.')}}. Para efeturar o pré-agendamento
+			 é necessário pagar a diferença no seu cartão pessoal. <a href='{{$url}}' target='_blank'>Clique aqui</a> para efeturar o pagamento dos
+			 R${{number_format($itemPedidoIndividual->sum('valor'), 2, ',', '.')}} restantes.
 		</td>
 	</tr>
 </table>
@@ -186,7 +82,7 @@
 		</td>
 	</tr>
 </table>
-&nbsp;
+
 <br>
 <br>
 <table width='600' border='0' cellspacing='0' cellpadding='0' align='center'>

@@ -33,4 +33,17 @@ class Payment extends Model
 	{
 		return $this->hasMany('App\DebitCardResponse');
 	}
+	/**
+	 * Converte os valores recebidos em reais para centavos
+	 */
+	public static function convertRealEmCentavos($valor){
+
+		$dado = str_replace(".", "", $valor);
+
+		$dado = str_replace(",", ".", $dado);
+
+		$resultado = $dado*100;
+		//echo $resultado; die;
+		return (int) $resultado;
+	}
 }
