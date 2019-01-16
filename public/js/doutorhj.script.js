@@ -1119,7 +1119,7 @@ $(function() {
 
                 $('.parcelamento-cartao').hide();
                 $('.empresarial-valor-resumo').hide();
-			console.log($('.valor-total-produtos').text())
+
 			$('.cartao-credito').slideDown();
 			dadosResumo.empty().html('Cartão Empresarial')
 				break;
@@ -1456,6 +1456,7 @@ function efetuarPagamento() {
 			break;
 	}
 
+
     var cupom_desconto 	=  $('#inputCupom').val() != "" ? $('#inputCupom').val() :  '';
 	var pacientes		= $('.paciente_agendamento_id');
 
@@ -1508,9 +1509,9 @@ function efetuarPagamento() {
 	}
 	
 
-	if(executar==true && dados  != null){
+	 if(executar==true && dados  != null){
 
-	
+
 
 		$.ajax({
 			type:'post',
@@ -1523,19 +1524,19 @@ function efetuarPagamento() {
 				'agendamentos':agendamentos,
 				paciente_id:paciente_id,
 				titulo_pedido:titulo_pedido,
-				'_token': laravel_token 
+				'_token': laravel_token
 				},
 			   timeout: 15000,
 			   success: function (result) {
-				
-				$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
-			//	$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
-			
+
+				$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+			//	$('#btn-finalizar-pedido-landing').removeAttr('disabled');
+
 				if(result.status) {
 					$.Notification.notify('success','top right', 'DrHoje', result.mensagem);
 					window.location.href='/concluir_pedido';
 				} else {
-					$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
+					$('#btn-finalizar-pedido-landing').removeAttr('disabled');
   //				  $.Notification.notify('error','top right', 'DrHoje', result.mensagem);
 					swal(
 							  {
@@ -1543,29 +1544,29 @@ function efetuarPagamento() {
 								  text: result.responseJSON.mensagem
 							  }
 						  );
-						 
+
 				}
 
 				},
 				error: function (result) {
 
 
-			 
+
 					swal(
 							  {
 								  title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i>DrHoje: Ocorreu um erro</div>',
- 
+
 								  text:  result.responseJSON.mensagem
- 
+
 							  }
 						  );
-						  $('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
-						  $('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
+						  $('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+						  $('#btn-finalizar-pedido-landing').removeAttr('disabled');
 				}
-		  }); 
+		  });
 	} else {
-		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>'); 
-		$('#btn-finalizar-pedido-landing').removeAttr('disabled'); 
+		$('#btn-finalizar-pedido-landing').find('#lbl-finalizar-pedido').html('FINALIZAR PAGAMENTO <i class="fa fa-spin fa-spinner" style="display: none; float: right; font-size: 16px;"></i>');
+		$('#btn-finalizar-pedido-landing').removeAttr('disabled');
 
 		swal(
 			{
@@ -1710,9 +1711,10 @@ function cartaoCredito() {
 	if(titularcnpj.length !=0){
 		titularcpf =titularcnpj
 	}
-	
 
-	var parcelas = $('.selectParcelamentoCredito option:selected').val()
+
+
+	var parcelas = $('.change-parcelamento-credito').find(":selected").val();
 	var salvar = $('input[name=gravar_cartao_credito]:checked').is(":checked")===true ? 1 : 0
 
 	if(cartaoid != ""){
@@ -1737,7 +1739,7 @@ function cartaoCredito() {
 		resp.push( validarCampos($('.selectValidadeMesCredito  ').val(), '#mesCartaoCredito', "Mês cartão é obrigatório"));
 		resp.push( validarCampos($('.selectValidadeAnoCredito  ').val(), '#anoCartaoCredito', "Ano do cartão é obrigatório"));
 		resp.push( validarCampos($('.inputCodigoCreditoCartao  ').val(), '#codigoCartaoCredito', "Código do cartão é obrigatório"));
-		
+
 
 		resp.forEach(function(entry) {
 			if(!entry) {

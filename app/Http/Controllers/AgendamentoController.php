@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Especialidade;
 use App\ItemCheckup;
+use App\Payment;
 use App\TipoCartao;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
@@ -36,6 +37,10 @@ use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use App\Cidade;
 use App\Endereco;
+use GuzzleHttp\Client;
+use App\Empresa;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 class AgendamentoController extends Controller
 {
     /**
@@ -914,11 +919,14 @@ class AgendamentoController extends Controller
 	public function autorizaCreditoEmpresarial($verify_hash)
 	{
 		$decryptString = Crypt::decryptString($verify_hash);
+
+
 		$dados = explode('@', $decryptString);
 
 		$paciente_id = $dados[0];
 		$empresa_id = $dados[1];
 		$agendamento_ids = json_decode($dados[2]);
+
 
 		$paciente = Paciente::find($paciente_id);
 		$agendamentos = Agendamento::whereIn('id', $agendamento_ids)->get();
@@ -940,7 +948,12 @@ class AgendamentoController extends Controller
 		$itemPedidoEmpresarial = Itempedido::whereIn('agendamento_id', $agendamento_ids)
 			->with(['pedido', 'pedido.cartao_paciente'])->whereHas('pedido', function($query) {
 				$query->where('tp_pagamento', 'empresarial');
-			});
+			})->sum('valor');
+
+
+		$empresa = Empresa::findOrFail($empresa_id);
+		$cartaoAtivo = $empresa->getCartaoAtivo();
+
 
 		DB::beginTransaction();
 
@@ -953,31 +966,56 @@ class AgendamentoController extends Controller
 
 				$this->enviaEmailPagamentoIndividual($paciente, $agendamentos);
 			} else { /** Caso seja somente pagamento empresarial, os agendamentos são atualizados para pré-agendado */
-				Agendamento::whereIn('id', $agendamento_ids)->update(['cs_status' => Agendamento::PRE_AGENDADO]);
 
-				/**
-				 *
-				 * ######### ATENÇÃO #########
-				 * É necessário implementar PAGAMENTO no cartão EMPRESARIAL nesse ponto
-				 *
-				 * Enviar EMAIL para usuário CONFIRMANDO o Pré-Agendamento
-				 *
-				 */
+				$client = new Client(['timeout'  => 1500,]);
+
+				$valor = str_replace(".", ",", $itemPedidoEmpresarial);
+
+				try{
+					if(env('APP_ENV') != 'production') {
+						$to = env('API_URL_HOMOLOG') ;
+					}else{
+						$to = env('API_URL_PROD') ;
+					}
+
+					 $client->request('POST', $to.'payment-dthoje', [
+						 'headers' => [
+							 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+						 ],
+						'form_params' => [
+							'method' => '1',
+							'empresa' => '1',
+							'custom_id' => $empresa->mundipagg_token,
+							'valor' => Payment::convertRealEmCentavos($valor),
+							'cartao_id' => $cartaoAtivo->card_token,
+							'parcelas' => 1
+
+						]
+					]);
+				} catch (RequestException $e) {
+					DB::rollBack();
+					return redirect('/')->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
+				}
+
+				Agendamento::whereIn('id', $agendamento_ids)->update(['cs_status' => Agendamento::PRE_AGENDADO]);
 
 				$paymentControl = new PaymentController();
 				foreach($agendamentos as $agendamento) {
 					$merchantId = $agendamento->itemPedidos->first()->pedido->id;
 					$paymentControl->enviarEmailPreAgendamento($paciente, $merchantId, $agendamento);
 				}
+
 			}
 		} catch(Exception $e) {
 			DB::rollBack();
-			return redirect()->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
+			return redirect('/')->with('error-alert', 'Ocorreu um erro inesperado ao tentar autorizar a utilização do crédito empresarial.');
 		}
 
-		DB::commit();
 
+		DB::commit();
 		return redirect('/')->with('success-alert', 'Foi autorizada a utilização do crédito empresarial.');
+
+
 	}
 
 	public function enviaEmailPagamentoIndividual(Paciente $paciente, Collection $agendamentos)

@@ -73,7 +73,40 @@
 									</div>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary">Pagar</button>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="validade">Parcelas</label>
+												@if($valorIndividual >50)
+													@if($valorIndividual >100)
+														<select class="form-control" name="parcelas" id="parcelas">
+															<option selected value="1">1</option>
+															<option  value="2">2</option>
+															<option  value="3">3</option>
+															<option  value="4">4</option>
+															<option  value="5">5</option>
+															<option  value="5">6</option>
+														</select>
+													@else
+														<select class="form-control" name="parcelas" id="parcelas">
+															<option selected value="1">1</option>
+															<option  value="2">2</option>
+															<option  value="3">3</option>
+														</select>
+														@endif
+												@else
+													<select class="form-control" name="parcelas" id="parcelas">
+														<option selected value="1">1</option>
+													</select>
+												@endif
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<button type="submit" class="btn pull-right btn-primary">Pagar</button>
 						</form>
 					</div>
 					<div class="col-md-6">
