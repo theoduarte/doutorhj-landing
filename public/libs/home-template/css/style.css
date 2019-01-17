@@ -4052,6 +4052,85 @@ footer ul li a:hover {
 
 /*********************************
 *
+*  LANDING PAGE PESSOA FISICA
+*
+*********************************/
+
+.lp-pessoa-fisica header .container {
+    padding-top: 0;
+}
+.lp-pessoa-fisica header .container {
+    padding: 0;
+}
+.lp-pessoa-fisica header .navbar-brand {
+    display: block;
+    width: 160px;
+    height: 55px;
+    background: none;
+    margin-top: 0;
+}
+.lp-pessoa-fisica header .navbar-brand img {
+    width: 160px;
+    display: block;
+}
+.lp-pessoa-fisica header .nav-link {
+    font-size: 16px;
+    font-weight: 600;
+}
+.lp-pessoa-fisica header .btn {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4470B4;
+    margin-left: 10px;
+}
+.lp-pessoa-fisica header .btn:hover {
+    background-color: #5282ce;
+}
+.lp-pessoa-fisica .faixa p {
+
+}
+.lp-pessoa-fisica .banner {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .banner .apresentacao {
+    padding: 10px 0;
+}
+.lp-pessoa-fisica .banner .apresentacao p {
+    font-size: 20px;
+    color: #2D405A;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+.lp-pessoa-fisica .banner .apresentacao h1 {
+    font-size: 48px;
+    color: #2D405A;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+.lp-pessoa-fisica .banner .apresentacao h1 strong {
+    font-weight: 600;
+}
+.lp-pessoa-fisica .banner .apresentacao img {
+    display: block;
+    width: 90%;
+}
+.lp-pessoa-fisica .banner .imagem img {
+    display: block;
+    width: 100%;
+}
+.lp-pessoa-fisica .tabela-planos {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/*********************************
+*
 *  X MEDIA QUERIES
 *
 *********************************/
