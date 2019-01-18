@@ -4126,7 +4126,202 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica .tabela-planos .area-tabela {
     background-color: #fff;
-    border-radius: 10px;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .table {
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .table thead th {
+    border-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .table td,
+.lp-pessoa-fisica .tabela-planos .area-tabela .table th {
+    padding: 30px;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras p {
+    color: #2D405A;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras p strong {
+    font-weight: 600;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras span {
+    color: #666E79;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 300;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores {
+    text-align: center;
+    width: 220px;
+    color: #5B5B5B;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .nome-plano {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .nm-blue {
+    color: #4470B4;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .valor {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .valor small {
+    font-size: 12px;
+    font-weight: 400;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue {
+    background: #4470B4;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black {
+    background: #484848;
+}
+.lp-pessoa-fisica .tabela-planos .descricao {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+.lp-pessoa-fisica .tabela-planos .descricao .cobertura {
+    color: #808080;
+    font-weight: 400;
+}
+.lp-pessoa-fisica .tabela-planos tbody td {
+    vertical-align: middle;
+}
+.lp-pessoa-fisica .tabela-planos tbody td img {
+    display: block;
+    width: 18px;
+    margin: 0 auto;
+}
+.lp-pessoa-fisica .tabela-planos tbody td .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue {
+    background: #4470B4;
+}
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black {
+    background: #484848;
+}
+.lp-pessoa-fisica .beneficios {
+    background: #4470B4  url(../img/l-pf-textura.png) repeat;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .beneficios h3 {
+    color: #ffffff;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 60px;
+}
+.lp-pessoa-fisica .beneficios .intro {
+    margin-bottom: 80px;
+}
+.lp-pessoa-fisica .beneficios .intro p {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 300;
+}
+.lp-pessoa-fisica .beneficios .intro p strong {
+    font-weight: 600;
+}
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    min-height: 318px;
+}
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios img {
+    display: block;
+    width: 72px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .titulo {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .linha {
+    width: 96px;
+    height: 1px;
+    background: #A21B26;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .texto {
+    font-size: 14px;
+    font-weight: 400;
+    color: #727272;
+}
+.lp-pessoa-fisica .numeros {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .numeros {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .numeros h3 {
+    text-align: center;
+    color: #2D405A;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 60px;
+}
+.lp-pessoa-fisica .numeros .box {
+    width: 100%;
+    padding: 40px 30px;
+    text-align: center;
+    background: #fff;
+    color: #2D405A;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.lp-pessoa-fisica .numeros .box p {
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .numeros .box span {
+    font-size: 32px;
+}
+.lp-pessoa-fisica .perguntas {
+    background-color: #1D2A40;
+    padding: 60px 0;
+}
+.lp-pessoa-fisica .perguntas h3 {
+    font-size: 60px;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 16px;
 }
 
 /*********************************
