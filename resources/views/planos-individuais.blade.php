@@ -299,74 +299,112 @@
                 <h3>Perguntas Frequentes</h3>
                 <div class="area-perguntas">
                     <h4>Sobre o Doutor Hoje</h4>
-
-
-                    <div class="accordion" id="accordionPerguntas">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         Comprei o plano Black e preciso utilizar meu bônus de 5 consultas. Como marcar?
-                                    </button>
-                                </h5>
+                                    </a>
+                                </h4>
                             </div>
-
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionPerguntas">
-                                <div class="card-body">
-                                    Ligue para 0800 727 36 20 e agende seu horário.
+                            <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <p> Ligue para 0800 727 36 20 e agende seu horário.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Como funciona Doutor Hoje?
-                                    </button>
-                                </h5>
+                                    </a>
+                                </h4>
                             </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionPerguntas">
-                                <div class="card-body">
-                                    Com ou sem assinatura de planos Você pode comprar consultas e exames a preços
-                                    justos. Basta acessar doutor.com.br escolher qual serviço de saúde precisa, agendar
-                                    e pagar com qualquer cartão de crédito.
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <p>Com ou sem assinatura de planos Você pode comprar consultas e exames a preços
+                                        justos. Basta acessar doutor.com.br escolher qual serviço de saúde precisa,
+                                        agendar e pagar com qualquer cartão de crédito.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         Doutor Hoje é um Plano de Saúde?
-                                    </button>
-                                </h5>
+                                    </a>
+                                </h4>
                             </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionPerguntas">
-                                <div class="card-body">
-                                    Não. O Doutor Hoje é uma rede de saúde disponibiliza acesso a consultas e exames a
-                                    preços justos.
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <p>Não. O Doutor Hoje é uma rede de saúde disponibiliza acesso a consultas e exames
+                                        a preços justos.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingFour">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                         Quem emite o cartão Doutor Hoje?
-                                    </button>
-                                </h5>
+                                    </a>
+                                </h4>
                             </div>
-                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionPerguntas">
-                                <div class="card-body">
-                                    Não necessariamente. Você pode comprar qualquer consulta ou exames no site Doutor
-                                    Hoje. Porém assinando o Blue ou Black Você tem acesso a consulta a partir de R$
-                                    29,50 e descontos de até 80% em exames.
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <p>Não necessariamente. Você pode comprar qualquer consulta ou exames no site Doutor
+                                        Hoje. Porém assinando o Blue ou Black Você tem acesso a consulta a partir de R$
+                                        29,50 e descontos de até 80% em exames.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="planos">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
 
-
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="titulo">
+                            <p><strong>Escolha o plano:</strong><br>
+                                perfeito para você</p>
+                            <p class="auxiliar">Sem restrição, o Doutor Hoje é<br>
+                                para toda a família!</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="box-planos">
+                                    <img src="/libs/home-template/img/l-pf-cartao-blue.png" alt="Cartão Blue">
+                                    <div class="texto">
+                                        <p class="nome-plano nome-blue">blue</p>
+                                        <p class="apoio">consultas a partir de:</p>
+                                        <p class="valor">R$29,50</p>
+                                        <p class="frequencia">R$ 29,50 MENSAIS</p>
+                                        <a href="#contato" class="btn btn-blue">Peça o seu</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="box-planos">
+                                    <img src="/libs/home-template/img/l-pf-cartao-black.png" alt="Cartão Black">
+                                    <div class="texto">
+                                        <p class="nome-plano">black</p>
+                                        <p class="apoio">consultas a partir de:</p>
+                                        <p class="valor">R$29,50</p>
+                                        <p class="frequencia">R$ 29,50 MENSAIS</p>
+                                        <a href="#contato" class="btn btn-black">Peça o seu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

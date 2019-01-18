@@ -4189,8 +4189,14 @@ footer ul li a:hover {
 .lp-pessoa-fisica .tabela-planos .info-valores .btn-blue {
     background: #4470B4;
 }
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue:hover {
+    background: #5282ce;
+}
 .lp-pessoa-fisica .tabela-planos .info-valores .btn-black {
     background: #484848;
+}
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black:hover {
+    background: #636060;
 }
 .lp-pessoa-fisica .tabela-planos .descricao {
     font-size: 12px;
@@ -4218,8 +4224,14 @@ footer ul li a:hover {
 .lp-pessoa-fisica .tabela-planos tbody td .btn-blue {
     background: #4470B4;
 }
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue:hover {
+    background: #5282ce;
+}
 .lp-pessoa-fisica .tabela-planos tbody td .btn-black {
     background: #484848;
+}
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black:hover {
+    background: #636060;
 }
 .lp-pessoa-fisica .beneficios {
     background: #4470B4  url(../img/l-pf-textura.png) repeat;
@@ -4322,6 +4334,176 @@ footer ul li a:hover {
     background-color: #fff;
     padding: 40px;
     border-radius: 16px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas h4 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #2D405A;
+    margin-bottom: 30px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel {
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    margin-bottom: 15px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading {
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading h4 {
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading h4 a {
+    background: #fafafa;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a {
+    display: block;
+    padding: 12px 15px;
+    background: #fff;
+    font-size: 32px;
+    line-height: 50px;
+    font-weight: 400;
+    color: #4470B4;
+    position: relative;
+    transition: all 0.5s ease 0s;
+    box-shadow: 0 1px 0 #fafafa;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed {
+    color: #637389;
+    box-shadow: 0 1px 0 #ddd;
+    background: #fff;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:before,
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed:before {
+    content: "\f067";
+    font-family: "FontAwesome";
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    color: #4470B4;
+    text-align: center;
+    position: absolute;
+    top: 24px;
+    right: 15px;
+    transform: rotate(135deg);
+    transition: all 0.3s ease 0s;
+    border: 1px solid;
+    border-radius: 50px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed:before {
+    color: #637389;
+    transform: rotate(0);
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    right: 55px;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body {
+    padding: 30px;
+    border: none;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body p {
+    font-size: 24px;
+    color: #637389;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos {
+    padding: 80px 0;
+    background: url("../img/l-pf-bg-planos.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.lp-pessoa-fisica .planos .titulo {
+    text-align: center;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 90px;
+    padding: 30px 30px;
+}
+.lp-pessoa-fisica .planos .titulo p {
+    font-size: 32px;
+    color: #2D405A;
+    line-height: 44px;
+}
+.lp-pessoa-fisica .planos .titulo p strong {
+    font-weight: 700;
+}
+.lp-pessoa-fisica .planos .titulo p.auxiliar {
+    font-size: 20px;
+    color: #797979;
+    line-height: 28px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos .box-planos {
+    background: #fff;
+    border-radius: 12px;
+    text-align: center;
+    color: #5B5B5B;
+    position: relative;
+}
+.lp-pessoa-fisica .planos .box-planos img {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: -70px;
+}
+.lp-pessoa-fisica .planos .box-planos .texto {
+    padding: 110px 30px 30px 30px;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .nome-plano {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .nome-blue {
+    color: #4470B4;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .valor {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .frequencia {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .btn {
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 12px;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .btn-blue {
+    background: #4470B4;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .btn-blue:hover {
+    background-color: #5282ce;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .btn-black {
+    background: #484848;
+}
+.lp-pessoa-fisica .planos .box-planos .texto .btn-black:hover {
+    background: #636060;
 }
 
 /*********************************
