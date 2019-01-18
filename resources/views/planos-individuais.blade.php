@@ -408,6 +408,73 @@
                 </div>
             </div>
         </div>
+        <div class="depoimentos">
+            <div class="container">
+                <h3>Veja os nossos clientes dizem sobre nós</h3>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="box-depoimento">
+                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
+                            <p class="nome">Fernanda Lúcia de Souza</p>
+                            <p class="funcao">Cliente Doutor Hoje Blue</p>
+                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
+                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="box-depoimento">
+                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
+                            <p class="nome">Fernanda Lúcia de Souza</p>
+                            <p class="funcao">Cliente Doutor Hoje Blue</p>
+                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
+                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="box-depoimento">
+                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
+                            <p class="nome">Fernanda Lúcia de Souza</p>
+                            <p class="funcao">Cliente Doutor Hoje Blue</p>
+                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
+                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contato" id="contato">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="box-contato">
+                            <div class="textura"></div>
+                            <div class="area-form">
+                                <p class="titulo">Tem interesse?</p>
+                                <p class="sub">Fale com a gente </p>
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="telefone" placeholder="Telefone">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="mensagem" rows="6" placeholder="Mensagem"></textarea>
+                                    </div>
+                                    <a class="btn">Enviar</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 <script src="/libs/comvex-template/js/jquery.min.js"></script>

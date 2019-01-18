@@ -4420,11 +4420,9 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica .planos {
     padding: 80px 0;
-    background: url("../img/l-pf-bg-planos.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url("../img/l-pf-bg-planos.jpg") no-repeat;
+    background-position: center center;
+    background-size: 100% auto;
 }
 .lp-pessoa-fisica .planos .titulo {
     text-align: center;
@@ -4504,6 +4502,107 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica .planos .box-planos .texto .btn-black:hover {
     background: #636060;
+}
+.lp-pessoa-fisica .depoimentos {
+    background-color: #E8F1FF;
+    padding: 100px 0 60px 0;
+}
+.lp-pessoa-fisica .depoimentos h3 {
+    font-size: 60px;
+    color: #2D405A;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+.lp-pessoa-fisica .depoimentos .box-depoimento {
+    width: 100%;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    background: #fff;
+}
+.lp-pessoa-fisica .depoimentos .box-depoimento img {
+    width: 69px;
+    display: block;
+    margin: 0 auto;
+}
+.lp-pessoa-fisica .depoimentos .box-depoimento p.nome {
+    font-size: 18px;
+    color: #2D405A;
+    font-weight: 600;
+    margin: 20px 0 0 0;
+}
+.lp-pessoa-fisica .depoimentos .box-depoimento p.funcao {
+    font-size: 14px;
+    color: #2D405A;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+.lp-pessoa-fisica .depoimentos .box-depoimento p.texto {
+    font-size: 14px;
+    color: #637287;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .contato {
+    padding: 80px 0;
+    background: url("../img/l-pf-bg-contato.jpg") no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+}
+.lp-pessoa-fisica .contato .box-contato {
+    width: 100%;
+    height: 860px;
+    position: relative;
+}
+.lp-pessoa-fisica .contato .box-contato .textura {
+    width: 90%;
+    height: 638px;
+    position: absolute;
+    border-radius: 12px;
+    background: #4470B4 url("../img/l-pf-bg-form.png") repeat;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form {
+    width: 90%;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px 12px 0 0;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form .titulo {
+    font-size: 32px;
+    line-height: 32px;
+    color: #2D405A;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form .sub {
+    font-size: 32px;
+    line-height: 32px;
+    color: #2D405A;
+    font-weight: 300;
+    margin-bottom: 16px;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form .form-group input {
+    border: 0;
+    background: #EDEDED;
+    height: 46px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form .form-group textarea {
+    border: 0;
+    background: #EDEDED;
+    font-size: 20px;
+    font-weight: 300;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form .btn {
+    color: #fff;
+    font-size: 20px;
+    background: #A21B26;
+    width: 100%;
 }
 
 /*********************************
