@@ -4562,11 +4562,13 @@ footer ul li a:hover {
     border-radius: 12px;
     background: #4470B4 url("../img/l-pf-bg-form.png") repeat;
 }
-.lp-pessoa-fisica .contato .box-contato .area-form {
+.lp-pessoa-fisica .contato .box-contato .area-contato {
     width: 90%;
     position: absolute;
     top: 40px;
     right: 0;
+}
+.lp-pessoa-fisica .contato .box-contato .area-form {
     background: #fff;
     padding: 20px 30px;
     border-radius: 12px 12px 0 0;
@@ -4604,7 +4606,30 @@ footer ul li a:hover {
     background: #A21B26;
     width: 100%;
 }
-
+.lp-pessoa-fisica .contato .box-contato .area-telefone {
+    background: #1D2A40;
+    padding: 30px;
+    border-radius: 0 0 12px 12px;
+    color: #fff;
+    overflow: auto;
+}
+.lp-pessoa-fisica .contato .box-contato .area-telefone .icone {
+    float: left;
+}
+.lp-pessoa-fisica .contato .box-contato .area-telefone .icone img {
+    display: block;
+    width: 80px;
+}
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones {
+    float: left;
+}
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones .titulo {
+    font-size: 20px;
+}
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones .numeros-tel {
+    font-size: 24px;
+    font-weight: 700;
+}
 /*********************************
 *
 *  X MEDIA QUERIES

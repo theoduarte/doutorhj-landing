@@ -448,24 +448,37 @@
                     <div class="col-sm-12 col-md-5">
                         <div class="box-contato">
                             <div class="textura"></div>
-                            <div class="area-form">
-                                <p class="titulo">Tem interesse?</p>
-                                <p class="sub">Fale com a gente </p>
-                                <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                            <div class="area-contato">
+                                <div class="area-form">
+                                    <p class="titulo">Tem interesse?</p>
+                                    <p class="sub">Fale com a gente </p>
+                                    <form>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="nome" placeholder="Nome">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="telefone" placeholder="Telefone">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="mensagem" rows="6" placeholder="Mensagem"></textarea>
+                                        </div>
+                                        <a class="btn">Enviar</a>
+                                    </form>
+                                </div>
+                                <div class="area-telefone">
+                                    <div class="icone">
+                                        <img src="/libs/home-template/img/l-pf-icone-contato.png" alt="">
                                     </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail">
+                                    <div class="telefones">
+                                        <p class="titulo">Central de Atendimento</p>
+                                        <p class="numeros-tel">0800 727 3620</p>
+                                        <p class="numeros-tel">(61) 3221 5350</p>
+                                        <p class="numeros-tel">(61) 9 8363 9661</p>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="telefone" placeholder="Telefone">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="mensagem" rows="6" placeholder="Mensagem"></textarea>
-                                    </div>
-                                    <a class="btn">Enviar</a>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
