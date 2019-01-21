@@ -18,6 +18,19 @@ $(document).ready(function () {
 </script>
 @endif
 
+@if ($message = Session::get('error-cart'))
+<script type="text/javascript">
+$(document).ready(function () {
+
+	$('html, body').animate({
+	    scrollTop: ($('#form-contato-pf').offset().top)
+	},500);
+	
+	$.Notification.notify('error','top right', 'Solicitação Falhou!', '{{ $message }}');
+});
+</script>
+@endif
+
 @if ($message = Session::get('warning'))
 <script type="text/javascript">
 $(document).ready(function () {

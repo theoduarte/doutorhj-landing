@@ -15,11 +15,33 @@
     <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css"/>
     
+    <!-- Sweet Alert css -->
+    <link href="/libs/sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Template theme CSS -->
+<!--     <link rel="stylesheet" href="/libs/comvex-template/css/style_dark.css"> -->
+    	
+    <!-- DoutorHJ Reset CSS -->
+    <link rel="stylesheet" href="/css/doutorhj.style.css">
+    
+    <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
+	<script src="/libs/home-template/js/popper.min.js"></script>
+	<script src="/libs/home-template/js/bootstrap.min.js"></script>
+	<script src="/libs/inputmask-4/dist/min/jquery.inputmask.bundle.min.js"></script>
+    
+<!--     <script src="/libs/comvex-template/js/jquery.min.js"></script> -->
+<!-- 	<script src="/libs/home-template/js/popper.min.js"></script> -->
+<!-- 	<script src="/libs/home-template/js/bootstrap.min.js"></script> -->
+    
     <!-- Notification js -->
 	<script src="/libs/notifyjs/dist/notify.min.js"></script>
 	<script src="/libs/notifications/notify-metro.js"></script>
 	
-	<script src="/js/jquery.core.js"></script>
+	<script src="/libs/comvex-template/js/jquery.core.js"></script>
+	
+	<!-- Sweet Alert Js  -->
+    <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
+    <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
 
     <title>Planos Individuais - Doutor Hoje</title>
 </head>
@@ -28,7 +50,7 @@
     <header>
         <div class="container">
             <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="#"><img src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje"></a>
+                <a class="navbar-brand" href="/"><img src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -465,20 +487,33 @@
                                 <div class="area-form">
                                     <p class="titulo">Tem interesse?</p>
                                     <p class="sub">Fale com a gente </p>
-                                    <form>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="nome" placeholder="Nome">
+                                    <form id="form-contato-pf" class="form-horizontal m-t-20" action="{{ route('enviar-email') }}" method="post" onsubmit="return validarContato()">
+                    					{!! csrf_field() !!}
+                                        <div class="form-group {{ $errors->has('nome') ? ' has-error' : '' }}">
+                                            <input type="text" class="form-control" id="nome" name="nome" value="{{ old('nome') }}" placeholder="Nome" required="required">
+                                            @if ($errors->has('nome'))
+                            				<span class="help-block text-danger"><strong>{{ $errors->first('nome') }}</strong></span>
+		                    				@endif
                                         </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail">
+                                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" aria-describedby="emailHelp" placeholder="E-mail" required="required">
+                                            @if ($errors->has('email'))
+                            				<span class="help-block text-danger"><strong>{{ $errors->first('email') }}</strong></span>
+		                    				@endif
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="telefone" placeholder="Telefone">
+                                        <div class="form-group {{ $errors->has('telefone') ? ' has-error' : '' }}">
+                                            <input type="text" class="form-control mascaraTelefone" id="telefone" name="telefone" value="{{ old('telefone') }}" placeholder="Telefone" required="required">
+                                            @if ($errors->has('telefone'))
+                            				<span class="help-block text-danger"><strong>{{ $errors->first('telefone') }}</strong></span>
+		                    				@endif
                                         </div>
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="mensagem" rows="6" placeholder="Mensagem"></textarea>
+                                        <div class="form-group {{ $errors->has('mensagem') ? ' has-error' : '' }}">
+                                            <textarea class="form-control" id="mensagem" name="mensagem" rows="6" placeholder="Mensagem" required="required">{{ old('mensagem') }}</textarea>
+                                            @if ($errors->has('mensagem'))
+                            				<span class="help-block text-danger"><strong>{{ $errors->first('mensagem') }}</strong></span>
+		                    				@endif
                                         </div>
-                                        <a class="btn">Enviar</a>
+                                        <button type="submit" id="btn-submit" class="btn" >Enviar</button>
                                     </form>
                                 </div>
                                 <div class="area-telefone">
@@ -503,8 +538,35 @@
         </div>
     </section>
 </div>
-<script src="/libs/comvex-template/js/jquery.min.js"></script>
-<script src="/libs/home-template/js/popper.min.js"></script>
-<script src="/libs/home-template/js/bootstrap.min.js"></script>
+@include('flash-message')
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$(".mascaraTelefone").inputmask({
+        mask: ["(99) 9999-9999", "(99) 99999-9999"],
+        keepStatic: true
+    });
+});
+
+function validarContato() {
+
+	if($('#nome').val().length === 0 || $('#email').val().length === 0 || $('#telefone').val().length === 0 || $('#mensagem').val().length === 0 || isEmail($('email').val() == false)) {
+		return false;
+	}
+
+	$('#btn-submit').attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+
+	return true;
+}
+
+function isEmail(email) {
+	var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if(!regex.test(email)) {
+		return false;
+	} else {
+	    return true;
+	}
+}
+</script>
 </body>
 </html>
