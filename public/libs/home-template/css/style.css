@@ -4630,6 +4630,61 @@ footer ul li a:hover {
     font-size: 24px;
     font-weight: 700;
 }
+.lp-pessoa-fisica .footer-lp-pf {
+    background: #1D2A40;
+    padding: 60px 0 60px 0;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-menu-footer p.titulo {
+    color: #808CA0;
+    font-size: 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-menu-footer ul li a {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-app {
+    width: 100%;
+    border-radius: 12px;
+    background: #E8F1FF url(../img/l-pf-textura.png) repeat;
+    padding: 20px 50px 0 50px;
+    overflow: auto;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-app .smartphone {
+    width: 128px;
+    display: block;
+    float: left;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-app .links {
+    float: left;
+    margin-left: 20px;
+    width: 290px;
+    text-align: center;
+}
+.lp-pessoa-fisica .footer-lp-pf .area-app .links .logo {
+    display: block;
+    width: 156px;
+    margin: 0 auto;
+
+}
+.lp-pessoa-fisica .footer-lp-pf .area-app .links p {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 30px 0 8px 0;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links a {
+     display: inline-block;
+
+ }
+.lp-pessoa-fisica .footer-lp-pf .area-app .links a img {
+    display: block;
+    height: 34px;
+}
+
 /*********************************
 *
 *  X MEDIA QUERIES

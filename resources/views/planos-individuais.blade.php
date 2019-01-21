@@ -489,6 +489,64 @@
             </div>
         </div>
     </section>
+    <footer class="footer-lp-pf">
+        <div class="container">
+            <div class="area-menu-footer">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p class="titulo">Sobre nós</p>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <ul>
+                                    <li><a href="#">Quem Somos</a></li>
+                                    <li><a href="#">Como Funciona?</a></li>
+                                    <li><a href="#">Vantagens</a></li>
+                                    <li><a href="#">Seja um prestador</a></li>
+                                    <li><a href="#"></a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <ul>
+                                    <li><a href="mailto:contato@doutorhoje.com.br">contato@doutorhoje.com.br</a></li>
+                                    <li><a href="tel:08007273620">0800 727 3620</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="area-app">
+                            <img class="smartphone" src="/libs/home-template/img/l-pf-smartphone.png" alt="">
+                            <div class="links">
+                                <img class="logo" src="/libs/home-template/img/logo-padrao.png" alt="" class="drhj">
+                                <p>Baixe o app</p>
+                                <a href="https://itunes.apple.com/br/app/doutor-hoje/id1442870073"><img src="/libs/home-template/img/l-pf-app-apple.png" alt="App Store"></a>
+                                <a href="https://play.google.com/store/apps/details?id=br.com.comveex.doctor"><img src="/libs/home-template/img/l-pf-app-google.png" alt="Google Play"></a>
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="faixa">
+                <p>Copyright © 2018 Doutor Hoje - Todos os direitos reservados</p>
+                <ul>
+                    <li>
+                        <a href="https://www.facebook.com/DoctorHoje/"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/doutor_hoje/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </div>
 <script src="/libs/comvex-template/js/jquery.min.js"></script>
 <script src="/libs/home-template/js/popper.min.js"></script>
