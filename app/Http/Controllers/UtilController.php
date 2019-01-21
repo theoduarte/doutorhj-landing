@@ -280,6 +280,17 @@ class UtilController extends Controller
 		 
 		if(env('APP_ENV') != 'production') {
 			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
+			
+			$to = [
+					[
+						'email' => env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com',
+						'name' => 'Vitor Pagani'
+					],
+					[
+						'email' => 'teocomp@gmail.com',
+						'name' => 'Theo Duarte'
+					]
+			];
 		}
 	
 		if(!is_array($to)) {

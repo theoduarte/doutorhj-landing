@@ -554,7 +554,7 @@ function validarContato() {
 		return false;
 	}
 
-	$('#btn-submit').attr('disabled', 'disabled').html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+	$('#btn-submit').attr('disabled', 'disabled').html('<i class="fa fa-spinner fa-spin"></i> Enviando...');
 
 	return true;
 }
