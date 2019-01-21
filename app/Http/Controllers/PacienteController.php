@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Documento;
+use App\Http\Requests\EmailRequest;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -99,6 +100,68 @@ class PacienteController extends Controller
     public function ativarContaRedirect()
     {
         return view('pacientes.activate');
+    }
+    
+    /**
+     * enviarEmailConfirmacao redirect
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function enviarEmailConfirmacao(EmailRequest $request)
+    {
+    	# envia o e-mail de confirmacao
+    	$nome          = CVXRequest::post('nome');
+    	$email         = CVXRequest::post('email');
+    	$telefone      = CVXRequest::post('telefone');
+    	$mensagem      = CVXRequest::post('mensagem');
+    	
+    	$from = 'contato@doutorhoje.com.br';
+    	 
+    	//$to = 'viviane.herica@doutorhoje.com.br';
+    	$to = [
+    			[
+    					'email' => 'viviane.herica@doutorhoje.com.br',
+    					'name' => 'Viviane Hérica'
+    			],
+    			[
+    					'email' => 'teocomp@gmail.com',
+    					'name' => 'Theo Duarte'
+    			],
+    			[
+    					'email' => 'comercial@doutorhoje.com.br',
+    					'name' => 'Comercial Doutor Hoje'
+    			],
+    	];
+    	
+    	$to_prestador = [
+    			[
+    					'email' => $email,
+    					'name' => $nome
+    			]
+    	];
+    	$subject = 'DoutorHoje - Confirmação de contato';
+    	 
+    	//--enviar e-mail para o cliente------------------------------------------------------
+    	$html_message = view('emails.send_confirmation', compact('nome', 'email', 'telefone', 'mensagem'))->render();
+    	 
+    	$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
+    	 
+    	$send_message = UtilController::sendMail($to_prestador, $from, $subject, $html_message);
+    	
+    	//--enviar e-mail a equipe comercial do doutorhoje-------------------------------------
+    	$subject = 'Contato de Cliente Interessada';
+    	$html_message = view('emails.send_contato', compact('nome', 'email', 'telefone', 'mensagem'))->render();
+    	 
+    	$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
+    	 
+    	$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+    	 
+    	 
+    	if ($send_message) {
+    		return redirect()->route('planos-individuais')->with('cart', 'Sua Mensagem foi enviada com sucesso!');
+    	} else {
+    		return redirect()->route('planos-individuais')->with('error-cart', 'Sua Mensagem não foi enviada. Por favor, tente novamente.');
+    	}
     }
      
     /**

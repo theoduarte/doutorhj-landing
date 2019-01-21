@@ -275,30 +275,65 @@ class UtilController extends Controller
 	 */
 	public static function sendMail($to, $from, $subject, $html_message)
 	{
-	    $token = env('SENDGRID_API_KEY');
-	    $url = 'https://api.sendgrid.com/v3/mail/send';
-
- 		if(env('APP_ENV') != 'production') {
- 			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
- 		}
-
-	    $payload = '{"personalizations": [{"to": [{"email": "'.$to.'"}]}],"from": {"email": "'.$from.'"},"subject": "'.$subject.'","content": [{"type": "text/html", "value": "'.$html_message.'"}]}';
-	    //$payload = '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "contato@doutorhoje.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste3 DoutorHoje</h1>"}]}';
-	    
-	    //dd($payload);
-	    
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    $output = curl_exec($ch);
-
-	    if ($output == "") {
-	        return true;
-	    }
-	    
-	    return $output;
+		$token = env('SENDGRID_API_KEY');
+		$url = 'https://api.sendgrid.com/v3/mail/send';
+		 
+		if(env('APP_ENV') != 'production') {
+			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
+			
+			$to = [
+					[
+						'email' => env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com',
+						'name' => 'Vitor Pagani'
+					],
+					[
+						'email' => 'teocomp@gmail.com',
+						'name' => 'Theo Duarte'
+					]
+			];
+		}
+	
+		if(!is_array($to)) {
+			$to = [
+					[
+							'email' => $to,
+							'name' => ''
+					]
+			];
+		}
+		
+		$email = [
+				'personalizations' => [[
+						'to' => $to,
+						'subject' => $subject
+				]],
+				"from" => [
+						'email' => $from,
+						'name' => 'Contato DoutorHoje'
+				],
+				'content' => [[
+						'type'=> 'text/html',
+						'value' => $html_message
+				]]
+		];
+		 
+		$payload = json_encode($email, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+		// 	    $payload = '{"personalizations": [{"to": [{"email": "'.$to.'"}]}],"from": {"email": "'.$from.'"},"subject": "'.$subject.'","content": [{"type": "text/html", "value": "'.$html_message.'"}]}';
+		 
+		//dd($payload);
+		 
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output = curl_exec($ch);
+		 
+		if ($output == "") {
+			return true;
+		}
+		 
+		return $output;
 	}
 
 	
