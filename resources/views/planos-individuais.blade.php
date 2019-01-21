@@ -58,27 +58,27 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Planos</a>
+                            <a class="nav-link" href="#planos">Planos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Vantagens</a>
+                            <a class="nav-link" href="#vantagens">Vantagens</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Perguntas Frequentes</a>
+                            <a class="nav-link" href="#perguntas">Perguntas Frequentes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Depoimentos</a>
+                            <a class="nav-link" href="#depoimentos">Depoimentos</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <a href="#" class="btn">Assine Agora</a>
+                        <a href="#contato" class="btn">Assine Agora</a>
                     </form>
                 </div>
             </nav>
         </div>
     </header>
     <section>
-        <div class="faixa">
+        <div class="info-corporativo">
             <div class="container">
                 <p>Corporativo</p>
             </div>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <div class="tabela-planos">
+        <div class="tabela-planos"id="planos">
             <div class="container">
                 <div class="area-tabela table-responsive">
                     <table class="table table-bordered">
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </div>
-        <div class="beneficios">
+        <div class="beneficios" id="beneficios">
             <div class="container">
                 <h3>A rede de saúde Doutor Hoje</h3>
                 <div class="row intro">
@@ -304,7 +304,7 @@
                 </div>
             </div>
         </div>
-        <div class="numeros">
+        <div class="numeros" id="numeros">
             <div class="container">
                 <h3>Números impressionantes.</h3>
                 <div class="row">
@@ -329,7 +329,7 @@
                 </div>
             </div>
         </div>
-        <div class="perguntas">
+        <div class="perguntas" id="perguntas">
             <div class="container">
                 <h3>Perguntas Frequentes</h3>
                 <div class="area-perguntas">
@@ -400,7 +400,7 @@
                 </div>
             </div>
         </div>
-        <div class="planos">
+        <div class="planos" id="planos">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -443,7 +443,7 @@
                 </div>
             </div>
         </div>
-        <div class="depoimentos">
+        <div class="depoimentos" id="depoimentos">
             <div class="container">
                 <h3>Veja os nossos clientes dizem sobre nós</h3>
                 <div class="row">
@@ -546,11 +546,10 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <ul>
-                                    <li><a href="#">Quem Somos</a></li>
-                                    <li><a href="#">Como Funciona?</a></li>
-                                    <li><a href="#">Vantagens</a></li>
-                                    <li><a href="#">Seja um prestador</a></li>
-                                    <li><a href="#"></a></li>
+                                    <li><a href="#planos">Planos</a></li>
+                                    <li><a href="#vantagens">Vantagens</a></li>
+                                    <li><a href="#perguntas">Perguntas Frequentes</a></li>
+                                    <li><a href="#depoimentos">Depoimentos</a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -567,31 +566,31 @@
                             <div class="links">
                                 <img class="logo" src="/libs/home-template/img/logo-padrao.png" alt="" class="drhj">
                                 <p>Baixe o app</p>
-                                <a href="https://itunes.apple.com/br/app/doutor-hoje/id1442870073"><img src="/libs/home-template/img/l-pf-app-apple.png" alt="App Store"></a>
-                                <a href="https://play.google.com/store/apps/details?id=br.com.comveex.doctor"><img src="/libs/home-template/img/l-pf-app-google.png" alt="Google Play"></a>
-                                <ul>
-                                    <li>
-
-                                    </li>
-                                    <li>
-
-                                    </li>
-                                </ul>
+                                <a href="https://itunes.apple.com/br/app/doutor-hoje/id1442870073" target="_blank"><img src="/libs/home-template/img/l-pf-app-apple.png" alt="App Store"></a>
+                                <a href="https://play.google.com/store/apps/details?id=br.com.comveex.doctor" target="_blank"><img src="/libs/home-template/img/l-pf-app-google.png" alt="Google Play"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="faixa">
-                <p>Copyright © 2018 Doutor Hoje - Todos os direitos reservados</p>
-                <ul>
-                    <li>
-                        <a href="https://www.facebook.com/DoctorHoje/"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="https://www.instagram.com/doutor_hoje/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </li>
-                </ul>
+        </div>
+        <div class="faixa">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <p>Copyright © 2018 Doutor Hoje - Todos os direitos reservados</p>
+                    </div>
+                    <div class="col-6">
+                        <ul>
+                            <li>
+                                <a href="https://www.facebook.com/DoctorHoje/" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/doutor_hoje/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
