@@ -4278,10 +4278,21 @@ footer ul li a:hover {
     font-weight: 600;
     color: #000000;
 }
-
+.lp-pessoa-fisica .tabela-planos tbody tr td {
+    text-align: center;
+}
+.lp-pessoa-fisica .tabela-planos tbody tr td .obs {
+    font-size: 11px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos tbody tr td,
+.lp-pessoa-fisica .tabela-planos tbody tr th {
+    vertical-align: middle;
+}
 .lp-pessoa-fisica .tabela-planos .descricao .cobertura {
     color: #808080;
     font-weight: 400;
+    margin-bottom: 0;
 }
 
 .lp-pessoa-fisica .tabela-planos tbody td {
