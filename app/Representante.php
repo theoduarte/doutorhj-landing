@@ -15,6 +15,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $nm_secundario
  * @property string $cs_sexo
  * @property string $dt_nascimento
+ * @property string $email
  * @property string $created_at
  * @property string $updated_at
  * @property Perfiluser $perfiluser

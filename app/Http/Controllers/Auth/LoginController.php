@@ -108,7 +108,7 @@ class LoginController extends Controller
                 try {
                     // cria o usuario na mundipagg
                     $userCreate = $client->getCustomers()->createCustomer($resultado);
-                    $paciente->mundipagg_token = $userCreate->id;;
+                    $paciente->mundipagg_token = $userCreate->id;
                     if(!$paciente->save()){
                         return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! não conseguimos criar e validar seu usuario ' );
                     }
