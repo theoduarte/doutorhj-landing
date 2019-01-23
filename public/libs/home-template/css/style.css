@@ -156,10 +156,12 @@ p {
 .modal-seleciona-estado .select2-selection__rendered {
     line-height: 45px !important;
 }
+
 .modal-seleciona-estado .select2-container .select2-selection--single {
     height: 46px;
     font-size: 15px;
 }
+
 .modal-seleciona-estado .select2-selection__arrow {
     height: 45px !important;
 }
@@ -250,7 +252,7 @@ p {
     margin-bottom: 10px;
 }
 
-.wb-links-mobile li i{
+.wb-links-mobile li i {
     font-size: 16px;
     color: #1b71b9;
 }
@@ -316,12 +318,14 @@ header .navbar-collapse {
     background: rgb(255, 255, 255);
 }
 
-.dropdown:hover>.dropdown-menu {
+.dropdown:hover > .dropdown-menu {
     display: block;
 }
+
 .menu-usuario .dropdown-menu {
     margin-top: -4px;
 }
+
 .info-empresarial {
     position: absolute;
     top: 0;
@@ -352,30 +356,36 @@ header .navbar-collapse {
 .info-empresarial .opcoes p {
     margin-bottom: 0;
 }
+
 .info-empresarial .opcoes p.titulo {
     color: #999999;
     font-size: 11px;
     margin-top: 4px;
     margin-bottom: 0;
 }
+
 .info-empresarial .opcoes p.plano {
     display: inline-block;
     padding: 2px 10px;
     font-size: 11px;
     border-radius: 4px;
 }
+
 .info-empresarial .opcoes p.premium {
     color: #ffffff;
     background: #17a2b8;
 }
+
 .info-empresarial .opcoes p.blue {
     color: #ffffff;
     background: #007bff;
 }
+
 .info-empresarial .opcoes p.black {
     color: #ffffff;
     background: #343a40;
 }
+
 .info-empresarial .opcoes p.saldo {
     color: #64A610;
     font-weight: 600;
@@ -452,47 +462,57 @@ header .navbar-collapse {
     padding-left: 470px;
     margin: 0 auto;
 }
+
 .banner-caixa .intro,
 .banner-caixa .logos,
 .banner-caixa .beneficios {
     width: 100%;
 }
+
 .banner-caixa .intro {
     margin-bottom: 30px;
 }
+
 .banner-caixa .logos {
     margin-bottom: 50px;
 }
+
 .banner-caixa .beneficios {
     margin-bottom: 30px;
     overflow: auto;
 }
+
 .banner-caixa .intro span {
     color: #005caa;
     font-size: 30px;
     font-weight: 700;
     line-height: 38px;
 }
+
 .banner-caixa .logos img {
     margin: 0 auto;
 }
+
 .banner-caixa .beneficios .beneficio1,
 .banner-caixa .beneficios .beneficio2 {
     width: 49%;
     float: left;
     text-align: left;
 }
+
 .banner-caixa .beneficios .beneficio1 img,
 .banner-caixa .beneficios .beneficio2 img {
     float: left;
     margin-right: 15px;
 }
+
 .banner-caixa .beneficios .beneficio1 span,
 .banner-caixa .beneficios .beneficio2 span {
     color: #005caa;
     font-size: 15px;
     text-align: left;
 }
+
 .btn-lp {
     display: block;
     padding: 10px 10px;
@@ -559,8 +579,8 @@ header .navbar-collapse {
     width: 1110px;
     position: absolute;
     bottom: 60px;
-    left:50%;
-    margin-left:-555px;
+    left: 50%;
+    margin-left: -555px;
     padding: 20px 20px;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.7);
@@ -775,6 +795,7 @@ header .navbar-collapse {
 .steps-mobile {
     display: none;
 }
+
 .area-checkup {
     padding: 80px 0;
     background-image: url(../img/ckp-bg.jpg);
@@ -801,8 +822,8 @@ header .navbar-collapse {
 .area-checkup .pacote-checkup {
     background-color: #fff;
     border-radius: 6px;
-    -webkit-box-shadow: 0 -5px 36px 0 rgba(0,0,0,0.17);
-    box-shadow: 0 -5px 36px 0 rgba(0,0,0,0.17);
+    -webkit-box-shadow: 0 -5px 36px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: 0 -5px 36px 0 rgba(0, 0, 0, 0.17);
 }
 
 .area-checkup .pacote-checkup .resumo {
@@ -878,7 +899,7 @@ header .navbar-collapse {
 .area-checkup .pacote-checkup .btn {
     width: 100%;
     border-radius: 0 0 6px 6px;
-    padding: 15px!important;
+    padding: 15px !important;
     font-size: 16px;
     font-weight: 300;
     color: #fff;
@@ -1398,7 +1419,7 @@ header .navbar-collapse {
 }
 
 .card-formulario .card-header {
-    color: rgb(255, 255, 255)!important;
+    color: rgb(255, 255, 255) !important;
     background-color: rgb(70, 117, 184);
     font-size: 16px;
     font-weight: 600;
@@ -1490,13 +1511,11 @@ header .navbar-collapse {
 }
 
 .lbl-enviar-token i.fa-spinner
-
-/*********************************
-*
-*  7 MENU ÁREA LOGADA
-*
-*********************************/
-
+    /*********************************
+    *
+    *  7 MENU ÁREA LOGADA
+    *
+    *********************************/
 .navbar-nav {
     margin-right: 40px;
 }
@@ -1512,6 +1531,7 @@ header .navbar-collapse {
     padding: 0;
     margin: 0;
 }
+
 .menu-area-logada ul li {
     float: left;
 }
@@ -1946,6 +1966,7 @@ header .nav-item-mobile {
 .card-resumo-compra .procedimentos p span {
     font-weight: 700;
 }
+
 .card-resumo-compra .procedimentos ul li {
     font-weight: 300;
 }
@@ -1983,10 +2004,10 @@ header .nav-item-mobile {
 }
 
 #pagamentoEmpresarial .vlr-ce {
-     color: #64A610;
-     font-weight: 600;
-     font-size: 16px;
- }
+    color: #64A610;
+    font-weight: 600;
+    font-size: 16px;
+}
 
 #pagamentoEmpresarial .escolhe-ce {
     margin-top: 6px;
@@ -2650,7 +2671,6 @@ header .nav-item-mobile {
     background-position: center -236px;
 }
 
-
 .box-minha-conta .row .conteudo .box-pagamento .cartao p .numero-oculto {
     color: rgb(175, 175, 175);
 }
@@ -2917,31 +2937,37 @@ header .nav-item-mobile {
 .procedimentos .pre-agendado {
     border-left: 4px solid rgb(255, 149, 0);
 }
+
 /* PRÉ AGENDADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .agendado,
 .procedimentos .agendado {
     border-left: 4px solid rgb(0, 122, 255);
 }
+
 /* NÃO CONFIRMADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-confirmado,
 .procedimentos .nao-confirmado {
     border-left: 4px solid rgb(179, 0, 134);
 }
+
 /* NÃO COMPARECEU */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .nao-compareceu,
 .procedimentos .nao-compareceu {
     border-left: 4px solid rgb(88, 86, 214);
 }
+
 /* CONFIRMADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .confirmado,
 .procedimentos .confirmado {
     border-left: 4px solid rgb(76, 217, 100);
 }
+
 /* CANCELADO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .cancelado,
 .procedimentos .cancelado {
     border-left: 4px solid rgb(255, 58, 48);
 }
+
 /* RETORNO */
 .box-meus-agendamentos .lista-agendamentos .agendamentos .area-informacoes .nome-status .retorno,
 .procedimentos .retorno {
@@ -3056,6 +3082,7 @@ header .nav-item-mobile {
 .box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo p span {
     font-weight: 700;
 }
+
 .box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .clinica,
 .box-meus-agendamentos .lista-agendamentos .agendamentos .linha-resumo ul li .endereco {
     font-weight: 300;
@@ -3081,6 +3108,7 @@ header .nav-item-mobile {
     border: 1px solid #fbfbfb;
     margin-bottom: 30px;
 }
+
 #checkup .nome-ckp p {
     font-size: 22px;
     font-weight: 600;
@@ -3088,7 +3116,7 @@ header .nav-item-mobile {
     margin: 20px 0 20px 0;
 }
 
-#checkup .linha-resumo{
+#checkup .linha-resumo {
     margin-bottom: 15px;
     width: 100%;
 }
@@ -3112,10 +3140,10 @@ header .nav-item-mobile {
 }
 
 #checkup .procedimentos {
-    padding:15px;
+    padding: 15px;
     background: #fbfbfb;
     border-radius: 6px;
-    margin:15px 0;
+    margin: 15px 0;
 }
 
 #checkup .procedimentos p {
@@ -3271,26 +3299,32 @@ header .nav-item-mobile {
 .box-resumo-home .proxima-consulta .resumo .nome-status .pre-agendado {
     border-left: 4px solid rgb(255, 149, 0);
 }
+
 /* PRÉ AGENDADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .agendado {
     border-left: 4px solid rgb(0, 122, 255);
 }
+
 /* NÃO CONFIRMADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .nao-confirmado {
     border-left: 4px solid rgb(179, 0, 134);
 }
+
 /* NÃO COMPARECEU */
 .box-resumo-home .proxima-consulta .resumo .nome-status .nao-compareceu {
     border-left: 4px solid rgb(88, 86, 214);
 }
+
 /* CONFIRMADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .confirmado {
     border-left: 4px solid rgb(76, 217, 100);
 }
+
 /* CANCELADO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
     border-left: 4px solid rgb(255, 58, 48);
 }
+
 /* RETORNO */
 .box-resumo-home .proxima-consulta .resumo .nome-status .cancelado {
     border-left: 4px solid rgb(74, 74, 74);
@@ -3648,7 +3682,7 @@ header .nav-item-mobile {
         font-size: 52px;
     }
 
-    .error h2     {
+    .error h2 {
         font-size: 24px;
     }
 
@@ -3729,7 +3763,6 @@ header .nav-item-mobile {
     list-style-type: none;
 }
 
-
 .resultado-checkup .lista .card-header .resumo .resumo-pacote ul.quantidade li {
     color: #555;
     font-size: 14px;
@@ -3761,8 +3794,8 @@ header .nav-item-mobile {
 .resultado-checkup .lista .card-header .resumo .valores .drhj {
     background-color: #f1f1f1;
     padding: 8px 10px 6px 10px;
-    border-left: 1px solid rgba(0,0,0,.125);
-    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-left: 1px solid rgba(0, 0, 0, .125);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
 .resultado-checkup .lista .card-header .resumo .valores .mercado p,
@@ -3783,7 +3816,7 @@ header .nav-item-mobile {
     color: #4675b8;
     background-color: #fff;
     padding: 8px 10px 10px 10px;
-    border-left: 1px solid rgba(0,0,0,.125);
+    border-left: 1px solid rgba(0, 0, 0, .125);
 }
 
 .resultado-checkup .lista .card-header .resumo .valores .checkup p {
@@ -3807,7 +3840,7 @@ header .nav-item-mobile {
 /* LISTA DE PROCEDIMENTOS */
 
 .resultado-checkup .lista .card-body {
-    border-top: 1px solid rgba(0,0,0,.125);
+    border-top: 1px solid rgba(0, 0, 0, .125);
     background-color: #f9f9f9;
 }
 
@@ -3896,8 +3929,7 @@ header .nav-item-mobile {
     background-color: rgb(249, 249, 249);
 }
 
-.contato-prestador .area-contato
-{
+.contato-prestador .area-contato {
     padding-top: 60px;
     padding-bottom: 60px;
 }
@@ -4052,6 +4084,816 @@ footer ul li a:hover {
 
 /*********************************
 *
+*  LANDING PAGE PESSOA FISICA
+*
+*********************************/
+
+.lp-pessoa-fisica header .container {
+    padding-top: 0;
+}
+
+.lp-pessoa-fisica header .container {
+    padding: 0;
+}
+
+.lp-pessoa-fisica header .navbar-brand {
+    display: block;
+    width: 160px;
+    height: 55px;
+    background: none;
+    margin-top: 0;
+}
+
+.lp-pessoa-fisica header .navbar-brand img {
+    width: 160px;
+    display: block;
+}
+
+.lp-pessoa-fisica header .nav-link {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica header .btn {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4470B4;
+    margin-left: 10px;
+}
+
+.lp-pessoa-fisica header .btn:hover {
+    background-color: #5282ce;
+}
+
+.lp-pessoa-fisica .info-corporativo {
+    font-size: 15px;
+    color: #2D405A;
+    background-color: #eeeeee;
+    padding: 10px;
+}
+
+.lp-pessoa-fisica .info-corporativo p {
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .banner {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .banner .apresentacao {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.lp-pessoa-fisica .banner .apresentacao p {
+    font-size: 20px;
+    color: #2D405A;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.lp-pessoa-fisica .banner .apresentacao h1 {
+    font-size: 48px;
+    color: #2D405A;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.lp-pessoa-fisica .banner .apresentacao h1 strong {
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica .banner .apresentacao img {
+    display: block;
+    width: 90%;
+}
+
+.lp-pessoa-fisica .banner .imagem img {
+    display: block;
+    width: 100%;
+}
+
+.lp-pessoa-fisica .tabela-planos {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela {
+    background-color: #fff;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .table {
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .table thead th {
+    border-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .table td,
+.lp-pessoa-fisica .tabela-planos .area-tabela .table th {
+    padding: 30px;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras p {
+    color: #2D405A;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras p strong {
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela .regras span {
+    color: #666E79;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores {
+    text-align: center;
+    width: 220px;
+    color: #5B5B5B;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .nome-plano {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .nm-blue {
+    color: #4470B4;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .valor {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .valor small {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black:hover {
+    background: #636060;
+}
+
+.lp-pessoa-fisica .tabela-planos .descricao {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+.lp-pessoa-fisica .tabela-planos tbody tr td {
+    text-align: center;
+}
+.lp-pessoa-fisica .tabela-planos tbody tr td .obs {
+    font-size: 11px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica .tabela-planos tbody tr td,
+.lp-pessoa-fisica .tabela-planos tbody tr th {
+    vertical-align: middle;
+}
+.lp-pessoa-fisica .tabela-planos .descricao .cobertura {
+    color: #808080;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td {
+    vertical-align: middle;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td img {
+    display: block;
+    width: 18px;
+    margin: 0 auto;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black:hover {
+    background: #636060;
+}
+
+.lp-pessoa-fisica .beneficios {
+    background: #4470B4 url(../img/l-pf-textura.png) repeat;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .beneficios h3 {
+    color: #ffffff;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 60px;
+}
+
+.lp-pessoa-fisica .beneficios .intro {
+    margin-bottom: 80px;
+}
+
+.lp-pessoa-fisica .beneficios .intro p {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica .beneficios .intro p strong {
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    min-height: 318px;
+}
+
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios img {
+    display: block;
+    width: 72px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .titulo {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .linha {
+    width: 96px;
+    height: 1px;
+    background: #A21B26;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios .texto {
+    font-size: 14px;
+    font-weight: 400;
+    color: #727272;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .numeros {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .numeros {
+    background-color: #E8F1FF;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .numeros h3 {
+    text-align: center;
+    color: #2D405A;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 60px;
+}
+
+.lp-pessoa-fisica .numeros .box {
+    width: 100%;
+    padding: 40px 30px;
+    text-align: center;
+    background: #fff;
+    color: #2D405A;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.lp-pessoa-fisica .numeros .box p {
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .numeros .box span {
+    font-size: 32px;
+}
+
+.lp-pessoa-fisica .perguntas {
+    background-color: #1D2A40;
+    padding: 60px 0;
+}
+
+.lp-pessoa-fisica .perguntas h3 {
+    font-size: 60px;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 16px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas h4 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #2D405A;
+    margin-bottom: 30px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel {
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    margin-bottom: 15px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading {
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading h4 {
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-heading h4 a {
+    background: #fafafa;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a {
+    display: block;
+    padding: 12px 15px;
+    background: #fff;
+    font-size: 32px;
+    line-height: 50px;
+    font-weight: 400;
+    color: #4470B4;
+    position: relative;
+    transition: all 0.5s ease 0s;
+    box-shadow: 0 1px 0 #fafafa;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed {
+    color: #637389;
+    box-shadow: 0 1px 0 #ddd;
+    background: #fff;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:before,
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed:before {
+    content: "\f067";
+    font-family: "FontAwesome";
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    color: #4470B4;
+    text-align: center;
+    position: absolute;
+    top: 24px;
+    right: 15px;
+    transform: rotate(135deg);
+    transition: all 0.3s ease 0s;
+    border: 1px solid;
+    border-radius: 50px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed:before {
+    color: #637389;
+    transform: rotate(0);
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    right: 55px;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body {
+    padding: 30px;
+    border: none;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body p {
+    font-size: 24px;
+    color: #637389;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos {
+    padding: 80px 0;
+
+    background: url("../img/l-pf-bg-planos.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.lp-pessoa-fisica .planos .titulo {
+    text-align: center;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 90px;
+    padding: 30px 30px;
+}
+
+.lp-pessoa-fisica .planos .titulo p {
+    font-size: 32px;
+    color: #2D405A;
+    line-height: 44px;
+}
+
+.lp-pessoa-fisica .planos .titulo p strong {
+    font-weight: 700;
+}
+
+.lp-pessoa-fisica .planos .titulo p.auxiliar {
+    font-size: 20px;
+    color: #797979;
+    line-height: 28px;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos .box-planos {
+    background: #fff;
+    border-radius: 12px;
+    text-align: center;
+    color: #5B5B5B;
+    position: relative;
+}
+
+.lp-pessoa-fisica .planos .box-planos img {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: -70px;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto {
+    padding: 110px 30px 30px 30px;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .nome-plano {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .nome-blue {
+    color: #4470B4;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .valor {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .frequencia {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .btn {
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .btn-blue:hover {
+    background-color: #5282ce;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica .planos .box-planos .texto .btn-black:hover {
+    background: #636060;
+}
+
+.lp-pessoa-fisica .depoimentos {
+    background-color: #E8F1FF;
+    padding: 100px 0 60px 0;
+}
+
+.lp-pessoa-fisica .depoimentos h3 {
+    font-size: 60px;
+    color: #2D405A;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.lp-pessoa-fisica .depoimentos .box-depoimento {
+    width: 100%;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    background: #fff;
+}
+
+.lp-pessoa-fisica .depoimentos .box-depoimento img {
+    width: 69px;
+    display: block;
+    margin: 0 auto;
+}
+
+.lp-pessoa-fisica .depoimentos .box-depoimento p.nome {
+    font-size: 18px;
+    color: #2D405A;
+    font-weight: 600;
+    margin: 20px 0 0 0;
+}
+
+.lp-pessoa-fisica .depoimentos .box-depoimento p.funcao {
+    font-size: 14px;
+    color: #2D405A;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+.lp-pessoa-fisica .depoimentos .box-depoimento p.texto {
+    font-size: 14px;
+    color: #637287;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .contato {
+    padding: 80px 0;
+    background: url("../img/l-pf-bg-contato.jpg") no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+}
+
+.lp-pessoa-fisica .contato .box-contato {
+    width: 100%;
+    height: 860px;
+    position: relative;
+}
+
+.lp-pessoa-fisica .contato .box-contato .textura {
+    width: 90%;
+    height: 638px;
+    position: absolute;
+    border-radius: 12px;
+    background: #4470B4 url("../img/l-pf-bg-form.png") repeat;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-contato {
+    width: 90%;
+    position: absolute;
+    top: 40px;
+    right: 0;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px 12px 0 0;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form .titulo {
+    font-size: 32px;
+    line-height: 32px;
+    color: #2D405A;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form .sub {
+    font-size: 32px;
+    line-height: 32px;
+    color: #2D405A;
+    font-weight: 300;
+    margin-bottom: 16px;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form .form-group input {
+    border: 0;
+    background: #EDEDED;
+    height: 46px;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form .form-group textarea {
+    border: 0;
+    background: #EDEDED;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-form .btn {
+    color: #fff;
+    font-size: 20px;
+    background: #A21B26;
+    width: 100%;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone {
+    background: #1D2A40;
+    padding: 30px;
+    border-radius: 0 0 12px 12px;
+    color: #fff;
+    overflow: auto;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone .icone {
+    float: left;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone .icone img {
+    display: block;
+    width: 80px;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones {
+    float: left;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones .titulo {
+    font-size: 20px;
+}
+
+.lp-pessoa-fisica .contato .box-contato .area-telefone .telefones .numeros-tel {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.lp-pessoa-fisica .footer-lp-pf {
+    background: #1D2A40;
+    padding: 60px 0 60px 0;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-menu-footer p.titulo {
+    color: #808CA0;
+    font-size: 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-menu-footer ul li a {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app {
+    width: 100%;
+    border-radius: 12px;
+    background: #E8F1FF url(../img/l-pf-textura.png) repeat;
+    padding: 20px 50px 0 50px;
+    overflow: auto;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .smartphone {
+    width: 128px;
+    display: block;
+    float: left;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links {
+    float: left;
+    margin-left: 20px;
+    width: 290px;
+    text-align: center;
+    padding-top: 28px;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links .logo {
+    display: block;
+    width: 156px;
+    margin: 0 auto;
+
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links p {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 30px 0 8px 0;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links a {
+    display: inline-block;
+
+}
+
+.lp-pessoa-fisica .footer-lp-pf .area-app .links a img {
+    display: block;
+    height: 34px;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .faixa {
+    background: #F0F1F3;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .faixa p {
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 44px;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .faixa ul {
+    float: right;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .faixa ul li {
+    float: left;
+}
+
+.lp-pessoa-fisica .footer-lp-pf .faixa ul li a {
+    color: #1D2A40;
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+/*********************************
+*
 *  X MEDIA QUERIES
 *
 *********************************/
@@ -4077,8 +4919,9 @@ footer ul li a:hover {
     header .container {
         padding-top: 0px;
     }
+
     .btn-profissional a {
-        margin: 0!important;
+        margin: 0 !important;
         text-align: center;
         width: 234px;
     }
@@ -4138,6 +4981,7 @@ footer ul li a:hover {
     .banner-caixa {
         background-position: -270px center !important;
     }
+
     .banner-caixa .area-texto {
         width: 900px;
         padding-left: 270px;
@@ -4225,6 +5069,7 @@ footer ul li a:hover {
     .home-prestador .area-beneficios .lb2 {
         text-align: left;
     }
+
     .area-checkup .pacote-checkup .resumo .textos {
         display: block;
         min-height: 246px;
@@ -4263,39 +5108,48 @@ footer ul li a:hover {
     .banner-caixa {
         background-position: -660px center !important;
     }
+
     .banner-caixa .area-texto {
         width: 600px;
         padding-left: 0;
         margin: 0 auto;
     }
+
     .banner-caixa .intro {
         margin-bottom: 14px;
     }
+
     .banner-caixa .intro span {
         font-size: 24px;
         line-height: 28px;
     }
+
     .banner-caixa .logos {
         margin-bottom: 24px;
     }
+
     .banner-caixa .logos img {
         display: block;
         width: 224px;
     }
+
     .banner-caixa .beneficios {
         margin-bottom: 16px;
         overflow: auto;
     }
+
     .banner-caixa .beneficios .beneficio1 img,
     .banner-caixa .beneficios .beneficio2 img {
         display: block;
         width: 50px;
     }
+
     .banner-caixa .beneficios .beneficio1 span,
     .banner-caixa .beneficios .beneficio2 span {
         font-size: 14px;
-        line-height: 18px!important;
+        line-height: 18px !important;
     }
+
     .btn-lp {
         margin-bottom: 20px;
     }
@@ -4309,20 +5163,25 @@ footer ul li a:hover {
         padding-left: 120px;
         margin: 0 auto;
     }
+
     .banner-natal .area-texto .intro {
         font-size: 24px;
         line-height: 34px;
     }
+
     .banner-natal .area-texto .texto {
         font-size: 17px;
         margin: 14px 0 20px 0;
     }
+
     .banner-natal .area-texto .cupom {
         margin-bottom: 30px;
     }
+
     .banner-natal .area-texto .cupom p {
         font-size: 15px;
     }
+
     .banner-natal .area-texto .cupom span {
         font-size: 26px;
         color: #a32431;
@@ -4341,6 +5200,7 @@ footer ul li a:hover {
     .form-busca-home button {
         margin-top: 0px;
     }
+
     .area-banner {
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -4443,13 +5303,16 @@ footer ul li a:hover {
     .resultado-checkup .lista .card-header .resumo .resumo-pacote ul {
         margin-bottom: 10px;
     }
+
     .area-checkup .pacote-checkup {
         margin-bottom: 30px;
     }
+
     .area-checkup .pacote-checkup .resumo .textos {
         display: block;
         min-height: auto;
     }
+
     .area-busca-interna {
         background-position: left top;
         background-size: auto 680px;
@@ -4487,33 +5350,39 @@ footer ul li a:hover {
         margin: 4px 0 15px 0;
     }
 
-    .mini-banner-resultado img{
-        margin:0 auto;
+    .mini-banner-resultado img {
+        margin: 0 auto;
         display: block;
     }
 
     .banner-caixa .intro {
         margin-bottom: 10px;
     }
+
     .banner-caixa .intro span {
         font-size: 18px;
         line-height: 22px;
     }
+
     .banner-caixa .logos {
         margin-bottom: 16px;
     }
+
     .banner-caixa .beneficios {
         margin-bottom: 0;
     }
+
     .banner-caixa .beneficios .beneficio1 img, .banner-caixa .beneficios .beneficio2 img {
         width: 40px;
     }
+
     .banner-caixa .beneficios .beneficio1, .banner-caixa .beneficios .beneficio2 {
         width: 100%;
         margin-bottom: 10px;
         float: left;
         text-align: left;
     }
+
     .btn-lp {
         font-size: 13px;
     }
@@ -4521,30 +5390,37 @@ footer ul li a:hover {
     .banner-natal {
         background-position: -800px center !important;
     }
+
     .banner-natal .area-texto {
         width: 400px;
         padding-left: 0;
         margin: 0 auto;
     }
+
     .banner-natal .area-texto .intro {
         font-size: 20px;
         line-height: 31px;
     }
+
     .banner-natal .area-texto .texto {
-        font-size: 17px!important;
+        font-size: 17px !important;
         margin: 14px 0 20px 0;
     }
+
     .banner-natal .area-texto .texto strong {
         font-size: 18px;
     }
+
     .banner-natal .area-texto .cupom {
         margin-bottom: 30px;
         padding: 8px 10px 0 10px;
         width: 240px;
     }
+
     .banner-natal .area-texto .cupom p {
         font-size: 15px;
     }
+
     .banner-natal .area-texto .cupom span {
         font-size: 26px;
         color: #a32431;
@@ -4560,24 +5436,29 @@ footer ul li a:hover {
     .area-busca-interna {
         background-position: -280px top;
     }
+
     .area-passos {
         background-size: cover;
     }
+
     .steps {
         display: none;
     }
+
     .steps-mobile {
         display: block;
         width: 100%;
         overflow: auto;
         margin-top: 70px;
     }
+
     .steps-mobile .step {
         width: 340px;
         text-align: left;
         overflow: auto;
         margin: 0 auto;
     }
+
     .steps-mobile .step .numero {
         font-size: 28px;
         color: rgb(255, 255, 255);
@@ -4586,6 +5467,7 @@ footer ul li a:hover {
         width: 30px;
         margin-top: 28px;
     }
+
     .steps-mobile .step .traco {
         width: 12px;
         height: 100px;
@@ -4595,15 +5477,18 @@ footer ul li a:hover {
         background-position: center center;
         float: left;
     }
+
     .steps-mobile .step .icone {
         margin-bottom: 0;
         float: left;
         margin-top: 24px;
     }
+
     .steps-mobile .step .icone img {
         height: 48px;
         margin: 0 auto;
     }
+
     .steps-mobile .step .texto {
         font-size: 13px;
         text-transform: uppercase;
@@ -4612,6 +5497,7 @@ footer ul li a:hover {
         display: block;
         float: left;
     }
+
     .steps-mobile .step5 .texto {
         font-size: 13px;
         text-transform: uppercase;
@@ -4620,36 +5506,47 @@ footer ul li a:hover {
         display: block;
         float: left;
     }
+
     .area-vantagens .row {
         margin-bottom: 0;
     }
+
     .area-vantagens .row .col-sm-12 {
         margin-bottom: 30px;
     }
+
     .area-vantagens {
         padding-bottom: 320px;
     }
+
     .box-banner-conheca {
         height: 104px;
     }
+
     .box-banner-conheca .area-imagem {
         margin-top: -374px;
     }
+
     .area-imagem-aplicativo img {
         width: 50%;
     }
+
     .area-seleciona-profissional {
         font-size: 10px;
     }
+
     .select-validade-mes {
         margin-bottom: 5px;
     }
+
     .area-btn-finalizar .btn-finalizar {
         float: left;
     }
+
     .home-prestador .passos-cadastro .texto {
         margin-bottom: 30px;
     }
+
     .home-prestador .area-beneficios .lb1,
     .home-prestador .area-beneficios .lb2 {
         text-align: center;
@@ -4659,7 +5556,7 @@ footer ul li a:hover {
     .resultado-checkup .lista .card-header .resumo .valores .drhj {
         background-color: #f1f1f1;
         padding: 8px 10px 6px 10px;
-        border-top: 1px solid rgba(0,0,0,.125);
+        border-top: 1px solid rgba(0, 0, 0, .125);
         border-left: none;
         border-bottom: none;
     }
@@ -4670,7 +5567,7 @@ footer ul li a:hover {
     }
 
     .resultado-checkup .lista .card-header .resumo .valores .checkup {
-        border-top: 1px solid rgba(0,0,0,.125);
+        border-top: 1px solid rgba(0, 0, 0, .125);
         border-left: none;
     }
 
@@ -4681,6 +5578,7 @@ footer ul li a:hover {
     .resultado-checkup .lista .card-header .resumo .valores .checkup .btn {
         margin-top: 0;
     }
+
     .contato-prestador .area-contato .area-form .form #email {
         margin-bottom: 20px;
     }
@@ -4691,6 +5589,7 @@ footer ul li a:hover {
     .modal-seleciona-estado {
         width: auto;
     }
+
     .modal-seleciona-estado p {
         font-size: 18px;
         margin-bottom: 20px;
@@ -4745,19 +5644,23 @@ footer ul li a:hover {
     .card-resumo-compra .card-header .valor-produto {
         text-align: left;
     }
+
     .box-resumo-home .proxima-consulta .data-consulta {
         font-size: 18px;
         font-weight: 700;
     }
+
     .box-minha-conta .row .conteudo .lista-notificacoes .card-header .titulo-notificacao {
         float: none;
         display: inline-block;
         width: 100%;
     }
+
     .box-minha-conta .row .conteudo .lista-notificacoes .card-header .status-notificacao {
         float: none;
         clear: both;
     }
+
     .box-minha-conta .row .conteudo .opcoes-notificacao .tit-opc-not label {
         line-height: 20px;
     }
@@ -4783,9 +5686,10 @@ footer ul li a:hover {
     .banner-caixa .beneficios .beneficio1 img, .banner-caixa .beneficios .beneficio2 img {
         width: 30px;
     }
+
     .banner-caixa .beneficios .beneficio1 span, .banner-caixa .beneficios .beneficio2 span {
         font-size: 11px;
-        line-height: 14px!important;
+        line-height: 14px !important;
     }
 
     .banner-natal .area-texto {
@@ -4793,25 +5697,31 @@ footer ul li a:hover {
         padding-left: 0;
         margin: 0 auto;
     }
+
     .banner-natal .area-texto .intro {
         font-size: 24px;
         line-height: 31px;
     }
+
     .banner-natal .area-texto .texto {
-        font-size: 17px!important;
+        font-size: 17px !important;
         margin: 14px 0 20px 0;
     }
+
     .banner-natal .area-texto .texto strong {
         font-size: 18px;
     }
+
     .banner-natal .area-texto .cupom {
         margin-bottom: 30px;
         padding: 8px 10px 0 10px;
         width: 240px;
     }
+
     .banner-natal .area-texto .cupom p {
         font-size: 15px;
     }
+
     .banner-natal .area-texto .cupom span {
         font-size: 26px;
         color: #a32431;
@@ -4851,6 +5761,136 @@ footer ul li a:hover {
 
     .area-escolher-data .confirma-data {
         font-size: 12px;
+    }
+
+    .lp-pessoa-fisica .banner {
+        padding: 30px 0;
+    }
+
+    .lp-pessoa-fisica .banner .apresentacao p {
+        font-size: 16px;
+    }
+
+    .lp-pessoa-fisica .banner .apresentacao img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .lp-pessoa-fisica .beneficios {
+        padding: 30px 0;
+    }
+
+    .lp-pessoa-fisica .beneficios h3 {
+        font-size: 38px;
+        margin-bottom: 20px;
+    }
+
+    .lp-pessoa-fisica .beneficios .intro p {
+        font-size: 18px;
+    }
+
+    .lp-pessoa-fisica .beneficios .intro {
+        margin-bottom: 10px;
+    }
+
+    .lp-pessoa-fisica .beneficios .area-beneficios .box-beneficios {
+        min-height: auto;
+        margin-bottom: 20px;
+    }
+
+    .lp-pessoa-fisica .numeros {
+        padding: 30px 0;
+    }
+
+    .lp-pessoa-fisica .numeros h3 {
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+
+    .lp-pessoa-fisica .numeros .box {
+        padding: 18px 30px;
+        margin-bottom: 20px;
+    }
+
+    .lp-pessoa-fisica .numeros .box p {
+        font-size: 40px;
+    }
+
+    .lp-pessoa-fisica .numeros .box span {
+        font-size: 22px;
+    }
+
+    .lp-pessoa-fisica .perguntas {
+        padding: 40px 0;
+    }
+
+    .lp-pessoa-fisica .perguntas h3 {
+        font-size: 40px;
+    }
+
+    .lp-pessoa-fisica .perguntas .area-perguntas h4 {
+        font-size: 22px;
+    }
+
+    .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a {
+        font-size: 20px;
+        line-height: 32px;
+    }
+
+    .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:before, .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a.collapsed:before,
+    .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-title a:after {
+        display: none;
+    }
+
+    .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body p {
+        font-size: 16px;
+        line-height: 26px;
+    }
+    .lp-pessoa-fisica .planos {
+        padding: 80px 0 0 0;
+    }
+    .lp-pessoa-fisica .planos .titulo {
+        margin-bottom: 130px;
+    }
+    .lp-pessoa-fisica .planos .titulo p {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    .lp-pessoa-fisica .planos .titulo p.auxiliar {
+        font-size: 16px;
+    }
+    .lp-pessoa-fisica .planos .box-planos {
+        margin-bottom: 126px;
+    }
+    .lp-pessoa-fisica .planos .box-planos img {
+        top: -100px;
+    }
+    .lp-pessoa-fisica .depoimentos {
+        padding: 50px 0 50px 0;
+    }
+    .lp-pessoa-fisica .depoimentos h3 {
+        font-size: 32px;
+        margin-bottom: 32px;
+    }
+    .lp-pessoa-fisica .depoimentos .box-depoimento {
+        margin-bottom: 20px;
+    }
+    .lp-pessoa-fisica .footer-lp-pf .area-app .smartphone {
+        display: none;
+    }
+    .lp-pessoa-fisica .footer-lp-pf .area-app {
+        padding: 30px;
+    }
+    .lp-pessoa-fisica .footer-lp-pf .area-app .links {
+        float: left;
+        margin-left: 0;
+        width: 100%;
+        padding-top: 0;
+    }
+    .lp-pessoa-fisica .footer-lp-pf .faixa p {
+        font-size: 10px;
+        margin-bottom: 0;
+        line-height: 27px;
     }
 }
 
@@ -4892,12 +5932,12 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 375px) {
-	
-	.modal-seleciona-estado {
+
+    .modal-seleciona-estado {
         width: 350px;
         margin: 0px auto;
     }
-    
+
     .area-vantagens {
         padding-bottom: 236px;
     }
@@ -4912,12 +5952,12 @@ footer ul li a:hover {
 }
 
 @media only screen and (max-width: 320px) {
-	
-	.modal-seleciona-estado {
+
+    .modal-seleciona-estado {
         width: 320px;
         margin: 0px;
     }
-    
+
     .area-vantagens {
         padding-bottom: 190px;
     }

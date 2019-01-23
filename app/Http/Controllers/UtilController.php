@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+
 class UtilController extends Controller
 {
 	/**
@@ -275,30 +277,72 @@ class UtilController extends Controller
 	 */
 	public static function sendMail($to, $from, $subject, $html_message)
 	{
-	    $token = env('SENDGRID_API_KEY');
-	    $url = 'https://api.sendgrid.com/v3/mail/send';
+		$token = env('SENDGRID_API_KEY');
+		$url = 'https://api.sendgrid.com/v3/mail/send';
 
- 		if(env('APP_ENV') != 'production') {
- 			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
- 		}
+		if(env('APP_ENV') != 'production') {
+			if(!empty(env('APP_EMAIL_DEV'))) {
+				$to = [['email' => env('APP_EMAIL_DEV')]];
+			} else {
+				$to = [
+					[
+						'email' => 'vitor.pagani.92@gmail.com',
+						'name' => 'Vitor Pagani'
+					],
+					[
+						'email' => 'hugorichard2010@gmail.com',
+						'name' => 'Hugo Richard'
+					],
+					[
+						'email' => 'theo@comvex.com.br',
+						'name' => 'Theo'
+					],
+					[
+						'email' => 'rodrigosilva26@hotmail.com',
+						'name' => 'Rodrigo Silva'
+					],
+				];
+			}
+		} else {
+			if(!is_array($to)) {
+				$to = [[
+					"email" => $to,
+				]];
+			}
+		}
 
-	    $payload = '{"personalizations": [{"to": [{"email": "'.$to.'"}]}],"from": {"email": "'.$from.'"},"subject": "'.$subject.'","content": [{"type": "text/html", "value": "'.$html_message.'"}]}';
-	    //$payload = '{"personalizations": [{"to": [{"email": "teocomp@gmail.com"}]}],"from": {"email": "contato@doutorhoje.com.br"},"subject": "Hello, World!","content": [{"type": "text/html", "value": "<h1>teste3 DoutorHoje</h1>"}]}';
-	    
-	    //dd($payload);
-	    
-	    $ch = curl_init();
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    $output = curl_exec($ch);
+		$email = [
+			'personalizations' => [[
+				'to' => $to,
+				'subject' => $subject
+			]],
+			"from" => [
+				'email' => $from,
+				'name' => 'Contato DoutorHoje'
+			],
+			'content' => [[
+				'type'=> 'text/html',
+				'value' => $html_message
+			]]
+		];
 
-	    if ($output == "") {
-	        return true;
-	    }
-	    
-	    return $output;
+		$payload = json_encode($email, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output = curl_exec($ch);
+		$er = curl_error($ch);
+		curl_close($ch);
+
+		if ($output == '') {
+			return true;
+		}
+
+		Log::critical("cURL Error #:" . $output. " Debug #:". $er. " Object Sender #:". $payload);
+		return $output;
 	}
 
 	

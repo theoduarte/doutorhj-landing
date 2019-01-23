@@ -25,6 +25,7 @@ Route::get('payment/failed/{hash}', 'PaymentController@failedPayment');
 
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
+Route::get('planos-individuais', 'ClinicaController@planos')->name('planos-individuais');
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');
 Route::get('avaliacao', 'ClinicaController@avaliaAtendimento');
 
@@ -100,6 +101,8 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 #rotas da campanha caixa
 Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
 Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa')->name('oferta-certa-caixa');
+
+Route::post('enviar-email-confirmacao', 'PacienteController@enviarEmailConfirmacao')->name('enviar-email');
 
 Auth::routes();
 

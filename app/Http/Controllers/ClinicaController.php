@@ -851,6 +851,9 @@ class ClinicaController extends Controller
     public function contatoHomePublica(){
         return view('mensagems.contato');
     }
+    public function planos(){
+        return view('planos-individuais');
+    }
 
     public function confirmaAgendamento(){
         return view('confirmacao');
