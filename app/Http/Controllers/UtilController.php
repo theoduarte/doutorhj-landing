@@ -267,13 +267,14 @@ class UtilController extends Controller
 	
 		return $result;
 	}
-	
+
 	/**
 	 * sendMail method
 	 *
-	 * @param string $number Destinatários que receberam a mensagem. DDD+Número, separados por vírgula caso possua mais de um.
-	 * @param string $remetente Nome do Remetente até 32 caracteres. Utilizado somente na organização dos relatórios
-	 * @param string $message Conteúdo da mensagem que será enviada. Tamanho máximo de 2048 caracteres.
+	 * @param array|string $to ['email' => '', 'name' => '']
+	 * @param string $from
+	 * @param string $subject
+	 * @param string $html_message
 	 */
 	public static function sendMail($to, $from, $subject, $html_message)
 	{
