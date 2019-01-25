@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+
 class UtilController extends Controller
 {
 	/**
@@ -265,74 +267,82 @@ class UtilController extends Controller
 	
 		return $result;
 	}
-	
+
 	/**
 	 * sendMail method
 	 *
-	 * @param string $number Destinatários que receberam a mensagem. DDD+Número, separados por vírgula caso possua mais de um.
-	 * @param string $remetente Nome do Remetente até 32 caracteres. Utilizado somente na organização dos relatórios
-	 * @param string $message Conteúdo da mensagem que será enviada. Tamanho máximo de 2048 caracteres.
+	 * @param array|string $to ['email' => '', 'name' => '']
+	 * @param string $from
+	 * @param string $subject
+	 * @param string $html_message
 	 */
 	public static function sendMail($to, $from, $subject, $html_message)
 	{
 		$token = env('SENDGRID_API_KEY');
 		$url = 'https://api.sendgrid.com/v3/mail/send';
-		 
+
 		if(env('APP_ENV') != 'production') {
-			$to = env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com';
-			
-			$to = [
+			if(!empty(env('APP_EMAIL_DEV'))) {
+				$to = [['email' => env('APP_EMAIL_DEV')]];
+			} else {
+				$to = [
 					[
-						'email' => env('APP_EMAIL_DEV') ?? 'vitor.pagani.92@gmail.com',
+						'email' => 'vitor.pagani.92@gmail.com',
 						'name' => 'Vitor Pagani'
 					],
 					[
-						'email' => 'teocomp@gmail.com',
-						'name' => 'Theo Duarte'
-					]
-			];
-		}
-	
-		if(!is_array($to)) {
-			$to = [
+						'email' => 'hugorichard2010@gmail.com',
+						'name' => 'Hugo Richard'
+					],
 					[
-							'email' => $to,
-							'name' => ''
-					]
-			];
+						'email' => 'theo@comvex.com.br',
+						'name' => 'Theo'
+					],
+					[
+						'email' => 'rodrigosilva26@hotmail.com',
+						'name' => 'Rodrigo Silva'
+					],
+				];
+			}
+		} else {
+			if(!is_array($to)) {
+				$to = [[
+					"email" => $to,
+				]];
+			}
 		}
-		
+
 		$email = [
-				'personalizations' => [[
-						'to' => $to,
-						'subject' => $subject
-				]],
-				"from" => [
-						'email' => $from,
-						'name' => 'Contato DoutorHoje'
-				],
-				'content' => [[
-						'type'=> 'text/html',
-						'value' => $html_message
-				]]
+			'personalizations' => [[
+				'to' => $to,
+				'subject' => $subject
+			]],
+			"from" => [
+				'email' => $from,
+				'name' => 'Contato DoutorHoje'
+			],
+			'content' => [[
+				'type'=> 'text/html',
+				'value' => $html_message
+			]]
 		];
-		 
+
 		$payload = json_encode($email, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-		// 	    $payload = '{"personalizations": [{"to": [{"email": "'.$to.'"}]}],"from": {"email": "'.$from.'"},"subject": "'.$subject.'","content": [{"type": "text/html", "value": "'.$html_message.'"}]}';
-		 
-		//dd($payload);
-		 
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type:application/json'));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$output = curl_exec($ch);
-		 
-		if ($output == "") {
+		$er = curl_error($ch);
+		curl_close($ch);
+
+		if ($output == '') {
 			return true;
 		}
-		 
+
+		Log::critical("cURL Error #:" . $output. " Debug #:". $er. " Object Sender #:". $payload);
 		return $output;
 	}
 
