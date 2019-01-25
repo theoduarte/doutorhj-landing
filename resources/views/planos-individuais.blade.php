@@ -458,33 +458,51 @@
         </div>
         <div class="depoimentos" id="depoimentos">
             <div class="container">
-                <h3>Veja os nossos clientes dizem sobre nós</h3>
+                <h3>Veja o que estão falando sobre nós</h3>
                 <div class="row">
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6">
                         <div class="box-depoimento">
-                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
-                            <p class="nome">Fernanda Lúcia de Souza</p>
+                            <img src="/libs/home-template/img/l-pf-foto-kelly.png" alt="">
+                            <p class="nome">Kelly Marques</p>
                             <p class="funcao">Cliente Doutor Hoje Blue</p>
-                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
-                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                            <p class="texto">Fiz um exame cardiológico pelo Doutor Hoje, o agendamento foi fácil e o
+                                atendimento na clinica foi ágil e sem burocracia.<br>Recomento a todos!</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6">
                         <div class="box-depoimento">
-                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
-                            <p class="nome">Fernanda Lúcia de Souza</p>
-                            <p class="funcao">Cliente Doutor Hoje Blue</p>
-                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
-                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                            <img src="/libs/home-template/img/l-pf-foto-viviane.png" alt="">
+                            <p class="nome">Viviane Hérica</p>
+                            <p class="funcao">CEO Doutor Hoje</p>
+                            <p class="texto">Me sinto honrada em trabalhar no time do Doutor Hoje, juntos fazemos
+                                diariamente a saúde chegar a quem precisa com preço super acessível.</p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-6">
                         <div class="box-depoimento">
-                            <img src="/libs/home-template/img/l-pf-cliente1.png" alt="">
-                            <p class="nome">Fernanda Lúcia de Souza</p>
-                            <p class="funcao">Cliente Doutor Hoje Blue</p>
-                            <p class="texto">O serviço é excelente e muito rápido. Já fiz minhas consultas de rotinas e
-                                as dos meus filhos e economizei bastante em relação ao particular.</p>
+                            <img src="/libs/home-template/img/l-pf-foto-silvio.png" alt="">
+                            <p class="nome">Doutor Silvio</p>
+                            <p class="funcao">Médico na Doutor Hoje</p>
+                            <p class="texto">É um projeto inovador, extremamente
+                                democrático onde o usuário/paciente escolhe aquilo
+                                o que ele quer fazer dentro da sua necessidade.</p>
+                            <p class="texto">E como médico, continuamos levando a saúde
+                                com compromisso, qualidade e responsabilidade
+                                a todo o público do Doutor Hoje.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="box-depoimento">
+                            <img src="/libs/home-template/img/l-pf-foto-ligia.png" alt="">
+                            <p class="nome">Doutora Lígia</p>
+                            <p class="funcao">Médica na Doutor Hoje</p>
+                            <p class="texto">Gosto muito de atender aos pacientes da Doutor Hoje,
+                                pois posso programar a minha agenda e dar um
+                                atendimento integro, sem pressa, ouvindo cada paciente.
+                                </p>
+                            <p class="texto">Além do mais, a relação do Doutor Hoje com a
+                                classe médica é excelente.
+                                Parabéns ao time Doutor Hoje!</p>
                         </div>
                     </div>
                 </div>

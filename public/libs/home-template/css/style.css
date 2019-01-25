@@ -4670,6 +4670,7 @@ footer ul li a:hover {
     border-radius: 12px;
     text-align: center;
     background: #fff;
+    margin-bottom: 30px;
 }
 
 .lp-pessoa-fisica .depoimentos .box-depoimento img {
@@ -4696,7 +4697,6 @@ footer ul li a:hover {
     font-size: 14px;
     color: #637287;
     font-weight: 400;
-    margin-bottom: 0;
 }
 
 .lp-pessoa-fisica .contato {
