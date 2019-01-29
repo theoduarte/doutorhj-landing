@@ -338,8 +338,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('landing-page') }}#como-funciona">Como funciona</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('landing-page') }}#vantagens">Vantagens</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Produtos Especiais
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/planos-individuais">Para você</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="https://empresarial.doutorhoje.com.br/">Para empresas</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="http://www.clinicasdoutorhoje.com.br/" target="_blank">Clínicas Doutor Hoje</a>
