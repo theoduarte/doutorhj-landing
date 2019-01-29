@@ -6,6 +6,7 @@ use App\Paciente;
 use App\Plano;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Http\Request;
 use App\Atendimento;
@@ -39,6 +40,7 @@ class AtendimentoController extends Controller
         $sortItem = !empty($request->get('sort')) ? $request->get('sort') : 'asc';
 
 		if(is_null($sg_estado_localizacao) || is_null($especialidade)) {
+			Log::error('Erro no resultado dos atenidmento. '. json_encode($request->all()));
 			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
 		}
 
