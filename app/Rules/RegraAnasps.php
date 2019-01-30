@@ -48,6 +48,13 @@ class RegraAnasps implements Rule
         	return true;
         }
         
+        $date_regra_ideal = date('Y-m-d H:i:s', strtotime('2019-01-29 00:00:00'));
+        $documento = Documento::where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])->whereDate('created_at', '=', $date_regra_ideal)->whereDate('updated_at', '=', $date_regra_ideal)->first();
+        
+        //--verifica se eh documento de colaborador ideal saude
+        if (!empty($documento)) {
+        	return true;
+        }
         
         $documento = Documento::with('pacientes')
 			->where(['tp_documento' => 'CPF', 'te_documento' => UtilController::retiraMascara($value)])
