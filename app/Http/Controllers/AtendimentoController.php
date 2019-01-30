@@ -6,6 +6,7 @@ use App\Paciente;
 use App\Plano;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Http\Request;
 use App\Atendimento;
@@ -30,6 +31,10 @@ class AtendimentoController extends Controller
 
 		$dados = $this->getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento, $request->sort);
 
+		if(!$dados) {
+			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
+		}
+
 		return view('resultado', $dados);
 	}
 
@@ -47,9 +52,13 @@ class AtendimentoController extends Controller
 		$sgEstado = $request->get('sg_estado_localizacao');
 		$sort = $request->get('sort');
 
-		$atendimentos = $this->getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento, $sort);
+		$dados = $this->getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento, $sort);
 
-    	return view('resultado', $atendimentos);
+		if(!$dados) {
+			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
+		}
+
+    	return view('resultado', $dados);
     }
 
 	public function getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento = null, $sort = null)
@@ -58,7 +67,16 @@ class AtendimentoController extends Controller
 		date_default_timezone_set('America/Sao_Paulo');
 
 		if(is_null($sgEstado) || is_null($tipoEspecialidade)) {
-			return redirect('/')->with('erro-clear-storage', 'Ocorreu um erro inesperado, tente novamente.');
+			$parametros = [
+				'tipo_atendimento' 		=> $tipoAtendimento,
+				'tipo_especialidade' 	=> $tipoEspecialidade,
+				'sg_estado_localizacao' => $sgEstado,
+				'local_atendimento' 	=> $localAtendimento,
+				'sort'					=> $sort,
+			];
+
+			Log::error('Erro no resultado dos atenidmento. '. json_encode($parametros));
+			return false;
 		}
 
 		$paciente_id = null;

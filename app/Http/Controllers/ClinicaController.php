@@ -879,11 +879,13 @@ class ClinicaController extends Controller
 
     	if(isset($cart_id)) {
     	    $item = CVXCart::get($cart_id);
-    		$valor_item = $item->price;
+			if(!empty($item)) {
+				$valor_item = $item->price;
 
-    		if (CVXCart::remove($cart_id)) {
-    			return response()->json(['status' => true, 'mensagem' => 'O Item foi removido com sucesso!', 'valor_item' => $valor_item]);
-    		}
+				if (CVXCart::remove($cart_id)) {
+					return response()->json(['status' => true, 'mensagem' => 'O Item foi removido com sucesso!', 'valor_item' => $valor_item]);
+				}
+			}
     	}
 
     	return response()->json(['status' => false, 'mensagem' => 'O Item não foi removido. Por favor, tente novamente']);
