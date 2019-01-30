@@ -852,7 +852,10 @@ class ClinicaController extends Controller
         return view('mensagems.contato');
     }
     public function planos(){
-        return view('planos-individuais');
+        return view('planos-individuais.index');
+    }
+    public function planosContratacao(){
+        return view('planos-individuais.contratacao');
     }
 
     public function confirmaAgendamento(){
