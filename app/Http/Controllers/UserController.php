@@ -151,6 +151,12 @@ class UserController extends Controller
         	$documento_assetran = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
         	############################################################################
         	
+        	############# verifica se o usuario pertece a lista da IDEAL CORRETORA ##############
+        	$date_regra = date('Y-m-d H:i:s', strtotime('2019-01-29 00:00:00'));
+        	$nr_documento = UtilController::retiraMascara($request->input('te_documento'));
+        	$documento_ideal = Documento::where(['tp_documento' => 'CPF', 'te_documento' => $nr_documento, 'created_at' => $date_regra, 'updated_at' => $date_regra])->first();
+        	############################################################################
+        	
         	# dados do paciente
         	$paciente           		= new Paciente();
         	$paciente->user_id 			= $usuario->id;
@@ -165,6 +171,10 @@ class UserController extends Controller
         	
         	if (!empty($documento_assetran)) {
         		$paciente->empresa_id = 6;
+        	}
+        	
+        	if (!empty($documento_ideal)) {
+        		$paciente->empresa_id = 17;
         	}
         	
         	$paciente->access_token    	= $access_token;
@@ -204,6 +214,21 @@ class UserController extends Controller
         		$documento_assetran->updated_at = date('Y-m-d H:i:s');
         		$documento_assetran->save();
         		$documento_ids = [$documento_assetran->id];
+        	} elseif (!empty($documento_ideal)) {
+        		
+        		# vigencia do colaborador IDEAL CORRETORA
+        		$vigencia 					= new VigenciaPaciente();
+        		$vigencia->data_inicio 		= date('Y-m-d', strtotime('2019-01-30'));
+        		$vigencia->data_fim 		= date('Y-m-d', strtotime('2020-01-30'));
+        		$vigencia->cobertura_ativa 	= true;
+        		$vigencia->vl_max_consumo	= 0;
+        		$vigencia->paciente_id 		= $paciente->id;
+        		$vigencia->anuidade_id 		= 126;
+        		$vigencia->save();
+        		
+        		$documento_ideal->updated_at = date('Y-m-d H:i:s');
+        		$documento_ideal->save();
+        		$documento_ids = [$documento_ideal->id];
         	} else {
         		# cpf do paciente
 				$te_documento = UtilController::retiraMascara($request->input('te_documento'));

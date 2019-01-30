@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Controller@home')->name('landing-page');
 
-Route::get('resultado', 'AtendimentoController@consultaAtendimentos');
+Route::get('resultado', 'AtendimentoController@consultaAtendimentos')->name('resultado');
+Route::get('resultadoApi/{tipo_atendimento}/{tipo_especialidade}/{sg_estado_localizacao}/{local_atendimento?}', 'AtendimentoController@consultaAtendimentosCaixa')->name('resultadoApi');
 Route::get('resultado-checkup', 'CheckupController@resultadoCheckup');
 Route::post('agendar-atendimento', 'AgendamentoController@agendarAtendimento');
 Route::get('informa-beneficiario', 'AgendamentoController@informaBeneficiario')->middleware('auth')->name('informa-beneficiario');
