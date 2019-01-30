@@ -68,19 +68,9 @@
                             </div>
                             <div class="area-dependente">
                                 <div id="boxes">
-                                    <div class="box-dependente active">
-                                        <p>Dependente 1</p>
-                                        <div class="form-row">
-                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>
-                                            <input type="text" class="form-control col-sm-8" id="nomeDependente" placeholder="Nome do dependente">
-                                        </div>
-                                        <div class="form-row">
-                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>
-                                            <input type="text" class="form-control col-sm-8" id="cpfDependente" placeholder="CPF do dependente">
-                                        </div>
-                                    </div>
+
                                 </div>
-                                <a id="addbutton" href=""><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <a id="addbutton" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     Adicionar Dependente</a>
                             </div>
                             <div class="area-btn">
@@ -272,11 +262,31 @@
         var addbutton = document.getElementById("addbutton");
         addbutton.addEventListener("click", function () {
             var boxes = document.getElementById("boxes");
-            var clone = boxes.firstElementChild.cloneNode(true);
-            boxes.appendChild(clone);
-        });
+            var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
+		    var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
+				'                                        <p>Dependente </p>\n' +
+			  '                                          <div >\n' +
+			  '                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>\n' +
+			  '                                                </div> \n' +
+				'                                        <div class="form-row">\n' +
+				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
+				'                                            <input type="text" class="form-control col-sm-8" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+				'                                        </div>\n' +
+				'                                        <div class="form-row">\n' +
+				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
+				'                                            <input type="text" class="form-control col-sm-8" id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+				'                                        </div>\n' +
+				'                                    </div>');
+			boxes.innerHTML +=data
+
+		});
+
+		removerDependente = (dd) => {
+			$('#boxes'+dd).remove();
+		}
 
     });
+
 </script>
 </body>
 </html>
