@@ -61,7 +61,7 @@ class AtendimentoController extends Controller
     	return view('resultado', $dados);
     }
 
-	public function getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento = null, $sort = null)
+	public function getConsultaAtendimentos($tipoAtendimento, $tipoEspecialidade, $sgEstado, $localAtendimento = null, $sort = 'asc')
 	{
 		setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 		date_default_timezone_set('America/Sao_Paulo');
@@ -78,6 +78,8 @@ class AtendimentoController extends Controller
 			Log::error('Erro no resultado dos atenidmento. '. json_encode($parametros));
 			return false;
 		}
+
+		$sort = $sort ?? 'asc';
 
 		$paciente_id = null;
 
