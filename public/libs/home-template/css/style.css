@@ -4892,6 +4892,166 @@ footer ul li a:hover {
     font-size: 30px;
 }
 
+.lp-pessoa-fisica-pagamento {
+    height: 100%;
+    background-color: #E8F1FF;
+}
+.lp-pessoa-fisica-pagamento .area-form-cont {
+    padding: 30px 30px 10px 30px;
+}
+.lp-pessoa-fisica-pagamento #msform {
+    width: 100%;
+    margin: 50px auto;
+    position: relative;
+}
+.lp-pessoa-fisica-pagamento #msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    position: absolute;
+}
+.lp-pessoa-fisica-pagamento #msform fieldset:not(:first-of-type) {
+    display: none;
+}
+.lp-pessoa-fisica-pagamento #msform input,
+#msform textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
+.lp-pessoa-fisica-pagamento #msform .area-btn {
+    padding: 30px;
+}
+.lp-pessoa-fisica-pagamento #msform .btn-blue {
+    width: auto;
+    height: 50px;
+    background: #4470B4;
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 0;
+}
+.lp-pessoa-fisica-pagamento #msform .btn-link {
+    width: auto;
+    height: 50px;
+    background: #fafafa;
+    color: #0070c9;
+    margin-top: 10px;
+    font-size: 11px;
+    border: 0;
+}
+.lp-pessoa-fisica-pagamento .fs-title {
+    font-size: 28px;
+    color: #2D405A;
+    line-height: 120%;
+    text-align: left;
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+.lp-pessoa-fisica-pagamento .fs-title strong {
+    font-weight: 700;
+}
+.lp-pessoa-fisica-pagamento .fs-subtitle {
+    font-weight: normal;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+.lp-pessoa-fisica-pagamento #progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    counter-reset: step;
+    text-align: center;
+    padding-left: 0;
+}
+.lp-pessoa-fisica-pagamento #progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 10%;
+    float: left;
+    position: relative;
+}
+.lp-pessoa-fisica-pagamento #progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 30px;
+    line-height: 30px;
+    display: block;
+    font-size: 18px;
+    color: #546479;
+    background: white;
+    border-radius: 3px;
+    margin: 0 auto 5px auto;
+}
+
+.lp-pessoa-fisica-pagamento #progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 15px;
+    z-index: -1;
+}
+.lp-pessoa-fisica-pagamento #progressbar li:first-child:after {
+    content: none;
+}
+
+.lp-pessoa-fisica-pagamento #progressbar li.active:before,
+#progressbar li.active:after {
+    background: #4470B4;
+    color: white;
+}
+
+.lp-pessoa-fisica-pagamento .help-block {
+    font-size: .8em;
+    color: #7c7c7c;
+    text-align: left;
+    margin-bottom: .5em;
+}
+
+.lp-pessoa-fisica-pagamento .area-dependente {
+    padding: 0 6px;
+}
+.lp-pessoa-fisica-pagamento .area-dependente #addbutton {
+    margin-left: 24px;
+}
+.lp-pessoa-fisica-pagamento .box-dependente {
+    background: #f1f1f1;
+    padding: 0 24px;
+    margin-bottom: 10px;
+}
+
+.lp-pessoa-fisica-pagamento .box-dependente p {
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.lp-pessoa-fisica-pagamento .area-resumo-cont {
+    width: 100%;
+    padding: 30px;
+    border-radius: 0 12px 12px 0;
+    min-height: 700px;
+    background: #4470B4 url(../img/l-pf-bg-form.png) repeat;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido {
+    width: 100%;
+    padding: 30px;
+    border-radius:12px;
+    background-color: #fff;
+}
+
 /*********************************
 *
 *  X MEDIA QUERIES

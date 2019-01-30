@@ -78,11 +78,6 @@
         </div>
     </header>
     <section>
-        <div class="info-corporativo">
-            <div class="container">
-                <p>Corporativo</p>
-            </div>
-        </div>
         <div class="banner">
             <div class="container">
                 <div class="row">
