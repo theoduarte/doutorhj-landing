@@ -22,22 +22,48 @@ $(function(){
 				primeiraPaginaArray.push({dependentes:dependentes})
 			}
 
-			next()
+			next(".primeiraPage")
 		}
 	}
 
+	$('.prox').click(function() {
+		next(".prox")
+	})
 	finalizarCompra = () => {
 		console.log(primeiraPaginaArray)
-		var numero = $('#inputNumeroCartaoCredito').val();
+		var numero = $('#numeroCartao').val();
 		var titular = $('#nomeCartao').val();
 		var mes = $('#mesVencimento ').val();
 		var ano = $('#anoVencimento').val();
 		var cvv = $('#cvvCartao').val();
-		console.log({numero, titular, mes, ano, cvv})
+		var card = {numero, titular, mes, ano , cvv}
+		efetuarPagamento(primeiraPaginaArray,card )
 
 	}
 
 
+	function efetuarPagamento(usuario, card ){
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url: '/contratar-plano',
+			data: {
+				usuario:usuario,
+				card:card,
+				'_token': laravel_token
+			},
+			timeout: 15000,
+			success: function (result) {
+
+				console.log(result)
+			},
+			error: function (result) {
+
+
+ 					console.log(result)
+			}
+		});
+	}
 
 
 	// MULTI STEP FORM
@@ -235,12 +261,12 @@ $(function(){
 	}
 
 
-	next = () => {
+	next = (dado) => {
 		if (animating) return false;
 		animating = true;
 
-		current_fs = $(".primeiraPage").parent().parent().parent().parent();
-		next_fs = $(".primeiraPage").parent().parent().parent().parent().next();
+		current_fs = $(dado).parent().parent().parent().parent();
+		next_fs = $(dado).parent().parent().parent().parent().next();
 
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");

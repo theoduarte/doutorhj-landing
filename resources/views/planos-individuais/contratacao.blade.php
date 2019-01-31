@@ -174,7 +174,7 @@
 
                                 <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
                                 <input type="submit" name="submit" class="btn btn-blue submit action-button  " onclick="finalizarCompra()" value="Finalizar compra"/>
-                                <input type="button" name="next" class="btn btn-blue next action-button" value="Próximo"/>
+                                <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/>
                             </div>
 
                             <div class="modal fade" id="modalTermoUso" tabindex="-1" role="dialog" aria-labelledby="modalTermoUsoTitle" aria-hidden="true">
@@ -238,6 +238,9 @@
 </div>
 @include('flash-message')
 
+<script>
+	var laravel_token = '{{ csrf_token() }}';
 
+</script>
 </body>
 </html>

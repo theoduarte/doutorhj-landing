@@ -858,6 +858,12 @@ class ClinicaController extends Controller
         return view('planos-individuais.contratacao');
     }
 
+    public function contratarPlano(Request $request) {
+		$usuario =  CVXRequest::toArray();
+
+
+	 	echo json_encode($usuario);
+	}
     public function confirmaAgendamento(){
         return view('confirmacao');
     }
