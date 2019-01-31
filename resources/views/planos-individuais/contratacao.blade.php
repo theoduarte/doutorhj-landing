@@ -388,7 +388,7 @@
 				'                                            <input type="text" class="form-control col-sm-8" id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
 				'                                        </div>\n' +
 				'                                    </div>');
-			boxes.innerHTML +=data
+			$('#boxes').append(data);
             $('.box-individual').stop().animate({
                 scrollTop: $('.box-individual')[0].scrollHeight
             }, 800);
