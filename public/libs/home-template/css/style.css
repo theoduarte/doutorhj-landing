@@ -4896,6 +4896,13 @@ footer ul li a:hover {
     height: 100%;
     background-color: #E8F1FF;
 }
+.lp-pessoa-fisica-pagamento header .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.lp-pessoa-fisica-pagamento header .logo-drhj {
+    width: 180px;
+}
 .lp-pessoa-fisica-pagamento .area-form-cont {
     padding: 30px 30px 10px 30px;
 }
