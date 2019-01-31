@@ -35,7 +35,7 @@
     </header>
     <section>
         <div class="container">
-            <form id="msform">
+            <form method="post" id="msform" name="pagamento"  >
                 <!-- progressbar -->
                 <ul id="progressbar">
                     <li class="active"></li>
@@ -46,44 +46,45 @@
                 <fieldset>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="area-form-cont">
-                                <h2 class="fs-title">Cadastre-se para utilizar<br>
-                                    <strong>o Doutor Hoje</strong></h2>
-                                <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control col-sm-8" id="nomeUsuario" placeholder="Seu nome">
-                                </div>
-                                <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8" id="emailUsuario" placeholder="exemplo@email.com.br">
-                                </div>
-                                <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control col-sm-8" id="cpfUsuario" placeholder="000.000.000-00">
-                                </div>
-                                <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control col-sm-8" id="celularUsuario" placeholder="(00) 00000-0000">
-                                </div>
-                            </div>
-                            <div class="area-dependente">
-                                <div id="boxes" class="box-individual">
 
+                                <div class="area-form-cont">
+                                    <h2 class="fs-title">Cadastre-se para utilizar<br>
+                                        <strong>o Doutor Hoje</strong></h2>
+                                    <div class="form-row">
+                                        <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
+                                        <input type="text" class="form-control col-sm-8"    title="Informe um nome correto" required id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
+                                        <input type="email" class="form-control col-sm-8" required id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
+                                        <input type="text" class="form-control col-sm-8" required  id="cpfUsuario"  name="cpfUsuario" placeholder="000.000.000-00">
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
+                                        <input type="text" class="form-control col-sm-8" required  id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
+                                    </div>
                                 </div>
-                                <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    Adicionar Dependente</a>
-                            </div>
-                            <div class="area-btn">
-                                <input type="button" name="next" class="btn btn-blue next action-button" value="Próximo"/>
-                            </div>
+                                <div class="area-dependente">
+                                    <div id="boxes" class="box-individual">
+
+                                    </div>
+                                    <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        Adicionar Dependente</a>
+                                </div>
+                                <div class="area-btn">
+                                    <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
+                                </div>
+
+
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
                                     <p>Pedido</p>
                                     <ul class="items-pedido">
-
-
                                     </ul>
                                 </div>
                                 <div class="codigo-corretor">
@@ -196,34 +197,7 @@
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
                                     <p>Pedido</p>
-                                    <ul>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">2. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
+                                    <ul class="items-pedido">
                                     </ul>
                                 </div>
                             </div>
@@ -259,47 +233,53 @@
 </div>
 @include('flash-message')
 <script>
+    $(function(){
+    	/*global primeiraPaginaArray*/
+
+		var primeiraPaginaArray =[]
+		primeiraPagina = () => {
+
+						var nome = $('#nomeUsuario').val();
+						var email = $('#emailUsuario').val();
+						var cpf = $('#cpfUsuario').val();
+						var celular = $('#celularUsuario').val();
+            if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0){
+				primeiraPaginaArray.length =0
+                let dados = {user:{
+						nome:nome,
+						email:email,
+						cpf:cpf,
+						celular:celular
+					}}
+				primeiraPaginaArray.push(dados)
+				next()
+                console.log(primeiraPaginaArray)
+            }
+		}
+
+	})
+
     $(document).ready(function () {
 
         // MULTI STEP FORM
         var current_fs, next_fs, previous_fs; //fieldsets
         var left, opacity, scale; //fieldset properties which we will animate
         var animating; //flag to prevent quick multi-click glitches
+        var dadosArray = []
+        var dependentes = []
+		$('#msform').submit(function () {
+			  return false;
+		});
 
-        $(".next").click(function () {
-            if (animating) return false;
-            animating = true;
 
-            current_fs = $(this).parent().parent().parent().parent();
-            next_fs = $(this).parent().parent().parent().parent().next();
-
-            //activate next step on progressbar using the index of next_fs
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-            //show the next fieldset
-            next_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function (now, mx) {
-                    //as the opacity of current_fs reduces to 0 - stored in "now"
-                    //1. scale current_fs down to 80%
-                    scale = 1 - (1 - now) * 0.2;
-                    //2. bring next_fs from the right(50%)
-                    left = (now * 50) + "%";
-                    //3. increase opacity of next_fs to 1 as it moves in
-                    opacity = 1 - now;
-                    current_fs.css({'transform': 'scale(' + scale + ')'});
-                    next_fs.css({'left': left, 'opacity': opacity});
-                },
-                duration: 500,
-                complete: function () {
-                    current_fs.hide();
-                    animating = false;
-                },
-                //this comes from the custom easing plugin
-                easing: 'easeOutQuint'
-            });
-        });
+		$("#cpfUsuario").inputmask({
+			mask: ['999.999.999-99'],
+			keepStatic: true
+		});
+		$("#celularUsuario").inputmask({
+			mask: ['(99) 99999-9999'],
+			keepStatic: true
+		});
 
         $(".previous").click(function () {
             if (animating) return false;
@@ -339,6 +319,7 @@
         $(".submit").click(function () {
             return false;
         })
+
         $('.items-pedido').empty().append('<li>\n' +
 			'                                            <div class="row">\n' +
 			'                                                <div class="col-md-8">\n' +
@@ -370,7 +351,7 @@
 				'                                        </div>\n' +
 				'                                        <div class="form-row">\n' +
 				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"   onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
 				'                                        </div>\n' +
 				'                                    </div>');
 			$('#boxes').append(data);
@@ -387,35 +368,107 @@
 
 
 
-		myFunction = (dd) => {
+
+
+		  myFunction = (dd) =>  {
 
             var nome = document.getElementById("nomeDependente"+dd).value;
 			var cpf = document.getElementById("cpfDependente"+dd).value;
 			var cpfLimpo = cpf.replace(/\D+/g, '');
             var plano ="blue";
             var valor = "35,90";
-			 if(nome.length >0 && cpfLimpo.length ==11){
-				 $('.items-pedido').append('<li>\n' +
-					 '                                            <div class="row">\n' +
-					 '                                                <div class="col-md-8">\n' +
-					 '                                                    <p class="nome-produto">2. Dependente '+nome+' Doutor Hoje '+plano+'</p>\n' +
-					 '                                                </div>\n' +
-					 '                                                <div class="col-md-3">\n' +
-					 '                                                    <p class="valor-produto">R$ '+valor+'</p>\n' +
-					 '                                                </div>\n' +
-					 '                                            </div>\n' +
-					 '                                        </li>');
+            var dados = '<li class="cpfDependente'+dd+'">\n' +
+				'   <div class="row  ">\n' +
+				'    <div class="col-md-8">\n' +
+				'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje '+plano+'</p>\n' +
+				'          </div>\n' +
+				'    <div class="col-md-3">\n' +
+				'       <p class="valor-produto">R$ '+valor+'</p>\n' +
+				'   </div>\n' +
+				'   </div>\n' +
+				'   </li>';
+            if(!$('li').hasClass("cpfDependente"+dd)){
+				if(nome.length >0 && cpfLimpo.length ==11){
+					$('.items-pedido').append(dados);
 
-             }else{
+				}
+            }
 
-             }
-
+			  verificarDependentesIguais(cpfLimpo,dd)
         }
+
+        verificarDependentesIguais = (cpf, dd) => {
+
+		  	if($('.box-individual .box-dependente').length >1){
+				$.each($('.box-individual'),function() {
+					var items = $(this).find('.box-dependente') ;
+					var input = items.find("input[name=cpf]").val();
+					if(input.length !=0){
+						var cpfLimpo = input.replace(/\D+/g, '');
+						if(cpfLimpo==cpf){
+							$('#boxes'+dd).remove();
+							$('.cpfDependente'+dd).remove();
+							swal(
+								{
+									title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
+									text: "Não é possivel adicionar dependentes com CPF iguais."
+								}
+							);
+						}
+					}
+
+				})
+            }
+
+
+		}
 		removerDependente = (dd) => {
 			$('#boxes'+dd).remove();
+			$('.cpfDependente'+dd).remove();
 		}
 
+
+		next = () => {
+			if (animating) return false;
+			animating = true;
+
+			current_fs = $(".primeiraPage").parent().parent().parent().parent();
+			next_fs = $(".primeiraPage").parent().parent().parent().parent().next();
+
+			//activate next step on progressbar using the index of next_fs
+			$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+			//show the next fieldset
+			next_fs.show();
+			//hide the current fieldset with style
+			current_fs.animate({opacity: 0}, {
+				step: function (now, mx) {
+					//as the opacity of current_fs reduces to 0 - stored in "now"
+					//1. scale current_fs down to 80%
+					scale = 1 - (1 - now) * 0.2;
+					//2. bring next_fs from the right(50%)
+					left = (now * 50) + "%";
+					//3. increase opacity of next_fs to 1 as it moves in
+					opacity = 1 - now;
+					current_fs.css({'transform': 'scale(' + scale + ')'});
+					next_fs.css({'left': left, 'opacity': opacity});
+				},
+				duration: 500,
+				complete: function () {
+					current_fs.hide();
+					animating = false;
+				},
+				//this comes from the custom easing plugin
+				easing: 'easeOutQuint'
+			});
+        }
+		previous = () => {
+
+        }
+
     });
+
+
 </script>
 </body>
 </html>
