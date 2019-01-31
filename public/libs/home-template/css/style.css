@@ -5053,7 +5053,9 @@ footer ul li a:hover {
     font-size: 11px;
     margin-bottom: 4px;
 }
-
+.lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
+    width: 13px;
+}
 .lp-pessoa-fisica-pagamento .area-resumo-cont {
     width: 100%;
     padding: 30px;
