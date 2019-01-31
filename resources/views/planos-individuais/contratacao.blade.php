@@ -139,23 +139,23 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="area-form-cont">
-                                <h2 class="fs-title">Cadastre-se para utilizar<br>
-                                    <strong>o Doutor Hoje</strong></h2>
-                                <div class="form-group">
-                                    <label for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control" id="nomeUsuario" placeholder="Seu nome">
+                                <h2 class="fs-title">Agora configure o<br>
+                                    <strong>seu pagamento</strong></h2>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
+                                    <input type="text" class="form-control col-sm-8" id="numeroCartao" placeholder="Seu nome">
                                 </div>
-                                <div class="form-group">
-                                    <label for="emailUsuario">Email address</label>
-                                    <input type="email" class="form-control" id="emailUsuario" placeholder="exemplo@email.com.br">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no cartão</label>
+                                    <input type="email" class="form-control col-sm-8" id="nomeCartao" placeholder="exemplo@email.com.br">
                                 </div>
-                                <div class="form-group">
-                                    <label for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control" id="cpfUsuario" placeholder="000.000.000-00">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="mesCartao">Validade</label>
+                                    <input type="text" class="form-control col-sm-8" id="mesCartao" placeholder="000.000.000-00">
                                 </div>
-                                <div class="form-group">
-                                    <label for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control" id="celularUsuario" placeholder="Seu nome">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
+                                    <input type="text" class="form-control col-sm-8" id="cvvCartao" placeholder="Seu nome">
                                 </div>
                             </div>
                             <div class="area-btn">
