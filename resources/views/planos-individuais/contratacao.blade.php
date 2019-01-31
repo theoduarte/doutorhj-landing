@@ -159,7 +159,7 @@
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="aceitaTermos">
-                                    <label class="form-check-label" for="aceitaTermos">
+                                    <label class="form-check-label link-termo-uso" for="aceitaTermos">
                                         Declaro que li e aceito os
                                         <a href="javascript:;" data-toggle="modal" data-target="#modalTermoUso">termos
                                             de uso</a> do Doutor Hoje
@@ -196,7 +196,7 @@
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
-                                    <p>Pedido</p>
+                                    <h3>Pedido</h3>
                                     <ul class="items-pedido">
                                     </ul>
                                 </div>
