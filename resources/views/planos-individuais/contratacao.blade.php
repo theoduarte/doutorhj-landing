@@ -44,8 +44,140 @@
                     <li class="active"></li>
                     <li></li>
                     <li></li>
+                    <li></li>
                 </ul>
                 <!-- fieldsets -->
+                <fieldset>
+                    <div class="tabela-planos">
+                        <div class="area-tabela table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <div class="regras">
+                                            <h3>Escolha o plano<br>
+                                                <strong>perfeito para você</strong></h3>
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="info-valores">
+                                            <p class="nome-plano nm-blue">blue</p>
+                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="valor">
+                                                <small>R$</small>
+                                                35,50
+                                            </p>
+                                            <a href="#contato" class="btn btn-blue">Assinar</a>
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="info-valores">
+                                            <p class="nome-plano nm-black">black</p>
+                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="valor">
+                                                <small>R$</small>
+                                                69,50
+                                            </p>
+                                            <a href="#contato" class="btn btn-black">Assinar</a>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas a partir de:</th>
+                                    <td>
+                                        <span>R$ 29,50</span>
+                                        <p class="obs">apenas no Distrito Federal</p>
+                                    </td>
+                                    <td>
+                                        <span>R$ 29,50</span>
+                                        <p class="obs">apenas no Distrito Federal</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
+                                    <td></td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas
+                                        saudáveis
+                                    </th>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Orientação Médica por Telefone</th>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto em Medicamentos</th>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$
+                                        29,50<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                    </th>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50</th>
+                                    <td></td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                    </th>
+                                    <td></td>
+                                    <td>
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td><a href="#contato" class="btn btn-blue">Assinar o Plano Blue</a></td>
+                                    <td><a href="#contato" class="btn btn-black">Assinar o Plano Black</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
                 <fieldset>
                     <div class="row">
                         <div class="col-md-6">

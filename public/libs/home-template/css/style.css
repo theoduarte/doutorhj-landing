@@ -4943,7 +4943,6 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform .btn-blue {
     width: auto;
-    height: 50px;
     background: #4470B4;
     color: #fff;
     margin-top: 10px;
@@ -4952,7 +4951,6 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform .btn-link {
     width: auto;
-    height: 50px;
     background: #fafafa;
     color: #0070c9;
     margin-top: 10px;
@@ -5118,6 +5116,153 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     margin-top: 30px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela {
+    background-color: #fff;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table {
+    margin-bottom: 60px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th {
+    border-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table td,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table th {
+    padding: 10px 30px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p {
+    color: #2D405A;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p strong {
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras span {
+    color: #666E79;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores {
+    text-align: center;
+    width: 220px;
+    color: #5B5B5B;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .nome-plano {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .nm-blue {
+    color: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .valor {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .valor small {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-black:hover {
+    background: #636060;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .descricao {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td {
+    text-align: center;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td .obs {
+    font-size: 11px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td,
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr th {
+    vertical-align: middle;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .descricao .cobertura {
+    color: #808080;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td {
+    vertical-align: middle;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td img {
+    display: block;
+    width: 18px;
+    margin: 0 auto;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-black:hover {
+    background: #636060;
 }
 
 /*********************************
