@@ -4915,6 +4915,9 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento #msform fieldset:not(:first-of-type) {
     display: none;
 }
+.lp-pessoa-fisica-pagamento #msform label {
+    font-weight: 600;
+}
 .lp-pessoa-fisica-pagamento #msform input,
 #msform textarea {
     padding: 15px;
@@ -5054,7 +5057,7 @@ footer ul li a:hover {
     width: 100%;
     padding: 30px;
     border-radius: 0 12px 12px 0;
-    min-height: 700px;
+    min-height: 100%;
     background: #4470B4 url(../img/l-pf-bg-form.png) repeat;
 }
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido {

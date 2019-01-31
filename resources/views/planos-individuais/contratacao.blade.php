@@ -121,8 +121,15 @@
                                                 </div>
                                             </div>
                                         </li>
-
                                     </ul>
+                                </div>
+                                <div class="codigo-corretor">
+                                    Você comprou com um corretor?
+                                    <div class="form-group">
+                                        <label for="codigoCorretor1">Código do corretor</label>
+                                        <input type="number" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
+                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo se sua compra foi online)</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +284,9 @@
 				'                                        </div>\n' +
 				'                                    </div>');
 			boxes.innerHTML +=data
-
+            $('.box-individual').stop().animate({
+                scrollTop: $('.box-individual')[0].scrollHeight
+            }, 800);
 		});
 
 		removerDependente = (dd) => {
