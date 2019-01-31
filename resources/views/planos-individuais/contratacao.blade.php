@@ -63,14 +63,14 @@
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control col-sm-8" id="celularUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8" id="celularUsuario" placeholder="(00) 00000-0000">
                                 </div>
                             </div>
                             <div class="area-dependente">
                                 <div id="boxes" class="box-individual">
 
                                 </div>
-                                <a id="addbutton" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     Adicionar Dependente</a>
                             </div>
                             <div class="area-btn">
@@ -153,15 +153,19 @@
                                     <input type="text" class="form-control col-sm-2" id="cvvCartao" placeholder="000">
                                 </div>
                             </div>
+
                             <div class="area-btn">
+
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="">
-                                    <label class="form-check-label" for="">
+                                    <input class="form-check-input" type="checkbox" value="" id="aceitaTermos">
+                                    <label class="form-check-label" for="aceitaTermos">
                                         Declaro que li e aceito os
                                         <a href="javascript:;" data-toggle="modal" data-target="#modalTermoUso">termos
                                             de uso</a> do Doutor Hoje
                                     </label>
                                 </div>
+
+
                                 <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
                                 <input type="submit" name="submit" class="btn btn-blue submit action-button" value="Finalizar compra"/>
                                 <input type="button" name="next" class="btn btn-blue next action-button" value="Próximo"/>
@@ -227,7 +231,22 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    Conclusão
+                    <div class="boas-vindas">
+                        <div class="mensagem">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Muito bem!</h3>
+                                    <p>Agora você já pode agendar sua consulta e/ou exame por um preço exclusivo</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="https://www.doutorhoje.com.br" target="_blank">Agende sua 1a consulta</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="imagem">
+
+                        </div>
+                    </div>
                 </fieldset>
             </form>
         </div>

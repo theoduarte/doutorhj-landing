@@ -4955,7 +4955,7 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .fs-title {
     font-size: 28px;
     color: #2D405A;
-    line-height: 120%;
+    line-height: 40px;
     text-align: left;
     font-weight: 300;
     margin-bottom: 40px;
@@ -5039,9 +5039,14 @@ footer ul li a:hover {
     font-size: 12px;
     color: #A21B26;
 }
-.lp-pessoa-fisica-pagamento .area-dependente #addbutton {
+.lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente {
     margin: 24px 0 0 24px;
     display: inline-block;
+    color: #8A9CB4;
+    font-size: 18px;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente i {
+    color: #4470B4;
 }
 .lp-pessoa-fisica-pagamento .box-dependente {
     border-top: 1px solid #dadada;
@@ -5053,7 +5058,9 @@ footer ul li a:hover {
     font-size: 11px;
     margin-bottom: 4px;
 }
-
+.lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
+    width: 13px;
+}
 .lp-pessoa-fisica-pagamento .area-resumo-cont {
     width: 100%;
     padding: 30px;
@@ -5061,11 +5068,16 @@ footer ul li a:hover {
     min-height: 100%;
     background: #4470B4 url(../img/l-pf-bg-form.png) repeat;
 }
-.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido {
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido,
+.lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     width: 100%;
     padding: 30px;
     border-radius:12px;
     background-color: #fff;
+}
+
+.lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
+    margin-top: 30px;
 }
 
 /*********************************
