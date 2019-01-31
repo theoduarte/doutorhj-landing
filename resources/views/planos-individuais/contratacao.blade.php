@@ -33,7 +33,7 @@
 <div class="lp-pessoa-fisica-pagamento">
     <header>
         <div class="container">
-
+            <img class="logo-drhj" src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje">
         </div>
     </header>
     <section>
@@ -232,7 +232,8 @@
     </section>
     {{--<footer class="footer-lp-pf">
         <div class="container">
-
+            <p>Central de Atendimento</p>
+            <p class="numeros">0800 727 3620 / (61) 3221 5350</p>
         </div>
     </footer>--}}
 </div>
