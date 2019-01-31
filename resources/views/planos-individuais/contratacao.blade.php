@@ -81,46 +81,9 @@
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
                                     <p>Pedido</p>
-                                    <ul>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">2. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">3. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
+                                    <ul class="items-pedido">
+
+
                                     </ul>
                                 </div>
                                 <div class="codigo-corretor">
@@ -243,23 +206,11 @@
                                                 </div>
                                             </div>
                                         </li>
+
                                         <li>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <p class="nome-produto">2. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">3. Dependente Doutor Hoje Blue</p>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <p class="valor-produto">R$ 35,50</p>
@@ -369,31 +320,78 @@
         $(".submit").click(function () {
             return false;
         })
+        $('.items-pedido').empty().append('<li>\n' +
+			'                                            <div class="row">\n' +
+			'                                                <div class="col-md-8">\n' +
+			'                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>\n' +
+			'                                                </div>\n' +
+			'                                                <div class="col-md-3">\n' +
+			'                                                    <p class="valor-produto">R$ 35,50</p>\n' +
+			'                                                </div>\n' +
+
+			'                                            </div>\n' +
+			'                                        </li>\n' +
+			'                                        ');
+
+
 
         // ADICIONAR DEPENDENTE
         var addbutton = document.getElementById("addbutton");
         addbutton.addEventListener("click", function () {
             var boxes = document.getElementById("boxes");
             var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
+
 		    var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
 			  '                                          <div class="btn-excluir">\n' +
 			  '                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
 			  '                                                </div> \n' +
 				'                                        <div class="form-row">\n' +
 				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+				'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
 				'                                        </div>\n' +
 				'                                        <div class="form-row">\n' +
 				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8" id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"   onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
 				'                                        </div>\n' +
 				'                                    </div>');
 			$('#boxes').append(data);
             $('.box-individual').stop().animate({
                 scrollTop: $('.box-individual')[0].scrollHeight
             }, 800);
+
+			$("#cpfDependente"+quantidade).inputmask({
+				mask: ['999.999.999-99'],
+				keepStatic: true
+			});
+
 		});
 
+
+
+		myFunction = (dd) => {
+
+            var nome = document.getElementById("nomeDependente"+dd).value;
+			var cpf = document.getElementById("cpfDependente"+dd).value;
+			var cpfLimpo = cpf.replace(/\D+/g, '');
+            var plano ="blue";
+            var valor = "35,90";
+			 if(nome.length >0 && cpfLimpo.length ==11){
+				 $('.items-pedido').append('<li>\n' +
+					 '                                            <div class="row">\n' +
+					 '                                                <div class="col-md-8">\n' +
+					 '                                                    <p class="nome-produto">2. Dependente '+nome+' Doutor Hoje '+plano+'</p>\n' +
+					 '                                                </div>\n' +
+					 '                                                <div class="col-md-3">\n' +
+					 '                                                    <p class="valor-produto">R$ '+valor+'</p>\n' +
+					 '                                                </div>\n' +
+					 '                                            </div>\n' +
+					 '                                        </li>');
+
+             }else{
+
+             }
+
+        }
 		removerDependente = (dd) => {
 			$('#boxes'+dd).remove();
 		}
