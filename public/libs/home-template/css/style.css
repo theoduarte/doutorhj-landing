@@ -4981,7 +4981,7 @@ footer ul li a:hover {
     color: white;
     text-transform: uppercase;
     font-size: 9px;
-    width: 10%;
+    width: 40px;
     float: left;
     position: relative;
 }
@@ -5064,6 +5064,8 @@ footer ul li a:hover {
     border-radius: 3px;
     margin-bottom: 10px;
     width: 100%;
+    height: 51px;
+    margin-right: 10px;
     box-sizing: border-box;
     font-family: montserrat;
     color: #2C3E50;
@@ -5071,6 +5073,10 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
     width: 13px;
+}
+.lp-pessoa-fisica-pagamento #msform .link-termo-uso {
+    font-size: 14px;
+    font-weight: 400;
 }
 .lp-pessoa-fisica-pagamento .area-resumo-cont {
     width: 100%;
