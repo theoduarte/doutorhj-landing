@@ -83,7 +83,7 @@
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
-                                    <p>Pedido</p>
+                                    <h3>Pedido</h3>
                                     <ul class="items-pedido">
                                     </ul>
                                 </div>

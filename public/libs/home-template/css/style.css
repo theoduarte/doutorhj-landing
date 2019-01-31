@@ -5058,6 +5058,17 @@ footer ul li a:hover {
     font-size: 11px;
     margin-bottom: 4px;
 }
+.lp-pessoa-fisica-pagamento #msform select {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
 .lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
     width: 13px;
 }
@@ -5075,7 +5086,23 @@ footer ul li a:hover {
     border-radius:12px;
     background-color: #fff;
 }
-
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul {
+    list-style: none;
+    padding-left: 0;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p {
+    font-size: 16px;
+    color: #687688;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p.valor-produto {
+    font-size: 16px;
+    color: #2D405A;
+    font-weight: 600;
+}
 .lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     margin-top: 30px;
 }
