@@ -5024,11 +5024,23 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .area-dependente {
     padding: 0 6px;
 }
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual {
+    max-height: 200px;
+    overflow: auto;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir {
+    text-align: right;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir a {
+    font-size: 12px;
+    color: #A21B26;
+}
 .lp-pessoa-fisica-pagamento .area-dependente #addbutton {
-    margin-left: 24px;
+    margin: 24px 0 0 24px;
+    display: inline-block;
 }
 .lp-pessoa-fisica-pagamento .box-dependente {
-    background: #f1f1f1;
+    border-top: 1px solid #dadada;
     padding: 0 24px;
     margin-bottom: 10px;
 }

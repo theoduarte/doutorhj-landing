@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="area-dependente">
-                                <div id="boxes">
+                                <div id="boxes" class="box-individual">
 
                                 </div>
                                 <a id="addbutton" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -264,9 +264,8 @@
             var boxes = document.getElementById("boxes");
             var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
 		    var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
-				'                                        <p>Dependente </p>\n' +
-			  '                                          <div >\n' +
-			  '                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>\n' +
+			  '                                          <div class="btn-excluir">\n' +
+			  '                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
 			  '                                                </div> \n' +
 				'                                        <div class="form-row">\n' +
 				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
