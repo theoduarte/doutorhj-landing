@@ -14,8 +14,9 @@ $(function(){
 			primeiraPaginaArray.push({
 				nome:nome,
 				email:email,
-				cpf:cpf,
-				celular:celular
+				cpf:cpf.replace(/\D+/g, ''),
+				celular:celular,
+				plano:plano
 			})
 
 			if(dependentes.length !=0){
@@ -30,28 +31,43 @@ $(function(){
 		next(".prox")
 	})
 	finalizarCompra = () => {
-		console.log(primeiraPaginaArray)
+
 		var numero = $('#numeroCartao').val();
 		var titular = $('#nomeCartao').val();
 		var mes = $('#mesVencimento ').val();
 		var ano = $('#anoVencimento').val();
 		var cvv = $('#cvvCartao').val();
-		var card = {numero, titular, mes, ano , cvv}
+		var card = [{numero, titular, mes, ano , cvv}]
 		efetuarPagamento(primeiraPaginaArray,card )
 
 	}
 
 
 	function efetuarPagamento(usuario, card ){
-		$.ajax({
+		var body ={}
+		if(usuario.length >1){
+			console.log()
+			body ={
+				usuario:usuario[0],
+				cartao:card,
+				dependente:usuario[1]['dependentes']
+			}
+		}else{
+			body ={
+				usuario:usuario[0],
+				cartao:card
+			}
+		}
+
+
+		 	$.ajax({
 			type:'post',
 			dataType:'json',
-			url: '/contratar-plano',
-			data: {
-				usuario:usuario,
-				card:card,
-				'_token': laravel_token
-			},
+			url: url,
+				headers: {
+					"Authorization": key
+				},
+			data: body,
 			timeout: 15000,
 			success: function (result) {
 
@@ -128,10 +144,10 @@ $(function(){
 	$('.items-pedido').empty().append('<li>\n' +
 		'                                            <div class="row">\n' +
 		'                                                <div class="col-md-8">\n' +
-		'                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>\n' +
+		'                                                    <p class="nome-produto">1. Assinatura Doutor '+plano_descricao+'</p>\n' +
 		'                                                </div>\n' +
 		'                                                <div class="col-md-3">\n' +
-		'                                                    <p class="valor-produto">R$ 35,50</p>\n' +
+		'                                                    <p class="valor-produto">R$ '+valor+'</p>\n' +
 		'                                                </div>\n' +
 
 		'                                            </div>\n' +
@@ -180,12 +196,11 @@ $(function(){
 		var nome = document.getElementById("nomeDependente"+dd).value;
 		var cpf = document.getElementById("cpfDependente"+dd).value;
 		var cpfLimpo = cpf.replace(/\D+/g, '');
-		var plano ="blue";
-		var valor = "35,90";
+
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje '+plano+'</p>\n' +
+			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje '+plano_descricao+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
 			'       <p class="valor-produto">R$ '+valor+'</p>\n' +

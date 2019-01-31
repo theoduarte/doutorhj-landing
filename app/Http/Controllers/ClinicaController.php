@@ -32,6 +32,7 @@ use App\CartaoPaciente;
 use App\Paciente;
 use App\Filial;
 use App\Plano;
+use GuzzleHttp\Client;
 use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
@@ -855,15 +856,17 @@ class ClinicaController extends Controller
         return view('planos-individuais.index');
     }
     public function planosContratacao(){
-        return view('planos-individuais.contratacao');
+    	$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
+		if(env('APP_ENV') != 'production') {
+			$to = env('API_URL_HOMOLOG') ;
+		}else{
+			$to = env('API_URL_PROD') ;
+		}
+
+		return view('planos-individuais.contratacao', array('values' => $key, "url" => $to.'gerar-plano-pagamento') );
     }
 
-    public function contratarPlano(Request $request) {
-		$usuario =  CVXRequest::toArray();
 
-
-	 	echo json_encode($usuario);
-	}
     public function confirmaAgendamento(){
         return view('confirmacao');
     }
