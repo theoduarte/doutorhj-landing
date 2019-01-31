@@ -373,6 +373,11 @@
 
 <script>
 	var laravel_token = '{{ csrf_token() }}';
+	var plano ="plan_LDZN8oS7nh90argx";
+	var plano_descricao ="Plano Blue";
+	var valor ="36,50";
+	var key  = '{{ $values }}';
+	var url ='{{ $url }}';
 
 </script>
 </body>
