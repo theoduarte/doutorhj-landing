@@ -4917,6 +4917,7 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform label {
     font-weight: 600;
+    line-height: 20px;
 }
 .lp-pessoa-fisica-pagamento #msform input,
 #msform textarea {

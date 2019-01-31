@@ -128,7 +128,9 @@
                                     <div class="form-group">
                                         <label for="codigoCorretor1">Código do corretor</label>
                                         <input type="number" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
-                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo se sua compra foi online)</small>
+                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo se sua
+                                            compra foi online)
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -143,29 +145,132 @@
                                     <strong>seu pagamento</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
-                                    <input type="text" class="form-control col-sm-8" id="numeroCartao" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8" id="numeroCartao" placeholder="0000 0000 0000 0000">
                                 </div>
                                 <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no cartão</label>
-                                    <input type="email" class="form-control col-sm-8" id="nomeCartao" placeholder="exemplo@email.com.br">
+                                    <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
+                                        cartão</label>
+                                    <input type="email" class="form-control col-sm-8" id="nomeCartao" placeholder="Nome do titular">
                                 </div>
                                 <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="mesCartao">Validade</label>
-                                    <input type="text" class="form-control col-sm-8" id="mesCartao" placeholder="000.000.000-00">
+                                    <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
+                                    <select class="form-control col-sm-2" id="mesVencimento">
+                                        <option>Mês</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                    </select>
+                                    <select class="form-control col-sm-2" id="mesVencimento">
+                                        <option>Ano</option>
+                                        <option>2019</option>
+                                        <option>2020</option>
+                                        <option>2021</option>
+                                        <option>2022</option>
+                                        <option>2023</option>
+                                        <option>2024</option>
+                                        <option>2025</option>
+                                        <option>2026</option>
+                                        <option>2027</option>
+                                        <option>2028</option>
+                                        <option>2029</option>
+                                        <option>2030</option>
+                                    </select>
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
-                                    <input type="text" class="form-control col-sm-8" id="cvvCartao" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-2" id="cvvCartao" placeholder="000">
                                 </div>
                             </div>
                             <div class="area-btn">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="">
+                                    <label class="form-check-label" for="">
+                                        Declaro que li e aceito os
+                                        <a href="javascript:;" data-toggle="modal" data-target="#modalTermoUso">termos
+                                            de uso</a> do Doutor Hoje
+                                    </label>
+                                </div>
                                 <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
                                 <input type="submit" name="submit" class="btn btn-blue submit action-button" value="Finalizar compra"/>
+                                <input type="button" name="next" class="btn btn-blue next action-button" value="Próximo"/>
+                            </div>
+
+                            <div class="modal fade" id="modalTermoUso" tabindex="-1" role="dialog" aria-labelledby="modalTermoUsoTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalTermoUsoTitle">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Fechar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
-                                Resumo 2
+                                <div class="lista-pedido">
+                                    <p>Pedido</p>
+                                    <ul>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p class="valor-produto">R$ 35,50</p>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="nome-produto">2. Dependente Doutor Hoje Blue</p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p class="valor-produto">R$ 35,50</p>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <p class="nome-produto">3. Dependente Doutor Hoje Blue</p>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p class="valor-produto">R$ 35,50</p>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -294,7 +399,6 @@
 		}
 
     });
-
 </script>
 </body>
 </html>
