@@ -5075,7 +5075,18 @@ footer ul li a:hover {
     border-radius:12px;
     background-color: #fff;
 }
-
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul {
+    list-style: none;
+    padding-left: 0;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p {
+    font-size: 16px;
+    color: #687688;
+}
 .lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     margin-top: 30px;
 }
