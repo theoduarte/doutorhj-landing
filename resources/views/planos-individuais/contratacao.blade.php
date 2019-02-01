@@ -47,7 +47,7 @@
                     <li></li>
                 </ul>
                 <!-- fieldsets -->
-              <!--  <fieldset>
+              <fieldset>
                     <div class="tabela-planos">
                         <div class="area-tabela table-responsive">
                             <table class="table table-bordered">
@@ -67,7 +67,6 @@
                                                 <small>R$</small>
                                                 35,50
                                             </p>
-                                            <a href="#contato" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
                                         </div>
                                     </th>
                                     <th scope="col">
@@ -78,7 +77,6 @@
                                                 <small>R$</small>
                                                 69,50
                                             </p>
-                                            <a href="#contato" class="btn btn-black">Assinar</a>
                                         </div>
                                     </th>
                                 </tr>
@@ -170,14 +168,14 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
-                                    <td><a href="#contato" class="btn btn-blue">Assinar o Plano Blue</a></td>
-                                    <td><a href="#contato" class="btn btn-black">Assinar o Plano Black</a></td>
+                                    <td><a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a></td>
+                                    <td><a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </fieldset> -->
+                </fieldset>
 
                 <fieldset>
                     <div class="row">
@@ -211,10 +209,15 @@
                                         Adicionar Dependente</a>
                                 </div>
                                 <div class="area-btn">
-                                    <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
+                                    <div>
+                                        <div>
+                                            <div>
+                                                <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
+                                                <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
@@ -303,11 +306,15 @@
                                             de uso</a> do Doutor Hoje
                                     </label>
                                 </div>
-
-
-                                <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                <input type="submit" name="submit" class="btn btn-blue submit action-button  " onclick="finalizarCompra()" value="Finalizar compra"/>
-                                <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/>
+                                <div>
+                                    <div>
+                                        <div>
+                                            <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
+                                            <input type="submit" name="submit" class="btn btn-blue submit action-button  " onclick="finalizarCompra()" value="Finalizar compra"/>
+                                            <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="modal fade" id="modalTermoUso" tabindex="-1" role="dialog" aria-labelledby="modalTermoUsoTitle" aria-hidden="true">
