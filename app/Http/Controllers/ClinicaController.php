@@ -47,6 +47,16 @@ class ClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	function __construct() {
+		if(env('APP_ENV') != 'production') {
+			$to = env('API_URL_HOMOLOG') ;
+		}else{
+			$to = env('API_URL_PROD') ;
+		}
+		$this->url_api = $to;
+
+	}
+
 
     public function cadastroAtivado()
     {
@@ -860,7 +870,7 @@ class ClinicaController extends Controller
 		try{
 			$client = new Client(['timeout'  => 1500,]);
 
-			$response = $client->request('get', 'http://192.168.1.87:8080/api/v1/listar-plano', [
+			$response = $client->request('get', $this->url_api.'listar-plano', [
 				'headers' => [
 					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
 				],
@@ -915,12 +925,7 @@ class ClinicaController extends Controller
 
 		$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
 
-		if(env('APP_ENV') != 'production') {
-			$to = env('API_URL_HOMOLOG') ;
-		}else{
-			$to = env('API_URL_PROD') ;
-		}
-		$paths = array('values' => $key, "url" => $to.'gerar-plano-pagamento', "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
+		$paths = array('values' => $key, "url" => $this->url_api.'gerar-plano-pagamento', "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
 		return view('planos-individuais.contratacao', $paths);
     }
 
@@ -958,19 +963,14 @@ class ClinicaController extends Controller
 			$client = new Client(['timeout'  => 1500,]);
 
 
-			if(env('APP_ENV') != 'production') {
-				$to = env('API_URL_HOMOLOG') ;
-			}else{
-				$to = env('API_URL_PROD') ;
-			}
 
-			$resp = $client->request('POST', 'http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
+
+			$resp = $client->request('POST',$this->url_api.'gerar-plano-pagamento', [
 				'headers' => [
 					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
 				],
 				'form_params' =>  ($form)
 			]);
-			$response = new Response();
 
 			return response()->json([
 				'message' => 'Pagamento realizado com sucesso!'
