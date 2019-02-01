@@ -27,7 +27,15 @@
     <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
     <script src="/js/plano.js"></script>
     <title>Planos Individuais - Doutor Hoje</title>
+    <style>
+        .ocult-color{
+            background: grey;
 
+        }
+        .ocult-color p {
+            color: rgba(176, 176, 176, 0.99) !important;
+        }
+    </style>
 </head>
 <body>
 <div class="lp-pessoa-fisica-pagamento">
@@ -36,6 +44,7 @@
             <img class="logo-drhj" src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje">
         </div>
     </header>
+
     <section>
         <div class="container">
             <form method="post" id="msform" name="pagamento"  >
@@ -46,6 +55,7 @@
                     <li></li>
                     <li></li>
                 </ul>
+
                 <!-- fieldsets -->
               <fieldset>
                     <div class="tabela-planos">
@@ -59,23 +69,22 @@
                                                 <strong>perfeito para você</strong></h3>
                                         </div>
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col " class="blue-style-ocult">
                                         <div class="info-valores">
-                                            <p class="nome-plano nm-blue">blue</p>
+                                            <p class="nome-plano nm-blue"></p>
                                             <p class="apoio">consultas a partir de:</p>
-                                            <p class="valor">
-                                                <small>R$</small>
-                                                35,50
+                                            <p class="valor val-blue">
+
                                             </p>
                                         </div>
                                     </th>
-                                    <th scope="col">
+
+                                    <th scope="col" class="black-style-ocult">
                                         <div class="info-valores">
-                                            <p class="nome-plano nm-black">black</p>
+                                            <p class="nome-plano nm-black"></p>
                                             <p class="apoio">consultas a partir de:</p>
-                                            <p class="valor">
-                                                <small>R$</small>
-                                                69,50
+                                            <p class="valor val-black">
+
                                             </p>
                                         </div>
                                     </th>
@@ -84,7 +93,7 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" class="descricao">Consultas a partir de:</th>
-                                    <td>
+                                    <td >
                                         <span>R$ 29,50</span>
                                         <p class="obs">apenas no Distrito Federal</p>
                                     </td>
@@ -381,11 +390,17 @@
 
 <script>
 	var laravel_token = '{{ csrf_token() }}';
-	var plano ="plan_LDZN8oS7nh90argx";
+	var plano =  '{{ $plano }}';
+    var id= '{{ $idplano }}';
+    var details = '{{ $detalhes }}';
+	var all = '{{ $all }}';
+
+
 	var plano_descricao ="Plano Blue";
 	var valor ="36,50";
 	var key  = '{{ $values }}';
 	var url ='{{ $url }}';
+
 
 </script>
 </body>

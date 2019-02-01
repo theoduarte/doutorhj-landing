@@ -27,7 +27,7 @@ Route::get('payment/failed/{hash}', 'PaymentController@failedPayment');
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
 Route::get('planos-individuais', 'ClinicaController@planos')->name('planos-individuais');
-Route::get('planos-individuais/contratar/{plano}/{identificador}/{details}', 'ClinicaController@planosContratacao')->name('contratacao');
+Route::get('planos-individuais/contratar/{plano}/{identificador}/{details}/{all}', 'ClinicaController@planosContratacao')->name('contratacao');
 Route::post('contratar-plano', 'ClinicaController@contratarPlano')->name('contratar-plano');
 
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');

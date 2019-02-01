@@ -2,8 +2,38 @@
 $(function(){
 
 
+	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
+	var detalhes =  JSON.parse(atob(details))
+	var alls =  JSON.parse(atob(all))
+	console.log(detalhes)
+	// carrega indices
+	alls.map((val) => {
+		if(val.plano =="black"){
+			preencherDados(  ".nm-black", ".val-black", ".assinar-black", val.plano, val.id, val.valor);
+		}
+		if(val.plano =="blue"){
+			preencherDados( ".nm-blue", ".val-blue", ".assinar-blue", val.plano, val.id, val.valor);
 
+		}
+	})
 
+	if(detalhes.plano =="blue"){
+		$('.blue-style-ocult').removeClass('ocult-color')
+		$('.black-style-ocult').addClass('ocult-color')
+	}
+
+	if(detalhes.plano =="black"){
+		$('.blue-style-ocult').addClass('ocult-color')
+		$('.black-style-ocult').removeClass('ocult-color')
+	}
+
+	function preencherDados( classeNome, classeValor, classeAssinar, plano, id, valor) {
+
+		$(classeNome).empty().append('Plano '+plano.charAt(0).toUpperCase() + plano.slice(1)+'')
+		$(classeValor).empty().append(' <small>R$</small> '+ (valor)+'')
+	}
+
+	// verificar plano selecionado
 
 	var dependentes = []
 	var primeiraPaginaArray =[]
@@ -31,6 +61,7 @@ $(function(){
 			next(".primeiraPage")
 		}
 	}
+
 
 	$('.prox').click(function() {
 		next(".prox")
@@ -149,10 +180,10 @@ $(function(){
 	$('.items-pedido').empty().append('<li>\n' +
 		'                                            <div class="row">\n' +
 		'                                                <div class="col-md-8">\n' +
-		'                                                    <p class="nome-produto">1. Assinatura Doutor '+plano_descricao+'</p>\n' +
+		'                                                    <p class="nome-produto">1. Assinatura Doutor Plano '+plano+'</p>\n' +
 		'                                                </div>\n' +
 		'                                                <div class="col-md-3">\n' +
-		'                                                    <p class="valor-produto">R$ '+valor+'</p>\n' +
+		'                                                    <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
 		'                                                </div>\n' +
 
 		'                                            </div>\n' +
