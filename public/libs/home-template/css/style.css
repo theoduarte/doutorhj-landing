@@ -4893,7 +4893,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica-pagamento {
-    height: 100%;
+    height: auto;
     background-color: #E8F1FF;
 }
 .lp-pessoa-fisica-pagamento header .container {
@@ -4908,7 +4908,9 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform {
     width: 100%;
-    margin: 50px auto;
+    height: 900px;
+    padding-bottom: 30px;
+    margin: 30px auto 0 auto;
     position: relative;
 }
 .lp-pessoa-fisica-pagamento #msform fieldset {
@@ -5123,7 +5125,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table {
-    margin-bottom: 60px;
+    margin-bottom: 0;
 }
 
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th {
