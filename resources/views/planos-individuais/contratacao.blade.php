@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -38,16 +37,14 @@
     </header>
     <section>
         <div class="container">
-            <form method="post" id="msform" name="pagamento"  >
-                <!-- progressbar -->
+            <form method="post" id="msform" name="pagamento">
                 <ul id="progressbar">
                     <li class="active"></li>
                     <li></li>
                     <li></li>
                     <li></li>
                 </ul>
-                <!-- fieldsets -->
-              <fieldset>
+                <fieldset>
                     <div class="tabela-planos">
                         <div class="area-tabela table-responsive">
                             <table class="table table-bordered">
@@ -108,7 +105,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas
+                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de
+                                        práticas
                                         saudáveis
                                     </th>
                                     <td>
@@ -137,10 +135,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$
+                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina
+                                        Integrada R$
                                         29,50<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
-                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
+                                            Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
+                                            Fonoaudiologia)</p>
                                     </th>
                                     <td>
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
@@ -150,7 +151,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50</th>
+                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$
+                                        29,50
+                                    </th>
                                     <td></td>
                                     <td>
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
@@ -158,8 +161,10 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
-                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
+                                            Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
+                                            Fonoaudiologia)</p>
                                     </th>
                                     <td></td>
                                     <td>
@@ -168,63 +173,65 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
-                                    <td><a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a></td>
-                                    <td><a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a></td>
+                                    <td>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <div class="col-md-6">
 
-                                <div class="area-form-cont">
-                                    <h2 class="fs-title">Cadastre-se para utilizar<br>
-                                        <strong>o Doutor Hoje</strong></h2>
-                                    <div class="form-row">
-                                        <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                        <input type="text" class="form-control col-sm-8"    title="Informe um nome correto" required id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
-                                    </div>
-                                    <div class="form-row">
-                                        <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                        <input type="email" class="form-control col-sm-8" required id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
-                                    </div>
-                                    <div class="form-row">
-                                        <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
-                                        <input type="text" class="form-control col-sm-8" required  id="cpfUsuario"  name="cpfUsuario" placeholder="000.000.000-00">
-                                    </div>
-                                    <div class="form-row">
-                                        <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                        <input type="text" class="form-control col-sm-8" required  id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
-                                    </div>
+                            <div class="area-form-cont">
+                                <h2 class="fs-title">Cadastre-se para utilizar<br>
+                                    <strong>o Doutor Hoje</strong></h2>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
+                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto" required id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
-                                <div class="area-dependente">
-                                    <div id="boxes" class="box-individual">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
+                                    <input type="email" class="form-control col-sm-8" required id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                </div>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
+                                    <input type="text" class="form-control col-sm-8" required id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
+                                </div>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
+                                    <input type="text" class="form-control col-sm-8" required id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
+                                </div>
+                            </div>
+                            <div class="area-dependente">
+                                <div id="boxes" class="box-individual">
 
-                                    </div>
-                                    <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                        Adicionar Dependente</a>
                                 </div>
-                                <div class="area-btn">
+                                <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    Adicionar Dependente</a>
+                            </div>
+                            <div class="area-btn">
+                                <div>
                                     <div>
                                         <div>
-                                            <div>
-                                                <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                                <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
-                                            </div>
+                                            <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
+                                            <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
                                     <h3>Pedido</h3>
-                                    <ul class="items-pedido">
-                                    </ul>
+                                    <ul class="items-pedido"></ul>
                                 </div>
                                 <div class="codigo-corretor">
                                     Você comprou com um corretor?
@@ -248,16 +255,16 @@
                                     <strong>seu pagamento</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
-                                       <input type="text" class="form-control col-sm-8 input-numero-cartao cvx-checkout_card_number" id="numeroCartao" placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16">
+                                    <input type="text" class="form-control col-sm-8 input-numero-cartao cvx-checkout_card_number" id="numeroCartao" placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
                                         cartão</label>
-                                    <input type="text" class="form-control col-sm-8" id="nomeCartao"   name="titular"  placeholder="Nome do titular" maxlength="30">
+                                    <input type="text" class="form-control col-sm-8" id="nomeCartao" name="titular" placeholder="Nome do titular" maxlength="30">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
-                                    <select class="form-control col-sm-2"  name="mes" required  id="mesVencimento">
+                                    <select class="form-control col-sm-2" name="mes" required id="mesVencimento">
                                         <option selected>Mês</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -272,7 +279,7 @@
                                         <option>11</option>
                                         <option>12</option>
                                     </select>
-                                    <select class="form-control col-sm-2" name="ano"  required  id="anoVencimento">
+                                    <select class="form-control col-sm-2" name="ano" required id="anoVencimento">
                                         <option selected>Ano</option>
                                         <option>2019</option>
                                         <option>2020</option>
@@ -290,7 +297,7 @@
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
-                                    <input type="text" class="form-control col-sm-2" name="codigo"  required  id="cvvCartao" placeholder="000" maxlength="3">
+                                    <input type="text" class="form-control col-sm-2" name="codigo" required id="cvvCartao" placeholder="000" maxlength="3">
                                 </div>
                             </div>
 
@@ -342,8 +349,7 @@
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
                                     <h3>Pedido</h3>
-                                    <ul class="items-pedido">
-                                    </ul>
+                                    <ul class="items-pedido"></ul>
                                 </div>
                             </div>
                         </div>
@@ -380,12 +386,12 @@
 @include('flash-message')
 
 <script>
-	var laravel_token = '{{ csrf_token() }}';
-	var plano ="plan_LDZN8oS7nh90argx";
-	var plano_descricao ="Plano Blue";
-	var valor ="36,50";
-	var key  = '{{ $values }}';
-	var url ='{{ $url }}';
+    var laravel_token = '{{ csrf_token() }}';
+    var plano = "plan_LDZN8oS7nh90argx";
+    var plano_descricao = "Plano Blue";
+    var valor = "36,50";
+    var key = '{{ $values }}';
+    var url = '{{ $url }}';
 
 </script>
 </body>
