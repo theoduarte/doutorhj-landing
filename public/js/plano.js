@@ -97,7 +97,7 @@ $(function(){
 			},
 			timeout: 15000,
 			success: function (result) {
-				next(".prox")
+				next(".finalizarCompra")
 				$('#msform').trigger("reset");
 				$('#progressbar').hide();
 

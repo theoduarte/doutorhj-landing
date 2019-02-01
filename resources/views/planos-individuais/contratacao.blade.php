@@ -310,7 +310,7 @@
                                     <div>
                                         <div>
                                             <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                            <input type="button" name="submit" class="btn btn-blue submit action-button  finalizarCompra"   value="Finalizar compra"/>
+                                            <input type="button" name="submit" class="btn btn-blue submit action-button prox finalizarCompra"   value="Finalizar compra"/>
                                            <!--  <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/> -->
                                         </div>
                                     </div>
