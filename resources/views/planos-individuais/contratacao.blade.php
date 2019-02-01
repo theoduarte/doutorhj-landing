@@ -105,9 +105,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de
-                                        práticas
-                                        saudáveis
+                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas saudáveis
                                     </th>
                                     <td>
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
@@ -135,13 +133,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina
-                                        Integrada R$
-                                        29,50<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
-                                            Ginecologia,
-                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
-                                            Fonoaudiologia)</p>
+                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                                     </th>
                                     <td>
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
@@ -151,8 +144,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$
-                                        29,50
+                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50
                                     </th>
                                     <td></td>
                                     <td>
@@ -161,10 +153,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
-                                            Ginecologia,
-                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
-                                            Fonoaudiologia)</p>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                                     </th>
                                     <td></td>
                                     <td>
@@ -255,7 +244,7 @@
                                     <strong>seu pagamento</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
-                                    <input type="text" class="form-control col-sm-8 input-numero-cartao cvx-checkout_card_number" id="numeroCartao" placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16">
+                                    <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao" placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
@@ -300,14 +289,10 @@
                                     <input type="text" class="form-control col-sm-2" name="codigo" required id="cvvCartao" placeholder="000" maxlength="3">
                                 </div>
                             </div>
-
                             <div class="area-btn">
-
                                 <div class="form-check">
-
                                     <input class="form-check-input" type="checkbox" value="" id="aceitaTermos">
                                     <label class="form-check-label link-termo-uso" for="aceitaTermos">
-
                                         Declaro que li e aceito os
                                         <a href="javascript:;" data-toggle="modal" data-target="#modalTermoUso">termos
                                             de uso</a> do Doutor Hoje
@@ -323,7 +308,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="modal fade" id="modalTermoUso" tabindex="-1" role="dialog" aria-labelledby="modalTermoUsoTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -359,17 +343,21 @@
                     <div class="boas-vindas">
                         <div class="mensagem">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <h3>Muito bem!</h3>
-                                    <p>Agora você já pode agendar sua consulta e/ou exame por um preço exclusivo</p>
+                                    <p>Agora você já pode agendar sua<br>
+                                        consulta e/ou exame por um<br>
+                                        preço exclusivo</p>
                                 </div>
-                                <div class="col-md-6">
-                                    <a href="https://www.doutorhoje.com.br" target="_blank">Agende sua 1a consulta</a>
+                                <div class="col-md-4">
+                                    <div class="area-btn">
+                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende sua 1a consulta</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="imagem">
-
+                            <img src="/libs/home-template/img/l-pf-pagamento-bg.jpg" alt="Pessoas no computador">
                         </div>
                     </div>
                 </fieldset>
