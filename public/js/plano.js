@@ -17,6 +17,7 @@ $(function(){
 		}
 	})
 
+	// verfica qual plano selecionado e adiciona a classe que escurece a coluna
 	if(detalhes.plano =="blue"){
 		$('.blue-style-ocult').removeClass('ocult-color')
 		$('.black-style-ocult').addClass('ocult-color')
@@ -26,6 +27,7 @@ $(function(){
 		$('.blue-style-ocult').addClass('ocult-color')
 		$('.black-style-ocult').removeClass('ocult-color')
 	}
+
 
 	function preencherDados( classeNome, classeValor, classeAssinar, plano, id, valor) {
 
