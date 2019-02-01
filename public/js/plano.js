@@ -5,7 +5,7 @@ $(function(){
 	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
-	console.log(detalhes)
+
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -17,6 +17,7 @@ $(function(){
 		}
 	})
 
+	// verfica qual plano selecionado e adiciona a classe que escurece a coluna
 	if(detalhes.plano =="blue"){
 		$('.blue-style-ocult').removeClass('ocult-color')
 		$('.black-style-ocult').addClass('ocult-color')
@@ -26,6 +27,7 @@ $(function(){
 		$('.blue-style-ocult').addClass('ocult-color')
 		$('.black-style-ocult').removeClass('ocult-color')
 	}
+
 
 	function preencherDados( classeNome, classeValor, classeAssinar, plano, id, valor) {
 
@@ -51,7 +53,7 @@ $(function(){
 				email:email,
 				cpf:cpf.replace(/\D+/g, ''),
 				celular:celular.replace('-',''),
-				plano:plano
+				plano:detalhes.id
 			})
 
 			if(dependentes.length !=0){
@@ -70,8 +72,9 @@ $(function(){
 
 		next(''+classe+'')
 	}
-	finalizarCompra = () => {
 
+	$('.finalizarCompra').click(function(e) {
+		e.preventDefault();
 		var numero = $('#numeroCartao').val();
 		var titular = $('#nomeCartao').val();
 		var mes = $('#mesVencimento ').val();
@@ -79,13 +82,11 @@ $(function(){
 		var cvv = $('#cvvCartao').val();
 		var card = [{numero, titular, mes, ano , cvv}]
 		efetuarPagamento(primeiraPaginaArray,card )
-
-	}
-
+	})
 
 	function efetuarPagamento(usuario, card ){
 
-		 	$.ajax({
+		  	$.ajax({
 			type:'post',
 			dataType:'json',
 			url: '/contratar-plano',
@@ -96,7 +97,9 @@ $(function(){
 			},
 			timeout: 15000,
 			success: function (result) {
-
+				$('#msform').trigger("reset");
+				$('#progressbar').hide();
+				next(".prox")
 				swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
 						text: result.message
@@ -239,10 +242,10 @@ $(function(){
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje '+plano_descricao+'</p>\n' +
+			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
-			'       <p class="valor-produto">R$ '+valor+'</p>\n' +
+			'       <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
 			'   </div>\n' +
 			'   </div>\n' +
 			'   </li>';
