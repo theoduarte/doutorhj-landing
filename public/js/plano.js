@@ -98,6 +98,7 @@ $(function(){
 			timeout: 15000,
 			success: function (result) {
 				$('#msform').trigger("reset");
+				$('#progressbar').hide();
 				next(".prox")
 				swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
