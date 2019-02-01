@@ -30,6 +30,10 @@ $(function(){
 	$('.prox').click(function() {
 		next(".prox")
 	})
+	planosAdesao = ({dd, classe}) => {
+
+		next(''+classe+'')
+	}
 	finalizarCompra = () => {
 
 		var numero = $('#numeroCartao').val();
@@ -45,38 +49,49 @@ $(function(){
 
 	function efetuarPagamento(usuario, card ){
 		var body ={}
-		if(usuario.length >1){
+	/*	if(usuario.length >1){
 			console.log()
 			body ={
 				usuario:usuario[0],
 				cartao:card,
-				dependente:usuario[1]['dependentes']
+				dependente:usuario[1]['dependentes'],
+				'_token': laravel_token
 			}
 		}else{
 			body ={
 				usuario:usuario[0],
-				cartao:card
+				cartao:card,
+				'_token': laravel_token
 			}
 		}
-
+*/
 
 		 	$.ajax({
 			type:'post',
 			dataType:'json',
-			url: url,
-				headers: {
-					"Authorization": key
-				},
-			data: body,
+			url: '/contratar-plano',
+
+			data: {
+				usuario:usuario,
+				card:card,
+				'_token': laravel_token
+			},
 			timeout: 15000,
 			success: function (result) {
 
-				console.log(result)
+				console.log(result.respo)
 			},
 			error: function (result) {
 
+				var res = result.responseJSON.message.split("response:");
+				var error =JSON.parse(res[1]);
 
- 					console.log(result)
+				swal(
+					{
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
+						text: error.message+' '+error.errors
+					}
+				);
 			}
 		});
 	}

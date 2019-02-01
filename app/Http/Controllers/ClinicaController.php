@@ -36,7 +36,7 @@ use GuzzleHttp\Client;
 use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
-
+use GuzzleHttp\Psr7\Response;
 class ClinicaController extends Controller
 {
     /**
@@ -866,7 +866,59 @@ class ClinicaController extends Controller
 		return view('planos-individuais.contratacao', array('values' => $key, "url" => $to.'gerar-plano-pagamento') );
     }
 
+    public function contratarPlano() {
+		$req =  CVXRequest::toArray();
+		 $usuario = $req['usuario'];;
+		$card = $req['card'];
+		$arrayDependentes =[];
+		$form ="";
 
+		if(count($usuario)>1){
+			$usr = ($usuario[0]);
+			$dependente = $usuario[1]['dependentes'];
+
+			foreach ($dependente as $depent){
+				array_push( $arrayDependentes, json_encode([
+					"nome" =>$depent['nome'],
+					"cpf" =>$depent['cpf']
+				]));
+			}
+			$form = [
+				'dependente' => $arrayDependentes[0],
+				'cartao' =>$card,
+				'usuario' => $usuario
+
+			];
+		}else{
+			$form = [
+				'cartao' =>json_encode($card),
+				'usuario' => json_encode($usuario)
+			];
+		}
+
+		 $client = new Client(['timeout'  => 1500,]);
+
+
+					if(env('APP_ENV') != 'production') {
+						$to = env('API_URL_HOMOLOG') ;
+					}else{
+						$to = env('API_URL_PROD') ;
+					}
+
+					$resp = $client->request('POST', 'http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
+						 'headers' => [
+							 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+						 ],
+						'form_params' =>  ($form)
+					]);
+					$response = new Response();
+					$body = $response->getBody();
+					$body->seek(0);
+
+				echo 	$body->read(1024);
+
+
+	}
     public function confirmaAgendamento(){
         return view('confirmacao');
     }

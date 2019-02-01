@@ -47,7 +47,7 @@
                     <li></li>
                 </ul>
                 <!-- fieldsets -->
-                <fieldset>
+              <!--  <fieldset>
                     <div class="tabela-planos">
                         <div class="area-tabela table-responsive">
                             <table class="table table-bordered">
@@ -67,7 +67,7 @@
                                                 <small>R$</small>
                                                 35,50
                                             </p>
-                                            <a href="#contato" class="btn btn-blue">Assinar</a>
+                                            <a href="#contato" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
                                         </div>
                                     </th>
                                     <th scope="col">
@@ -177,7 +177,8 @@
                             </table>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset> -->
+
                 <fieldset>
                     <div class="row">
                         <div class="col-md-6">
