@@ -37,6 +37,9 @@ use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 use GuzzleHttp\Psr7\Response;
+
+use App\Http\Requests ;
+
 class ClinicaController extends Controller
 {
     /**
@@ -903,15 +906,22 @@ class ClinicaController extends Controller
 
         return view('planos-individuais.index',["planos" =>  ($planos)]);
     }
-    public function planosContratacao(){
-    	$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
+    public function planosContratacao( $plano, $identificador, $details, $all){
+
+		$plano = explode("=", $plano);
+		$identificador =explode("=", $identificador);
+		$details =explode("=", $details);
+		$all =explode("=", $all);
+
+		$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
+
 		if(env('APP_ENV') != 'production') {
 			$to = env('API_URL_HOMOLOG') ;
 		}else{
 			$to = env('API_URL_PROD') ;
 		}
-
-		return view('planos-individuais.contratacao', array('values' => $key, "url" => $to.'gerar-plano-pagamento') );
+		$paths = array('values' => $key, "url" => $to.'gerar-plano-pagamento', "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
+		return view('planos-individuais.contratacao', $paths);
     }
 
     public function contratarPlano() {
