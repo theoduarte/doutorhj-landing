@@ -1,5 +1,10 @@
+/*global primeiraPaginaArray dependentes global Base64 */
 $(function(){
-	/*global primeiraPaginaArray dependentes*/
+
+
+
+
+
 	var dependentes = []
 	var primeiraPaginaArray =[]
 	primeiraPagina = () => {
@@ -158,34 +163,37 @@ $(function(){
 
 	// ADICIONAR DEPENDENTE
 	var addbutton = document.getElementById("addbutton");
-	addbutton.addEventListener("click", function () {
-		var boxes = document.getElementById("boxes");
-		var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
+	if(addbutton != null) {
+		addbutton.addEventListener("click", function () {
+			var boxes = document.getElementById("boxes");
+			var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
 
-		var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
-			'                                          <div class="btn-excluir">\n' +
-			'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
-			'                                                </div> \n' +
-			'                                        <div class="form-row">\n' +
-			'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-			'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
-			'                                        </div>\n' +
-			'                                        <div class="form-row">\n' +
-			'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-			'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
-			'                                        </div>\n' +
-			'                                    </div>');
-		$('#boxes').append(data);
-		$('.box-individual').stop().animate({
-			scrollTop: $('.box-individual')[0].scrollHeight
-		}, 800);
+			var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
+				'                                          <div class="btn-excluir">\n' +
+				'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
+				'                                                </div> \n' +
+				'                                        <div class="form-row">\n' +
+				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
+				'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+				'                                        </div>\n' +
+				'                                        <div class="form-row">\n' +
+				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
+				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+				'                                        </div>\n' +
+				'                                    </div>');
+			$('#boxes').append(data);
+			$('.box-individual').stop().animate({
+				scrollTop: $('.box-individual')[0].scrollHeight
+			}, 800);
 
-		$("#cpfDependente"+quantidade).inputmask({
-			mask: ['999.999.999-99'],
-			keepStatic: true
+			$("#cpfDependente"+quantidade).inputmask({
+				mask: ['999.999.999-99'],
+				keepStatic: true
+			});
+
 		});
 
-	});
+	}
 
 
 
@@ -332,5 +340,7 @@ $(function(){
 			}
 		}
 	}
+
+
 
 })

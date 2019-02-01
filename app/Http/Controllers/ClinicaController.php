@@ -853,7 +853,55 @@ class ClinicaController extends Controller
         return view('mensagems.contato');
     }
     public function planos(){
-        return view('planos-individuais.index');
+
+		try{
+			$client = new Client(['timeout'  => 1500,]);
+
+			$response = $client->request('get', 'http://192.168.1.87:8080/api/v1/listar-plano', [
+				'headers' => [
+					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+				],
+			]);
+
+			$data=$response->getBody()->read(2000000) ;
+
+
+		}catch (\Exception $ee){}
+
+		$response = json_decode($data, true);
+		$planos =[];
+		foreach ($response as  $dd){
+
+			foreach ($dd['data'] as $datum) {
+
+				if($datum['name'] == "blue"  ){
+
+					$pp = [
+						"nome" => $datum['name'],
+						"id" =>$datum['id'],
+						"price" =>$datum['minimum_price']
+					];
+					array_push($planos,$pp);
+
+
+				}
+
+
+				if( $datum['name'] =="black"){
+					$pp = [
+						"nome" => $datum['name'],
+						"id" =>$datum['id'],
+						"price" => $datum['minimum_price']
+					];
+					array_push($planos,$pp);
+				}
+			 }
+
+		}
+
+
+
+        return view('planos-individuais.index',["planos" =>  ($planos)]);
     }
     public function planosContratacao(){
     	$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
