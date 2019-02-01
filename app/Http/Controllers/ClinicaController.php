@@ -896,26 +896,33 @@ class ClinicaController extends Controller
 			];
 		}
 
-		 $client = new Client(['timeout'  => 1500,]);
+		try{
+			$client = new Client(['timeout'  => 1500,]);
 
 
-					if(env('APP_ENV') != 'production') {
-						$to = env('API_URL_HOMOLOG') ;
-					}else{
-						$to = env('API_URL_PROD') ;
-					}
+			if(env('APP_ENV') != 'production') {
+				$to = env('API_URL_HOMOLOG') ;
+			}else{
+				$to = env('API_URL_PROD') ;
+			}
 
-					$resp = $client->request('POST', 'http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
-						 'headers' => [
-							 'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
-						 ],
-						'form_params' =>  ($form)
-					]);
-					$response = new Response();
-					$body = $response->getBody();
-					$body->seek(0);
+			$resp = $client->request('POST', 'http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
+				'headers' => [
+					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+				],
+				'form_params' =>  ($form)
+			]);
+			$response = new Response();
 
-				echo 	$body->read(1024);
+			return response()->json([
+				'message' => 'Pagamento realizado com sucesso!'
+			], 200);
+		}catch (\Exception $ee){
+			return response()->json([
+				'message' => 'Ocorreou um error ao processar o pagamento!',
+				'details' =>$ee->getMessage()
+			], 500);
+		}
 
 
 	}

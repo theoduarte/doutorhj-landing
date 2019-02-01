@@ -15,7 +15,7 @@ $(function(){
 				nome:nome,
 				email:email,
 				cpf:cpf.replace(/\D+/g, ''),
-				celular:celular,
+				celular:celular.replace('-',''),
 				plano:plano
 			})
 
@@ -48,29 +48,11 @@ $(function(){
 
 
 	function efetuarPagamento(usuario, card ){
-		var body ={}
-	/*	if(usuario.length >1){
-			console.log()
-			body ={
-				usuario:usuario[0],
-				cartao:card,
-				dependente:usuario[1]['dependentes'],
-				'_token': laravel_token
-			}
-		}else{
-			body ={
-				usuario:usuario[0],
-				cartao:card,
-				'_token': laravel_token
-			}
-		}
-*/
 
 		 	$.ajax({
 			type:'post',
 			dataType:'json',
 			url: '/contratar-plano',
-
 			data: {
 				usuario:usuario,
 				card:card,
@@ -79,19 +61,22 @@ $(function(){
 			timeout: 15000,
 			success: function (result) {
 
-				console.log(result.respo)
+				swal({
+						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
+						text: result.message
+					})
 			},
 			error: function (result) {
 
-				var res = result.responseJSON.message.split("response:");
+				var response = result.responseJSON;
+				var res = response.details.split("response:")
 				var error =JSON.parse(res[1]);
+				var errors =error.errors != undefined ? error.errors : '';
 
-				swal(
-					{
-						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
-						text: error.message+' '+error.errors
-					}
-				);
+				swal({
+					title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+response.message+'</div>',
+					text: error.message+' '+errors
+				})
 			}
 		});
 	}
@@ -121,8 +106,8 @@ $(function(){
 		if (animating) return false;
 		animating = true;
 
-		current_fs = $(this).parent().parent().parent().parent();
-		previous_fs = $(this).parent().parent().parent().parent().prev();
+		current_fs = $(this).parent().parent().parent().parent().parent().parent().parent();
+		previous_fs = $(this).parent().parent().parent().parent().parent().parent().parent().prev();
 
 		//de-activate current step on progressbar
 		$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
@@ -295,8 +280,8 @@ $(function(){
 		if (animating) return false;
 		animating = true;
 
-		current_fs = $(dado).parent().parent().parent().parent();
-		next_fs = $(dado).parent().parent().parent().parent().next();
+		current_fs = $(dado).parent().parent().parent().parent().parent().parent().parent();
+		next_fs = $(dado).parent().parent().parent().parent().parent().parent().parent().next();
 
 		//activate next step on progressbar using the index of next_fs
 		$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
