@@ -15,7 +15,7 @@ $(function(){
 				nome:nome,
 				email:email,
 				cpf:cpf.replace(/\D+/g, ''),
-				celular:celular,
+				celular:celular.replace('-',''),
 				plano:plano
 			})
 
@@ -70,7 +70,6 @@ $(function(){
 			type:'post',
 			dataType:'json',
 			url: '/contratar-plano',
-
 			data: {
 				usuario:usuario,
 				card:card,
@@ -79,19 +78,22 @@ $(function(){
 			timeout: 15000,
 			success: function (result) {
 
-				console.log(result.respo)
+				swal({
+						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
+						text: result.message
+					})
 			},
 			error: function (result) {
-
-				var res = result.responseJSON.message.split("response:");
+				console.log(result)
+				var response = result.details;
+				var res = response.split("response:")
 				var error =JSON.parse(res[1]);
 
-				swal(
-					{
-						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
-						text: error.message+' '+error.errors
-					}
-				);
+
+				swal({
+					title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+result.message+'</div>',
+					text: error.message+' '+error.errors
+				})
 			}
 		});
 	}
