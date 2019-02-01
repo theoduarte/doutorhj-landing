@@ -382,14 +382,17 @@
 @include('flash-message')
 
 <script>
-	var laravel_token = '{{ csrf_token() }}';
-	var plano ="plan_LDZN8oS7nh90argx";
-	var plano_descricao ="Plano Blue";
-	var valor ="36,50";
-	var key  = '{{ $values }}';
-	var url ='{{ $url }}';
+    var laravel_token = '{{ csrf_token() }}';
+    var plano =  '{{ $plano }}';
+    var id= '{{ $idplano }}';
+    var details = '{{ $detalhes }}';
+    var all = '{{ $all }}';
 
 
+    var plano_descricao ="Plano Blue";
+    var valor ="36,50";
+    var key  = '{{ $values }}';
+    var url ='{{ $url }}';
 </script>
 </body>
 </html>
