@@ -151,29 +151,18 @@ $(function(){
 
 	function efetuarPagamento(usuario, card ){
 		$('.spinner').fadeIn()
-			var params ={}
-			if(dependentes.length !=0 ){
-				params ={
-					usuario:usuario,
-					dependente:dependentes,
-					card:card,
-					corretor:$('#codigoCorretor').val(),
-					'_token': laravel_token
-				}
-			}else{
-				params ={
-					usuario:usuario,
-					card:card,
-					corretor:$('#codigoCorretor').val(),
-					'_token': laravel_token
-				}
-			}
 
 		  	$.ajax({
 			type:'post',
 			dataType:'json',
 			url: '/contratar-plano',
-			data: params,
+			data: {
+				usuario:usuario,
+				dependente:dependentes,
+				card:card,
+				corretor:$('#codigoCorretor').val(),
+				'_token': laravel_token
+			},
 			timeout: 15000,
 			success: function (result) {
 				console.log(result)

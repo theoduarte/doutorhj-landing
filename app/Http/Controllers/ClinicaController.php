@@ -933,8 +933,8 @@ class ClinicaController extends Controller
 		$req =  CVXRequest::toArray();
 		$usuario = $req['usuario'];;
 		$card = $req['card'];
-		$corretor = isset($req['corretor']) ? $req['corretor'] : '';
-		$dependente = isset($req['dependente']) ? $req['dependente'] : [];
+		$corretor = $req['corretor'];
+		$dependente = $req['dependente'];
 
 
 		if(count($dependente)>0){
