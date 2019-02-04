@@ -931,10 +931,10 @@ class ClinicaController extends Controller
 
     public function contratarPlano() {
 		$req =  CVXRequest::toArray();
-		 $usuario = $req['usuario'];;
+		$usuario = $req['usuario'];;
 		$card = $req['card'];
-		$corretor = $req['corretor'];
-		$dependente = $req['dependente'];
+		$corretor = isset($req['corretor']) ? $req['corretor'] : '';
+		$dependente = isset($req['dependente']) ? $req['dependente'] : [];
 
 
 		if(count($dependente)>0){
