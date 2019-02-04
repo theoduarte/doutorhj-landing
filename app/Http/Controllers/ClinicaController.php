@@ -960,7 +960,7 @@ class ClinicaController extends Controller
 			$client = new Client(['timeout'  => 1500,]);
 
 
-			 $client->request('POST','http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
+			 $client->request('POST',$this->url_api.'gerar-plano-pagamento', [
 				'headers' => [
 					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
 				],
