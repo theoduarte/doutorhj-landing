@@ -65,7 +65,9 @@ $(function(){
 			next('.primeiraPage')
 
 		}else{
-			$.Notification.notify('error','top right', 'DrHoje', 'Verifique se as informações inseridas estão corretas!');
+
+			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas!');
+
 		}
 	}
 
@@ -105,13 +107,46 @@ $(function(){
 
 	$('.finalizarCompra').click(function(e) {
 		e.preventDefault();
-		var numero = $('#numeroCartao').val();
-		var titular = $('#nomeCartao').val();
-		var mes = $('#mesVencimento ').val();
-		var ano = $('#anoVencimento').val();
-		var cvv = $('#cvvCartao').val();
-		var card = [{numero, titular, mes, ano , cvv}]
-		efetuarPagamento(primeiraPaginaArray,card )
+		var numeroCard = $('#numero').val();
+		var numeroFormatado = numeroCard.replace(/\s{1,}/g, '');
+		var titular = $('#nome_impresso').val();
+		var validade = $('#validade ').val();
+		var divider = validade.split("/");
+		var mes = divider[0]
+		var ano = divider[1]
+		var cvv = $('#codigo_seg').val();
+
+		if(numeroFormatado.length !=0 && titular.length !=0 && validade.length !=0 && mes.length !=0 && ano.length !=0 && cvv.length !=0){
+			var card = [{numero:numeroFormatado, titular, mes, ano , cvv}]
+
+			try {
+
+				$('#numero').validateCreditCard(function(result) {
+
+
+					if(!result.luhn_valid || !result.length_valid    ){
+						$.Notification.notify('error','top right', 'DrHoje', 'Informe um número de cartão válido!');
+					}else{
+						console.log()
+						if($('.form-check-input').is(':checked')){
+							$('.spinner').fadeIn()
+							efetuarPagamento(primeiraPaginaArray,card )
+
+						}else{
+							$.Notification.notify('error','top center', 'DrHoje', 'Aceite os termos e condições para realizar o pagamento!');
+						}
+
+					}
+
+				});
+			} catch (e) { $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
+
+		}else{
+			$.Notification.notify('error','top right', 'DrHoje', 'Verifique as informações do seu cartão e tente novamente!');
+		}
+
+
+
 	})
 
 	function efetuarPagamento(usuario, card ){
@@ -130,14 +165,14 @@ $(function(){
 				next(".finalizarCompra")
 				$('#msform').trigger("reset");
 				$('#progressbar').hide();
-
+				$('.spinner').fadeOut()
 				swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
 						text: result.message
 					})
 			},
 			error: function (result) {
-
+				$('.spinner').fadeOut()
 				var response = result.responseJSON;
 				var res = response.details.split("response:")
 				var error =JSON.parse(res[1]);
