@@ -933,29 +933,24 @@ class ClinicaController extends Controller
 		$req =  CVXRequest::toArray();
 		 $usuario = $req['usuario'];;
 		$card = $req['card'];
-		$arrayDependentes =[];
-		$form ="";
+		$corretor = $req['corretor'];
+		$dependente = $req['dependente'];
 
-		if(count($usuario)>1){
-			$usr = ($usuario[0]);
-			$dependente = $usuario[1]['dependentes'];
 
-			foreach ($dependente as $depent){
-				array_push( $arrayDependentes, json_encode([
-					"nome" =>$depent['nome'],
-					"cpf" =>$depent['cpf']
-				]));
-			}
+		if(count($dependente)>0){
+
 			$form = [
-				'dependente' => $arrayDependentes[0],
-				'cartao' =>$card,
-				'usuario' => $usuario
+				'dependente' => json_encode($dependente),
+				'cartao' =>json_encode($card),
+				'usuario' =>json_encode($usuario),
+				'corretor' => $corretor
 
 			];
 		}else{
 			$form = [
 				'cartao' =>json_encode($card),
-				'usuario' => json_encode($usuario)
+				'usuario' => json_encode($usuario),
+				'corretor' => $corretor
 			];
 		}
 
@@ -963,9 +958,7 @@ class ClinicaController extends Controller
 			$client = new Client(['timeout'  => 1500,]);
 
 
-
-
-			$resp = $client->request('POST',$this->url_api.'gerar-plano-pagamento', [
+			 $client->request('POST','http://192.168.1.87:8080/api/v1/gerar-plano-pagamento', [
 				'headers' => [
 					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
 				],

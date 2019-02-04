@@ -42,6 +42,7 @@ $(function(){
 
 	var dependentes = []
 	var primeiraPaginaArray =[]
+
 	primeiraPagina = () => {
 	 var nome = $('#nomeUsuario').val();
 		var email = $('#emailUsuario').val();
@@ -59,9 +60,7 @@ $(function(){
 				plano:detalhes.id
 			})
 
-			if(dependentes.length !=0){
-				primeiraPaginaArray.push({dependentes:dependentes})
-			}
+
 			next('.primeiraPage')
 
 		}else{
@@ -127,9 +126,10 @@ $(function(){
 					if(!result.luhn_valid || !result.length_valid    ){
 						$.Notification.notify('error','top right', 'DrHoje', 'Informe um número de cartão válido!');
 					}else{
-						console.log()
+
 						if($('.form-check-input').is(':checked')){
-							$('.spinner').fadeIn()
+
+
 							efetuarPagamento(primeiraPaginaArray,card )
 
 						}else{
@@ -139,7 +139,7 @@ $(function(){
 					}
 
 				});
-			} catch (e) { $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
+			} catch (e) { console.log(e); $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
 
 		}else{
 			$.Notification.notify('error','top right', 'DrHoje', 'Verifique as informações do seu cartão e tente novamente!');
@@ -150,23 +150,38 @@ $(function(){
 	})
 
 	function efetuarPagamento(usuario, card ){
+		$('.spinner').fadeIn()
+			var params ={}
+			if(dependentes.length !=0 ){
+				params ={
+					usuario:usuario,
+					dependente:dependentes,
+					card:card,
+					corretor:$('#codigoCorretor').val(),
+					'_token': laravel_token
+				}
+			}else{
+				params ={
+					usuario:usuario,
+					card:card,
+					corretor:$('#codigoCorretor').val(),
+					'_token': laravel_token
+				}
+			}
 
 		  	$.ajax({
 			type:'post',
 			dataType:'json',
 			url: '/contratar-plano',
-			data: {
-				usuario:usuario,
-				card:card,
-				'_token': laravel_token
-			},
+			data: params,
 			timeout: 15000,
 			success: function (result) {
-				next(".finalizarCompra")
-				$('#msform').trigger("reset");
-				$('#progressbar').hide();
+				console.log(result)
+				 next(".finalizarCompra")
+				 $('#msform').trigger("reset");
+				 $('#progressbar').hide();
 				$('.spinner').fadeOut()
-				swal({
+				 swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
 						text: result.message
 					})
