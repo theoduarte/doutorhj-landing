@@ -189,14 +189,8 @@ $(function(){
 			error: function (result) {
 				$('.spinner').fadeOut()
 				var response = result.responseJSON;
-				var res = response.details.split("response:")
-				var error =JSON.parse(res[1]);
-				var errors =error.errors != undefined ? error.errors : '';
+				console.log(response)
 
-				swal({
-					title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+response.message+'</div>',
-					text: error.message+' '+errors
-				})
 			}
 		});
 	}
