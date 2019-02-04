@@ -37,10 +37,74 @@
             background-repeat: no-repeat;
             padding-left: 48px;
         }
+        .spinner {
+
+            background-color: #1b71b9cf;
+            width: 100%;
+            height:100vh;
+            line-height: 50px;
+            text-align:center;
+
+            color: white;
+
+            /* pura mágica */
+            position: fixed;
+            z-index:20;
+
+
+
+        }
+        .cube1, .cube2 {
+            background-color: white;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+            animation: sk-cubemove 1.8s infinite ease-in-out;
+        }
+
+        .cube2 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        @-webkit-keyframes sk-cubemove {
+            25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+            50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+            75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+            100% { -webkit-transform: rotate(-360deg) }
+        }
+
+        @keyframes sk-cubemove {
+            25% {
+                transform: translateX(42px) rotate(-90deg) scale(0.5);
+                -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+            } 50% {
+                  transform: translateX(42px) translateY(42px) rotate(-179deg);
+                  -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+              } 50.1% {
+                    transform: translateX(42px) translateY(42px) rotate(-180deg);
+                    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+                } 75% {
+                      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                  } 100% {
+                        transform: rotate(-360deg);
+                        -webkit-transform: rotate(-360deg);
+                    }
+        }
     </style>
 </head>
 <body>
 <div class="lp-pessoa-fisica-pagamento">
+    <div class="spinner"  style="display:none"   >
+
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
     <header>
         <div class="container">
             <img class="logo-drhj" src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje">
@@ -48,7 +112,10 @@
     </header>
 
     <section>
+
+
         <div class="container">
+
             <form method="post" id="msform" name="pagamento">
                 <ul id="progressbar">
                     <li class="active"></li>
@@ -414,10 +481,10 @@
 
 			masks: {
 				cardNumber: '•' // optional - mask card number
-			},
+			}
 
 			// if true, will log helpful messages for setting up Card
-			debug: {{env('APP_DEBUG') ? 'true' : 'false'}}
+
 		});
 	});
 </script>
