@@ -30,13 +30,6 @@
 
     <title>Planos Individuais - Doutor Hoje</title>
     <style>
-        .ocult-color{
-            background: grey;
-
-        }
-        .ocult-color p {
-            color: rgba(176, 176, 176, 0.99) !important;
-        }
         #checkout_card_number {
             background-image: url(cards.png);
             background-position: 3px 3px;
@@ -166,54 +159,54 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row" class="descricao">Consultas a partir de:</th>
-                                    <td >
+                                    <td class="blue-style-ocult">
                                         <span>R$ 29,50</span>
                                         <p class="obs">apenas no Distrito Federal</p>
                                     </td>
-                                    <td>
+                                    <td  class="black-style-ocult">
                                         <span>R$ 29,50</span>
                                         <p class="obs">apenas no Distrito Federal</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
                                     </td>
-                                    <td></td>
+                                    <td class="black-style-ocult"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
-                                    <td></td>
-                                    <td>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas saudáveis
                                     </th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
                                     </td>
-                                    <td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Orientação Médica por Telefone</th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
                                     </td>
-                                    <td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Desconto em Medicamentos</th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
                                     </td>
-                                    <td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
@@ -221,18 +214,18 @@
                                     <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50<br>
                                         <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                                     </th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
                                     </td>
-                                    <td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50
                                     </th>
-                                    <td></td>
-                                    <td>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
@@ -240,17 +233,17 @@
                                     <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
                                         <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                                     </th>
-                                    <td></td>
-                                    <td>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
                                         <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
-                                    <td>
+                                    <td class="blue-style-ocult">
                                         <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
                                     </td>
-                                    <td>
+                                    <td class="black-style-ocult">
                                         <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
                                     </td>
                                 </tr>

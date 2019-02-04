@@ -5132,6 +5132,25 @@ footer ul li a:hover {
     border-bottom: 0;
 }
 
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+    background-color: #efefef !important;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color img {
+    filter: gray;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color .info-valores p,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+    color: #c5c5c5 !important;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color .btn {
+    background-color: #cccccc !important;
+    color: #ffffff !important;
+}
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table td,
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table th {
     padding: 10px 30px;
