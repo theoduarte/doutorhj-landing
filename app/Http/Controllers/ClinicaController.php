@@ -931,10 +931,11 @@ class ClinicaController extends Controller
 
     public function contratarPlano() {
 		$req =  CVXRequest::toArray();
+
 		$usuario = $req['usuario'];;
 		$card = $req['card'];
 		$corretor = $req['corretor'];
-		$dependente = $req['dependente'];
+		$dependente = isset($req['dependente']) ? $req['dependente'] : [];
 
 
 		if(count($dependente)>0){
@@ -953,6 +954,7 @@ class ClinicaController extends Controller
 				'corretor' => $corretor
 			];
 		}
+
 
 		try{
 			$client = new Client(['timeout'  => 1500,]);

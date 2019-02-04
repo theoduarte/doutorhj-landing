@@ -166,9 +166,9 @@ $(function(){
 			timeout: 15000,
 			success: function (result) {
 				console.log(result)
-				 next(".finalizarCompra")
-				 $('#msform').trigger("reset");
-				 $('#progressbar').hide();
+				// next(".finalizarCompra")
+				// $('#msform').trigger("reset");
+				// $('#progressbar').hide();
 				$('.spinner').fadeOut()
 				 swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
