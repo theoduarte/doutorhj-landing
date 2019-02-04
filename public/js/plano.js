@@ -62,7 +62,7 @@ $(function(){
 			if(dependentes.length !=0){
 				primeiraPaginaArray.push({dependentes:dependentes})
 			}
-
+			next('.primeiraPage')
 
 		}else{
 			$.Notification.notify('error','top right', 'DrHoje', 'Verifique se as informações inseridas estão corretas!');
