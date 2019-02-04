@@ -6,6 +6,7 @@ $(function(){
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
 
+
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -35,17 +36,20 @@ $(function(){
 		$(classeValor).empty().append(' <small>R$</small> '+ (valor)+'')
 	}
 
+
+
 	// verificar plano selecionado
 
 	var dependentes = []
 	var primeiraPaginaArray =[]
 	primeiraPagina = () => {
-
-		var nome = $('#nomeUsuario').val();
+		next(".primeiraPage")
+		/*var nome = $('#nomeUsuario').val();
 		var email = $('#emailUsuario').val();
 		var cpf = $('#cpfUsuario').val();
 		var celular = $('#celularUsuario').val();
-		if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0){
+
+		if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0 && isEmail(email) && cpfVerify(cpf)){
 			primeiraPaginaArray.length =0
 
 			primeiraPaginaArray.push({
@@ -60,9 +64,36 @@ $(function(){
 				primeiraPaginaArray.push({dependentes:dependentes})
 			}
 
-			next(".primeiraPage")
+
+		}else{
+			$.Notification.notify('error','top right', 'DrHoje', 'Verifique se as informações inseridas estão corretas!');
+		}*/
+	}
+
+	function cpfVerify(cpf){
+		cpf = cpf.replace(/\D/g, '');
+		if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+		var result = true;
+		[9,10].forEach(function(j){
+			var soma = 0, r;
+			cpf.split(/(?=)/).splice(0,j).forEach(function(e, i){
+				soma += parseInt(e) * ((j+2)-(i+1));
+			});
+			r = soma % 11;
+			r = (r <2)?0:11-r;
+			if(r != cpf.substring(j, j+1)) result = false;
+		});
+		return result;
+	}
+	function isEmail(email) {
+		var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (!regex.test(email)) {
+			return false;
+		} else {
+			return true;
 		}
 	}
+
 
 
 	$('.prox').click(function() {
@@ -232,8 +263,6 @@ $(function(){
 
 
 
-
-
 	myFunction = (dd) =>  {
 
 		var nome = document.getElementById("nomeDependente"+dd).value;
@@ -252,23 +281,31 @@ $(function(){
 			'   </li>';
 		if(!$('li').hasClass("cpfDependente"+dd)){
 			if(nome.length >0 && cpfLimpo.length ==11){
-				$('.items-pedido').append(dados);
+				if(cpfVerify(cpf)){
+					$('.items-pedido').append(dados);
 
-				if(dependentes.length >0){
-					var dad = dependentes.filter(x => x.cpf === cpfLimpo);
-					if(dad.length ==0){
+					if(dependentes.length >0){
+						var dad = dependentes.filter(x => x.cpf === cpfLimpo);
+						if(dad.length ==0){
+							dependentes.push({
+								nome:nome,
+								cpf:cpfLimpo
+							})
+						}
+
+					}else{
 						dependentes.push({
 							nome:nome,
 							cpf:cpfLimpo
 						})
 					}
-
 				}else{
-					dependentes.push({
-						nome:nome,
-						cpf:cpfLimpo
-					})
+
+					$('#cpfDependente'+dd).val("");
+
+					$.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
 				}
+
 
 
 			}

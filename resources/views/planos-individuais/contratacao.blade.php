@@ -25,6 +25,9 @@
     <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
     <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
     <script src="/js/plano.js"></script>
+    <script src="/libs/card-master/dist/jquery.card.js"></script>
+
+
     <title>Planos Individuais - Doutor Hoje</title>
     <style>
         .ocult-color{
@@ -33,6 +36,13 @@
         }
         .ocult-color p {
             color: rgba(176, 176, 176, 0.99) !important;
+        }
+        #checkout_card_number {
+            background-image: url(cards.png);
+            background-position: 3px 3px;
+            background-size: 40px 252px; /* 89 x 560 */
+            background-repeat: no-repeat;
+            padding-left: 48px;
         }
     </style>
 </head>
@@ -191,19 +201,19 @@
                                     <strong>o Doutor Hoje</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto" required id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8" required id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                    <input type="email" class="form-control col-sm-8"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control col-sm-8" required id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
+                                    <input type="text" class="form-control col-sm-8"   id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control col-sm-8" required id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
+                                    <input type="text" class="form-control col-sm-8"   id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
                                 </div>
                             </div>
                             <div class="area-dependente">
@@ -218,7 +228,7 @@
                                     <div>
                                         <div>
                                             <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                            <input type="submit" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
+                                            <input type="button" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
                                         </div>
                                     </div>
                                 </div>
@@ -246,55 +256,37 @@
                 </fieldset>
                 <fieldset>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 card-validation">
                             <div class="area-form-cont">
+
                                 <h2 class="fs-title">Agora configure o<br>
                                     <strong>seu pagamento</strong></h2>
+
+                                <div class="form-row">
+                                    <div class="col-sm-12 card-wrapper"></div>
+                                    <!-- <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao"   placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16"> -->
+
+                                </div>
+                                <hr>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
-                                    <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao" placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16">
+                                   <input type="text" class="form-control col-sm-7" name="numero" id="numero" placeholder="Insira o número do cartão"  required >
+                                    <!-- <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao"   placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16"> -->
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
                                         cartão</label>
-                                    <input type="text" class="form-control col-sm-8" id="nomeCartao" name="titular" placeholder="Nome do titular" maxlength="30">
+                                    <input type="text" class="form-control col-sm-7  text-uppercase" id="nome_impresso" name="nome_impresso" placeholder="Insira o nome do titular" required>
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
-                                    <select class="form-control col-sm-2" name="mes" required id="mesVencimento">
-                                        <option selected>Mês</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </select>
-                                    <select class="form-control col-sm-2" name="ano" required id="anoVencimento">
-                                        <option selected>Ano</option>
-                                        <option>2019</option>
-                                        <option>2020</option>
-                                        <option>2021</option>
-                                        <option>2022</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                        <option>2029</option>
-                                        <option>2030</option>
-                                    </select>
+
+                                    <input type="text" class="form-control col-sm-3" id="validade" name="validade" placeholder="MM/AA"   required>
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
-                                    <input type="text" class="form-control col-sm-2" name="codigo" required id="cvvCartao" placeholder="000" maxlength="3">
+
+                                    <input type="text" class="form-control col-sm-2" id="codigo_seg" name="codigo_seg" placeholder="CVC" required >
                                 </div>
                             </div>
                             <div class="area-btn">
@@ -394,5 +386,48 @@
     var key  = '{{ $values }}';
     var url ='{{ $url }}';
 </script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.card-validation').card({
+			// a selector or DOM element for the container
+			// where you want the card to appear
+			container: '.card-wrapper', // *required*
+
+			formSelectors: {
+				numberInput: 'input#numero', // optional — default input[name="number"]
+				expiryInput: 'input#validade', // optional — default input[name="expiry"]
+				cvcInput: 'input#codigo_seg', // optional — default input[name="cvc"]
+				nameInput: 'input#nome_impresso' // optional - defaults input[name="name"]
+			},
+
+			width: '100%', // optional — default 350px
+			formatting: true, // optional - default true
+
+			// Strings for translation - optional
+			messages: {
+				validDate: 'valid\ndate', // optional - default 'valid\nthru'
+				monthYear: 'mm/yy', // optional - default 'month/year'
+			},
+
+			// Default placeholders for rendered fields - optional
+			placeholders: {
+				number: '•••• •••• •••• ••••',
+				name: 'Nome Impresso',
+				expiry: '••/••',
+				cvc: '•••'
+			},
+
+			masks: {
+				cardNumber: '•' // optional - mask card number
+			},
+
+			// if true, will log helpful messages for setting up Card
+			debug: {{env('APP_DEBUG') ? 'true' : 'false'}}
+		});
+	});
+</script>
+
 </body>
 </html>

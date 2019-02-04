@@ -674,7 +674,7 @@
 				var all = btoa(JSON.stringify(load));
             	$(classeNome).empty().append('Plano '+plano+'')
 				$(classeValor).empty().append(' <small>R$</small> '+formatReal(valor)+'')
-				$(classeAssinar).attr("href",url+''+emBase64+'/all='+all)
+				$(classeAssinar).attr("href",url+''+emBase64+'/all='+all+'/')
 
 		}
 		$(".mascaraTelefone").inputmask({
