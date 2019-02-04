@@ -526,50 +526,6 @@ header .navbar-collapse {
     margin: 0 auto;
 }
 
-.banner-natal .area-texto {
-    width: 1110px;
-    padding-left: 620px;
-    margin: 0 auto;
-}
-
-.banner-natal .area-texto .intro {
-    font-size: 36px;
-    line-height: 45px;
-    color: #1b71b9;
-    text-align: left;
-}
-
-.banner-natal .area-texto .texto {
-    font-size: 22px;
-    color: #a32431;
-    text-align: left;
-    margin: 14px 0 14px 0;
-}
-
-.banner-natal .area-texto .texto strong {
-    font-size: 22px;
-    color: #1b71b9;
-}
-
-.banner-natal .area-texto .cupom {
-    border: 3px dashed #a32431;
-    padding: 8px 30px 0 30px;
-    width: 290px;
-    text-align: center;
-}
-
-.banner-natal .area-texto .cupom p {
-    font-size: 18px;
-    color: #1b71b9;
-    margin-bottom: 0;
-    text-transform: uppercase;
-}
-
-.banner-natal .area-texto .cupom span {
-    font-size: 30px;
-    color: #a32431;
-}
-
 .banner-slider-home .carousel-control-next,
 .banner-slider-home .carousel-control-prev {
     z-index: 0;
@@ -5148,12 +5104,6 @@ footer ul li a:hover {
         margin: 0 auto;
     }
 
-    .banner-natal .area-texto {
-        width: 900px;
-        padding-left: 410px;
-        margin: 0 auto;
-    }
-
     .area-seleciona-profissional {
         font-size: 11px;
     }
@@ -5312,39 +5262,6 @@ footer ul li a:hover {
 
     .btn-lp {
         margin-bottom: 20px;
-    }
-
-    .banner-natal {
-        background-position: -470px center !important;
-    }
-
-    .banner-natal .area-texto {
-        width: 600px;
-        padding-left: 120px;
-        margin: 0 auto;
-    }
-
-    .banner-natal .area-texto .intro {
-        font-size: 24px;
-        line-height: 34px;
-    }
-
-    .banner-natal .area-texto .texto {
-        font-size: 17px;
-        margin: 14px 0 20px 0;
-    }
-
-    .banner-natal .area-texto .cupom {
-        margin-bottom: 30px;
-    }
-
-    .banner-natal .area-texto .cupom p {
-        font-size: 15px;
-    }
-
-    .banner-natal .area-texto .cupom span {
-        font-size: 26px;
-        color: #a32431;
     }
 
     .busca-welcome {
@@ -5545,45 +5462,6 @@ footer ul li a:hover {
 
     .btn-lp {
         font-size: 13px;
-    }
-
-    .banner-natal {
-        background-position: -800px center !important;
-    }
-
-    .banner-natal .area-texto {
-        width: 400px;
-        padding-left: 0;
-        margin: 0 auto;
-    }
-
-    .banner-natal .area-texto .intro {
-        font-size: 20px;
-        line-height: 31px;
-    }
-
-    .banner-natal .area-texto .texto {
-        font-size: 17px !important;
-        margin: 14px 0 20px 0;
-    }
-
-    .banner-natal .area-texto .texto strong {
-        font-size: 18px;
-    }
-
-    .banner-natal .area-texto .cupom {
-        margin-bottom: 30px;
-        padding: 8px 10px 0 10px;
-        width: 240px;
-    }
-
-    .banner-natal .area-texto .cupom p {
-        font-size: 15px;
-    }
-
-    .banner-natal .area-texto .cupom span {
-        font-size: 26px;
-        color: #a32431;
     }
 
     .busca-welcome {
@@ -5850,41 +5728,6 @@ footer ul li a:hover {
     .banner-caixa .beneficios .beneficio1 span, .banner-caixa .beneficios .beneficio2 span {
         font-size: 11px;
         line-height: 14px !important;
-    }
-
-    .banner-natal .area-texto {
-        width: 320px;
-        padding-left: 0;
-        margin: 0 auto;
-    }
-
-    .banner-natal .area-texto .intro {
-        font-size: 24px;
-        line-height: 31px;
-    }
-
-    .banner-natal .area-texto .texto {
-        font-size: 17px !important;
-        margin: 14px 0 20px 0;
-    }
-
-    .banner-natal .area-texto .texto strong {
-        font-size: 18px;
-    }
-
-    .banner-natal .area-texto .cupom {
-        margin-bottom: 30px;
-        padding: 8px 10px 0 10px;
-        width: 240px;
-    }
-
-    .banner-natal .area-texto .cupom p {
-        font-size: 15px;
-    }
-
-    .banner-natal .area-texto .cupom span {
-        font-size: 26px;
-        color: #a32431;
     }
 
     .busca-welcome {
