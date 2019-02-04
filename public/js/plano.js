@@ -43,8 +43,7 @@ $(function(){
 	var dependentes = []
 	var primeiraPaginaArray =[]
 	primeiraPagina = () => {
-		next(".primeiraPage")
-		/*var nome = $('#nomeUsuario').val();
+	 var nome = $('#nomeUsuario').val();
 		var email = $('#emailUsuario').val();
 		var cpf = $('#cpfUsuario').val();
 		var celular = $('#celularUsuario').val();
@@ -67,7 +66,7 @@ $(function(){
 
 		}else{
 			$.Notification.notify('error','top right', 'DrHoje', 'Verifique se as informações inseridas estão corretas!');
-		}*/
+		}
 	}
 
 	function cpfVerify(cpf){
