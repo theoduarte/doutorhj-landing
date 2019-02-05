@@ -4849,15 +4849,24 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica-pagamento {
-    height: 100%;
+    height: auto;
     background-color: #E8F1FF;
+}
+.lp-pessoa-fisica-pagamento header .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.lp-pessoa-fisica-pagamento header .logo-drhj {
+    width: 180px;
 }
 .lp-pessoa-fisica-pagamento .area-form-cont {
     padding: 30px 30px 10px 30px;
 }
 .lp-pessoa-fisica-pagamento #msform {
     width: 100%;
-    margin: 50px auto;
+    height: 900px;
+    padding-bottom: 30px;
+    margin: 30px auto 0 auto;
     position: relative;
 }
 .lp-pessoa-fisica-pagamento #msform fieldset {
@@ -4870,6 +4879,10 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform fieldset:not(:first-of-type) {
     display: none;
+}
+.lp-pessoa-fisica-pagamento #msform label {
+    font-weight: 600;
+    line-height: 20px;
 }
 .lp-pessoa-fisica-pagamento #msform input,
 #msform textarea {
@@ -4888,7 +4901,6 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform .btn-blue {
     width: auto;
-    height: 50px;
     background: #4470B4;
     color: #fff;
     margin-top: 10px;
@@ -4897,7 +4909,6 @@ footer ul li a:hover {
 }
 .lp-pessoa-fisica-pagamento #msform .btn-link {
     width: auto;
-    height: 50px;
     background: #fafafa;
     color: #0070c9;
     margin-top: 10px;
@@ -4907,7 +4918,7 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .fs-title {
     font-size: 28px;
     color: #2D405A;
-    line-height: 120%;
+    line-height: 40px;
     text-align: left;
     font-weight: 300;
     margin-bottom: 40px;
@@ -4933,7 +4944,7 @@ footer ul li a:hover {
     color: white;
     text-transform: uppercase;
     font-size: 9px;
-    width: 10%;
+    width: 40px;
     float: left;
     position: relative;
 }
@@ -4980,11 +4991,28 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .area-dependente {
     padding: 0 6px;
 }
-.lp-pessoa-fisica-pagamento .area-dependente #addbutton {
-    margin-left: 24px;
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual {
+    max-height: 200px;
+    overflow: auto;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir {
+    text-align: right;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir a {
+    font-size: 12px;
+    color: #A21B26;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente {
+    margin: 24px 0 0 24px;
+    display: inline-block;
+    color: #8A9CB4;
+    font-size: 18px;
+}
+.lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente i {
+    color: #4470B4;
 }
 .lp-pessoa-fisica-pagamento .box-dependente {
-    background: #f1f1f1;
+    border-top: 1px solid #dadada;
     padding: 0 24px;
     margin-bottom: 10px;
 }
@@ -4993,21 +5021,254 @@ footer ul li a:hover {
     font-size: 11px;
     margin-bottom: 4px;
 }
-
+.lp-pessoa-fisica-pagamento #msform select {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 51px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
+.lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
+    width: 13px;
+}
+.lp-pessoa-fisica-pagamento #msform .link-termo-uso {
+    font-size: 14px;
+    font-weight: 400;
+}
 .lp-pessoa-fisica-pagamento .area-resumo-cont {
     width: 100%;
     padding: 30px;
     border-radius: 0 12px 12px 0;
-    min-height: 700px;
+    min-height: 100%;
     background: #4470B4 url(../img/l-pf-bg-form.png) repeat;
 }
-.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido {
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido,
+.lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     width: 100%;
     padding: 30px;
     border-radius:12px;
     background-color: #fff;
 }
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul {
+    list-style: none;
+    padding-left: 0;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p {
+    font-size: 16px;
+    color: #687688;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p.valor-produto {
+    font-size: 16px;
+    color: #2D405A;
+    font-weight: 600;
+}
+.lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
+    margin-top: 30px;
+}
 
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela {
+    background-color: #fff;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table {
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th {
+    border-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+    background-color: #efefef !important;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color img {
+    filter: gray;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color .info-valores p,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+    color: #c5c5c5 !important;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color .btn {
+    background-color: #cccccc !important;
+    color: #ffffff !important;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table td,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table th {
+    padding: 10px 30px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p {
+    color: #2D405A;
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p strong {
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras span {
+    color: #666E79;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores {
+    text-align: center;
+    width: 220px;
+    color: #5B5B5B;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .nome-plano {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .nm-blue {
+    color: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .valor {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .valor small {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .info-valores .btn-black:hover {
+    background: #636060;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .descricao {
+    font-size: 12px;
+    font-weight: 600;
+    color: #000000;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td {
+    text-align: center;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td .obs {
+    font-size: 11px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr td,
+.lp-pessoa-fisica-pagamento .tabela-planos tbody tr th {
+    vertical-align: middle;
+}
+.lp-pessoa-fisica-pagamento .tabela-planos .descricao .cobertura {
+    color: #808080;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td {
+    vertical-align: middle;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td img {
+    display: block;
+    width: 18px;
+    margin: 0 auto;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-blue {
+    background: #4470B4;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-blue:hover {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-black {
+    background: #484848;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-black:hover {
+    background: #636060;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .mensagem {
+    padding: 50px;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .mensagem h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .mensagem p {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .mensagem .area-btn {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 0;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .mensagem .btn {
+    position: absolute;
+    bottom: 0;
+    width: 258px!important;
+}
+.lp-pessoa-fisica-pagamento .boas-vindas .imagem img {
+    border-radius: 0 0 12px 12px;
+    width: 100%;
+    display: block;
+}
 /*********************************
 *
 *  X MEDIA QUERIES

@@ -5,7 +5,7 @@ $(function(){
 	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
-
+ 
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -35,17 +35,21 @@ $(function(){
 		$(classeValor).empty().append(' <small>R$</small> '+ (valor)+'')
 	}
 
+ 
 	// verificar plano selecionado
 
 	var dependentes = []
 	var primeiraPaginaArray =[]
-	primeiraPagina = () => {
+ 
 
-		var nome = $('#nomeUsuario').val();
+	primeiraPagina = () => {
+	 var nome = $('#nomeUsuario').val();
 		var email = $('#emailUsuario').val();
 		var cpf = $('#cpfUsuario').val();
 		var celular = $('#celularUsuario').val();
-		if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0){
+
+		if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0 && isEmail(email) && cpfVerify(cpf)){
+ 
 			primeiraPaginaArray.length =0
 
 			primeiraPaginaArray.push({
@@ -56,14 +60,41 @@ $(function(){
 				plano:detalhes.id
 			})
 
-			if(dependentes.length !=0){
-				primeiraPaginaArray.push({dependentes:dependentes})
-			}
+ 
 
-			next(".primeiraPage")
+			next('.primeiraPage')
+
+		}else{
+
+			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas!');
+
 		}
 	}
 
+	function cpfVerify(cpf){
+		cpf = cpf.replace(/\D/g, '');
+		if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+		var result = true;
+		[9,10].forEach(function(j){
+			var soma = 0, r;
+			cpf.split(/(?=)/).splice(0,j).forEach(function(e, i){
+				soma += parseInt(e) * ((j+2)-(i+1));
+			});
+			r = soma % 11;
+			r = (r <2)?0:11-r;
+			if(r != cpf.substring(j, j+1)) result = false;
+		});
+		return result;
+	}
+	function isEmail(email) {
+		var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (!regex.test(email)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+ 
 
 	$('.prox').click(function() {
 		next(".prox")
@@ -75,16 +106,51 @@ $(function(){
 
 	$('.finalizarCompra').click(function(e) {
 		e.preventDefault();
-		var numero = $('#numeroCartao').val();
-		var titular = $('#nomeCartao').val();
-		var mes = $('#mesVencimento ').val();
-		var ano = $('#anoVencimento').val();
-		var cvv = $('#cvvCartao').val();
-		var card = [{numero, titular, mes, ano , cvv}]
-		efetuarPagamento(primeiraPaginaArray,card )
+		var numeroCard = $('#numero').val();
+		var numeroFormatado = numeroCard.replace(/\s{1,}/g, '');
+		var titular = $('#nome_impresso').val();
+		var validade = $('#validade ').val();
+		var divider = validade.split("/");
+		var mes = divider[0]
+		var ano = divider[1]
+		var cvv = $('#codigo_seg').val();
+
+		if(numeroFormatado.length !=0 && titular.length !=0 && validade.length !=0 && mes.length !=0 && ano.length !=0 && cvv.length !=0){
+			var card = [{numero:numeroFormatado, titular, mes, ano , cvv}]
+
+			try {
+
+				$('#numero').validateCreditCard(function(result) {
+
+
+					if(!result.luhn_valid || !result.length_valid    ){
+						$.Notification.notify('error','top right', 'DrHoje', 'Informe um número de cartão válido!');
+					}else{
+
+						if($('.form-check-input').is(':checked')){
+
+
+							efetuarPagamento(primeiraPaginaArray,card )
+
+						}else{
+							$.Notification.notify('error','top center', 'DrHoje', 'Aceite os termos e condições para realizar o pagamento!');
+						}
+
+					}
+
+				});
+			} catch (e) { console.log(e); $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
+
+		}else{
+			$.Notification.notify('error','top right', 'DrHoje', 'Verifique as informações do seu cartão e tente novamente!');
+		}
+
+
+
 	})
 
-	function efetuarPagamento(usuario, card ){
+function efetuarPagamento(usuario, card ){
+		$('.spinner').fadeIn()
 
 		  	$.ajax({
 			type:'post',
@@ -92,31 +158,28 @@ $(function(){
 			url: '/contratar-plano',
 			data: {
 				usuario:usuario,
+				dependente:dependentes,
 				card:card,
+				corretor:$('#codigoCorretor').val(),
 				'_token': laravel_token
 			},
 			timeout: 15000,
 			success: function (result) {
+
 				next(".finalizarCompra")
 				$('#msform').trigger("reset");
-				$('#progressbar').hide();
-
-				swal({
+			  	$('#progressbar').hide();
+				$('.spinner').fadeOut()
+				 swal({
 						title: '<div class="tit-sweet tit-success"><i class="fa fa-times-circle" aria-hidden="true"></i> Sucesso</div>',
 						text: result.message
 					})
 			},
 			error: function (result) {
-
+				$('.spinner').fadeOut()
 				var response = result.responseJSON;
-				var res = response.details.split("response:")
-				var error =JSON.parse(res[1]);
-				var errors =error.errors != undefined ? error.errors : '';
+				console.log(response)
 
-				swal({
-					title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+response.message+'</div>',
-					text: error.message+' '+errors
-				})
 			}
 		});
 	}
@@ -230,10 +293,6 @@ $(function(){
 
 	}
 
-
-
-
-
 	myFunction = (dd) =>  {
 
 		var nome = document.getElementById("nomeDependente"+dd).value;
@@ -252,11 +311,21 @@ $(function(){
 			'   </li>';
 		if(!$('li').hasClass("cpfDependente"+dd)){
 			if(nome.length >0 && cpfLimpo.length ==11){
-				$('.items-pedido').append(dados);
 
-				if(dependentes.length >0){
-					var dad = dependentes.filter(x => x.cpf === cpfLimpo);
-					if(dad.length ==0){
+				if(cpfVerify(cpf)){
+					$('.items-pedido').append(dados);
+
+					if(dependentes.length >0){
+						var dad = dependentes.filter(x => x.cpf === cpfLimpo);
+						if(dad.length ==0){
+							dependentes.push({
+								nome:nome,
+								cpf:cpfLimpo
+							})
+						}
+
+					}else{
+
 						dependentes.push({
 							nome:nome,
 							cpf:cpfLimpo
@@ -264,12 +333,11 @@ $(function(){
 					}
 
 				}else{
-					dependentes.push({
-						nome:nome,
-						cpf:cpfLimpo
-					})
-				}
 
+					$('#cpfDependente'+dd).val("");
+
+					$.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
+				}
 
 			}
 		}
