@@ -85,7 +85,7 @@ $(function(){
 
 	})
 	function buscarCorretor(codigo) {
-		$("#codigoCorretor").prop('disabled', true);
+
 		$.ajax({
 			type:'get',
 			dataType:'json',
@@ -99,7 +99,7 @@ $(function(){
 			},
 			timeout: 15000,
 			success: function (result) {
-				$("#codigoCorretor").prop('disabled', false);
+
 				if(result.corretor.length !=0){
 					var consultor = result.corretor[0];
 					$('#consultorName').empty().append('<strong>Nome: </strong>'+consultor.nm_primario+' '+consultor.nm_primario);
@@ -115,7 +115,7 @@ $(function(){
 
 			},
 			error: function (result) {
-				$("#codigoCorretor").prop('disabled', false);
+
 				console.log(result)
 
 			}
