@@ -312,8 +312,7 @@
                                             <label for="codigoCorretor1">Consultor</label>
                                             <small id="consultorName" class="form-text text-muted">
                                             </small>
-                                            <small id="consultorEmail" class="form-text text-muted">
-                                            </small>
+
                                         </div>
                                     </div>
                                 </div>

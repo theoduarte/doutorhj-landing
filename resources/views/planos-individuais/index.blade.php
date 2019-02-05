@@ -642,11 +642,19 @@
 
         var data =[]
 		planos.map((val  ) => {
+
 			data.push({
 				plano:val.plano,
 				id:val.id,
 				valor:formatReal(val.valor)
 			})
+
+		})
+
+
+
+
+		planos.map((val  ) => {
 
 			if(val.plano =="black"){
 
