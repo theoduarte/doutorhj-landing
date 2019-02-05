@@ -5,7 +5,7 @@ $(function(){
 	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
- 	console.log(alls)
+
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -30,7 +30,7 @@ $(function(){
 
 
 	function preencherDados( classeNome, classeValor, classeAssinar, plano, id, valor) {
-		console.log(classeNome, classeValor, classeAssinar, plano, id, valor)
+
 		$(classeNome).empty().append('Plano '+plano.charAt(0).toUpperCase() + plano.slice(1)+'')
 		$(classeValor).empty().append(' <small>R$</small> '+ (valor)+'')
 	}
@@ -75,7 +75,7 @@ $(function(){
 		$('.consultor').slideUp();
 		var codigo = $(this).val().replace(/\D/g, '');
 		if(codigo.length >0 ){
-				console.log(codigo.length)
+
 			if(codigo.length ==10){
 
 				buscarCorretor(codigo);
