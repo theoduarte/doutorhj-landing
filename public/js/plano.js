@@ -72,18 +72,21 @@ $(function(){
 	}
 
 	$('#codigoCorretor').keydown(function() {
+		$('.consultor').slideUp();
 		var codigo = $(this).val().replace(/\D/g, '');
 		if(codigo.length >0 ){
+				console.log(codigo.length)
+			if(codigo.length ==10){
 
-			if(codigo.length ==7){
 				buscarCorretor(codigo);
+
 			}
 		}
 
 	})
 	function buscarCorretor(codigo) {
 		$.ajax({
-			type:'post',
+			type:'get',
 			dataType:'json',
 			url: url_corretor,
 			headers: {
@@ -91,12 +94,19 @@ $(function(){
 
 			},
 			data: {
-				codigo:codigo,
+				cpf:codigo,
 			},
 			timeout: 15000,
 			success: function (result) {
 
-				console.log(result)
+				if(result.corretor.length !=0){
+					var consultor = result.corretor[0];
+					$('#consultorName').empty().append('<strong>Nome: </strong>'+consultor.nm_primario+' '+consultor.nm_primario);
+					$('#consultorEmail').empty().append('<strong>Email: </strong>'+consultor.email );
+					$('.consultor').slideDown();
+
+				}
+
 			},
 			error: function (result) {
 

@@ -307,6 +307,14 @@
                                         <input type="text" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
                                         <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo caso não haja consultor)
                                         </small>
+                                        <div class="consultor" style="display:none">
+                                            <hr>
+                                            <label for="codigoCorretor1">Consultor</label>
+                                            <small id="consultorName" class="form-text text-muted">
+                                            </small>
+                                            <small id="consultorEmail" class="form-text text-muted">
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
