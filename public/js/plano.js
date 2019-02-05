@@ -5,8 +5,7 @@ $(function(){
 	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
-
-
+ 
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -36,12 +35,12 @@ $(function(){
 		$(classeValor).empty().append(' <small>R$</small> '+ (valor)+'')
 	}
 
-
-
+ 
 	// verificar plano selecionado
 
 	var dependentes = []
 	var primeiraPaginaArray =[]
+ 
 
 	primeiraPagina = () => {
 	 var nome = $('#nomeUsuario').val();
@@ -50,6 +49,7 @@ $(function(){
 		var celular = $('#celularUsuario').val();
 
 		if(nome.length !=0 && email.length != 0 && cpf.length != 0 && celular.length !=0 && isEmail(email) && cpfVerify(cpf)){
+ 
 			primeiraPaginaArray.length =0
 
 			primeiraPaginaArray.push({
@@ -60,6 +60,7 @@ $(function(){
 				plano:detalhes.id
 			})
 
+ 
 
 			next('.primeiraPage')
 
@@ -93,8 +94,7 @@ $(function(){
 			return true;
 		}
 	}
-
-
+ 
 
 	$('.prox').click(function() {
 		next(".prox")
@@ -149,7 +149,7 @@ $(function(){
 
 	})
 
-	function efetuarPagamento(usuario, card ){
+function efetuarPagamento(usuario, card ){
 		$('.spinner').fadeIn()
 
 		  	$.ajax({
@@ -293,8 +293,6 @@ $(function(){
 
 	}
 
-
-
 	myFunction = (dd) =>  {
 
 		var nome = document.getElementById("nomeDependente"+dd).value;
@@ -313,6 +311,7 @@ $(function(){
 			'   </li>';
 		if(!$('li').hasClass("cpfDependente"+dd)){
 			if(nome.length >0 && cpfLimpo.length ==11){
+
 				if(cpfVerify(cpf)){
 					$('.items-pedido').append(dados);
 
@@ -326,19 +325,19 @@ $(function(){
 						}
 
 					}else{
+
 						dependentes.push({
 							nome:nome,
 							cpf:cpfLimpo
 						})
 					}
+
 				}else{
 
 					$('#cpfDependente'+dd).val("");
 
 					$.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
 				}
-
-
 
 			}
 		}

@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Controller@home')->name('landing-page');
 
+Route::get('/home', function () {
+    return redirect('/');
+});
+
 Route::get('resultado', 'AtendimentoController@consultaAtendimentos')->name('resultado');
 Route::get('resultadoApi/{tipo_atendimento}/{tipo_especialidade}/{sg_estado_localizacao}/{local_atendimento?}', 'AtendimentoController@consultaAtendimentosCaixa')->name('resultadoApi');
 Route::get('resultado-checkup', 'CheckupController@resultadoCheckup');
