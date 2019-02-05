@@ -32,9 +32,13 @@ use App\CartaoPaciente;
 use App\Paciente;
 use App\Filial;
 use App\Plano;
+use GuzzleHttp\Client;
 use App\VigenciaPaciente;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
+use GuzzleHttp\Psr7\Response;
+
+use App\Http\Requests ;
 
 class ClinicaController extends Controller
 {
@@ -43,6 +47,16 @@ class ClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	function __construct() {
+		if(env('APP_ENV') != 'production') {
+			$to = env('API_URL_HOMOLOG') ;
+		}else{
+			$to = env('API_URL_PROD') ;
+		}
+		$this->url_api = $to;
+
+	}
+
 
     public function cadastroAtivado()
     {
@@ -858,12 +872,118 @@ class ClinicaController extends Controller
         return view('mensagems.contato');
     }
     public function planos(){
-        return view('planos-individuais.index');
-    }
-    public function planosContratacao(){
-        return view('planos-individuais.contratacao');
+
+		try{
+			$client = new Client(['timeout'  => 1500,]);
+
+			$response = $client->request('get',  $this->url_api.'listar-plano', [
+				'headers' => [
+					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+				],
+			]);
+
+			$data=$response->getBody()->read(49000000) ;
+
+
+		}catch (\Exception $ee){}
+
+		$response = json_decode($data, true);
+		$planos =[];
+		foreach ($response as  $dd ){
+
+		 	foreach ($dd['data'] as $datum) {
+
+		 	if($datum['name'] == "blue"  ){
+
+				$pp = [
+				"nome" => $datum['name'],
+				"id" =>$datum['id'],
+				"price" =>$datum['minimum_price']
+				];
+				array_push($planos,$pp);
+
+
+			}
+
+
+			if( $datum['name'] =="black"){
+				$pp = [
+				"nome" => $datum['name'],
+				"id" =>$datum['id'],
+				"price" => $datum['minimum_price']
+				];
+				array_push($planos,$pp);
+			}
+	 	 }
+
+		}
+
+
+        return view('planos-individuais.index',["planos" =>  ($planos)]);
     }
 
+    public function planosContratacao( $plano, $identificador, $details, $all){
+
+		$plano = explode("=", $plano);
+		$identificador =explode("=", $identificador);
+		$details =explode("=", $details);
+		$all =explode("=", $all);
+
+		$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
+
+		$paths = array('values' => $key, "url" => $this->url_api.'gerar-plano-pagamento', "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
+		return view('planos-individuais.contratacao', $paths);
+    }
+
+    public function contratarPlano() {
+		$req =  CVXRequest::toArray();
+
+		$usuario = $req['usuario'];;
+		$card = $req['card'];
+		$corretor = $req['corretor'];
+		$dependente = isset($req['dependente']) ? $req['dependente'] : [];
+
+
+		if(count($dependente)>0){
+
+			$form = [
+				'dependente' => json_encode($dependente),
+				'cartao' =>json_encode($card),
+				'usuario' =>json_encode($usuario),
+				'corretor' => $corretor
+
+			];
+		}else{
+			$form = [
+				'cartao' =>json_encode($card),
+				'usuario' => json_encode($usuario),
+				'corretor' => $corretor
+			];
+		}
+
+
+		try{
+			$client = new Client(['timeout'  => 1500,]);
+
+			$client->request('POST',$this->url_api.'gerar-plano-pagamento', [
+				'headers' => [
+					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+				],
+				'form_params' =>  ($form)
+			]);
+
+			return response()->json([
+				'message' => 'Pagamento realizado com sucesso!'
+			], 200);
+		}catch (\Exception $ee){
+			return response()->json([
+				'message' => 'Ocorreou um error ao processar o pagamento!',
+				'details' =>$ee->getMessage()
+			], 500);
+		}
+
+
+	}
     public function confirmaAgendamento(){
         return view('confirmacao');
     }

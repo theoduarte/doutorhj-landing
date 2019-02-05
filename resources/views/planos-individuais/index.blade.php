@@ -110,27 +110,27 @@
                             </th>
                             <th scope="col">
                                 <div class="info-valores">
-                                    <p class="nome-plano nm-blue">blue</p>
+                                    <p class="nome-plano nm-blue"></p>
                                     <p class="apoio">consultas a partir de:</p>
-                                    <p class="valor">
-                                        <small>R$</small>
-                                        35,50
-                                    </p>
-                                    <a href="#contato" class="btn btn-blue">Assinar</a>
+                                    <p class="valor val-blue"> </p>
+
+
+
+                                    <a href="#contato" class="btn btn-blue assinar-blue">Assinar</a>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="info-valores">
-                                    <p class="nome-plano nm-black">black</p>
+                                    <p class="nome-plano nm-black">Plano  </p>
                                     <p class="apoio">consultas a partir de:</p>
-                                    <p class="valor">
-                                        <small>R$</small>
-                                        69,50
-                                    </p>
-                                    <a href="#contato" class="btn btn-black">Assinar</a>
+                                    <p class="valor val-black"> </p>
+
+
+                                    <a   class="btn btn-black assinar-black">Assinar</a>
                                 </div>
                             </th>
                         </tr>
+
                         </thead>
                         <tbody>
                         <tr>
@@ -426,7 +426,8 @@
                                 <div class="box-planos">
                                     <img src="/libs/home-template/img/l-pf-cartao-blue.png" alt="Cartão Blue">
                                     <div class="texto">
-                                        <p class="nome-plano nome-blue">blue</p>
+
+                                        <p class="nome-plano nome-blue"> blue</p>
                                         <p class="apoio">consultas a partir de:</p>
                                         <p class="valor">R$29,50</p>
                                         <p class="frequencia">R$ 29,50 MENSAIS</p>
@@ -625,11 +626,74 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $(".mascaraTelefone").inputmask({
+		 var planos = []
+		planos.push({
+			plano :'{{$planos[1]['nome']}}',
+			id: '{{$planos[1]['id']}}',
+			valor: '{{$planos[1]['price']}}'
+		})
+		planos.push({
+			plano :'{{$planos[0]['nome']}}',
+			id: '{{$planos[0]['id']}}',
+			valor: '{{$planos[0]['price']}}'
+		}  );
+
+
+
+        var data =[]
+		planos.map((val  ) => {
+			data.push({
+				plano:val.plano,
+				id:val.id,
+				valor:formatReal(val.valor)
+			})
+
+			if(val.plano =="black"){
+
+				preencherDados(data, ".nm-black", ".val-black", ".assinar-black",val.plano, val.id, val.valor, '/planos-individuais/contratar/plano='+val.plano+'/identificador='+val.id+'/details=');
+			}
+			if(val.plano =="blue"){
+
+				preencherDados(data, ".nm-blue", ".val-blue", ".assinar-blue", val.plano, val.id, val.valor, '/planos-individuais/contratar/plano='+val.plano+'/identificador='+val.id+'/details=');
+
+			}
+
+		})
+
+
+		function preencherDados(load, classeNome, classeValor, classeAssinar, plano, id, valor, url) {
+
+				var emBase64 = btoa(JSON.stringify(
+					{
+						plano:plano,
+						id:id,
+						valor:formatReal(valor)
+					}
+				));
+
+				var all = btoa(JSON.stringify(load));
+            	$(classeNome).empty().append('Plano '+plano+'')
+				$(classeValor).empty().append(' <small>R$</small> '+formatReal(valor)+'')
+				$(classeAssinar).attr("href",url+''+emBase64+'/all='+all+'/')
+
+		}
+		$(".mascaraTelefone").inputmask({
             mask: ["(99) 9999-9999", "(99) 99999-9999"],
             keepStatic: true
         });
+
     });
+
+	function formatReal( int )
+	{
+		var tmp = int+'';
+		tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+		if( tmp.length > 6 )
+			tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+		return tmp;
+	}
+
 
     function validarContato() {
 
@@ -650,6 +714,8 @@
             return true;
         }
     }
+
+
 </script>
 </body>
 </html>

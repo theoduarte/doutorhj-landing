@@ -23,116 +23,292 @@
     <script src="/libs/comvex-template/js/jquery.core.js"></script>
     <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
     <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
-    <title>Planos Individuais - Doutor Hoje</title>
+    <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
+    <script src="/js/plano.js"></script>
+    <script src="/libs/card-master/dist/jquery.card.js"></script>
 
+
+    <title>Planos Individuais - Doutor Hoje</title>
+    <style>
+        #checkout_card_number {
+            background-image: url(cards.png);
+            background-position: 3px 3px;
+            background-size: 40px 252px; /* 89 x 560 */
+            background-repeat: no-repeat;
+            padding-left: 48px;
+        }
+        .spinner {
+
+            background-color: #1b71b9cf;
+            width: 100%;
+            height:100vh;
+            line-height: 50px;
+            text-align:center;
+
+            color: white;
+
+            /* pura mágica */
+            position: fixed;
+            z-index:20;
+
+
+
+        }
+        .cube1, .cube2 {
+            background-color: white;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+            animation: sk-cubemove 1.8s infinite ease-in-out;
+        }
+
+        .cube2 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        @-webkit-keyframes sk-cubemove {
+            25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+            50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+            75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+            100% { -webkit-transform: rotate(-360deg) }
+        }
+
+        @keyframes sk-cubemove {
+            25% {
+                transform: translateX(42px) rotate(-90deg) scale(0.5);
+                -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+            } 50% {
+                  transform: translateX(42px) translateY(42px) rotate(-179deg);
+                  -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+              } 50.1% {
+                    transform: translateX(42px) translateY(42px) rotate(-180deg);
+                    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+                } 75% {
+                      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                  } 100% {
+                        transform: rotate(-360deg);
+                        -webkit-transform: rotate(-360deg);
+                    }
+        }
+    </style>
 </head>
 <body>
 <div class="lp-pessoa-fisica-pagamento">
+    <div class="spinner"  style="display:none"   >
+
+        <div class="cube1"></div>
+        <div class="cube2"></div>
+    </div>
     <header>
         <div class="container">
-
+            <img class="logo-drhj" src="/libs/home-template/img/logo-padrao.png" alt="Doutor Hoje">
         </div>
     </header>
+
     <section>
+
+
         <div class="container">
-            <form id="msform">
-                <!-- progressbar -->
+
+            <form method="post" id="msform" name="pagamento">
                 <ul id="progressbar">
                     <li class="active"></li>
                     <li></li>
                     <li></li>
+                    <li></li>
                 </ul>
-                <!-- fieldsets -->
+                <fieldset>
+                    <div class="tabela-planos">
+                        <div class="area-tabela table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <div class="regras">
+                                            <h3>Escolha o plano<br>
+                                                <strong>perfeito para você</strong></h3>
+                                        </div>
+                                    </th>
+                                    <th scope="col " class="blue-style-ocult">
+                                        <div class="info-valores">
+                                            <p class="nome-plano nm-blue"></p>
+                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="valor val-blue">
+
+                                            </p>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col" class="black-style-ocult">
+                                        <div class="info-valores">
+                                            <p class="nome-plano nm-black"></p>
+                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="valor val-black">
+
+                                            </p>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas a partir de:</th>
+                                    <td class="blue-style-ocult">
+                                        <span>R$ 29,50</span>
+                                        <p class="obs">apenas no Distrito Federal</p>
+                                    </td>
+                                    <td  class="black-style-ocult">
+                                        <span>R$ 29,50</span>
+                                        <p class="obs">apenas no Distrito Federal</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas saudáveis
+                                    </th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Orientação Médica por Telefone</th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Desconto em Medicamentos</th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                    </th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50
+                                    </th>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                    </th>
+                                    <td class="blue-style-ocult"></td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td class="blue-style-ocult">
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
                 <fieldset>
                     <div class="row">
                         <div class="col-md-6">
+
                             <div class="area-form-cont">
                                 <h2 class="fs-title">Cadastre-se para utilizar<br>
                                     <strong>o Doutor Hoje</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control col-sm-8" id="nomeUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8" id="emailUsuario" placeholder="exemplo@email.com.br">
+                                    <input type="email" class="form-control col-sm-8"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control col-sm-8" id="cpfUsuario" placeholder="000.000.000-00">
+                                    <input type="text" class="form-control col-sm-8"   id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control col-sm-8" id="celularUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8"   id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
                                 </div>
                             </div>
                             <div class="area-dependente">
-                                <div id="boxes">
-                                    <div class="box-dependente active">
-                                        <p>Dependente 1</p>
-                                        <div class="form-row">
-                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>
-                                            <input type="text" class="form-control col-sm-8" id="nomeDependente" placeholder="Nome do dependente">
-                                        </div>
-                                        <div class="form-row">
-                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>
-                                            <input type="text" class="form-control col-sm-8" id="cpfDependente" placeholder="CPF do dependente">
-                                        </div>
-                                    </div>
+                                <div id="boxes" class="box-individual">
+
                                 </div>
-                                <a id="addbutton" href=""><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <a id="addbutton" class="btn-adicionar-dependente" href="javascript:;"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     Adicionar Dependente</a>
                             </div>
                             <div class="area-btn">
-                                <input type="button" name="next" class="btn btn-blue next action-button" value="Próximo"/>
+                                <div>
+                                    <div>
+                                        <div>
+                                            <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
+                                            <input type="button" name="next" class="btn btn-blue next action-button primeiraPage" onclick="primeiraPagina()" value="Próximo"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
                                 <div class="lista-pedido">
-                                    <p>Pedido</p>
-                                    <ul>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">1. Assinatura Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">2. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <p class="nome-produto">3. Dependente Doutor Hoje Blue</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="valor-produto">R$ 35,50</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <a class="excluir-produto" href=""><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                    <h3>Pedido</h3>
+                                    <ul class="items-pedido"></ul>
+                                </div>
+                                <div class="codigo-corretor">
+                                    Você comprou com um corretor?
+                                    <div class="form-group">
+                                        <label for="codigoCorretor1">Código do corretor</label>
+                                        <input type="number" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
+                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo se sua
+                                            compra foi online)
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -140,143 +316,178 @@
                 </fieldset>
                 <fieldset>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 card-validation">
                             <div class="area-form-cont">
-                                <h2 class="fs-title">Cadastre-se para utilizar<br>
-                                    <strong>o Doutor Hoje</strong></h2>
-                                <div class="form-group">
-                                    <label for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control" id="nomeUsuario" placeholder="Seu nome">
+
+                                <h2 class="fs-title">Agora configure o<br>
+                                    <strong>seu pagamento</strong></h2>
+
+                                <div class="form-row">
+                                    <div class="col-sm-12 card-wrapper"></div>
+                                    <!-- <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao"   placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16"> -->
+
                                 </div>
-                                <div class="form-group">
-                                    <label for="emailUsuario">Email address</label>
-                                    <input type="email" class="form-control" id="emailUsuario" placeholder="exemplo@email.com.br">
+                                <hr>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
+                                   <input type="text" class="form-control col-sm-7" name="numero" id="numero" placeholder="Insira o número do cartão"  required >
+                                    <!-- <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao"   placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16"> -->
                                 </div>
-                                <div class="form-group">
-                                    <label for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control" id="cpfUsuario" placeholder="000.000.000-00">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
+                                        cartão</label>
+                                    <input type="text" class="form-control col-sm-7  text-uppercase" id="nome_impresso" name="nome_impresso" placeholder="Insira o nome do titular" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control" id="celularUsuario" placeholder="Seu nome">
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
+
+                                    <input type="text" class="form-control col-sm-3" id="validade" name="validade" placeholder="MM/AA"   required>
+                                </div>
+                                <div class="form-row">
+                                    <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
+
+                                    <input type="text" class="form-control col-sm-2" id="codigo_seg" name="codigo_seg" placeholder="CVC" required >
                                 </div>
                             </div>
                             <div class="area-btn">
-                                <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                <input type="submit" name="submit" class="btn btn-blue submit action-button" value="Finalizar compra"/>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="aceitaTermos">
+                                    <label class="form-check-label link-termo-uso" for="aceitaTermos">
+                                        Declaro que li e aceito os
+                                        <a href="javascript:;" data-toggle="modal" data-target="#modalTermoUso">termos
+                                            de uso</a> do Doutor Hoje
+                                    </label>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div>
+                                            <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
+                                            <input type="button" name="submit" class="btn btn-blue submit action-button   finalizarCompra"   value="Finalizar compra"/>
+                                           <!--  <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="modalTermoUso" tabindex="-1" role="dialog" aria-labelledby="modalTermoUsoTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalTermoUsoTitle">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Fechar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="area-resumo-cont">
-                                Resumo 2
+                                <div class="lista-pedido">
+                                    <h3>Pedido</h3>
+                                    <ul class="items-pedido"></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    Conclusão
+                    <div class="boas-vindas">
+                        <div class="mensagem">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3>Muito bem!</h3>
+                                    <p>Agora você já pode agendar sua<br>
+                                        consulta e/ou exame por um<br>
+                                        preço exclusivo</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="area-btn">
+                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende sua 1a consulta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="imagem">
+                            <img src="/libs/home-template/img/l-pf-pagamento-bg.jpg" alt="Pessoas no computador">
+                        </div>
+                    </div>
                 </fieldset>
             </form>
         </div>
     </section>
     {{--<footer class="footer-lp-pf">
         <div class="container">
-
+            <p>Central de Atendimento</p>
+            <p class="numeros">0800 727 3620 / (61) 3221 5350</p>
         </div>
     </footer>--}}
 </div>
 @include('flash-message')
+
 <script>
-    $(document).ready(function () {
+    var laravel_token = '{{ csrf_token() }}';
+    var plano =  '{{ $plano }}';
+    var id= '{{ $idplano }}';
+    var details = '{{ $detalhes }}';
+    var all = '{{ $all }}';
 
-        // MULTI STEP FORM
-        var current_fs, next_fs, previous_fs; //fieldsets
-        var left, opacity, scale; //fieldset properties which we will animate
-        var animating; //flag to prevent quick multi-click glitches
 
-        $(".next").click(function () {
-            if (animating) return false;
-            animating = true;
-
-            current_fs = $(this).parent().parent().parent().parent();
-            next_fs = $(this).parent().parent().parent().parent().next();
-
-            //activate next step on progressbar using the index of next_fs
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-            //show the next fieldset
-            next_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function (now, mx) {
-                    //as the opacity of current_fs reduces to 0 - stored in "now"
-                    //1. scale current_fs down to 80%
-                    scale = 1 - (1 - now) * 0.2;
-                    //2. bring next_fs from the right(50%)
-                    left = (now * 50) + "%";
-                    //3. increase opacity of next_fs to 1 as it moves in
-                    opacity = 1 - now;
-                    current_fs.css({'transform': 'scale(' + scale + ')'});
-                    next_fs.css({'left': left, 'opacity': opacity});
-                },
-                duration: 500,
-                complete: function () {
-                    current_fs.hide();
-                    animating = false;
-                },
-                //this comes from the custom easing plugin
-                easing: 'easeOutQuint'
-            });
-        });
-
-        $(".previous").click(function () {
-            if (animating) return false;
-            animating = true;
-
-            current_fs = $(this).parent().parent().parent().parent();
-            previous_fs = $(this).parent().parent().parent().parent().prev();
-
-            //de-activate current step on progressbar
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
-            //show the previous fieldset
-            previous_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function (now, mx) {
-                    //as the opacity of current_fs reduces to 0 - stored in "now"
-                    //1. scale previous_fs from 80% to 100%
-                    scale = 0.8 + (1 - now) * 0.2;
-                    //2. take current_fs to the right(50%) - from 0%
-                    left = ((1 - now) * 50) + "%";
-                    //3. increase opacity of previous_fs to 1 as it moves in
-                    opacity = 1 - now;
-                    current_fs.css({'left': left});
-                    previous_fs.css({'transform': 'scale(' + scale + ')', 'opacity': opacity});
-                },
-                duration: 500,
-                complete: function () {
-                    current_fs.hide();
-                    animating = false;
-                },
-                //this comes from the custom easing plugin
-                easing: 'easeOutQuint'
-            });
-        });
-
-        $(".submit").click(function () {
-            return false;
-        })
-
-        // ADICIONAR DEPENDENTE
-        var addbutton = document.getElementById("addbutton");
-        addbutton.addEventListener("click", function () {
-            var boxes = document.getElementById("boxes");
-            var clone = boxes.firstElementChild.cloneNode(true);
-            boxes.appendChild(clone);
-        });
-
-    });
+    var plano_descricao ="Plano Blue";
+    var valor ="36,50";
+    var key  = '{{ $values }}';
+    var url ='{{ $url }}';
 </script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.card-validation').card({
+			// a selector or DOM element for the container
+			// where you want the card to appear
+			container: '.card-wrapper', // *required*
+
+			formSelectors: {
+				numberInput: 'input#numero', // optional — default input[name="number"]
+				expiryInput: 'input#validade', // optional — default input[name="expiry"]
+				cvcInput: 'input#codigo_seg', // optional — default input[name="cvc"]
+				nameInput: 'input#nome_impresso' // optional - defaults input[name="name"]
+			},
+
+			width: '100%', // optional — default 350px
+			formatting: true, // optional - default true
+
+			// Strings for translation - optional
+			messages: {
+				validDate: 'valid\ndate', // optional - default 'valid\nthru'
+				monthYear: 'mm/yy', // optional - default 'month/year'
+			},
+
+			// Default placeholders for rendered fields - optional
+			placeholders: {
+				number: '•••• •••• •••• ••••',
+				name: 'Nome Impresso',
+				expiry: '••/••',
+				cvc: '•••'
+			},
+
+			masks: {
+				cardNumber: '•' // optional - mask card number
+			}
+
+			// if true, will log helpful messages for setting up Card
+
+		});
+	});
+</script>
+
 </body>
 </html>
