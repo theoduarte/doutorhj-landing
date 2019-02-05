@@ -104,6 +104,9 @@ $(function(){
 					$('#consultorName').empty().append('<strong>Nome: </strong>'+consultor.nm_primario+' '+consultor.nm_primario);
 					$('.consultor').slideDown();
 
+				}else{
+					$('#codigoCorretor').val('');
+					$.Notification.notify('error','top right', 'DrHoje', 'Não encontramos nenhum consultor vinculado a este codigo!');
 				}
 
 			},
