@@ -34,6 +34,7 @@ Route::get('planos-individuais', 'ClinicaController@planos')->name('planos-indiv
 Route::get('planos-individuais/contratar', 'ClinicaController@planosContratacao')->name('contratacao');
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');
 Route::get('avaliacao', 'ClinicaController@avaliaAtendimento');
+Route::get('campanha', 'ClinicaController@cadastroCampanha');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');

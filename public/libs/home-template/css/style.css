@@ -5008,6 +5008,75 @@ footer ul li a:hover {
     background-color: #fff;
 }
 
+.cont-form-campanha {
+    height: 100%;
+    padding: 50px 0;
+    background-color: #E8F1FF;
+}
+.cont-form-campanha .area-form-campanha {
+    width: 640px;
+    padding: 50px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background-color: #ffffff;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria {
+    width: 100%;
+    padding: 0 20px 20px 20px;
+    border-radius: 12px;
+    background-color: #E9E9E9;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria .titulo {
+    width: 230px;
+    margin: 0 auto;
+    border-radius: 0 0 6px 6px;
+    background-color: #2D405A;
+    color: #ffffff;
+    line-height: 24px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro {
+    margin-top: 20px;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo {
+    background-color: #ffffff;
+    border-radius: 6px;
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    text-align: center;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo img {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+.cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo p {
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: 40px;
+    font-weight: 700;
+    color: #000000;
+}
+.cont-form-campanha .area-form-campanha .subtitulo p {
+    margin: 30px 0 30px 0;
+    font-size: 30px;
+    color: #2D405A;
+    text-align: center;
+}
+.cont-form-campanha .area-form-campanha form .form-group label {
+    font-size: 15px;
+    color: #2D405A;
+    font-weight: 600;
+}
+.cont-form-campanha .area-form-campanha form .btn {
+    width: 100%;
+    height: 40px;
+    margin-top: 12px;
+}
+
 /*********************************
 *
 *  X MEDIA QUERIES
