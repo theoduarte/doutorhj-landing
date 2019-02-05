@@ -301,12 +301,11 @@
                                     <ul class="items-pedido"></ul>
                                 </div>
                                 <div class="codigo-corretor">
-                                    Você comprou com um corretor?
+                                    Você comprou com um consultor de vendas?
                                     <div class="form-group">
-                                        <label for="codigoCorretor1">Código do corretor</label>
-                                        <input type="number" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
-                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo se sua
-                                            compra foi online)
+                                        <label for="codigoCorretor1">Código do consultor</label>
+                                        <input type="text" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
+                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo caso não haja consultor)
                                         </small>
                                     </div>
                                 </div>
@@ -439,7 +438,8 @@
     var id= '{{ $idplano }}';
     var details = '{{ $detalhes }}';
     var all = '{{ $all }}';
-
+	var corretorkey = "csadfasdfsdfdfdsa";
+    var url_corretor = '{{$url_corretor}}';
 
     var plano_descricao ="Plano Blue";
     var valor ="36,50";

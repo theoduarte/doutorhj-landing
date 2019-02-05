@@ -70,6 +70,40 @@ $(function(){
 		}
 	}
 
+	$('#codigoCorretor').keydown(function() {
+		var codigo = $(this).val().replace(/\D/g, '');
+		if(codigo.length >0 ){
+
+			if(codigo.length ==7){
+				buscarCorretor(codigo);
+			}
+		}
+
+	})
+	function buscarCorretor(codigo) {
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url: url_corretor,
+			headers: {
+				"Authorization":corretorkey
+
+			},
+			data: {
+				codigo:codigo,
+			},
+			timeout: 15000,
+			success: function (result) {
+
+				console.log(result)
+			},
+			error: function (result) {
+
+				console.log(result)
+
+			}
+		});
+	}
 	function cpfVerify(cpf){
 		cpf = cpf.replace(/\D/g, '');
 		if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -200,6 +234,12 @@ $(function(){
 		mask: ['999.999.999-99'],
 		keepStatic: true
 	});
+
+	// codigo consultor
+	$("#codigoCorretor").inputmask({
+		mask: ['9-9-9-9-9-9-9-9-9-9-9'],
+		keepStatic: true
+	});
 	$("#celularUsuario").inputmask({
 		mask: ['(99) 99999-9999'],
 		keepStatic: true
@@ -263,31 +303,37 @@ $(function(){
 	var addbutton = document.getElementById("addbutton");
 	if(addbutton != null) {
 		addbutton.addEventListener("click", function () {
-			var boxes = document.getElementById("boxes");
-			var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
+			var limite = $('#boxes').children().length +1
+			if(limite ==8){
+				$.Notification.notify('error','top right', 'DrHoje', 'Só é possivel adicionar 7 dependentes no momento!');
+			}else{
+				var boxes = document.getElementById("boxes");
+				var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
 
-			var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
-				'                                          <div class="btn-excluir">\n' +
-				'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
-				'                                                </div> \n' +
-				'                                        <div class="form-row">\n' +
-				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
-				'                                        </div>\n' +
-				'                                        <div class="form-row">\n' +
-				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
-				'                                        </div>\n' +
-				'                                    </div>');
-			$('#boxes').append(data);
-			$('.box-individual').stop().animate({
-				scrollTop: $('.box-individual')[0].scrollHeight
-			}, 800);
+				var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
+					'                                          <div class="btn-excluir">\n' +
+					'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
+					'                                                </div> \n' +
+					'                                        <div class="form-row">\n' +
+					'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
+					'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+					'                                        </div>\n' +
+					'                                        <div class="form-row">\n' +
+					'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
+					'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+					'                                        </div>\n' +
+					'                                    </div>');
+				$('#boxes').append(data);
+				$('.box-individual').stop().animate({
+					scrollTop: $('.box-individual')[0].scrollHeight
+				}, 800);
 
-			$("#cpfDependente"+quantidade).inputmask({
-				mask: ['999.999.999-99'],
-				keepStatic: true
-			});
+				$("#cpfDependente"+quantidade).inputmask({
+					mask: ['999.999.999-99'],
+					keepStatic: true
+				});
+			}
+
 
 		});
 
