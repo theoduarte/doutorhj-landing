@@ -36,7 +36,7 @@ Route::post('contratar-plano', 'ClinicaController@contratarPlano')->name('contra
 
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');
 Route::get('avaliacao', 'ClinicaController@avaliaAtendimento');
-Route::get('campanha', 'ClinicaController@cadastroCampanha');
+Route::get('campanha/{url_param}/{plano?}', 'CampanhaVendaController@cadastroCampanha');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
@@ -110,6 +110,8 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 #rotas da campanha caixa
 Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
 Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa')->name('oferta-certa-caixa');
+
+Route::post('registrar-campanha', 'CampanhaVendaController@registrarCampanha')->name('registrar-campanha');
 
 Route::post('enviar-email-confirmacao', 'PacienteController@enviarEmailConfirmacao')->name('enviar-email');
 

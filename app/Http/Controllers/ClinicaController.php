@@ -76,12 +76,6 @@ class ClinicaController extends Controller
         return view('avaliacao');
     }
 
-    public function cadastroCampanha()
-    {
-        /*Request::flash();*/
-        return view('campanhas/planos');
-    }
-
     public function index()
     {
         $prestadores = Clinica::where(function($query){

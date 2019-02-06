@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
     <link rel="stylesheet" href="/css/doutorhj.style.css">
     <link rel="stylesheet" href="/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.css"/>
+    
+    <script src="/libs/comvex-template/js/jquery.min.js"></script>
+    <script src="/libs/comvex-template/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -40,7 +43,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="logo">
-                                    <p>Ideal Saúde</p>
+                                    <p>{{$campanha->empresa->nome_fantasia}}</p>
                                 </div>
                             </div>
                         </div>
@@ -51,65 +54,105 @@
                         <strong>ativar sua assinatura</strong></p>
                 </div>
 
-                <form>
-                    <div class="form-group row">
-                        <label for="inputNome" class="col-sm-4 col-form-label">Nome</label>
+                <form action="{{ route('registrar-campanha') }}" method="post" onsubmit="return validaRegistrar()">
+                
+                	{{ csrf_field() }}
+                    <div class="form-group row {{ $errors->has('nm_primario') ? ' cvx-has-error' : '' }}">
+                        <label for="nm_primario" class="col-sm-4 col-form-label">Nome</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputNome" placeholder="Seu nome">
+                            <input type="text" id="nm_primario" class="form-control" name="nm_primario" value="{{ old('nm_primario') }}" placeholder="Seu nome" required="required" maxlength="50">
+                            <input type="hidden" name="a7cadgygey6yp3uc" value="{{ $campanha->id }}">
+                            @if ($errors->has('nm_primario'))
+                            	<span class="help-block"><strong>{{ $errors->first('nm_primario') }}</strong></span>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row {{ $errors->has('nm_secundario') ? ' cvx-has-error' : '' }}">
+                        <label for="nm_secundario" class="col-sm-4 col-form-label">Sobrenome</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="nm_secundario" class="form-control" name="nm_secundario" value="{{ old('nm_secundario') }}" placeholder="Seu sobrenome" required="required" maxlength="50">
+                            @if ($errors->has('nm_secundario'))
+                            	<span class="help-block"> <strong>{{ $errors->first('nm_secundario') }}</strong></span>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row {{ $errors->has('te_documento') ? ' cvx-has-error' : '' }}">
+                        <label for="te_documento" class="col-sm-4 col-form-label">CPF</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="te_documento" class="form-control mascaraCPF" name="te_documento" placeholder="000.000.000-00" required="required">
+                            @if ($errors->has('te_documento'))
+                            	<span class="help-block"> <strong>{{ $errors->first('te_documento') }}</strong></span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
+                        <label for="email" class="col-sm-4 col-form-label">E-mail</label>
+                        <div class="col-sm-8">
+                            <input type="email" id="inputEmail" class="form-control" name="email" placeholder="exemplo@email.com.br" required="required" maxlength="250">
+                            @if ($errors->has('email'))
+                            	<span class="help-block"> <strong>{{ $errors->first('email') }}</strong></span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputSobrenome" class="col-sm-4 col-form-label">Sobrenome</label>
+                        <label for="cs_sexo" class="col-sm-4 col-form-label">Gênero</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputSobrenome" placeholder="Seu sobrenome">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputCPF" class="col-sm-4 col-form-label">CPF</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputCPF" placeholder="000.000.000-00">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-4 col-form-label">E-mail</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="exemplo@email.com.br">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputNome" class="col-sm-4 col-form-label">Gênero</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputNome" placeholder="Seu sobrenome">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="mesNascimento" class="col-sm-4 col-form-label">Data de nascimento</label>
-                        <div class="col-6 col-sm-4">
-                            <select class="form-control" id="mesNascimento">
-                                <option>Mês</option>
+                            <select id="cs_sexo" class="form-control" name="cs_sexo">
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
                             </select>
                         </div>
-                        <div class="col-6 col-sm-4">
-                            <select class="form-control" id="anoNascimento">
+                    </div>
+                    <div class="form-group row">
+                        <label for="dia_nascimento" class="col-sm-4 col-form-label">Data de nascimento</label>
+                        <div class="col-4 col-sm-2">
+                            <select id="dia_nascimento" class="form-control" name="dia_nascimento" required="required" style="width: 75px;">
+                            	<option>Dia</option>
+                            	@for($i = 1; $i < 32; $i++)
+                            	<option value="{{ $i }}">{{ sprintf("%02d", $i) }}</option>
+                            	@endfor
+                            </select>
+                        </div>
+                        <div class="col-4 col-sm-3">
+                            <select id="mes_nascimento" class="form-control" name="mes_nascimento" required="required">
+                            	<option>Mês</option>
+                            	@for($i = 1; $i <= 12; $i++)
+                            	<option value="{{ $i }}">{{ sprintf("%02d", $i) }}</option>
+                            	@endfor
+                            </select>
+                        </div>
+                        <div class="col-4 col-sm-3">
+                            <select id="ano_nascimento" class="form-control" name="ano_nascimento" required="required">
                                 <option>Ano</option>
+                                @for($i = date('Y'); $i >= (date('Y')-100); $i--)
+                                <option value="{{ $i }}">{{ sprintf("%04d", $i) }}</option>
+                                @endfor
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="inputCelular" class="col-sm-4 col-form-label">Celular</label>
+                    <div class="form-group row {{ $errors->has('ds_contato') ? ' cvx-has-error' : '' }}">
+                        <label for="ds_contato" class="col-sm-4 col-form-label">Celular</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputCelular" placeholder="(00) 00000-0000">
+                            <input type="text" id="ds_contato" class="form-control mascaraTelefone" name="ds_contato" placeholder="(00) 00000-0000" required="required">
+                            @if ($errors->has('ds_contato'))
+                            	<span class="help-block"> <strong>{{ $errors->first('ds_contato') }}</strong></span>
+                            @endif
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="inputConfCelular" class="col-sm-4 col-form-label">Confirme o celular</label>
+                    <div class="form-group row {{ $errors->has('confirma_ds_contato') ? ' cvx-has-error' : '' }}">
+                        <label for="confirma_ds_contato" class="col-sm-4 col-form-label">Confirme o celular</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputConfCelular" placeholder="(00) 00000-0000">
+                            <input type="text" id="confirma_ds_contato" class="form-control mascaraTelefone" name="confirma_ds_contato" placeholder="(00) 00000-0000" required="required">
+                            @if ($errors->has('confirma_ds_contato'))
+                            	<span class="help-block"> <strong>{{ $errors->first('confirma_ds_contato') }}</strong></span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
+                        <input type="checkbox" id="aceita_termos" class="form-check-input" name="aceita_termos" value="">
+                        <label class="form-check-label" for="aceita_termos">
                             Declaro que li e aceito os <a href="javascript:;" data-toggle="modal" data-target="#modalTermos">termos de uso</a> do Doutor Hoje
                         </label>
                     </div>
@@ -139,11 +182,6 @@
         </div>
     </div>
 
-    <script>
-        var laravel_token = '{{ csrf_token() }}';
-        var resizefunc = [];
-    </script>
-
     <script src="/libs/comvex-template/js/jquery.min.js"></script>
     <script src="/libs/home-template/js/bootstrap.min.js"></script>
     <script src="/libs/select2/js/select2.min.js"></script>
@@ -151,9 +189,40 @@
     <script src="/libs/jquery-credit-card/jquery.creditCardValidator.js"></script>
     <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
     <script src="/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="/js/inputMask.min.js"></script>
+    
+    <script src="/libs/jquery-ui/jquery-ui.js"></script>
+	<script src="/libs/comvex-template/js/jquery.inputmask.bundle.js"></script>
     <script>
+        var laravel_token = '{{ csrf_token() }}';
+        var resizefunc = [];
 
+        $(".mascaraCPF").inputmask({
+    		mask: ['999.999.999-99'],
+    		keepStatic: true
+    	});
+
+        $(".mascaraTelefone").inputmask({
+            mask: ["(99) 9999-9999", "(99) 99999-9999"],
+            keepStatic: true
+    	});
+
+        function validaRegistrar() {
+
+            var contato1 = $('#ds_contato').val();
+            var contato2 = $('#confirma_ds_contato').val();
+
+            if (contato1 != contato2) {
+                swal(
+                    {
+                        title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ocorreu um erro</div>',
+                        text: 'Os números de telefone informados devem ser iguais!'
+                    }
+                );
+                return false;
+            }
+
+            return true;
+        }
     </script>
 
 </body>
