@@ -57,7 +57,7 @@ class Paciente extends Model
 	public $dates 	      = ['dt_nascimento'];
 
 	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
-	protected $appends = ['plano_ativo', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
+	protected $appends = ['plano_ativo', 'planos_disponiveis', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
 
 	/*
      * Constants
@@ -190,7 +190,12 @@ class Paciente extends Model
 
 	public function getPlanoAtivoAttribute()
 	{
-		return Plano::findOrFail($this->getPlanoAtivo($this->attributes['id'])); //some logic to return numbers
+		return Plano::findOrFail($this->getPlanoAtivo($this->attributes['id']));
+	}
+
+	public function getPlanosDisponiveisAttribute()
+	{
+		return Plano::whereIn('id', $this->getPlanosDisponiveis($this->attributes['id']))->get();
 	}
 
 	public function getVlMaxConsumoAttribute()
@@ -219,6 +224,23 @@ class Paciente extends Model
 		}
 	}
 
+	public static function getPlanosDisponiveis($paciente_id)
+	{
+		$vigenciasPac = self::getVigenciasDisponiveis($paciente_id);
+
+		if(is_null($vigenciasPac) || $vigenciasPac->count() == 0) {
+			return [Plano::OPEN];
+		} else {
+			$planos = [];
+			foreach($vigenciasPac as $vigencia) {
+				if(!is_null($vigencia->anuidade)) {
+					$planos[] = $vigencia->anuidade->plano->id;
+				}
+			}
+			return $planos;
+		}
+	}
+
 	public static function getVigenciaAtiva($paciente_id)
 	{
 		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id])
@@ -229,6 +251,20 @@ class Paciente extends Model
 			})
 			->orderBy('id', 'DESC')
 			->first();
+
+		return $vigenciaPac;
+	}
+
+	public static function getVigenciasDisponiveis($paciente_id)
+	{
+		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id])
+			->where(function($query) {
+				$query->where('data_inicio', '<=', date('Y-m-d H:i:s'))
+					->where('data_fim', '>=', date('Y-m-d H:i:s'))
+					->orWhere(DB::raw('cobertura_ativa'), '=', true);
+			})
+			->orderBy('id', 'DESC')
+			->get();
 
 		return $vigenciaPac;
 	}

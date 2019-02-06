@@ -170,13 +170,8 @@
 }
 </style>
 
-
- 
-<div class="tudo home-view"  >
-
-
+<div class="tudo home-view">
     <header>
-      
         @if (Auth::check())
         <div class="welcome-bar">
             <div class="container">
@@ -191,7 +186,6 @@
                 </div>
             </div>
         </div>
-
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
@@ -283,7 +277,6 @@
 						<ul class="wb-links-mobile">
 							<li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
 						</ul>
-                                
                         @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
                             <div class="info-empresarial">
                                 <div class="opcoes ie-logo">
@@ -291,9 +284,17 @@
                                         <img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
                                     </div>
                                 </div>
-                                <div class="opcoes ie-plano">
+                                <div class="opcoes ie-plano dropdown">
                                     <p class="titulo">Plano</p>
-                                    <p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
+									<p class="plano dropdown-toggle {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}" id="selectPlano" role="button" data-toggle="dropdown">
+										{{Auth::user()->paciente->plano_ativo->ds_plano}}
+									</p>
+									<div class="dropdown-menu" aria-labelledby="selectPlano">
+										@foreach(Auth::user()->paciente->planos_disponiveis as $planos)
+											<a class="dropdown-item" href="#">{{$planos->ds_plano}}</a>
+										@endforeach
+									</div>
+                                    {{--<p class="plano {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>--}}
                                 </div>
 								@if(Auth::user()->paciente->saldo_empresarial != 0)
 									<div class="opcoes ie-saldo">

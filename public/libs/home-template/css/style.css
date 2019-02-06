@@ -386,6 +386,11 @@ header .navbar-collapse {
     background: #343a40;
 }
 
+.info-empresarial .opcoes p.plus {
+	color: #808080;
+	background: #fff;
+}
+
 .info-empresarial .opcoes p.saldo {
     color: #64A610;
     font-weight: 600;
