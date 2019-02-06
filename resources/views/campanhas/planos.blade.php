@@ -84,12 +84,12 @@
                     </div>
                     <div class="form-group row">
                         <label for="mesNascimento" class="col-sm-4 col-form-label">Data de nascimento</label>
-                        <div class="col-sm-4">
+                        <div class="col-6 col-sm-4">
                             <select class="form-control" id="mesNascimento">
                                 <option>Mês</option>
                             </select>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-6 col-sm-4">
                             <select class="form-control" id="anoNascimento">
                                 <option>Ano</option>
                             </select>

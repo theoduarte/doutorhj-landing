@@ -5271,7 +5271,6 @@ footer ul li a:hover {
 }
 
 .cont-form-campanha {
-    height: 100%;
     padding: 50px 0;
     background-color: #E8F1FF;
 }
@@ -6036,6 +6035,27 @@ footer ul li a:hover {
 
     .area-checkup .pacote-checkup .valor .row div {
         margin-bottom: 20px;
+    }
+    .cont-form-campanha {
+        padding: 20px 0;
+    }
+    .cont-form-campanha .area-form-campanha {
+        width: 100%;
+        padding: 14px;
+    }
+    .cont-form-campanha .area-form-campanha .logos-parceria {
+        padding: 0 20px 10px 20px;
+    }
+    .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo {
+        margin-bottom: 10px;
+    }
+    .cont-form-campanha .area-form-campanha .subtitulo p {
+        margin: 26px 0 22px 0;
+        font-size: 20px;
+    }
+    .cont-form-campanha .area-form-campanha form .btn {
+        height: 50px;
+        white-space: normal;
     }
 }
 
