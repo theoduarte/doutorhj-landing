@@ -227,8 +227,24 @@ function efetuarPagamento(usuario, card ){
 			},
 			error: function (result) {
 				$('.spinner').fadeOut()
-				var response = result.responseJSON;
-				console.log(response)
+
+				try{
+					var response = result.responseJSON;
+					var res = response.details.split("response:")
+					var error =JSON.parse(res[1]);
+					var errors =error.errors != undefined ? error.errors : '';
+
+					swal({
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+response.message+'</div>',
+						text: error.message+' '+errors
+					})
+
+				}catch (e) {
+					swal({
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> ops</div>',
+						text: 'Não conseguimos processar o pagamento'
+					})
+				}
 
 			}
 		});
