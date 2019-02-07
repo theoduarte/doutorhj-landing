@@ -57,7 +57,7 @@ class Paciente extends Model
 	public $dates 	      = ['dt_nascimento'];
 
 	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
-	protected $appends = ['plano_ativo', 'planos_disponiveis', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
+	protected $appends = ['plano_ativo', 'plano_principal', 'planos_disponiveis', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
 
 	/*
      * Constants
@@ -193,6 +193,11 @@ class Paciente extends Model
 		return Plano::findOrFail($this->getPlanoAtivo($this->attributes['id']));
 	}
 
+	public function getPlanoPrincipalAttribute()
+	{
+		return Plano::findOrFail($this->getPlanoPrincipal($this->attributes['id']));
+	}
+
 	public function getPlanosDisponiveisAttribute()
 	{
 		return Plano::whereIn('id', $this->getPlanosDisponiveis($this->attributes['id']))->get();
@@ -221,6 +226,20 @@ class Paciente extends Model
 			return Plano::OPEN;
 		} else {
 			return $vigenciaPac->anuidade->plano_id;
+		}
+	}
+
+	public static function getPlanoPrincipal($paciente_id)
+	{
+		$planosDisponiveis = self::getPlanosDisponiveis($paciente_id);
+
+		dd($planosDisponiveis);
+
+
+		if(is_null($planosDisponiveis) || is_null($planosDisponiveis->anuidade)) {
+			return Plano::OPEN;
+		} else {
+			return $planosDisponiveis->anuidade->plano_id;
 		}
 	}
 

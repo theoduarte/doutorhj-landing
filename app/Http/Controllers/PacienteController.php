@@ -8,6 +8,7 @@ use App\Endereco;
 use App\Estado;
 use App\Especialidade;
 use App\Paciente;
+use App\Plano;
 use App\User;
 
 use Illuminate\Support\Facades\Request;
@@ -320,4 +321,11 @@ class PacienteController extends Controller
     
     	return $dependente;
     }
+
+	public function alteraPlanoAtivo($id)
+	{
+		$plano = Plano::findOrFail($id);
+
+
+	}
 }
