@@ -432,6 +432,7 @@ function efetuarPagamento(usuario, card ){
 				if(input.length !=0){
 					var cpfLimpo = input.replace(/\D+/g, '');
 					if(cpfLimpo==cpf){
+						console.log({cpf,cpfLimpo })
 						$('#boxes'+dd).remove();
 						$('.cpfDependente'+dd).remove();
 						swal(
