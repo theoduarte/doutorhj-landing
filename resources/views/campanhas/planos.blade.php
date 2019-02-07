@@ -10,7 +10,7 @@
     <meta name="keywords" content="doutorhoje saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
 
-    <title>@yield('title', 'DoutorHoje')</title>
+    <title>@yield('title', 'DoutorHoje'): Campanha - {{$campanha->empresa->nome_fantasia}}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css"/>
@@ -19,15 +19,44 @@
     <link rel="stylesheet" href="/libs/home-template/css/style.css"/>
     <link rel="stylesheet" href="/libs/select2/css/select2.min.css"/>
     <link rel="stylesheet" href="/libs/jquery-autocomplete/css/styles.css">
+    
+    <!-- Sweet Alert css -->
+    <link href="/libs/sweet-alert/sweetalert2.css" rel="stylesheet" type="text/css"/>
+    
     <link rel="stylesheet" href="/css/doutorhj.style.css">
     <link rel="stylesheet" href="/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.css"/>
     
     <script src="/libs/comvex-template/js/jquery.min.js"></script>
+    <script src="/libs/comvex-template/js/popper.min.js"></script>
     <script src="/libs/comvex-template/js/bootstrap.min.js"></script>
+    
+    <!-- Notification js -->
+    <script src="/libs/notifyjs/dist/notify.min.js"></script>
+    <script src="/libs/notifications/notify-metro.js"></script>
+    
+    <script src="/libs/comvex-template/js/jquery.core.js"></script>
 </head>
 <body>
-
+	@if ($errors->any())
+		<script type="text/javascript">
+		$(document).ready(function () {
+		
+			$.Notification.notify('error','top right', 'Solicitação Falhou!', '<ul style="margin-left: -30px;">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>');
+		});
+		</script>
+		{{--<div class="alert alert-danger alert-dismissible fade show" style="padding: 10px;">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>--}}
+	@endif
     <div class="cont-form-campanha">
+    	 @include('flash-message')
         <div class="container">
             <div class="area-form-campanha">
                 <div class="logos-parceria">
@@ -81,7 +110,7 @@
                     <div class="form-group row {{ $errors->has('te_documento') ? ' cvx-has-error' : '' }}">
                         <label for="te_documento" class="col-sm-4 col-form-label">CPF</label>
                         <div class="col-sm-8">
-                            <input type="text" id="te_documento" class="form-control mascaraCPF" name="te_documento" placeholder="000.000.000-00" required="required">
+                            <input type="text" id="te_documento" class="form-control mascaraCPF" name="te_documento" value="{{ old('te_documento') }}" placeholder="000.000.000-00" required="required">
                             @if ($errors->has('te_documento'))
                             	<span class="help-block"> <strong>{{ $errors->first('te_documento') }}</strong></span>
                             @endif
@@ -90,7 +119,7 @@
                     <div class="form-group row {{ $errors->has('email') ? ' cvx-has-error' : '' }}">
                         <label for="email" class="col-sm-4 col-form-label">E-mail</label>
                         <div class="col-sm-8">
-                            <input type="email" id="inputEmail" class="form-control" name="email" placeholder="exemplo@email.com.br" required="required" maxlength="250">
+                            <input type="email" id="inputEmail" class="form-control" name="email" value="{{ old('email') }}" placeholder="exemplo@email.com.br" required="required" maxlength="250">
                             @if ($errors->has('email'))
                             	<span class="help-block"> <strong>{{ $errors->first('email') }}</strong></span>
                             @endif
@@ -100,8 +129,8 @@
                         <label for="cs_sexo" class="col-sm-4 col-form-label">Gênero</label>
                         <div class="col-sm-8">
                             <select id="cs_sexo" class="form-control" name="cs_sexo">
-                                <option value="M">Masculino</option>
-                                <option value="F">Feminino</option>
+                                <option value="M" @if(old('cs_sexo') == 'M') selected="selected" @endif >Masculino</option>
+                                <option value="F" @if(old('cs_sexo') == 'F') selected="selected" @endif>Feminino</option>
                             </select>
                         </div>
                     </div>
@@ -111,7 +140,7 @@
                             <select id="dia_nascimento" class="form-control" name="dia_nascimento" required="required" style="width: 75px;">
                             	<option>Dia</option>
                             	@for($i = 1; $i < 32; $i++)
-                            	<option value="{{ $i }}">{{ sprintf("%02d", $i) }}</option>
+                            	<option value="{{ $i }}" @if(old('dia_nascimento') == $i) selected="selected" @endif>{{ sprintf("%02d", $i) }}</option>
                             	@endfor
                             </select>
                         </div>
@@ -119,7 +148,7 @@
                             <select id="mes_nascimento" class="form-control" name="mes_nascimento" required="required">
                             	<option>Mês</option>
                             	@for($i = 1; $i <= 12; $i++)
-                            	<option value="{{ $i }}">{{ sprintf("%02d", $i) }}</option>
+                            	<option value="{{ $i }}" @if(old('mes_nascimento') == $i) selected="selected" @endif>{{ sprintf("%02d", $i) }}</option>
                             	@endfor
                             </select>
                         </div>
@@ -127,7 +156,7 @@
                             <select id="ano_nascimento" class="form-control" name="ano_nascimento" required="required">
                                 <option>Ano</option>
                                 @for($i = date('Y'); $i >= (date('Y')-100); $i--)
-                                <option value="{{ $i }}">{{ sprintf("%04d", $i) }}</option>
+                                <option value="{{ $i }}" @if(old('ano_nascimento') == $i) selected="selected" @endif>{{ sprintf("%04d", $i) }}</option>
                                 @endfor
                             </select>
                         </div>
@@ -135,7 +164,7 @@
                     <div class="form-group row {{ $errors->has('ds_contato') ? ' cvx-has-error' : '' }}">
                         <label for="ds_contato" class="col-sm-4 col-form-label">Celular</label>
                         <div class="col-sm-8">
-                            <input type="text" id="ds_contato" class="form-control mascaraTelefone" name="ds_contato" placeholder="(00) 00000-0000" required="required">
+                            <input type="text" id="ds_contato" class="form-control mascaraTelefone" name="ds_contato" value="{{ old('ds_contato') }}" placeholder="(00) 00000-0000" required="required">
                             @if ($errors->has('ds_contato'))
                             	<span class="help-block"> <strong>{{ $errors->first('ds_contato') }}</strong></span>
                             @endif
@@ -144,14 +173,14 @@
                     <div class="form-group row {{ $errors->has('confirma_ds_contato') ? ' cvx-has-error' : '' }}">
                         <label for="confirma_ds_contato" class="col-sm-4 col-form-label">Confirme o celular</label>
                         <div class="col-sm-8">
-                            <input type="text" id="confirma_ds_contato" class="form-control mascaraTelefone" name="confirma_ds_contato" placeholder="(00) 00000-0000" required="required">
+                            <input type="text" id="confirma_ds_contato" class="form-control mascaraTelefone" name="confirma_ds_contato" value="{{ old('confirma_ds_contato') }}" placeholder="(00) 00000-0000" required="required">
                             @if ($errors->has('confirma_ds_contato'))
                             	<span class="help-block"> <strong>{{ $errors->first('confirma_ds_contato') }}</strong></span>
                             @endif
                         </div>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" id="aceita_termos" class="form-check-input" name="aceita_termos" value="">
+                        <input type="checkbox" id="aceita_termos" class="form-check-input" name="aceita_termos" value="" required="required">
                         <label class="form-check-label" for="aceita_termos">
                             Declaro que li e aceito os <a href="javascript:;" data-toggle="modal" data-target="#modalTermos">termos de uso</a> do Doutor Hoje
                         </label>
@@ -192,6 +221,17 @@
     
     <script src="/libs/jquery-ui/jquery-ui.js"></script>
 	<script src="/libs/comvex-template/js/jquery.inputmask.bundle.js"></script>
+	
+	<!-- Notification js -->
+    <script src="/libs/notifyjs/dist/notify.min.js"></script>
+    <script src="/libs/notifications/notify-metro.js"></script>
+    
+    <!-- Sweet Alert Js  -->
+    <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
+    <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
+    
+    <script src="/libs/comvex-template/js/jquery.core.js"></script>
+    
     <script>
         var laravel_token = '{{ csrf_token() }}';
         var resizefunc = [];

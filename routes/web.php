@@ -36,7 +36,7 @@ Route::post('contratar-plano', 'ClinicaController@contratarPlano')->name('contra
 
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');
 Route::get('avaliacao', 'ClinicaController@avaliaAtendimento');
-Route::get('campanha/{url_param}/{plano?}', 'CampanhaVendaController@cadastroCampanha');
+Route::get('campanha/{url_param}/{plano?}', 'CampanhaVendaController@cadastroCampanha')->name('campanha');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');

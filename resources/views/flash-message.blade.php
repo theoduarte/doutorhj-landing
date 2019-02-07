@@ -105,7 +105,7 @@ $(document).ready(function () {
     swal(
         {
             title: '<div class="tit-sweet tit-info"><i class="fa fa-info-circle" aria-hidden="true"></i> Informação</div>',
-            text: '{{ $message }}.'
+            text: '{{ $message }}'
         }
     );
 });

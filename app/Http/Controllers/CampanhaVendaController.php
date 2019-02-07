@@ -12,6 +12,13 @@ use App\Campanha;
 use App\Anuidade;
 use App\Paciente;
 use App\User;
+use MundiAPILib\MundiAPIClient;
+use App\FuncoesPagamento;
+use App\VigenciaPaciente;
+use App\Documento;
+use App\Contato;
+use App\TermosCondicoes;
+use App\TermosCondicoesUsuarios;
 
 class CampanhaVendaController extends Controller
 {
@@ -63,10 +70,12 @@ class CampanhaVendaController extends Controller
 			# realiza a busca pela campanha
 			$campanha_id = $request->input('a7cadgygey6yp3uc');
 			$campanha = CampanhaVenda::with('empresa', 'plano')->where(['id' => $campanha_id])->first();
-
+			
 			# realiza a busca pela anuidade vigencia
-			$anuidade = Anuidade::where(['empresa_id' => $campanha->empresa_id, 'plano_id' => $campanha->plano_id, 'cs_status' => 'A'])->whereDate('data_inicio', '>=', date('Y-m-d H:i:s'))->whereDate('data_fim', '<=', date('Y-m-d H:i:s'))->whereNull('deleted_at')->first();
-
+// 			DB::enableQueryLog();
+			$anuidade = Anuidade::where(['empresa_id' => $campanha->empresa_id, 'plano_id' => $campanha->plano_id, 'cs_status' => 'A'])->whereDate('data_inicio', '<=', date('Y-m-d H:i:s'))->whereDate('data_fim', '>=', date('Y-m-d H:i:s'))->whereNull('deleted_at')->first();
+// 			dd( DB::getQueryLog() );
+			
 			if(is_null($anuidade)) {
 				DB::rollback();
 				return redirect()->route('landing-page')->with('error-alert', 'Esta Campanha ('.$campanha->url_param.') não está vigente ou está inativa!');
@@ -80,6 +89,7 @@ class CampanhaVendaController extends Controller
     
     		if(is_null($usuario)) {
     			$usuario  = new User();
+    			$usuario->cs_status = 'I';
     		} else {
     			$user_id = $usuario->id;
     		}
@@ -90,10 +100,10 @@ class CampanhaVendaController extends Controller
     		$usuario->password  		= bcrypt(UtilController::retiraMascara($request->input('te_documento')).'@paciente');
     		$usuario->access_token		= bcrypt($access_token);
     		$usuario->tp_user   		= 'PAC';
-    		$usuario->cs_status 		= 'I';
     		$usuario->perfiluser_id 	= 3;
     		$usuario->save();
-    		 
+    		
+    		$user_id = $usuario->id;
     		// passa os valores para montar o objeto a ser enviado
     		$resultado = FuncoesPagamento::criarUser($request->input('nm_primario') . ' ' . $request->input('nm_secundario'),  $request->input('email'));
     		 
@@ -106,16 +116,16 @@ class CampanhaVendaController extends Controller
     			$paciente = Paciente::where(['user_id' => $user_id])->first();
     		}
 			
-			if(is_null()) {
+			if(is_null($paciente)) {
 				$paciente = new Paciente();
 			}
-			$paciente->user_id 		= $usuario->id;
-
+			$paciente->user_id 		= $user_id;
+			$dt_nascimento = $request->input('ano_nascimento').'-'.$request->input('mes_nascimento').'-'.$request->input('dia_nascimento');
     		//     		dd($paciente);
     		$paciente->nm_primario      = $request->input('nm_primario');
     		$paciente->nm_secundario    = $request->input('nm_secundario');
     		$paciente->cs_sexo     		= $request->input('cs_sexo');
-    		$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
+    		$paciente->dt_nascimento 	= $dt_nascimento;
     		$paciente->empresa_id       = $campanha->empresa_id;
     		$paciente->access_token    	= $access_token;
     		$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
@@ -124,6 +134,13 @@ class CampanhaVendaController extends Controller
     		$paciente->save();
     		 
     		############# coloca vigencia no cliente da campanha ##############
+    		$vigencia = VigenciaPaciente::where(['paciente_id' => $paciente->id, 'anuidade_id' => $anuidade->id])->first();
+    		
+    		if (!is_null($vigencia)) {
+    			DB::rollback();	
+    			return redirect()->route('campanha', ['url_param' => $campanha->url_param])->with('info-alert', 'Você já faz parte da Campanha: '.$campanha->url_param.'!');
+    		}
+    		
     		$vigencia 					= new VigenciaPaciente();
     		$vigencia->data_inicio 		= date('Y-m-d');
     		$vigencia->data_fim 		= date('Y-m-d');
@@ -166,7 +183,7 @@ class CampanhaVendaController extends Controller
     		$termosCondicoesActual = $termosCondicoes->getActual();
     		 
     		$termosCondicoesUsuarios = new TermosCondicoesUsuarios();
-    		$termosCondicoesUsuarios->user_id = $usuario->id;
+    		$termosCondicoesUsuarios->user_id = $user_id;
     		$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
     		$termosCondicoesUsuarios->save();
     		 
@@ -181,7 +198,7 @@ class CampanhaVendaController extends Controller
     	#############################################
     	 
     	//     	return view('oferta-certa-caixa', compact('access_token'));
-    	return view('auth.login', compact('access_token'));
+    	return redirect()->route('landing-page')->with('success-alert', 'Seu cadastro na Campanha ('.$campanha->url_param.') foi realizada com sucesso!');
 	}
 	
 	//############# PERFORM RELATIONSHIP ##################
