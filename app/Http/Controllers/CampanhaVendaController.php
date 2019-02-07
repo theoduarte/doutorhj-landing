@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\CampanhaVenda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as CVXRequest;
+use App\Http\Requests\CampanhaRequest;
 use App\Empresa;
 use Illuminate\Support\Facades\DB;
 use App\Campanha;
+use App\Anuidade;
+use App\Paciente;
+use App\User;
 
 class CampanhaVendaController extends Controller
 {
@@ -41,7 +45,7 @@ class CampanhaVendaController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    public function registrarCampanha(Request $request)
+    public function registrarCampanha(CampanhaRequest $request)
     {
     	$access_token = UtilController::getAccessToken();
     	$time_to_live = date('Y-m-d H:i:s');
@@ -56,14 +60,26 @@ class CampanhaVendaController extends Controller
     	#############################################
 
     	try {
+			# realiza a busca pela campanha
+			$campanha_id = $request->input('a7cadgygey6yp3uc');
+			$campanha = CampanhaVenda::with('empresa', 'plano')->where(['id' => $campanha_id])->first();
+
+			# realiza a busca pela anuidade vigencia
+			$anuidade = Anuidade::where(['empresa_id' => $campanha->empresa_id, 'plano_id' => $campanha->plano_id, 'cs_status' => 'A'])->whereDate('data_inicio', '>=', date('Y-m-d H:i:s'))->whereDate('data_fim', '<=', date('Y-m-d H:i:s'))->whereNull('deleted_at')->first();
+
+			if(is_null($anuidade)) {
+				DB::rollback();
+				return redirect()->route('landing-page')->with('error-alert', 'Esta Campanha ('.$campanha->url_param.') não está vigente ou está inativa!');
+			}
+
     		# dados de acesso do usuário paciente
     		//     		DB::enableQueryLog();
-    		$usuario = User::where(['email' => $request->input('email')])->first();
+    		$usuario = User::where(['email' => $request->input('email'), 'cs_status' => 'A'])->first();
     		//     		dd( DB::getQueryLog() );
     		$user_id = 0;
     
     		if(is_null($usuario)) {
-    			$usuario            	= new User();
+    			$usuario  = new User();
     		} else {
     			$user_id = $usuario->id;
     		}
@@ -84,46 +100,44 @@ class CampanhaVendaController extends Controller
     		// cria o usuario na mundipagg
     		$userCreate = $client->getCustomers()->createCustomer( $resultado );
     		 
-    		# dados do paciente
-    
+			# dados do paciente
+			$paciente = [];
     		if($user_id != 0) {
     			$paciente = Paciente::where(['user_id' => $user_id])->first();
-    		} else {
-    			$paciente           	= new Paciente();
-    			$paciente->user_id 		= $usuario->id;
     		}
+			
+			if(is_null()) {
+				$paciente = new Paciente();
+			}
+			$paciente->user_id 		= $usuario->id;
+
     		//     		dd($paciente);
     		$paciente->nm_primario      = $request->input('nm_primario');
     		$paciente->nm_secundario    = $request->input('nm_secundario');
     		$paciente->cs_sexo     		= $request->input('cs_sexo');
     		$paciente->dt_nascimento 	= preg_replace("/(\d+)\D+(\d+)\D+(\d+)/","$3-$2-$1", CVXRequest::post('dt_nascimento'));
-    		$paciente->empresa_id       = 5;
+    		$paciente->empresa_id       = $campanha->empresa_id;
     		$paciente->access_token    	= $access_token;
     		$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
     		$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
     		//dd($usuario);
     		$paciente->save();
     		 
-    		############# coloca vigencia no colaborador CAIXA ##############
+    		############# coloca vigencia no cliente da campanha ##############
     		$vigencia 					= new VigenciaPaciente();
-    		$vigencia->data_inicio 		= date('Y-m-d', strtotime('2018-12-10'));
-    		$vigencia->data_fim 		= date('Y-m-d', strtotime('2019-12-10'));
+    		$vigencia->data_inicio 		= date('Y-m-d');
+    		$vigencia->data_fim 		= date('Y-m-d');
     		$vigencia->cobertura_ativa 	= true;
     		$vigencia->vl_max_consumo	= 0;
     		$vigencia->paciente_id 		= $paciente->id;
-    		$vigencia->anuidade_id 		= 34;
+    		$vigencia->anuidade_id 		= $anuidade->id;
     		$vigencia->save();
     
     		# cpf do paciente
     		$documento = Documento::with(['pacientes'])->where(['te_documento' => UtilController::retiraMascara($request->input('te_documento'))])->first();
     		//     		dd($paciente);
     		if (empty($documento)) {
-    			$documento 					= new Documento();
-    		} else {
-    			//     			if($documento->pacientes->first()->id != $paciente->id) {
-    			//     				DB::rollback();
-    			//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Documento que você está tentando usar pertence a outro usuário. Por favor, verifique.');
-    			//     			}
+    			$documento = new Documento();
     		}
     
     		$documento->tp_documento 	= 'CPF';
@@ -137,12 +151,7 @@ class CampanhaVendaController extends Controller
     		$contato1 = Contato::with(['pacientes'])->where(['ds_contato' => $request->input('ds_contato')])->first();
     
     		if (empty($contato1)) {
-    			$contato1             		= new Contato();
-    		} else {
-    			//     			if($contato1->pacientes->first()->id != $paciente->id) {
-    			//     				DB::rollback();
-    			//     				return redirect()->route('oferta-certa-caixa')->with('error-alert', 'O Contato que você está tentando usar pertence a outro usuário. Por favor, verifique.');
-    			//     			}
+    			$contato1 = new Contato();
     		}
     
     		$contato1->tp_contato 		= 'CP';
@@ -161,7 +170,7 @@ class CampanhaVendaController extends Controller
     		$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
     		$termosCondicoesUsuarios->save();
     		 
-    		$send_message = $this->enviaEmailAtivacaoCaixa($paciente);
+    		//$send_message = $this->enviaEmailAtivacaoCaixa($paciente);
     
     	} catch (Exception $e) {
     		DB::rollback();
@@ -173,5 +182,20 @@ class CampanhaVendaController extends Controller
     	 
     	//     	return view('oferta-certa-caixa', compact('access_token'));
     	return view('auth.login', compact('access_token'));
+	}
+	
+	//############# PERFORM RELATIONSHIP ##################
+    /**
+     * Perform relationship.
+     *
+     * @param  Paciente  $paciente, array $documento_ids, array $documento_ids
+     * @return \Illuminate\Http\Response
+     */
+    private function setPacienteRelations(Paciente $paciente, array $documento_ids, array $contatos_ids)
+    {
+    	$paciente->documentos()->sync($documento_ids);
+    	$paciente->contatos()->sync($contatos_ids);
+    
+    	return $paciente;
     }
 }
