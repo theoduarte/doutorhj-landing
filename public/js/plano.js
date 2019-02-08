@@ -472,8 +472,10 @@ function efetuarPagamento(usuario, card ){
 		 }else{
 
 			 if(!$('li').hasClass("cpfDependente"+dd)){
-				 if(nome.length >3 && cpfLimpo.length ==11){
+				 if(nome.length >1 && cpfLimpo.length ==11){
 					 if(cpfVerify(cpf)){
+						 $("#nomeDependente"+dd).prop('disabled', true);
+						 $("#cpfDependente"+dd).prop('disabled', true);
 						 $('.items-pedido').append(dados);
 
 						 if(dependentes.length >0){
@@ -502,6 +504,7 @@ function efetuarPagamento(usuario, card ){
 
 				 }
 			 }
+
 			 if($('li').hasClass("cpfDependente"+dd)){
 				 if(nome.length <4 || cpfLimpo.length <11){
 					 $.each(dependentes, function(i){
@@ -514,32 +517,38 @@ function efetuarPagamento(usuario, card ){
 				 }
 
 			 }
-			 verificarDependentesIguais(cpfLimpo,dd, nome, cpf)
+
 		 }
 
+		verificarDependentesIguais(cpfLimpo,dd )
 
 	}
 
 	verificarDependentesIguais = (cpf, dd) => {
 
-		if($('.box-individual .box-dependente').length >1){
-			$.each($('.box-individual'),function() {
-				var items = $(this).find('.box-dependente') ;
+		if($(' .box-dependente').length >1){
+			for (var j=1; j < $(' .box-dependente').length; j++){
+				var items = $('.box-individual').find('#boxes'+j);
+			try{
 				var input = items.find("input[name=cpf]").val();
 				if(input.length !=0){
 					var cpfLimpo = input.replace(/\D+/g, '');
+
 					if(cpfLimpo==cpf){
 						$('#boxes'+dd).remove();
 						$('.cpfDependente'+dd).remove();
 						swal({
 
-								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
-								text: "Não é possivel adicionar dependentes com CPF iguais."
-							});
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
+							text: "Não é possivel adicionar dependentes com CPF iguais."
+						});
 					}
 				}
+			}catch (e) {}
 
-			})
+
+			}
+
 		}
 
 
