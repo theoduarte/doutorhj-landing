@@ -453,10 +453,9 @@
                                     <img src="/libs/home-template/img/l-pf-cartao-blue.png" alt="Cartão Blue">
                                     <div class="texto">
 
-                                        <p class="nome-plano nome-blue"> blue</p>
-                                        <p class="apoio">consultas a partir de:</p>
+                                        <p class="nome-plano nm-blue"></p>
+                                        <p class="apoio">assinatura por:</p>
                                         <p class="valor val-blue"> </p>
-                                        <p class="frequencia">R$ 29,50 MENSAIS</p>
                                         <a  class="btn btn-blue assinar-blue">Peça o seu</a>
                                     </div>
                                 </div>
@@ -465,10 +464,9 @@
                                 <div class="box-planos">
                                     <img src="/libs/home-template/img/l-pf-cartao-black.png" alt="Cartão Black">
                                     <div class="texto">
-                                        <p class="nome-plano">black</p>
-                                        <p class="apoio">consultas a partir de:</p>
+                                        <p class="nome-plano nm-black"></p>
+                                        <p class="apoio">assinatura por:</p>
                                         <p class="valor val-black"> </p>
-                                        <p class="frequencia">R$ 29,50 MENSAIS</p>
                                         <a   class="btn btn-black assinar-black">Peça o seu</a>
                                     </div>
                                 </div>
