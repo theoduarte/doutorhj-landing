@@ -173,7 +173,7 @@ $(function(){
 	}
 
 	$('.finalizarCompra').click(function(e) {
-		e.preventDefault();
+
 		var numeroCard = $('#numero').val();
 		var numeroFormatado = numeroCard.replace(/\s{1,}/g, '');
 		var titular = $('#nome_impresso').val();
@@ -186,7 +186,7 @@ $(function(){
 		if(numeroFormatado.length !=0 && titular.length !=0 && validade.length !=0 && mes.length !=0 && ano.length !=0 && cvv.length !=0){
 			var card = [{numero:numeroFormatado, titular, mes, ano , cvv}]
 
-			try {
+	 
 
 				$('#numero').validateCreditCard(function(result) {
 
@@ -207,10 +207,11 @@ $(function(){
 					}
 
 				});
-			} catch (e) { console.log(e); $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
 
+			return false;
 		}else{
 			$.Notification.notify('error','top right', 'DrHoje', 'Verifique as informações do seu cartão e tente novamente!');
+			return false;
 		}
 
 
@@ -412,13 +413,6 @@ function efetuarPagamento(usuario, card ){
 					}
 
 				}
-
-
-				/*
-
-					*/
-
-
 
 		});
 
