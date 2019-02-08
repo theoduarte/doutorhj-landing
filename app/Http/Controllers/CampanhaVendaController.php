@@ -125,8 +125,12 @@ class CampanhaVendaController extends Controller
     		$paciente->nm_primario      = $request->input('nm_primario');
     		$paciente->nm_secundario    = $request->input('nm_secundario');
     		$paciente->cs_sexo     		= $request->input('cs_sexo');
-    		$paciente->dt_nascimento 	= $dt_nascimento;
-    		$paciente->empresa_id       = $campanha->empresa_id;
+			$paciente->dt_nascimento 	= $dt_nascimento;
+
+			if(is_null($paciente->empresa_id)) {
+				$paciente->empresa_id = $campanha->empresa_id;
+			}
+			
     		$paciente->access_token    	= $access_token;
     		$paciente->time_to_live    	= date('Y-m-d H:i:s', strtotime($time_to_live . '+2 hour'));
     		$paciente->mundipagg_token  = $userCreate->id; // armazena o mundipagg_token do usuario criado
