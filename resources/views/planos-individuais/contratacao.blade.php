@@ -241,10 +241,10 @@
                                 <tr>
                                     <th scope="row"></th>
                                     <td class="blue-style-ocult">
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue assinar-bt-blue"  >Assinar</a>
                                     </td>
                                     <td class="black-style-ocult">
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black" onClick="planosAdesao({dd:'foi', classe:'.blue'})">Assinar</a>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black"  >Assinar</a>
                                     </td>
                                 </tr>
                                 </tbody>

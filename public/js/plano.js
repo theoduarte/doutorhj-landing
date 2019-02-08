@@ -19,11 +19,21 @@ $(function(){
 
 	// verfica qual plano selecionado e adiciona a classe que escurece a coluna
 	if(detalhes.plano =="blue"){
+		$('.assinar-bt-black').css({cursor:"default"});
 		$('.blue-style-ocult').removeClass('ocult-color')
 		$('.black-style-ocult').addClass('ocult-color')
+
+		$('.assinar-bt-blue').click(function() {
+			planosAdesao({dd:'foi', classe:'.blue'})
+		})
 	}
 
 	if(detalhes.plano =="black"){
+		$('.assinar-bt-blue').css({cursor:"default"});
+		$('.assinar-bt-black').click(function() {
+			planosAdesao({dd:'foi', classe:'.black'})
+		})
+
 		$('.blue-style-ocult').addClass('ocult-color')
 		$('.black-style-ocult').removeClass('ocult-color')
 	}
@@ -66,7 +76,15 @@ $(function(){
 
 		}else{
 
-			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas '+ !isEmail(email) ?'E-mail inválido! ' :cpfVerify(cpf) ? 'CPF inválido! ' :'!' );
+			if(!isEmail(email)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+			}
+			if(!cpfVerify(cpf)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+			}else{
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+			}
+
 
 		}
 	}
@@ -319,7 +337,7 @@ function efetuarPagamento(usuario, card ){
 	$('.items-pedido').empty().append('<li>\n' +
 		'                                            <div class="row">\n' +
 		'                                                <div class="col-md-8">\n' +
-		'                                                    <p class="nome-produto">1. Assinatura Doutor Plano '+plano+'</p>\n' +
+		'                                                    <p class="nome-produto"><i class="fa fa-chevron-right"></i> Assinatura Doutor Hoje Plano '+plano+'</p>\n' +
 		'                                                </div>\n' +
 		'                                                <div class="col-md-3">\n' +
 		'                                                    <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
@@ -384,7 +402,15 @@ function efetuarPagamento(usuario, card ){
 
 					}
 				} else {
-					$.Notification.notify('error','top right', 'DrHoje', 'Preencha os dados do paciente antes adicionar um dependente!');
+					if(!isEmail(emailVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+					}
+					if(!cpfVerify(cpfVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+					}else{
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+					}
+
 				}
 
 
@@ -425,10 +451,11 @@ function efetuarPagamento(usuario, card ){
 		var cpfTitular = document.getElementById("cpfUsuario").value;
 		var cpfLimpo = cpf.replace(/\D+/g, '');
 		var cpfTitularLimpo =  cpfTitular.replace(/\D+/g, '');
+		var numDepe = dd+1;
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
+			'      <p class="nome-produto"><i class="fa fa-chevron-right"></i>  Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
 			'       <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
@@ -445,8 +472,10 @@ function efetuarPagamento(usuario, card ){
 		 }else{
 
 			 if(!$('li').hasClass("cpfDependente"+dd)){
-				 if(nome.length >3 && cpfLimpo.length ==11){
+				 if(nome.length >1 && cpfLimpo.length ==11){
 					 if(cpfVerify(cpf)){
+						 $("#nomeDependente"+dd).prop('disabled', true);
+						 $("#cpfDependente"+dd).prop('disabled', true);
 						 $('.items-pedido').append(dados);
 
 						 if(dependentes.length >0){
@@ -475,6 +504,7 @@ function efetuarPagamento(usuario, card ){
 
 				 }
 			 }
+
 			 if($('li').hasClass("cpfDependente"+dd)){
 				 if(nome.length <4 || cpfLimpo.length <11){
 					 $.each(dependentes, function(i){
@@ -487,32 +517,38 @@ function efetuarPagamento(usuario, card ){
 				 }
 
 			 }
-			 verificarDependentesIguais(cpfLimpo,dd, nome, cpf)
+
 		 }
 
+		verificarDependentesIguais(cpfLimpo,dd )
 
 	}
 
 	verificarDependentesIguais = (cpf, dd) => {
 
-		if($('.box-individual .box-dependente').length >1){
-			$.each($('.box-individual'),function() {
-				var items = $(this).find('.box-dependente') ;
+		if($(' .box-dependente').length >1){
+			for (var j=1; j < $(' .box-dependente').length; j++){
+				var items = $('.box-individual').find('#boxes'+j);
+			try{
 				var input = items.find("input[name=cpf]").val();
 				if(input.length !=0){
 					var cpfLimpo = input.replace(/\D+/g, '');
+
 					if(cpfLimpo==cpf){
 						$('#boxes'+dd).remove();
 						$('.cpfDependente'+dd).remove();
 						swal({
 
-								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
-								text: "Não é possivel adicionar dependentes com CPF iguais."
-							});
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
+							text: "Não é possivel adicionar dependentes com CPF iguais."
+						});
 					}
 				}
+			}catch (e) {}
 
-			})
+
+			}
+
 		}
 
 
