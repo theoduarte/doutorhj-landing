@@ -66,7 +66,15 @@ $(function(){
 
 		}else{
 
-			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas '+ !isEmail(email) ?'E-mail inválido! ' :cpfVerify(cpf) ? 'CPF inválido! ' :'!' );
+			if(!isEmail(email)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+			}
+			if(!cpfVerify(cpf)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+			}else{
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+			}
+
 
 		}
 	}
@@ -319,7 +327,7 @@ function efetuarPagamento(usuario, card ){
 	$('.items-pedido').empty().append('<li>\n' +
 		'                                            <div class="row">\n' +
 		'                                                <div class="col-md-8">\n' +
-		'                                                    <p class="nome-produto">1. Assinatura Doutor Plano '+plano+'</p>\n' +
+		'                                                    <p class="nome-produto"><i class="fa fa-chevron-right"></i> Assinatura Doutor Hoje Plano '+plano+'</p>\n' +
 		'                                                </div>\n' +
 		'                                                <div class="col-md-3">\n' +
 		'                                                    <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
@@ -384,7 +392,15 @@ function efetuarPagamento(usuario, card ){
 
 					}
 				} else {
-					$.Notification.notify('error','top right', 'DrHoje', 'Preencha os dados do paciente antes adicionar um dependente!');
+					if(!isEmail(emailVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+					}
+					if(!cpfVerify(cpfVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+					}else{
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+					}
+
 				}
 
 
@@ -425,10 +441,11 @@ function efetuarPagamento(usuario, card ){
 		var cpfTitular = document.getElementById("cpfUsuario").value;
 		var cpfLimpo = cpf.replace(/\D+/g, '');
 		var cpfTitularLimpo =  cpfTitular.replace(/\D+/g, '');
+		var numDepe = dd+1;
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
+			'      <p class="nome-produto"><i class="fa fa-chevron-right"></i>  Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
 			'       <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
