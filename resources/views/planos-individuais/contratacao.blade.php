@@ -37,23 +37,23 @@
             background-repeat: no-repeat;
             padding-left: 48px;
         }
+
         .spinner {
 
             background-color: #1b71b9cf;
             width: 100%;
-            height:100vh;
+            height: 100vh;
             line-height: 50px;
-            text-align:center;
+            text-align: center;
 
             color: white;
 
             /* pura mágica */
             position: fixed;
-            z-index:20;
-
-
+            z-index: 20;
 
         }
+
         .cube1, .cube2 {
             background-color: white;
             width: 18px;
@@ -72,35 +72,47 @@
         }
 
         @-webkit-keyframes sk-cubemove {
-            25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
-            50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
-            75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
-            100% { -webkit-transform: rotate(-360deg) }
+            25% {
+                -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
+            }
+            50% {
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
+            }
+            75% {
+                -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
+            }
+            100% {
+                -webkit-transform: rotate(-360deg)
+            }
         }
 
         @keyframes sk-cubemove {
             25% {
                 transform: translateX(42px) rotate(-90deg) scale(0.5);
                 -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-            } 50% {
-                  transform: translateX(42px) translateY(42px) rotate(-179deg);
-                  -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
-              } 50.1% {
-                    transform: translateX(42px) translateY(42px) rotate(-180deg);
-                    -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-                } 75% {
-                      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-                      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-                  } 100% {
-                        transform: rotate(-360deg);
-                        -webkit-transform: rotate(-360deg);
-                    }
+            }
+            50% {
+                transform: translateX(42px) translateY(42px) rotate(-179deg);
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+            }
+            50.1% {
+                transform: translateX(42px) translateY(42px) rotate(-180deg);
+                -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+            }
+            75% {
+                transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+                -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+            }
+            100% {
+                transform: rotate(-360deg);
+                -webkit-transform: rotate(-360deg);
+            }
         }
     </style>
 </head>
 <body>
 <div class="lp-pessoa-fisica-pagamento">
-    <div class="spinner"  style="display:none"   >
+    <div class="spinner" style="display:none">
 
         <div class="cube1"></div>
         <div class="cube2"></div>
@@ -138,17 +150,16 @@
                                     <th scope="col " class="blue-style-ocult">
                                         <div class="info-valores">
                                             <p class="nome-plano nm-blue"></p>
-                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="apoio">assinatura por:</p>
                                             <p class="valor val-blue">
 
                                             </p>
                                         </div>
                                     </th>
-
                                     <th scope="col" class="black-style-ocult">
                                         <div class="info-valores">
                                             <p class="nome-plano nm-black"></p>
-                                            <p class="apoio">consultas a partir de:</p>
+                                            <p class="apoio">assinatura por:</p>
                                             <p class="valor val-black">
 
                                             </p>
@@ -163,88 +174,118 @@
                                         <span>R$ 29,50</span>
                                         <p class="obs">apenas no Distrito Federal</p>
                                     </td>
-                                    <td  class="black-style-ocult">
+                                    <td class="black-style-ocult">
                                         <span>R$ 29,50</span>
                                         <p class="obs">apenas no Distrito Federal</p>
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" class="descricao">Rede com preços justos com mais de 2700
+                                        especialidades, mais de 11500 exames e em todo o Brasil
+                                    </th>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                                    </td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
                                     <td class="blue-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
-                                    <td class="black-style-ocult"></td>
+                                    <td class="black-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
-                                    <td class="blue-style-ocult"></td>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                                    </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas saudáveis
+                                    <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de
+                                        práticas
+                                        saudáveis
                                     </th>
                                     <td class="blue-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Orientação Médica por Telefone</th>
                                     <td class="blue-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Desconto em Medicamentos</th>
                                     <td class="blue-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                    <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina
+                                        Integrada R$
+                                        29,50<br>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
+                                            Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
+                                            Fonoaudiologia)</p>
                                     </th>
                                     <td class="blue-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50
+                                    <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$
+                                        29,50
                                     </th>
-                                    <td class="blue-style-ocult"></td>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                                    </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
-                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                                        <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
+                                            Ginecologia,
+                                            Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
+                                            Fonoaudiologia)</p>
                                     </th>
-                                    <td class="blue-style-ocult"></td>
+                                    <td class="blue-style-ocult">
+                                        <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício">
+                                    </td>
                                     <td class="black-style-ocult">
-                                        <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                        <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"></th>
                                     <td class="blue-style-ocult">
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue assinar-bt-blue"  >Assinar</a>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue assinar-bt-blue">Assinar</a>
                                     </td>
                                     <td class="black-style-ocult">
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black"  >Assinar</a>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black">Assinar</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -261,19 +302,19 @@
                                     <strong>o Doutor Hoje</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto" id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                    <input type="email" class="form-control col-sm-8" id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
-                                    <input type="text" class="form-control col-sm-8"   id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
+                                    <input type="text" class="form-control col-sm-8" id="cpfUsuario" name="cpfUsuario" placeholder="000.000.000-00">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="celularUsuario">Celular com DDD</label>
-                                    <input type="text" class="form-control col-sm-8"   id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
+                                    <input type="text" class="form-control col-sm-8" id="celularUsuario" name="celularUsuario" placeholder="(00) 00000-0000">
                                 </div>
                             </div>
                             <div class="area-dependente">
@@ -305,13 +346,13 @@
                                     <div class="form-group">
                                         <label for="codigoCorretor1">Código do consultor</label>
                                         <input type="text" class="form-control" id="codigoCorretor" aria-describedby="codigoHelp" placeholder="Insira o código">
-                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo caso não haja consultor)
+                                        <small id="codigoHelp" class="form-text text-muted">(Ignore esse campo caso não
+                                            haja consultor)
                                         </small>
                                         <div class="consultor" style="display:none">
                                             <hr>
                                             <label for="codigoCorretor1">Consultor</label>
-                                            <small id="consultorName" class="form-text text-muted">
-                                            </small>
+                                            <small id="consultorName" class="form-text text-muted"></small>
 
                                         </div>
                                     </div>
@@ -336,7 +377,7 @@
                                 <hr>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="numeroCartao">N. do cartão</label>
-                                   <input type="text" class="form-control col-sm-7" name="numero" id="numero" placeholder="Insira o número do cartão"  required >
+                                    <input type="text" class="form-control col-sm-7" name="numero" id="numero" placeholder="Insira o número do cartão" required>
                                     <!-- <input type="text" class="form-control col-sm-8 input-numero-cartao" id="numeroCartao"   placeholder="0000 0000 0000 0000" onkeypress="onlyNumbers(event)" maxlength="16"> -->
                                 </div>
                                 <div class="form-row">
@@ -347,12 +388,12 @@
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
 
-                                    <input type="text" class="form-control col-sm-3" id="validade" name="validade" placeholder="MM/AA"   required>
+                                    <input type="text" class="form-control col-sm-3" id="validade" name="validade" placeholder="MM/AA" required>
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cvvCartao">Código de segurança</label>
 
-                                    <input type="text" class="form-control col-sm-2" id="codigo_seg" name="codigo_seg" placeholder="CVC" required >
+                                    <input type="text" class="form-control col-sm-2" id="codigo_seg" name="codigo_seg" placeholder="CVC" required>
                                 </div>
                             </div>
                             <div class="area-btn">
@@ -368,8 +409,8 @@
                                     <div>
                                         <div>
                                             <input type="button" name="previous" class="btn btn-link previous action-button" value="voltar"/>
-                                            <input type="button" name="submit" class="btn btn-blue submit action-button   finalizarCompra"   value="Finalizar compra"/>
-                                           <!--  <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/> -->
+                                            <input type="button" name="submit" class="btn btn-blue submit action-button   finalizarCompra" value="Finalizar compra"/>
+                                            <!--  <input type="button" name="next" class="btn btn-blue next action-button prox" value="Próximo"/> -->
                                         </div>
                                     </div>
                                 </div>
@@ -417,7 +458,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="area-btn">
-                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende sua 1a consulta</a>
+                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende
+                                            sua 1a consulta</a>
                                     </div>
                                 </div>
                             </div>
@@ -441,59 +483,59 @@
 
 <script>
     var laravel_token = '{{ csrf_token() }}';
-    var plano =  '{{ $plano }}';
-    var id= '{{ $idplano }}';
+    var plano = '{{ $plano }}';
+    var id = '{{ $idplano }}';
     var details = '{{ $detalhes }}';
     var all = '{{ $all }}';
-	var corretorkey = "csadfasdfsdfdfdsa";
+    var corretorkey = "csadfasdfsdfdfdsa";
     var url_corretor = '{{$url_corretor}}';
 
-    var plano_descricao ="Plano Blue";
-    var valor ="36,50";
-    var key  = '{{ $values }}';
-    var url ='{{ $url }}';
+    var plano_descricao = "Plano Blue";
+    var valor = "36,50";
+    var key = '{{ $values }}';
+    var url = '{{ $url }}';
 </script>
 
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.card-validation').card({
-			// a selector or DOM element for the container
-			// where you want the card to appear
-			container: '.card-wrapper', // *required*
+    $(document).ready(function () {
+        $('.card-validation').card({
+            // a selector or DOM element for the container
+            // where you want the card to appear
+            container: '.card-wrapper', // *required*
 
-			formSelectors: {
-				numberInput: 'input#numero', // optional — default input[name="number"]
-				expiryInput: 'input#validade', // optional — default input[name="expiry"]
-				cvcInput: 'input#codigo_seg', // optional — default input[name="cvc"]
-				nameInput: 'input#nome_impresso' // optional - defaults input[name="name"]
-			},
+            formSelectors: {
+                numberInput: 'input#numero', // optional — default input[name="number"]
+                expiryInput: 'input#validade', // optional — default input[name="expiry"]
+                cvcInput: 'input#codigo_seg', // optional — default input[name="cvc"]
+                nameInput: 'input#nome_impresso' // optional - defaults input[name="name"]
+            },
 
-			width: '100%', // optional — default 350px
-			formatting: true, // optional - default true
+            width: '100%', // optional — default 350px
+            formatting: true, // optional - default true
 
-			// Strings for translation - optional
-			messages: {
-				validDate: 'valid\ndate', // optional - default 'valid\nthru'
-				monthYear: 'mm/yy', // optional - default 'month/year'
-			},
+            // Strings for translation - optional
+            messages: {
+                validDate: 'valid\ndate', // optional - default 'valid\nthru'
+                monthYear: 'mm/yy', // optional - default 'month/year'
+            },
 
-			// Default placeholders for rendered fields - optional
-			placeholders: {
-				number: '•••• •••• •••• ••••',
-				name: 'Nome Impresso',
-				expiry: '••/••',
-				cvc: '•••'
-			},
+            // Default placeholders for rendered fields - optional
+            placeholders: {
+                number: '•••• •••• •••• ••••',
+                name: 'Nome Impresso',
+                expiry: '••/••',
+                cvc: '•••'
+            },
 
-			masks: {
-				cardNumber: '•' // optional - mask card number
-			}
+            masks: {
+                cardNumber: '•' // optional - mask card number
+            }
 
-			// if true, will log helpful messages for setting up Card
+            // if true, will log helpful messages for setting up Card
 
-		});
-	});
+        });
+    });
 </script>
 
 </body>

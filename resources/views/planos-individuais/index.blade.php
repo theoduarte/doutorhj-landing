@@ -111,7 +111,7 @@
                                     <p class="nome-plano nm-open">Plano open</p>
                                     <p class="apoio">sem assinatura</p>
                                     <p class="valor val-open">Grátis</p>
-                                    <a href="https://doutorhoje.com.br/" class="btn btn-open assinar-open">Inscreva-se</a>
+                                    <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
                                 </div>
                             </th>
                             <th scope="col">
@@ -244,9 +244,9 @@
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <td><a href="https://doutorhoje.com.br/" class="btn btn-open assinar-open">Inscreva-se</a></td>
-                            <td><a  class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
-                            <td><a   class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
+                            <td><a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a></td>
+                            <td><a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
+                            <td><a class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -705,7 +705,7 @@
 
 				var all = btoa(JSON.stringify(load));
             	$(classeNome).empty().append('Plano '+plano+'')
-				$(classeValor).empty().append(' <small>R$</small> '+formatReal(valor)+'')
+				$(classeValor).empty().append(' <small>R$</small> '+formatReal(valor)+'<small>/mês</small>')
 				$(classeAssinar).attr("href",url+''+emBase64+'/all='+all+'/')
 
 		}
