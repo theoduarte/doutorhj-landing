@@ -245,8 +245,8 @@
                         <tr>
                             <th scope="row"></th>
                             <td><a href="https://doutorhoje.com.br/" class="btn btn-open assinar-open">Inscreva-se</a></td>
-                            <td><a href="#contato" class="btn btn-blue">Assinar o Plano Blue</a></td>
-                            <td><a href="#contato" class="btn btn-black">Assinar o Plano Black</a></td>
+                            <td><a  class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
+                            <td><a   class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -455,9 +455,9 @@
 
                                         <p class="nome-plano nome-blue"> blue</p>
                                         <p class="apoio">consultas a partir de:</p>
-                                        <p class="valor">R$29,50</p>
+                                        <p class="valor val-blue"> </p>
                                         <p class="frequencia">R$ 29,50 MENSAIS</p>
-                                        <a href="#contato" class="btn btn-blue">Peça o seu</a>
+                                        <a  class="btn btn-blue assinar-blue">Peça o seu</a>
                                     </div>
                                 </div>
                             </div>
@@ -467,9 +467,9 @@
                                     <div class="texto">
                                         <p class="nome-plano">black</p>
                                         <p class="apoio">consultas a partir de:</p>
-                                        <p class="valor">R$29,50</p>
+                                        <p class="valor val-black"> </p>
                                         <p class="frequencia">R$ 29,50 MENSAIS</p>
-                                        <a href="#contato" class="btn btn-black">Peça o seu</a>
+                                        <a   class="btn btn-black assinar-black">Peça o seu</a>
                                     </div>
                                 </div>
                             </div>
