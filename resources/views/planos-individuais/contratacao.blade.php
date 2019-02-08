@@ -285,11 +285,9 @@
                                         <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue assinar-bt-blue">Assinar</a>
                                     </td>
                                     <td class="black-style-ocult">
-<<<<<<< HEAD
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black"  >Assinar</ef="ja>
-=======
+
                                         <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black">Assinar</a>
->>>>>>> 326da76fed917b99a7b05c1c374710c1345ea734
+
                                     </td>
                                 </tr>
                                 </tbody>
@@ -306,19 +304,12 @@
                                     <strong>o Doutor Hoje</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-<<<<<<< HEAD
+
                                     <input type="text" class="form-control col-sm-8 text-uppercase" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
                                     <input type="email" class="form-control col-sm-8 text-uppercase"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
-=======
-                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto" id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
-                                </div>
-                                <div class="form-row">
-                                    <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8" id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
->>>>>>> 326da76fed917b99a7b05c1c374710c1345ea734
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
