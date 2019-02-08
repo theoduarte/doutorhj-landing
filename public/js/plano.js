@@ -66,7 +66,7 @@ $(function(){
 
 		}else{
 
-			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas!');
+			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas '+ !isEmail(email) ?'E-mail inválido! ' :cpfVerify(cpf) ? 'CPF inválido! ' :'!' );
 
 		}
 	}
@@ -334,49 +334,97 @@ function efetuarPagamento(usuario, card ){
 	// ADICIONAR DEPENDENTE
 	var addbutton = document.getElementById("addbutton");
 	if(addbutton != null) {
-		addbutton.addEventListener("click", function () {
-			var limite = $('#boxes').children().length +1
-			if(limite ==8){
-				$.Notification.notify('error','top right', 'DrHoje', 'Só é possivel adicionar 7 dependentes no momento!');
-			}else{
-				var boxes = document.getElementById("boxes");
-				var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
 
-				var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
-					'                                          <div class="btn-excluir">\n' +
-					'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
-					'                                                </div> \n' +
-					'                                        <div class="form-row">\n' +
-					'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-					'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
-					'                                        </div>\n' +
-					'                                        <div class="form-row">\n' +
-					'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-					'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
-					'                                        </div>\n' +
-					'                                    </div>');
-				$('#boxes').append(data);
-				$('.box-individual').stop().animate({
-					scrollTop: $('.box-individual')[0].scrollHeight
-				}, 800);
 
-				$("#cpfDependente"+quantidade).inputmask({
-					mask: ['999.999.999-99'],
-					keepStatic: true
-				});
-			}
+			addbutton.addEventListener("click", function () {
+
+
+				var nomeVerificar = $('#nomeUsuario').val();
+				var emailVerificar = $('#emailUsuario').val();
+				var cpfVerificar = $('#cpfUsuario').val();
+				var celularVerificar = $('#celularUsuario').val();
+
+				if(nomeVerificar.length !=0 && emailVerificar.length != 0 && cpfVerificar.length != 0 && celularVerificar.length !=0 && isEmail(emailVerificar) && cpfVerify(cpfVerificar)){
+					var limite = $('#boxes').children().length +1
+					if(limite ==8){
+						$.Notification.notify('error','top right', 'DrHoje', 'Só é possivel adicionar 7 dependentes no momento!');
+					}else{
+						var boxes = document.getElementById("boxes");
+						var quantidade = $('#boxes').children().length +  1 ;
+
+						if(verificarInputs()){
+							$.Notification.notify('error','top right', 'DrHoje', 'Preencha os dados do depedente antes de adicionar um novo!');
+						}else{
+
+							var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
+								'                                          <div class="btn-excluir">\n' +
+								'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
+								'                                                </div> \n' +
+								'                                        <div class="form-row">\n' +
+								'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
+								'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+								'                                        </div>\n' +
+								'                                        <div class="form-row">\n' +
+								'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
+								'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade +')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+								'                                        </div>\n' +
+								'                                    </div>');
+							$('#boxes').append(data);
+
+							$('.box-individual').stop().animate({
+								scrollTop: $('.box-individual')[0].scrollHeight
+							}, 800);
+
+							$("#cpfDependente"+quantidade).inputmask({
+								mask: ['999.999.999-99'],
+								keepStatic: true
+							});
+
+						}
+
+					}
+				} else {
+					$.Notification.notify('error','top right', 'DrHoje', 'Preencha os dados do paciente antes adicionar um dependente!');
+				}
+
+
+				/*
+
+					*/
+
 
 
 		});
 
 	}
 
-	myFunction = (dd) =>  {
+	verificarInputs = () => {
+		var data =false;
+		for (var i=1; i<8; i++){
+			var cpf = $( "#cpfDependente"+i).val();
+			var nome = $( "#nomeDependente"+i).val();
+
+			try{
+				if( cpf.length  == 0 ||  nome.length==0){
+					data = true;
+				}
+			}catch (e) {}
+
+
+		}
+
+		return data
+
+	}
+
+	myFunction = (dd ) =>  {
+
 
 		var nome = document.getElementById("nomeDependente"+dd).value;
 		var cpf = document.getElementById("cpfDependente"+dd).value;
+		var cpfTitular = document.getElementById("cpfUsuario").value;
 		var cpfLimpo = cpf.replace(/\D+/g, '');
-
+		var cpfTitularLimpo =  cpfTitular.replace(/\D+/g, '');
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
@@ -387,40 +435,62 @@ function efetuarPagamento(usuario, card ){
 			'   </div>\n' +
 			'   </div>\n' +
 			'   </li>';
-		if(!$('li').hasClass("cpfDependente"+dd)){
-			if(nome.length >0 && cpfLimpo.length ==11){
+		var dadoTitular = dependentes.filter(x => x.cpf === cpfTitularLimpo);
 
-				if(cpfVerify(cpf)){
-					$('.items-pedido').append(dados);
 
-					if(dependentes.length >0){
-						var dad = dependentes.filter(x => x.cpf === cpfLimpo);
-						if(dad.length ==0){
-							dependentes.push({
-								nome:nome,
-								cpf:cpfLimpo
-							})
-						}
 
-					}else{
+		 if(cpfTitularLimpo ==cpfLimpo || dadoTitular.length !=0){
+			 $.Notification.notify('error','top right', 'DrHoje', 'Não é possivel adicionar o CPF do titular como dependente!');
+			 $('#cpfDependente'+dd).val("");
+		 }else{
 
-						dependentes.push({
-							nome:nome,
-							cpf:cpfLimpo
-						})
-					}
+			 if(!$('li').hasClass("cpfDependente"+dd)){
+				 if(nome.length >3 && cpfLimpo.length ==11){
+					 if(cpfVerify(cpf)){
+						 $('.items-pedido').append(dados);
 
-				}else{
+						 if(dependentes.length >0){
+							 var dad = dependentes.filter(x => x.cpf === cpfLimpo);
+							 if(dad.length ==0){
+								 dependentes.push({
+									 nome:nome,
+									 cpf:cpfLimpo
+								 })
+							 }
 
-					$('#cpfDependente'+dd).val("");
+						 }else{
 
-					$.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
-				}
+							 dependentes.push({
+								 nome:nome,
+								 cpf:cpfLimpo
+							 })
+						 }
 
-			}
-		}
+					 }else{
 
-		verificarDependentesIguais(cpfLimpo,dd, nome, cpf)
+						 $('#cpfDependente'+dd).val("");
+
+						 $.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
+					 }
+
+				 }
+			 }
+			 if($('li').hasClass("cpfDependente"+dd)){
+				 if(nome.length <4 || cpfLimpo.length <11){
+					 $.each(dependentes, function(i){
+						 if(dependentes[i].cpf === cpfLimpo) {
+							 dependentes.splice(i,1);
+							 return false;
+						 }
+					 });
+					 $('.cpfDependente'+dd).remove();
+				 }
+
+			 }
+			 verificarDependentesIguais(cpfLimpo,dd, nome, cpf)
+		 }
+
+
 	}
 
 	verificarDependentesIguais = (cpf, dd) => {
@@ -432,15 +502,13 @@ function efetuarPagamento(usuario, card ){
 				if(input.length !=0){
 					var cpfLimpo = input.replace(/\D+/g, '');
 					if(cpfLimpo==cpf){
-						console.log({cpf,cpfLimpo })
 						$('#boxes'+dd).remove();
 						$('.cpfDependente'+dd).remove();
-						swal(
-							{
+						swal({
+
 								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
 								text: "Não é possivel adicionar dependentes com CPF iguais."
-							}
-						);
+							});
 					}
 				}
 
