@@ -19,11 +19,21 @@ $(function(){
 
 	// verfica qual plano selecionado e adiciona a classe que escurece a coluna
 	if(detalhes.plano =="blue"){
+		$('.assinar-bt-black').css({cursor:"default"});
 		$('.blue-style-ocult').removeClass('ocult-color')
 		$('.black-style-ocult').addClass('ocult-color')
+
+		$('.assinar-bt-blue').click(function() {
+			planosAdesao({dd:'foi', classe:'.blue'})
+		})
 	}
 
 	if(detalhes.plano =="black"){
+		$('.assinar-bt-blue').css({cursor:"default"});
+		$('.assinar-bt-black').click(function() {
+			planosAdesao({dd:'foi', classe:'.black'})
+		})
+
 		$('.blue-style-ocult').addClass('ocult-color')
 		$('.black-style-ocult').removeClass('ocult-color')
 	}

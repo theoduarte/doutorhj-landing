@@ -219,8 +219,8 @@
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <td><a href="#contato" class="btn btn-blue">Assinar o Plano Blue</a></td>
-                            <td><a href="#contato" class="btn btn-black">Assinar o Plano Black</a></td>
+                            <td><a   class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
+                            <td><a  class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
                         </tr>
                         </tbody>
                     </table>
