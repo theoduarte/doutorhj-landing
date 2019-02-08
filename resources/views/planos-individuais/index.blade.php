@@ -101,31 +101,32 @@
                             <th scope="col">
                                 <div class="regras">
                                     <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a
-                                        partir de <strong>R$ 29,50*</strong> e descontos de até 80% nos exames.</p>
+                                        partir de <strong>R$ 29,50¹</strong> e descontos de até 80% nos exames.</p>
                                     <p>Na assinatura <strong>Black</strong> Você ainda conta com o bônus de <strong>5
-                                            consultas grátis*</strong> em 2019 nas especialidades básicas.</p>
-                                    <span>*Válido no DF, consulte demais estados.</span><br>
-                                    <span>*Marcação via central de atendimento. 0800 Doutor Hoje</span>
+                                            consultas²</strong> em 2019 nas especialidades básicas.</p>
+                                </div>
+                            </th>
+                            <th scope="col">
+                                <div class="info-valores">
+                                    <p class="nome-plano nm-open">Plano open</p>
+                                    <p class="apoio">sem assinatura</p>
+                                    <p class="valor val-open">Grátis</p>
+                                    <a href="https://doutorhoje.com.br/" class="btn btn-open assinar-open">Inscreva-se</a>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="info-valores">
                                     <p class="nome-plano nm-blue"></p>
-                                    <p class="apoio">consultas a partir de:</p>
+                                    <p class="apoio">assinatura por:</p>
                                     <p class="valor val-blue"> </p>
-
-
-
                                     <a href="#contato" class="btn btn-blue assinar-blue">Assinar</a>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="info-valores">
                                     <p class="nome-plano nm-black">Plano  </p>
-                                    <p class="apoio">consultas a partir de:</p>
+                                    <p class="apoio">assinatura por:</p>
                                     <p class="valor val-black"> </p>
-
-
                                     <a   class="btn btn-black assinar-black">Assinar</a>
                                 </div>
                             </th>
@@ -136,55 +137,76 @@
                         <tr>
                             <th scope="row" class="descricao">Consultas a partir de:</th>
                             <td>
+                                <span>R$ 59,50</span>
+                                <p class="obs">apenas no Distrito Federal</p>
+                            </td>
+                            <td>
                                 <span>R$ 29,50</span>
                                 <p class="obs">apenas no Distrito Federal</p>
                             </td>
                             <td>
                                 <span>R$ 29,50</span>
                                 <p class="obs">apenas no Distrito Federal</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="descricao">Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em todo o Brasil</th>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
-                            <td></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
-                            <td></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas
                                 saudáveis
                             </th>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Orientação Médica por Telefone</th>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto em Medicamentos</th>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
@@ -193,18 +215,20 @@
                                 <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
                                     Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                             </th>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano blue contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50</th>
-                            <td></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
@@ -212,22 +236,24 @@
                                 <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
                                     Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                             </th>
-                            <td></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício"></td>
                             <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="O plano black contempla este benefício">
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <td><a   class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
-                            <td><a  class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
+                            <td><a href="https://doutorhoje.com.br/" class="btn btn-open assinar-open">Inscreva-se</a></td>
+                            <td><a href="#contato" class="btn btn-blue">Assinar o Plano Blue</a></td>
+                            <td><a href="#contato" class="btn btn-black">Assinar o Plano Black</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <p>
-                    <small>* Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small>
-                </p>
+                <p class="regras"><small>¹ Válido no DF, consulte demais estados.</small></p>
+                <p class="regras"><small>² Marcação via central de atendimento. 0800 Doutor Hoje</small></p>
+                <p class="regras"><small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small></p>
             </div>
         </div>
         <div class="beneficios" id="beneficios">

@@ -4157,7 +4157,7 @@ footer ul li a:hover {
 .lp-pessoa-fisica .tabela-planos .area-tabela .regras p {
     color: #2D405A;
     line-height: 24px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
     margin-bottom: 6px;
 }
@@ -4175,14 +4175,22 @@ footer ul li a:hover {
 
 .lp-pessoa-fisica .tabela-planos .info-valores {
     text-align: center;
-    width: 220px;
+    width: 180px;
     color: #5B5B5B;
 }
 
+.lp-pessoa-fisica .tabela-planos p.regras {
+    margin-bottom: 6px;
+}
+
 .lp-pessoa-fisica .tabela-planos .info-valores .nome-plano {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 0;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .nm-open {
+    color: #12B18C;
 }
 
 .lp-pessoa-fisica .tabela-planos .info-valores .nm-blue {
@@ -4196,7 +4204,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .tabela-planos .info-valores .valor {
-    font-size: 40px;
+    font-size: 34px;
     font-weight: 700;
     margin-bottom: 0;
 }
@@ -4213,19 +4221,33 @@ footer ul li a:hover {
     width: 100%;
 }
 
-.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue {
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-open,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-open {
+    background: #12B18C;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-open:hover,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-open:hover {
+    background: #2bbd9b;
+}
+
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue {
     background: #4470B4;
 }
 
-.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue:hover {
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-blue:hover,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-blue:hover {
     background: #5282ce;
 }
 
-.lp-pessoa-fisica .tabela-planos .info-valores .btn-black {
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black {
     background: #484848;
 }
 
-.lp-pessoa-fisica .tabela-planos .info-valores .btn-black:hover {
+.lp-pessoa-fisica .tabela-planos .info-valores .btn-black:hover,
+.lp-pessoa-fisica .tabela-planos tbody td .btn-black:hover {
     background: #636060;
 }
 
@@ -4266,22 +4288,6 @@ footer ul li a:hover {
     margin-top: 10px;
     font-size: 14px;
     width: 100%;
-}
-
-.lp-pessoa-fisica .tabela-planos tbody td .btn-blue {
-    background: #4470B4;
-}
-
-.lp-pessoa-fisica .tabela-planos tbody td .btn-blue:hover {
-    background: #5282ce;
-}
-
-.lp-pessoa-fisica .tabela-planos tbody td .btn-black {
-    background: #484848;
-}
-
-.lp-pessoa-fisica .tabela-planos tbody td .btn-black:hover {
-    background: #636060;
 }
 
 .lp-pessoa-fisica .beneficios {
