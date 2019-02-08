@@ -244,7 +244,7 @@
                                         <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue blue assinar-bt-blue"  >Assinar</a>
                                     </td>
                                     <td class="black-style-ocult">
-                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black"  >Assinar</a>
+                                        <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black black assinar-bt-black"  >Assinar</ef="ja>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -261,11 +261,11 @@
                                     <strong>o Doutor Hoje</strong></h2>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
-                                    <input type="text" class="form-control col-sm-8" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
+                                    <input type="text" class="form-control col-sm-8 text-uppercase" title="Informe um nome correto"   id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                    <input type="email" class="form-control col-sm-8 text-uppercase"   id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
@@ -417,7 +417,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="area-btn">
-                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende sua 1a consulta</a>
+                                        <a href="https://www.doutorhoje.com.br" class="btn btn-blue" target="_blank">Agende sua 1º consulta</a>
                                     </div>
                                 </div>
                             </div>

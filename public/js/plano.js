@@ -63,8 +63,8 @@ $(function(){
 			primeiraPaginaArray.length =0
 
 			primeiraPaginaArray.push({
-				nome:nome,
-				email:email,
+				nome:nome.toUpperCase(),
+				email:email.toUpperCase(),
 				cpf:cpf.replace(/\D+/g, ''),
 				celular:celular.replace('-',''),
 				plano:detalhes.id
@@ -184,9 +184,9 @@ $(function(){
 		var cvv = $('#codigo_seg').val();
 
 		if(numeroFormatado.length !=0 && titular.length !=0 && validade.length !=0 && mes.length !=0 && ano.length !=0 && cvv.length !=0){
-			var card = [{numero:numeroFormatado, titular, mes, ano , cvv}]
+			var card = [{numero:numeroFormatado, titular:titular.toUpperCase() , mes, ano , cvv}]
 
-	 
+
 
 				$('#numero').validateCreditCard(function(result) {
 
@@ -381,7 +381,7 @@ function efetuarPagamento(usuario, card ){
 								'                                                </div> \n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-								'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+								'                                            <input type="text" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
 								'                                        </div>\n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
@@ -449,7 +449,7 @@ function efetuarPagamento(usuario, card ){
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto"><i class="fa fa-chevron-right"></i>  Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
+			'      <p class="nome-produto"><i class="fa fa-chevron-right"></i>  Dependente <strong> '+nome.toUpperCase()+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
 			'       <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
@@ -476,7 +476,7 @@ function efetuarPagamento(usuario, card ){
 							 var dad = dependentes.filter(x => x.cpf === cpfLimpo);
 							 if(dad.length ==0){
 								 dependentes.push({
-									 nome:nome,
+									 nome:nome.toUpperCase(),
 									 cpf:cpfLimpo
 								 })
 							 }
@@ -484,7 +484,7 @@ function efetuarPagamento(usuario, card ){
 						 }else{
 
 							 dependentes.push({
-								 nome:nome,
+								 nome:nome.toUpperCase(),
 								 cpf:cpfLimpo
 							 })
 						 }
