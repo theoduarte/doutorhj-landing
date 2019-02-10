@@ -69,7 +69,7 @@
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
 		<script src="/libs/home-template/js/popper.min.js"></script>
         <script src="/libs/home-template/js/bootstrap.min.js"></script>
-        <script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>
+        {{--<script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>--}}
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
@@ -292,7 +292,7 @@
 										<div class="dropdown-menu">
 											@foreach(Auth::user()->paciente->planos_disponiveis as $plano)
 												@if(Auth::user()->paciente->plano_ativo->id != $plano->id)
-													<a class="dropdown-item" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
+													<a class="btn dropdown-item {{strtolower($plano->ds_plano)}}" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
 												@endif
 											@endforeach
 										</div>
