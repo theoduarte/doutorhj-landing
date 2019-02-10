@@ -286,7 +286,9 @@
 								<div class="opcoes ie-plano">
 									<p class="titulo">Plano</p>
 									<div id="dropdown-plano-div">
-										<p class="btn btn-default plano dropdown-toggle {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}" data-toggle="dropdown">
+										<p class="btn btn-default plano {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}
+										@if(Auth::user()->paciente->planos_disponiveis->count() > 1)
+												dropdown-toggle" data-toggle="dropdown">
 											{{Auth::user()->paciente->plano_ativo->ds_plano}}
 										</p>
 										<div class="dropdown-menu">
@@ -296,6 +298,11 @@
 												@endif
 											@endforeach
 										</div>
+										@else
+												">
+											{{Auth::user()->paciente->plano_ativo->ds_plano}}
+										</p>
+										@endif
 									</div>
 								</div>
 								@if(Auth::user()->paciente->saldo_empresarial != 0)
