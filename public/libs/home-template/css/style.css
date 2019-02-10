@@ -371,19 +371,24 @@ header .navbar-collapse {
     border-radius: 4px;
 }
 
-.info-empresarial .opcoes p.premium {
+.info-empresarial .opcoes .premium {
     color: #ffffff;
     background: #17a2b8;
 }
 
-.info-empresarial .opcoes p.blue {
+.info-empresarial .opcoes .blue {
     color: #ffffff;
     background: #007bff;
 }
 
-.info-empresarial .opcoes p.black {
+.info-empresarial .opcoes .black {
     color: #ffffff;
     background: #343a40;
+}
+
+.info-empresarial .opcoes .plus {
+	color: #808080;
+	background: #fff;
 }
 
 .info-empresarial .opcoes p.saldo {

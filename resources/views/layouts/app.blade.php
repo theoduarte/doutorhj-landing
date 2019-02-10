@@ -47,7 +47,7 @@
     	var laravel_token = '{{ csrf_token() }}';
     	var resizefunc = [];
     </script>
-    	
+
 	<script src="/libs/comvex-template/js/jquery.min.js"></script>
 	<script src="/libs/comvex-template/js/popper.min.js"></script>
 	<script src="/libs/comvex-template/js/bootstrap.min.js"></script>

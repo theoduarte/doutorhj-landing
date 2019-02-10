@@ -28,6 +28,8 @@ Route::get('terms-and-conditions','HomeController@terms')->middleware('web');
 Route::get('payment/success/{hash}', 'PaymentController@successPayment');
 Route::get('payment/failed/{hash}', 'PaymentController@failedPayment');
 
+Route::get('changePlanoAtivo/{id}', 'PacienteController@alteraPlanoAtivo')->name('altera_plano_ativo');
+
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
 Route::get('planos-individuais', 'ClinicaController@planos')->name('planos-individuais');
