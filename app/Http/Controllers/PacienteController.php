@@ -326,6 +326,10 @@ class PacienteController extends Controller
 	{
 		$plano = Plano::findOrFail($id);
 
+		dd($plano, session('plano_id'));
+
+		Session::put('plano_id', $plano->id);
+
 
 	}
 }

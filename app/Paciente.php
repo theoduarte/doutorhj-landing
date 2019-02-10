@@ -233,13 +233,10 @@ class Paciente extends Model
 	{
 		$planosDisponiveis = self::getPlanosDisponiveis($paciente_id);
 
-		dd($planosDisponiveis);
-
-
 		if(is_null($planosDisponiveis) || is_null($planosDisponiveis->anuidade)) {
 			return Plano::OPEN;
 		} else {
-			return $planosDisponiveis->anuidade->plano_id;
+			return $planosDisponiveis->first()->anuidade->plano_id;
 		}
 	}
 

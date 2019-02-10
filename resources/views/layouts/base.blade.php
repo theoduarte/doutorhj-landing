@@ -286,7 +286,7 @@
 								<div class="opcoes ie-plano">
 									<p class="titulo">Plano</p>
 									<div id="dropdown-plano-div">
-										<p class="plano dropdown-toggle {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}" data-toggle="dropdown">
+										<p class="btn btn-default plano dropdown-toggle {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}" data-toggle="dropdown">
 											{{Auth::user()->paciente->plano_ativo->ds_plano}}
 										</p>
 										<div class="dropdown-menu">
