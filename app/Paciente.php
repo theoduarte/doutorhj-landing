@@ -6,6 +6,7 @@ use App\Http\Controllers\UtilController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Kyslik\ColumnSortable\Sortable;
 use League\Flysystem\Util;
 
@@ -41,6 +42,8 @@ use League\Flysystem\Util;
  * @property Campanha[] $campanhas
  *
  * @property Plano $plano_ativo
+ * @property Plano[] $planos_disponiveis
+ * @property Plano $plano_principal
  * @property float $vl_max_consumo
  * @property float $vl_consumido
  * @property float $saldo_empresarial
@@ -220,23 +223,24 @@ class Paciente extends Model
 
 	public static function getPlanoAtivo($paciente_id)
 	{
-		$vigenciaPac = self::getVigenciaAtiva($paciente_id);
-
-		if(is_null($vigenciaPac) || is_null($vigenciaPac->anuidade)) {
+		if(is_null(Session::get('plano_id'))) {
 			return Plano::OPEN;
 		} else {
-			return $vigenciaPac->anuidade->plano_id;
+			return Session::get('plano_id');
 		}
 	}
 
 	public static function getPlanoPrincipal($paciente_id)
 	{
-		$planosDisponiveis = self::getPlanosDisponiveis($paciente_id);
+		$vigenciasPac = self::getVigenciasDisponiveis($paciente_id);
 
-		if(is_null($planosDisponiveis) || is_null($planosDisponiveis->anuidade)) {
+		if(is_null($vigenciasPac) || $vigenciasPac->count() == 0) {
 			return Plano::OPEN;
 		} else {
-			return $planosDisponiveis->first()->anuidade->plano_id;
+			$vigenciasPac = $vigenciasPac->sortByDesc(function($vigencia, $key) {
+				return $vigencia->anuidade->plano->cd_plano;
+			});
+			return $vigenciasPac->first()->anuidade->plano_id;
 		}
 	}
 
@@ -335,7 +339,6 @@ class Paciente extends Model
 
 	public static function getSaldoEmpresarial($paciente_id)
 	{
-	
 		$saldo = self::getVlMaxConsumo($paciente_id) - self::getVlConsumido($paciente_id);
 
 		if($saldo < 0) {
@@ -343,5 +346,10 @@ class Paciente extends Model
 		} else {
 			return $saldo;
 		}
+	}
+
+	public function validaPlano($plano_id)
+	{
+		return $this->planos_disponiveis->contains('id', $plano_id);
 	}
 }

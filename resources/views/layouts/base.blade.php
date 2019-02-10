@@ -291,18 +291,12 @@
 										</p>
 										<div class="dropdown-menu">
 											@foreach(Auth::user()->paciente->planos_disponiveis as $plano)
-												<a class="dropdown-item" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
+												@if(Auth::user()->paciente->plano_ativo->id != $plano->id)
+													<a class="dropdown-item" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
+												@endif
 											@endforeach
 										</div>
 									</div>
-									@push('scripts')
-									<script>
-										$('#dropdown-plano-div .dropdown-item').on('click', function () {
-											alert('hello');
-										})
-									</script>
-									@endpush
-									{{--<p class="plano {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>--}}
 								</div>
 								@if(Auth::user()->paciente->saldo_empresarial != 0)
 									<div class="opcoes ie-saldo">

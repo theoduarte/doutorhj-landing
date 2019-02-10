@@ -101,8 +101,7 @@ class LoginController extends Controller
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		$session = Auth::user()->load('paciente');
-			dd($session->plano_principal);
-			Session::put('plano_id', $session->plano_principal);
+			Session::put('plano_id', $session->paciente->plano_principal->id);
 
     		if(empty($session->paciente->mundipagg_token)) {
                 // passa os valores para montar o objeto a ser enviado
@@ -132,6 +131,7 @@ class LoginController extends Controller
     
     public function logout(Request $request) {
 		CVXCart::clear();
+		Session::forget('plano_id');
     	Auth::logout();
     	return redirect('/');
     }
