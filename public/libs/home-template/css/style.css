@@ -5275,6 +5275,20 @@ footer ul li a:hover {
     width: 100%;
     display: block;
 }
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane {
+    padding-top: 30px;
+}
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3.nome-plano {
+    color: #a32431;
+}
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane p {
+    font-size: 14px;
+}
+
 /*********************************
 *
 *  X MEDIA QUERIES
