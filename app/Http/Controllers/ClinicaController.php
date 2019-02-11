@@ -925,7 +925,7 @@ class ClinicaController extends Controller
 
 		$key = env("TOKEN_PAGAMENTO_PRE_AUTORIZAR");
 
-		$paths = array('values' => $key, "url" => $this->url_api.'gerar-plano-pagamento', "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
+		$paths = array('values' => $key, "url" => $this->url_api.'gerar-plano-pagamento', "url_corretor" =>$this->url_api."listar-corretor" , "plano" => $plano[1], "idplano" =>$identificador[1] , "detalhes" =>$details[1] , "all" => $all[1]) ;
 		return view('planos-individuais.contratacao', $paths);
     }
 

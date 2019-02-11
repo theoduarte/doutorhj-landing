@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Paciente;
 use Darryldecode\Cart\Facades\CartFacade as CVXCart;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use MundiAPILib\MundiAPIClient;
 use App\FuncoesPagamento;
 
@@ -100,6 +101,7 @@ class LoginController extends Controller
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		$session = Auth::user()->load('paciente');
+			Session::put('plano_id', $session->paciente->plano_principal->id);
 
     		if(empty($session->paciente->mundipagg_token)) {
                 // passa os valores para montar o objeto a ser enviado
@@ -109,21 +111,19 @@ class LoginController extends Controller
                     // cria o usuario na mundipagg
                     $userCreate = $client->getCustomers()->createCustomer($resultado);
                     $paciente->mundipagg_token = $userCreate->id;
-                    if(!$paciente->save()){
-                        return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! não conseguimos criar e validar seu usuario ' );
+                    if(!$paciente->save()) {
+                        return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! Não conseguimos criar e validar seu usuario ' );
                     }
 
                     return redirect()->intended('/');
                 } catch (\Exception $e) {
 
-                    return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! não conseguimos validar seu usuario, '.$e->getMessage());
+                    return redirect()->route('landing-page')->with('error-alert', 'O Login falhou! Não conseguimos validar seu usuario,');
 
                 }
-
-            }else {
+            } else {
                return redirect()->intended('/');
     		}
-
     	} else {
     		return redirect()->route('landing-page')->with('error-alert', 'O Login falhou. As credenciais não conferem!');
     	}
@@ -131,6 +131,7 @@ class LoginController extends Controller
     
     public function logout(Request $request) {
 		CVXCart::clear();
+		Session::forget('plano_id');
     	Auth::logout();
     	return redirect('/');
     }
