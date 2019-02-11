@@ -5,7 +5,7 @@ $(function(){
 	 	/* DADOS OBTIDOS DA PAGINA QUE EXIBE A OPÇÃO DE SELECIONAR O PLANO */
 	var detalhes =  JSON.parse(atob(details))
 	var alls =  JSON.parse(atob(all))
- 
+
 	// carrega indices
 	alls.map((val) => {
 		if(val.plano =="black"){
@@ -19,11 +19,21 @@ $(function(){
 
 	// verfica qual plano selecionado e adiciona a classe que escurece a coluna
 	if(detalhes.plano =="blue"){
+		$('.assinar-bt-black').css({cursor:"default"});
 		$('.blue-style-ocult').removeClass('ocult-color')
 		$('.black-style-ocult').addClass('ocult-color')
+
+		$('.assinar-bt-blue').click(function() {
+			planosAdesao({dd:'foi', classe:'.blue'})
+		})
 	}
 
 	if(detalhes.plano =="black"){
+		$('.assinar-bt-blue').css({cursor:"default"});
+		$('.assinar-bt-black').click(function() {
+			planosAdesao({dd:'foi', classe:'.black'})
+		})
+
 		$('.blue-style-ocult').addClass('ocult-color')
 		$('.black-style-ocult').removeClass('ocult-color')
 	}
@@ -53,8 +63,8 @@ $(function(){
 			primeiraPaginaArray.length =0
 
 			primeiraPaginaArray.push({
-				nome:nome,
-				email:email,
+				nome:nome.toUpperCase(),
+				email:email.toUpperCase(),
 				cpf:cpf.replace(/\D+/g, ''),
 				celular:celular.replace('-',''),
 				plano:detalhes.id
@@ -66,11 +76,69 @@ $(function(){
 
 		}else{
 
-			$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas!');
+			if(!isEmail(email)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+			}
+			if(!cpfVerify(cpf)){
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+			}else{
+				$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+			}
+
 
 		}
 	}
 
+	$('#codigoCorretor').keydown(function() {
+		$('.consultor').slideUp();
+		var codigo = $(this).val().replace(/\D/g, '');
+		if(codigo.length >0 ){
+
+			if(codigo.length ==10){
+
+				buscarCorretor(codigo);
+
+			}
+		}
+
+	})
+	function buscarCorretor(codigo) {
+
+		$.ajax({
+			type:'get',
+			dataType:'json',
+			url: url_corretor,
+			headers: {
+				"Authorization":corretorkey
+
+			},
+			data: {
+				cpf:codigo,
+			},
+			timeout: 15000,
+			success: function (result) {
+
+				if(result.corretor.length !=0){
+					var consultor = result.corretor[0];
+					$('#consultorName').empty().append('<strong>Nome: </strong>'+consultor.nm_primario+' '+consultor.nm_primario);
+					$('.consultor').slideDown();
+
+				}else{
+
+
+
+					$('#codigoCorretor').val('');
+					$.Notification.notify('error','top right', 'DrHoje', 'Não encontramos nenhum consultor vinculado a este codigo!');
+				}
+
+			},
+			error: function (result) {
+
+				console.log(result)
+
+			}
+		});
+	}
 	function cpfVerify(cpf){
 		cpf = cpf.replace(/\D/g, '');
 		if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -105,7 +173,7 @@ $(function(){
 	}
 
 	$('.finalizarCompra').click(function(e) {
-		e.preventDefault();
+
 		var numeroCard = $('#numero').val();
 		var numeroFormatado = numeroCard.replace(/\s{1,}/g, '');
 		var titular = $('#nome_impresso').val();
@@ -116,9 +184,9 @@ $(function(){
 		var cvv = $('#codigo_seg').val();
 
 		if(numeroFormatado.length !=0 && titular.length !=0 && validade.length !=0 && mes.length !=0 && ano.length !=0 && cvv.length !=0){
-			var card = [{numero:numeroFormatado, titular, mes, ano , cvv}]
+			var card = [{numero:numeroFormatado, titular:titular.toUpperCase() , mes, ano , cvv}]
 
-			try {
+
 
 				$('#numero').validateCreditCard(function(result) {
 
@@ -139,10 +207,11 @@ $(function(){
 					}
 
 				});
-			} catch (e) { console.log(e); $.Notification.notify('error','top right', 'DrHoje', 'Não conseguimos verificar seu cartão de crédito!');}
 
+			return false;
 		}else{
 			$.Notification.notify('error','top right', 'DrHoje', 'Verifique as informações do seu cartão e tente novamente!');
+			return false;
 		}
 
 
@@ -152,6 +221,8 @@ $(function(){
 function efetuarPagamento(usuario, card ){
 		$('.spinner').fadeIn()
 
+			let corretor =$('#codigoCorretor').val();
+
 		  	$.ajax({
 			type:'post',
 			dataType:'json',
@@ -160,7 +231,7 @@ function efetuarPagamento(usuario, card ){
 				usuario:usuario,
 				dependente:dependentes,
 				card:card,
-				corretor:$('#codigoCorretor').val(),
+				corretor:corretor.replace(/\s{1,}/g, ''),
 				'_token': laravel_token
 			},
 			timeout: 15000,
@@ -177,8 +248,24 @@ function efetuarPagamento(usuario, card ){
 			},
 			error: function (result) {
 				$('.spinner').fadeOut()
-				var response = result.responseJSON;
-				console.log(response)
+
+				try{
+					var response = result.responseJSON;
+					var res = response.details.split("response:")
+					var error =JSON.parse(res[1]);
+					var errors =error.errors != undefined ? error.errors : '';
+
+					swal({
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> '+response.message+'</div>',
+						text: error.message+' '+errors
+					})
+
+				}catch (e) {
+					swal({
+						title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> ops</div>',
+						text: 'Não conseguimos processar o pagamento'
+					})
+				}
 
 			}
 		});
@@ -198,6 +285,12 @@ function efetuarPagamento(usuario, card ){
 
 	$("#cpfUsuario").inputmask({
 		mask: ['999.999.999-99'],
+		keepStatic: true
+	});
+
+	// codigo consultor
+	$("#codigoCorretor").inputmask({
+		mask: ['9-9-9-9-9-9-9-9-9-9-9'],
 		keepStatic: true
 	});
 	$("#celularUsuario").inputmask({
@@ -247,7 +340,7 @@ function efetuarPagamento(usuario, card ){
 	$('.items-pedido').empty().append('<li>\n' +
 		'                                            <div class="row">\n' +
 		'                                                <div class="col-md-8">\n' +
-		'                                                    <p class="nome-produto">1. Assinatura Doutor Plano '+plano+'</p>\n' +
+		'                                                    <p class="nome-produto"><i class="fa fa-chevron-right"></i> Assinatura Doutor Hoje Plano '+plano+'</p>\n' +
 		'                                                </div>\n' +
 		'                                                <div class="col-md-3">\n' +
 		'                                                    <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
@@ -262,110 +355,196 @@ function efetuarPagamento(usuario, card ){
 	// ADICIONAR DEPENDENTE
 	var addbutton = document.getElementById("addbutton");
 	if(addbutton != null) {
-		addbutton.addEventListener("click", function () {
-			var boxes = document.getElementById("boxes");
-			var quantidade = $('#boxes').children().length +Math.floor(Math.random() * 100) + 1 ;
 
-			var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
-				'                                          <div class="btn-excluir">\n' +
-				'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
-				'                                                </div> \n' +
-				'                                        <div class="form-row">\n' +
-				'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8" onkeyup="myFunction( '+quantidade+')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
-				'                                        </div>\n' +
-				'                                        <div class="form-row">\n' +
-				'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
-				'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade+')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
-				'                                        </div>\n' +
-				'                                    </div>');
-			$('#boxes').append(data);
-			$('.box-individual').stop().animate({
-				scrollTop: $('.box-individual')[0].scrollHeight
-			}, 800);
 
-			$("#cpfDependente"+quantidade).inputmask({
-				mask: ['999.999.999-99'],
-				keepStatic: true
-			});
+			addbutton.addEventListener("click", function () {
+
+
+				var nomeVerificar = $('#nomeUsuario').val();
+				var emailVerificar = $('#emailUsuario').val();
+				var cpfVerificar = $('#cpfUsuario').val();
+				var celularVerificar = $('#celularUsuario').val();
+
+				if(nomeVerificar.length !=0 && emailVerificar.length != 0 && cpfVerificar.length != 0 && celularVerificar.length !=0 && isEmail(emailVerificar) && cpfVerify(cpfVerificar)){
+					var limite = $('#boxes').children().length +1
+					if(limite ==8){
+						$.Notification.notify('error','top right', 'DrHoje', 'Só é possivel adicionar 7 dependentes no momento!');
+					}else{
+						var boxes = document.getElementById("boxes");
+						var quantidade = $('#boxes').children().length +  1 ;
+
+						if(verificarInputs()){
+							$.Notification.notify('error','top right', 'DrHoje', 'Preencha os dados do depedente antes de adicionar um novo!');
+						}else{
+
+							var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
+								'                                          <div class="btn-excluir">\n' +
+								'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">Remover Dependente</a>\n' +
+								'                                                </div> \n' +
+								'                                        <div class="form-row">\n' +
+								'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
+								'                                            <input type="text" maxlength="40" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+								'                                        </div>\n' +
+								'                                        <div class="form-row">\n' +
+								'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
+								'                                            <input type="text" class="form-control col-sm-8 cpfs-depe"  name="cpf" onkeyup="myFunction( '+quantidade +')"   id="cpfDependente'+quantidade+'" placeholder="CPF do dependente">\n' +
+								'                                        </div>\n' +
+								'                                    </div>');
+							$('#boxes').append(data);
+
+							$('.box-individual').stop().animate({
+								scrollTop: $('.box-individual')[0].scrollHeight
+							}, 800);
+
+							$("#cpfDependente"+quantidade).inputmask({
+								mask: ['999.999.999-99'],
+								keepStatic: true
+							});
+
+						}
+
+					}
+				} else {
+					if(!isEmail(emailVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, E-mail inválido ');
+					}
+					if(!cpfVerify(cpfVerificar)){
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas, CPF inválido ');
+					}else{
+						$.Notification.notify('error','top right', 'DrHoje', 'Ops, verifique as informações inseridas e tente novamente ');
+					}
+
+				}
 
 		});
 
 	}
 
-	myFunction = (dd) =>  {
+	verificarInputs = () => {
+		var data =false;
+		for (var i=1; i<8; i++){
+			var cpf = $( "#cpfDependente"+i).val();
+			var nome = $( "#nomeDependente"+i).val();
+
+			try{
+				if( cpf.length  == 0 ||  nome.length==0){
+					data = true;
+				}
+			}catch (e) {}
+
+
+		}
+
+		return data
+
+	}
+
+	myFunction = (dd ) =>  {
+
 
 		var nome = document.getElementById("nomeDependente"+dd).value;
 		var cpf = document.getElementById("cpfDependente"+dd).value;
+		var cpfTitular = document.getElementById("cpfUsuario").value;
 		var cpfLimpo = cpf.replace(/\D+/g, '');
-
+		var cpfTitularLimpo =  cpfTitular.replace(/\D+/g, '');
+		var numDepe = dd+1;
 		var dados = '<li class="cpfDependente'+dd+'">\n' +
 			'   <div class="row  ">\n' +
 			'    <div class="col-md-8">\n' +
-			'      <p class="nome-produto">2. Dependente <strong> '+nome+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
+			'      <p class="nome-produto"><i class="fa fa-chevron-right"></i>  Dependente <strong> '+nome.toUpperCase()+' </strong> Doutor Hoje Plano '+plano+'</p>\n' +
 			'          </div>\n' +
 			'    <div class="col-md-3">\n' +
 			'       <p class="valor-produto">R$ '+detalhes.valor+'</p>\n' +
 			'   </div>\n' +
 			'   </div>\n' +
 			'   </li>';
-		if(!$('li').hasClass("cpfDependente"+dd)){
-			if(nome.length >0 && cpfLimpo.length ==11){
+		var dadoTitular = dependentes.filter(x => x.cpf === cpfTitularLimpo);
 
-				if(cpfVerify(cpf)){
-					$('.items-pedido').append(dados);
 
-					if(dependentes.length >0){
-						var dad = dependentes.filter(x => x.cpf === cpfLimpo);
-						if(dad.length ==0){
-							dependentes.push({
-								nome:nome,
-								cpf:cpfLimpo
-							})
-						}
 
-					}else{
+		 if(cpfTitularLimpo ==cpfLimpo || dadoTitular.length !=0){
+			 $.Notification.notify('error','top right', 'DrHoje', 'Não é possivel adicionar o CPF do titular como dependente!');
+			 $('#cpfDependente'+dd).val("");
+		 }else{
 
-						dependentes.push({
-							nome:nome,
-							cpf:cpfLimpo
-						})
-					}
+			 if(!$('li').hasClass("cpfDependente"+dd)){
+				 if(nome.length >1 && cpfLimpo.length ==11){
+					 if(cpfVerify(cpf)){
+						 $("#nomeDependente"+dd).prop('disabled', true);
+						 $("#cpfDependente"+dd).prop('disabled', true);
+						 $('.items-pedido').append(dados);
 
-				}else{
+						 if(dependentes.length >0){
+							 var dad = dependentes.filter(x => x.cpf === cpfLimpo);
+							 if(dad.length ==0){
+								 dependentes.push({
+									 nome:nome.toUpperCase(),
+									 cpf:cpfLimpo
+								 })
+							 }
 
-					$('#cpfDependente'+dd).val("");
+						 }else{
 
-					$.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
-				}
+							 dependentes.push({
+								 nome:nome.toUpperCase(),
+								 cpf:cpfLimpo
+							 })
+						 }
 
-			}
-		}
+					 }else{
 
-		verificarDependentesIguais(cpfLimpo,dd, nome, cpf)
+						 $('#cpfDependente'+dd).val("");
+
+						 $.Notification.notify('error','top right', 'DrHoje', 'Verifique se os dados do Dependente estão corretos!');
+					 }
+
+				 }
+			 }
+
+			 if($('li').hasClass("cpfDependente"+dd)){
+				 if(nome.length <4 || cpfLimpo.length <11){
+					 $.each(dependentes, function(i){
+						 if(dependentes[i].cpf === cpfLimpo) {
+							 dependentes.splice(i,1);
+							 return false;
+						 }
+					 });
+					 $('.cpfDependente'+dd).remove();
+				 }
+
+			 }
+
+		 }
+
+		verificarDependentesIguais(cpfLimpo,dd )
+
 	}
 
 	verificarDependentesIguais = (cpf, dd) => {
 
-		if($('.box-individual .box-dependente').length >1){
-			$.each($('.box-individual'),function() {
-				var items = $(this).find('.box-dependente') ;
+		if($(' .box-dependente').length >1){
+			for (var j=1; j < $(' .box-dependente').length; j++){
+				var items = $('.box-individual').find('#boxes'+j);
+			try{
 				var input = items.find("input[name=cpf]").val();
 				if(input.length !=0){
 					var cpfLimpo = input.replace(/\D+/g, '');
+
 					if(cpfLimpo==cpf){
 						$('#boxes'+dd).remove();
 						$('.cpfDependente'+dd).remove();
-						swal(
-							{
-								title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
-								text: "Não é possivel adicionar dependentes com CPF iguais."
-							}
-						);
+						swal({
+
+							title: '<div class="tit-sweet tit-error"><i class="fa fa-times-circle" aria-hidden="true"></i> Ops</div>',
+							text: "Não é possivel adicionar dependentes com CPF iguais."
+						});
 					}
 				}
+			}catch (e) {}
 
-			})
+
+			}
+
 		}
 
 

@@ -8,8 +8,10 @@ use App\Endereco;
 use App\Estado;
 use App\Especialidade;
 use App\Paciente;
+use App\Plano;
 use App\User;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\PacientesRequest;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +19,7 @@ use Illuminate\Support\Facades\Request as CVXRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Documento;
 use App\Http\Requests\EmailRequest;
+use Illuminate\Support\Facades\Session;
 
 /**
  * @author Frederico Cruz <frederico.cruz@s1saude.com.br>
@@ -320,4 +323,14 @@ class PacienteController extends Controller
     
     	return $dependente;
     }
+
+	public function alteraPlanoAtivo($id)
+	{
+		if(Auth::user()->paciente->validaPlano($id))
+			Session::put('plano_id', $id);
+		else
+			Session::put('plano_id', Auth::user()->paciente->plano_principal->id);
+
+		return redirect()->back();
+	}
 }
