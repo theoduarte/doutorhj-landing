@@ -71,7 +71,7 @@
             <tr>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
                 <td width='108' style='font-family:Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 18px; color: #333; background-color: #fff;'><strong>E-mail:</strong></td>
-                <td width='432' style='font-family:Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 26px; color: #333; background-color: #fff;'>{{$email}}</td>
+                <td width='432' style='font-family:Verdana, Helvetica, sans-serif; font-size: 14px; line-height: 26px; color: #333; background-color: #fff;'>{{$paciente_email}}</td>
                 <td width='30' style='background-color: #fff;'>&nbsp;</td>
             </tr>
         </table>

@@ -114,6 +114,7 @@ Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa')->name('ofer
 Route::post('registrar-campanha', 'CampanhaVendaController@registrarCampanha')->name('registrar-campanha');
 
 Route::post('enviar-email-confirmacao', 'PacienteController@enviarEmailConfirmacao')->name('enviar-email');
+Route::get('campanha_venda/activate/{verify_hash}', 'CampanhaVendaController@ativarCampanha')->name('ativar_campanha');
 
 Auth::routes();
 
