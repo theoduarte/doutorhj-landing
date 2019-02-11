@@ -726,23 +726,24 @@
                     <div class="boas-vindas">
                         <div class="mensagem">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <h3>Muito bem!</h3>
                                     <p>Dentro de 24 horas comerciais nós ativaremos o seu cadastro para você pode cuidar
                                         da sua saúde!‍</p>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-5">
                                     <div class="area-atendimento">
                                         <p>Central de Atendimento</p>
                                         <ul>
                                             <li>
-                                                <p>0800 727 3620</p>
+                                                <p>0800 727-3620</p>
                                             </li>
                                             <li>
-                                                <p>(61) 3221 5350</p>
+                                                <p>(61) 3221-5350</p>
                                             </li>
                                             <li>
-                                                <p>(61) 9 8363 9661</p>
+                                                <p>(61) 98363-9661</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -750,7 +751,15 @@
                             </div>
                         </div>
                         <div class="imagem">
-                            <img src="/libs/home-template/img/l-pf-pagamento-bg.jpg" alt="Pessoas no computador">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p><strong>Verifique seu e-mail</strong></p>
+                                    <p>Em alguns instantes você receberá o comprovante da assinatura Doutor Hoje.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="/libs/home-template/img/l-pf-smartphone.png" alt="Pessoas no computador">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
