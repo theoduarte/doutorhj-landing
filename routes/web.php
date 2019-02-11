@@ -28,6 +28,8 @@ Route::get('terms-and-conditions','HomeController@terms')->middleware('web');
 Route::get('payment/success/{hash}', 'PaymentController@successPayment');
 Route::get('payment/failed/{hash}', 'PaymentController@failedPayment');
 
+Route::get('changePlanoAtivo/{id}', 'PacienteController@alteraPlanoAtivo')->name('altera_plano_ativo');
+
 /*colocar essa rota no local correto*/
 Route::get('contato', 'ClinicaController@contatoHomePublica');
 Route::get('planos-individuais', 'ClinicaController@planos')->name('planos-individuais');
@@ -36,6 +38,7 @@ Route::post('contratar-plano', 'ClinicaController@contratarPlano')->name('contra
 
 // Route::get('confirmacao', 'ClinicaController@cadastroAtivado');
 Route::get('avaliacao', 'ClinicaController@avaliaAtendimento');
+Route::get('campanha/{url_param}/{plano?}', 'CampanhaVendaController@cadastroCampanha')->name('campanha');
 
 Route::get('home-prestador', 'ClinicaController@homePrestador');
 Route::get('confirma-cadastro', 'ClinicaController@confirmaCadastro');
@@ -109,6 +112,8 @@ Route::get('ver-notificacoes/{id}','MensagemController@verNotificacao')->middlew
 #rotas da campanha caixa
 Route::post('registrar-caixa', 'UserController@registrarCaixa')->name('registrar-caixa');
 Route::get('ofertacertacaixa', 'ClinicaController@ofertaCertaCaixa')->name('oferta-certa-caixa');
+
+Route::post('registrar-campanha', 'CampanhaVendaController@registrarCampanha')->name('registrar-campanha');
 
 Route::post('enviar-email-confirmacao', 'PacienteController@enviarEmailConfirmacao')->name('enviar-email');
 

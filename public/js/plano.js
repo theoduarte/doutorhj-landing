@@ -381,7 +381,7 @@ function efetuarPagamento(usuario, card ){
 								'                                                </div> \n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-								'                                            <input type="text" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+								'                                            <input type="text" maxlength="40" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
 								'                                        </div>\n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +

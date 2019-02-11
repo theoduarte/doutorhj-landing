@@ -29,13 +29,12 @@
     <title>@yield('title', 'DoutorHoje')</title>
 
 @push('style')
-
-    <!-- Google fonts -->
+    	<!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 
         <!-- Template css -->
         <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css"/>
-        <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
+		<link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
 
         <!-- Sweet Alert css -->
         <link href="/libs/sweet-alert/sweetalert2.css" rel="stylesheet" type="text/css"/>
@@ -68,9 +67,9 @@
         <script src="/libs/comvex-template/js/jquery.min.js"></script>
         <script src="/libs/comvex-template/js/modernizr.min.js"></script>
         <script src="/libs/home-template/js/jquery.datetimepicker.full.min.js"></script>
-        <script src="/libs/home-template/js/popper.min.js"></script>
+		<script src="/libs/home-template/js/popper.min.js"></script>
         <script src="/libs/home-template/js/bootstrap.min.js"></script>
-        <script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>
+        {{--<script src="/libs/home-template/js/bootstrap.bundle.min.js"></script>--}}
         <script src="/libs/select2/js/select2.min.js"></script>
         <script src="/libs/select2/js/i18n/pt-BR.js"></script>
         <script src="/libs/jquery-autocomplete/js/jquery.autocomplete.min.js"></script>
@@ -170,13 +169,8 @@
 }
 </style>
 
-
- 
-<div class="tudo home-view"  >
-
-
+<div class="tudo home-view">
     <header>
-      
         @if (Auth::check())
         <div class="welcome-bar">
             <div class="container">
@@ -191,7 +185,6 @@
                 </div>
             </div>
         </div>
-
             <nav class="navbar navbar-expand-xl">
                 <div class="container">
                     <a class="navbar-brand" href="/">
@@ -283,26 +276,43 @@
 						<ul class="wb-links-mobile">
 							<li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
 						</ul>
-                                
-                        @if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
-                            <div class="info-empresarial">
-                                <div class="opcoes ie-logo">
-                                    <div class="logo-empresa">
-                                        <img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
-                                    </div>
-                                </div>
-                                <div class="opcoes ie-plano">
-                                    <p class="titulo">Plano</p>
-                                    <p class="plano premium">{{Auth::user()->paciente->plano_ativo->ds_plano}}</p>
-                                </div>
+						@if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+							<div class="info-empresarial">
+								<div class="opcoes ie-logo">
+									<div class="logo-empresa">
+										<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
+									</div>
+								</div>
+								<div class="opcoes ie-plano">
+									<p class="titulo">Plano</p>
+									<div id="dropdown-plano-div">
+										<p class="btn btn-default plano {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}
+										@if(Auth::user()->paciente->planos_disponiveis->count() > 1)
+												dropdown-toggle" data-toggle="dropdown">
+											{{Auth::user()->paciente->plano_ativo->ds_plano}}
+										</p>
+										<div class="dropdown-menu">
+											@foreach(Auth::user()->paciente->planos_disponiveis as $plano)
+												@if(Auth::user()->paciente->plano_ativo->id != $plano->id)
+													<a class="btn dropdown-item {{strtolower($plano->ds_plano)}}" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
+												@endif
+											@endforeach
+										</div>
+										@else
+												">
+											{{Auth::user()->paciente->plano_ativo->ds_plano}}
+										</p>
+										@endif
+									</div>
+								</div>
 								@if(Auth::user()->paciente->saldo_empresarial != 0)
 									<div class="opcoes ie-saldo">
 										<p class="titulo">Saldo</p>
 										<p class="saldo">R$ {{number_format(Auth::user()->paciente->saldo_empresarial, 2, ',', '.')}}</p>
 									</div>
 								@endif
-                            </div>
-                        @endif
+							</div>
+						@endif
                     </div>
                 </div>
             </nav>
@@ -599,7 +609,7 @@
     <!-- <script src="/libs/jquery-ui/jquery-ui.js"></script> -->
 
     <script src="/js/inputMask.min.js"></script>
-    
+
     <script src="/js/utilitarios.js"></script>
 
     <script>
@@ -619,7 +629,6 @@
         });
 
         $(document).ready(function () {
-
         	//docCookies.removeItem('uf_localizacao');
         	$('.seleciona-estado').select2({
                 width: '100%',
