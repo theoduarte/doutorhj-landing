@@ -705,7 +705,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">
-                                                Concordo com os termos
+                                                Fechar
                                             </button>
                                         </div>
                                     </div>

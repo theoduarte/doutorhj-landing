@@ -110,7 +110,7 @@
                                 <div class="info-valores">
                                     <p class="nome-plano nm-open">Plano open</p>
                                     <p class="apoio">sem assinatura</p>
-                                    <p class="valor val-open">Grátis</p>
+                                    <p class="valor val-open">Free</p>
                                     <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
                                 </div>
                             </th>
