@@ -196,7 +196,7 @@ p {
 /*********************************
 *
 *  2 TOPO E MENU
-* 
+*
 *********************************/
 
 .welcome-bar {
@@ -387,8 +387,8 @@ header .navbar-collapse {
 }
 
 .info-empresarial .opcoes .plus {
-	color: #808080;
-	background: #fff;
+    color: #808080;
+    background: #fff;
 }
 
 .info-empresarial .opcoes p.saldo {
@@ -401,7 +401,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  3 BANNER
-* 
+*
 *********************************/
 
 .banner-slider-home .carousel-inner {
@@ -640,7 +640,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  4 SEÇÕES HOME
-* 
+*
 *********************************/
 
 .area-sobre {
@@ -688,7 +688,8 @@ header .navbar-collapse {
     background-image: url(../img/bg-passos.jpg);
     background-repeat: no-repeat;
     background-position: center center;
-    /*background-size: auto 100%;*/;
+    /*background-size: auto 100%;*/
+;
 }
 
 .area-passos .container .titulo-home {
@@ -1044,7 +1045,7 @@ header .navbar-collapse {
 /*********************************
 *
 *  5 RESULTADO DA BUSCA
-* 
+*
 *********************************/
 
 .area-alt-busca {
@@ -1483,7 +1484,7 @@ header .navbar-collapse {
 
 .menu-area-logada {
     /*padding: 78px 15px 22px 15px;
-    margin-top: -55px;*/
+    margin-top: -55px;*/;
 }
 
 .menu-area-logada ul {
@@ -2732,7 +2733,6 @@ header .nav-item-mobile {
 
 .box-minha-conta .row .conteudo .historico .detalhes .texto {
     padding: 20px 20px 20px 0;
-
 }
 
 .box-minha-conta .row .conteudo .historico ul {
@@ -3352,7 +3352,6 @@ header .nav-item-mobile {
 .swal2-modal .tit-sweet i {
     font-size: 20px;
     margin-right: 5px;
-
 }
 
 .swal2-modal .tit-success {
@@ -3550,7 +3549,6 @@ header .nav-item-mobile {
 }
 
 .error .clip .shadow {
-
     overflow: hidden;
 }
 
@@ -4261,17 +4259,21 @@ footer ul li a:hover {
     font-weight: 600;
     color: #000000;
 }
+
 .lp-pessoa-fisica .tabela-planos tbody tr td {
     text-align: center;
 }
+
 .lp-pessoa-fisica .tabela-planos tbody tr td .obs {
     font-size: 11px;
     margin-bottom: 0;
 }
+
 .lp-pessoa-fisica .tabela-planos tbody tr td,
 .lp-pessoa-fisica .tabela-planos tbody tr th {
     vertical-align: middle;
 }
+
 .lp-pessoa-fisica .tabela-planos .descricao .cobertura {
     color: #808080;
     font-weight: 400;
@@ -4514,7 +4516,6 @@ footer ul li a:hover {
 
 .lp-pessoa-fisica .planos {
     padding: 80px 0;
-
     background: url("../img/l-pf-bg-planos.jpg") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -4813,7 +4814,6 @@ footer ul li a:hover {
     display: block;
     width: 156px;
     margin: 0 auto;
-
 }
 
 .lp-pessoa-fisica .footer-lp-pf .area-app .links p {
@@ -4824,7 +4824,6 @@ footer ul li a:hover {
 
 .lp-pessoa-fisica .footer-lp-pf .area-app .links a {
     display: inline-block;
-
 }
 
 .lp-pessoa-fisica .footer-lp-pf .area-app .links a img {
@@ -4863,16 +4862,20 @@ footer ul li a:hover {
     height: auto;
     background-color: #E8F1FF;
 }
+
 .lp-pessoa-fisica-pagamento header .container {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
 .lp-pessoa-fisica-pagamento header .logo-drhj {
     width: 180px;
 }
+
 .lp-pessoa-fisica-pagamento .area-form-cont {
     padding: 30px 30px 10px 30px;
 }
+
 .lp-pessoa-fisica-pagamento #msform {
     width: 100%;
     height: 900px;
@@ -4880,6 +4883,7 @@ footer ul li a:hover {
     margin: 30px auto 0 auto;
     position: relative;
 }
+
 .lp-pessoa-fisica-pagamento #msform fieldset {
     background: white;
     border: 0 none;
@@ -4888,13 +4892,16 @@ footer ul li a:hover {
     width: 100%;
     position: absolute;
 }
+
 .lp-pessoa-fisica-pagamento #msform fieldset:not(:first-of-type) {
     display: none;
 }
+
 .lp-pessoa-fisica-pagamento #msform label {
     font-weight: 600;
     line-height: 20px;
 }
+
 .lp-pessoa-fisica-pagamento #msform input,
 #msform textarea {
     padding: 15px;
@@ -4907,9 +4914,11 @@ footer ul li a:hover {
     color: #2C3E50;
     font-size: 13px;
 }
+
 .lp-pessoa-fisica-pagamento #msform .area-btn {
     padding: 30px;
 }
+
 .lp-pessoa-fisica-pagamento #msform .btn-blue {
     width: auto;
     background: #4470B4;
@@ -4918,6 +4927,7 @@ footer ul li a:hover {
     font-size: 14px;
     border: 0;
 }
+
 .lp-pessoa-fisica-pagamento #msform .btn-link {
     width: auto;
     background: #fafafa;
@@ -4926,6 +4936,7 @@ footer ul li a:hover {
     font-size: 11px;
     border: 0;
 }
+
 .lp-pessoa-fisica-pagamento .fs-title {
     font-size: 28px;
     color: #2D405A;
@@ -4934,15 +4945,18 @@ footer ul li a:hover {
     font-weight: 300;
     margin-bottom: 40px;
 }
+
 .lp-pessoa-fisica-pagamento .fs-title strong {
     font-weight: 700;
 }
+
 .lp-pessoa-fisica-pagamento .fs-subtitle {
     font-weight: normal;
     font-size: 14px;
     color: #666;
     margin-bottom: 20px;
 }
+
 .lp-pessoa-fisica-pagamento #progressbar {
     margin-bottom: 30px;
     overflow: hidden;
@@ -4950,6 +4964,7 @@ footer ul li a:hover {
     text-align: center;
     padding-left: 0;
 }
+
 .lp-pessoa-fisica-pagamento #progressbar li {
     list-style-type: none;
     color: white;
@@ -4959,6 +4974,7 @@ footer ul li a:hover {
     float: left;
     position: relative;
 }
+
 .lp-pessoa-fisica-pagamento #progressbar li:before {
     content: counter(step);
     counter-increment: step;
@@ -4982,6 +4998,7 @@ footer ul li a:hover {
     top: 15px;
     z-index: -1;
 }
+
 .lp-pessoa-fisica-pagamento #progressbar li:first-child:after {
     content: none;
 }
@@ -5002,26 +5019,32 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .area-dependente {
     padding: 0 6px;
 }
+
 .lp-pessoa-fisica-pagamento .area-dependente .box-individual {
     max-height: 200px;
     overflow: auto;
 }
+
 .lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir {
     text-align: right;
 }
+
 .lp-pessoa-fisica-pagamento .area-dependente .box-individual .box-dependente .btn-excluir a {
     font-size: 12px;
     color: #A21B26;
 }
+
 .lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente {
     margin: 24px 0 0 24px;
     display: inline-block;
     color: #8A9CB4;
     font-size: 18px;
 }
+
 .lp-pessoa-fisica-pagamento .area-dependente .btn-adicionar-dependente i {
     color: #4470B4;
 }
+
 .lp-pessoa-fisica-pagamento .box-dependente {
     border-top: 1px solid #dadada;
     padding: 0 24px;
@@ -5032,6 +5055,7 @@ footer ul li a:hover {
     font-size: 11px;
     margin-bottom: 4px;
 }
+
 .lp-pessoa-fisica-pagamento #msform select {
     padding: 15px;
     border: 1px solid #ccc;
@@ -5045,13 +5069,16 @@ footer ul li a:hover {
     color: #2C3E50;
     font-size: 13px;
 }
+
 .lp-pessoa-fisica-pagamento #msform input#aceitaTermos {
     width: 13px;
 }
+
 .lp-pessoa-fisica-pagamento #msform .link-termo-uso {
     font-size: 14px;
     font-weight: 400;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont {
     width: 100%;
     padding: 30px;
@@ -5059,30 +5086,36 @@ footer ul li a:hover {
     min-height: 100%;
     background: #4470B4 url(../img/l-pf-bg-form.png) repeat;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido,
 .lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     width: 100%;
     padding: 30px;
-    border-radius:12px;
+    border-radius: 12px;
     background-color: #fff;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido h3 {
     font-size: 28px;
     margin-bottom: 30px;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul {
     list-style: none;
     padding-left: 0;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p {
     font-size: 16px;
     color: #687688;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .lista-pedido ul li p.valor-produto {
     font-size: 16px;
     color: #2D405A;
     font-weight: 600;
 }
+
 .lp-pessoa-fisica-pagamento .area-resumo-cont .codigo-corretor {
     margin-top: 30px;
 }
@@ -5103,6 +5136,7 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
     background-color: #efefef !important;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color img {
     filter: gray;
     -webkit-filter: grayscale(1);
@@ -5110,14 +5144,17 @@ footer ul li a:hover {
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color .info-valores p,
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
     color: #c5c5c5 !important;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color .btn {
     background-color: #cccccc !important;
     color: #ffffff !important;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table td,
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table th {
     padding: 10px 30px;
@@ -5203,17 +5240,21 @@ footer ul li a:hover {
     font-weight: 600;
     color: #000000;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos tbody tr td {
     text-align: center;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos tbody tr td .obs {
     font-size: 11px;
     margin-bottom: 0;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos tbody tr td,
 .lp-pessoa-fisica-pagamento .tabela-planos tbody tr th {
     vertical-align: middle;
 }
+
 .lp-pessoa-fisica-pagamento .tabela-planos .descricao .cobertura {
     color: #808080;
     font-weight: 400;
@@ -5252,39 +5293,86 @@ footer ul li a:hover {
 .lp-pessoa-fisica-pagamento .tabela-planos tbody td .btn-black:hover {
     background: #636060;
 }
+
 .lp-pessoa-fisica-pagamento .boas-vindas .mensagem {
     padding: 50px;
 }
+
 .lp-pessoa-fisica-pagamento .boas-vindas .mensagem h3 {
     font-size: 28px;
     margin-bottom: 30px;
     font-weight: 600;
 }
+
 .lp-pessoa-fisica-pagamento .boas-vindas .mensagem p {
     font-size: 24px;
     margin-bottom: 0;
 }
-.lp-pessoa-fisica-pagamento .boas-vindas .mensagem .area-btn {
+
+.lp-pessoa-fisica-pagamento .boas-vindas .area-atendimento {
     width: 100%;
-    height: 100%;
-    position: relative;
-    padding: 0;
+    padding-left: 120px;
+    background: url(../img/l-pf-central-atendimento.png) no-repeat;
+    background-size: 100px 100px;
 }
-.lp-pessoa-fisica-pagamento .boas-vindas .mensagem .btn {
-    position: absolute;
-    bottom: 0;
-    width: 258px!important;
+
+.lp-pessoa-fisica-pagamento .boas-vindas .area-atendimento p {
+    font-size: 20px;
 }
-.lp-pessoa-fisica-pagamento .boas-vindas .imagem img {
+
+.lp-pessoa-fisica-pagamento .boas-vindas .area-atendimento ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.lp-pessoa-fisica-pagamento .boas-vindas .area-atendimento ul li p {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.lp-pessoa-fisica-pagamento .boas-vindas .imagem {
     border-radius: 0 0 12px 12px;
     width: 100%;
     display: block;
+    background-color: #1D2A40;
+    padding: 0 50px;
+}
+
+.lp-pessoa-fisica-pagamento .boas-vindas .imagem p {
+    color: #ffffff;
+    font-size: 28px;
+    margin-top: 50px;
+    line-height: 38px;
+}
+
+.lp-pessoa-fisica-pagamento .boas-vindas .imagem img {
+    margin: 0 auto;
+    display: block;
+    margin-top: 50px;
+}
+
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane {
+    padding-top: 30px;
+}
+
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3.nome-plano {
+    color: #a32431;
+}
+
+.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane p {
+    font-size: 14px;
 }
 
 .cont-form-campanha {
     padding: 50px 0;
     background-color: #E8F1FF;
 }
+
 .cont-form-campanha .area-form-campanha {
     width: 640px;
     padding: 50px;
@@ -5292,12 +5380,14 @@ footer ul li a:hover {
     border-radius: 12px;
     background-color: #ffffff;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria {
     width: 100%;
     padding: 0 20px 20px 20px;
     border-radius: 12px;
     background-color: #E9E9E9;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria .titulo {
     width: 230px;
     margin: 0 auto;
@@ -5309,9 +5399,11 @@ footer ul li a:hover {
     text-align: center;
     text-transform: uppercase;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro {
     margin-top: 20px;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo {
     background-color: #ffffff;
     border-radius: 6px;
@@ -5320,11 +5412,13 @@ footer ul li a:hover {
     padding: 10px;
     text-align: center;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo img {
     display: block;
     width: 80%;
     margin: 0 auto;
 }
+
 .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo p {
     margin-bottom: 0;
     font-size: 18px;
@@ -5332,35 +5426,24 @@ footer ul li a:hover {
     font-weight: 700;
     color: #000000;
 }
+
 .cont-form-campanha .area-form-campanha .subtitulo p {
     margin: 30px 0 30px 0;
     font-size: 30px;
     color: #2D405A;
     text-align: center;
 }
+
 .cont-form-campanha .area-form-campanha form .form-group label {
     font-size: 15px;
     color: #2D405A;
     font-weight: 600;
 }
+
 .cont-form-campanha .area-form-campanha form .btn {
     width: 100%;
     height: 40px;
     margin-top: 12px;
-}
-
-.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane {
-    padding-top: 30px;
-}
-.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3 {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane h3.nome-plano {
-    color: #a32431;
-}
-.lp-pessoa-fisica-pagamento #modalTermoUso #myTabContent .tab-pane p {
-    font-size: 14px;
 }
 
 /*********************************
@@ -6061,23 +6144,29 @@ footer ul li a:hover {
     .area-checkup .pacote-checkup .valor .row div {
         margin-bottom: 20px;
     }
+
     .cont-form-campanha {
         padding: 20px 0;
     }
+
     .cont-form-campanha .area-form-campanha {
         width: 100%;
         padding: 14px;
     }
+
     .cont-form-campanha .area-form-campanha .logos-parceria {
         padding: 0 20px 10px 20px;
     }
+
     .cont-form-campanha .area-form-campanha .logos-parceria .area-logo-parceiro .logo {
         margin-bottom: 10px;
     }
+
     .cont-form-campanha .area-form-campanha .subtitulo p {
         margin: 26px 0 22px 0;
         font-size: 20px;
     }
+
     .cont-form-campanha .area-form-campanha form .btn {
         height: 50px;
         white-space: normal;
@@ -6225,47 +6314,60 @@ footer ul li a:hover {
         font-size: 16px;
         line-height: 26px;
     }
+
     .lp-pessoa-fisica .planos {
         padding: 80px 0 0 0;
     }
+
     .lp-pessoa-fisica .planos .titulo {
         margin-bottom: 130px;
     }
+
     .lp-pessoa-fisica .planos .titulo p {
         font-size: 28px;
         line-height: 36px;
     }
+
     .lp-pessoa-fisica .planos .titulo p.auxiliar {
         font-size: 16px;
     }
+
     .lp-pessoa-fisica .planos .box-planos {
         margin-bottom: 126px;
     }
+
     .lp-pessoa-fisica .planos .box-planos img {
         top: -100px;
     }
+
     .lp-pessoa-fisica .depoimentos {
         padding: 50px 0 50px 0;
     }
+
     .lp-pessoa-fisica .depoimentos h3 {
         font-size: 32px;
         margin-bottom: 32px;
     }
+
     .lp-pessoa-fisica .depoimentos .box-depoimento {
         margin-bottom: 20px;
     }
+
     .lp-pessoa-fisica .footer-lp-pf .area-app .smartphone {
         display: none;
     }
+
     .lp-pessoa-fisica .footer-lp-pf .area-app {
         padding: 30px;
     }
+
     .lp-pessoa-fisica .footer-lp-pf .area-app .links {
         float: left;
         margin-left: 0;
         width: 100%;
         padding-top: 0;
     }
+
     .lp-pessoa-fisica .footer-lp-pf .faixa p {
         font-size: 10px;
         margin-bottom: 0;
@@ -6334,7 +6436,7 @@ footer ul li a:hover {
 
     .modal-seleciona-estado {
         width: 320px;
-        margin: 0px;
+        margin: 0;
     }
 
     .area-vantagens {
