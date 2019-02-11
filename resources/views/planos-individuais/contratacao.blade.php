@@ -305,11 +305,11 @@
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeUsuario">Nome Completo</label>
 
-                                    <input type="text" class="form-control col-sm-8 text-uppercase" title="Informe um nome correto" id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
+                                    <input type="text" maxlength="64" class="form-control col-sm-8 text-uppercase" title="Informe um nome correto" id="nomeUsuario" name="nomeUsuario" placeholder="Seu nome">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="emailUsuario">E-mail</label>
-                                    <input type="email" class="form-control col-sm-8 text-uppercase" id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
+                                    <input type="email" maxlength="64" class="form-control col-sm-8 text-uppercase" id="emailUsuario" name="emailUsuario" placeholder="exemplo@email.com.br">
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="cpfUsuario">CPF</label>
@@ -386,7 +386,7 @@
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="nomeCartao">Nome impresso no
                                         cartão</label>
-                                    <input type="text" class="form-control col-sm-7  text-uppercase" id="nome_impresso" name="nome_impresso" placeholder="Insira o nome do titular" required>
+                                    <input type="text" maxlength="40" class="form-control col-sm-7  text-uppercase" id="nome_impresso" name="nome_impresso" placeholder="Insira o nome do titular" required>
                                 </div>
                                 <div class="form-row">
                                     <label class="col-sm-4 col-form-label" for="mesVencimento">Validade</label>
