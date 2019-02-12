@@ -94,6 +94,90 @@
         </div>
         <div class="tabela-planos" id="planos">
             <div class="container">
+                <div class="area-tabela-mobile">
+                    <div class="intro">
+                        <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de R$
+                            29,50¹ e descontos de até 80% nos exames.</p>
+                        <p>Na assinatura Black Você ainda conta com o bônus de 5 consultas² em 2019 nas especialidades
+                            básicas.</p>
+                    </div>
+
+                    <div class="plano">
+                        <p class="nome-plano nm-open">Plano open</p>
+                        <p class="apoio">sem assinatura</p>
+                        <p class="valor">Free</p>
+                        <ul>
+                            <li>
+                                <p>Consultas a partir de R$ 59,50
+                                    <small>(apenas no Distrito Federal)</small>
+                                </p>
+                            </li>
+                            <li>
+                                <p>Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em
+                                    todo o Brasil</p>
+                            </li>
+                        </ul>
+                        <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
+                    </div>
+
+                    <div class="plano">
+                        <p class="nome-plano nm-blue">Plano blue</p>
+                        <p class="apoio">assinatura por:</p>
+                        <p class="valor val-blue"></p>
+                        <ul>
+                            <li>
+                                <p>Consultas a partir de R$ 29,50
+                                    <small>(apenas no Distrito Federal)</small>
+                                </p>
+                            </li>
+                            <li>
+                                <p>Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em
+                                    todo o Brasil</p>
+                            </li>
+                            <li>
+                                <p>Desconto de até 70% em Consultas e Exames</p>
+                            </li>
+                            <li>
+                                <p>Programas de Promoção a Saúde e e incentivo de práticas saudáveis</p>
+                            </li>
+                            <li>
+                                <p>Orientação Médica por Telefone</p>
+                            </li>
+                            <li>
+                                <p>Desconto em Medicamentos</p>
+                            </li>
+                            <li>
+                                <p>Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50 <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
+                                </p>
+
+                            </li>
+                        </ul>
+                        <a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a>
+                    </div>
+
+                    <div class="plano">
+                        <p class="nome-plano nm-black">Plano black</p>
+                        <p class="apoio">assinatura por:</p>
+                        <p class="valor val-black"></p>
+                        <ul>
+                            <li>
+                                <p><strong>Todos os benefícios do Plano Blue</strong></p>
+                            </li>
+                            <li>
+                                <p>Desconto de até 80% em Consultas e Exames</p>
+                            </li>
+                            <li>
+                                <p>Consultas Médicas em todas as especialidades R$ 29,50</p>
+                            </li>
+                            <li>
+                                <p>Bônus de 5 consultas por ano * <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
+                                </p>
+                            </li>
+                        </ul>
+                        <a class="btn btn-black assinar-black">Assinar o Plano Blue</a>
+                    </div>
+
+                </div>
                 <div class="area-tabela table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -118,16 +202,16 @@
                                 <div class="info-valores">
                                     <p class="nome-plano nm-blue"></p>
                                     <p class="apoio">assinatura por:</p>
-                                    <p class="valor val-blue"> </p>
+                                    <p class="valor val-blue"></p>
                                     <a href="#contato" class="btn btn-blue assinar-blue">Assinar</a>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="info-valores">
-                                    <p class="nome-plano nm-black">Plano  </p>
+                                    <p class="nome-plano nm-black">Plano </p>
                                     <p class="apoio">assinatura por:</p>
-                                    <p class="valor val-black"> </p>
-                                    <a   class="btn btn-black assinar-black">Assinar</a>
+                                    <p class="valor val-black"></p>
+                                    <a class="btn btn-black assinar-black">Assinar</a>
                                 </div>
                             </th>
                         </tr>
@@ -150,7 +234,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" class="descricao">Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em todo o Brasil</th>
+                            <th scope="row" class="descricao">Rede com preços justos com mais de 2700 especialidades,
+                                mais de 11500 exames e em todo o Brasil
+                            </th>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -163,16 +249,24 @@
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto de até 70% em Consultas e Exames</th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto de até 80% em Consultas e Exames</th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -181,7 +275,9 @@
                             <th scope="row" class="descricao">Programas de Promoção a Saúde e e incentivo de práticas
                                 saudáveis
                             </th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -191,7 +287,9 @@
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Orientação Médica por Telefone</th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -201,7 +299,9 @@
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Desconto em Medicamentos</th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -215,7 +315,9 @@
                                 <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
                                     Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                             </th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -225,8 +327,12 @@
                         </tr>
                         <tr>
                             <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50</th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
@@ -236,24 +342,36 @@
                                 <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
                                     Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                             </th>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício"></td>
-                            <td><img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício"></td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício">
+                            </td>
                             <td>
                                 <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
                             <th scope="row"></th>
-                            <td><a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a></td>
+                            <td>
+                                <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
+                            </td>
                             <td><a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
                             <td><a class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="regras"><small>¹ Válido no DF, consulte demais estados.</small></p>
-                <p class="regras"><small>² Marcação via central de atendimento. 0800 Doutor Hoje</small></p>
-                <p class="regras"><small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small></p>
+                <p class="regras">
+                    <small>¹ Válido no DF, consulte demais estados.</small>
+                </p>
+                <p class="regras">
+                    <small>² Marcação via central de atendimento. 0800 Doutor Hoje</small>
+                </p>
+                <p class="regras">
+                    <small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small>
+                </p>
             </div>
         </div>
         <div class="beneficios" id="beneficios">
@@ -455,8 +573,8 @@
 
                                         <p class="nome-plano nm-blue"></p>
                                         <p class="apoio">assinatura por:</p>
-                                        <p class="valor val-blue"> </p>
-                                        <a  class="btn btn-blue assinar-blue">Peça o seu</a>
+                                        <p class="valor val-blue"></p>
+                                        <a class="btn btn-blue assinar-blue">Peça o seu</a>
                                     </div>
                                 </div>
                             </div>
@@ -466,8 +584,8 @@
                                     <div class="texto">
                                         <p class="nome-plano nm-black"></p>
                                         <p class="apoio">assinatura por:</p>
-                                        <p class="valor val-black"> </p>
-                                        <a   class="btn btn-black assinar-black">Peça o seu</a>
+                                        <p class="valor val-black"></p>
+                                        <a class="btn btn-black assinar-black">Peça o seu</a>
                                     </div>
                                 </div>
                             </div>
@@ -518,8 +636,7 @@
                             <p class="funcao">Médica na Doutor Hoje</p>
                             <p class="texto">Gosto muito de atender aos pacientes da Doutor Hoje,
                                 pois posso programar a minha agenda e dar um
-                                atendimento integro, sem pressa, ouvindo cada paciente.
-                                </p>
+                                atendimento integro, sem pressa, ouvindo cada paciente. </p>
                             <p class="texto">Além do mais, a relação do Doutor Hoje com a
                                 classe médica é excelente.
                                 Parabéns ao time Doutor Hoje!</p>
@@ -650,81 +767,78 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-		 var planos = []
-		planos.push({
-			plano :'{{$planos[1]['nome']}}',
-			id: '{{$planos[1]['id']}}',
-			valor: '{{$planos[1]['price']}}'
-		})
-		planos.push({
-			plano :'{{$planos[0]['nome']}}',
-			id: '{{$planos[0]['id']}}',
-			valor: '{{$planos[0]['price']}}'
-		}  );
+        var planos = []
+        planos.push({
+            plano: '{{$planos[1]['nome']}}',
+            id: '{{$planos[1]['id']}}',
+            valor: '{{$planos[1]['price']}}'
+        })
+        planos.push({
+            plano: '{{$planos[0]['nome']}}',
+            id: '{{$planos[0]['id']}}',
+            valor: '{{$planos[0]['price']}}'
+        });
 
 
+        var data = []
+        planos.map((val) => {
 
-        var data =[]
-		planos.map((val  ) => {
+            data.push({
+                plano: val.plano,
+                id: val.id,
+                valor: formatReal(val.valor)
+            })
 
-			data.push({
-				plano:val.plano,
-				id:val.id,
-				valor:formatReal(val.valor)
-			})
-
-		})
-
+        })
 
 
+        planos.map((val) => {
 
-		planos.map((val  ) => {
+            if (val.plano == "black") {
 
-			if(val.plano =="black"){
+                preencherDados(data, ".nm-black", ".val-black", ".assinar-black", val.plano, val.id, val.valor, '/planos-individuais/contratar/plano=' + val.plano + '/identificador=' + val.id + '/details=');
+            }
+            if (val.plano == "blue") {
 
-				preencherDados(data, ".nm-black", ".val-black", ".assinar-black",val.plano, val.id, val.valor, '/planos-individuais/contratar/plano='+val.plano+'/identificador='+val.id+'/details=');
-			}
-			if(val.plano =="blue"){
+                preencherDados(data, ".nm-blue", ".val-blue", ".assinar-blue", val.plano, val.id, val.valor, '/planos-individuais/contratar/plano=' + val.plano + '/identificador=' + val.id + '/details=');
 
-				preencherDados(data, ".nm-blue", ".val-blue", ".assinar-blue", val.plano, val.id, val.valor, '/planos-individuais/contratar/plano='+val.plano+'/identificador='+val.id+'/details=');
+            }
 
-			}
-
-		})
+        })
 
 
-		function preencherDados(load, classeNome, classeValor, classeAssinar, plano, id, valor, url) {
+        function preencherDados(load, classeNome, classeValor, classeAssinar, plano, id, valor, url) {
 
-				var emBase64 = btoa(JSON.stringify(
-					{
-						plano:plano,
-						id:id,
-						valor:formatReal(valor)
-					}
-				));
+            var emBase64 = btoa(JSON.stringify(
+                {
+                    plano: plano,
+                    id: id,
+                    valor: formatReal(valor)
+                }
+            ));
 
-				var all = btoa(JSON.stringify(load));
-            	$(classeNome).empty().append('Plano '+plano+'')
-				$(classeValor).empty().append(' <small>R$</small> '+formatReal(valor)+'<small>/mês</small>')
-				$(classeAssinar).attr("href",url+''+emBase64+'/all='+all+'/')
+            var all = btoa(JSON.stringify(load));
+            $(classeNome).empty().append('Plano ' + plano + '')
+            $(classeValor).empty().append(' <small>R$</small> ' + formatReal(valor) + '<small>/mês</small>')
+            $(classeAssinar).attr("href", url + '' + emBase64 + '/all=' + all + '/')
 
-		}
-		$(".mascaraTelefone").inputmask({
+        }
+
+        $(".mascaraTelefone").inputmask({
             mask: ["(99) 9999-9999", "(99) 99999-9999"],
             keepStatic: true
         });
 
     });
 
-	function formatReal( int )
-	{
-		var tmp = int+'';
-		tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
-		if( tmp.length > 6 )
-			tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    function formatReal(int) {
+        var tmp = int + '';
+        tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+        if (tmp.length > 6)
+            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
 
-		return tmp;
-	}
+        return tmp;
+    }
 
 
     function validarContato() {
