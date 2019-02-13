@@ -911,6 +911,7 @@ class PaymentController extends Controller
 			$agendamento->bo_remarcacao     	= 'N';
 			$agendamento->bo_retorno        	= 'N';
 			$agendamento->paciente_id       	= $item_agendamento->paciente_id;
+			$agendamento->vigencia_paciente_id	= session('vigencia_id');
 
 			if(!empty($item_agendamento->atendimento_id)) {
 				$agendamento->dt_atendimento    = isset($item_agendamento->dt_atendimento) && !empty($item_agendamento->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $item_agendamento->dt_atendimento)->format('Y-m-d H:i:s') : null;
@@ -1409,6 +1410,7 @@ class PaymentController extends Controller
 			$agendamento->bo_remarcacao 		= 'N';
 			$agendamento->bo_retorno 			= 'N';
 			$agendamento->paciente_id 			= $agend->paciente_id;
+			$agendamento->vigencia_paciente_id	= session('vigencia_id');
 
 			if(!empty($agend->atendimento_id)) {
 				$agendamento->dt_atendimento    = isset($agend->dt_atendimento) && !empty($agend->dt_atendimento) ? \DateTime::createFromFormat('d/m/Y H:i', $agend->dt_atendimento)->format('Y-m-d H:i:s') : null;
