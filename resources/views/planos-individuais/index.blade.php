@@ -1,49 +1,48 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
-    <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
-
+    <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css"/>
-
-    <!-- Sweet Alert css -->
     <link href="/libs/sweet-alert/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
-
-    <!-- Template theme CSS -->
-    <!--     <link rel="stylesheet" href="/libs/comvex-template/css/style_dark.css"> -->
-
-    <!-- DoutorHJ Reset CSS -->
     <link rel="stylesheet" href="/css/doutorhj.style.css">
-
     <script src="/libs/home-template/js/jquery-3.3.1.min.js"></script>
     <script src="/libs/home-template/js/popper.min.js"></script>
     <script src="/libs/home-template/js/bootstrap.min.js"></script>
     <script src="/libs/inputmask-4/dist/min/jquery.inputmask.bundle.min.js"></script>
-
-    <!--     <script src="/libs/comvex-template/js/jquery.min.js"></script> -->
-    <!-- 	<script src="/libs/home-template/js/popper.min.js"></script> -->
-    <!-- 	<script src="/libs/home-template/js/bootstrap.min.js"></script> -->
-
-    <!-- Notification js -->
     <script src="/libs/notifyjs/dist/notify.min.js"></script>
     <script src="/libs/notifications/notify-metro.js"></script>
-
     <script src="/libs/comvex-template/js/jquery.core.js"></script>
-
-    <!-- Sweet Alert Js  -->
     <script src="/libs/sweet-alert/sweetalert2.min.js"></script>
     <script src="/libs/comvex-template/pages/jquery.sweet-alert.init.js"></script>
-
     <title>Planos Individuais - Doutor Hoje</title>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '260779058156507');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1"
+             src="https://www.facebook.com/tr?id=260779058156507&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+
 </head>
 <body>
 <div class="lp-pessoa-fisica">
@@ -94,6 +93,7 @@
         </div>
         <div class="tabela-planos" id="planos">
             <div class="container">
+
                 <div class="area-tabela-mobile">
                     <div class="intro">
                         <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de R$
@@ -178,6 +178,7 @@
                     </div>
 
                 </div>
+
                 <div class="area-tabela table-responsive">
                     <table class="table table-bordered">
                         <thead>
