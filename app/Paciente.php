@@ -42,7 +42,7 @@ use League\Flysystem\Util;
  * @property Campanha[] $campanhas
  *
  * @property Plano $plano_ativo
- * @property Plano[] $planos_disponiveis
+ * @property Plano[] $vigencias_disponiveis
  * @property Plano $plano_principal
  * @property float $vl_max_consumo
  * @property float $vl_consumido
@@ -60,7 +60,7 @@ class Paciente extends Model
 	public $dates 	      = ['dt_nascimento'];
 
 	protected $hidden = ['access_token', 'time_to_live', 'mundipagg_token'];
-	protected $appends = ['plano_ativo', 'plano_principal', 'planos_disponiveis', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
+	protected $appends = ['plano_ativo', 'plano_principal', 'vigencias_disponiveis', 'vl_max_consumo', 'vl_consumido', 'saldo_empresarial'];
 
 	/*
      * Constants
@@ -196,14 +196,23 @@ class Paciente extends Model
 		return Plano::findOrFail($this->getPlanoAtivo($this->attributes['id']));
 	}
 
-	public function getPlanoPrincipalAttribute()
+	public function getVigenciaAtivaAttribute()
 	{
-		return Plano::findOrFail($this->getPlanoPrincipal($this->attributes['id']));
+		return VigenciaPaciente::findOrFail($this->getVigenciaAtiva($this->attributes['id']));
 	}
 
-	public function getPlanosDisponiveisAttribute()
+	public function getVigenciaPrincipalAttribute()
 	{
-		return Plano::whereIn('id', $this->getPlanosDisponiveis($this->attributes['id']))->get();
+		return VigenciaPaciente::findOrFail($this->getVigenciaPrincipal($this->attributes['id']));
+	}
+
+	public function getVigenciasDisponiveisAttribute()
+	{
+		return VigenciaPaciente::whereIn('id', $this->getVigenciasDisponiveis($this->attributes['id']))
+			->with(['anuidade' => function($query) {
+				$query->orderBy('empresa_id');
+			}])
+			->get();
 	}
 
 	public function getVlMaxConsumoAttribute()
@@ -223,56 +232,37 @@ class Paciente extends Model
 
 	public static function getPlanoAtivo($paciente_id)
 	{
-		if(is_null(Session::get('plano_id'))) {
+		$vigenciaPac = VigenciaPaciente::find(self::getVigenciaAtiva($paciente_id));
+
+		if(is_null($vigenciaPac)) {
 			return Plano::OPEN;
 		} else {
-			return Session::get('plano_id');
+			return $vigenciaPac->anuidade->plano_id;
 		}
 	}
 
-	public static function getPlanoPrincipal($paciente_id)
+	public static function getVigenciaPrincipal($paciente_id)
 	{
-		$vigenciasPac = self::getVigenciasDisponiveis($paciente_id);
+		$vigenciasPac = VigenciaPaciente::whereIn('id', self::getVigenciasDisponiveis($paciente_id))->get();
 
 		if(is_null($vigenciasPac) || $vigenciasPac->count() == 0) {
-			return Plano::OPEN;
+			return null;
 		} else {
 			$vigenciasPac = $vigenciasPac->sortByDesc(function($vigencia, $key) {
 				return $vigencia->anuidade->plano->cd_plano;
 			});
-			return $vigenciasPac->first()->anuidade->plano_id;
-		}
-	}
-
-	public static function getPlanosDisponiveis($paciente_id)
-	{
-		$vigenciasPac = self::getVigenciasDisponiveis($paciente_id);
-
-		if(is_null($vigenciasPac) || $vigenciasPac->count() == 0) {
-			return [Plano::OPEN];
-		} else {
-			$planos = [];
-			foreach($vigenciasPac as $vigencia) {
-				if(!is_null($vigencia->anuidade)) {
-					$planos[] = $vigencia->anuidade->plano->id;
-				}
-			}
-			return $planos;
+			return $vigenciasPac->first()->id;
 		}
 	}
 
 	public static function getVigenciaAtiva($paciente_id)
 	{
-		$vigenciaPac = VigenciaPaciente::where(['paciente_id' => $paciente_id])
-			->where(function($query) {
-				$query->where('data_inicio', '<=', date('Y-m-d H:i:s'))
-					->where('data_fim', '>=', date('Y-m-d H:i:s'))
-					->orWhere(DB::raw('cobertura_ativa'), '=', true);
-			})
-			->orderBy('id', 'DESC')
-			->first();
+		if(is_null(Session::get('vigencia_id')))
+			$vigenciaPac = null;
+		else
+			$vigenciaPac = VigenciaPaciente::findOrFail(Session::get('vigencia_id'));
 
-		return $vigenciaPac;
+		return $vigenciaPac->id;
 	}
 
 	public static function getVigenciasDisponiveis($paciente_id)
@@ -286,18 +276,18 @@ class Paciente extends Model
 			->orderBy('id', 'DESC')
 			->get();
 
-		return $vigenciaPac;
+		return $vigenciaPac->pluck('id');
 	}
 
 	public static function getVlMaxConsumo($paciente_id)
 	{
-		$vigenciaPac = self::getVigenciaAtiva($paciente_id);
-	    
-		if(!is_null($vigenciaPac) && !is_null($vigenciaPac->paciente->empresa_id)) {
+		$vigenciaPac = VigenciaPaciente::findOrFail(self::getVigenciaAtiva($paciente_id));
+
+		if(!is_null($vigenciaPac) && isset($vigenciaPac->paciente->empresa_id) && !is_null($vigenciaPac->paciente->empresa_id)) {
 			if(!empty(UtilController::moedaBanco($vigenciaPac->vl_max_consumo))) {
 				return UtilController::moedaBanco($vigenciaPac->vl_max_consumo);
 			} else {
-				return UtilController::moedaBanco($vigenciaPac->paciente->empresa->vl_max_funcionario);
+				return UtilController::moedaBanco($vigenciaPac->anuidade->empresa->vl_max_funcionario);
 			}
 		} else {
 			return 0;
@@ -348,8 +338,8 @@ class Paciente extends Model
 		}
 	}
 
-	public function validaPlano($plano_id)
+	public function validaVigencia($vigencia_id)
 	{
-		return $this->planos_disponiveis->contains('id', $plano_id);
+		return $this->vigencias_disponiveis->contains('id', $vigencia_id);
 	}
 }
