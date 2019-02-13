@@ -244,7 +244,11 @@
         $(".mascaraTelefone").inputmask({
             mask: ["(99) 9999-9999", "(99) 99999-9999"],
             keepStatic: true
-    	});
+    	}).bind('paste', function(e) {
+            setTimeout(function() {
+                $('.mascaraTelefone').val('');
+            }, 1);
+        });
 
         function validaRegistrar() {
 

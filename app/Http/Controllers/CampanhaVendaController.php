@@ -19,6 +19,7 @@ use App\Documento;
 use App\Contato;
 use App\TermosCondicoes;
 use App\TermosCondicoesUsuarios;
+use Illuminate\Support\Facades\Crypt;
 
 class CampanhaVendaController extends Controller
 {
@@ -115,8 +116,9 @@ class CampanhaVendaController extends Controller
     		if($user_id != 0) {
     			$paciente = Paciente::where(['user_id' => $user_id])->first();
     		}
-			
+			$eh_paciente = true;
 			if(is_null($paciente)) {
+				$eh_paciente = false;
 				$paciente = new Paciente();
 			}
 			$paciente->user_id 		= $user_id;
@@ -181,6 +183,7 @@ class CampanhaVendaController extends Controller
     		$contato_ids = [$contato1->id];
     
     		$paciente = $this->setPacienteRelations($paciente, $documento_ids, $contato_ids);
+    		$paciente->save();
     		 
     		# vinculação com o termo e condição
     		$termosCondicoes = new TermosCondicoes();
@@ -190,8 +193,20 @@ class CampanhaVendaController extends Controller
     		$termosCondicoesUsuarios->user_id = $user_id;
     		$termosCondicoesUsuarios->termo_condicao_id = $termosCondicoesActual->id;
     		$termosCondicoesUsuarios->save();
-    		 
-    		//$send_message = $this->enviaEmailAtivacaoCaixa($paciente);
+    		
+    		$nome_empresa = $campanha->empresa->razao_social;
+    		
+    		$send_message = false;
+    		if(!$eh_paciente) {
+    			$send_message = $this->enviaEmailAtivacao($paciente, $nome_empresa);
+    		} else {
+    			$send_message = $this->enviarConfirmaAdesaoCampanha($paciente, $nome_empresa);
+    		}
+    		
+    		if(!$send_message) {
+    			DB::rollback();
+    			return redirect()->route('landing-page')->with('error-alert', 'Sua adesão à Campanha ('.$campanha->url_param.') NÃO foi efetivada. Por favor, tente novamente.');
+    		}
     
     	} catch (Exception $e) {
     		DB::rollback();
@@ -203,6 +218,126 @@ class CampanhaVendaController extends Controller
     	 
     	//     	return view('oferta-certa-caixa', compact('access_token'));
     	return redirect()->route('landing-page')->with('success-alert', 'Seu cadastro na Campanha ('.$campanha->url_param.') foi realizada com sucesso!');
+	}
+	
+	/**
+	 * enviaEmailAtivacao redirect
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public static function enviaEmailAtivacao(Paciente $paciente, $nm_empresa)
+	{
+		$usuario = $paciente->user;
+	
+		# envia o e-mail de ativação
+		$verify_hash = Crypt::encryptString($paciente->id);
+		$from = 'contato@doutorhoje.com.br';
+		$to = $usuario->email;
+		$subject = 'Contato DoutorHoje';
+	
+		$nome_completo = $paciente->nm_primario.' '.$paciente->nm_secundario;
+		$paciente_email = $usuario->email;
+		
+		$documento = $paciente->documentos->first();
+		$cpf = $documento->te_documento;
+		
+		$cs_sexo = $paciente->cs_sexo;
+		$dt_nascimento = $paciente->dt_nascimento;
+
+		$contato = $paciente->contatos->first();
+		$ds_contato = $contato->ds_contato;
+		$nm_fantasia = $nm_empresa;
+		
+		$url = route('ativar_campanha', $verify_hash);
+	
+		$html_message = view('emails.email_ativacao_campanha', compact('nome_completo', 'url', 'cpf', 'paciente_email', 'cs_sexo', 'dt_nascimento', 'ds_contato', 'nm_fantasia'))->render();
+	
+		$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
+	
+		$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+	
+		return $send_message;
+	}
+	
+	/**
+	 * enviaEmailAtivacao redirect
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public static function enviarConfirmaAdesaoCampanha(Paciente $paciente, $nm_empresa)
+	{
+		$usuario = $paciente->user;
+	
+		# envia o e-mail de confirmacao de adesao a campanha
+		$from = 'contato@doutorhoje.com.br';
+		$to = $usuario->email;
+		$subject = 'Contato DoutorHoje';
+	
+		$nome_completo = $paciente->nm_primario.' '.$paciente->nm_secundario;
+		$paciente_email = $usuario->email;
+	
+		$documento = $paciente->documentos->first();
+		$cpf = $documento->te_documento;
+	
+		$cs_sexo = $paciente->cs_sexo;
+		$dt_nascimento = $paciente->dt_nascimento;
+	
+		$contato = $paciente->contatos->first();
+		$ds_contato = $contato->ds_contato;
+		$nm_fantasia = $nm_empresa;
+	
+		$html_message = view('emails.email_confirma_adesao_campanha', compact('nome_completo', 'cpf', 'paciente_email', 'cs_sexo', 'dt_nascimento', 'ds_contato', 'nm_fantasia'))->render();
+	
+		$html_message = str_replace(["\r", "\n", "\t"], '', $html_message);
+	
+		$send_message = UtilController::sendMail($to, $from, $subject, $html_message);
+	
+		return $send_message;
+	}
+	
+	/**
+	 * ativarCampanha the specified resource in storage.
+	 *
+	 * @param  String  $verify_hash
+	 * @return \Illuminate\Http\Response
+	 */
+	public function ativarCampanha($verify_hash)
+	{
+		
+		$paciente_id = Crypt::decryptString($verify_hash);
+	
+		$paciente = Paciente::findOrFail($paciente_id);
+	
+		if($paciente->cs_status != Paciente::ATIVO) {
+			return redirect()->route('landing-page')->with('error-alert', 'Paciente não cadastrado.!');
+		}
+	
+		if($paciente === null) {
+			return redirect()->route('landing-page')->with('error-alert', 'Sua Conta DoutorHoje não foi ativada. Por favor, tente novamente!');
+		}
+	
+		$paciente->load('user');
+		$user_activate_temp = $paciente->user;
+		$user_id = $user_activate_temp->id;
+		$user_activate = User::findOrFail($user_id);
+		$user_activate->cs_status = 'A';
+		
+		$empresa_id = $paciente->empresa->id;
+		$vigencia = VigenciaPaciente::with('anuidade')->where(['paciente_id' => $paciente->id])->first();
+		
+		$campanha = CampanhaVenda::with('empresa')->where(['empresa_id' => $vigencia->anuidade->empresa_id, 'plano_id' => $vigencia->anuidade->plano_id])->first();
+		$nome_empresa = $campanha->empresa->razao_social;
+	
+		if($user_activate->save()) {
+			
+			$send_message = $this->enviarConfirmaAdesaoCampanha($paciente, $nome_empresa);
+			if(!$send_message) {
+				return redirect()->route('landing-page')->with('error-alert', 'Sua adesão à Campanha ('.$campanha->url_param.') NÃO foi efetivada. Por favor, tente novamente.');
+			}
+		}
+	
+		//         return redirect()->route( 'activate-redirect' );
+		return view('pacientes.activate');
 	}
 	
 	//############# PERFORM RELATIONSHIP ##################

@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  * @property string $bo_retorno
+ * @property int $vigencia_paciente_id
  * @property Atendimento $atendimento
  * @property Checkup $checkup
  * @property Clinica $clinica
