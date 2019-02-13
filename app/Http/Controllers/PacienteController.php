@@ -324,12 +324,12 @@ class PacienteController extends Controller
     	return $dependente;
     }
 
-	public function alteraPlanoAtivo($id)
+	public function alteraVigenciaAtiva($id)
 	{
-		if(Auth::user()->paciente->validaPlano($id))
-			Session::put('plano_id', $id);
+		if(Auth::user()->paciente->validaVigencia($id))
+			Session::put('vigencia_id', $id);
 		else
-			Session::put('plano_id', Auth::user()->paciente->plano_principal->id);
+			Session::put('vigencia_id', Auth::user()->paciente->vigencia_principal->id);
 
 		return redirect()->back();
 	}

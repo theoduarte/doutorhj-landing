@@ -101,7 +101,7 @@ class LoginController extends Controller
     	if (Auth::attempt($credentials)) {
     		// Authentication passed...
     		$session = Auth::user()->load('paciente');
-			Session::put('plano_id', $session->paciente->plano_principal->id);
+			Session::put('vigencia_id', $session->paciente->vigencia_principal->id);
 
     		if(empty($session->paciente->mundipagg_token)) {
                 // passa os valores para montar o objeto a ser enviado

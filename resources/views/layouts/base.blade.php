@@ -276,31 +276,33 @@
 						<ul class="wb-links-mobile">
 							<li><i class="fa fa-map-marker" aria-hidden="true"></i> <span class=""><span id="ds_uf_localizacao" class="ds_uf_localizacao" >Selecione</span> - <a href="" data-toggle="modal" data-target="#modalEstado">Alterar</a></span></li>
 						</ul>
-						@if(Auth::user()->paciente->plano_ativo->id != App\Plano::OPEN)
+						@if(Auth::user()->paciente->vigencia_ativa->anuidade->plano->id != App\Plano::OPEN)
 							<div class="info-empresarial">
 								<div class="opcoes ie-logo">
 									<div class="logo-empresa">
-										<img src="@if(!empty(Auth::user()->paciente->empresa->logomarca_path)) {{ Auth::user()->paciente->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
+										<img src="@if(!empty(Auth::user()->paciente->vigencia_ativa->anuidade->empresa->logomarca_path)) {{ Auth::user()->paciente->vigencia_ativa->anuidade->empresa->logomarca_path }} @else /img/no-image-empresa.png @endif" alt="">
 									</div>
 								</div>
 								<div class="opcoes ie-plano">
 									<p class="titulo">Plano</p>
 									<div id="dropdown-plano-div">
-										<p class="btn btn-default plano {{strtolower(Auth::user()->paciente->plano_ativo->ds_plano)}}
-										@if(Auth::user()->paciente->planos_disponiveis->count() > 1)
+										<p class="btn btn-default plano {{strtolower(Auth::user()->paciente->vigencia_ativa->anuidade->plano->ds_plano)}}
+										@if(Auth::user()->paciente->vigencias_disponiveis->count() > 1)
 												dropdown-toggle" data-toggle="dropdown">
-											{{Auth::user()->paciente->plano_ativo->ds_plano}}
+											{{Auth::user()->paciente->vigencia_ativa->anuidade->plano->ds_plano}}
 										</p>
 										<div class="dropdown-menu">
-											@foreach(Auth::user()->paciente->planos_disponiveis as $plano)
-												@if(Auth::user()->paciente->plano_ativo->id != $plano->id)
-													<a class="btn dropdown-item {{strtolower($plano->ds_plano)}}" href="{{route('altera_plano_ativo', $plano->id)}}">{{$plano->ds_plano}}</a>
+											@foreach(Auth::user()->paciente->vigencias_disponiveis as $vigencia)
+												@if(Auth::user()->paciente->vigencia_ativa->id != $vigencia->id)
+													<a class="btn dropdown-item" href="{{route('altera_vigencia_ativa', $vigencia->id)}}">
+														{{$vigencia->anuidade->empresa->nome_fantasia}} - {{$vigencia->anuidade->plano->ds_plano}}
+													</a>
 												@endif
 											@endforeach
 										</div>
 										@else
 												">
-											{{Auth::user()->paciente->plano_ativo->ds_plano}}
+											{{Auth::user()->paciente->vigencia_ativa->anuidade->plano->ds_plano}}
 										</p>
 										@endif
 									</div>
