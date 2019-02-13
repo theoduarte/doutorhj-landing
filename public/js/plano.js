@@ -221,6 +221,8 @@ $(function(){
 function efetuarPagamento(usuario, card ){
 		$('.spinner').fadeIn()
 
+			let corretor =$('#codigoCorretor').val();
+
 		  	$.ajax({
 			type:'post',
 			dataType:'json',
@@ -229,7 +231,7 @@ function efetuarPagamento(usuario, card ){
 				usuario:usuario,
 				dependente:dependentes,
 				card:card,
-				corretor:$('#codigoCorretor').val(),
+				corretor:corretor.replace(/\s{1,}/g, ''),
 				'_token': laravel_token
 			},
 			timeout: 15000,
@@ -377,11 +379,11 @@ function efetuarPagamento(usuario, card ){
 
 							var data = (' <div id="boxes'+quantidade+'" class="box-dependente ">\n' +
 								'                                          <div class="btn-excluir">\n' +
-								'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">remover dependente</a>\n' +
+								'                                                    <a class="excluir-produto" href="javascript:;" onclick="removerDependente('+quantidade+')">Remover Dependente</a>\n' +
 								'                                                </div> \n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="nomeDependente">Nome Completo do Dependente</label>\n' +
-								'                                            <input type="text" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
+								'                                            <input type="text" maxlength="40" class="form-control col-sm-8 text-uppercase" onkeyup="myFunction( '+quantidade +')" id="nomeDependente'+quantidade+'" placeholder="Nome do dependente">\n' +
 								'                                        </div>\n' +
 								'                                        <div class="form-row">\n' +
 								'                                            <label class="col-sm-4 col-form-label" for="cpfDependente">CPF do Dependente</label>\n' +
