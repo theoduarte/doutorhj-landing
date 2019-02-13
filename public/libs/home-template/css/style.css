@@ -4140,8 +4140,122 @@ footer ul li a:hover {
     padding: 60px 0;
 }
 
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile {
+    display: none;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .intro,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .intro {
+    text-align: center;
+    font-size: 16px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .intro {
+    margin-left: 30px;
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano {
+    border: 1px solid #d6d6d6;
+    border-radius: 3px;
+    margin: 0 auto 20px;
+    max-width: 300px;
+    padding: 30px;
+    background-color: #ffffff;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .nome-plano,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .nome-plano,
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .valor,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .valor {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .nm-open,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .nm-open {
+    color: #12B18C;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .nm-blue,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .nm-blue {
+    color: #4470B4;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .apoio,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .apoio {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano ul,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano ul {
+    margin-top: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano li,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano li {
+    padding-left: 1.3em;
+}
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano li:before,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano li:before {
+    content: "\f00c";
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-left: -1.3em;
+    width: 1.3em;
+    float: left;
+    color: #ccc;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano ul li p,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano ul li p {
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano ul li p span,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano ul li p span {
+    color: #424242;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .btn,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .btn {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .btn-open,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .btn-open {
+    background: #12B18C;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .btn-blue,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .btn-blue {
+    background: #5282ce;
+}
+
+.lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .btn-black,
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .btn-black {
+    background: #000000;
+}
+
 .lp-pessoa-fisica .tabela-planos .area-tabela {
     background-color: #fff;
+    display: block;
 }
 
 .lp-pessoa-fisica .tabela-planos .area-tabela .table {
@@ -6170,6 +6284,15 @@ footer ul li a:hover {
     .cont-form-campanha .area-form-campanha form .btn {
         height: 50px;
         white-space: normal;
+    }
+
+    .lp-pessoa-fisica .tabela-planos .area-tabela,
+    .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela {
+        display: none;
+    }
+    .lp-pessoa-fisica .tabela-planos .area-tabela-mobile,
+    .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile {
+        display: block;
     }
 }
 
