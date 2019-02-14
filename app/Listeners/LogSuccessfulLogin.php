@@ -44,5 +44,6 @@ class LogSuccessfulLogin
         
         //dd($menus_app);
         Session::put('menus_app', $menus_app);
+		Session::put('vigencia_id', $event->user->paciente->vigencia_principal->id);
     }
 }
