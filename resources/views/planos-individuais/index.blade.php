@@ -106,9 +106,9 @@
 
                 <div class="area-tabela-mobile">
                     <div class="intro">
-                        <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de R$
-                            29,50¹ e descontos de até 80% nos exames.</p>
-                        <p>Na assinatura Black Você ainda conta com o bônus de 5 consultas² em 2019 nas especialidades
+                        <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de
+                            <strong>R$ 29,50¹</strong> e descontos de até 80% nos exames.</p>
+                        <p>Na assinatura <strong>Black</strong> Você ainda conta com o bônus de <strong>5 consultas²</strong> em 2019 nas especialidades
                             básicas.</p>
                     </div>
 
@@ -187,9 +187,7 @@
                         </ul>
                         <a class="btn btn-black assinar-black">Assinar o Plano Black</a>
                     </div>
-
                 </div>
-
                 <div class="area-tabela table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -258,7 +256,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" class="descricao">Bônus de 5 consultas por ano ³<br>
+                            <th scope="row" class="descricao">Bônus de 5 consultas por ano³<br>
                                 <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
                                     Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
                             </th>

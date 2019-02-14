@@ -29,6 +29,9 @@
     <script src="/libs/card-master/dist/jquery.card.js"></script>
     <title>Planos Individuais - Doutor Hoje</title>
     <style>
+        html, body {
+            height: auto!important;
+        }
         #checkout_card_number {
             background-image: url(cards.png);
             background-position: 3px 3px;
@@ -163,9 +166,8 @@
                         <div class="area-tabela-mobile">
                             <div class="intro">
                                 <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir
-                                    de R$
-                                    29,50¹ e descontos de até 80% nos exames.</p>
-                                <p>Na assinatura Black Você ainda conta com o bônus de 5 consultas² em 2019 nas
+                                    de <strong>R$ 29,50¹</strong> e descontos de até 80% nos exames.</p>
+                                <p>Na assinatura <strong>Black</strong> Você ainda conta com o bônus de <strong>5 consultas²</strong> em 2019 nas
                                     especialidades
                                     básicas.</p>
                             </div>
@@ -227,7 +229,7 @@
                                         <p>Consultas Médicas em todas as especialidades R$ 29,50</p>
                                     </li>
                                     <li>
-                                        <p>Bônus de 5 consultas por ano * <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
+                                        <p>Bônus de 5 consultas por ano³ <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
                                         </p>
                                     </li>
                                 </ul>
@@ -240,16 +242,33 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <p class="regras">
+                                <small>¹ Válido no DF. Para o plano Blue as consultas de 29,50 são limitadas as especialidades (
+                                    Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia,
+                                    Acupuntura, Nutricionista e Fonoaudiologia)
+                                </small>
+                            </p>
+                            <p class="regras">
+                                <small>² Marcação exclusivamente via central de atendimento. 0800 Doutor Hoje</small>
+                            </p>
+                            <p class="regras">
+                                <small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small>
+                            </p>
                         </div>
                         <div class="area-tabela table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
                                     <th scope="col">
-                                        <div class="regras">
+                                        {{--<div class="regras">
                                             <h3>Escolha o plano<br>
                                                 <strong>perfeito para você</strong></h3>
+                                        </div>--}}
+                                        <div class="intro">
+                                            <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de <strong>R$
+                                                    29,50¹</strong> e descontos de até 80% nos exames.</p>
+                                            <p>Na assinatura <strong>Black</strong> Você ainda conta com o bônus de <strong>5 consultas²</strong> em 2019 nas especialidades
+                                                básicas.</p>
                                         </div>
                                     </th>
                                     <th scope="col " class="blue-style-ocult">
@@ -371,7 +390,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
+                                    <th scope="row" class="descricao">Bônus de 5 consultas por ano³<br>
                                         <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia,
                                             Ginecologia,
                                             Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
@@ -395,6 +414,18 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <p class="regras">
+                                <small>¹ Válido no DF. Para o plano Blue as consultas de 29,50 são limitadas as especialidades (
+                                    Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia,
+                                    Acupuntura, Nutricionista e Fonoaudiologia)
+                                </small>
+                            </p>
+                            <p class="regras">
+                                <small>² Marcação exclusivamente via central de atendimento. 0800 Doutor Hoje</small>
+                            </p>
+                            <p class="regras">
+                                <small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small>
+                            </p>
                         </div>
                     </div>
                 </fieldset>

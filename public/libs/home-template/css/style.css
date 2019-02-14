@@ -4982,7 +4982,7 @@ footer ul li a:hover {
 
 .lp-pessoa-fisica-pagamento {
     height: auto;
-    background-color: #E8F1FF;
+    /*background-color: #E8F1FF;*/
 }
 
 .lp-pessoa-fisica-pagamento header .container {
@@ -5007,7 +5007,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica-pagamento #msform fieldset {
-    background: white;
+    background: #f1f1f1;
     border: 0 none;
     border-radius: 12px;
     box-sizing: border-box;
@@ -5247,7 +5247,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table {
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th {
@@ -5282,6 +5282,10 @@ footer ul li a:hover {
     padding: 10px 30px;
 }
 
+.lp-pessoa-fisica-pagamento .tabela-planos {
+    padding-bottom: 60px;
+}
+
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p {
     color: #2D405A;
     line-height: 24px;
@@ -5294,11 +5298,29 @@ footer ul li a:hover {
     font-weight: 600;
 }
 
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras span {
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .regras p span {
     color: #666E79;
     line-height: 14px;
     font-size: 12px;
     font-weight: 300;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .intro p {
+    color: #2D405A;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 6px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos p.regras {
+    margin-bottom: 6px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .intro p strong {
+    font-weight: 600;
 }
 
 .lp-pessoa-fisica-pagamento .tabela-planos .info-valores {
