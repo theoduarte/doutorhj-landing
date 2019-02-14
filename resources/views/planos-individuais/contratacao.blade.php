@@ -109,20 +109,30 @@
     </style>
     <!-- Facebook Pixel Code -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '1424052894404362');
         fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=1424052894404362&ev=PageView&noscript=1"
-        /></noscript>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1424052894404362&ev=PageView&noscript=1"/>
+    </noscript>
     <!-- End Facebook Pixel Code -->
 
 </head>
@@ -151,13 +161,14 @@
                     <div class="tabela-planos">
                         <div class="area-tabela-mobile">
                             <div class="intro">
-                                <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir de R$
+                                <p>Assinando os planos Blue ou Black você pode ter acesso a consultas médicas a partir
+                                    de R$
                                     29,50¹ e descontos de até 80% nos exames.</p>
-                                <p>Na assinatura Black Você ainda conta com o bônus de 5 consultas² em 2019 nas especialidades
+                                <p>Na assinatura Black Você ainda conta com o bônus de 5 consultas² em 2019 nas
+                                    especialidades
                                     básicas.</p>
                             </div>
-
-                            <div class="plano">
+                            <div class="plano blue-style-ocult">
                                 <p class="nome-plano nm-blue">Plano blue</p>
                                 <p class="apoio">assinatura por:</p>
                                 <p class="valor val-blue"></p>
@@ -168,7 +179,8 @@
                                         </p>
                                     </li>
                                     <li>
-                                        <p>Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em
+                                        <p>Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames
+                                            e em
                                             todo o Brasil</p>
                                     </li>
                                     <li>
@@ -189,10 +201,17 @@
 
                                     </li>
                                 </ul>
-                                <a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a>
+                                <div>
+                                    <div>
+                                        <div class="blue-style-ocult">
+                                            <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-blue assinar-blue blue assinar-bt-blue">Assinar
+                                                o Plano Blue</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="plano">
+                            <div class="plano black-style-ocult">
                                 <p class="nome-plano nm-black">Plano black</p>
                                 <p class="apoio">assinatura por:</p>
                                 <p class="valor val-black"></p>
@@ -211,7 +230,14 @@
                                         </p>
                                     </li>
                                 </ul>
-                                <a class="btn btn-black assinar-black">Assinar o Plano Blue</a>
+                                <div>
+                                    <div>
+                                        <div class="black-style-ocult">
+                                            <a href="javascript:;" style="width: 100%; line-height: 50px;" class="btn btn-black assinar-black black assinar-bt-black">Assinar
+                                                o Plano Black</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -1001,6 +1027,6 @@
         });
     });
 </script>
-<script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/8c6802b8-db14-4d8b-996e-5892079447e3-loader.js" ></script>
+<script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/8c6802b8-db14-4d8b-996e-5892079447e3-loader.js"></script>
 </body>
 </html>
