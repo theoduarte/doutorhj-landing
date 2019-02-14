@@ -116,7 +116,7 @@
                                     todo o Brasil</p>
                             </li>
                         </ul>
-                        <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
+                        <a href="{{route('login')}}" class="btn btn-open assinar-open">Inscreva-se</a>
                     </div>
 
                     <div class="plano">
@@ -173,7 +173,7 @@
                                 </p>
                             </li>
                         </ul>
-                        <a class="btn btn-black assinar-black">Assinar o Plano Blue</a>
+                        <a class="btn btn-black assinar-black">Assinar o Plano Black</a>
                     </div>
 
                 </div>
@@ -195,7 +195,7 @@
                                     <p class="nome-plano nm-open">Plano open</p>
                                     <p class="apoio">sem assinatura</p>
                                     <p class="valor val-open">Free</p>
-                                    <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
+                                    <a href="{{route('login')}}" class="btn btn-open assinar-open">Inscreva-se</a>
                                 </div>
                             </th>
                             <th scope="col">
@@ -355,7 +355,7 @@
                         <tr>
                             <th scope="row"></th>
                             <td>
-                                <a href="https://doutorhoje.com.br/login" class="btn btn-open assinar-open">Inscreva-se</a>
+                                <a href="{{route('login')}}" class="btn btn-open assinar-open">Inscreva-se</a>
                             </td>
                             <td><a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a></td>
                             <td><a class="btn btn-black assinar-black">Assinar o Plano Black</a></td>
