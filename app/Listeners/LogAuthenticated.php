@@ -27,6 +27,7 @@ class LogAuthenticated
      */
     public function handle(Authenticated $event)
     {
-		Session::put('vigencia_id', $event->user->paciente->vigencia_principal->id);
+    	if(is_null(session('vigencia_id')))
+			Session::put('vigencia_id', ($event->user->paciente->vigencia_principal->id ?? null));
     }
 }

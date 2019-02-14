@@ -203,7 +203,7 @@ class Paciente extends Model
 
 	public function getVigenciaPrincipalAttribute()
 	{
-		return VigenciaPaciente::findOrFail($this->getVigenciaPrincipal($this->attributes['id']));
+		return VigenciaPaciente::find($this->getVigenciaPrincipal($this->attributes['id']));
 	}
 
 	public function getVigenciasDisponiveisAttribute()
