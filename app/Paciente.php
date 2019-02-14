@@ -257,12 +257,7 @@ class Paciente extends Model
 
 	public static function getVigenciaAtiva($paciente_id)
 	{
-		if(is_null(Session::get('vigencia_id')))
-			$vigenciaPac = null;
-		else
-			$vigenciaPac = VigenciaPaciente::findOrFail(Session::get('vigencia_id'));
-
-		return $vigenciaPac->id;
+		return Session::get('vigencia_id');
 	}
 
 	public static function getVigenciasDisponiveis($paciente_id)

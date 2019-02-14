@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Checkup;
 use App\ItemCheckup;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PrestadoresRequest;
@@ -49,9 +50,9 @@ class ClinicaController extends Controller
      */
 	function __construct() {
 		if(env('APP_ENV') != 'production') {
-			$to = env('API_URL_HOMOLOG') ;
+			$to = env('API_URL_HOMOLOG', 'https://homologacao-api.doctorhoje.com.br/api/v1/') ;
 		}else{
-			$to = env('API_URL_PROD') ;
+			$to = env('API_URL_PROD', 'https://api.doctorhoje.com.br/api/v1/') ;
 		}
 		$this->url_api = $to;
 
@@ -862,56 +863,53 @@ class ClinicaController extends Controller
     }
 
     /*colocar essa rota no local correto*/
-    public function contatoHomePublica(){
-        return view('mensagems.contato');
+    public function contatoHomePublica()
+	{
+    	return view('mensagems.contato');
     }
-    public function planos(){
+
+    public function planos()
+	{
+		$data = null;
 
 		try{
 			$client = new Client(['timeout'  => 1500,]);
 
 			$response = $client->request('get',  $this->url_api.'listar-plano', [
 				'headers' => [
-					'Authorization'     => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
+					'Authorization' => env('TOKEN_PAGAMENTO_PRE_AUTORIZAR')
 				],
 			]);
 
-			$data=$response->getBody()->read(49000000) ;
-
-
-		}catch (\Exception $ee){}
+			$data = $response->getBody()->read(49000000) ;
+		} catch (\Exception $ee) {
+			Log::error('Erro ao carregar tela de planos individuais. ', ['message' => $ee->getMessage(), 'dados' => $data]);
+		}
 
 		$response = json_decode($data, true);
 		$planos =[];
-		foreach ($response as  $dd ){
 
-		 	foreach ($dd['data'] as $datum) {
+		foreach ($response as  $dd ) {
+			foreach ($dd['data'] as $datum) {
+				if($datum['name'] == "blue"  ) {
+					$pp = [
+						"nome" => $datum['name'],
+						"id" =>$datum['id'],
+						"price" =>$datum['minimum_price']
+					];
+					array_push($planos,$pp);
+				}
 
-		 	if($datum['name'] == "blue"  ){
-
-				$pp = [
-				"nome" => $datum['name'],
-				"id" =>$datum['id'],
-				"price" =>$datum['minimum_price']
-				];
-				array_push($planos,$pp);
-
-
-			}
-
-
-			if( $datum['name'] =="black"){
-				$pp = [
-				"nome" => $datum['name'],
-				"id" =>$datum['id'],
-				"price" => $datum['minimum_price']
-				];
-				array_push($planos,$pp);
-			}
-	 	 }
-
+				if( $datum['name'] =="black"){
+					$pp = [
+						"nome" => $datum['name'],
+						"id" =>$datum['id'],
+						"price" => $datum['minimum_price']
+					];
+					array_push($planos,$pp);
+				}
+	 	 	}
 		}
-
 
         return view('planos-individuais.index',["planos" =>  ($planos)]);
     }
