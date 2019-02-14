@@ -131,7 +131,7 @@ class LoginController extends Controller
     
     public function logout(Request $request) {
 		CVXCart::clear();
-		Session::forget('plano_id');
+		Session::forget('vigencia_id');
     	Auth::logout();
     	return redirect('/');
     }
