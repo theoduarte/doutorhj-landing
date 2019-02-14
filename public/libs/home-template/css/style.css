@@ -4187,6 +4187,10 @@ footer ul li a:hover {
     color: #4470B4;
 }
 
+.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .blue-style-ocult .nm-blue {
+    color: #c5c5c5 !important;
+}
+
 .lp-pessoa-fisica .tabela-planos .area-tabela-mobile .plano .apoio,
 .lp-pessoa-fisica-pagamento .tabela-planos .area-tabela-mobile .plano .apoio {
     font-size: 14px;
@@ -5246,12 +5250,11 @@ footer ul li a:hover {
     border-bottom: 0;
 }
 
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color,
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color {
     background-color: #efefef !important;
 }
 
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color img {
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color img {
     filter: gray;
     -webkit-filter: grayscale(1);
     filter: grayscale(1);
@@ -5259,12 +5262,13 @@ footer ul li a:hover {
     filter: alpha(opacity=50);
 }
 
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table thead th.ocult-color .info-valores p,
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color {
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color .info-valores p,
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color .info-valores p span,
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color {
     color: #c5c5c5 !important;
 }
 
-.lp-pessoa-fisica-pagamento .tabela-planos .area-tabela .table tbody td.ocult-color .btn {
+.lp-pessoa-fisica-pagamento .tabela-planos .ocult-color .btn {
     background-color: #cccccc !important;
     color: #ffffff !important;
 }
