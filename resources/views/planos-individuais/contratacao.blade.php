@@ -8,6 +8,7 @@
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/style.css"/>

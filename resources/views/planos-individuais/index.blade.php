@@ -7,6 +7,7 @@
     <meta name="description" content="Comvex">
     <meta name="keywords" content="doutorhj saúde consulta médico sus plano de saúde">
     <meta name="author" content="Theogenes Ferreira Duarte">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link rel="shortcut icon" href="/libs/comvex-template/img/favicon.ico">
     <link type="text/css" rel="stylesheet" href="/libs/home-template/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
@@ -26,20 +27,30 @@
 
     <!-- Facebook Pixel Code -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '1424052894404362');
         fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=1424052894404362&ev=PageView&noscript=1"
-        /></noscript>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1424052894404362&ev=PageView&noscript=1"/>
+    </noscript>
     <!-- End Facebook Pixel Code -->
 
 </head>
@@ -69,7 +80,7 @@
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <a href="#contato" class="btn">Assine Agora</a>
+                        <a href="#planos" class="btn">Assine Agora</a>
                     </form>
                 </div>
             </nav>
@@ -107,7 +118,7 @@
                         <p class="valor">Free</p>
                         <ul>
                             <li>
-                                <p>Consultas a partir de R$ 59,50
+                                <p>Consultas a partir de R$ 74,50
                                     <small>(apenas no Distrito Federal)</small>
                                 </p>
                             </li>
@@ -130,6 +141,10 @@
                                 </p>
                             </li>
                             <li>
+                                <p>Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50 <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
+                                </p>
+                            </li>
+                            <li>
                                 <p>Rede com preços justos com mais de 2700 especialidades, mais de 11500 exames e em
                                     todo o Brasil</p>
                             </li>
@@ -145,11 +160,6 @@
                             <li>
                                 <p>Desconto em Medicamentos</p>
                             </li>
-                            <li>
-                                <p>Consultas, Especialidades Básicas e Medicina Integrada R$ 29,50 <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
-                                </p>
-
-                            </li>
                         </ul>
                         <a class="btn btn-blue assinar-blue">Assinar o Plano Blue</a>
                     </div>
@@ -163,14 +173,16 @@
                                 <p><strong>Todos os benefícios do Plano Blue</strong></p>
                             </li>
                             <li>
-                                <p>Desconto de até 80% em Consultas e Exames</p>
+                                <p>Consultas Médicas em todas as especialidades por R$ 29,50</p>
                             </li>
                             <li>
-                                <p>Consultas Médicas em todas as especialidades R$ 29,50</p>
-                            </li>
-                            <li>
-                                <p>Bônus de 5 consultas por ano * <span>(Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</span>
+                                <p>Bônus de 5 consultas por ano³ <span>(Clínica Médica, Médico da Família, Cardiologia,
+                                        Ginecologia, Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e
+                                        Fonoaudiologia)</span>
                                 </p>
+                            </li>
+                            <li>
+                                <p>Desconto de até 80% em Consultas e Exames</p>
                             </li>
                         </ul>
                         <a class="btn btn-black assinar-black">Assinar o Plano Black</a>
@@ -221,7 +233,7 @@
                         <tr>
                             <th scope="row" class="descricao">Consultas a partir de:</th>
                             <td>
-                                <span>R$ 59,50</span>
+                                <span>R$ 74,50</span>
                                 <p class="obs">apenas no Distrito Federal</p>
                             </td>
                             <td>
@@ -231,6 +243,49 @@
                             <td>
                                 <span>R$ 29,50</span>
                                 <p class="obs">apenas no Distrito Federal</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="descricao">Consultas Médicas em todas as especialidades por R$ 29,50</th>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="descricao">Bônus de 5 consultas por ano ³<br>
+                                <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
+                                    Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                            </th>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$
+                                29,50<br>
+                                <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
+                                    Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
+                            </th>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
+                            </td>
+                            <td>
+                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
                             </td>
                         </tr>
                         <tr>
@@ -310,49 +365,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" class="descricao">Consultas, Especialidades Básicas e Medicina Integrada R$
-                                29,50<br>
-                                <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
-                                    Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
-                            </th>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="descricao">Consultas Médicas em todas as especialidades R$ 29,50</th>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="descricao">Bônus de 5 consultas por ano *<br>
-                                <p class="cobertura">(Clínica Médica, Médico da Família, Cardiologia, Ginecologia,
-                                    Dermatologia, Urologia, Psicologia, Acupuntura, Nutricionista e Fonoaudiologia)</p>
-                            </th>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-close.png" alt="Esse plano não contempla contempla este benefício">
-                            </td>
-                            <td>
-                                <img src="/libs/home-template/img/l-pf-check.png" alt="Esse plano contempla este benefício">
-                            </td>
-                        </tr>
-                        <tr>
                             <th scope="row"></th>
                             <td>
                                 <a href="{{route('login')}}" class="btn btn-open assinar-open">Inscreva-se</a>
@@ -364,10 +376,13 @@
                     </table>
                 </div>
                 <p class="regras">
-                    <small>¹ Válido no DF, consulte demais estados.</small>
+                    <small>¹ Válido no DF. Para o plano Blue as consultas de 29,50 são limitadas as especialidades (
+                        Clínica Médica, Médico da Família, Cardiologia, Ginecologia, Dermatologia, Urologia, Psicologia,
+                        Acupuntura, Nutricionista e Fonoaudiologia)
+                    </small>
                 </p>
                 <p class="regras">
-                    <small>² Marcação via central de atendimento. 0800 Doutor Hoje</small>
+                    <small>² Marcação exclusivamente via central de atendimento. 0800 Doutor Hoje</small>
                 </p>
                 <p class="regras">
                     <small>³ Válido para 2019, não é acumulativo. Marcação via central de atendimento.</small>
@@ -863,6 +878,6 @@
 
 
 </script>
-<script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/8c6802b8-db14-4d8b-996e-5892079447e3-loader.js" ></script>
+<script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/8c6802b8-db14-4d8b-996e-5892079447e3-loader.js"></script>
 </body>
 </html>

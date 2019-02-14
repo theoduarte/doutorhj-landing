@@ -4047,6 +4047,10 @@ footer ul li a:hover {
 *
 *********************************/
 
+.lp-pessoa-fisica {
+
+}
+
 .lp-pessoa-fisica header .container {
     padding-top: 0;
 }
@@ -4069,7 +4073,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica header .nav-link {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -4422,7 +4426,7 @@ footer ul li a:hover {
 
 .lp-pessoa-fisica .beneficios h3 {
     color: #ffffff;
-    font-size: 60px;
+    font-size: 50px;
     font-weight: 700;
     margin-bottom: 60px;
 }
@@ -4492,7 +4496,7 @@ footer ul li a:hover {
 .lp-pessoa-fisica .numeros h3 {
     text-align: center;
     color: #2D405A;
-    font-size: 60px;
+    font-size: 50px;
     font-weight: 700;
     margin-bottom: 60px;
 }
@@ -4508,14 +4512,14 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .numeros .box p {
-    font-size: 60px;
+    font-size: 40px;
     line-height: 60px;
     font-weight: 700;
     margin-bottom: 0;
 }
 
 .lp-pessoa-fisica .numeros .box span {
-    font-size: 32px;
+    font-size: 24px;
 }
 
 .lp-pessoa-fisica .perguntas {
@@ -4524,7 +4528,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .perguntas h3 {
-    font-size: 60px;
+    font-size: 50px;
     color: #fff;
     text-align: center;
     font-weight: 600;
@@ -4538,7 +4542,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .perguntas .area-perguntas h4 {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
     color: #2D405A;
     margin-bottom: 30px;
@@ -4569,7 +4573,7 @@ footer ul li a:hover {
     display: block;
     padding: 12px 15px;
     background: #fff;
-    font-size: 32px;
+    font-size: 22px;
     line-height: 50px;
     font-weight: 400;
     color: #4470B4;
@@ -4626,7 +4630,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .perguntas .area-perguntas #accordion .panel-body p {
-    font-size: 24px;
+    font-size: 18px;
     color: #637389;
     line-height: 30px;
     margin-bottom: 0;
@@ -4743,7 +4747,7 @@ footer ul li a:hover {
 }
 
 .lp-pessoa-fisica .depoimentos h3 {
-    font-size: 60px;
+    font-size: 50px;
     color: #2D405A;
     font-weight: 700;
     text-align: center;
